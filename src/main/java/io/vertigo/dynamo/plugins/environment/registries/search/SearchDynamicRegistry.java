@@ -22,10 +22,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.Tuple;
 import io.vertigo.core.locale.MessageText;
 import io.vertigo.core.node.definition.Definition;
 import io.vertigo.core.node.definition.DefinitionSpace;
@@ -109,17 +111,10 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 
 		//Déclaration des ranges
 		final List<DslDefinition> rangeDefinitions = xdefinition.getChildDefinitions("range");
+		final List<DslDefinition> paramsDefinitions = xdefinition.getChildDefinitions("params");
 		final MessageText labelMsg = MessageText.of(label);
 		final StudioFacetDefinition facetDefinition;
-		if (rangeDefinitions.isEmpty()) {
-			facetDefinition = StudioFacetDefinition.createFacetDefinitionByTerm(
-					definitionName,
-					indexDtDefinition,
-					dtField,
-					labelMsg,
-					isMultiSelectable(xdefinition, false),
-					getFacetOrder(xdefinition, FacetOrder.count));
-		} else {
+		if (!rangeDefinitions.isEmpty()) {
 			final List<FacetValue> facetValues = rangeDefinitions.stream()
 					.map(SearchDynamicRegistry::createFacetValue)
 					.collect(Collectors.toList());
@@ -131,6 +126,26 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 					facetValues,
 					isMultiSelectable(xdefinition, false),
 					getFacetOrder(xdefinition, FacetOrder.definition));
+		} else if (!paramsDefinitions.isEmpty()) {
+			final Map<String, String> facetParams = paramsDefinitions.stream()
+					.map(SearchDynamicRegistry::createFacetParam)
+					.collect(Collectors.toMap(Tuple::getVal1, Tuple::getVal2));
+			facetDefinition = StudioFacetDefinition.createCustomFacetDefinition(
+					definitionName,
+					indexDtDefinition,
+					dtField,
+					labelMsg,
+					facetParams,
+					isMultiSelectable(xdefinition, false),
+					getFacetOrder(xdefinition, FacetOrder.definition));
+		} else {
+			facetDefinition = StudioFacetDefinition.createFacetDefinitionByTerm(
+					definitionName,
+					indexDtDefinition,
+					dtField,
+					labelMsg,
+					isMultiSelectable(xdefinition, false),
+					getFacetOrder(xdefinition, FacetOrder.count));
 		}
 		return facetDefinition;
 	}
@@ -158,6 +173,12 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 		return new FacetValue(code, listFilter, labelMsg);
 	}
 
+	private static Tuple<String, String> createFacetParam(final DslDefinition paramDefinition) {
+		final String name = paramDefinition.getName();
+		final String value = (String) paramDefinition.getPropertyValue(SearchGrammar.PARAMS_VALUE_PROPERTY);
+		return Tuple.of(name, value);
+	}
+
 	private static StudioFacetedQueryDefinition createFacetedQueryDefinition(final DefinitionSpace definitionSpace, final DslDefinition xdefinition) {
 		final String definitionName = "St" + xdefinition.getName();
 		final StudioDtDefinition keyConceptDtDefinition = definitionSpace.resolve("St" + xdefinition.getDefinitionLinkName("keyConcept"), StudioDtDefinition.class);
@@ -166,6 +187,7 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 				.map(dynamicDefinitionName -> definitionSpace.resolve("St" + dynamicDefinitionName, StudioFacetDefinition.class))
 				.collect(Collectors.toList());
 		final String listFilterBuilderQuery = (String) xdefinition.getPropertyValue(SearchGrammar.LIST_FILTER_BUILDER_QUERY);
+		final String geoSearchQuery = (String) xdefinition.getPropertyValue(SearchGrammar.GEO_SEARCH_QUERY);
 		final Class<? extends ListFilterBuilder> listFilterBuilderClass = getListFilterBuilderClass(xdefinition);
 		final String criteriaDomainName = xdefinition.getDefinitionLinkName("domainCriteria");
 		final Domain criteriaDomain = definitionSpace.resolve(criteriaDomainName, Domain.class);
@@ -176,7 +198,8 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 				facetDefinitions,
 				criteriaDomain,
 				listFilterBuilderClass,
-				listFilterBuilderQuery);
+				listFilterBuilderQuery,
+				Optional.ofNullable(geoSearchQuery));
 	}
 
 	private static Class<? extends ListFilterBuilder> getListFilterBuilderClass(final DslDefinition xtaskDefinition) {

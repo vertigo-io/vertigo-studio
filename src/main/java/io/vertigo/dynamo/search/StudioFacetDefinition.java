@@ -20,6 +20,7 @@ package io.vertigo.dynamo.search;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.locale.MessageText;
@@ -58,7 +59,9 @@ public final class StudioFacetDefinition implements Definition {
 	private final StudioDtField dtField;
 	private final MessageText label;
 	private final List<FacetValue> facetValues;
+	private final Map<String, String> facetParams;
 	private final boolean rangeFacet;
+	private final boolean customFacet;
 	private final boolean multiSelectable;
 	private final FacetOrder order;
 
@@ -81,6 +84,7 @@ public final class StudioFacetDefinition implements Definition {
 	 * @param dtField the field of the facet
 	 * @param facetValues the list of filters
 	 * @param rangeFacet if the facet is of type 'range'
+	 * @param customFacet if the facet is of type 'custom'
 	 * @param multiSelectable Can select multiple values
 	 * @param order Facet Order
 	 */
@@ -90,7 +94,9 @@ public final class StudioFacetDefinition implements Definition {
 			final StudioDtField dtField,
 			final MessageText label,
 			final List<FacetValue> facetValues,
+			final Map<String, String> facetParams,
 			final boolean rangeFacet,
+			final boolean customFacet,
 			final boolean multiSelectable,
 			final FacetOrder order) {
 		Assertion.checkArgNotEmpty(name);
@@ -98,9 +104,12 @@ public final class StudioFacetDefinition implements Definition {
 		Assertion.checkNotNull(dtField);
 		Assertion.checkNotNull(label);
 		Assertion.checkNotNull(facetValues);
+		Assertion.checkNotNull(facetParams);
 		Assertion.when(rangeFacet)
 				.check(() -> !facetValues.isEmpty(), "Les FacetDefinition de type 'range' doivent fournir la liste des segments non vides (FacetValues)");
-		Assertion.when(!rangeFacet)
+		Assertion.when(customFacet)
+				.check(() -> !facetParams.isEmpty(), "Les FacetDefinition de type 'custom' doivent fournir la liste des params non vides");
+		Assertion.when(!rangeFacet && !customFacet)
 				.check(facetValues::isEmpty, "Les FacetDefinition de type 'term' doivent fournir une liste des segments vide");
 		Assertion.checkNotNull(order);
 		//-----
@@ -109,7 +118,9 @@ public final class StudioFacetDefinition implements Definition {
 		this.dtField = dtField;
 		this.label = label;
 		this.facetValues = Collections.unmodifiableList(facetValues);
+		this.facetParams = Collections.unmodifiableMap(facetParams);
 		this.rangeFacet = rangeFacet;
+		this.customFacet = customFacet;
 		this.multiSelectable = multiSelectable;
 		this.order = order;
 	}
@@ -139,7 +150,7 @@ public final class StudioFacetDefinition implements Definition {
 			final List<FacetValue> facetValues,
 			final boolean multiSelectable,
 			final FacetOrder order) {
-		return new StudioFacetDefinition(name, indexDtDefinition, dtField, label, facetValues, true, multiSelectable, order);
+		return new StudioFacetDefinition(name, indexDtDefinition, dtField, label, facetValues, Collections.emptyMap(), true, false, multiSelectable, order);
 	}
 
 	/**
@@ -160,7 +171,29 @@ public final class StudioFacetDefinition implements Definition {
 			final MessageText label,
 			final boolean multiSelectable,
 			final FacetOrder order) {
-		return new StudioFacetDefinition(name, indexDtDefinition, dtField, label, Collections.emptyList(), false, multiSelectable, order);
+		return new StudioFacetDefinition(name, indexDtDefinition, dtField, label, Collections.emptyList(), Collections.emptyMap(), false, false, multiSelectable, order);
+	}
+
+	/**
+	 * Creates a new facetDefinition of type 'custom'.
+	 *
+	 * @param name the name of the facet
+	 * @param indexDtDefinition the dtDefinition of the facet
+	 * @param dtField the field of the facet
+	 * @param label the label of the facet
+	 * @param multiSelectable Can select multiple values
+	 * @param order Facet Order
+	 * @return new facetDefinition of type 'term'
+	 */
+	public static StudioFacetDefinition createCustomFacetDefinition(
+			final String name,
+			final StudioDtDefinition indexDtDefinition,
+			final StudioDtField dtField,
+			final MessageText label,
+			final Map<String, String> facetParams,
+			final boolean multiSelectable,
+			final FacetOrder order) {
+		return new StudioFacetDefinition(name, indexDtDefinition, dtField, label, Collections.emptyList(), facetParams, false, true, multiSelectable, order);
 	}
 
 	/**
@@ -196,10 +229,26 @@ public final class StudioFacetDefinition implements Definition {
 	}
 
 	/**
+	 * @return Liste des params.
+	 */
+	public Map<String, String> getFacetParams() {
+		Assertion.checkArgument(!facetParams.isEmpty(), "Cette facette ({0}) n'est pas paramétrée (custom).", getName());
+		//-----
+		return facetParams;
+	}
+
+	/**
 	 * @return if the facet is of type 'range'
 	 */
 	public boolean isRangeFacet() {
 		return rangeFacet;
+	}
+
+	/**
+	 * @return if the facet is of type 'custom'
+	 */
+	public boolean isCustomFacet() {
+		return customFacet;
 	}
 
 	/**

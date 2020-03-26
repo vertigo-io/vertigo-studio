@@ -13,6 +13,7 @@ public class FacetDefinitionModel {
 
 	private final StudioFacetDefinition studioFacetDefinition;
 	private List<FacetValueModel> facetValueModels;
+	private List<FacetParamModel> facetParamModels;
 
 	public FacetDefinitionModel(final StudioFacetDefinition studioFacetDefinition) {
 		Assertion.checkNotNull(studioFacetDefinition);
@@ -20,13 +21,24 @@ public class FacetDefinitionModel {
 		this.studioFacetDefinition = studioFacetDefinition;
 		if (studioFacetDefinition.isRangeFacet()) {
 			facetValueModels = studioFacetDefinition.getFacetRanges().stream().map(FacetValueModel::new).collect(Collectors.toList());
+			facetParamModels = Collections.emptyList();
+		} else if (studioFacetDefinition.isCustomFacet()) {
+			facetValueModels = Collections.emptyList();
+			facetParamModels = studioFacetDefinition.getFacetParams().entrySet().stream()
+					.map(entry -> new FacetParamModel(entry.getKey(), entry.getValue()))
+					.collect(Collectors.toList());
 		} else {
 			facetValueModels = Collections.emptyList();
+			facetParamModels = Collections.emptyList();
 		}
 	}
 
 	public boolean isTerm() {
-		return !studioFacetDefinition.isRangeFacet();
+		return !studioFacetDefinition.isRangeFacet() && !studioFacetDefinition.isCustomFacet();
+	}
+
+	public boolean isCustom() {
+		return studioFacetDefinition.isCustomFacet();
 	}
 
 	public boolean isRange() {
@@ -55,6 +67,10 @@ public class FacetDefinitionModel {
 
 	public List<FacetValueModel> getFacetValues() {
 		return facetValueModels;
+	}
+
+	public List<FacetParamModel> getFacetParams() {
+		return facetParamModels;
 	}
 
 }

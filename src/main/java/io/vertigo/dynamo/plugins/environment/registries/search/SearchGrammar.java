@@ -46,6 +46,8 @@ final class SearchGrammar implements DslGrammar {
 	public static final String LIST_FILTER_BUILDER_CLASS = "LIST_FILTER_BUILDER_CLASS";
 	/** List filter query. */
 	public static final String LIST_FILTER_BUILDER_QUERY = "LIST_FILTER_BUILDER_QUERY";
+	/** geo query. */
+	public static final String GEO_SEARCH_QUERY = "GEO_SEARCH_QUERY";
 	/** Fieldname. */
 	public static final String FIELD_NAME = "FIELD_NAME";
 	/** Facet order. */
@@ -55,6 +57,8 @@ final class SearchGrammar implements DslGrammar {
 	public static final String FACET_MULTISELECTABLE = "multiSelectable";
 	/** Range filter. */
 	public static final String RANGE_FILTER_PROPERTY = "FILTER";
+	/** Params Value. */
+	public static final String PARAMS_VALUE_PROPERTY = "VALUE";
 	/** indexCopy to. */
 	public static final String INDEX_COPY_TO_PROPERTY = "indexCopyTo";
 	/** indexCopy from. */
@@ -107,6 +111,11 @@ final class SearchGrammar implements DslGrammar {
 				.addRequiredField(KspProperty.LABEL, String)
 				.build();
 
+		/** Facet params. */
+		final DslEntity facetParamsEntity = DslEntity.builder("params")
+				.addRequiredField(PARAMS_VALUE_PROPERTY, String)
+				.build();
+
 		FACET_DEFINITION_ENTITY = DslEntity.builder("FacetDefinition")
 				.addRequiredField("dtDefinition", DomainGrammar.DT_DEFINITION_ENTITY.getLink())
 				.addRequiredField(FIELD_NAME, String)
@@ -114,6 +123,7 @@ final class SearchGrammar implements DslGrammar {
 				.addOptionalField(FACET_MULTISELECTABLE, Boolean) //facultative, default to false
 				.addOptionalField(FACET_ORDER, String) //facultative, default to count
 				.addManyFields("range", facetRangeEntity)
+				.addManyFields("params", facetParamsEntity)
 				.build();
 
 		FACETED_QUERY_DEFINITION_ENTITY = DslEntity.builder("FacetedQueryDefinition")
@@ -121,6 +131,7 @@ final class SearchGrammar implements DslGrammar {
 				.addRequiredField("domainCriteria", DomainGrammar.DOMAIN_ENTITY.getLink())
 				.addRequiredField(LIST_FILTER_BUILDER_CLASS, String)
 				.addRequiredField(LIST_FILTER_BUILDER_QUERY, String)
+				.addOptionalField(GEO_SEARCH_QUERY, String)
 				.addManyFields("facets", FACET_DEFINITION_ENTITY.getLink())
 				.build();
 	}

@@ -102,7 +102,7 @@ public final class DomainUtil {
 		}
 	}
 
-	private static String buildJavaType(final Domain domain, final Cardinality cardinality, final Class manyTargetClass) {
+	public static String buildJavaTypeName(final Domain domain) {
 		final String className;
 		switch (domain.getScope()) {
 			case PRIMITIVE:
@@ -124,6 +124,11 @@ public final class DomainUtil {
 			default:
 				throw new IllegalStateException();
 		}
+		return className;
+	}
+
+	private static String buildJavaType(final Domain domain, final Cardinality cardinality, final Class manyTargetClass) {
+		final String className = buildJavaTypeName(domain);
 		if (cardinality.hasMany()) {
 			return manyTargetClass.getName() + '<' + className + '>';
 		}

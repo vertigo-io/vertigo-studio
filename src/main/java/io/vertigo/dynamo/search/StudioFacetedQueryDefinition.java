@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.definition.Definition;
@@ -55,6 +56,8 @@ public final class StudioFacetedQueryDefinition implements Definition {
 
 	/** Query du listFilterBuilder. */
 	private final String listFilterBuilderQuery;
+	/** Query du geoSearchQuery. */
+	private final Optional<String> geoSearchQuery;
 
 	/**
 	 * Moyen de créer le ListFilter à partir du Criteria.
@@ -76,13 +79,15 @@ public final class StudioFacetedQueryDefinition implements Definition {
 			final List<StudioFacetDefinition> facetDefinitions,
 			final Domain criteriaDomain,
 			final Class<? extends ListFilterBuilder> listFilterBuilderClass,
-			final String listFilterBuilderQuery) {
+			final String listFilterBuilderQuery,
+			final Optional<String> geoSearchQuery) {
 		Assertion.checkArgNotEmpty(name);
 		Assertion.checkNotNull(keyConceptDtDefinition);
 		Assertion.checkNotNull(facetDefinitions);
 		Assertion.checkNotNull(criteriaDomain);
 		Assertion.checkNotNull(listFilterBuilderClass);
 		Assertion.checkNotNull(listFilterBuilderQuery);
+		Assertion.checkNotNull(geoSearchQuery);
 		//-----
 		this.name = name;
 		this.keyConceptDtDefinition = keyConceptDtDefinition;
@@ -92,6 +97,7 @@ public final class StudioFacetedQueryDefinition implements Definition {
 		this.criteriaDomain = criteriaDomain;
 		this.listFilterBuilderClass = listFilterBuilderClass;
 		this.listFilterBuilderQuery = listFilterBuilderQuery;
+		this.geoSearchQuery = geoSearchQuery;
 	}
 
 	/**
@@ -155,5 +161,19 @@ public final class StudioFacetedQueryDefinition implements Definition {
 	@Override
 	public String toString() {
 		return name;
+	}
+
+	/**
+	 * @return if there is a geoSearchQuery.
+	 */
+	public String getGeoSearchQuery() {
+		return geoSearchQuery.get();
+	}
+
+	/**
+	 * @return Query du geoSearch.
+	 */
+	public boolean hasGeoSearch() {
+		return geoSearchQuery.isPresent();
 	}
 }

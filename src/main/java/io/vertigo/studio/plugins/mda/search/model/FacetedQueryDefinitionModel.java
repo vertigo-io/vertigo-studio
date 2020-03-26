@@ -27,6 +27,7 @@ import io.vertigo.datafactory.collections.metamodel.FacetedQueryDefinition;
 import io.vertigo.datamodel.structure.metamodel.DtDefinition;
 import io.vertigo.dynamo.domain.metamodel.Domain;
 import io.vertigo.dynamo.search.StudioFacetedQueryDefinition;
+import io.vertigo.studio.plugins.mda.util.DomainUtil;
 
 /**
  * Génération des classes/méthodes des taches de type DAO.
@@ -75,6 +76,14 @@ public final class FacetedQueryDefinitionModel {
 		return facetedQueryDefinition.getListFilterBuilderQuery();
 	}
 
+	public boolean hasGeoSearch() {
+		return facetedQueryDefinition.hasGeoSearch();
+	}
+
+	public String getGeoSearchQuery() {
+		return facetedQueryDefinition.getGeoSearchQuery();
+	}
+
 	public String getKeyConceptDtDefinition() {
 		return DefinitionUtil.getPrefix(DtDefinition.class) + facetedQueryDefinition.getKeyConceptDtDefinition().getLocalName();
 	}
@@ -97,7 +106,7 @@ public final class FacetedQueryDefinitionModel {
 	private String obtainCriteriaClassCanonicalName() {
 		final Domain domain = facetedQueryDefinition.getCriteriaDomain();
 		//---
-		return domain.getJavaClass().getCanonicalName();
+		return DomainUtil.buildJavaTypeName(domain);
 	}
 
 }

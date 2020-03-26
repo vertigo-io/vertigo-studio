@@ -15,6 +15,7 @@ import io.vertigo.core.util.ListBuilder;
 import io.vertigo.datafactory.collections.metamodel.FacetDefinition.FacetOrder;
 import io.vertigo.datafactory.collections.metamodel.FacetRangeDefinitionSupplier;
 import io.vertigo.datafactory.collections.metamodel.FacetTermDefinitionSupplier;
+import io.vertigo.datafactory.collections.metamodel.FacetCustomDefinitionSupplier;
 import io.vertigo.datafactory.collections.metamodel.FacetedQueryDefinitionSupplier;
 import io.vertigo.datafactory.collections.model.FacetedQueryResult;
 import io.vertigo.datafactory.collections.model.SelectedFacetValues;
@@ -120,7 +121,7 @@ public final class ${dtDefinition.classSimpleName}SearchClient implements Compon
 				// FacetTermDefinition
 				//-----
 				<#list facetDefinitions as facetDefinition>
-				.add(new Facet<#if facetDefinition.isRange()>Range<#else>Term</#if>DefinitionSupplier("${facetDefinition.name}")
+				.add(new Facet<#if facetDefinition.isRange()>Range<#elseif facetDefinition.isCustom()>Custom<#else>Term</#if>DefinitionSupplier("${facetDefinition.name}")
 						.withDtDefinition("${searchIndexDefinition.indexDtDefinition}")
 						.withFieldName("${facetDefinition.fieldName}")
 						.withLabel("${facetDefinition.label}")
@@ -130,6 +131,11 @@ public final class ${dtDefinition.classSimpleName}SearchClient implements Compon
 						<#if facetDefinition.isRange()>
 						<#list facetDefinition.facetValues as facetValue>
 						.withRange("${facetValue.code}", "${facetValue.listFilter}", "${facetValue.label}")
+						</#list>						
+						</#if>
+						<#if facetDefinition.isCustom()>
+						<#list facetDefinition.facetParams as facetParam>
+						.withParams("${facetParam.name}", "${facetParam.value?js_string}")
 						</#list>
 						</#if>
 						.withOrder(FacetOrder.${facetDefinition.order}))
@@ -145,6 +151,9 @@ public final class ${dtDefinition.classSimpleName}SearchClient implements Compon
 						</#list>
 						.withListFilterBuilderClass(${facetedQueryDefinition.listFilterClassName}.class)
 						.withListFilterBuilderQuery("${facetedQueryDefinition.listFilterBuilderQuery}")
+						<#if facetedQueryDefinition.hasGeoSearch()>
+						.withGeoSearchQuery("${facetedQueryDefinition.geoSearchQuery}")
+						</#if>
 						.withCriteriaSmartType("${facetedQueryDefinition.criteriaSmartType}"))						
 				</#list>
 				
