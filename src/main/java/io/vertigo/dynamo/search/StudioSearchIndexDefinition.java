@@ -26,9 +26,9 @@ import java.util.Set;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.definition.Definition;
 import io.vertigo.core.node.definition.DefinitionPrefix;
-import io.vertigo.datamodel.structure.metamodel.DtStereotype;
 import io.vertigo.dynamo.domain.metamodel.StudioDtDefinition;
 import io.vertigo.dynamo.domain.metamodel.StudioDtField;
+import io.vertigo.dynamo.domain.metamodel.StudioStereotype;
 
 /**
  * Définition de l'index de recherche.
@@ -79,7 +79,7 @@ public final class StudioSearchIndexDefinition implements Definition {
 		Assertion.checkArgNotEmpty(name);
 		Assertion.checkNotNull(keyConceptDtDefinition);
 		Assertion.checkArgument(
-				keyConceptDtDefinition.getStereotype() == DtStereotype.KeyConcept,
+				keyConceptDtDefinition.getStereotype() == StudioStereotype.KeyConcept,
 				"keyConceptDtDefinition ({0}) must be a DtDefinition of a KeyConcept class", keyConceptDtDefinition.getName());
 		Assertion.checkNotNull(indexDtDefinition);
 		Assertion.checkNotNull(indexCopyToFieldsMap);

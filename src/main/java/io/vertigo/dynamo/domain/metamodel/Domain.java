@@ -19,17 +19,15 @@
 package io.vertigo.dynamo.domain.metamodel;
 
 import java.util.List;
+import java.util.Properties;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.BasicType;
 import io.vertigo.core.node.Home;
 import io.vertigo.core.node.definition.Definition;
 import io.vertigo.core.node.definition.DefinitionPrefix;
-import io.vertigo.core.node.definition.DefinitionReference;
 import io.vertigo.core.node.definition.DefinitionUtil;
 import io.vertigo.core.util.ClassUtil;
-import io.vertigo.datamodel.structure.metamodel.FormatterException;
-import io.vertigo.datamodel.structure.metamodel.Properties;
 
 /**
  * A domain exists to enrich the primitive datatypes, giving them super powers.
@@ -88,10 +86,11 @@ public final class Domain implements Definition {
 	private final String dtDefinitionName;
 
 	/** Formatter. */
-	private final DefinitionReference<FormatterDefinition> formatterDefinitionRef;
+	private final FormatterDefinition formatterDefinition;
 
 	/** List of property-value tuples */
 	private final Properties properties;
+	private final List<ConstraintDefinition> constraintDefinitions;
 
 	/**
 	 * Constructor.
@@ -135,7 +134,8 @@ public final class Domain implements Definition {
 		//---
 		this.valueObjectClass = valueObjectClass;
 		//---
-		formatterDefinitionRef = formatterDefinition == null ? null : new DefinitionReference<>(formatterDefinition);
+		this.formatterDefinition = formatterDefinition;
+		this.constraintDefinitions = constraintDefinitions;
 		//---Properties
 		this.properties = properties;
 	}
@@ -186,10 +186,14 @@ public final class Domain implements Definition {
 	 *
 	 * @return the formatter.
 	 */
-	private FormatterDefinition getFormatter() {
-		Assertion.checkNotNull(formatterDefinitionRef, "no formatter defined on {0}", this);
+	public FormatterDefinition getFormatterDefinition() {
+		Assertion.checkNotNull(formatterDefinition, "no formatter defined on {0}", this);
 		//-----
-		return formatterDefinitionRef.get();
+		return formatterDefinition;
+	}
+
+	public List<ConstraintDefinition> getConstraintDefinitions() {
+		return constraintDefinitions;
 	}
 
 	/**
@@ -197,17 +201,6 @@ public final class Domain implements Definition {
 	 */
 	public Properties getProperties() {
 		return properties;
-	}
-
-	/**
-	 * Chechs if the value is valid.
-	 *
-	 * @param value the value to check
-	 */
-	public void checkValue(final Object value) {
-		if (getScope().isPrimitive()) {
-			dataType.checkValue(value);
-		}
 	}
 
 	//==========================================================================
@@ -267,24 +260,6 @@ public final class Domain implements Definition {
 	@Override
 	public String toString() {
 		return name;
-	}
-
-	public String getFormatterClassName() {
-		Assertion.checkNotNull(dataType, "can only be used with primitives");
-		//---
-		return getFormatter().getFormatterClassName();
-	}
-
-	public String valueToString(final Object objValue) {
-		Assertion.checkNotNull(dataType, "can only be used with primitives");
-		//---
-		return getFormatter().valueToString(objValue, dataType);
-	}
-
-	public Object stringToValue(final String strValue) throws FormatterException {
-		Assertion.checkNotNull(dataType, "can only be used with primitives");
-		//---
-		return getFormatter().stringToValue(strValue, dataType);
 	}
 
 }

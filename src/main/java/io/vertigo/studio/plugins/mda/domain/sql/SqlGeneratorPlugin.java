@@ -36,8 +36,8 @@ import io.vertigo.core.node.Home;
 import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.datamodel.structure.metamodel.DtStereotype;
 import io.vertigo.dynamo.domain.metamodel.StudioDtDefinition;
+import io.vertigo.dynamo.domain.metamodel.StudioStereotype;
 import io.vertigo.dynamo.domain.metamodel.association.StudioAssociationNNDefinition;
 import io.vertigo.dynamo.domain.metamodel.association.StudioAssociationSimpleDefinition;
 import io.vertigo.studio.impl.mda.GeneratorPlugin;
@@ -123,7 +123,7 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 
 		final List<SqlMasterDataDefinitionModel> sqlMasterDataDefinitionModels = Home.getApp().getDefinitionSpace().getAll(StudioDtDefinition.class)
 				.stream()
-				.filter(dtDefinition -> dtDefinition.getStereotype() == DtStereotype.StaticMasterData)
+				.filter(dtDefinition -> dtDefinition.getStereotype() == StudioStereotype.StaticMasterData)
 				.map(dtDefinition -> new SqlMasterDataDefinitionModel(dtDefinition, masterDataValues.getOrDefault(dtDefinition.getClassCanonicalName(), Collections.emptyMap())))
 				.collect(Collectors.toList());
 

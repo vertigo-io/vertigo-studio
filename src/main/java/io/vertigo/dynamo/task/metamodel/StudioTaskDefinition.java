@@ -28,8 +28,6 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.definition.Definition;
 import io.vertigo.core.node.definition.DefinitionPrefix;
 import io.vertigo.core.node.definition.DefinitionUtil;
-import io.vertigo.datamodel.structure.metamodel.DtDefinition;
-import io.vertigo.datamodel.task.model.TaskEngine;
 
 /**
  * This class defines a task and its attributes.
@@ -58,25 +56,24 @@ public final class StudioTaskDefinition implements Definition {
 	/**
 	 * Moyen de réaliser la tache.
 	 */
-	private final Class<? extends TaskEngine> taskEngineClass;
+	private final String taskEngineClassName;
 
 	/**
 	 * Constructor.
-	 * @param taskEngineClass Classe réalisant l'implémentation
+	 * @param taskEngineClassName Classe réalisant l'implémentation
 	 * @param request Chaine de configuration
 	 */
 	StudioTaskDefinition(
 			final String name,
 			final String packageName,
 			final String dataSpace,
-			final Class<? extends TaskEngine> taskEngineClass,
+			final String taskEngineClassName,
 			final String request,
 			final List<StudioTaskAttribute> inTaskAttributes,
 			final Optional<StudioTaskAttribute> outTaskAttributeOption) {
 		DefinitionUtil.checkName(name, StudioTaskDefinition.class);
 		Assertion.checkArgNotEmpty(dataSpace);
-		Assertion.checkState(DtDefinition.REGEX_DATA_SPACE.matcher(dataSpace).matches(), "collection {0} must match pattern {1}", dataSpace, DtDefinition.REGEX_DATA_SPACE);
-		Assertion.checkNotNull(taskEngineClass, "a taskEngineClass is required");
+		Assertion.checkArgNotEmpty(taskEngineClassName, "a taskEngineClass is required");
 		Assertion.checkNotNull(request, "a request is required");
 		Assertion.checkNotNull(inTaskAttributes);
 		Assertion.checkNotNull(outTaskAttributeOption);
@@ -87,7 +84,7 @@ public final class StudioTaskDefinition implements Definition {
 		this.request = request;
 		this.inTaskAttributes = createMap(inTaskAttributes);
 		this.outTaskAttributeOption = outTaskAttributeOption;
-		this.taskEngineClass = taskEngineClass;
+		this.taskEngineClassName = taskEngineClassName;
 	}
 
 	/**
@@ -133,8 +130,8 @@ public final class StudioTaskDefinition implements Definition {
 	 *
 	 * @return Classe réalisant l'implémentation
 	 */
-	public Class<? extends TaskEngine> getTaskEngineClass() {
-		return taskEngineClass;
+	public String getTaskEngineClassName() {
+		return taskEngineClassName;
 	}
 
 	/**

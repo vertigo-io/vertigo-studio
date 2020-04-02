@@ -30,10 +30,6 @@ import io.vertigo.core.locale.MessageText;
 import io.vertigo.core.node.definition.DefinitionReference;
 import io.vertigo.core.node.definition.DefinitionUtil;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.datamodel.structure.metamodel.ComputedExpression;
-import io.vertigo.datamodel.structure.metamodel.DtDefinition;
-import io.vertigo.datamodel.structure.metamodel.DtField;
-import io.vertigo.datamodel.structure.metamodel.DtStereotype;
 
 /**
  * This class must be used to build a DtDefinition.
@@ -64,7 +60,7 @@ public final class StudioDtDefinitionBuilder implements Builder<StudioDtDefiniti
 	private final String myName;
 	private DefinitionReference<StudioDtDefinition> myFragmentRef;
 	private String myPackageName;
-	private DtStereotype myStereotype;
+	private StudioStereotype myStereotype;
 	private StudioDtField myIdField;
 	private final List<StudioDtField> myFields = new ArrayList<>();
 	private String myDataSpace;
@@ -102,7 +98,7 @@ public final class StudioDtDefinitionBuilder implements Builder<StudioDtDefiniti
 	public StudioDtDefinitionBuilder withFragment(final StudioDtDefinition fragment) {
 		Assertion.checkNotNull(fragment);
 		//---
-		myStereotype = DtStereotype.Fragment;
+		myStereotype = StudioStereotype.Fragment;
 		myFragmentRef = new DefinitionReference<>(fragment);
 		return this;
 	}
@@ -113,7 +109,7 @@ public final class StudioDtDefinitionBuilder implements Builder<StudioDtDefiniti
 	 * @param stereotype the stereotype of the dtDefinition
 	 * @return this builder
 	 */
-	public StudioDtDefinitionBuilder withStereoType(final DtStereotype stereotype) {
+	public StudioDtDefinitionBuilder withStereoType(final StudioStereotype stereotype) {
 		Assertion.checkNotNull(stereotype);
 		//-----
 		myStereotype = stereotype;
@@ -258,7 +254,7 @@ public final class StudioDtDefinitionBuilder implements Builder<StudioDtDefiniti
 		final String shortName = DefinitionUtil.getLocalName(myName, StudioDtDefinition.class);
 		//-----
 		// Le DtField vérifie ses propres règles et gère ses propres optimisations
-		final String id = DtField.PREFIX + shortName + '$' + fieldName;
+		final String id = "fld" + shortName + '$' + fieldName;
 
 		//2. Sinon Indication de longueur portée par le champ du DT.
 		//-----
@@ -325,14 +321,14 @@ public final class StudioDtDefinitionBuilder implements Builder<StudioDtDefiniti
 		Assertion.checkState(dtDefinition == null, "build() already executed");
 		//-----
 		if (myStereotype == null) {
-			myStereotype = myIdField == null ? DtStereotype.ValueObject : DtStereotype.Entity;
+			myStereotype = myIdField == null ? StudioStereotype.ValueObject : StudioStereotype.Entity;
 		}
 
 		final StudioDtField sortField;
 		if (mySortFieldName != null) {
 			sortField = findFieldByName(mySortFieldName)
 					.orElseThrow(() -> new IllegalStateException(StringUtil.format("Sort field '{0}' not found on '{1}'", mySortFieldName, dtDefinition.getName())));
-		} else if (myStereotype == DtStereotype.Fragment) {
+		} else if (myStereotype == StudioStereotype.Fragment) {
 			sortField = myFragmentRef.get().getSortField().orElse(null);
 		} else {
 			sortField = null;
@@ -342,7 +338,7 @@ public final class StudioDtDefinitionBuilder implements Builder<StudioDtDefiniti
 		if (myDisplayFieldName != null) {
 			displayField = findFieldByName(myDisplayFieldName)
 					.orElseThrow(() -> new IllegalStateException(StringUtil.format("Display field '{0}' not found on '{1}'", myDisplayFieldName, dtDefinition.getName())));
-		} else if (myStereotype == DtStereotype.Fragment) {
+		} else if (myStereotype == StudioStereotype.Fragment) {
 			displayField = myFragmentRef.get().getDisplayField().orElse(null);
 		} else {
 			displayField = null;
@@ -352,7 +348,7 @@ public final class StudioDtDefinitionBuilder implements Builder<StudioDtDefiniti
 		if (myHandleFieldName != null) {
 			handleField = findFieldByName(myHandleFieldName)
 					.orElseThrow(() -> new IllegalStateException(StringUtil.format("Handle field '{0}' not found on '{1}'", myHandleFieldName, dtDefinition.getName())));
-		} else if (myStereotype == DtStereotype.Fragment) {
+		} else if (myStereotype == StudioStereotype.Fragment) {
 			handleField = myFragmentRef.get().getHandleField().orElse(null);
 		} else {
 			handleField = null;
@@ -364,7 +360,7 @@ public final class StudioDtDefinitionBuilder implements Builder<StudioDtDefiniti
 				myPackageName,
 				myStereotype,
 				myFields,
-				myDataSpace == null ? DtDefinition.DEFAULT_DATA_SPACE : myDataSpace,
+				myDataSpace == null ? "main" : myDataSpace,
 				Optional.ofNullable(sortField),
 				Optional.ofNullable(displayField),
 				Optional.ofNullable(handleField));

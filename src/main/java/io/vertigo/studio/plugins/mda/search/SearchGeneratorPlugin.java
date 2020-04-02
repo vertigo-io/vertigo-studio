@@ -31,8 +31,8 @@ import io.vertigo.core.node.Home;
 import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.datamodel.structure.metamodel.DtStereotype;
 import io.vertigo.dynamo.domain.metamodel.StudioDtDefinition;
+import io.vertigo.dynamo.domain.metamodel.StudioStereotype;
 import io.vertigo.dynamo.search.StudioFacetDefinition;
 import io.vertigo.dynamo.search.StudioFacetedQueryDefinition;
 import io.vertigo.dynamo.search.StudioSearchIndexDefinition;
@@ -86,7 +86,7 @@ public final class SearchGeneratorPlugin implements GeneratorPlugin {
 
 		Home.getApp().getDefinitionSpace().getAll(StudioDtDefinition.class)
 				.stream()
-				.filter(dtDefinition -> dtDefinition.getStereotype() == DtStereotype.KeyConcept)
+				.filter(dtDefinition -> dtDefinition.getStereotype() == StudioStereotype.KeyConcept)
 				.forEach(dtDefinition -> generateSearchAo(targetSubDir, fileGeneratorConfig, mdaResultBuilder, dtDefinition));
 
 	}

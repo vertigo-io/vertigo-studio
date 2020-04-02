@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -37,13 +38,7 @@ import io.vertigo.core.node.definition.DefinitionSupplier;
 import io.vertigo.core.node.definition.DefinitionUtil;
 import io.vertigo.core.util.ClassUtil;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.datamodel.structure.metamodel.ComputedExpression;
-import io.vertigo.datamodel.structure.metamodel.DtProperty;
-import io.vertigo.datamodel.structure.metamodel.DtStereotype;
-import io.vertigo.datamodel.structure.metamodel.Properties;
-import io.vertigo.datamodel.structure.metamodel.PropertiesBuilder;
-import io.vertigo.datamodel.structure.metamodel.Property;
-import io.vertigo.datamodel.structure.util.AssociationUtil;
+import io.vertigo.dynamo.domain.metamodel.ComputedExpression;
 import io.vertigo.dynamo.domain.metamodel.ConstraintDefinition;
 import io.vertigo.dynamo.domain.metamodel.Domain;
 import io.vertigo.dynamo.domain.metamodel.DomainBuilder;
@@ -51,6 +46,8 @@ import io.vertigo.dynamo.domain.metamodel.FormatterDefinition;
 import io.vertigo.dynamo.domain.metamodel.StudioDtDefinition;
 import io.vertigo.dynamo.domain.metamodel.StudioDtDefinitionBuilder;
 import io.vertigo.dynamo.domain.metamodel.StudioDtField;
+import io.vertigo.dynamo.domain.metamodel.StudioStereotype;
+import io.vertigo.dynamo.domain.metamodel.association.AssociationUtil;
 import io.vertigo.dynamo.domain.metamodel.association.StudioAssociationNNDefinition;
 import io.vertigo.dynamo.domain.metamodel.association.StudioAssociationNode;
 import io.vertigo.dynamo.domain.metamodel.association.StudioAssociationSimpleDefinition;
@@ -130,9 +127,9 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		final Properties properties = extractProperties(xdomain);
 		final DomainBuilder domainBuilder;
 		if ("DtObject".equals(type)) {
-			domainBuilder = Domain.builder(domainName, properties.getValue(DtProperty.TYPE));
+			domainBuilder = Domain.builder(domainName, properties.getProperty("TYPE"));
 		} else if ("ValueObject".equals(type)) {
-			domainBuilder = Domain.builder(domainName, ClassUtil.classForName(properties.getValue(DtProperty.TYPE)));
+			domainBuilder = Domain.builder(domainName, ClassUtil.classForName(properties.getProperty("TYPE")));
 		} else {
 			final BasicType dataType = BasicType.valueOf(type);
 			domainBuilder = Domain.builder(domainName, dataType);
@@ -225,7 +222,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		//-----
 		final String tmpStereotype = (String) xdtDefinition.getPropertyValue(KspProperty.STEREOTYPE);
 		//Si Stereotype est non renseigné on suppose que la définition est DtStereotype.Data.
-		final DtStereotype stereotype = tmpStereotype != null ? DtStereotype.valueOf(tmpStereotype) : null;
+		final StudioStereotype stereotype = tmpStereotype != null ? StudioStereotype.valueOf(tmpStereotype) : null;
 		//-----
 		final String dataSpace = (String) xdtDefinition.getPropertyValue(KspProperty.DATA_SPACE);
 		//-----
@@ -463,14 +460,13 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 	 * @return Container des propriétés
 	 */
 	private static Properties extractProperties(final DslDefinition dslDefinition) {
-		final PropertiesBuilder propertiesBuilder = Properties.builder();
+		final Properties properties = new Properties();
 
 		//On associe les propriétés Dt et Ksp par leur nom.
 		for (final String entityPropertyName : dslDefinition.getPropertyNames()) {
-			final Property property = DtProperty.valueOf(entityPropertyName);
-			propertiesBuilder.addValue(property, dslDefinition.getPropertyValue(entityPropertyName));
+			properties.put(entityPropertyName, dslDefinition.getPropertyValue(entityPropertyName));
 		}
-		return propertiesBuilder.build();
+		return properties;
 	}
 
 	/** {@inheritDoc} */

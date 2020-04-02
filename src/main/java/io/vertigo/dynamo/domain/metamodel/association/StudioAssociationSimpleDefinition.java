@@ -22,7 +22,6 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.definition.DefinitionPrefix;
 import io.vertigo.core.node.definition.DefinitionUtil;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.datamodel.structure.util.AssociationUtil;
 import io.vertigo.dynamo.domain.metamodel.StudioDtField;
 
 /**

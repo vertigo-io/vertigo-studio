@@ -28,7 +28,6 @@ import java.util.Optional;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.definition.Definition;
 import io.vertigo.core.node.definition.DefinitionPrefix;
-import io.vertigo.datafactory.collections.metamodel.ListFilterBuilder;
 import io.vertigo.dynamo.domain.metamodel.Domain;
 import io.vertigo.dynamo.domain.metamodel.StudioDtDefinition;
 
@@ -62,7 +61,7 @@ public final class StudioFacetedQueryDefinition implements Definition {
 	/**
 	 * Moyen de créer le ListFilter à partir du Criteria.
 	 */
-	private final Class<? extends ListFilterBuilder> listFilterBuilderClass;
+	private final String listFilterBuilderClassName;
 
 	/**
 	 * Constructor.
@@ -70,7 +69,7 @@ public final class StudioFacetedQueryDefinition implements Definition {
 	 * @param keyConceptDtDefinition Definition du keyConcept sur lequel s'applique cette recherche
 	 * @param facetDefinitions Liste des facettes
 	 * @param criteriaDomain Criteria's domain
-	 * @param listFilterBuilderClass listFilterBuilderClass to use
+	 * @param listFilterBuilderClassName listFilterBuilderClass to use
 	 * @param listFilterBuilderQuery listFilterBuilderQuery to use
 	 */
 	public StudioFacetedQueryDefinition(
@@ -78,14 +77,14 @@ public final class StudioFacetedQueryDefinition implements Definition {
 			final StudioDtDefinition keyConceptDtDefinition,
 			final List<StudioFacetDefinition> facetDefinitions,
 			final Domain criteriaDomain,
-			final Class<? extends ListFilterBuilder> listFilterBuilderClass,
+			final String listFilterBuilderClassName,
 			final String listFilterBuilderQuery,
 			final Optional<String> geoSearchQuery) {
 		Assertion.checkArgNotEmpty(name);
 		Assertion.checkNotNull(keyConceptDtDefinition);
 		Assertion.checkNotNull(facetDefinitions);
 		Assertion.checkNotNull(criteriaDomain);
-		Assertion.checkNotNull(listFilterBuilderClass);
+		Assertion.checkArgNotEmpty(listFilterBuilderClassName);
 		Assertion.checkNotNull(listFilterBuilderQuery);
 		Assertion.checkNotNull(geoSearchQuery);
 		//-----
@@ -95,7 +94,7 @@ public final class StudioFacetedQueryDefinition implements Definition {
 			this.facetDefinitions.put(facetDefinition.getName(), facetDefinition);
 		}
 		this.criteriaDomain = criteriaDomain;
-		this.listFilterBuilderClass = listFilterBuilderClass;
+		this.listFilterBuilderClassName = listFilterBuilderClassName;
 		this.listFilterBuilderQuery = listFilterBuilderQuery;
 		this.geoSearchQuery = geoSearchQuery;
 	}
@@ -146,8 +145,8 @@ public final class StudioFacetedQueryDefinition implements Definition {
 	/**
 	  * @return Class du ListFilterBuilder.
 	 */
-	public Class<? extends ListFilterBuilder> getListFilterBuilderClass() {
-		return listFilterBuilderClass;
+	public String getListFilterBuilderClassName() {
+		return listFilterBuilderClassName;
 	}
 
 	/**

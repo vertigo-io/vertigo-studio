@@ -33,11 +33,9 @@ import org.xml.sax.helpers.DefaultHandler;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
 import io.vertigo.core.lang.WrappedException;
-import io.vertigo.core.node.definition.DefinitionUtil;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.datamodel.structure.metamodel.DtDefinition;
-import io.vertigo.datamodel.structure.util.AssociationUtil;
+import io.vertigo.dynamo.domain.metamodel.association.AssociationUtil;
 import io.vertigo.dynamo.plugins.environment.KspProperty;
 import io.vertigo.dynamo.plugins.environment.dsl.dynamic.DslDefinition;
 import io.vertigo.dynamo.plugins.environment.dsl.dynamic.DslDefinitionBuilder;
@@ -55,7 +53,7 @@ public abstract class AbstractXmlLoader implements Loader {
 	private static final int MAX_COLUMN_LENGTH = 30;
 	private static final Logger LOGGER = LogManager.getLogger(AbstractXmlLoader.class);
 
-	private static final String DT_DEFINITION_PREFIX = DefinitionUtil.getPrefix(DtDefinition.class);
+	private static final String DT_DEFINITION_PREFIX = "Dt";
 	private final ResourceManager resourceManager;
 	private final boolean constFieldNameInSource;
 

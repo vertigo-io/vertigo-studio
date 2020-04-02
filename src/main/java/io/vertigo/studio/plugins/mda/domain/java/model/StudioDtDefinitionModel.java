@@ -24,19 +24,14 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.Home;
-import io.vertigo.datamodel.structure.metamodel.DtStereotype;
-import io.vertigo.datamodel.structure.model.DtMasterData;
-import io.vertigo.datamodel.structure.model.DtObject;
-import io.vertigo.datamodel.structure.model.DtStaticMasterData;
-import io.vertigo.datamodel.structure.model.Entity;
-import io.vertigo.datamodel.structure.model.Fragment;
-import io.vertigo.datamodel.structure.model.KeyConcept;
 import io.vertigo.dynamo.domain.metamodel.StudioDtDefinition;
 import io.vertigo.dynamo.domain.metamodel.StudioDtField;
 import io.vertigo.dynamo.domain.metamodel.StudioDtField.FieldType;
+import io.vertigo.dynamo.domain.metamodel.StudioStereotype;
 import io.vertigo.dynamo.domain.metamodel.association.StudioAssociationDefinition;
 import io.vertigo.dynamo.domain.metamodel.association.StudioAssociationNNDefinition;
 import io.vertigo.dynamo.domain.metamodel.association.StudioAssociationSimpleDefinition;
+import io.vertigo.studio.plugins.mda.VertigoConstants.VertigoClassNames;
 
 /**
  * Model used by FreeMarker.
@@ -124,16 +119,20 @@ public final class StudioDtDefinitionModel {
 		return dtDefinition.getPackageName();
 	}
 
-	public String getStereotypePackageName() {
-		return getStereotypeClass().getCanonicalName();
+	public String getStereotypeClassCanonicalName() {
+		return getStereotypeClass().getClassName();
 	}
 
 	public boolean isEntity() {
-		return Entity.class.isAssignableFrom(getStereotypeClass());
+		return dtDefinition.getStereotype() == StudioStereotype.Entity
+				|| dtDefinition.getStereotype() == StudioStereotype.KeyConcept
+				|| dtDefinition.getStereotype() == StudioStereotype.Fragment
+				|| dtDefinition.getStereotype() == StudioStereotype.MasterData
+				|| dtDefinition.getStereotype() == StudioStereotype.StaticMasterData;
 	}
 
 	public boolean isFragment() {
-		return Fragment.class.isAssignableFrom(getStereotypeClass());
+		return dtDefinition.getStereotype() == StudioStereotype.Fragment;
 	}
 
 	public String getEntityClassSimpleName() {
@@ -144,26 +143,26 @@ public final class StudioDtDefinitionModel {
 	 * @return Nom simple de l'nterface associé au Sterotype de l'objet (DtObject, DtMasterData ou KeyConcept)
 	 */
 	public String getStereotypeInterfaceName() {
-		if (dtDefinition.getStereotype() == DtStereotype.Fragment) {
+		if (dtDefinition.getStereotype() == StudioStereotype.Fragment) {
 			return getStereotypeClass().getSimpleName() + "<" + getEntityClassSimpleName() + ">";
 		}
 		return getStereotypeClass().getSimpleName();
 	}
 
-	private Class getStereotypeClass() {
+	private VertigoClassNames getStereotypeClass() {
 		switch (dtDefinition.getStereotype()) {
 			case Entity:
-				return Entity.class;
+				return VertigoClassNames.Entity;
 			case ValueObject:
-				return DtObject.class;
+				return VertigoClassNames.DtObject;
 			case MasterData:
-				return DtMasterData.class;
+				return VertigoClassNames.DtMasterData;
 			case StaticMasterData:
-				return DtStaticMasterData.class;
+				return VertigoClassNames.DtStaticMasterData;
 			case KeyConcept:
-				return KeyConcept.class;
+				return VertigoClassNames.KeyConcept;
 			case Fragment:
-				return Fragment.class;
+				return VertigoClassNames.Fragment;
 			default:
 				throw new IllegalArgumentException("Stereotype " + dtDefinition.getStereotype().name() + " non géré");
 		}
@@ -198,18 +197,18 @@ public final class StudioDtDefinitionModel {
 	}
 
 	public boolean containsAccessor() {
-		return dtDefinition.getStereotype() != DtStereotype.Fragment &&
+		return dtDefinition.getStereotype() != StudioStereotype.Fragment &&
 				dtDefinition.getFields()
 						.stream()
-						.anyMatch(field -> field.getType() == FieldType.FOREIGN_KEY && field.getFkDtDefinition().getStereotype() != DtStereotype.StaticMasterData);
+						.anyMatch(field -> field.getType() == FieldType.FOREIGN_KEY && field.getFkDtDefinition().getStereotype() != StudioStereotype.StaticMasterData);
 
 	}
 
 	public boolean containsEnumAccessor() {
-		return dtDefinition.getStereotype() != DtStereotype.Fragment &&
+		return dtDefinition.getStereotype() != StudioStereotype.Fragment &&
 				dtDefinition.getFields()
 						.stream()
-						.anyMatch(field -> field.getType() == FieldType.FOREIGN_KEY && field.getFkDtDefinition().getStereotype() == DtStereotype.StaticMasterData);
+						.anyMatch(field -> field.getType() == FieldType.FOREIGN_KEY && field.getFkDtDefinition().getStereotype() == StudioStereotype.StaticMasterData);
 
 	}
 

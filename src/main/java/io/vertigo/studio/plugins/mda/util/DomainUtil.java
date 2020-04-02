@@ -27,7 +27,6 @@ import java.util.Map;
 
 import io.vertigo.core.lang.Cardinality;
 import io.vertigo.core.node.Home;
-import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.dynamo.domain.metamodel.Domain;
 import io.vertigo.dynamo.domain.metamodel.StudioDtDefinition;
 import io.vertigo.dynamo.domain.metamodel.StudioDtField;
@@ -90,13 +89,13 @@ public final class DomainUtil {
 		return buildJavaTypeLabel(taskAttribute.getDomain(), taskAttribute.getCardinality(), getManyTargetJavaClass(taskAttribute.getDomain()));
 	}
 
-	private static Class getManyTargetJavaClass(final Domain domain) {
+	private static String getManyTargetJavaClass(final Domain domain) {
 		switch (domain.getScope()) {
 			case DATA_OBJECT:
-				return DtList.class;
+				return "io.vertigo.datamodel.structure.model.DtList";
 			case PRIMITIVE:
 			case VALUE_OBJECT:
-				return List.class;
+				return List.class.getName();
 			default:
 				throw new IllegalStateException();
 		}
@@ -127,15 +126,15 @@ public final class DomainUtil {
 		return className;
 	}
 
-	private static String buildJavaType(final Domain domain, final Cardinality cardinality, final Class manyTargetClass) {
+	private static String buildJavaType(final Domain domain, final Cardinality cardinality, final String manyTargetClassName) {
 		final String className = buildJavaTypeName(domain);
 		if (cardinality.hasMany()) {
-			return manyTargetClass.getName() + '<' + className + '>';
+			return manyTargetClassName + '<' + className + '>';
 		}
 		return className;
 	}
 
-	public static String buildJavaTypeLabel(final Domain domain, final Cardinality cardinality, final Class manyTargetClass) {
+	public static String buildJavaTypeLabel(final Domain domain, final Cardinality cardinality, final String manyTargetClassName) {
 		final String classLabel;
 		switch (domain.getScope()) {
 			case PRIMITIVE:
@@ -151,7 +150,7 @@ public final class DomainUtil {
 				throw new IllegalStateException();
 		}
 		if (cardinality.hasMany()) {
-			return manyTargetClass.getSimpleName() + " de " + classLabel;
+			return manyTargetClassName.substring(manyTargetClassName.lastIndexOf('.') + 1) + " de " + classLabel;
 		}
 		return classLabel;
 	}

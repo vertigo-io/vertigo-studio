@@ -20,7 +20,6 @@ package io.vertigo.studio.mda;
 
 import org.junit.jupiter.api.Test;
 
-import io.vertigo.commons.CommonsFeatures;
 import io.vertigo.core.node.AutoCloseableApp;
 import io.vertigo.core.node.config.DefinitionProviderConfig;
 import io.vertigo.core.node.config.ModuleConfig;
@@ -43,7 +42,6 @@ public class SqlGeneratorTest {
 				.withLocales("fr_FR")
 				.addPlugin(ClassPathResourceResolverPlugin.class)
 				.endBoot()
-				.addModule(new CommonsFeatures().build())
 				.addModule(new StudioFeatures()
 						.withMasterData()
 						.withMda(

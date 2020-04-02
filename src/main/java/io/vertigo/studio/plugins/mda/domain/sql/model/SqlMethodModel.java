@@ -26,7 +26,6 @@ import freemarker.template.TemplateMethodModelEx;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.datamodel.structure.metamodel.DtProperty;
 import io.vertigo.dynamo.domain.metamodel.Domain;
 
 /**
@@ -52,7 +51,7 @@ public final class SqlMethodModel implements TemplateMethodModelEx {
 	}
 
 	private static String getSqlType(final Domain domain) {
-		final String storeType = domain.getProperties().getValue(DtProperty.STORE_TYPE);
+		final String storeType = domain.getProperties().getProperty("STORE_TYPE");
 		Assertion.checkNotNull(storeType, "La propriété StoreType est obligatoire dans le cas de génération de Sql. Domaine incriminé : {0}", domain.getName());
 		return storeType;
 	}

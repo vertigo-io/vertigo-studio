@@ -68,7 +68,7 @@ public final class JavaEnvironmentManagerTest extends AbstractTestCaseJU5 {
 		final DefinitionSpace definitionSpace = getApp().getDefinitionSpace();
 		final io.vertigo.dynamo.domain.metamodel.Domain domain = definitionSpace.resolve("DoId", Domain.class);
 		Assertions.assertEquals(BasicType.Long, domain.getDataType());
-		Assertions.assertEquals(FormatterDefault.class.getName(), domain.getFormatterClassName());
+		Assertions.assertEquals(FormatterDefault.class.getName(), domain.getFormatterDefinition().getFormatterClassName());
 	}
 
 	@Test

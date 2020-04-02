@@ -25,8 +25,6 @@ import java.util.Optional;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 import io.vertigo.core.lang.Cardinality;
-import io.vertigo.datamodel.structure.metamodel.DtDefinition;
-import io.vertigo.datamodel.task.model.TaskEngine;
 import io.vertigo.dynamo.domain.metamodel.Domain;
 
 /**
@@ -38,7 +36,7 @@ public final class StudioTaskDefinitionBuilder implements Builder<StudioTaskDefi
 	private final List<StudioTaskAttribute> myInTaskAttributes = new ArrayList<>();
 	private StudioTaskAttribute myOutTaskAttribute;
 	private final String myTaskDefinitionName;
-	private Class<? extends TaskEngine> myTaskEngineClass;
+	private String myTaskEngineClassName;
 	private String myRequest;
 	private String myPackageName;
 	private String myDataSpace;
@@ -57,15 +55,13 @@ public final class StudioTaskDefinitionBuilder implements Builder<StudioTaskDefi
 	/**
 	 * Defines the engine, used at runtime to process the task.
 	 *
-	 * @param taskEngineClass Class running the task
+	 * @param taskEngineClassName Class running the task
 	 * @return this builder
 	 */
-	public StudioTaskDefinitionBuilder withEngine(final Class<? extends TaskEngine> taskEngineClass) {
-		Assertion.checkNotNull(taskEngineClass);
-		Assertion.checkArgument(TaskEngine.class.isAssignableFrom(taskEngineClass), "class must extends TaskEngine");
-		//We have to do this  test because generics are not safe
+	public StudioTaskDefinitionBuilder withEngine(final String taskEngineClassName) {
+		Assertion.checkArgNotEmpty(taskEngineClassName);
 		//---
-		myTaskEngineClass = taskEngineClass;
+		myTaskEngineClassName = taskEngineClassName;
 		return this;
 	}
 
@@ -144,8 +140,8 @@ public final class StudioTaskDefinitionBuilder implements Builder<StudioTaskDefi
 		return new StudioTaskDefinition(
 				myTaskDefinitionName,
 				myPackageName,
-				myDataSpace == null ? DtDefinition.DEFAULT_DATA_SPACE : myDataSpace,
-				myTaskEngineClass,
+				myDataSpace == null ? "main" : myDataSpace,
+				myTaskEngineClassName,
 				myRequest,
 				myInTaskAttributes,
 				Optional.ofNullable(myOutTaskAttribute));

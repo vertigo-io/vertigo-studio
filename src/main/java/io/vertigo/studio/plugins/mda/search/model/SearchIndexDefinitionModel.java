@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.definition.DefinitionUtil;
-import io.vertigo.datafactory.search.metamodel.SearchIndexDefinition;
 import io.vertigo.dynamo.search.StudioSearchIndexDefinition;
+import io.vertigo.studio.plugins.mda.VertigoConstants.VertigoDefinitionPrefix;
 
 public class SearchIndexDefinitionModel {
 
@@ -23,7 +23,7 @@ public class SearchIndexDefinitionModel {
 	}
 
 	public String getName() {
-		return DefinitionUtil.getPrefix(SearchIndexDefinition.class) + DefinitionUtil.getLocalName(studioSearchIndexDefinition.getName(), StudioSearchIndexDefinition.class);
+		return VertigoDefinitionPrefix.SearchIndexDefinition.getPrefix() + DefinitionUtil.getLocalName(studioSearchIndexDefinition.getName(), StudioSearchIndexDefinition.class);
 	}
 
 	public String getLoaderId() {

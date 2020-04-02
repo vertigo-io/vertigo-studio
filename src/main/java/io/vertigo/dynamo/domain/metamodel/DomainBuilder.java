@@ -20,11 +20,11 @@ package io.vertigo.dynamo.domain.metamodel;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.lang.Builder;
 import io.vertigo.core.lang.BasicType;
-import io.vertigo.datamodel.structure.metamodel.Properties;
+import io.vertigo.core.lang.Builder;
 import io.vertigo.dynamo.domain.metamodel.Domain.Scope;
 
 /**
@@ -142,6 +142,6 @@ public final class DomainBuilder implements Builder<Domain> {
 				myValueObjectClass,
 				myformatterDefinition,
 				myConstraintDefinitions == null ? Collections.emptyList() : myConstraintDefinitions,
-				myProperties == null ? Properties.builder().build() : myProperties);
+				myProperties == null ? new Properties() : myProperties);
 	}
 }

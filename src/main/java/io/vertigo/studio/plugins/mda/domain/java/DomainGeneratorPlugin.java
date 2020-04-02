@@ -33,8 +33,8 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.Home;
 import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.util.MapBuilder;
-import io.vertigo.datamodel.structure.metamodel.DtStereotype;
 import io.vertigo.dynamo.domain.metamodel.StudioDtDefinition;
+import io.vertigo.dynamo.domain.metamodel.StudioStereotype;
 import io.vertigo.studio.impl.mda.GeneratorPlugin;
 import io.vertigo.studio.masterdata.MasterDataManager;
 import io.vertigo.studio.masterdata.MasterDataValue;
@@ -218,7 +218,7 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 
 		Home.getApp().getDefinitionSpace().getAll(StudioDtDefinition.class)
 				.stream()
-				.filter(dtDefinition -> dtDefinition.getStereotype() == DtStereotype.StaticMasterData)
+				.filter(dtDefinition -> dtDefinition.getStereotype() == StudioStereotype.StaticMasterData)
 				.forEach(dtDefintion -> generateJavaEnum(
 						fileGeneratorConfig,
 						mdaResultBuilder,

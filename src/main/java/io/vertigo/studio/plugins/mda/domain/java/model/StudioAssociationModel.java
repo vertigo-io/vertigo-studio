@@ -19,7 +19,7 @@
 package io.vertigo.studio.plugins.mda.domain.java.model;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.datamodel.structure.metamodel.DtStereotype;
+import io.vertigo.dynamo.domain.metamodel.StudioStereotype;
 import io.vertigo.dynamo.domain.metamodel.association.StudioAssociationDefinition;
 import io.vertigo.dynamo.domain.metamodel.association.StudioAssociationNode;
 import io.vertigo.dynamo.domain.metamodel.association.StudioAssociationSimpleDefinition;
@@ -105,7 +105,7 @@ public final class StudioAssociationModel {
 	 * @return Type à retourner
 	 */
 	public boolean isTargetStaticMasterData() {
-		return associationNode.getDtDefinition().getStereotype() == DtStereotype.StaticMasterData;
+		return associationNode.getDtDefinition().getStereotype() == StudioStereotype.StaticMasterData;
 	}
 
 	/**

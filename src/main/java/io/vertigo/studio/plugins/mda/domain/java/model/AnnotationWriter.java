@@ -24,16 +24,13 @@ import java.util.List;
 
 import io.vertigo.core.lang.Cardinality;
 import io.vertigo.core.util.ListBuilder;
-import io.vertigo.datamodel.structure.stereotype.Association;
-import io.vertigo.datamodel.structure.stereotype.AssociationNN;
-import io.vertigo.datamodel.structure.stereotype.ForeignKey;
-import io.vertigo.datamodel.structure.util.AssociationUtil;
-import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.dynamo.domain.metamodel.StudioDtDefinition;
 import io.vertigo.dynamo.domain.metamodel.StudioDtField;
+import io.vertigo.dynamo.domain.metamodel.association.AssociationUtil;
 import io.vertigo.dynamo.domain.metamodel.association.StudioAssociationNNDefinition;
 import io.vertigo.dynamo.domain.metamodel.association.StudioAssociationNode;
 import io.vertigo.dynamo.domain.metamodel.association.StudioAssociationSimpleDefinition;
+import io.vertigo.studio.plugins.mda.VertigoConstants.VertigoClassNames;
 
 /**
  * Gestion centralisée des annotations sur les objets générés.
@@ -79,7 +76,7 @@ class AnnotationWriter {
 		if (dtDefinition.getFragment().isPresent()) {
 			// Générations des annotations Dynamo
 			final StringBuilder buffer = new StringBuilder()
-					.append('@').append(io.vertigo.datamodel.structure.stereotype.Fragment.class.getCanonicalName());
+					.append('@').append(VertigoClassNames.Fragment.getClassName());
 			if (dtDefinition.getFragment().isPresent()) {
 				buffer.append('(')
 						.append("fragmentOf = \"").append(dtDefinition.getFragment().get().getName()).append('\"')
@@ -88,9 +85,9 @@ class AnnotationWriter {
 
 			lines.add(buffer.toString());
 		}
-		if (dtDefinition.isPersistent() && !EntityStoreManager.MAIN_DATA_SPACE_NAME.equals(dtDefinition.getDataSpace())) {
+		if (dtDefinition.isPersistent() && !"main".equals(dtDefinition.getDataSpace())) {
 			final String dataSpace = new StringBuilder()
-					.append('@').append(io.vertigo.datamodel.structure.stereotype.DataSpace.class.getCanonicalName())
+					.append('@').append(VertigoClassNames.AnnotationDataSpace.getClassName())
 					.append("(\"").append(dtDefinition.getDataSpace()).append("\")")
 					.toString();
 			lines.add(dataSpace);
@@ -108,7 +105,7 @@ class AnnotationWriter {
 		// Générations des annotations Dynamo
 		// if we are a foreign key
 		if (dtField.getType() == StudioDtField.FieldType.FOREIGN_KEY) {
-			return Collections.singletonList(new StringBuilder("@").append(ForeignKey.class.getName()).append("(")
+			return Collections.singletonList(new StringBuilder("@").append(VertigoClassNames.AnnotationForeignKey.getClassName()).append("(")
 					.append("smartType = \"").append(dtField.getDomain().getSmartTypeName()).append("\", ")
 					.append("label = \"").append(dtField.getLabel().getDisplay()).append("\", ")
 					.append("fkDefinition = \"").append("Dt").append(dtField.getFkDtDefinition().getLocalName()).append("\" ")
@@ -167,7 +164,7 @@ class AnnotationWriter {
 		final String foreignMultiplipicity = AssociationUtil.getMultiplicity(foreignNode.isNotNull(), foreignNode.isMultiple());
 
 		return new ListBuilder<String>()
-				.add("@" + Association.class.getCanonicalName() + "(")
+				.add("@" + VertigoClassNames.AnnotationAssociation.getClassName() + "(")
 				.add(INDENT + "name = \"" + "A" + associationSimple.getLocalName() + "\",")
 				.add(INDENT + "fkFieldName = \"" + associationSimple.getFKField().getName() + "\",")
 				.add(INDENT + "primaryDtDefinitionName = \"" + "Dt" + primaryNode.getDtDefinition().getLocalName() + "\",")
@@ -194,7 +191,7 @@ class AnnotationWriter {
 		final StudioAssociationNode nodeB = associationNN.getAssociationNodeB();
 
 		return new ListBuilder<String>()
-				.add("@" + AssociationNN.class.getCanonicalName() + "(")
+				.add("@" + VertigoClassNames.AnnotationAssociationNN.getClassName() + "(")
 				.add(INDENT + "name = \"" + "Ann" + associationNN.getLocalName() + "\",")
 				.add(INDENT + "tableName = \"" + associationNN.getTableName() + "\",")
 				.add(INDENT + "dtDefinitionA = \"" + "Dt" + nodeA.getDtDefinition().getLocalName() + "\",")

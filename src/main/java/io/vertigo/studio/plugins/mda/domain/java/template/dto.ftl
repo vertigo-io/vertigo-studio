@@ -1,7 +1,7 @@
 package ${dtDefinition.packageName};
 
 import io.vertigo.core.lang.Generated;
-import ${dtDefinition.stereotypePackageName};
+import ${dtDefinition.stereotypeClassCanonicalName};
 <#if dtDefinition.containsEnumAccessor()>
 import io.vertigo.datastore.impl.entitystore.EnumStoreVAccessor;
 </#if>

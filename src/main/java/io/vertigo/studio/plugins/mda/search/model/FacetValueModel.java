@@ -1,13 +1,13 @@
 package io.vertigo.studio.plugins.mda.search.model;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.datafactory.collections.model.FacetValue;
+import io.vertigo.dynamo.search.StudioFacetValue;
 
 public class FacetValueModel {
 
-	private final FacetValue facetValue;
+	private final StudioFacetValue facetValue;
 
-	public FacetValueModel(final FacetValue facetValue) {
+	public FacetValueModel(final StudioFacetValue facetValue) {
 		Assertion.checkNotNull(facetValue);
 		//---
 		this.facetValue = facetValue;
@@ -18,11 +18,11 @@ public class FacetValueModel {
 	}
 
 	public String getLabel() {
-		return facetValue.getLabel().getDisplay();
+		return facetValue.getLabel();
 	}
 
 	public String getListFilter() {
-		return facetValue.getListFilter().getFilterValue();
+		return facetValue.getListFilter();
 	}
 
 }

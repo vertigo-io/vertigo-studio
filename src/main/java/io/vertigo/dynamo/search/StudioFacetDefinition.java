@@ -26,7 +26,6 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.locale.MessageText;
 import io.vertigo.core.node.definition.Definition;
 import io.vertigo.core.node.definition.DefinitionPrefix;
-import io.vertigo.datafactory.collections.model.FacetValue;
 import io.vertigo.dynamo.domain.metamodel.StudioDtDefinition;
 import io.vertigo.dynamo.domain.metamodel.StudioDtField;
 
@@ -58,7 +57,7 @@ public final class StudioFacetDefinition implements Definition {
 	private final StudioDtDefinition indexDtDefinition;
 	private final StudioDtField dtField;
 	private final MessageText label;
-	private final List<FacetValue> facetValues;
+	private final List<StudioFacetValue> facetValues;
 	private final Map<String, String> facetParams;
 	private final boolean rangeFacet;
 	private final boolean customFacet;
@@ -93,7 +92,7 @@ public final class StudioFacetDefinition implements Definition {
 			final StudioDtDefinition indexDtDefinition,
 			final StudioDtField dtField,
 			final MessageText label,
-			final List<FacetValue> facetValues,
+			final List<StudioFacetValue> facetValues,
 			final Map<String, String> facetParams,
 			final boolean rangeFacet,
 			final boolean customFacet,
@@ -147,7 +146,7 @@ public final class StudioFacetDefinition implements Definition {
 			final StudioDtDefinition indexDtDefinition,
 			final StudioDtField dtField,
 			final MessageText label,
-			final List<FacetValue> facetValues,
+			final List<StudioFacetValue> facetValues,
 			final boolean multiSelectable,
 			final FacetOrder order) {
 		return new StudioFacetDefinition(name, indexDtDefinition, dtField, label, facetValues, Collections.emptyMap(), true, false, multiSelectable, order);
@@ -222,7 +221,7 @@ public final class StudioFacetDefinition implements Definition {
 	/**
 	 * @return Liste des sélections/range.
 	 */
-	public List<FacetValue> getFacetRanges() {
+	public List<StudioFacetValue> getFacetRanges() {
 		Assertion.checkArgument(rangeFacet, "Cette facette ({0}) n'est pas segmentée.", getName());
 		//-----
 		return facetValues;

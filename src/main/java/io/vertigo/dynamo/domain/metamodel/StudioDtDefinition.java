@@ -31,8 +31,6 @@ import io.vertigo.core.node.definition.Definition;
 import io.vertigo.core.node.definition.DefinitionPrefix;
 import io.vertigo.core.node.definition.DefinitionReference;
 import io.vertigo.core.node.definition.DefinitionUtil;
-import io.vertigo.datamodel.structure.metamodel.DtFieldName;
-import io.vertigo.datamodel.structure.metamodel.DtStereotype;
 
 /**
  * The DtDefinition class defines the definition of data.
@@ -60,7 +58,7 @@ public final class StudioDtDefinition implements Definition {
 	/** Map. (fieldName, DtField). */
 	private final Map<String, StudioDtField> mappedFields = new HashMap<>();
 
-	private final DtStereotype stereotype;
+	private final StudioStereotype stereotype;
 
 	/** id Field */
 	private final Optional<StudioDtField> idFieldOpt;
@@ -78,7 +76,7 @@ public final class StudioDtDefinition implements Definition {
 			final String name,
 			final Optional<DefinitionReference<StudioDtDefinition>> fragment,
 			final String packageName,
-			final DtStereotype stereotype,
+			final StudioStereotype stereotype,
 			final List<StudioDtField> dtFields,
 			final String dataSpace,
 			final Optional<StudioDtField> sortField,
@@ -120,7 +118,7 @@ public final class StudioDtDefinition implements Definition {
 		this.dataSpace = dataSpace;
 		//-----
 		Assertion.when(fragment.isPresent())
-				.check(() -> DtStereotype.Fragment == stereotype, "Error on {0} with sterotype {1}, If an object is a fragment then it must have this stereotype", name, stereotype);
+				.check(() -> StudioStereotype.Fragment == stereotype, "Error on {0} with sterotype {1}, If an object is a fragment then it must have this stereotype", name, stereotype);
 		//Persistent => ID
 		Assertion.when(stereotype.isPersistent())
 				.check(idFieldOpt::isPresent, "Error on {0}, If an object is persistent then it must have an ID", name);
@@ -160,7 +158,7 @@ public final class StudioDtDefinition implements Definition {
 	/**
 	 * @return Stereotype du Dt
 	 */
-	public DtStereotype getStereotype() {
+	public StudioStereotype getStereotype() {
 		return stereotype;
 	}
 
@@ -198,16 +196,6 @@ public final class StudioDtDefinition implements Definition {
 		//-----
 		Assertion.checkNotNull(dtField, "field '{0}' not found on '{1}'. Available fields are :{2}", fieldName, this, mappedFields.keySet());
 		return dtField;
-	}
-
-	/**
-	 * Retourne le champ correspondant SOUS CONDITION qu'il existe sinon assertion.
-	 *
-	 * @param fieldName Nom du champ
-	 * @return Champ correspondant
-	 */
-	public StudioDtField getField(final DtFieldName fieldName) {
-		return getField(fieldName.name());
 	}
 
 	/**

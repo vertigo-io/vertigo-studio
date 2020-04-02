@@ -38,7 +38,6 @@ import io.vertigo.dynamo.plugins.environment.dsl.dynamic.DslDefinitionRepository
 import io.vertigo.dynamo.plugins.environment.dsl.dynamic.DynamicRegistry;
 import io.vertigo.dynamo.plugins.environment.loaders.Loader;
 import io.vertigo.dynamo.plugins.environment.loaders.eaxmi.core.EAXmiLoader;
-import io.vertigo.dynamo.plugins.environment.loaders.java.AnnotationLoader;
 import io.vertigo.dynamo.plugins.environment.loaders.kpr.KprLoader;
 import io.vertigo.dynamo.plugins.environment.loaders.poweramc.core.OOMLoader;
 import io.vertigo.dynamo.plugins.environment.registries.DynamoDynamicRegistry;
@@ -71,7 +70,7 @@ public class StudioDefinitionProvider implements DefinitionProvider {
 				.put("kpr", new KprLoader(resourceManager, encoding))
 				.put("oom", new OOMLoader(constFieldName.orElse(true), resourceManager))
 				.put("xmi", new EAXmiLoader(constFieldName.orElse(true), resourceManager))
-				.put("classes", new AnnotationLoader())
+				//.put("classes", new AnnotationLoader())
 				.unmodifiable()
 				.build();
 	}

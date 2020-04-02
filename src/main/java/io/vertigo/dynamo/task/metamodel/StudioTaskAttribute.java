@@ -18,12 +18,9 @@
  */
 package io.vertigo.dynamo.task.metamodel;
 
-import java.util.List;
-
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.dynamo.domain.metamodel.Domain;
 
 /**
@@ -93,24 +90,4 @@ public final class StudioTaskAttribute {
 		return "{ name : " + name + ", smarttype :" + domain + ", cardinality :" + cardinality + "]";
 	}
 
-	/**
-	 * Returns the class that holds the value of the field.
-	 * If cardinality is many it's either a list or a dtList, if not then it's the base type of the domain.
-	 * @return the data accessor.
-	 */
-	public Class getTargetJavaClass() {
-		if (cardinality.hasMany()) {
-			switch (domain.getScope()) {
-				case PRIMITIVE:
-					return List.class;
-				case DATA_OBJECT:
-					return DtList.class;
-				case VALUE_OBJECT:
-					return List.class;
-				default:
-					throw new IllegalStateException();
-			}
-		}
-		return domain.getJavaClass();
-	}
 }

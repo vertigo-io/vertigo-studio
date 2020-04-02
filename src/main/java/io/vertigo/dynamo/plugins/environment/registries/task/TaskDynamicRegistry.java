@@ -22,8 +22,6 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
 import io.vertigo.core.node.Home;
 import io.vertigo.core.node.definition.DefinitionSupplier;
-import io.vertigo.core.util.ClassUtil;
-import io.vertigo.datamodel.task.model.TaskEngine;
 import io.vertigo.dynamo.domain.metamodel.Domain;
 import io.vertigo.dynamo.plugins.environment.KspProperty;
 import io.vertigo.dynamo.plugins.environment.dsl.dynamic.DslDefinition;
@@ -55,19 +53,18 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 		throw new IllegalStateException("The type of definition" + dslDefinition + " is not managed by me");
 	}
 
-	private static Class<? extends TaskEngine> getTaskEngineClass(final DslDefinition xtaskDefinition) {
-		final String taskEngineClassName = (String) xtaskDefinition.getPropertyValue(KspProperty.CLASS_NAME);
-		return ClassUtil.classForName(taskEngineClassName, TaskEngine.class);
+	private static String getTaskEngineClassName(final DslDefinition xtaskDefinition) {
+		return (String) xtaskDefinition.getPropertyValue(KspProperty.CLASS_NAME);
 	}
 
 	private static StudioTaskDefinition createTaskDefinition(final DslDefinition xtaskDefinition) {
 		final String taskDefinitionName = xtaskDefinition.getName();
 		final String request = (String) xtaskDefinition.getPropertyValue(KspProperty.REQUEST);
 		Assertion.checkNotNull(taskDefinitionName);
-		final Class<? extends TaskEngine> taskEngineClass = getTaskEngineClass(xtaskDefinition);
+		final String taskEngineClassName = getTaskEngineClassName(xtaskDefinition);
 		final String dataSpace = (String) xtaskDefinition.getPropertyValue(KspProperty.DATA_SPACE);
 		final StudioTaskDefinitionBuilder taskDefinitionBuilder = StudioTaskDefinition.builder("St" + taskDefinitionName)
-				.withEngine(taskEngineClass)
+				.withEngine(taskEngineClassName)
 				.withDataSpace(dataSpace)
 				.withRequest(request)
 				.withPackageName(xtaskDefinition.getPackageName());

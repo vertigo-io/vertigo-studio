@@ -20,26 +20,24 @@
 		</dependency>
 		<dependency>
 			<groupId>io.vertigo</groupId>
-			<artifactId>vertigo-datamodel</artifactId>
+			<artifactId>vertigo-commons</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>io.vertigo</groupId>
-			<artifactId>vertigo-datafactory</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.vertigo</groupId>
-			<artifactId>vertigo-vega</artifactId> <!-- Impl for ClassPathWebServiceLoaderPlugin -->
-			<version>${project.version}</version>
-		</dependency>
-
+		
+		
 		<dependency>
 			<groupId>io.vertigo</groupId>
 			<artifactId>vertigo-account</artifactId>
 			<version>${project.version}</version>
+			<optional>true</optional> <!-- to generate security  -->
 		</dependency>
-
+		<dependency>
+			<groupId>io.vertigo</groupId>
+			<artifactId>vertigo-vega</artifactId>
+			<version>${project.version}</version>
+			<optional>true</optional> <!-- to generate webservices  -->
+		</dependency>
+		
 		<dependency>
 			<groupId>io.vertigo</groupId>
 			<artifactId>vertigo-core</artifactId>

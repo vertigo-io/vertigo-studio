@@ -32,10 +32,6 @@ import io.vertigo.core.locale.MessageText;
 import io.vertigo.core.node.definition.Definition;
 import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.node.definition.DefinitionSupplier;
-import io.vertigo.core.util.ClassUtil;
-import io.vertigo.datafactory.collections.ListFilter;
-import io.vertigo.datafactory.collections.metamodel.ListFilterBuilder;
-import io.vertigo.datafactory.collections.model.FacetValue;
 import io.vertigo.dynamo.domain.metamodel.Domain;
 import io.vertigo.dynamo.domain.metamodel.StudioDtDefinition;
 import io.vertigo.dynamo.domain.metamodel.StudioDtField;
@@ -46,6 +42,7 @@ import io.vertigo.dynamo.plugins.environment.dsl.entity.DslEntity;
 import io.vertigo.dynamo.plugins.environment.dsl.entity.DslGrammar;
 import io.vertigo.dynamo.search.StudioFacetDefinition;
 import io.vertigo.dynamo.search.StudioFacetDefinition.FacetOrder;
+import io.vertigo.dynamo.search.StudioFacetValue;
 import io.vertigo.dynamo.search.StudioFacetedQueryDefinition;
 import io.vertigo.dynamo.search.StudioSearchIndexDefinition;
 
@@ -115,7 +112,7 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 		final MessageText labelMsg = MessageText.of(label);
 		final StudioFacetDefinition facetDefinition;
 		if (!rangeDefinitions.isEmpty()) {
-			final List<FacetValue> facetValues = rangeDefinitions.stream()
+			final List<StudioFacetValue> facetValues = rangeDefinitions.stream()
 					.map(SearchDynamicRegistry::createFacetValue)
 					.collect(Collectors.toList());
 			facetDefinition = StudioFacetDefinition.createFacetDefinitionByRange(
@@ -164,13 +161,11 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 		return multiSelectable != null ? multiSelectable : defaultValue;
 	}
 
-	private static FacetValue createFacetValue(final DslDefinition rangeDefinition) {
+	private static StudioFacetValue createFacetValue(final DslDefinition rangeDefinition) {
 		final String listFilterString = (String) rangeDefinition.getPropertyValue(SearchGrammar.RANGE_FILTER_PROPERTY);
-		final ListFilter listFilter = ListFilter.of(listFilterString);
 		final String label = (String) rangeDefinition.getPropertyValue(KspProperty.LABEL);
-		final MessageText labelMsg = MessageText.of(label);
 		final String code = rangeDefinition.getName();
-		return new FacetValue(code, listFilter, labelMsg);
+		return new StudioFacetValue(code, listFilterString, label);
 	}
 
 	private static Tuple<String, String> createFacetParam(final DslDefinition paramDefinition) {
@@ -188,7 +183,7 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 				.collect(Collectors.toList());
 		final String listFilterBuilderQuery = (String) xdefinition.getPropertyValue(SearchGrammar.LIST_FILTER_BUILDER_QUERY);
 		final String geoSearchQuery = (String) xdefinition.getPropertyValue(SearchGrammar.GEO_SEARCH_QUERY);
-		final Class<? extends ListFilterBuilder> listFilterBuilderClass = getListFilterBuilderClass(xdefinition);
+		final String listFilterBuilderClassName = getListFilterBuilderClassName(xdefinition);
 		final String criteriaDomainName = xdefinition.getDefinitionLinkName("domainCriteria");
 		final Domain criteriaDomain = definitionSpace.resolve(criteriaDomainName, Domain.class);
 
@@ -197,14 +192,13 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 				keyConceptDtDefinition,
 				facetDefinitions,
 				criteriaDomain,
-				listFilterBuilderClass,
+				listFilterBuilderClassName,
 				listFilterBuilderQuery,
 				Optional.ofNullable(geoSearchQuery));
 	}
 
-	private static Class<? extends ListFilterBuilder> getListFilterBuilderClass(final DslDefinition xtaskDefinition) {
-		final String listFilterBuilderClassName = (String) xtaskDefinition.getPropertyValue(SearchGrammar.LIST_FILTER_BUILDER_CLASS);
-		return ClassUtil.classForName(listFilterBuilderClassName, ListFilterBuilder.class);
+	private static String getListFilterBuilderClassName(final DslDefinition xtaskDefinition) {
+		return (String) xtaskDefinition.getPropertyValue(SearchGrammar.LIST_FILTER_BUILDER_CLASS);
 	}
 
 }

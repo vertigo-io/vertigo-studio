@@ -31,7 +31,6 @@ import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugi
 import io.vertigo.datamodel.impl.smarttype.constraint.ConstraintRegex;
 import io.vertigo.datamodel.impl.smarttype.formatter.FormatterDefault;
 import io.vertigo.datamodel.impl.smarttype.formatter.FormatterNumber;
-import io.vertigo.datamodel.structure.metamodel.Formatter;
 import io.vertigo.dynamo.domain.metamodel.ConstraintDefinition;
 import io.vertigo.dynamo.domain.metamodel.Domain;
 import io.vertigo.dynamo.domain.metamodel.FormatterDefinition;
@@ -75,13 +74,6 @@ public final class OOMEnvironmentManagerTest extends AbstractTestCaseJU5 {
 	}
 
 	@Test
-	public void testDefaultBooleanFormatter() {
-		final DefinitionSpace definitionSpace = getApp().getDefinitionSpace();
-		final Formatter formatter = definitionSpace.resolve("FmtDefault", FormatterDefinition.class);
-		Assertions.assertEquals("Oui", formatter.valueToString(true, BasicType.Boolean));
-	}
-
-	@Test
 	public void testFormatter() {
 		final DefinitionSpace definitionSpace = getApp().getDefinitionSpace();
 		final FormatterDefinition formatter = definitionSpace.resolve("FmtTaux", FormatterDefinition.class);
@@ -93,7 +85,7 @@ public final class OOMEnvironmentManagerTest extends AbstractTestCaseJU5 {
 		final DefinitionSpace definitionSpace = getApp().getDefinitionSpace();
 		final io.vertigo.dynamo.domain.metamodel.Domain domain = definitionSpace.resolve("DoEmail", Domain.class);
 		Assertions.assertEquals(BasicType.String, domain.getDataType());
-		Assertions.assertEquals(FormatterDefault.class.getName(), domain.getFormatterClassName());
+		Assertions.assertEquals(FormatterDefault.class.getName(), domain.getFormatterDefinition().getFormatterClassName());
 	}
 
 	@Test

@@ -24,7 +24,6 @@ import java.util.List;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.definition.DefinitionUtil;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.dynamo.task.metamodel.StudioTaskAttribute;
 import io.vertigo.dynamo.task.metamodel.StudioTaskDefinition;
 
@@ -123,7 +122,7 @@ public final class TaskDefinitionModel {
 	 * @return Attribut de sortie (Unique)
 	 */
 	public String getTaskEngineClass() {
-		return taskDefinition.getTaskEngineClass().getName();
+		return taskDefinition.getTaskEngineClassName();
 	}
 
 	/**
@@ -137,7 +136,7 @@ public final class TaskDefinitionModel {
 	 * @return Si cette task est liée à un dataspace spécifique (différent de main)
 	 */
 	public boolean hasSpecificDataSpace() {
-		return !EntityStoreManager.MAIN_DATA_SPACE_NAME.equals(taskDefinition.getDataSpace());
+		return !"main".equals(taskDefinition.getDataSpace());
 	}
 
 	/**

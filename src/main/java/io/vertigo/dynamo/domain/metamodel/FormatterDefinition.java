@@ -18,15 +18,9 @@
  */
 package io.vertigo.dynamo.domain.metamodel;
 
-import java.lang.reflect.Constructor;
-
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.lang.BasicType;
 import io.vertigo.core.node.definition.Definition;
 import io.vertigo.core.node.definition.DefinitionPrefix;
-import io.vertigo.core.util.ClassUtil;
-import io.vertigo.datamodel.structure.metamodel.Formatter;
-import io.vertigo.datamodel.structure.metamodel.FormatterException;
 
 /**
  * Par nature un formatter est une ressource partagée et non modifiable.
@@ -34,14 +28,14 @@ import io.vertigo.datamodel.structure.metamodel.FormatterException;
  * @author pchretien
  */
 @DefinitionPrefix("Fmt")
-public final class FormatterDefinition implements Formatter, Definition {
+public final class FormatterDefinition implements Definition {
 	/**
 	* Nom de la contrainte.
 	* On n'utilise pas les génériques car problémes.
 	*/
 	private final String name;
-
-	private final Formatter formatter;
+	private final String formatterClassName;
+	private final String args;
 
 	/**
 	 * Constructor.
@@ -54,18 +48,8 @@ public final class FormatterDefinition implements Formatter, Definition {
 		Assertion.checkArgNotEmpty(name);
 		//-----
 		this.name = name;
-		//-----
-		formatter = createFormatter(formatterClassName, args);
-	}
-
-	private static Formatter createFormatter(final String formatterClassName, final String args) {
-		final Class<? extends Formatter> formatterClass = ClassUtil.classForName(formatterClassName, Formatter.class);
-		final Constructor<? extends Formatter> constructor = ClassUtil.findConstructor(formatterClass, new Class[] { String.class });
-		return ClassUtil.newInstance(constructor, new Object[] { args });
-	}
-
-	public String getFormatterClassName() {
-		return formatter.getClass().getName();
+		this.formatterClassName = formatterClassName;
+		this.args = args;
 	}
 
 	/** {@inheritDoc} */
@@ -74,20 +58,18 @@ public final class FormatterDefinition implements Formatter, Definition {
 		return name;
 	}
 
+	public String getFormatterClassName() {
+		return formatterClassName;
+	}
+
+	public String getArgs() {
+		return args;
+	}
+
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
 		return name;
-	}
-
-	@Override
-	public String valueToString(final Object objValue, final BasicType dataType) {
-		return formatter.valueToString(objValue, dataType);
-	}
-
-	@Override
-	public Object stringToValue(final String strValue, final BasicType dataType) throws FormatterException {
-		return formatter.stringToValue(strValue, dataType);
 	}
 
 }

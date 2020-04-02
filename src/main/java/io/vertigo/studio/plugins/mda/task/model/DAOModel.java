@@ -23,8 +23,8 @@ import java.util.Collection;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.datamodel.structure.metamodel.DtStereotype;
 import io.vertigo.dynamo.domain.metamodel.StudioDtDefinition;
+import io.vertigo.dynamo.domain.metamodel.StudioStereotype;
 import io.vertigo.dynamo.task.metamodel.StudioTaskDefinition;
 import io.vertigo.studio.plugins.mda.FileGeneratorConfig;
 
@@ -88,7 +88,7 @@ public final class DAOModel {
 	 * @return Si l'entité est un keyConcept
 	 */
 	public boolean isKeyConcept() {
-		return dtDefinition.getStereotype() == DtStereotype.KeyConcept;
+		return dtDefinition.getStereotype() == StudioStereotype.KeyConcept;
 	}
 
 	/**

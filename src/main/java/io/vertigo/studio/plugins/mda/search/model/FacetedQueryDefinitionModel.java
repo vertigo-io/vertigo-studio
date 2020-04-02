@@ -23,10 +23,9 @@ import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.definition.DefinitionUtil;
-import io.vertigo.datafactory.collections.metamodel.FacetedQueryDefinition;
-import io.vertigo.datamodel.structure.metamodel.DtDefinition;
 import io.vertigo.dynamo.domain.metamodel.Domain;
 import io.vertigo.dynamo.search.StudioFacetedQueryDefinition;
+import io.vertigo.studio.plugins.mda.VertigoConstants.VertigoDefinitionPrefix;
 import io.vertigo.studio.plugins.mda.util.DomainUtil;
 
 /**
@@ -65,7 +64,7 @@ public final class FacetedQueryDefinitionModel {
 	}
 
 	public String getQueryName() {
-		return DefinitionUtil.getPrefix(FacetedQueryDefinition.class) + simpleName;
+		return VertigoDefinitionPrefix.FacetedQueryDefiniton.getPrefix() + simpleName;
 	}
 
 	public String getCriteriaSmartType() {
@@ -85,11 +84,11 @@ public final class FacetedQueryDefinitionModel {
 	}
 
 	public String getKeyConceptDtDefinition() {
-		return DefinitionUtil.getPrefix(DtDefinition.class) + facetedQueryDefinition.getKeyConceptDtDefinition().getLocalName();
+		return VertigoDefinitionPrefix.DtDefinition.getPrefix() + facetedQueryDefinition.getKeyConceptDtDefinition().getLocalName();
 	}
 
 	public String getListFilterClassName() {
-		return facetedQueryDefinition.getListFilterBuilderClass().getName();
+		return facetedQueryDefinition.getListFilterBuilderClassName();
 	}
 
 	/**

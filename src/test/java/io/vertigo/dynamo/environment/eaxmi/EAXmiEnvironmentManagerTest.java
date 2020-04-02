@@ -87,7 +87,7 @@ public final class EAXmiEnvironmentManagerTest extends AbstractTestCaseJU5 {
 	public void testDomain() {
 		final io.vertigo.dynamo.domain.metamodel.Domain domain = definitionSpace.resolve("DoEmail", Domain.class);
 		Assertions.assertEquals(BasicType.String, domain.getDataType());
-		Assertions.assertEquals(FormatterDefault.class.getName(), domain.getFormatterClassName());
+		Assertions.assertEquals(FormatterDefault.class.getName(), domain.getFormatterDefinition().getFormatterClassName());
 	}
 
 	@Test

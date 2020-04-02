@@ -53,7 +53,7 @@ public final class ${classSimpleName} implements Iterable<Class<?>> {
 	/** {@inheritDoc} */
 	@Override
 	public Iterator<Class<?>> iterator() {
-		return new Iterator<Class<?>>() {
+		return new Iterator<>() {
 			private Iterator<Definitions> it = Arrays.asList(Definitions.values()).iterator();
 
 			/** {@inheritDoc} */

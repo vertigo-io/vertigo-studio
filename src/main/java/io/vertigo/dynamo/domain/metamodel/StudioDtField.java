@@ -18,16 +18,12 @@
  */
 package io.vertigo.dynamo.domain.metamodel;
 
-import java.util.List;
-
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
 import io.vertigo.core.locale.MessageText;
 import io.vertigo.core.node.Home;
 import io.vertigo.core.node.definition.DefinitionReference;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.datamodel.structure.metamodel.ComputedExpression;
-import io.vertigo.datamodel.structure.model.DtList;
 
 /**
  * This class defines the structure of a field.
@@ -234,25 +230,4 @@ public final class StudioDtField {
 		return computedExpression;
 	}
 
-	/**
-	 * Returns the class that holds the value of the field.
-	 * If cardinality is many it's either a list or a dtList, if not then it's the base type of the domain.
-	 * @return the data accessor.
-	 */
-	public Class getTargetJavaClass() {
-		final Domain domain = getDomain();
-		if (cardinality.hasMany()) {
-			switch (domain.getScope()) {
-				case PRIMITIVE:
-					return List.class;
-				case DATA_OBJECT:
-					return DtList.class;
-				case VALUE_OBJECT:
-					return List.class;
-				default:
-					throw new IllegalStateException();
-			}
-		}
-		return domain.getJavaClass();
-	}
 }
