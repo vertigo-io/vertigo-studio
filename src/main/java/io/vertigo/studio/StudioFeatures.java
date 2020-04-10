@@ -26,16 +26,16 @@ import io.vertigo.studio.impl.mda.MdaManagerImpl;
 import io.vertigo.studio.masterdata.MasterDataManager;
 import io.vertigo.studio.mda.MdaManager;
 import io.vertigo.studio.plugins.masterdata.json.JsonMasterDataValueProvider;
-import io.vertigo.studio.plugins.mda.authorization.AuthorizationGeneratorPlugin;
-import io.vertigo.studio.plugins.mda.domain.java.DomainGeneratorPlugin;
-import io.vertigo.studio.plugins.mda.domain.js.JSGeneratorPlugin;
-import io.vertigo.studio.plugins.mda.domain.sql.SqlGeneratorPlugin;
-import io.vertigo.studio.plugins.mda.domain.ts.TSGeneratorPlugin;
-import io.vertigo.studio.plugins.mda.file.FileInfoGeneratorPlugin;
-import io.vertigo.studio.plugins.mda.search.SearchGeneratorPlugin;
-import io.vertigo.studio.plugins.mda.task.TaskGeneratorPlugin;
-import io.vertigo.studio.plugins.mda.task.test.TaskTestGeneratorPlugin;
-import io.vertigo.studio.plugins.mda.webservice.WsTsGeneratorPlugin;
+import io.vertigo.studio.plugins.mda.vertigo.authorization.AuthorizationGeneratorPlugin;
+import io.vertigo.studio.plugins.mda.vertigo.domain.java.DomainGeneratorPlugin;
+import io.vertigo.studio.plugins.mda.vertigo.domain.js.JSGeneratorPlugin;
+import io.vertigo.studio.plugins.mda.vertigo.domain.sql.SqlGeneratorPlugin;
+import io.vertigo.studio.plugins.mda.vertigo.domain.ts.TSGeneratorPlugin;
+import io.vertigo.studio.plugins.mda.vertigo.file.FileInfoGeneratorPlugin;
+import io.vertigo.studio.plugins.mda.vertigo.search.SearchGeneratorPlugin;
+import io.vertigo.studio.plugins.mda.vertigo.task.TaskGeneratorPlugin;
+import io.vertigo.studio.plugins.mda.vertigo.task.test.TaskTestGeneratorPlugin;
+import io.vertigo.studio.plugins.mda.vertigo.webservice.WsTsGeneratorPlugin;
 
 public class StudioFeatures extends Features<StudioFeatures> {
 

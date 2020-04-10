@@ -69,7 +69,7 @@ public final class CarDAO extends DAO<Car, java.lang.Long> implements StoreServi
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkListCars",
 			request = "hello",
-			taskEngineClass = io.vertigo.studio.data.domain.CarEngine.class)
+			taskEngineClass = io.vertigo.studio.metamodel.vertigo.data.domain.CarEngine.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtCar")
 	public io.vertigo.studio.domain.car.Car listCars(@io.vertigo.datamodel.task.proxy.TaskInput(name = "dtoCarIn", smartType = "STyDtCar") final io.vertigo.studio.domain.car.Car dtoCarIn) {
 		final Task task = createTaskBuilder("TkListCars")

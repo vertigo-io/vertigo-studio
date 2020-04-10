@@ -35,7 +35,7 @@
 			<groupId>io.vertigo</groupId>
 			<artifactId>vertigo-vega</artifactId>
 			<version>${project.version}</version>
-			<optional>true</optional> <!-- to generate webservices  -->
+			<optional>true</optional> <!-- to scan vega webservices  -->
 		</dependency>
 		
 		<dependency>

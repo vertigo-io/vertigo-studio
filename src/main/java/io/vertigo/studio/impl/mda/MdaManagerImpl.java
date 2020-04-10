@@ -29,7 +29,6 @@ import io.vertigo.core.param.ParamValue;
 import io.vertigo.studio.mda.MdaManager;
 import io.vertigo.studio.mda.MdaResult;
 import io.vertigo.studio.mda.MdaResultBuilder;
-import io.vertigo.studio.plugins.mda.FileGeneratorConfig;
 
 /**
  * Implements MDA.

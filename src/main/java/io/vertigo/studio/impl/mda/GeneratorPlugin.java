@@ -20,7 +20,6 @@ package io.vertigo.studio.impl.mda;
 
 import io.vertigo.core.node.component.Plugin;
 import io.vertigo.studio.mda.MdaResultBuilder;
-import io.vertigo.studio.plugins.mda.FileGeneratorConfig;
 
 /**
  * Plugin de génération de fichiers.
