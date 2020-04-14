@@ -19,6 +19,7 @@
 package io.vertigo.studio.plugins.mda.vertigo.task.test;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
@@ -39,7 +40,7 @@ public final class TemplateTaskDefinition {
 	private final String packageName;
 	private final String classSimpleName;
 
-	TemplateTaskDefinition(final StudioTaskDefinition taskDefinition, final String packageName, final String classSimpleName) {
+	TemplateTaskDefinition(final StudioTaskDefinition taskDefinition, final String packageName, final String classSimpleName, final Function<String, String> classNameFromDt) {
 		Assertion.checkNotNull(taskDefinition);
 		Assertion.checkNotNull(packageName);
 		Assertion.checkNotNull(classSimpleName);
@@ -53,7 +54,7 @@ public final class TemplateTaskDefinition {
 
 		// Paramètres in
 		templateInTaskAttributes = taskDefinition.getInAttributes().stream()
-				.map(taskAttribute -> new TemplateTaskAttribute(taskAttribute))
+				.map(taskAttribute -> new TemplateTaskAttribute(taskAttribute, classNameFromDt))
 				.collect(Collectors.toList());
 	}
 

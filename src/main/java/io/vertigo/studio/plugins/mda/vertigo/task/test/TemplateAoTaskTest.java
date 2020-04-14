@@ -18,6 +18,8 @@
  */
 package io.vertigo.studio.plugins.mda.vertigo.task.test;
 
+import java.util.function.Function;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.impl.mda.FileGeneratorConfig;
 import io.vertigo.studio.metamodel.task.StudioTaskDefinition;
@@ -41,7 +43,8 @@ public final class TemplateAoTaskTest {
 			final StudioTaskDefinition taskDefinition,
 			final String packageName,
 			final String classSimpleName,
-			final String daoTestBaseClass) {
+			final String daoTestBaseClass,
+			final Function<String, String> classNameFromDt) {
 		Assertion.checkNotNull(taskConfiguration);
 		Assertion.checkNotNull(taskDefinition);
 		Assertion.checkNotNull(packageName);
@@ -49,7 +52,7 @@ public final class TemplateAoTaskTest {
 		this.packageName = packageName;
 
 		this.classSimpleName = classSimpleName;
-		templateTaskDefinition = new TemplateTaskDefinition(taskDefinition, packageName, classSimpleName);
+		templateTaskDefinition = new TemplateTaskDefinition(taskDefinition, packageName, classSimpleName, classNameFromDt);
 		this.daoTestBaseClass = daoTestBaseClass;
 	}
 

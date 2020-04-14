@@ -139,7 +139,7 @@ public final class DomainBuilder implements Builder<Domain> {
 				myScope,
 				myDataType,
 				myDtDefinitionName,
-				myValueObjectClass,
+				myValueObjectClass != null ? myValueObjectClass.getCanonicalName() : null,
 				myformatterDefinition,
 				myConstraintDefinitions == null ? Collections.emptyList() : myConstraintDefinitions,
 				myProperties == null ? new Properties() : myProperties);

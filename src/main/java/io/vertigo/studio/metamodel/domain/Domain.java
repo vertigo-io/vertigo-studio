@@ -23,11 +23,9 @@ import java.util.Properties;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.BasicType;
-import io.vertigo.core.node.Home;
 import io.vertigo.core.node.definition.Definition;
 import io.vertigo.core.node.definition.DefinitionPrefix;
 import io.vertigo.core.node.definition.DefinitionUtil;
-import io.vertigo.core.util.ClassUtil;
 
 /**
  * A domain exists to enrich the primitive datatypes, giving them super powers.
@@ -79,7 +77,7 @@ public final class Domain implements Definition {
 	private final Scope scope;
 	private final BasicType dataType;
 
-	private final Class valueObjectClass;
+	private final String valueObjectClassName;
 	/**
 	 * Name of the DtDefinition (for the DtObject or DtList)
 	 */
@@ -106,7 +104,7 @@ public final class Domain implements Definition {
 			final Scope scope,
 			final BasicType dataType,
 			final String dtDefinitionName,
-			final Class valueObjectClass,
+			final String valueObjectClassName,
 			final FormatterDefinition formatterDefinition,
 			final List<ConstraintDefinition> constraintDefinitions,
 			final Properties properties) {
@@ -114,12 +112,12 @@ public final class Domain implements Definition {
 		Assertion.checkNotNull(scope);
 		//---
 		Assertion.when(scope == Scope.PRIMITIVE).check(() -> dataType != null, "a primitive domain must define a primitive type");
-		Assertion.when(scope == Scope.PRIMITIVE).check(() -> dtDefinitionName == null && valueObjectClass == null, "a primitive domain can't have nor a data-object-definition nor a value-object class");
+		Assertion.when(scope == Scope.PRIMITIVE).check(() -> dtDefinitionName == null && valueObjectClassName == null, "a primitive domain can't have nor a data-object-definition nor a value-object class");
 		//---
 		Assertion.when(scope == Scope.DATA_OBJECT).check(() -> dtDefinitionName != null, "a data-object domain must define a data-object definition");
-		Assertion.when(scope == Scope.DATA_OBJECT).check(() -> dataType == null && valueObjectClass == null, "a data-object domain can't have nor a primitive type nor a value-object class");
+		Assertion.when(scope == Scope.DATA_OBJECT).check(() -> dataType == null && valueObjectClassName == null, "a data-object domain can't have nor a primitive type nor a value-object class");
 		//---
-		Assertion.when(scope == Scope.VALUE_OBJECT).check(() -> valueObjectClass != null, "a value-object domain must define a value-object class");
+		Assertion.when(scope == Scope.VALUE_OBJECT).check(() -> valueObjectClassName != null, "a value-object domain must define a value-object class");
 		Assertion.when(scope == Scope.VALUE_OBJECT).check(() -> dataType == null && dtDefinitionName == null, "a value-object domain can't have nor a primitive type nor a data-object-definition");
 		//formatterDefinition is nullable
 		Assertion.checkNotNull(constraintDefinitions);
@@ -132,7 +130,7 @@ public final class Domain implements Definition {
 		//---data-object
 		this.dtDefinitionName = dtDefinitionName;
 		//---
-		this.valueObjectClass = valueObjectClass;
+		this.valueObjectClassName = valueObjectClassName;
 		//---
 		this.formatterDefinition = formatterDefinition;
 		this.constraintDefinitions = constraintDefinitions;
@@ -206,13 +204,11 @@ public final class Domain implements Definition {
 	//==========================================================================
 	//for these domains : DtList or DtObject
 	//==========================================================================
-	/**
-	 * @return the dtDefinition for the domains DtList or DtObject.
-	 */
-	public StudioDtDefinition getDtDefinition() {
+
+	public String getDtDefinitionName() {
 		Assertion.checkState(scope == Scope.DATA_OBJECT, "can only be used with data-objects");
 		//---
-		return Home.getApp().getDefinitionSpace().resolve("St" + dtDefinitionName, StudioDtDefinition.class);
+		return dtDefinitionName;
 	}
 
 	/** {@inheritDoc} */
@@ -232,28 +228,10 @@ public final class Domain implements Definition {
 		return scope;
 	}
 
-	/**
-	 * Gets the type managed by this domain.
-	 * Warn : if the domain is a list, the return type is the one inside the list.
-	 *
-	 * Example :
-	 *	Integer => Integer
-	 * 	List<Integer> => Integer
-	 * 	Car => Car
-	 * 	DtList<Car> => Car
-	 * @return the class of the object
-	 */
-	public Class getJavaClass() {
-		switch (scope) {
-			case PRIMITIVE:
-				return dataType.getJavaClass();
-			case DATA_OBJECT:
-				return ClassUtil.classForName(getDtDefinition().getClassCanonicalName());
-			case VALUE_OBJECT:
-				return valueObjectClass;
-			default:
-				throw new IllegalStateException();
-		}
+	public String getValueObjectClassName() {
+		Assertion.checkState(scope == Scope.VALUE_OBJECT, "can only be used with value-objects");
+		//---
+		return valueObjectClassName;
 	}
 
 	/** {@inheritDoc} */

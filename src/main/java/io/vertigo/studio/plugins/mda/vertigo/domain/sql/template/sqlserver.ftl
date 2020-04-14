@@ -35,7 +35,7 @@ create table ${dtDefinition.localName}
 	<#list dtDefinition.fields as field>
 	<#if field.persistent>
 	<#-- For primary key we use the domain datatype to add 'identity'  -->
-    ${field.constName?right_pad(12)}${"\t"} ${sql(field)?right_pad(12)}${"\t"}<#if (field.id) && ("String" != field.javaType) >identity<#elseif field.required>not null<#else></#if>,
+    ${field.constName?right_pad(12)}${"\t"} ${sql(field)?right_pad(12)}${"\t"}<#if (field.id) && (!field.typeString) >identity<#elseif field.required>not null<#else></#if>,
     </#if><#-- field.persistent -->
     </#list><#-- fieldCollection -->
     <#list dtDefinition.fields as field>

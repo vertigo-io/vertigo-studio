@@ -18,12 +18,16 @@
  */
 package io.vertigo.studio.plugins.mda.vertigo.domain.java.model;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.function.Function;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 import io.vertigo.studio.metamodel.domain.StudioDtField;
 import io.vertigo.studio.metamodel.domain.StudioDtField.FieldType;
+import io.vertigo.studio.metamodel.domain.association.StudioAssociationDefinition;
+import io.vertigo.studio.metamodel.domain.association.StudioAssociationSimpleDefinition;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
 
 /**
@@ -34,17 +38,26 @@ import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
 public final class StudioDtFieldModel {
 	private final StudioDtDefinition dtDefinition;
 	private final StudioDtField dtField;
+	private final List<? extends StudioAssociationDefinition> associationDefinitions;
+	private final String javaType;
+	private final String javaTypeLabel;
 
 	/***
 	 * Constructeur.
 	 * @param dtField Champ à générer
 	 */
-	StudioDtFieldModel(final StudioDtDefinition dtDefinition, final StudioDtField dtField) {
+	StudioDtFieldModel(final StudioDtDefinition dtDefinition, final StudioDtField dtField, final List<? extends StudioAssociationDefinition> associationDefinitions, final Function<String, String> classNameFromDt) {
 		Assertion.checkNotNull(dtDefinition);
 		Assertion.checkNotNull(dtField);
+		Assertion.checkNotNull(associationDefinitions);
+		Assertion.checkNotNull(classNameFromDt);
 		//-----
 		this.dtDefinition = dtDefinition;
 		this.dtField = dtField;
+		this.associationDefinitions = associationDefinitions;
+		//---
+		javaType = DomainUtil.buildJavaType(dtField, classNameFromDt);
+		javaTypeLabel = DomainUtil.buildJavaTypeLabel(dtField, classNameFromDt);
 	}
 
 	/**
@@ -82,14 +95,14 @@ public final class StudioDtFieldModel {
 	 * @return Type java du champ
 	 */
 	public String getJavaType() {
-		return DomainUtil.buildJavaType(dtField);
+		return javaType;
 	}
 
 	/**
 	 * @return Type java du champ
 	 */
 	public String getJavaTypeLabel() {
-		return DomainUtil.buildJavaTypeLabel(dtField);
+		return javaTypeLabel;
 	}
 
 	/**
@@ -138,8 +151,10 @@ public final class StudioDtFieldModel {
 	public StudioAssociationModel getAssociation() {
 		Assertion.checkState(isChildOfEntity(), "an association must be declared on an entity");
 		//---
-		return DomainUtil.getSimpleAssociations()
+		return associationDefinitions
 				.stream()
+				.filter(association -> association instanceof StudioAssociationSimpleDefinition)
+				.map(association -> (StudioAssociationSimpleDefinition) association)
 				.filter(association -> association.getFKField().equals(dtField))
 				.map(association -> new StudioAssociationModel(association, association.getPrimaryAssociationNode()))
 				.findFirst()

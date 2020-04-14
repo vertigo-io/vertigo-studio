@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 import io.vertigo.core.lang.Cardinality;
+import io.vertigo.core.node.definition.DefinitionUtil;
 import io.vertigo.core.util.ListBuilder;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 import io.vertigo.studio.metamodel.domain.StudioDtField;
@@ -108,7 +109,7 @@ class AnnotationWriter {
 			return Collections.singletonList(new StringBuilder("@").append(VertigoClassNames.AnnotationForeignKey.getClassName()).append("(")
 					.append("smartType = \"").append(dtField.getDomain().getSmartTypeName()).append("\", ")
 					.append("label = \"").append(dtField.getLabel().getDisplay()).append("\", ")
-					.append("fkDefinition = \"").append("Dt").append(dtField.getFkDtDefinition().getLocalName()).append("\" ")
+					.append("fkDefinition = \"").append("Dt").append(DefinitionUtil.getLocalName(dtField.getFkDtDefinitionName(), StudioDtDefinition.class)).append("\" ")
 					.append(")")
 					.toString());
 		}

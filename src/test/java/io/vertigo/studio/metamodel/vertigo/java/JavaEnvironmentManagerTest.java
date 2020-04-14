@@ -92,7 +92,7 @@ public final class JavaEnvironmentManagerTest extends AbstractTestCaseJU5 {
 		Assertions.assertEquals("io.vertigo.studio.metamodel.vertigo.java.data.domain.CityFragment", dtDefinition.getClassCanonicalName());
 		Assertions.assertEquals("io.vertigo.studio.metamodel.vertigo.java.data.domain", dtDefinition.getPackageName());
 		Assertions.assertEquals("CityFragment", dtDefinition.getClassSimpleName());
-		Assertions.assertTrue("City".equals(dtDefinition.getField("citId").getFkDtDefinition().getClassSimpleName()));
+		Assertions.assertTrue("StDtCity".equals(dtDefinition.getField("citId").getFkDtDefinitionName()));
 	}
 
 	//	@Test

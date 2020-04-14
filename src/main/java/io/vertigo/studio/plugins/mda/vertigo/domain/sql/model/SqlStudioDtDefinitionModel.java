@@ -50,7 +50,7 @@ public final class SqlStudioDtDefinitionModel {
 
 		final Optional<StudioDtField> pkField = dtDefinition.getIdField();
 		if (pkField.isPresent()) {
-			final BasicType pkDataType = BasicType.of(pkField.get().getDomain().getJavaClass()).get();
+			final BasicType pkDataType = pkField.get().getDomain().getDataType();
 			hasSequence = pkDataType.isNumber();
 		} else {
 			hasSequence = false;

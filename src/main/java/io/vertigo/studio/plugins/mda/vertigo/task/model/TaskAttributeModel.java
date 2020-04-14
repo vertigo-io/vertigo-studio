@@ -18,6 +18,8 @@
  */
 package io.vertigo.studio.plugins.mda.vertigo.task.model;
 
+import java.util.function.Function;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.definition.DefinitionUtil;
 import io.vertigo.studio.metamodel.domain.Domain;
@@ -31,11 +33,18 @@ import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
  */
 public final class TaskAttributeModel {
 	private final StudioTaskAttribute taskAttribute;
+	private final String javaType;
+	private final String javaTypeLabel;
 
-	TaskAttributeModel(final StudioTaskAttribute taskAttribute) {
+	TaskAttributeModel(final StudioTaskAttribute taskAttribute, final Function<String, String> classNameFromDt) {
 		Assertion.checkNotNull(taskAttribute);
+		Assertion.checkNotNull(classNameFromDt);
 		//-----
 		this.taskAttribute = taskAttribute;
+		//---
+		javaType = String.valueOf(DomainUtil.buildJavaType(taskAttribute, classNameFromDt));
+		javaTypeLabel = DomainUtil.buildJavaTypeLabel(taskAttribute, classNameFromDt);
+
 	}
 
 	/**
@@ -56,14 +65,14 @@ public final class TaskAttributeModel {
 	 * @return Type de la donnée en string
 	 */
 	public String getDataType() {
-		return String.valueOf(DomainUtil.buildJavaType(taskAttribute));
+		return javaType;
 	}
 
 	/**
 	 * @return Type java du champ
 	 */
 	public String getJavaTypeLabel() {
-		return DomainUtil.buildJavaTypeLabel(taskAttribute);
+		return javaTypeLabel;
 	}
 
 	/**

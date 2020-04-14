@@ -19,17 +19,15 @@
 package io.vertigo.studio.plugins.mda.vertigo.domain.java.model;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.Home;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 import io.vertigo.studio.metamodel.domain.StudioDtField;
-import io.vertigo.studio.metamodel.domain.StudioStereotype;
 import io.vertigo.studio.metamodel.domain.StudioDtField.FieldType;
+import io.vertigo.studio.metamodel.domain.StudioStereotype;
 import io.vertigo.studio.metamodel.domain.association.StudioAssociationDefinition;
-import io.vertigo.studio.metamodel.domain.association.StudioAssociationNNDefinition;
 import io.vertigo.studio.metamodel.domain.association.StudioAssociationSimpleDefinition;
 import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants.VertigoClassNames;
 
@@ -50,13 +48,13 @@ public final class StudioDtDefinitionModel {
 	 *
 	 * @param dtDefinition DtDefinition de l'objet à générer
 	 */
-	public StudioDtDefinitionModel(final StudioDtDefinition dtDefinition) {
+	public StudioDtDefinitionModel(final StudioDtDefinition dtDefinition, final List<? extends StudioAssociationDefinition> associationDefinitions, final Function<String, String> classNameFromDt) {
 		Assertion.checkNotNull(dtDefinition);
 		//-----
 		this.dtDefinition = dtDefinition;
 
 		for (final StudioDtField dtField : dtDefinition.getFields()) {
-			final StudioDtFieldModel dtFieldModel = new StudioDtFieldModel(dtDefinition, dtField);
+			final StudioDtFieldModel dtFieldModel = new StudioDtFieldModel(dtDefinition, dtField, associationDefinitions, classNameFromDt);
 			dtAllFieldModels.add(dtFieldModel);
 			if (FieldType.COMPUTED == dtField.getType()) {
 				dtComputedFieldModels.add(dtFieldModel);
@@ -65,14 +63,6 @@ public final class StudioDtDefinitionModel {
 			}
 		}
 
-		addTemplateAssociationNodes(Home.getApp().getDefinitionSpace().getAll(StudioAssociationSimpleDefinition.class));
-		addTemplateAssociationNodes(Home.getApp().getDefinitionSpace().getAll(StudioAssociationNNDefinition.class));
-	}
-
-	/**
-	 * Enregistre toutes les templates d'associations où la DtDéfinition est concernée.
-	 */
-	private void addTemplateAssociationNodes(final Collection<? extends StudioAssociationDefinition> associationDefinitions) {
 		for (final StudioAssociationDefinition associationDefinition : associationDefinitions) {
 			if (associationDefinition.getAssociationNodeA().getDtDefinition().getName().equals(dtDefinition.getName())) {
 				associationModels.add(new StudioAssociationModel(associationDefinition, associationDefinition.getAssociationNodeB()));
@@ -81,6 +71,7 @@ public final class StudioDtDefinitionModel {
 				associationModels.add(new StudioAssociationModel(associationDefinition, associationDefinition.getAssociationNodeA()));
 			}
 		}
+
 	}
 
 	/**
@@ -198,17 +189,25 @@ public final class StudioDtDefinitionModel {
 
 	public boolean containsAccessor() {
 		return dtDefinition.getStereotype() != StudioStereotype.Fragment &&
-				dtDefinition.getFields()
+				associationModels
 						.stream()
-						.anyMatch(field -> field.getType() == FieldType.FOREIGN_KEY && field.getFkDtDefinition().getStereotype() != StudioStereotype.StaticMasterData);
+						//only simple
+						.filter(StudioAssociationModel::isSimple)
+						.map(associationModel -> (StudioAssociationSimpleDefinition) associationModel.getDefinition())
+						.filter(association -> association.getForeignAssociationNode().getDtDefinition().getName().equals(dtDefinition.getName())) // only when we are on the foreign node with a fk field
+						.anyMatch(association -> association.getPrimaryAssociationNode().getDtDefinition().getStereotype() != StudioStereotype.StaticMasterData); // any that IS NOT a static master data
 
 	}
 
 	public boolean containsEnumAccessor() {
 		return dtDefinition.getStereotype() != StudioStereotype.Fragment &&
-				dtDefinition.getFields()
+				associationModels
 						.stream()
-						.anyMatch(field -> field.getType() == FieldType.FOREIGN_KEY && field.getFkDtDefinition().getStereotype() == StudioStereotype.StaticMasterData);
+						//only simple
+						.filter(StudioAssociationModel::isSimple)
+						.map(associationModel -> (StudioAssociationSimpleDefinition) associationModel.getDefinition())
+						.filter(association -> association.getForeignAssociationNode().getDtDefinition().getName().equals(dtDefinition.getName())) // only when we are on the primary node
+						.anyMatch(association -> association.getPrimaryAssociationNode().getDtDefinition().getStereotype() == StudioStereotype.StaticMasterData); // any that IS  a static master data
 
 	}
 

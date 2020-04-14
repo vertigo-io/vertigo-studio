@@ -24,9 +24,11 @@ import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
+import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
-import io.vertigo.core.node.Home;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.studio.metamodel.domain.Domain;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 import io.vertigo.studio.metamodel.domain.StudioDtField;
@@ -55,8 +57,8 @@ public final class DomainUtil {
 	 * @param dtField the field
 	 * @return String
 	 */
-	public static String buildJavaType(final StudioDtField dtField) {
-		return buildJavaType(dtField.getDomain(), dtField.getCardinality(), getManyTargetJavaClass(dtField.getDomain()));
+	public static String buildJavaType(final StudioDtField dtField, final Function<String, String> classNameFromDt) {
+		return buildJavaType(dtField.getDomain(), classNameFromDt, dtField.getCardinality(), getManyTargetJavaClass(dtField.getDomain()));
 	}
 
 	/**
@@ -65,8 +67,8 @@ public final class DomainUtil {
 	 * @param taskAttribute the attribute
 	 * @return String
 	 */
-	public static String buildJavaType(final StudioTaskAttribute taskAttribute) {
-		return buildJavaType(taskAttribute.getDomain(), taskAttribute.getCardinality(), getManyTargetJavaClass(taskAttribute.getDomain()));
+	public static String buildJavaType(final StudioTaskAttribute taskAttribute, final Function<String, String> classNameFromDt) {
+		return buildJavaType(taskAttribute.getDomain(), classNameFromDt, taskAttribute.getCardinality(), getManyTargetJavaClass(taskAttribute.getDomain()));
 	}
 
 	/**
@@ -75,8 +77,8 @@ public final class DomainUtil {
 	 * @param dtField DtField
 	 * @return String
 	 */
-	public static String buildJavaTypeLabel(final StudioDtField dtField) {
-		return buildJavaTypeLabel(dtField.getDomain(), dtField.getCardinality(), getManyTargetJavaClass(dtField.getDomain()));
+	public static String buildJavaTypeLabel(final StudioDtField dtField, final Function<String, String> classNameFromDt) {
+		return buildJavaTypeLabel(dtField.getDomain(), classNameFromDt, dtField.getCardinality(), getManyTargetJavaClass(dtField.getDomain()));
 	}
 
 	/**
@@ -85,8 +87,8 @@ public final class DomainUtil {
 	 * @param taskAttribute the attribute
 	 * @return String
 	 */
-	public static String buildJavaTypeLabel(final StudioTaskAttribute taskAttribute) {
-		return buildJavaTypeLabel(taskAttribute.getDomain(), taskAttribute.getCardinality(), getManyTargetJavaClass(taskAttribute.getDomain()));
+	public static String buildJavaTypeLabel(final StudioTaskAttribute taskAttribute, final Function<String, String> classNameFromDt) {
+		return buildJavaTypeLabel(taskAttribute.getDomain(), classNameFromDt, taskAttribute.getCardinality(), getManyTargetJavaClass(taskAttribute.getDomain()));
 	}
 
 	private static String getManyTargetJavaClass(final Domain domain) {
@@ -101,11 +103,11 @@ public final class DomainUtil {
 		}
 	}
 
-	public static String buildJavaTypeName(final Domain domain) {
+	public static String buildJavaTypeName(final Domain domain, final Function<String, String> classNameFromDt) {
 		final String className;
 		switch (domain.getScope()) {
 			case PRIMITIVE:
-				String javaType = domain.getJavaClass().getName();
+				String javaType = domain.getDataType().getJavaClass().getName();
 
 				//On simplifie l'écriture des types primitifs
 				//java.lang.String => String
@@ -115,10 +117,10 @@ public final class DomainUtil {
 				className = javaType;
 				break;
 			case DATA_OBJECT:
-				className = domain.getDtDefinition().getClassCanonicalName();
+				className = classNameFromDt.apply("St" + domain.getDtDefinitionName());
 				break;
 			case VALUE_OBJECT:
-				className = domain.getJavaClass().getName();
+				className = domain.getValueObjectClassName();
 				break;
 			default:
 				throw new IllegalStateException();
@@ -126,25 +128,25 @@ public final class DomainUtil {
 		return className;
 	}
 
-	private static String buildJavaType(final Domain domain, final Cardinality cardinality, final String manyTargetClassName) {
-		final String className = buildJavaTypeName(domain);
+	private static String buildJavaType(final Domain domain, final Function<String, String> classNameFromDt, final Cardinality cardinality, final String manyTargetClassName) {
+		final String className = buildJavaTypeName(domain, classNameFromDt);
 		if (cardinality.hasMany()) {
 			return manyTargetClassName + '<' + className + '>';
 		}
 		return className;
 	}
 
-	public static String buildJavaTypeLabel(final Domain domain, final Cardinality cardinality, final String manyTargetClassName) {
+	public static String buildJavaTypeLabel(final Domain domain, final Function<String, String> classNameFromDt, final Cardinality cardinality, final String manyTargetClassName) {
 		final String classLabel;
 		switch (domain.getScope()) {
 			case PRIMITIVE:
-				classLabel = domain.getJavaClass().getSimpleName();
+				classLabel = domain.getDataType().getJavaClass().getSimpleName();
 				break;
 			case DATA_OBJECT:
-				classLabel = domain.getDtDefinition().getClassSimpleName();
+				classLabel = getSimpleNameFromCanonicalName(classNameFromDt.apply("St" + domain.getDtDefinitionName()));
 				break;
 			case VALUE_OBJECT:
-				classLabel = domain.getJavaClass().getSimpleName();
+				classLabel = getSimpleNameFromCanonicalName(domain.getValueObjectClassName());
 				break;
 			default:
 				throw new IllegalStateException();
@@ -155,20 +157,20 @@ public final class DomainUtil {
 		return classLabel;
 	}
 
-	public static Collection<StudioDtDefinition> getDtDefinitions() {
-		return sortDefinitionCollection(Home.getApp().getDefinitionSpace().getAll(StudioDtDefinition.class));
+	public static Collection<StudioDtDefinition> getDtDefinitions(final DefinitionSpace definitionSpace) {
+		return sortDefinitionCollection(definitionSpace.getAll(StudioDtDefinition.class));
 	}
 
-	public static Map<String, Collection<StudioDtDefinition>> getDtDefinitionCollectionMap() {
-		return getDefinitionCollectionMap(getDtDefinitions());
+	public static Map<String, Collection<StudioDtDefinition>> getDtDefinitionCollectionMap(final DefinitionSpace definitionSpace) {
+		return getDefinitionCollectionMap(getDtDefinitions(definitionSpace));
 	}
 
-	public static Collection<StudioAssociationSimpleDefinition> getSimpleAssociations() {
-		return sortAssociationsCollection(Home.getApp().getDefinitionSpace().getAll(StudioAssociationSimpleDefinition.class));
+	public static Collection<StudioAssociationSimpleDefinition> getSimpleAssociations(final DefinitionSpace definitionSpace) {
+		return sortAssociationsCollection(definitionSpace.getAll(StudioAssociationSimpleDefinition.class));
 	}
 
-	public static Collection<StudioAssociationNNDefinition> getNNAssociations() {
-		return sortAssociationsCollection(Home.getApp().getDefinitionSpace().getAll(StudioAssociationNNDefinition.class));
+	public static Collection<StudioAssociationNNDefinition> getNNAssociations(final DefinitionSpace definitionSpace) {
+		return sortAssociationsCollection(definitionSpace.getAll(StudioAssociationNNDefinition.class));
 	}
 
 	/**
@@ -201,5 +203,15 @@ public final class DomainUtil {
 		final List<A> list = new ArrayList<>(associationCollection);
 		list.sort(Comparator.comparing(StudioAssociationDefinition::getName));
 		return list;
+	}
+
+	public static String getSimpleNameFromCanonicalName(final String canonicalClassName) {
+		final int lastDot = canonicalClassName.lastIndexOf('.');
+		Assertion.checkState(lastDot > 0, "A cananical class name is required, '{0}' does not contain package name", canonicalClassName);
+		return canonicalClassName.substring(lastDot + 1);
+	}
+
+	public static Function<String, String> createClassNameFromDtFunction(final DefinitionSpace definitionSpace) {
+		return dtName -> definitionSpace.resolve(dtName, StudioDtDefinition.class).getClassCanonicalName();
 	}
 }

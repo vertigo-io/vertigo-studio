@@ -19,6 +19,7 @@
 package io.vertigo.studio.impl.mda;
 
 import io.vertigo.core.node.component.Plugin;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.studio.mda.MdaResultBuilder;
 
 /**
@@ -32,7 +33,7 @@ public interface GeneratorPlugin extends Plugin {
 	 * @param fileGeneratorConfig general configuration of the generator
 	 * @param mdaResultBuilder Builder
 	 */
-	void generate(final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder);
+	void generate(final DefinitionSpace definitionSpace, final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder);
 
 	void clean(final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder);
 

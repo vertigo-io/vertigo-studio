@@ -20,7 +20,7 @@ package io.vertigo.studio.plugins.metamodel.vertigo.registries.task;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
-import io.vertigo.core.node.Home;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.node.definition.DefinitionSupplier;
 import io.vertigo.studio.metamodel.domain.Domain;
 import io.vertigo.studio.metamodel.task.StudioTaskDefinition;
@@ -48,7 +48,7 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 
 		if (TaskGrammar.TASK_DEFINITION_ENTITY.equals(dslEntity)) {
 			//Only taskDefinitions are concerned
-			return definitionSpace -> createTaskDefinition(dslDefinition);
+			return definitionSpace -> createTaskDefinition(definitionSpace, dslDefinition);
 		}
 		throw new IllegalStateException("The type of definition" + dslDefinition + " is not managed by me");
 	}
@@ -57,7 +57,7 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 		return (String) xtaskDefinition.getPropertyValue(KspProperty.CLASS_NAME);
 	}
 
-	private static StudioTaskDefinition createTaskDefinition(final DslDefinition xtaskDefinition) {
+	private static StudioTaskDefinition createTaskDefinition(final DefinitionSpace definitionSpace, final DslDefinition xtaskDefinition) {
 		final String taskDefinitionName = xtaskDefinition.getName();
 		final String request = (String) xtaskDefinition.getPropertyValue(KspProperty.REQUEST);
 		Assertion.checkNotNull(taskDefinitionName);
@@ -72,7 +72,7 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 			final String attributeName = xtaskAttribute.getName();
 			Assertion.checkNotNull(attributeName);
 			final String smartTypeName = xtaskAttribute.getDefinitionLinkName("domain");
-			final Domain domain = Home.getApp().getDefinitionSpace().resolve(smartTypeName, Domain.class);
+			final Domain domain = definitionSpace.resolve(smartTypeName, Domain.class);
 			//-----
 			final Cardinality cardinality = Cardinality.fromSymbol((String) xtaskAttribute.getPropertyValue(KspProperty.CARDINALITY));
 			if (isInValue((String) xtaskAttribute.getPropertyValue(KspProperty.IN_OUT))) {

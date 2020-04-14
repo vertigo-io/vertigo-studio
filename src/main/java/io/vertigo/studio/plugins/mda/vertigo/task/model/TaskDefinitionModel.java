@@ -20,6 +20,7 @@ package io.vertigo.studio.plugins.mda.vertigo.task.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.definition.DefinitionUtil;
@@ -39,21 +40,22 @@ public final class TaskDefinitionModel {
 	private final TaskAttributeModel out;
 	private final boolean optional;
 
-	public TaskDefinitionModel(final StudioTaskDefinition taskDefinition) {
+	public TaskDefinitionModel(final StudioTaskDefinition taskDefinition, final Function<String, String> classNameFromDt) {
 		Assertion.checkNotNull(taskDefinition);
+		Assertion.checkNotNull(classNameFromDt);
 		//-----
 		this.taskDefinition = taskDefinition;
 		boolean hasOption = false;
 
 		for (final StudioTaskAttribute attribute : taskDefinition.getInAttributes()) {
-			final TaskAttributeModel templateTaskAttribute = new TaskAttributeModel(attribute);
+			final TaskAttributeModel templateTaskAttribute = new TaskAttributeModel(attribute, classNameFromDt);
 			ins.add(templateTaskAttribute);
 			hasOption = hasOption || attribute.getCardinality().isOptionalOrNullable();
 		}
 
 		if (taskDefinition.getOutAttributeOption().isPresent()) {
 			final StudioTaskAttribute attribute = taskDefinition.getOutAttributeOption().get();
-			final TaskAttributeModel templateTaskAttribute = new TaskAttributeModel(attribute);
+			final TaskAttributeModel templateTaskAttribute = new TaskAttributeModel(attribute, classNameFromDt);
 			//On est dans le cas des paramètres OUT
 			out = templateTaskAttribute;
 			hasOption = hasOption || attribute.getCardinality().isOptionalOrNullable();

@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.Home;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.core.util.StringUtil;
@@ -103,25 +103,27 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 	/** {@inheritDoc} */
 	@Override
 	public void generate(
+			final DefinitionSpace definitionSpace,
 			final FileGeneratorConfig fileGeneratorConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		Assertion.checkNotNull(fileGeneratorConfig);
 		Assertion.checkNotNull(mdaResultBuilder);
 		//-----
-		generateSql(fileGeneratorConfig, mdaResultBuilder);
+		generateSql(definitionSpace, fileGeneratorConfig, mdaResultBuilder);
 
 		if (generateMasterData) {
-			generateMasterDataInserts(fileGeneratorConfig, mdaResultBuilder);
+			generateMasterDataInserts(definitionSpace, fileGeneratorConfig, mdaResultBuilder);
 		}
 	}
 
 	private void generateMasterDataInserts(
+			final DefinitionSpace definitionSpace,
 			final FileGeneratorConfig fileGeneratorConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 
 		final MasterDataValues masterDataValues = masterDataManager.getValues();
 
-		final List<SqlMasterDataDefinitionModel> sqlMasterDataDefinitionModels = Home.getApp().getDefinitionSpace().getAll(StudioDtDefinition.class)
+		final List<SqlMasterDataDefinitionModel> sqlMasterDataDefinitionModels = definitionSpace.getAll(StudioDtDefinition.class)
 				.stream()
 				.filter(dtDefinition -> dtDefinition.getStereotype() == StudioStereotype.StaticMasterData)
 				.map(dtDefinition -> new SqlMasterDataDefinitionModel(dtDefinition, masterDataValues.getOrDefault(dtDefinition.getClassCanonicalName(), Collections.emptyMap())))
@@ -145,11 +147,12 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 	}
 
 	private void generateSql(
+			final DefinitionSpace definitionSpace,
 			final FileGeneratorConfig fileGeneratorConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 
 		final Map<String, List<SqlStudioDtDefinitionModel>> mapListDtDef = new HashMap<>();
-		for (final StudioDtDefinition dtDefinition : DomainUtil.sortDefinitionCollection(DomainUtil.getDtDefinitions())) {
+		for (final StudioDtDefinition dtDefinition : DomainUtil.sortDefinitionCollection(DomainUtil.getDtDefinitions(definitionSpace))) {
 			if (dtDefinition.isPersistent()) {
 				final SqlStudioDtDefinitionModel templateDef = new SqlStudioDtDefinitionModel(dtDefinition);
 				final String dataSpace = dtDefinition.getDataSpace();
@@ -158,8 +161,8 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 			}
 		}
 		//
-		final Collection<StudioAssociationSimpleDefinition> collectionSimpleAll = DomainUtil.getSimpleAssociations();
-		final Collection<StudioAssociationNNDefinition> collectionNNAll = DomainUtil.getNNAssociations();
+		final Collection<StudioAssociationSimpleDefinition> collectionSimpleAll = DomainUtil.getSimpleAssociations(definitionSpace);
+		final Collection<StudioAssociationNNDefinition> collectionNNAll = DomainUtil.getNNAssociations(definitionSpace);
 		//
 		for (final Entry<String, List<SqlStudioDtDefinitionModel>> entry : mapListDtDef.entrySet()) {
 			final String dataSpace = entry.getKey();

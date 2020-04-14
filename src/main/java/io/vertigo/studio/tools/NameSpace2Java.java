@@ -39,7 +39,7 @@ public final class NameSpace2Java {
 	 */
 	public static void main(final NodeConfig nodeConfig) {
 		try (final AutoCloseableApp app = new AutoCloseableApp(nodeConfig)) {
-			app.getComponentSpace().resolve(MdaManager.class).generate().displayResultMessage(System.out);
+			app.getComponentSpace().resolve(MdaManager.class).generate(app.getDefinitionSpace()).displayResultMessage(System.out);
 		}
 	}
 }

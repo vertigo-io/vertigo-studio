@@ -19,6 +19,7 @@
 package io.vertigo.studio.mda;
 
 import io.vertigo.core.node.component.Manager;
+import io.vertigo.core.node.definition.DefinitionSpace;
 
 /**
  * This class generates files in any text format.
@@ -29,7 +30,7 @@ public interface MdaManager extends Manager {
 	 * Generates the files.
 	 * @return the result
 	 */
-	MdaResult generate();
+	MdaResult generate(DefinitionSpace definitionSpace);
 
 	/**
 	 * Clean the gen directory

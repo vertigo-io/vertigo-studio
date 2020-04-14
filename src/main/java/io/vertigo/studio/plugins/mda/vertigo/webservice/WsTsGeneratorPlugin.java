@@ -31,7 +31,7 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.Home;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.mda.FileGenerator;
@@ -63,19 +63,22 @@ public final class WsTsGeneratorPlugin implements GeneratorPlugin {
 
 	/** {@inheritDoc} */
 	@Override
-	public void generate(final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder) {
+	public void generate(
+			final DefinitionSpace definitionSpace,
+			final FileGeneratorConfig fileGeneratorConfig,
+			final MdaResultBuilder mdaResultBuilder) {
 		Assertion.checkNotNull(fileGeneratorConfig);
 		Assertion.checkNotNull(mdaResultBuilder);
 		//-----
-		generateRoute(targetSubDir, fileGeneratorConfig, mdaResultBuilder);
+		generateRoute(definitionSpace, targetSubDir, fileGeneratorConfig, mdaResultBuilder);
 	}
 
-	private static Collection<StudioWebServiceDefinition> getWebServiceDefinitions() {
-		return Home.getApp().getDefinitionSpace().getAll(StudioWebServiceDefinition.class);
+	private static Collection<StudioWebServiceDefinition> getWebServiceDefinitions(final DefinitionSpace definitionSpace) {
+		return definitionSpace.getAll(StudioWebServiceDefinition.class);
 	}
 
-	private static void generateRoute(final String targetSubDir, final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder) {
-		final Collection<StudioWebServiceDefinition> webServiceDefinitions = getWebServiceDefinitions();
+	private static void generateRoute(final DefinitionSpace definitionSpace, final String targetSubDir, final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder) {
+		final Collection<StudioWebServiceDefinition> webServiceDefinitions = getWebServiceDefinitions(definitionSpace);
 		if (!webServiceDefinitions.isEmpty()) {
 			final Map<String, List<WebServiceDefinitionModelTs>> webServicesPerFacades = new HashMap<>();
 			for (final StudioWebServiceDefinition webServiceDefinition : webServiceDefinitions) {

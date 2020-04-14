@@ -20,6 +20,7 @@ package io.vertigo.studio.plugins.mda.vertigo.task.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.function.Function;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.util.StringUtil;
@@ -45,7 +46,7 @@ public final class DAOModel {
 	 *
 	 * @param dtDefinition DtDefinition de l'objet à générer
 	 */
-	public DAOModel(final FileGeneratorConfig fileGeneratorConfig, final StudioDtDefinition dtDefinition, final Collection<StudioTaskDefinition> taskDefinitionCollection) {
+	public DAOModel(final FileGeneratorConfig fileGeneratorConfig, final StudioDtDefinition dtDefinition, final Collection<StudioTaskDefinition> taskDefinitionCollection, final Function<String, String> classNameFromDt) {
 		Assertion.checkNotNull(fileGeneratorConfig);
 		Assertion.checkNotNull(dtDefinition);
 		Assertion.checkNotNull(taskDefinitionCollection);
@@ -70,7 +71,7 @@ public final class DAOModel {
 
 		boolean hasOption = false;
 		for (final StudioTaskDefinition taskDefinition : taskDefinitionCollection) {
-			final TaskDefinitionModel templateTaskDefinition = new TaskDefinitionModel(taskDefinition);
+			final TaskDefinitionModel templateTaskDefinition = new TaskDefinitionModel(taskDefinition, classNameFromDt);
 			taskDefinitions.add(templateTaskDefinition);
 			hasOption = hasOption || templateTaskDefinition.hasOptions();
 		}
@@ -95,7 +96,9 @@ public final class DAOModel {
 	 * @return Type de la PK
 	 */
 	public String getIdFieldType() {
-		return dtDefinition.getIdField().get().getDomain().getJavaClass().getCanonicalName();
+		Assertion.checkState(dtDefinition.getIdField().get().getDomain().getScope().isPrimitive(), "An id field should be a primitive");
+		//---
+		return dtDefinition.getIdField().get().getDomain().getDataType().getJavaClass().getCanonicalName();
 	}
 
 	/**

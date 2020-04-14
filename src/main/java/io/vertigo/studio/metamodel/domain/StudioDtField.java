@@ -21,7 +21,6 @@ package io.vertigo.studio.metamodel.domain;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
 import io.vertigo.core.locale.MessageText;
-import io.vertigo.core.node.Home;
 import io.vertigo.core.node.definition.DefinitionReference;
 import io.vertigo.core.util.StringUtil;
 
@@ -214,10 +213,10 @@ public final class StudioDtField {
 	 *  @return DtDefinition de la ForeignKey (caractère obligatoire lié au type)
 	 */
 	//Todo changer le nom
-	public StudioDtDefinition getFkDtDefinition() {
+	public String getFkDtDefinitionName() {
 		Assertion.checkNotNull(fkDtDefinitionName);
 		//-----
-		return Home.getApp().getDefinitionSpace().resolve(fkDtDefinitionName, StudioDtDefinition.class);
+		return fkDtDefinitionName;
 	}
 
 	/**

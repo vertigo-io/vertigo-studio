@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.Home;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.mda.FileGenerator;
@@ -64,40 +64,41 @@ public final class AuthorizationGeneratorPlugin implements GeneratorPlugin {
 	/** {@inheritDoc} */
 	@Override
 	public void generate(
+			final DefinitionSpace definitionSpace,
 			final FileGeneratorConfig fileGeneratorConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		Assertion.checkNotNull(fileGeneratorConfig);
 		Assertion.checkNotNull(mdaResultBuilder);
 		//-----
-		generateGlobalAuthorizations(targetSubDir, fileGeneratorConfig, mdaResultBuilder);
+		generateGlobalAuthorizations(definitionSpace, targetSubDir, fileGeneratorConfig, mdaResultBuilder);
 
-		generateOperations(targetSubDir, fileGeneratorConfig, mdaResultBuilder);
+		generateOperations(definitionSpace, targetSubDir, fileGeneratorConfig, mdaResultBuilder);
 	}
 
-	private static List<GlobalAuthorizationModel> getGlobalAuthorizations() {
-		return Home.getApp().getDefinitionSpace().getAll(SecuredFeature.class).stream()
+	private static List<GlobalAuthorizationModel> getGlobalAuthorizations(final DefinitionSpace definitionSpace) {
+		return definitionSpace.getAll(SecuredFeature.class).stream()
 				.filter(o -> o.getLinkedResourceOpt().isEmpty())
 				.map(GlobalAuthorizationModel::new)
 				.collect(Collectors.toList());
 	}
 
-	private static Collection<SecuredEntityModel> getSecuredEntities() {
-		return Home.getApp().getDefinitionSpace().getAll(SecuredFeature.class)
+	private static Collection<SecuredEntityModel> getSecuredEntities(final DefinitionSpace definitionSpace) {
+		return definitionSpace.getAll(SecuredFeature.class)
 				.stream()
 				.filter(securedFeature -> securedFeature.getLinkedResourceOpt().isPresent())
 				.collect(Collectors.groupingBy(securedFeature -> securedFeature.getLinkedResourceOpt().get(), Collectors.toList()))
 				.entrySet().stream()
-				.filter(entry -> Home.getApp().getDefinitionSpace().contains("StDt" + entry.getKey()))// we have the studioDtDefinition
-				.map(entry -> new SecuredEntityModel(entry.getValue(), Home.getApp().getDefinitionSpace().resolve("StDt" + entry.getKey(), StudioDtDefinition.class)))
+				.filter(entry -> definitionSpace.contains("StDt" + entry.getKey()))// we have the studioDtDefinition
+				.map(entry -> new SecuredEntityModel(entry.getValue(), definitionSpace.resolve("StDt" + entry.getKey(), StudioDtDefinition.class)))
 				.collect(Collectors.toList());
 	}
 
-	private static void generateGlobalAuthorizations(final String targetSubDir, final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder) {
-		generateDictionnary("GlobalAuthorizations", targetSubDir, fileGeneratorConfig, mdaResultBuilder, getGlobalAuthorizations());
+	private static void generateGlobalAuthorizations(final DefinitionSpace definitionSpace, final String targetSubDir, final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder) {
+		generateDictionnary("GlobalAuthorizations", targetSubDir, fileGeneratorConfig, mdaResultBuilder, getGlobalAuthorizations(definitionSpace));
 	}
 
-	private static void generateOperations(final String targetSubDir, final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder) {
-		generateDictionnary("SecuredEntities", targetSubDir, fileGeneratorConfig, mdaResultBuilder, getSecuredEntities());
+	private static void generateOperations(final DefinitionSpace definitionSpace, final String targetSubDir, final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder) {
+		generateDictionnary("SecuredEntities", targetSubDir, fileGeneratorConfig, mdaResultBuilder, getSecuredEntities(definitionSpace));
 	}
 
 	private static void generateDictionnary(

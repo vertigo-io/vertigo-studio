@@ -27,7 +27,7 @@ import java.util.Optional;
 import javax.inject.Inject;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.Home;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.core.util.StringUtil;
@@ -44,6 +44,7 @@ import io.vertigo.studio.plugins.mda.vertigo.search.model.FacetDefinitionModel;
 import io.vertigo.studio.plugins.mda.vertigo.search.model.FacetedQueryDefinitionModel;
 import io.vertigo.studio.plugins.mda.vertigo.search.model.SearchDtDefinitionModel;
 import io.vertigo.studio.plugins.mda.vertigo.search.model.SearchIndexDefinitionModel;
+import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
 import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
 
 /**
@@ -68,26 +69,28 @@ public final class SearchGeneratorPlugin implements GeneratorPlugin {
 	/** {@inheritDoc} */
 	@Override
 	public void generate(
+			final DefinitionSpace definitionSpace,
 			final FileGeneratorConfig fileGeneratorConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		Assertion.checkNotNull(fileGeneratorConfig);
 		Assertion.checkNotNull(mdaResultBuilder);
 		//-----
-		generateSearchAos(targetSubDir, fileGeneratorConfig, mdaResultBuilder);
+		generateSearchAos(definitionSpace, targetSubDir, fileGeneratorConfig, mdaResultBuilder);
 	}
 
 	/**
 	 * Génération de tous les PAOs.
 	 */
 	private static void generateSearchAos(
+			final DefinitionSpace definitionSpace,
 			final String targetSubDir,
 			final FileGeneratorConfig fileGeneratorConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 
-		Home.getApp().getDefinitionSpace().getAll(StudioDtDefinition.class)
+		definitionSpace.getAll(StudioDtDefinition.class)
 				.stream()
 				.filter(dtDefinition -> dtDefinition.getStereotype() == StudioStereotype.KeyConcept)
-				.forEach(dtDefinition -> generateSearchAo(targetSubDir, fileGeneratorConfig, mdaResultBuilder, dtDefinition));
+				.forEach(dtDefinition -> generateSearchAo(definitionSpace, targetSubDir, fileGeneratorConfig, mdaResultBuilder, dtDefinition));
 
 	}
 
@@ -95,6 +98,7 @@ public final class SearchGeneratorPlugin implements GeneratorPlugin {
 	 * Génération d'un DAO c'est à dire des taches afférentes à un objet.
 	 */
 	private static void generateSearchAo(
+			final DefinitionSpace definitionSpace,
 			final String targetSubDir,
 			final FileGeneratorConfig fileGeneratorConfig,
 			final MdaResultBuilder mdaResultBuilder,
@@ -120,21 +124,21 @@ public final class SearchGeneratorPlugin implements GeneratorPlugin {
 
 		final SearchDtDefinitionModel searchDtDefinitionModel = new SearchDtDefinitionModel(dtDefinition);
 
-		final Optional<StudioSearchIndexDefinition> searchIndexDefinitionOpt = Home.getApp().getDefinitionSpace().getAll(StudioSearchIndexDefinition.class).stream()
+		final Optional<StudioSearchIndexDefinition> searchIndexDefinitionOpt = definitionSpace.getAll(StudioSearchIndexDefinition.class).stream()
 				.filter(indexDefinition -> indexDefinition.getKeyConceptDtDefinition().equals(dtDefinition))
 				.findFirst();
 
 		final List<FacetedQueryDefinitionModel> facetedQueryDefinitions = new ArrayList<>();
-		for (final StudioFacetedQueryDefinition facetedQueryDefinition : Home.getApp().getDefinitionSpace().getAll(StudioFacetedQueryDefinition.class)) {
+		for (final StudioFacetedQueryDefinition facetedQueryDefinition : definitionSpace.getAll(StudioFacetedQueryDefinition.class)) {
 			if (facetedQueryDefinition.getKeyConceptDtDefinition().equals(dtDefinition)) {
-				final FacetedQueryDefinitionModel templateFacetedQueryDefinition = new FacetedQueryDefinitionModel(facetedQueryDefinition);
+				final FacetedQueryDefinitionModel templateFacetedQueryDefinition = new FacetedQueryDefinitionModel(facetedQueryDefinition, DomainUtil.createClassNameFromDtFunction(definitionSpace));
 				facetedQueryDefinitions.add(templateFacetedQueryDefinition);
 			}
 		}
 
 		final List<FacetDefinitionModel> facetDefinitions = new ArrayList<>();
 		if (searchIndexDefinitionOpt.isPresent()) {
-			for (final StudioFacetDefinition facetDefinition : Home.getApp().getDefinitionSpace().getAll(StudioFacetDefinition.class)) {
+			for (final StudioFacetDefinition facetDefinition : definitionSpace.getAll(StudioFacetDefinition.class)) {
 				if (facetDefinition.getIndexDtDefinition().equals(searchIndexDefinitionOpt.get().getIndexDtDefinition())) {
 					final FacetDefinitionModel templateFacetedQueryDefinition = new FacetDefinitionModel(facetDefinition);
 					facetDefinitions.add(templateFacetedQueryDefinition);

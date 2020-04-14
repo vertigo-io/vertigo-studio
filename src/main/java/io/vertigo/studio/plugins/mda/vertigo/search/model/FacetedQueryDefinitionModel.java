@@ -19,11 +19,11 @@
 package io.vertigo.studio.plugins.mda.vertigo.search.model;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.definition.DefinitionUtil;
-import io.vertigo.studio.metamodel.domain.Domain;
 import io.vertigo.studio.metamodel.search.StudioFacetedQueryDefinition;
 import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants.VertigoDefinitionPrefix;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
@@ -40,12 +40,12 @@ public final class FacetedQueryDefinitionModel {
 	private final String criteriaClassCanonicalName;
 	private final List<FacetDefinitionModel> facetDefinitionModels;
 
-	public FacetedQueryDefinitionModel(final StudioFacetedQueryDefinition facetedQueryDefinition) {
+	public FacetedQueryDefinitionModel(final StudioFacetedQueryDefinition facetedQueryDefinition, final Function<String, String> classNameFromDt) {
 		Assertion.checkNotNull(facetedQueryDefinition);
 		//-----
 		this.facetedQueryDefinition = facetedQueryDefinition;
 		simpleName = DefinitionUtil.getLocalName(facetedQueryDefinition.getName(), StudioFacetedQueryDefinition.class);
-		criteriaClassCanonicalName = obtainCriteriaClassCanonicalName();
+		criteriaClassCanonicalName = DomainUtil.buildJavaTypeName(facetedQueryDefinition.getCriteriaDomain(), classNameFromDt);
 		facetDefinitionModels = facetedQueryDefinition.getFacetDefinitions().stream().map(FacetDefinitionModel::new).collect(Collectors.toList());
 	}
 
@@ -100,12 +100,6 @@ public final class FacetedQueryDefinitionModel {
 
 	public List<FacetDefinitionModel> getFacetDefinitions() {
 		return facetDefinitionModels;
-	}
-
-	private String obtainCriteriaClassCanonicalName() {
-		final Domain domain = facetedQueryDefinition.getCriteriaDomain();
-		//---
-		return DomainUtil.buildJavaTypeName(domain);
 	}
 
 }

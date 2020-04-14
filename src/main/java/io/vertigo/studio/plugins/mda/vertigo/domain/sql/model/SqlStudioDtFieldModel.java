@@ -19,9 +19,9 @@
 package io.vertigo.studio.plugins.mda.vertigo.domain.sql.model;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.BasicType;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.metamodel.domain.StudioDtField;
-import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
 
 /**
  * Model used to define a DtField.
@@ -71,8 +71,8 @@ public final class SqlStudioDtFieldModel {
 	/**
 	 * @return Type java du champ
 	 */
-	public String getJavaType() {
-		return DomainUtil.buildJavaType(dtField);
+	public boolean isTypeString() {
+		return dtField.getDomain().getScope().isPrimitive() && dtField.getDomain().getDataType() == BasicType.String;
 	}
 
 	/**
