@@ -18,22 +18,25 @@
  */
 package io.vertigo.studio.metamodel.vertigo.java;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import io.vertigo.core.AbstractTestCaseJU5;
 import io.vertigo.core.lang.BasicType;
-import io.vertigo.core.node.config.DefinitionProviderConfig;
-import io.vertigo.core.node.config.ModuleConfig;
 import io.vertigo.core.node.config.NodeConfig;
-import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.datamodel.impl.smarttype.formatter.FormatterDefault;
+import io.vertigo.studio.StudioFeatures;
+import io.vertigo.studio.metamodel.MetamodelRepository;
+import io.vertigo.studio.metamodel.MetamodelResource;
+import io.vertigo.studio.metamodel.StudioMetamodelManager;
 import io.vertigo.studio.metamodel.domain.Domain;
 import io.vertigo.studio.metamodel.domain.FormatterDefinition;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 import io.vertigo.studio.metamodel.vertigo.java.data.DtDefinitions;
-import io.vertigo.studio.plugins.metamodel.vertigo.StudioDefinitionProvider;
 
 /**
  * Test de l'implémentation standard.
@@ -42,40 +45,45 @@ import io.vertigo.studio.plugins.metamodel.vertigo.StudioDefinitionProvider;
  */
 public final class JavaEnvironmentManagerTest extends AbstractTestCaseJU5 {
 
+	private MetamodelRepository metamodelRepository;
+
 	@Override
 	protected NodeConfig buildNodeConfig() {
 		return NodeConfig.builder()
 				.beginBoot()
 				.addPlugin(ClassPathResourceResolverPlugin.class)
 				.endBoot()
-				.addModule(ModuleConfig.builder("myApp")
-						.addDefinitionProvider(DefinitionProviderConfig.builder(StudioDefinitionProvider.class)
-								.addDefinitionResource("kpr", "io/vertigo/studio/metamodel/vertigo/java/data/execution.kpr")
-								.addDefinitionResource("classes", DtDefinitions.class.getName())
-								.build())
+				.addModule(new StudioFeatures()
+						.withMetamodel()
+						.withVertigoMetamodel()
 						.build())
 				.build();
 	}
 
+	@Override
+	protected void doSetUp() throws Exception {
+		final List<MetamodelResource> resources = Arrays.asList(
+				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/java/data/execution.kpr"),
+				new MetamodelResource("classes", DtDefinitions.class.getName()));
+		metamodelRepository = getApp().getComponentSpace().resolve(StudioMetamodelManager.class).parseResources(resources);
+	}
+
 	@Test
 	public void testDefaultFormatter() {
-		final DefinitionSpace definitionSpace = getApp().getDefinitionSpace();
-		final FormatterDefinition formatter = definitionSpace.resolve("FmtDefault", FormatterDefinition.class);
+		final FormatterDefinition formatter = metamodelRepository.resolve("FmtDefault", FormatterDefinition.class);
 		Assertions.assertEquals(FormatterDefault.class.getName(), formatter.getFormatterClassName());
 	}
 
 	@Test
 	public void testDomain() {
-		final DefinitionSpace definitionSpace = getApp().getDefinitionSpace();
-		final io.vertigo.studio.metamodel.domain.Domain domain = definitionSpace.resolve("DoId", Domain.class);
+		final io.vertigo.studio.metamodel.domain.Domain domain = metamodelRepository.resolve("DoId", Domain.class);
 		Assertions.assertEquals(BasicType.Long, domain.getDataType());
 		Assertions.assertEquals(FormatterDefault.class.getName(), domain.getFormatterDefinition().getFormatterClassName());
 	}
 
 	@Test
 	public void testCommand() {
-		final DefinitionSpace definitionSpace = getApp().getDefinitionSpace();
-		final StudioDtDefinition dtDefinition = definitionSpace.resolve("StDtCommand", StudioDtDefinition.class);
+		final StudioDtDefinition dtDefinition = metamodelRepository.resolve("StDtCommand", StudioDtDefinition.class);
 		Assertions.assertTrue(dtDefinition.isPersistent());
 		Assertions.assertEquals("io.vertigo.studio.metamodel.vertigo.java.data.domain.Command", dtDefinition.getClassCanonicalName());
 		Assertions.assertEquals("io.vertigo.studio.metamodel.vertigo.java.data.domain", dtDefinition.getPackageName());
@@ -84,8 +92,7 @@ public final class JavaEnvironmentManagerTest extends AbstractTestCaseJU5 {
 
 	@Test
 	public void testCityFragment() {
-		final DefinitionSpace definitionSpace = getApp().getDefinitionSpace();
-		final StudioDtDefinition dtDefinition = definitionSpace.resolve("StDtCityFragment", StudioDtDefinition.class);
+		final StudioDtDefinition dtDefinition = metamodelRepository.resolve("StDtCityFragment", StudioDtDefinition.class);
 		Assertions.assertFalse(dtDefinition.isPersistent());
 		Assertions.assertTrue(dtDefinition.getFragment().isPresent());
 		Assertions.assertTrue("City".equals(dtDefinition.getFragment().get().getClassSimpleName()));

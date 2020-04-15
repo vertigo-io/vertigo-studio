@@ -26,13 +26,13 @@ import java.util.Optional;
 import javax.inject.Inject;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.mda.FileGenerator;
 import io.vertigo.studio.impl.mda.FileGeneratorConfig;
 import io.vertigo.studio.impl.mda.GeneratorPlugin;
 import io.vertigo.studio.mda.MdaResultBuilder;
+import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.file.StudioFileInfo;
 import io.vertigo.studio.plugins.mda.vertigo.file.model.FileInfoDefinitionModel;
 import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
@@ -58,22 +58,22 @@ public final class FileInfoGeneratorPlugin implements GeneratorPlugin {
 	/** {@inheritDoc} */
 	@Override
 	public void generate(
-			final DefinitionSpace definitionSpace,
+			final MetamodelRepository metamodelRepository,
 			final FileGeneratorConfig fileGeneratorConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		Assertion.checkNotNull(fileGeneratorConfig);
 		Assertion.checkNotNull(mdaResultBuilder);
 		//-----
 		/* Générations des FI. */
-		generateFileInfos(definitionSpace, targetSubDir, fileGeneratorConfig, mdaResultBuilder);
+		generateFileInfos(metamodelRepository, targetSubDir, fileGeneratorConfig, mdaResultBuilder);
 	}
 
 	private static void generateFileInfos(
-			final DefinitionSpace definitionSpace,
+			final MetamodelRepository metamodelRepository,
 			final String targetSubDir,
 			final FileGeneratorConfig fileGeneratorConfig,
 			final MdaResultBuilder mdaResultBuilder) {
-		final Collection<StudioFileInfo> fileInfoDefinitions = definitionSpace.getAll(StudioFileInfo.class);
+		final Collection<StudioFileInfo> fileInfoDefinitions = metamodelRepository.getAll(StudioFileInfo.class);
 		for (final StudioFileInfo fileInfoDefinition : fileInfoDefinitions) {
 			generateFileInfo(targetSubDir, fileGeneratorConfig, mdaResultBuilder, fileInfoDefinition);
 		}

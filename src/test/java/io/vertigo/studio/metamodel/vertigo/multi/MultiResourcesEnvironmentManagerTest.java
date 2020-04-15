@@ -18,95 +18,62 @@
  */
 package io.vertigo.studio.metamodel.vertigo.multi;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import io.vertigo.core.node.AutoCloseableApp;
-import io.vertigo.core.node.config.DefinitionProviderConfig;
-import io.vertigo.core.node.config.LogConfig;
-import io.vertigo.core.node.config.ModuleConfig;
+import io.vertigo.core.AbstractTestCaseJU5;
 import io.vertigo.core.node.config.NodeConfig;
-import io.vertigo.core.node.config.NodeConfigBuilder;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
+import io.vertigo.studio.StudioFeatures;
+import io.vertigo.studio.metamodel.MetamodelRepository;
+import io.vertigo.studio.metamodel.MetamodelResource;
+import io.vertigo.studio.metamodel.StudioMetamodelManager;
 import io.vertigo.studio.metamodel.domain.Domain;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 import io.vertigo.studio.metamodel.vertigo.multi.data.DtDefinitions;
-import io.vertigo.studio.plugins.metamodel.vertigo.StudioDefinitionProvider;
 
 /**
  * Test de l'implémentation standard.
  *
  * @author npiedeloup
  */
-public final class MultiResourcesEnvironmentManagerTest {
+public final class MultiResourcesEnvironmentManagerTest extends AbstractTestCaseJU5 {
 
-	//
-	//<module name="test-2"><!--  this moduleReference -->
-	//	<resource type ="classes" path="io.vertigo.dynamock.domain.DtDefinitions"/>
-	//</module>
+	@Override
+	protected NodeConfig buildNodeConfig() {
+		return NodeConfig.builder()
+				.beginBoot()
+				.addPlugin(ClassPathResourceResolverPlugin.class)
+				.endBoot()
+				.addModule(new StudioFeatures()
+						.withMetamodel()
+						.withVertigoMetamodel()
+						.build())
+				.build();
+	}
 
 	@Test
 	public void testFirst() {
-		final NodeConfig nodeConfig = prepareDefaultNodeConfigBuilder()
-				.addModule(ModuleConfig.builder("myApp")
-						.addDefinitionProvider(DefinitionProviderConfig.builder(StudioDefinitionProvider.class)
-								.addDefinitionResource("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr")
-								.build())
-						.build())
-				.build();
-
-		try (final AutoCloseableApp app = new AutoCloseableApp(nodeConfig)) {
-			final Domain doString = app.getDefinitionSpace().resolve("DoString", Domain.class);
-			Assertions.assertNotNull(doString);
-		}
+		final MetamodelRepository metamodelRepository = getApp().getComponentSpace().resolve(StudioMetamodelManager.class)
+				.parseResources(Collections.singletonList(new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr")));
+		final Domain doString = metamodelRepository.resolve("DoString", Domain.class);
+		Assertions.assertNotNull(doString);
 	}
 
 	@Test
 	public void testMergedResources() {
-		final NodeConfig nodeConfig = prepareDefaultNodeConfigBuilder()
-				.addModule(ModuleConfig.builder("myApp")
-						.addDefinitionProvider(DefinitionProviderConfig.builder(StudioDefinitionProvider.class)
-								.addDefinitionResource("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr")
-								.addDefinitionResource("classes", DtDefinitions.class.getCanonicalName()).build())
-						.build())
-				.build();
+		final MetamodelRepository metamodelRepository = getApp().getComponentSpace().resolve(StudioMetamodelManager.class)
+				.parseResources(Arrays.asList(
+						new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr"),
+						new MetamodelResource("classes", DtDefinitions.class.getCanonicalName())));
 
-		try (final AutoCloseableApp app = new AutoCloseableApp(nodeConfig)) {
-			final Domain doString = app.getDefinitionSpace().resolve("DoString", Domain.class);
-			Assertions.assertNotNull(doString);
-			final StudioDtDefinition dtItem = app.getDefinitionSpace().resolve("StDtItem", StudioDtDefinition.class);
-			Assertions.assertNotNull(dtItem);
-		}
+		final Domain doString = metamodelRepository.resolve("DoString", Domain.class);
+		Assertions.assertNotNull(doString);
+		final StudioDtDefinition dtItem = metamodelRepository.resolve("StDtItem", StudioDtDefinition.class);
+		Assertions.assertNotNull(dtItem);
 	}
 
-	@Test
-	public void testSplittedModules() {
-		final NodeConfig nodeConfig = prepareDefaultNodeConfigBuilder()
-				.addModule(ModuleConfig.builder("myApp")
-						.addDefinitionProvider(DefinitionProviderConfig.builder(StudioDefinitionProvider.class)
-								.addDefinitionResource("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr")
-								.addDefinitionResource("classes", DtDefinitions.class.getCanonicalName())
-								.build())
-						.build())
-				.build();
-
-		try (final AutoCloseableApp app = new AutoCloseableApp(nodeConfig)) {
-			final Domain doString = app.getDefinitionSpace().resolve("DoString", Domain.class);
-			Assertions.assertNotNull(doString);
-			final StudioDtDefinition dtItem = app.getDefinitionSpace().resolve("StDtItem", StudioDtDefinition.class);
-			Assertions.assertNotNull(dtItem);
-		}
-	}
-
-	private static NodeConfigBuilder prepareDefaultNodeConfigBuilder() {
-		// @formatter:off
-		return
-			NodeConfig.builder()
-			.beginBoot()
-				.withLogConfig(new LogConfig("/log4j.xml"))
-				.withLocales("fr")
-				.addPlugin(ClassPathResourceResolverPlugin.class)
-			.endBoot();
-		// @formatter:on
-	}
 }

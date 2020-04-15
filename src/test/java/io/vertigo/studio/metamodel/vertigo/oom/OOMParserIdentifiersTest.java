@@ -18,16 +18,20 @@
  */
 package io.vertigo.studio.metamodel.vertigo.oom;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import io.vertigo.core.AbstractTestCaseJU5;
-import io.vertigo.core.node.config.DefinitionProviderConfig;
-import io.vertigo.core.node.config.ModuleConfig;
 import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
+import io.vertigo.studio.StudioFeatures;
+import io.vertigo.studio.metamodel.MetamodelRepository;
+import io.vertigo.studio.metamodel.MetamodelResource;
+import io.vertigo.studio.metamodel.StudioMetamodelManager;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
-import io.vertigo.studio.plugins.metamodel.vertigo.StudioDefinitionProvider;
 
 /**
  * Test de lecture d'un OOM.
@@ -35,28 +39,33 @@ import io.vertigo.studio.plugins.metamodel.vertigo.StudioDefinitionProvider;
  * @author npiedeloup
  */
 public final class OOMParserIdentifiersTest extends AbstractTestCaseJU5 {
+
+	private MetamodelRepository metamodelRepository;
+
 	@Override
 	protected NodeConfig buildNodeConfig() {
 		return NodeConfig.builder()
 				.beginBoot()
 				.addPlugin(ClassPathResourceResolverPlugin.class)
 				.endBoot()
-				.addModule(ModuleConfig.builder("myApp")
-						.addDefinitionProvider(DefinitionProviderConfig.builder(StudioDefinitionProvider.class)
-								.addDefinitionResource("kpr", "io/vertigo/studio/metamodel/vertigo/oom/data/domain.kpr")
-								.addDefinitionResource("oom", "io/vertigo/studio/metamodel/vertigo/oom/data/demo.oom")
-								.build())
+				.addModule(new StudioFeatures()
+						.withMetamodel()
+						.withVertigoMetamodel()
 						.build())
 				.build();
 	}
 
-	private StudioDtDefinition getDtDefinition(final String urn) {
-		return getApp().getDefinitionSpace().resolve(urn, StudioDtDefinition.class);
+	@Override
+	protected void doSetUp() throws Exception {
+		final List<MetamodelResource> resources = Arrays.asList(
+				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/oom/data/domain.kpr"),
+				new MetamodelResource("oom", "io/vertigo/studio/metamodel/vertigo/oom/data/demo.oom"));
+		metamodelRepository = getApp().getComponentSpace().resolve(StudioMetamodelManager.class).parseResources(resources);
 	}
 
 	@Test
 	public void testIdentifiersVsPrimaryKey() {
-		final StudioDtDefinition loginDefinition = getDtDefinition("StDtLogin");
+		final StudioDtDefinition loginDefinition = metamodelRepository.resolve("StDtLogin", StudioDtDefinition.class);
 		Assertions.assertTrue(loginDefinition.getIdField().isPresent());
 	}
 }

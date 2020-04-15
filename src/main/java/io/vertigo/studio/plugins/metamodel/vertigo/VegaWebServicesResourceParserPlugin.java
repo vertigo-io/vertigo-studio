@@ -6,6 +6,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -13,17 +14,18 @@ import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
-import io.vertigo.core.node.config.DefinitionResourceConfig;
-import io.vertigo.core.node.definition.DefinitionSpace;
-import io.vertigo.core.node.definition.SimpleDefinitionProvider;
+import io.vertigo.core.node.definition.DefinitionSupplier;
 import io.vertigo.core.util.ClassUtil;
 import io.vertigo.core.util.Selector;
 import io.vertigo.core.util.Selector.ClassConditions;
+import io.vertigo.core.util.StringUtil;
+import io.vertigo.studio.impl.metamodel.MetamodelResourceParserPlugin;
+import io.vertigo.studio.metamodel.MetamodelRepository;
+import io.vertigo.studio.metamodel.MetamodelResource;
 import io.vertigo.studio.metamodel.webservices.StudioWebServiceDefinition;
 import io.vertigo.studio.metamodel.webservices.StudioWebServiceParam;
-import io.vertigo.studio.metamodel.webservices.StudioWebServiceResponseContent;
 import io.vertigo.studio.metamodel.webservices.StudioWebServiceParam.WebServiceParamLocation;
-import io.vertigo.core.util.StringUtil;
+import io.vertigo.studio.metamodel.webservices.StudioWebServiceResponseContent;
 import io.vertigo.vega.webservice.WebServices;
 import io.vertigo.vega.webservice.stereotype.DELETE;
 import io.vertigo.vega.webservice.stereotype.Doc;
@@ -37,28 +39,15 @@ import io.vertigo.vega.webservice.stereotype.PathParam;
 import io.vertigo.vega.webservice.stereotype.PathPrefix;
 import io.vertigo.vega.webservice.stereotype.QueryParam;
 
-public class VegaWebServicesDefinitionProvider implements SimpleDefinitionProvider {
+public class VegaWebServicesResourceParserPlugin implements MetamodelResourceParserPlugin {
 
 	private static final int NAME_MAX_SIZE = 40;
 
-	private List<DefinitionResourceConfig> definitionResourceConfigs;
-
-	/** {@inheritDoc} */
 	@Override
-	public void addDefinitionResourceConfig(final DefinitionResourceConfig definitionResourceConfig) {
-		Assertion.checkArgument("webservice".equals(definitionResourceConfig.getType()), "This DefinitionProvider Support only 'webservice' type (not {0})", definitionResourceConfig.getType());
-		//-----
-		definitionResourceConfigs.add(definitionResourceConfig);
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public List<StudioWebServiceDefinition> provideDefinitions(final DefinitionSpace definitionSpace) {
-		Assertion.checkArgument(!definitionResourceConfigs.isEmpty(), "No definitionResource registered");
-		//-----
+	public List<DefinitionSupplier> parseResources(final List<MetamodelResource> resources, final MetamodelRepository metamodelRepository) {
 		final List<StudioWebServiceDefinition> webServiceDefinitions = new ArrayList<>();
-		for (final DefinitionResourceConfig definitionResourceConfig : definitionResourceConfigs) {
-			final String resourcePath = definitionResourceConfig.getPath();
+		for (final MetamodelResource resource : resources) {
+			final String resourcePath = resource.getPath();
 			if (resourcePath.endsWith(".*")) {
 				scanAndAddPackage(resourcePath.substring(0, resourcePath.length() - ".*".length()), webServiceDefinitions);
 			} else {
@@ -66,9 +55,8 @@ public class VegaWebServicesDefinitionProvider implements SimpleDefinitionProvid
 				webServiceDefinitions.addAll(scanWebServices(webServicesClass));
 			}
 		}
-		Assertion.checkArgument(!webServiceDefinitions.isEmpty(), "No webService found by WebServiceDefinitionProvider");
-		//----
-		return webServiceDefinitions;
+
+		return webServiceDefinitions.stream().map(webserviceDefinition -> (DefinitionSupplier) dS -> webserviceDefinition).collect(Collectors.toList());
 	}
 
 	private static void scanAndAddPackage(final String packagePath, final List<StudioWebServiceDefinition> webServiceDefinitions) {
@@ -87,7 +75,7 @@ public class VegaWebServicesDefinitionProvider implements SimpleDefinitionProvid
 		Assertion.checkNotNull(webServicesClass);
 		//-----
 		return Arrays.stream(webServicesClass.getMethods())
-				.map(VegaWebServicesDefinitionProvider::buildWebServiceDefinition)
+				.map(VegaWebServicesResourceParserPlugin::buildWebServiceDefinition)
 				.filter(webServiceDefinitionOptional -> webServiceDefinitionOptional.isPresent())
 				.map(webServiceDefinitionOptional -> webServiceDefinitionOptional.get())
 				.collect(Collectors.toList());
@@ -133,7 +121,7 @@ public class VegaWebServicesDefinitionProvider implements SimpleDefinitionProvid
 		final String moduleName = fullPackageNameSplited[fullPackageNameSplited.length - 1];
 		//---
 		return new StudioWebServiceDefinition(
-				"Ws" + verb + normalizePath(path),
+				"StWs" + verb + normalizePath(path),
 				verb,
 				path,
 				webServiceParams,
@@ -191,6 +179,11 @@ public class VegaWebServicesDefinitionProvider implements SimpleDefinitionProvid
 		final String hashcodeAsHex = "$x" + Integer.toHexString(argsRemovedPath.hashCode());
 		//On limite sa taille pour avec un nom de définition acceptable
 		return normalizedString.substring(0, Math.min(NAME_MAX_SIZE, normalizedString.length())) + hashcodeAsHex;
+	}
+
+	@Override
+	public List<String> getHandledResourceTypes() {
+		return Collections.singletonList("webservice");
 	}
 
 }

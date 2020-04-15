@@ -16,30 +16,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.tools;
+package io.vertigo.studio.metamodel;
 
-import io.vertigo.core.node.AutoCloseableApp;
-import io.vertigo.core.node.config.NodeConfig;
-import io.vertigo.studio.mda.MdaManager;
+import io.vertigo.core.lang.Assertion;
 
 /**
- * Génération des fichiers Java et SQL à patrir de fichiers template freemarker.
+ * A resource is defined by
+ * - a type
+ * - a path
+ * A resource can be a file, a blob or a simple java class.
+ * A resource is used to configure a module.
  *
- * @author dchallas, pchretien
+ * @author pchretien
  */
-public final class NameSpace2Java {
-	private NameSpace2Java() {
-		super();
+public final class MetamodelResource {
+	private final String type;
+	private final String path;
+
+	public MetamodelResource(final String type, final String path) {
+		Assertion.checkArgNotEmpty(type);
+		Assertion.checkArgNotEmpty(path);
+		//-----
+		this.type = type;
+		this.path = path;
 	}
 
-	/**
-	 * Lancement du générateur de classes Java.
-	 * à partir des déclarations (ksp, oom..)
-	 * @param args Le premier argument [0] précise le nom du fichier properties de paramétrage
-	 */
-	public static void main(final NodeConfig nodeConfig) {
-		try (final AutoCloseableApp app = new AutoCloseableApp(nodeConfig)) {
-			app.getComponentSpace().resolve(MdaManager.class).generate(app.getDefinitionSpace()).displayResultMessage(System.out);
-		}
+	public String getType() {
+		return type;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	@Override
+	public String toString() {
+		return "{ type: " + type + ", path: " + path + " }";
 	}
 }

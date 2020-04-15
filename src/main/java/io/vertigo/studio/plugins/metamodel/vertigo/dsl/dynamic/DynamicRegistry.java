@@ -39,8 +39,8 @@ public interface DynamicRegistry {
 	DslGrammar getGrammar();
 
 	/**
-	 * Create a definition from a dynamic definition in a context defined by definitionSpace (preexisting definitions).
-	 * @param definitionSpace Space where all the definitions are stored.
+	 * Create a definition from a dynamic definition in a context defined by metamodelRepository (preexisting definitions).
+	 * @param metamodelRepository Space where all the definitions are stored.
 	 * @param dslDefinition Definition
 	 * @return An optional definition
 	 */

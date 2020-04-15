@@ -23,8 +23,10 @@ import io.vertigo.core.node.config.Features;
 import io.vertigo.core.param.Param;
 import io.vertigo.studio.impl.masterdata.MasterDataManagerImpl;
 import io.vertigo.studio.impl.mda.MdaManagerImpl;
+import io.vertigo.studio.impl.metamodel.StudioMetamodelManagerImpl;
 import io.vertigo.studio.masterdata.MasterDataManager;
 import io.vertigo.studio.mda.MdaManager;
+import io.vertigo.studio.metamodel.StudioMetamodelManager;
 import io.vertigo.studio.plugins.masterdata.json.JsonMasterDataValueProvider;
 import io.vertigo.studio.plugins.mda.vertigo.authorization.AuthorizationGeneratorPlugin;
 import io.vertigo.studio.plugins.mda.vertigo.domain.java.DomainGeneratorPlugin;
@@ -36,11 +38,29 @@ import io.vertigo.studio.plugins.mda.vertigo.search.SearchGeneratorPlugin;
 import io.vertigo.studio.plugins.mda.vertigo.task.TaskGeneratorPlugin;
 import io.vertigo.studio.plugins.mda.vertigo.task.test.TaskTestGeneratorPlugin;
 import io.vertigo.studio.plugins.mda.vertigo.webservice.WsTsGeneratorPlugin;
+import io.vertigo.studio.plugins.metamodel.vertigo.AccountJsonSecurityResourceParserPlugin;
+import io.vertigo.studio.plugins.metamodel.vertigo.StudioResourceParserPlugin;
+import io.vertigo.studio.plugins.metamodel.vertigo.VegaWebServicesResourceParserPlugin;
 
 public class StudioFeatures extends Features<StudioFeatures> {
 
 	public StudioFeatures() {
 		super("vertigo-studio");
+	}
+
+	@Feature("metamodel")
+	public StudioFeatures withMetamodel() {
+		getModuleConfigBuilder().addComponent(StudioMetamodelManager.class, StudioMetamodelManagerImpl.class);
+		return this;
+	}
+
+	@Feature("metamodel.vertigo")
+	public StudioFeatures withVertigoMetamodel(final Param... params) {
+		getModuleConfigBuilder()
+				.addPlugin(StudioResourceParserPlugin.class, params)
+				.addPlugin(AccountJsonSecurityResourceParserPlugin.class)
+				.addPlugin(VegaWebServicesResourceParserPlugin.class);
+		return this;
 	}
 
 	@Feature("mda")

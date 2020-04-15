@@ -29,13 +29,13 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.mda.FileGenerator;
 import io.vertigo.studio.impl.mda.FileGeneratorConfig;
 import io.vertigo.studio.impl.mda.GeneratorPlugin;
 import io.vertigo.studio.mda.MdaResultBuilder;
+import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.authorization.SecuredFeature;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 import io.vertigo.studio.plugins.mda.vertigo.authorization.model.GlobalAuthorizationModel;
@@ -64,41 +64,41 @@ public final class AuthorizationGeneratorPlugin implements GeneratorPlugin {
 	/** {@inheritDoc} */
 	@Override
 	public void generate(
-			final DefinitionSpace definitionSpace,
+			final MetamodelRepository metamodelRepository,
 			final FileGeneratorConfig fileGeneratorConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		Assertion.checkNotNull(fileGeneratorConfig);
 		Assertion.checkNotNull(mdaResultBuilder);
 		//-----
-		generateGlobalAuthorizations(definitionSpace, targetSubDir, fileGeneratorConfig, mdaResultBuilder);
+		generateGlobalAuthorizations(metamodelRepository, targetSubDir, fileGeneratorConfig, mdaResultBuilder);
 
-		generateOperations(definitionSpace, targetSubDir, fileGeneratorConfig, mdaResultBuilder);
+		generateOperations(metamodelRepository, targetSubDir, fileGeneratorConfig, mdaResultBuilder);
 	}
 
-	private static List<GlobalAuthorizationModel> getGlobalAuthorizations(final DefinitionSpace definitionSpace) {
-		return definitionSpace.getAll(SecuredFeature.class).stream()
+	private static List<GlobalAuthorizationModel> getGlobalAuthorizations(final MetamodelRepository metamodelRepository) {
+		return metamodelRepository.getAll(SecuredFeature.class).stream()
 				.filter(o -> o.getLinkedResourceOpt().isEmpty())
 				.map(GlobalAuthorizationModel::new)
 				.collect(Collectors.toList());
 	}
 
-	private static Collection<SecuredEntityModel> getSecuredEntities(final DefinitionSpace definitionSpace) {
-		return definitionSpace.getAll(SecuredFeature.class)
+	private static Collection<SecuredEntityModel> getSecuredEntities(final MetamodelRepository metamodelRepository) {
+		return metamodelRepository.getAll(SecuredFeature.class)
 				.stream()
 				.filter(securedFeature -> securedFeature.getLinkedResourceOpt().isPresent())
 				.collect(Collectors.groupingBy(securedFeature -> securedFeature.getLinkedResourceOpt().get(), Collectors.toList()))
 				.entrySet().stream()
-				.filter(entry -> definitionSpace.contains("StDt" + entry.getKey()))// we have the studioDtDefinition
-				.map(entry -> new SecuredEntityModel(entry.getValue(), definitionSpace.resolve("StDt" + entry.getKey(), StudioDtDefinition.class)))
+				.filter(entry -> metamodelRepository.contains("StDt" + entry.getKey()))// we have the studioDtDefinition
+				.map(entry -> new SecuredEntityModel(entry.getValue(), metamodelRepository.resolve("StDt" + entry.getKey(), StudioDtDefinition.class)))
 				.collect(Collectors.toList());
 	}
 
-	private static void generateGlobalAuthorizations(final DefinitionSpace definitionSpace, final String targetSubDir, final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder) {
-		generateDictionnary("GlobalAuthorizations", targetSubDir, fileGeneratorConfig, mdaResultBuilder, getGlobalAuthorizations(definitionSpace));
+	private static void generateGlobalAuthorizations(final MetamodelRepository metamodelRepository, final String targetSubDir, final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder) {
+		generateDictionnary("GlobalAuthorizations", targetSubDir, fileGeneratorConfig, mdaResultBuilder, getGlobalAuthorizations(metamodelRepository));
 	}
 
-	private static void generateOperations(final DefinitionSpace definitionSpace, final String targetSubDir, final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder) {
-		generateDictionnary("SecuredEntities", targetSubDir, fileGeneratorConfig, mdaResultBuilder, getSecuredEntities(definitionSpace));
+	private static void generateOperations(final MetamodelRepository metamodelRepository, final String targetSubDir, final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder) {
+		generateDictionnary("SecuredEntities", targetSubDir, fileGeneratorConfig, mdaResultBuilder, getSecuredEntities(metamodelRepository));
 	}
 
 	private static void generateDictionnary(

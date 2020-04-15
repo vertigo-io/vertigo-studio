@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.core.util.StringUtil;
@@ -38,6 +37,7 @@ import io.vertigo.studio.impl.mda.FileGenerator;
 import io.vertigo.studio.impl.mda.FileGeneratorConfig;
 import io.vertigo.studio.impl.mda.GeneratorPlugin;
 import io.vertigo.studio.mda.MdaResultBuilder;
+import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.domain.Domain;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 import io.vertigo.studio.metamodel.task.StudioTaskDefinition;
@@ -72,33 +72,33 @@ public final class TaskTestGeneratorPlugin implements GeneratorPlugin {
 
 	/** {@inheritDoc} */
 	@Override
-	public void generate(final DefinitionSpace definitionSpace, final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder) {
+	public void generate(final MetamodelRepository metamodelRepository, final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder) {
 		Assertion.checkNotNull(fileGeneratorConfig);
 		Assertion.checkNotNull(mdaResultBuilder);
 		//-----
 
-		generatePaos(definitionSpace, targetSubDir, fileGeneratorConfig, mdaResultBuilder);
-		generateDaos(definitionSpace, targetSubDir, fileGeneratorConfig, mdaResultBuilder);
+		generatePaos(metamodelRepository, targetSubDir, fileGeneratorConfig, mdaResultBuilder);
+		generateDaos(metamodelRepository, targetSubDir, fileGeneratorConfig, mdaResultBuilder);
 	}
 
 	/**
 	 * Génération de tous les PAOs.
 	 */
 	private void generatePaos(
-			final DefinitionSpace definitionSpace,
+			final MetamodelRepository metamodelRepository,
 			final String paosTargetSubDir,
 			final FileGeneratorConfig fileGeneratorConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 
 		//On liste des taches regroupées par Package.
-		for (final Entry<String, List<StudioTaskDefinition>> entry : buildPackageMap(definitionSpace).entrySet()) {
+		for (final Entry<String, List<StudioTaskDefinition>> entry : buildPackageMap(metamodelRepository).entrySet()) {
 			final Collection<StudioTaskDefinition> taskDefinitionCollection = entry.getValue();
 			if (!taskDefinitionCollection.isEmpty()) {
 
 				final String packageName = entry.getKey();
 				final String classSimpleName = getLastPackageName(packageName) + "PAO";
 
-				generateAo(definitionSpace, paosTargetSubDir, fileGeneratorConfig, mdaResultBuilder, taskDefinitionCollection, packageName,
+				generateAo(metamodelRepository, paosTargetSubDir, fileGeneratorConfig, mdaResultBuilder, taskDefinitionCollection, packageName,
 						classSimpleName);
 			}
 		}
@@ -109,12 +109,12 @@ public final class TaskTestGeneratorPlugin implements GeneratorPlugin {
 	 * Génération de tous les DAOs.
 	 */
 	private void generateDaos(
-			final DefinitionSpace definitionSpace,
+			final MetamodelRepository metamodelRepository,
 			final String daosTargetSubDir,
 			final FileGeneratorConfig fileGeneratorConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 
-		for (final Entry<StudioDtDefinition, List<StudioTaskDefinition>> entry : builDtDefinitiondMap(definitionSpace).entrySet()) {
+		for (final Entry<StudioDtDefinition, List<StudioTaskDefinition>> entry : builDtDefinitiondMap(metamodelRepository).entrySet()) {
 			final StudioDtDefinition dtDefinition = entry.getKey();
 			if (dtDefinition.isPersistent()) {
 				final String definitionPackageName = dtDefinition.getPackageName();
@@ -123,19 +123,19 @@ public final class TaskTestGeneratorPlugin implements GeneratorPlugin {
 
 				final String classSimpleName = dtDefinition.getClassSimpleName() + "DAO";
 
-				generateAo(definitionSpace, daosTargetSubDir, fileGeneratorConfig, mdaResultBuilder, entry.getValue(), packageName,
+				generateAo(metamodelRepository, daosTargetSubDir, fileGeneratorConfig, mdaResultBuilder, entry.getValue(), packageName,
 						classSimpleName);
 			}
 		}
 	}
 
 	private void generateAo(
-			final DefinitionSpace definitionSpace,
+			final MetamodelRepository metamodelRepository,
 			final String aoTargetSubDir, final FileGeneratorConfig fileGeneratorConfig,
 			final MdaResultBuilder mdaResultBuilder, final Collection<StudioTaskDefinition> taskDefinitionCollection,
 			final String packageName, final String classSimpleName) {
 		for (final StudioTaskDefinition taskDefinition : taskDefinitionCollection) {
-			final TemplateAoTaskTest paoModel = new TemplateAoTaskTest(fileGeneratorConfig, taskDefinition, packageName, classSimpleName, baseTestClass, DomainUtil.createClassNameFromDtFunction(definitionSpace));
+			final TemplateAoTaskTest paoModel = new TemplateAoTaskTest(fileGeneratorConfig, taskDefinition, packageName, classSimpleName, baseTestClass, DomainUtil.createClassNameFromDtFunction(metamodelRepository));
 			generatePaoTaskTest(aoTargetSubDir, fileGeneratorConfig, mdaResultBuilder, paoModel);
 		}
 	}
@@ -215,18 +215,18 @@ public final class TaskTestGeneratorPlugin implements GeneratorPlugin {
 		return null;
 	}
 
-	private static Map<String, List<StudioTaskDefinition>> buildPackageMap(final DefinitionSpace definitionSpace) {
-		final Collection<StudioTaskDefinition> taskDefinitions = definitionSpace.getAll(StudioTaskDefinition.class);
+	private static Map<String, List<StudioTaskDefinition>> buildPackageMap(final MetamodelRepository metamodelRepository) {
+		final Collection<StudioTaskDefinition> taskDefinitions = metamodelRepository.getAll(StudioTaskDefinition.class);
 		final Map<String, List<StudioTaskDefinition>> taskDefinitionsMap = new LinkedHashMap<>();
 		//---
 		for (final StudioTaskDefinition taskDefinition : taskDefinitions) {
-			final TaskDefinitionModel templateTaskDefinition = new TaskDefinitionModel(taskDefinition, DomainUtil.createClassNameFromDtFunction(definitionSpace));
+			final TaskDefinitionModel templateTaskDefinition = new TaskDefinitionModel(taskDefinition, DomainUtil.createClassNameFromDtFunction(metamodelRepository));
 			final String dtDefinition = getDtDefinition(templateTaskDefinition);
 			// Correction bug : task avec retour DtObject (non persistant) non générée
 			//Les taches sont générées dans les pao
 			// - si il n'esxiste pas de définition associées à la tache
 			// - ou si la définition est considérée comme non persistante.
-			final boolean pao = dtDefinition == null || !definitionSpace.resolve("St" + dtDefinition, StudioDtDefinition.class).isPersistent();
+			final boolean pao = dtDefinition == null || !metamodelRepository.resolve("St" + dtDefinition, StudioDtDefinition.class).isPersistent();
 			if (pao) {
 				//La tache est liée au package. (PAO)
 				final List<StudioTaskDefinition> list = taskDefinitionsMap
@@ -239,25 +239,25 @@ public final class TaskTestGeneratorPlugin implements GeneratorPlugin {
 
 	}
 
-	private static Map<StudioDtDefinition, List<StudioTaskDefinition>> builDtDefinitiondMap(final DefinitionSpace definitionSpace) {
-		final Collection<StudioTaskDefinition> taskDefinitions = definitionSpace.getAll(StudioTaskDefinition.class);
+	private static Map<StudioDtDefinition, List<StudioTaskDefinition>> builDtDefinitiondMap(final MetamodelRepository metamodelRepository) {
+		final Collection<StudioTaskDefinition> taskDefinitions = metamodelRepository.getAll(StudioTaskDefinition.class);
 		final Map<StudioDtDefinition, List<StudioTaskDefinition>> taskDefinitionsMap = new LinkedHashMap<>();
 
 		//---
 		//Par défaut, On crée pour chaque DT une liste vide des taches lui étant associées.
-		final Collection<StudioDtDefinition> dtDefinitions = definitionSpace.getAll(StudioDtDefinition.class);
+		final Collection<StudioDtDefinition> dtDefinitions = metamodelRepository.getAll(StudioDtDefinition.class);
 		for (final StudioDtDefinition dtDefinition : dtDefinitions) {
 			taskDefinitionsMap.put(dtDefinition, new ArrayList<StudioTaskDefinition>());
 		}
 		//---
 		for (final StudioTaskDefinition taskDefinition : taskDefinitions) {
-			final TaskDefinitionModel templateTaskDefinition = new TaskDefinitionModel(taskDefinition, DomainUtil.createClassNameFromDtFunction(definitionSpace));
+			final TaskDefinitionModel templateTaskDefinition = new TaskDefinitionModel(taskDefinition, DomainUtil.createClassNameFromDtFunction(metamodelRepository));
 
 			final String dtDefinition = getDtDefinition(templateTaskDefinition);
 			final boolean dao = dtDefinition != null;
 			if (dao) {
 				//Dans le cas d'un DTO ou DTC en sortie on considère que la tache est liée au DAO.
-				taskDefinitionsMap.get(definitionSpace.resolve("St" + dtDefinition, StudioDtDefinition.class)).add(taskDefinition);
+				taskDefinitionsMap.get(metamodelRepository.resolve("St" + dtDefinition, StudioDtDefinition.class)).add(taskDefinition);
 			}
 		}
 		return taskDefinitionsMap;

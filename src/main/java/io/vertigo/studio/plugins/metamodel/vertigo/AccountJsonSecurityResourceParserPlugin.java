@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,22 +18,21 @@ import com.google.gson.JsonObject;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.WrappedException;
-import io.vertigo.core.node.config.DefinitionResourceConfig;
-import io.vertigo.core.node.definition.Definition;
-import io.vertigo.core.node.definition.DefinitionSpace;
-import io.vertigo.core.node.definition.SimpleDefinitionProvider;
+import io.vertigo.core.node.definition.DefinitionSupplier;
 import io.vertigo.core.resource.ResourceManager;
+import io.vertigo.studio.impl.metamodel.MetamodelResourceParserPlugin;
+import io.vertigo.studio.metamodel.MetamodelRepository;
+import io.vertigo.studio.metamodel.MetamodelResource;
 import io.vertigo.studio.metamodel.authorization.SecuredFeature;
 
-public class AccountJsonSecurityDefinitionProvider implements SimpleDefinitionProvider {
+public class AccountJsonSecurityResourceParserPlugin implements MetamodelResourceParserPlugin {
 
 	private static final Gson gson = new Gson();
 
 	private final ResourceManager resourceManager;
-	private final List<DefinitionResourceConfig> definitionResourceConfigs = new ArrayList<>();
 
 	@Inject
-	public AccountJsonSecurityDefinitionProvider(
+	public AccountJsonSecurityResourceParserPlugin(
 			final ResourceManager resourceManager) {
 		Assertion.checkNotNull(resourceManager);
 		//---
@@ -40,17 +40,16 @@ public class AccountJsonSecurityDefinitionProvider implements SimpleDefinitionPr
 	}
 
 	@Override
-	public List<? extends Definition> provideDefinitions(final DefinitionSpace definitionSpace) {
-		return definitionResourceConfigs.stream()
-				.flatMap(resourceConfig -> parseJson(resourceManager.resolve(resourceConfig.getPath())).stream())
+	public List<DefinitionSupplier> parseResources(final List<MetamodelResource> resources, final MetamodelRepository metamodelRepository) {
+		return resources.stream()
+				.flatMap(metamodelResource -> parseJson(resourceManager.resolve(metamodelResource.getPath())).stream())
+				.map(webserviceDefinition -> (DefinitionSupplier) dS -> webserviceDefinition)
 				.collect(Collectors.toList());
 	}
 
 	@Override
-	public void addDefinitionResourceConfig(final DefinitionResourceConfig definitionResourceConfig) {
-		Assertion.checkArgument("security".equals(definitionResourceConfig.getType()), "This DefinitionProvider Support only 'webservice' type (not {0})", definitionResourceConfig.getType());
-		//-----
-		definitionResourceConfigs.add(definitionResourceConfig);
+	public List<String> getHandledResourceTypes() {
+		return Collections.singletonList("security");
 	}
 
 	final List<SecuredFeature> parseJson(final URL url) {

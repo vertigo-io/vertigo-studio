@@ -18,7 +18,7 @@
  */
 package io.vertigo.studio.plugins.metamodel.vertigo;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -26,13 +26,13 @@ import java.util.Optional;
 import javax.inject.Inject;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.config.DefinitionResourceConfig;
-import io.vertigo.core.node.definition.DefinitionProvider;
-import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.node.definition.DefinitionSupplier;
 import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.core.util.MapBuilder;
+import io.vertigo.studio.impl.metamodel.MetamodelResourceParserPlugin;
+import io.vertigo.studio.metamodel.MetamodelRepository;
+import io.vertigo.studio.metamodel.MetamodelResource;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinition;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinitionRepository;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DynamicRegistry;
@@ -55,10 +55,9 @@ import io.vertigo.studio.plugins.metamodel.vertigo.registries.DynamoDynamicRegis
  *
  * @author pchretien
  */
-public class StudioDefinitionProvider implements DefinitionProvider {
+public class StudioResourceParserPlugin implements MetamodelResourceParserPlugin {
 
 	private final Map<String, Loader> loadersByType;
-	private final List<DefinitionResourceConfig> definitionResourceConfigs = new ArrayList<>();
 
 	/**
 	 * Constructeur injectable.
@@ -66,7 +65,7 @@ public class StudioDefinitionProvider implements DefinitionProvider {
 	 * @param encoding the encoding to use for reading ksp files
 	 */
 	@Inject
-	public StudioDefinitionProvider(final ResourceManager resourceManager, @ParamValue("encoding") final Optional<String> encoding, @ParamValue("constFieldName") final Optional<Boolean> constFieldName) {
+	public StudioResourceParserPlugin(final ResourceManager resourceManager, @ParamValue("encoding") final Optional<String> encoding, @ParamValue("constFieldName") final Optional<Boolean> constFieldName) {
 		loadersByType = new MapBuilder<String, Loader>()
 				.put("kpr", new KprLoader(resourceManager, encoding))
 				.put("oom", new OOMLoader(constFieldName.orElse(true), resourceManager))
@@ -77,22 +76,7 @@ public class StudioDefinitionProvider implements DefinitionProvider {
 	}
 
 	@Override
-	public void addDefinitionResourceConfig(final DefinitionResourceConfig definitionResourceConfig) {
-		Assertion.checkNotNull(definitionResourceConfig);
-		//
-		definitionResourceConfigs.add(definitionResourceConfig);
-	}
-
-	@Override
-	public List<DefinitionSupplier> get(final DefinitionSpace definitionSpace) {
-		return parse(definitionSpace);
-	}
-
-	/**
-	 * @param definitionResourceConfigs List of resources (must be in a type managed by this loader)
-	 */
-	private List<DefinitionSupplier> parse(final DefinitionSpace definitionSpace) {
-
+	public List<DefinitionSupplier> parseResources(final List<MetamodelResource> resources, final MetamodelRepository metamodelRepository) {
 		//Création du repositoy des instances le la grammaire (=> model)
 		final DynamicRegistry dynamoDynamicRegistry = new DynamoDynamicRegistry();
 		final DslDefinitionRepository dslDefinitionRepository = new DslDefinitionRepository(dynamoDynamicRegistry);
@@ -101,13 +85,18 @@ public class StudioDefinitionProvider implements DefinitionProvider {
 		for (final DslDefinition dslDefinition : dynamoDynamicRegistry.getGrammar().getRootDefinitions()) {
 			dslDefinitionRepository.addDefinition(dslDefinition);
 		}
-		for (final DefinitionResourceConfig definitionResourceConfig : definitionResourceConfigs) {
-			final Loader loaderPlugin = loadersByType.get(definitionResourceConfig.getType());
-			Assertion.checkNotNull(loaderPlugin, "This resource {0} can not be parse by these loaders : {1}", definitionResourceConfig, loadersByType.keySet());
-			loaderPlugin.load(definitionResourceConfig.getPath(), dslDefinitionRepository);
+		for (final MetamodelResource resource : resources) {
+			final Loader loaderPlugin = loadersByType.get(resource.getType());
+			Assertion.checkNotNull(loaderPlugin, "This resource {0} can not be parse by these loaders : {1}", resource, loadersByType.keySet());
+			loaderPlugin.load(resource.getPath(), dslDefinitionRepository);
 		}
 
-		return dslDefinitionRepository.solve(definitionSpace);
+		return dslDefinitionRepository.solve(metamodelRepository);
+	}
+
+	@Override
+	public List<String> getHandledResourceTypes() {
+		return Arrays.asList("kpr", "oom", "xmi", "classes");
 	}
 
 }

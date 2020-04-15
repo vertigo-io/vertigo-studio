@@ -18,18 +18,21 @@
  */
 package io.vertigo.studio.metamodel.vertigo.java;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import io.vertigo.core.AbstractTestCaseJU5;
-import io.vertigo.core.node.config.DefinitionProviderConfig;
-import io.vertigo.core.node.config.ModuleConfig;
 import io.vertigo.core.node.config.NodeConfig;
-import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
+import io.vertigo.studio.StudioFeatures;
+import io.vertigo.studio.metamodel.MetamodelRepository;
+import io.vertigo.studio.metamodel.MetamodelResource;
+import io.vertigo.studio.metamodel.StudioMetamodelManager;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 import io.vertigo.studio.metamodel.domain.StudioStereotype;
-import io.vertigo.studio.plugins.metamodel.vertigo.StudioDefinitionProvider;
 
 /**
  * Test de lecture de class Java.
@@ -38,24 +41,31 @@ import io.vertigo.studio.plugins.metamodel.vertigo.StudioDefinitionProvider;
  */
 public final class JavaParserStereotypesTest2 extends AbstractTestCaseJU5 {
 
+	private MetamodelRepository metamodelRepository;
+
 	@Override
 	protected NodeConfig buildNodeConfig() {
 		return NodeConfig.builder()
 				.beginBoot()
 				.addPlugin(ClassPathResourceResolverPlugin.class)
 				.endBoot()
-				.addModule(ModuleConfig.builder("myApp")
-						.addDefinitionProvider(DefinitionProviderConfig.builder(StudioDefinitionProvider.class)
-								.addDefinitionResource("kpr", "io/vertigo/studio/metamodel/vertigo/java/data/execution.kpr")
-								.addDefinitionResource("classes", "io.vertigo.studio.metamodel.vertigo.java.data.domain.*")
-								.build())
+				.addModule(new StudioFeatures()
+						.withMetamodel()
+						.withVertigoMetamodel()
 						.build())
 				.build();
 	}
 
+	@Override
+	protected void doSetUp() throws Exception {
+		final List<MetamodelResource> resources = Arrays.asList(
+				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/java/data/execution.kpr"),
+				new MetamodelResource("classes", "io.vertigo.studio.metamodel.vertigo.java.data.domain.*"));
+		metamodelRepository = getApp().getComponentSpace().resolve(StudioMetamodelManager.class).parseResources(resources);
+	}
+
 	private StudioDtDefinition getDtDefinition(final String urn) {
-		final DefinitionSpace definitionSpace = getApp().getDefinitionSpace();
-		return definitionSpace.resolve(urn, StudioDtDefinition.class);
+		return metamodelRepository.resolve(urn, StudioDtDefinition.class);
 	}
 
 	/**

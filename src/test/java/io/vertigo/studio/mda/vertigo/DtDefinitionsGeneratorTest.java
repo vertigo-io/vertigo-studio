@@ -18,24 +18,30 @@
  */
 package io.vertigo.studio.mda.vertigo;
 
+import java.util.Arrays;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import org.junit.jupiter.api.Test;
 
 import io.vertigo.commons.CommonsFeatures;
-import io.vertigo.core.node.config.DefinitionProviderConfig;
-import io.vertigo.core.node.config.ModuleConfig;
+import io.vertigo.core.AbstractTestCaseJU5;
 import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.param.Param;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.studio.StudioFeatures;
-import io.vertigo.studio.plugins.metamodel.vertigo.StudioDefinitionProvider;
-import io.vertigo.studio.tools.NameSpace2Java;
+import io.vertigo.studio.mda.MdaManager;
+import io.vertigo.studio.metamodel.MetamodelResource;
+import io.vertigo.studio.metamodel.StudioMetamodelManager;
 
 /**
  * Test la génération à partir des oom et ksp.
  * @author dchallas
  */
-public class DtDefinitionsGeneratorTest {
+public class DtDefinitionsGeneratorTest extends AbstractTestCaseJU5 {
 
+	@Override
 	protected NodeConfig buildNodeConfig() {
 		return NodeConfig.builder()
 				.beginBoot()
@@ -45,27 +51,31 @@ public class DtDefinitionsGeneratorTest {
 				.addModule(new CommonsFeatures().build())
 				.addModule(new StudioFeatures()
 						.withMasterData()
+						.withMetamodel()
+						.withVertigoMetamodel()
 						.withMda(
 								Param.of("projectPackageName", "io.vertigo.studio"),
 								Param.of("targetGenDir", "target/"))
 						.withJavaDomainGenerator(
 								Param.of("dictionaryClassName", "MyDtDefinitions"))
 						.build())
-				.addModule(ModuleConfig.builder("myApp")
-						.addDefinitionProvider(DefinitionProviderConfig.builder(StudioDefinitionProvider.class)
-								.addDefinitionResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr")
-								.addDefinitionResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr")
-								.build())
-						.build())
 				.build();
 	}
+
+	@Inject
+	private StudioMetamodelManager studioMetamodelManager;
+	@Inject
+	private MdaManager mdaManager;
 
 	/**
 	 * Lancement du test.
 	 */
 	@Test
 	public void testGenerate() {
-		NameSpace2Java.main(buildNodeConfig());
+		final List<MetamodelResource> resources = Arrays.asList(
+				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
+				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"));
+		mdaManager.generate(studioMetamodelManager.parseResources(resources));
 	}
 
 }

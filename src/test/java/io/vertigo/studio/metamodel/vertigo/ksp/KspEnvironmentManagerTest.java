@@ -18,68 +18,58 @@
  */
 package io.vertigo.studio.metamodel.vertigo.ksp;
 
+import java.util.Collections;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.AutoCloseableApp;
-import io.vertigo.core.node.config.DefinitionProviderConfig;
-import io.vertigo.core.node.config.ModuleConfig;
+import io.vertigo.core.AbstractTestCaseJU5;
 import io.vertigo.core.node.config.NodeConfig;
-import io.vertigo.core.node.config.NodeConfigBuilder;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
-import io.vertigo.studio.plugins.metamodel.vertigo.StudioDefinitionProvider;
+import io.vertigo.studio.StudioFeatures;
+import io.vertigo.studio.metamodel.MetamodelResource;
+import io.vertigo.studio.metamodel.StudioMetamodelManager;
 
 /**
  * Test ksp model.
  *
  * @author mlaroche
  */
-public final class KspEnvironmentManagerTest {
+public final class KspEnvironmentManagerTest extends AbstractTestCaseJU5 {
+
+	@Override
+	protected NodeConfig buildNodeConfig() {
+		return NodeConfig.builder()
+				.beginBoot()
+				.addPlugin(ClassPathResourceResolverPlugin.class)
+				.endBoot()
+				.addModule(new StudioFeatures()
+						.withMetamodel()
+						.withVertigoMetamodel()
+						.build())
+				.build();
+	}
 
 	@Test
 	public void testDomain() {
-		final NodeConfigBuilder nodeConfigBuilder = createNodeConfigBuilder("io/vertigo/studio/metamodel/vertigo/ksp/data/execution.kpr");
-		try (final AutoCloseableApp app = new AutoCloseableApp(nodeConfigBuilder.build())) {
-			//nothing (if it's boot it's ok)
-
-		}
+		getApp().getComponentSpace().resolve(StudioMetamodelManager.class)
+				.parseResources(Collections.singletonList(new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/ksp/data/execution.kpr")));
 	}
 
 	@Test
 	public void testWrongNavigability() {
 		Assertions.assertThrows(IllegalStateException.class, () -> {
-			final NodeConfigBuilder nodeConfigBuilder = createNodeConfigBuilder("io/vertigo/studio/metamodel/vertigo/ksp/data/execution-forbidden.kpr");
-			try (final AutoCloseableApp app = new AutoCloseableApp(nodeConfigBuilder.build())) {
-				//nothing (exception is ok)
-
-			}
+			getApp().getComponentSpace().resolve(StudioMetamodelManager.class)
+					.parseResources(Collections.singletonList(new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/ksp/data/execution-forbidden.kpr")));
 		});
 	}
 
 	@Test
 	public void testNonPossibleAssociation() {
 		Assertions.assertThrows(IllegalStateException.class, () -> {
-			final NodeConfigBuilder nodeConfigBuilder = createNodeConfigBuilder("io/vertigo/studio/metamodel/vertigo/ksp/data/execution-forbidden2.kpr");
-			try (final AutoCloseableApp app = new AutoCloseableApp(nodeConfigBuilder.build())) {
-				//nothing (exception is ok)
-
-			}
+			getApp().getComponentSpace().resolve(StudioMetamodelManager.class)
+					.parseResources(Collections.singletonList(new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/ksp/data/execution-forbidden2.kpr")));
 		});
-	}
-
-	private static NodeConfigBuilder createNodeConfigBuilder(final String kprPath) {
-		Assertion.checkArgNotEmpty(kprPath);
-		//---
-		return NodeConfig.builder()
-				.beginBoot()
-				.addPlugin(ClassPathResourceResolverPlugin.class)
-				.endBoot()
-				.addModule(ModuleConfig.builder("myModule")
-						.addDefinitionProvider(DefinitionProviderConfig.builder(StudioDefinitionProvider.class)
-								.addDefinitionResource("kpr", kprPath)
-								.build())
-						.build());
 	}
 
 }

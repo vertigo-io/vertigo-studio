@@ -35,7 +35,7 @@ import org.junit.jupiter.api.Test;
 import io.vertigo.core.AbstractTestCaseJU5;
 import io.vertigo.core.node.config.LogConfig;
 import io.vertigo.core.node.config.NodeConfig;
-import io.vertigo.core.node.definition.DefinitionSpace;
+import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinition;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinitionRepository;
 
@@ -51,7 +51,7 @@ public final class EnvironmentManagerTest extends AbstractTestCaseJU5 {
 
 	@Test
 	public void simpleTest() {
-		final DefinitionSpace definitionSpace = getApp().getDefinitionSpace();
+		final MetamodelRepository metamodelRepository = new MetamodelRepository();
 
 		final DslDefinition address1Definition = DslDefinition.builder("MockMainAddress", PersonGrammar.ADDRESS_ENTITY)
 				.withPackageName("io.vertigo.test.model")
@@ -81,7 +81,7 @@ public final class EnvironmentManagerTest extends AbstractTestCaseJU5 {
 				.build();
 		dslDefinitionRepository.addDefinition(personDefinition);
 
-		dslDefinitionRepository.solve(definitionSpace);
+		dslDefinitionRepository.solve(metamodelRepository);
 		assertNotNull(personDefinition);
 	}
 

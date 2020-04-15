@@ -18,18 +18,21 @@
  */
 package io.vertigo.studio.metamodel.vertigo.oom;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import io.vertigo.core.AbstractTestCaseJU5;
-import io.vertigo.core.node.config.DefinitionProviderConfig;
-import io.vertigo.core.node.config.ModuleConfig;
 import io.vertigo.core.node.config.NodeConfig;
-import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
+import io.vertigo.studio.StudioFeatures;
+import io.vertigo.studio.metamodel.MetamodelRepository;
+import io.vertigo.studio.metamodel.MetamodelResource;
+import io.vertigo.studio.metamodel.StudioMetamodelManager;
 import io.vertigo.studio.metamodel.domain.association.StudioAssociationNNDefinition;
 import io.vertigo.studio.metamodel.domain.association.StudioAssociationSimpleDefinition;
-import io.vertigo.studio.plugins.metamodel.vertigo.StudioDefinitionProvider;
 
 /**
  * Test de lecture d'un OOM.
@@ -38,19 +41,42 @@ import io.vertigo.studio.plugins.metamodel.vertigo.StudioDefinitionProvider;
  */
 public final class OOMParserAATest extends AbstractTestCaseJU5 {
 
+	//	@Override
+	//	protected NodeConfig buildNodeConfig() {
+	//		return NodeConfig.builder()
+	//				.beginBoot()
+	//				.addPlugin(ClassPathResourceResolverPlugin.class)
+	//				.endBoot()
+	//				.addModule(ModuleConfig.builder("myApp")
+	//						.addDefinitionProvider(DefinitionProviderConfig.builder(StudioDefinitionProvider.class)
+	//								.addDefinitionResource("kpr", "io/vertigo/studio/metamodel/vertigo/oom/data/domain.kpr")
+	//								.addDefinitionResource("oom", "io/vertigo/studio/metamodel/vertigo/oom/data/AssociationAA.oom")
+	//								.build())
+	//						.build())
+	//				.build();
+	//	}
+
+	private MetamodelRepository metamodelRepository;
+
 	@Override
 	protected NodeConfig buildNodeConfig() {
 		return NodeConfig.builder()
 				.beginBoot()
 				.addPlugin(ClassPathResourceResolverPlugin.class)
 				.endBoot()
-				.addModule(ModuleConfig.builder("myApp")
-						.addDefinitionProvider(DefinitionProviderConfig.builder(StudioDefinitionProvider.class)
-								.addDefinitionResource("kpr", "io/vertigo/studio/metamodel/vertigo/oom/data/domain.kpr")
-								.addDefinitionResource("oom", "io/vertigo/studio/metamodel/vertigo/oom/data/AssociationAA.oom")
-								.build())
+				.addModule(new StudioFeatures()
+						.withMetamodel()
+						.withVertigoMetamodel()
 						.build())
 				.build();
+	}
+
+	@Override
+	protected void doSetUp() throws Exception {
+		final List<MetamodelResource> resources = Arrays.asList(
+				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/oom/data/domain.kpr"),
+				new MetamodelResource("oom", "io/vertigo/studio/metamodel/vertigo/oom/data/AssociationAA.oom"));
+		metamodelRepository = getApp().getComponentSpace().resolve(StudioMetamodelManager.class).parseResources(resources);
 	}
 
 	/*
@@ -60,13 +86,11 @@ public final class OOMParserAATest extends AbstractTestCaseJU5 {
 	 * - Navigabilité notée v
 	 */
 	private StudioAssociationSimpleDefinition getAssociationSimpleDefinition(final String urn) {
-		final DefinitionSpace definitionSpace = getApp().getDefinitionSpace();
-		return definitionSpace.resolve(urn, StudioAssociationSimpleDefinition.class);
+		return metamodelRepository.resolve(urn, StudioAssociationSimpleDefinition.class);
 	}
 
 	private StudioAssociationNNDefinition getAssociationNNDefinition(final String urn) {
-		final DefinitionSpace definitionSpace = getApp().getDefinitionSpace();
-		return definitionSpace.resolve(urn, StudioAssociationNNDefinition.class);
+		return metamodelRepository.resolve(urn, StudioAssociationNNDefinition.class);
 	}
 
 	/**

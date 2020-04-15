@@ -19,7 +19,7 @@
 package io.vertigo.studio.mda;
 
 import io.vertigo.core.node.component.Manager;
-import io.vertigo.core.node.definition.DefinitionSpace;
+import io.vertigo.studio.metamodel.MetamodelRepository;
 
 /**
  * This class generates files in any text format.
@@ -30,7 +30,7 @@ public interface MdaManager extends Manager {
 	 * Generates the files.
 	 * @return the result
 	 */
-	MdaResult generate(DefinitionSpace definitionSpace);
+	MdaResult generate(MetamodelRepository metamodelRepository);
 
 	/**
 	 * Clean the gen directory

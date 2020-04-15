@@ -18,16 +18,20 @@
  */
 package io.vertigo.studio.metamodel.vertigo.eaxmi;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import io.vertigo.core.AbstractTestCaseJU5;
-import io.vertigo.core.node.config.DefinitionProviderConfig;
-import io.vertigo.core.node.config.ModuleConfig;
 import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
+import io.vertigo.studio.StudioFeatures;
+import io.vertigo.studio.metamodel.MetamodelRepository;
+import io.vertigo.studio.metamodel.MetamodelResource;
+import io.vertigo.studio.metamodel.StudioMetamodelManager;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
-import io.vertigo.studio.plugins.metamodel.vertigo.StudioDefinitionProvider;
 
 /**
  * Test de lecture d'un OOM.
@@ -35,23 +39,32 @@ import io.vertigo.studio.plugins.metamodel.vertigo.StudioDefinitionProvider;
  * @author npiedeloup
  */
 public final class EAXmiTestParserIdentifiers extends AbstractTestCaseJU5 {
+
+	private MetamodelRepository metamodelRepository;
+
 	@Override
 	protected NodeConfig buildNodeConfig() {
 		return NodeConfig.builder()
 				.beginBoot()
 				.addPlugin(ClassPathResourceResolverPlugin.class)
 				.endBoot()
-				.addModule(ModuleConfig.builder("myApp")
-						.addDefinitionProvider(DefinitionProviderConfig.builder(StudioDefinitionProvider.class)
-								.addDefinitionResource("xmi", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/demo.xml")
-								.addDefinitionResource("kpr", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/domain.kpr")
-								.build())
+				.addModule(new StudioFeatures()
+						.withMetamodel()
+						.withVertigoMetamodel()
 						.build())
 				.build();
 	}
 
+	@Override
+	protected void doSetUp() throws Exception {
+		final List<MetamodelResource> resources = Arrays.asList(
+				new MetamodelResource("xmi", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/demo.xml"),
+				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/domain.kpr"));
+		metamodelRepository = getApp().getComponentSpace().resolve(StudioMetamodelManager.class).parseResources(resources);
+	}
+
 	private StudioDtDefinition getDtDefinition(final String urn) {
-		return getApp().getDefinitionSpace()
+		return metamodelRepository
 				.resolve(urn, StudioDtDefinition.class);
 	}
 
