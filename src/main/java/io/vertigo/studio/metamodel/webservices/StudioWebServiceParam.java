@@ -97,4 +97,11 @@ public final class StudioWebServiceParam {
 		return type;
 	}
 
+	/**
+	 * @return cardinality
+	 */
+	public Cardinality getCardinality() {
+		return cardinality;
+	}
+
 }
