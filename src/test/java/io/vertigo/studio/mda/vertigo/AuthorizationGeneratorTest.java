@@ -76,7 +76,6 @@ public class AuthorizationGeneratorTest extends AbstractTestCaseJU5 {
 				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"),
 				new MetamodelResource("security", "io/vertigo/studio/metamodel/vertigo/data/security/advanced-auth-config-v2.json"));
 		mdaManager.generate(studioMetamodelManager.parseResources(resources));
-		//NameSpace2Java.main(buildNodeConfig());
 	}
 
 }

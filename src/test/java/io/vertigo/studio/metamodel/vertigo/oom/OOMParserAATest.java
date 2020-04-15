@@ -41,21 +41,6 @@ import io.vertigo.studio.metamodel.domain.association.StudioAssociationSimpleDef
  */
 public final class OOMParserAATest extends AbstractTestCaseJU5 {
 
-	//	@Override
-	//	protected NodeConfig buildNodeConfig() {
-	//		return NodeConfig.builder()
-	//				.beginBoot()
-	//				.addPlugin(ClassPathResourceResolverPlugin.class)
-	//				.endBoot()
-	//				.addModule(ModuleConfig.builder("myApp")
-	//						.addDefinitionProvider(DefinitionProviderConfig.builder(StudioDefinitionProvider.class)
-	//								.addDefinitionResource("kpr", "io/vertigo/studio/metamodel/vertigo/oom/data/domain.kpr")
-	//								.addDefinitionResource("oom", "io/vertigo/studio/metamodel/vertigo/oom/data/AssociationAA.oom")
-	//								.build())
-	//						.build())
-	//				.build();
-	//	}
-
 	private MetamodelRepository metamodelRepository;
 
 	@Override
