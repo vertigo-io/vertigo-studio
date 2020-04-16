@@ -16,10 +16,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.masterdata;
+package io.vertigo.studio.metamodel.domain.masterdata;
 
-import java.util.HashMap;
 import java.util.Map;
+
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.node.definition.Definition;
+import io.vertigo.core.node.definition.DefinitionPrefix;
+import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
 
 /**
  * A raw masterdata values is just a map of key/value pairs :
@@ -29,6 +33,32 @@ import java.util.Map;
  * @author mlaroche
  *
  */
-public class MasterDataValues extends HashMap<String, Map<String, MasterDataValue>> {
-	private static final long serialVersionUID = -5252370330938111223L;
+@DefinitionPrefix("StMd")
+public class StaticMasterData implements Definition {
+
+	private final String name;
+	private final String entityClassName;
+	private final Map<String, MasterDataValue> values;
+
+	public StaticMasterData(final String entityClassName, final Map<String, MasterDataValue> values) {
+		Assertion.checkArgNotEmpty(entityClassName);
+		Assertion.checkNotNull(values);
+		//---
+		name = "StMd" + DomainUtil.getSimpleNameFromCanonicalName(entityClassName);
+		this.entityClassName = entityClassName;
+		this.values = values;
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	public String getEntityClassName() {
+		return entityClassName;
+	}
+
+	public Map<String, MasterDataValue> getValues() {
+		return values;
+	}
 }

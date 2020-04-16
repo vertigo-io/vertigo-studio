@@ -23,8 +23,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.masterdata.MasterDataValue;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
+import io.vertigo.studio.metamodel.domain.masterdata.MasterDataValue;
 
 /**
  * Model Sql des materdata.

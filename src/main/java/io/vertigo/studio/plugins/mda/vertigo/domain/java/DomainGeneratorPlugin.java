@@ -36,9 +36,6 @@ import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.mda.FileGenerator;
 import io.vertigo.studio.impl.mda.FileGeneratorConfig;
 import io.vertigo.studio.impl.mda.GeneratorPlugin;
-import io.vertigo.studio.masterdata.MasterDataManager;
-import io.vertigo.studio.masterdata.MasterDataValue;
-import io.vertigo.studio.masterdata.MasterDataValues;
 import io.vertigo.studio.mda.MdaResultBuilder;
 import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
@@ -46,6 +43,8 @@ import io.vertigo.studio.metamodel.domain.StudioStereotype;
 import io.vertigo.studio.metamodel.domain.association.StudioAssociationDefinition;
 import io.vertigo.studio.metamodel.domain.association.StudioAssociationNNDefinition;
 import io.vertigo.studio.metamodel.domain.association.StudioAssociationSimpleDefinition;
+import io.vertigo.studio.metamodel.domain.masterdata.MasterDataValue;
+import io.vertigo.studio.metamodel.domain.masterdata.StaticMasterData;
 import io.vertigo.studio.plugins.mda.vertigo.domain.java.model.MethodAnnotationsModel;
 import io.vertigo.studio.plugins.mda.vertigo.domain.java.model.StudioDtDefinitionModel;
 import io.vertigo.studio.plugins.mda.vertigo.domain.java.model.masterdata.MasterDataDefinitionModel;
@@ -63,8 +62,6 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 	private final boolean shouldGenerateDtDefinitions;
 	private final String dictionaryClassName;
 
-	private final MasterDataManager masterDataManager;
-
 	/**
 	 * Constructeur.
 	 * @param targetSubDirOpt Repertoire de generation des fichiers de ce plugin
@@ -77,15 +74,12 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 			@ParamValue("targetSubDir") final Optional<String> targetSubDirOpt,
 			@ParamValue("generateDtResources") final Optional<Boolean> generateDtResourcesOpt,
 			@ParamValue("generateDtDefinitions") final Optional<Boolean> generateDtDefinitionsOpt,
-			@ParamValue("dictionaryClassName") final Optional<String> dictionaryClassNameOption,
-			final MasterDataManager masterDataManager) {
+			@ParamValue("dictionaryClassName") final Optional<String> dictionaryClassNameOption) {
 		//-----
 		targetSubDir = targetSubDirOpt.orElse("javagen");
 		shouldGenerateDtResources = generateDtResourcesOpt.orElse(Boolean.TRUE);// true by default
 		shouldGenerateDtDefinitions = generateDtDefinitionsOpt.orElse(Boolean.TRUE);// true by default
 		dictionaryClassName = dictionaryClassNameOption.orElse("DtDefinitions");
-		//---
-		this.masterDataManager = masterDataManager;
 	}
 
 	/** {@inheritDoc} */
@@ -232,7 +226,7 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 			final MetamodelRepository metamodelRepository,
 			final FileGeneratorConfig fileGeneratorConfig,
 			final MdaResultBuilder mdaResultBuilder) {
-		final MasterDataValues masterDataValues = masterDataManager.getValues();
+		final Map<String, Map<String, MasterDataValue>> staticMasterDataValues = metamodelRepository.getAll(StaticMasterData.class).stream().collect(Collectors.toMap(StaticMasterData::getEntityClassName, StaticMasterData::getValues));
 
 		metamodelRepository.getAll(StudioDtDefinition.class)
 				.stream()
@@ -240,7 +234,7 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 				.forEach(dtDefintion -> generateJavaEnum(
 						fileGeneratorConfig,
 						mdaResultBuilder,
-						dtDefintion, masterDataValues.getOrDefault(dtDefintion.getClassCanonicalName(), Collections.emptyMap())));
+						dtDefintion, staticMasterDataValues.getOrDefault(dtDefintion.getClassCanonicalName(), Collections.emptyMap())));
 	}
 
 	private void generateJavaEnum(

@@ -38,14 +38,14 @@ import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.impl.mda.FileGenerator;
 import io.vertigo.studio.impl.mda.FileGeneratorConfig;
 import io.vertigo.studio.impl.mda.GeneratorPlugin;
-import io.vertigo.studio.masterdata.MasterDataManager;
-import io.vertigo.studio.masterdata.MasterDataValues;
 import io.vertigo.studio.mda.MdaResultBuilder;
 import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 import io.vertigo.studio.metamodel.domain.StudioStereotype;
 import io.vertigo.studio.metamodel.domain.association.StudioAssociationNNDefinition;
 import io.vertigo.studio.metamodel.domain.association.StudioAssociationSimpleDefinition;
+import io.vertigo.studio.metamodel.domain.masterdata.MasterDataValue;
+import io.vertigo.studio.metamodel.domain.masterdata.StaticMasterData;
 import io.vertigo.studio.plugins.mda.vertigo.domain.sql.model.SqlMasterDataDefinitionModel;
 import io.vertigo.studio.plugins.mda.vertigo.domain.sql.model.SqlMethodModel;
 import io.vertigo.studio.plugins.mda.vertigo.domain.sql.model.SqlStudioAssociationNNModel;
@@ -70,8 +70,6 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 	private final Optional<String> tableSpaceIndexOpt;
 	private final boolean generateMasterData;
 
-	private final MasterDataManager masterDataManager;
-
 	/**
 	 * Constructeur.
 	 *
@@ -88,8 +86,7 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 			@ParamValue("baseCible") final String baseCible,
 			@ParamValue("generateMasterData") final Optional<Boolean> generateMasterDataOpt,
 			@ParamValue("tableSpaceData") final Optional<String> tableSpaceData,
-			@ParamValue("tableSpaceIndex") final Optional<String> tableSpaceIndex,
-			final MasterDataManager masterDataManager) {
+			@ParamValue("tableSpaceIndex") final Optional<String> tableSpaceIndex) {
 		//-----
 		targetSubDir = targetSubDirOpt.orElse("sqlgen");
 		this.generateDrop = generateDrop;
@@ -97,7 +94,6 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 		tableSpaceDataOpt = tableSpaceData;
 		tableSpaceIndexOpt = tableSpaceIndex;
 		generateMasterData = generateMasterDataOpt.orElse(false);
-		this.masterDataManager = masterDataManager;
 	}
 
 	/** {@inheritDoc} */
@@ -121,12 +117,12 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 			final FileGeneratorConfig fileGeneratorConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 
-		final MasterDataValues masterDataValues = masterDataManager.getValues();
+		final Map<String, Map<String, MasterDataValue>> staticMasterDataValues = metamodelRepository.getAll(StaticMasterData.class).stream().collect(Collectors.toMap(StaticMasterData::getEntityClassName, StaticMasterData::getValues));
 
 		final List<SqlMasterDataDefinitionModel> sqlMasterDataDefinitionModels = metamodelRepository.getAll(StudioDtDefinition.class)
 				.stream()
 				.filter(dtDefinition -> dtDefinition.getStereotype() == StudioStereotype.StaticMasterData)
-				.map(dtDefinition -> new SqlMasterDataDefinitionModel(dtDefinition, masterDataValues.getOrDefault(dtDefinition.getClassCanonicalName(), Collections.emptyMap())))
+				.map(dtDefinition -> new SqlMasterDataDefinitionModel(dtDefinition, staticMasterDataValues.getOrDefault(dtDefinition.getClassCanonicalName(), Collections.emptyMap())))
 				.collect(Collectors.toList());
 
 		for (final SqlMasterDataDefinitionModel sqlMasterDataDefinitionModel : sqlMasterDataDefinitionModels) {

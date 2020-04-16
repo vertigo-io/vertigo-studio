@@ -45,7 +45,6 @@ public class SqlGeneratorTest {
 				.addPlugin(ClassPathResourceResolverPlugin.class)
 				.endBoot()
 				.addModule(new StudioFeatures()
-						.withMasterData()
 						.withMetamodel()
 						.withVertigoMetamodel()
 						.withMda(

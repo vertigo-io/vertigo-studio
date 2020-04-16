@@ -50,17 +50,12 @@ public class MasterDataDomainGeneratorTest extends AbstractTestCaseJU5 {
 				.endBoot()
 				.addModule(new CommonsFeatures().build())
 				.addModule(new StudioFeatures()
-						.withMasterData()
 						.withMetamodel()
 						.withVertigoMetamodel()
 						.withMda(
 								Param.of("projectPackageName", "io.vertigo.studio"),
 								Param.of("targetGenDir", "target/"))
 						.withJavaDomainGenerator()
-						.withJsonMasterDataValuesProvider(
-								Param.of("fileName", "io/vertigo/studio/metamodel/vertigo/data/masterdata/testJsonMasterDataValues.json"))
-						.withJsonMasterDataValuesProvider(
-								Param.of("fileName", "io/vertigo/studio/metamodel/vertigo/data/masterdata/testJsonMasterDataValues2.json"))
 						.build())
 				.build();
 	}
@@ -77,7 +72,9 @@ public class MasterDataDomainGeneratorTest extends AbstractTestCaseJU5 {
 	public void testGenerate() {
 		final List<MetamodelResource> resources = Arrays.asList(
 				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
-				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"));
+				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"),
+				new MetamodelResource("staticMasterData", "io/vertigo/studio/metamodel/vertigo/data/masterdata/testJsonMasterDataValues.json"),
+				new MetamodelResource("staticMasterData", "io/vertigo/studio/metamodel/vertigo/data/masterdata/testJsonMasterDataValues2.json"));
 		mdaManager.generate(studioMetamodelManager.parseResources(resources));
 	}
 

@@ -50,7 +50,6 @@ public class WebServicesGeneratorTest extends AbstractTestCaseJU5 {
 				.endBoot()
 				.addModule(new CommonsFeatures().build())
 				.addModule(new StudioFeatures()
-						.withMasterData()
 						.withMetamodel()
 						.withVertigoMetamodel()
 						.withMda(

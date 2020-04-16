@@ -47,7 +47,6 @@ public class MasterDataSqlGeneratorTest {
 				.endBoot()
 				.addModule(new CommonsFeatures().build())
 				.addModule(new StudioFeatures()
-						.withMasterData()
 						.withMetamodel()
 						.withVertigoMetamodel()
 						.withMda(
@@ -58,10 +57,6 @@ public class MasterDataSqlGeneratorTest {
 								Param.of("baseCible", "PostgreSql"),
 								Param.of("generateDrop", "false"),
 								Param.of("generateMasterData", "true"))
-						.withJsonMasterDataValuesProvider(
-								Param.of("fileName", "io/vertigo/studio/metamodel/vertigo/data/masterdata/testJsonMasterDataValues.json"))
-						.withJsonMasterDataValuesProvider(
-								Param.of("fileName", "io/vertigo/studio/metamodel/vertigo/data/masterdata/testJsonMasterDataValues2.json"))
 						.build())
 				.build();
 	}
@@ -74,7 +69,9 @@ public class MasterDataSqlGeneratorTest {
 		try (AutoCloseableApp studioApp = new AutoCloseableApp(buildNodeConfig())) {
 			final List<MetamodelResource> resources = Arrays.asList(
 					new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
-					new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"));
+					new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"),
+					new MetamodelResource("staticMasterData", "io/vertigo/studio/metamodel/vertigo/data/masterdata/testJsonMasterDataValues.json"),
+					new MetamodelResource("staticMasterData", "io/vertigo/studio/metamodel/vertigo/data/masterdata/testJsonMasterDataValues2.json"));
 			final StudioMetamodelManager studioMetamodelManager = studioApp.getComponentSpace().resolve(StudioMetamodelManager.class);
 			final MdaManager mdaManager = studioApp.getComponentSpace().resolve(MdaManager.class);
 			mdaManager.generate(studioMetamodelManager.parseResources(resources));

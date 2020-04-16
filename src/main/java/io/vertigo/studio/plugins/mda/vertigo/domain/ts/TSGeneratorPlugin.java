@@ -36,12 +36,12 @@ import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.mda.FileGenerator;
 import io.vertigo.studio.impl.mda.FileGeneratorConfig;
 import io.vertigo.studio.impl.mda.GeneratorPlugin;
-import io.vertigo.studio.masterdata.MasterDataManager;
-import io.vertigo.studio.masterdata.MasterDataValues;
 import io.vertigo.studio.mda.MdaResultBuilder;
 import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 import io.vertigo.studio.metamodel.domain.StudioStereotype;
+import io.vertigo.studio.metamodel.domain.masterdata.MasterDataValue;
+import io.vertigo.studio.metamodel.domain.masterdata.StaticMasterData;
 import io.vertigo.studio.plugins.mda.vertigo.domain.ts.model.TSMasterDataDefinitionModel;
 import io.vertigo.studio.plugins.mda.vertigo.domain.ts.model.TSStudioDtDefinitionModel;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
@@ -57,7 +57,6 @@ public final class TSGeneratorPlugin implements GeneratorPlugin {
 	private final boolean shouldGenerateDtResourcesTS;
 	private final boolean shouldGenerateTsDtDefinitions;
 	private final boolean shouldGenerateTsMasterData;
-	private final MasterDataManager masterDataManager;
 
 	/**
 	 * Constructeur.
@@ -70,14 +69,12 @@ public final class TSGeneratorPlugin implements GeneratorPlugin {
 			@ParamValue("targetSubDir") final Optional<String> targetSubDirOpt,
 			@ParamValue("generateDtResourcesTS") final Optional<Boolean> generateDtResourcesTSOpt,
 			@ParamValue("generateTsDtDefinitions") final Optional<Boolean> generateTsDtDefinitionsOpt,
-			@ParamValue("generateTsMasterData") final Optional<Boolean> generateTsMasterDataOpt,
-			final MasterDataManager masterDataManager) {
+			@ParamValue("generateTsMasterData") final Optional<Boolean> generateTsMasterDataOpt) {
 		//-----
 		targetSubDir = targetSubDirOpt.orElse("tsgen");
 		shouldGenerateDtResourcesTS = generateDtResourcesTSOpt.orElse(true); //true by default
 		shouldGenerateTsDtDefinitions = generateTsDtDefinitionsOpt.orElse(true); //true by default
 		shouldGenerateTsMasterData = generateTsMasterDataOpt.orElse(false);
-		this.masterDataManager = masterDataManager;
 	}
 
 	/** {@inheritDoc} */
@@ -120,12 +117,12 @@ public final class TSGeneratorPlugin implements GeneratorPlugin {
 			final FileGeneratorConfig fileGeneratorConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 
-		final MasterDataValues masterDataValues = masterDataManager.getValues();
+		final Map<String, Map<String, MasterDataValue>> staticMasterDataValues = metamodelRepository.getAll(StaticMasterData.class).stream().collect(Collectors.toMap(StaticMasterData::getEntityClassName, StaticMasterData::getValues));
 
 		final List<TSMasterDataDefinitionModel> tsMasterDataDefinitionModels = metamodelRepository.getAll(StudioDtDefinition.class)
 				.stream()
 				.filter(dtDefinition -> dtDefinition.getStereotype() == StudioStereotype.StaticMasterData)
-				.map(dtDefinition -> new TSMasterDataDefinitionModel(dtDefinition, masterDataValues.getOrDefault(dtDefinition.getClassCanonicalName(), Collections.emptyMap())))
+				.map(dtDefinition -> new TSMasterDataDefinitionModel(dtDefinition, staticMasterDataValues.getOrDefault(dtDefinition.getClassCanonicalName(), Collections.emptyMap())))
 				.collect(Collectors.toList());
 
 		final Map<String, Object> model = new MapBuilder<String, Object>()

@@ -21,13 +21,10 @@ package io.vertigo.studio;
 import io.vertigo.core.node.config.Feature;
 import io.vertigo.core.node.config.Features;
 import io.vertigo.core.param.Param;
-import io.vertigo.studio.impl.masterdata.MasterDataManagerImpl;
 import io.vertigo.studio.impl.mda.MdaManagerImpl;
 import io.vertigo.studio.impl.metamodel.StudioMetamodelManagerImpl;
-import io.vertigo.studio.masterdata.MasterDataManager;
 import io.vertigo.studio.mda.MdaManager;
 import io.vertigo.studio.metamodel.StudioMetamodelManager;
-import io.vertigo.studio.plugins.masterdata.json.JsonMasterDataValueProvider;
 import io.vertigo.studio.plugins.mda.vertigo.authorization.AuthorizationGeneratorPlugin;
 import io.vertigo.studio.plugins.mda.vertigo.domain.java.DomainGeneratorPlugin;
 import io.vertigo.studio.plugins.mda.vertigo.domain.js.JSGeneratorPlugin;
@@ -39,6 +36,7 @@ import io.vertigo.studio.plugins.mda.vertigo.task.TaskGeneratorPlugin;
 import io.vertigo.studio.plugins.mda.vertigo.task.test.TaskTestGeneratorPlugin;
 import io.vertigo.studio.plugins.mda.vertigo.webservice.WsTsGeneratorPlugin;
 import io.vertigo.studio.plugins.metamodel.vertigo.AccountJsonSecurityResourceParserPlugin;
+import io.vertigo.studio.plugins.metamodel.vertigo.JsonStaticMasterDataParserPlugin;
 import io.vertigo.studio.plugins.metamodel.vertigo.StudioResourceParserPlugin;
 import io.vertigo.studio.plugins.metamodel.vertigo.VegaWebServicesResourceParserPlugin;
 
@@ -59,7 +57,8 @@ public class StudioFeatures extends Features<StudioFeatures> {
 		getModuleConfigBuilder()
 				.addPlugin(StudioResourceParserPlugin.class, params)
 				.addPlugin(AccountJsonSecurityResourceParserPlugin.class)
-				.addPlugin(VegaWebServicesResourceParserPlugin.class);
+				.addPlugin(VegaWebServicesResourceParserPlugin.class)
+				.addPlugin(JsonStaticMasterDataParserPlugin.class);
 		return this;
 	}
 
@@ -126,18 +125,6 @@ public class StudioFeatures extends Features<StudioFeatures> {
 	@Feature("mda.tsWebservices")
 	public StudioFeatures withTsWebServicesGenerator(final Param... params) {
 		getModuleConfigBuilder().addPlugin(WsTsGeneratorPlugin.class, params);
-		return this;
-	}
-
-	@Feature("masterdata")
-	public StudioFeatures withMasterData() {
-		getModuleConfigBuilder().addComponent(MasterDataManager.class, MasterDataManagerImpl.class);
-		return this;
-	}
-
-	@Feature("masterdata.json")
-	public StudioFeatures withJsonMasterDataValuesProvider(final Param... params) {
-		getModuleConfigBuilder().addPlugin(JsonMasterDataValueProvider.class, params);
 		return this;
 	}
 

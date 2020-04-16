@@ -16,22 +16,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.impl.masterdata;
+package io.vertigo.studio.metamodel.domain.masterdata;
 
-import io.vertigo.core.node.component.Plugin;
-import io.vertigo.studio.masterdata.MasterDataValues;
+import java.util.HashMap;
 
 /**
- * Plugin that retrieve raw values of masterdata.
+ * A raw masterdata value is just a map of field/value pairs
  * @author mlaroche
  *
  */
-public interface MasterDataValueProviderPlugin extends Plugin {
-
-	/**
-	 * Return masterdata values
-	 * @return masterdata values
-	 */
-	MasterDataValues getValues();
-
+public class MasterDataValue extends HashMap<String, String> {
+	private static final long serialVersionUID = 5665962755214122837L;
 }
