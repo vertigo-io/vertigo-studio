@@ -24,7 +24,7 @@ import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 /**
  * Model used by FreeMarker.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class SearchDtDefinitionModel {
 	private final StudioDtDefinition dtDefinition;

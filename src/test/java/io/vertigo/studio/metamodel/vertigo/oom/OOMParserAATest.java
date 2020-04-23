@@ -37,7 +37,7 @@ import io.vertigo.studio.metamodel.domain.association.StudioAssociationSimpleDef
 /**
  * Test de lecture d'un OOM.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class OOMParserAATest extends AbstractTestCaseJU5 {
 

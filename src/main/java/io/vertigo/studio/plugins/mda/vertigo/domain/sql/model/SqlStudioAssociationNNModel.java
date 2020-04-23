@@ -26,7 +26,7 @@ import io.vertigo.studio.metamodel.domain.association.StudioAssociationNNDefinit
 /**
  * Objet utilisé par FreeMarker.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class SqlStudioAssociationNNModel {
 	private final StudioAssociationNNDefinition associationDefinition;

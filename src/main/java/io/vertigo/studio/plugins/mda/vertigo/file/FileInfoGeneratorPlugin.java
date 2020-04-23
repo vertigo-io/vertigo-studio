@@ -21,16 +21,12 @@ package io.vertigo.studio.plugins.mda.vertigo.file;
 import java.io.File;
 import java.util.Collection;
 import java.util.Map;
-import java.util.Optional;
-
-import javax.inject.Inject;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.mda.FileGenerator;
-import io.vertigo.studio.impl.mda.FileGeneratorConfig;
 import io.vertigo.studio.impl.mda.GeneratorPlugin;
+import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
 import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.file.StudioFileInfo;
@@ -43,66 +39,65 @@ import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
  * @author npiedeloup
  */
 public final class FileInfoGeneratorPlugin implements GeneratorPlugin {
-	private final String targetSubDir;
 
-	/**
-	 * Constructeur.
-	 * @param targetSubDirOpt Repertoire de generation des fichiers de ce plugin
-	 */
-	@Inject
-	public FileInfoGeneratorPlugin(@ParamValue("targetSubDir") final Optional<String> targetSubDirOpt) {
-		//-----
-		targetSubDir = targetSubDirOpt.orElse("javagen");
-	}
+	private static final String DEFAULT_TARGET_SUBDIR = "javagen";
 
 	/** {@inheritDoc} */
 	@Override
 	public void generate(
 			final MetamodelRepository metamodelRepository,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
-		Assertion.checkNotNull(fileGeneratorConfig);
+		Assertion.checkNotNull(mdaConfig);
 		Assertion.checkNotNull(mdaResultBuilder);
 		//-----
 		/* Générations des FI. */
-		generateFileInfos(metamodelRepository, targetSubDir, fileGeneratorConfig, mdaResultBuilder);
+		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.file.targetSubDir", DEFAULT_TARGET_SUBDIR);
+		generateFileInfos(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder);
 	}
 
 	private static void generateFileInfos(
 			final MetamodelRepository metamodelRepository,
 			final String targetSubDir,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		final Collection<StudioFileInfo> fileInfoDefinitions = metamodelRepository.getAll(StudioFileInfo.class);
 		for (final StudioFileInfo fileInfoDefinition : fileInfoDefinitions) {
-			generateFileInfo(targetSubDir, fileGeneratorConfig, mdaResultBuilder, fileInfoDefinition);
+			generateFileInfo(targetSubDir, mdaConfig, mdaResultBuilder, fileInfoDefinition);
 		}
 	}
 
 	private static void generateFileInfo(
 			final String targetSubDir,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder,
 			final StudioFileInfo fileInfoDefinition) {
 		final FileInfoDefinitionModel fileInfoDefinitionModel = new FileInfoDefinitionModel(fileInfoDefinition);
 
 		final Map<String, Object> model = new MapBuilder<String, Object>()
 				.put("fiDefinition", fileInfoDefinitionModel)
-				.put("packageName", fileGeneratorConfig.getProjectPackageName() + ".fileinfo")
+				.put("packageName", mdaConfig.getProjectPackageName() + ".fileinfo")
 				.build();
 
-		FileGenerator.builder(fileGeneratorConfig)
+		FileGenerator.builder(mdaConfig)
 				.withModel(model)
 				.withFileName(fileInfoDefinitionModel.getClassSimpleName() + ".java")
 				.withGenSubDir(targetSubDir)
-				.withPackageName(fileGeneratorConfig.getProjectPackageName() + ".fileinfo")
+				.withPackageName(mdaConfig.getProjectPackageName() + ".fileinfo")
 				.withTemplateName(FileInfoGeneratorPlugin.class, "template/fileInfo.ftl")
 				.build()
 				.generateFile(mdaResultBuilder);
 	}
 
 	@Override
-	public void clean(final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder) {
-		MdaUtil.deleteFiles(new File(fileGeneratorConfig.getTargetGenDir() + targetSubDir), mdaResultBuilder);
+	public void clean(final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
+		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.file.targetSubDir", DEFAULT_TARGET_SUBDIR);
+		//---
+		MdaUtil.deleteFiles(new File(mdaConfig.getTargetGenDir() + targetSubDir), mdaResultBuilder);
+	}
+
+	@Override
+	public String getOutputType() {
+		return "vertigo.file";
 	}
 }

@@ -35,7 +35,7 @@ import io.vertigo.commons.peg.PegRules;
 /**
  * règle de composition d'une déclaration de liste de mots.
  * {mot1, mot2, mot3}
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class DslWordsRule extends AbstractRule<List<String>, PegChoice> {
 

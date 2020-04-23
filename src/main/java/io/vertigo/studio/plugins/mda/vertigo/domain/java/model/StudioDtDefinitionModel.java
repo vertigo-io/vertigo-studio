@@ -34,7 +34,7 @@ import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants.VertigoClassNames;
 /**
  * Model used by FreeMarker.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class StudioDtDefinitionModel {
 	private final StudioDtDefinition dtDefinition;

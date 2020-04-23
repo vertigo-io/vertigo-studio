@@ -35,7 +35,7 @@ import io.vertigo.core.node.definition.DefinitionUtil;
 /**
  * The DtDefinition class defines the definition of data.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 @DefinitionPrefix("StDt")
 public final class StudioDtDefinition implements Definition {

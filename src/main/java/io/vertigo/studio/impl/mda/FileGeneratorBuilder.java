@@ -23,28 +23,31 @@ import java.util.Map;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
+import io.vertigo.studio.mda.MdaConfig;
 
 /**
  * This class provides a way to create a FileFenerator.
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class FileGeneratorBuilder implements Builder<FileGenerator> {
-	private final FileGeneratorConfig fileGeneratorConfig;
 	private Map<String, Object> myModel;
 	private String myFileName;
 	private String myPackageName;
 
 	private Class myRelativeClass;
 	private String myTemplateName;
+	private String myTargetGenDir;
 	private String myGenSubDir;
+	private String myEncoding;
 
 	/**
 	 * @param fileGeneratorConfig the config of the file generator
 	*/
-	FileGeneratorBuilder(final FileGeneratorConfig fileGeneratorConfig) {
+	FileGeneratorBuilder(final MdaConfig fileGeneratorConfig) {
 		Assertion.checkNotNull(fileGeneratorConfig);
 		//---
-		this.fileGeneratorConfig = fileGeneratorConfig;
+		myEncoding = fileGeneratorConfig.getEncoding();
+		myTargetGenDir = fileGeneratorConfig.getTargetGenDir();
 	}
 
 	/**
@@ -81,6 +84,17 @@ public final class FileGeneratorBuilder implements Builder<FileGenerator> {
 	}
 
 	/**
+	 * @param packageName the name of the package
+	 * @return this builder
+	 */
+	public FileGeneratorBuilder withEncoding(final String encoding) {
+		Assertion.checkNotNull(encoding);
+		//---
+		myEncoding = encoding;
+		return this;
+	}
+
+	/**
 	 * @param templateName the name of the template
 	 * @return this builder
 	 */
@@ -90,6 +104,17 @@ public final class FileGeneratorBuilder implements Builder<FileGenerator> {
 		//---
 		myRelativeClass = relativeClass;
 		myTemplateName = templateName;
+		return this;
+	}
+
+	/**
+	 * @param targetGenDir Repertoire de destination
+	 * @return this builder
+	 */
+	public FileGeneratorBuilder withTargetGenDir(final String targetGenDir) {
+		Assertion.checkNotNull(targetGenDir);
+		//---
+		myTargetGenDir = targetGenDir;
 		return this;
 	}
 
@@ -111,14 +136,16 @@ public final class FileGeneratorBuilder implements Builder<FileGenerator> {
 		Assertion.checkNotNull(myPackageName, "a package is required");
 		Assertion.checkNotNull(myRelativeClass, "a relative class is required to locate template");
 		Assertion.checkNotNull(myTemplateName, "a template is required");
+		Assertion.checkNotNull(myEncoding, "an encoding is required");
+		Assertion.checkNotNull(myTargetGenDir, "a target gen dir is required");
 		Assertion.checkNotNull(myGenSubDir, "a sub directory is required");
 		//---
 		final String filePath = buildFilePath();
-		return new FileGeneratorFreeMarker(myModel, filePath, myTemplateName, fileGeneratorConfig.getEncoding(), myRelativeClass);
+		return new FileGeneratorFreeMarker(myModel, filePath, myTemplateName, myEncoding, myRelativeClass);
 	}
 
 	private String buildFilePath() {
-		final String directoryPath = fileGeneratorConfig.getTargetGenDir() + myGenSubDir + File.separatorChar + package2directory(myPackageName) + File.separatorChar;
+		final String directoryPath = myTargetGenDir + myGenSubDir + File.separatorChar + package2directory(myPackageName) + File.separatorChar;
 		return directoryPath + myFileName;
 	}
 

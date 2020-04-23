@@ -20,12 +20,11 @@ package io.vertigo.studio.impl.mda;
 
 import java.io.File;
 import java.util.List;
-import java.util.Optional;
 
 import javax.inject.Inject;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.param.ParamValue;
+import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaManager;
 import io.vertigo.studio.mda.MdaResult;
 import io.vertigo.studio.mda.MdaResultBuilder;
@@ -34,56 +33,49 @@ import io.vertigo.studio.metamodel.MetamodelRepository;
 /**
  * Implements MDA.
  *
- * @author pchretien, dchallas
+ * @author pchretien, mlaroche, dchallas
  */
 public final class MdaManagerImpl implements MdaManager {
 	private final List<GeneratorPlugin> generatorPlugins;
-	private final FileGeneratorConfig fileGeneratorConfig;
 
 	/**
 	 * Constructor.
 	 * @param generatorPlugins
-	 * @param targetGenDirOpt Répertoire des fichiers TOUJOURS générés
-	 * @param projectPackageName Racine du projet.
-	 * @param encodingOpt Encoding des fichiers générés.
 	 */
 	@Inject
 	public MdaManagerImpl(
-			final List<GeneratorPlugin> generatorPlugins,
-			@ParamValue("targetGenDir") final Optional<String> targetGenDirOpt,
-			@ParamValue("projectPackageName") final String projectPackageName,
-			@ParamValue("encoding") final Optional<String> encodingOpt) {
+			final List<GeneratorPlugin> generatorPlugins) {
 		Assertion.checkNotNull(generatorPlugins);
-		Assertion.checkArgNotEmpty(projectPackageName);
 		//-----
 		this.generatorPlugins = java.util.Collections.unmodifiableList(generatorPlugins);
-		final String targetGenDir = targetGenDirOpt.orElse("src/main/");
-		final String encoding = encodingOpt.orElse("UTF-8");
-		fileGeneratorConfig = new FileGeneratorConfig(targetGenDir, projectPackageName, encoding);
 	}
 
 	/** {@inheritDoc} */
 	@Override
-	public MdaResult generate(final MetamodelRepository metamodelRepository) {
+	public MdaResult generate(final MetamodelRepository metamodelRepository, final MdaConfig mdaConfig) {
 		//Création d'un objet listant les résultats
 		final MdaResultBuilder mdaResultBuilder = MdaResult.builder();
 		//Génèration des objets issus de la modélisation
 		for (final GeneratorPlugin generatorPlugin : generatorPlugins) {
-			generatorPlugin.generate(metamodelRepository, fileGeneratorConfig, mdaResultBuilder);
+			if (mdaConfig.getOrDefaultAsBoolean(generatorPlugin.getOutputType(), false)) {
+				generatorPlugin.generate(metamodelRepository, mdaConfig, mdaResultBuilder);
+			}
 		}
 		return mdaResultBuilder.build();
 	}
 
 	@Override
-	public MdaResult clean() {
-		final File directory = new File(fileGeneratorConfig.getTargetGenDir());
+	public MdaResult clean(final MdaConfig mdaConfig) {
+		final File directory = new File(mdaConfig.getTargetGenDir());
 		Assertion.checkArgument(directory.exists(), "targetGenDir must exist");
 		Assertion.checkArgument(directory.isDirectory(), "targetGenDir must be a directory");
 		//---
 		// We want to final clean the directory
 		final MdaResultBuilder mdaResultBuilder = MdaResult.builder();
 		for (final GeneratorPlugin generatorPlugin : generatorPlugins) {
-			generatorPlugin.clean(fileGeneratorConfig, mdaResultBuilder);
+			if (mdaConfig.getOrDefaultAsBoolean(generatorPlugin.getOutputType(), false)) {
+				generatorPlugin.clean(mdaConfig, mdaResultBuilder);
+			}
 		}
 		return mdaResultBuilder.build();
 	}

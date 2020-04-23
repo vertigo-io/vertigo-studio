@@ -36,7 +36,7 @@ import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants.VertigoClassNames;
 /**
  * Gestion centralisée des annotations sur les objets générés.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 class AnnotationWriter {
 

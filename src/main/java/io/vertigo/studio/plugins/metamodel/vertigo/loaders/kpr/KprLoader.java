@@ -40,7 +40,7 @@ import io.vertigo.studio.plugins.metamodel.vertigo.loaders.Loader;
  * Parses a KPR file.
  * A KPR file is a project file that lists all the KSP files.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class KprLoader implements Loader {
 

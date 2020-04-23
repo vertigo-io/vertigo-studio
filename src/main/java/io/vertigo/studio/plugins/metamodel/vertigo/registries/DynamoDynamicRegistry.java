@@ -35,7 +35,7 @@ import io.vertigo.studio.plugins.metamodel.vertigo.registries.search.SearchDynam
 import io.vertigo.studio.plugins.metamodel.vertigo.registries.task.TaskDynamicRegistry;
 
 /**
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class DynamoDynamicRegistry implements DynamicRegistry {
 	private final List<DynamicRegistry> dynamicRegistries;

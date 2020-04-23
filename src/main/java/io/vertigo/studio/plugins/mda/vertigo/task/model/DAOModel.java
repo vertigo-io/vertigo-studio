@@ -24,7 +24,7 @@ import java.util.function.Function;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.studio.impl.mda.FileGeneratorConfig;
+import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 import io.vertigo.studio.metamodel.domain.StudioStereotype;
 import io.vertigo.studio.metamodel.task.StudioTaskDefinition;
@@ -32,7 +32,7 @@ import io.vertigo.studio.metamodel.task.StudioTaskDefinition;
 /**
  * Objet utilisé par FreeMarker.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class DAOModel {
 	private final StudioDtDefinition dtDefinition;
@@ -46,12 +46,12 @@ public final class DAOModel {
 	 *
 	 * @param dtDefinition DtDefinition de l'objet à générer
 	 */
-	public DAOModel(final FileGeneratorConfig fileGeneratorConfig, final StudioDtDefinition dtDefinition, final Collection<StudioTaskDefinition> taskDefinitionCollection, final Function<String, String> classNameFromDt) {
-		Assertion.checkNotNull(fileGeneratorConfig);
+	public DAOModel(final MdaConfig mdaConfig, final StudioDtDefinition dtDefinition, final Collection<StudioTaskDefinition> taskDefinitionCollection, final Function<String, String> classNameFromDt) {
+		Assertion.checkNotNull(mdaConfig);
 		Assertion.checkNotNull(dtDefinition);
 		Assertion.checkNotNull(taskDefinitionCollection);
 		final String definitionPackageName = dtDefinition.getPackageName();
-		final String packageNamePrefix = fileGeneratorConfig.getProjectPackageName();
+		final String packageNamePrefix = mdaConfig.getProjectPackageName();
 		// ---
 		Assertion.checkArgument(definitionPackageName.startsWith(packageNamePrefix), "Package name {0}, must begin with normalised prefix: {1}", definitionPackageName, packageNamePrefix);
 		Assertion.checkArgument(definitionPackageName.substring(packageNamePrefix.length()).contains(".domain"), "Package name {0}, must contains the modifier .domain", definitionPackageName);
@@ -67,7 +67,7 @@ public final class DAOModel {
 
 		this.dtDefinition = dtDefinition;
 		//On construit le nom du package à partir du package de la DT et de la feature.
-		packageName = fileGeneratorConfig.getProjectPackageName() + featureName + ".dao" + subpackage;
+		packageName = mdaConfig.getProjectPackageName() + featureName + ".dao" + subpackage;
 
 		boolean hasOption = false;
 		for (final StudioTaskDefinition taskDefinition : taskDefinitionCollection) {

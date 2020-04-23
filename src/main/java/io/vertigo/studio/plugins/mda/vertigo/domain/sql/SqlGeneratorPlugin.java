@@ -26,18 +26,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.inject.Inject;
-
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.impl.mda.FileGenerator;
-import io.vertigo.studio.impl.mda.FileGeneratorConfig;
 import io.vertigo.studio.impl.mda.GeneratorPlugin;
+import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
 import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
@@ -57,64 +53,32 @@ import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
 /**
  * Generate crebas.sql.
  *
- * @author pchretien, gpierre-nicolas
+ * @author pchretien, mlaroche, gpierre-nicolas
  */
 public final class SqlGeneratorPlugin implements GeneratorPlugin {
 
 	private static final String DEFAULT_DATA_SPACE = "main";
-
-	private final String targetSubDir;
-	private final boolean generateDrop;
-	private final String baseCible;
-	private final Optional<String> tableSpaceDataOpt;
-	private final Optional<String> tableSpaceIndexOpt;
-	private final boolean generateMasterData;
-
-	/**
-	 * Constructeur.
-	 *
-	 * @param targetSubDirOpt Repertoire de generation des fichiers de ce plugin
-	 * @param generateDrop Si on génère les Drop table dans le fichier SQL
-	 * @param baseCible Type de base de données ciblé.
-	 * @param tableSpaceData Nom du tableSpace des données
-	 * @param tableSpaceIndex Nom du tableSpace des indexes
-	 */
-	@Inject
-	public SqlGeneratorPlugin(
-			@ParamValue("targetSubDir") final Optional<String> targetSubDirOpt,
-			@ParamValue("generateDrop") final boolean generateDrop,
-			@ParamValue("baseCible") final String baseCible,
-			@ParamValue("generateMasterData") final Optional<Boolean> generateMasterDataOpt,
-			@ParamValue("tableSpaceData") final Optional<String> tableSpaceData,
-			@ParamValue("tableSpaceIndex") final Optional<String> tableSpaceIndex) {
-		//-----
-		targetSubDir = targetSubDirOpt.orElse("sqlgen");
-		this.generateDrop = generateDrop;
-		this.baseCible = baseCible;
-		tableSpaceDataOpt = tableSpaceData;
-		tableSpaceIndexOpt = tableSpaceIndex;
-		generateMasterData = generateMasterDataOpt.orElse(false);
-	}
+	private static final String DEFAULT_TARGET_SUBDIR = "sqlgen";
 
 	/** {@inheritDoc} */
 	@Override
 	public void generate(
 			final MetamodelRepository metamodelRepository,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
-		Assertion.checkNotNull(fileGeneratorConfig);
+		Assertion.checkNotNull(mdaConfig);
 		Assertion.checkNotNull(mdaResultBuilder);
 		//-----
-		generateSql(metamodelRepository, fileGeneratorConfig, mdaResultBuilder);
+		generateSql(metamodelRepository, mdaConfig, mdaResultBuilder);
 
-		if (generateMasterData) {
-			generateMasterDataInserts(metamodelRepository, fileGeneratorConfig, mdaResultBuilder);
+		if (mdaConfig.getOrDefaultAsBoolean("vertigo.domain.sql.generateMasterData", false)) {
+			generateMasterDataInserts(metamodelRepository, mdaConfig, mdaResultBuilder);
 		}
 	}
 
-	private void generateMasterDataInserts(
+	private static void generateMasterDataInserts(
 			final MetamodelRepository metamodelRepository,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 
 		final Map<String, Map<String, MasterDataValue>> staticMasterDataValues = metamodelRepository.getAll(StaticMasterData.class).stream().collect(Collectors.toMap(StaticMasterData::getEntityClassName, StaticMasterData::getValues));
@@ -125,12 +89,14 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 				.map(dtDefinition -> new SqlMasterDataDefinitionModel(dtDefinition, staticMasterDataValues.getOrDefault(dtDefinition.getClassCanonicalName(), Collections.emptyMap())))
 				.collect(Collectors.toList());
 
+		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.domain.sql.targetSubDir", DEFAULT_TARGET_SUBDIR);
+
 		for (final SqlMasterDataDefinitionModel sqlMasterDataDefinitionModel : sqlMasterDataDefinitionModels) {
 			final Map<String, Object> model = new MapBuilder<String, Object>()
 					.put("masterdata", sqlMasterDataDefinitionModel)
 					.build();
 
-			FileGenerator.builder(fileGeneratorConfig)
+			FileGenerator.builder(mdaConfig)
 					.withModel(model)
 					.withFileName("init_masterdata_" + sqlMasterDataDefinitionModel.getDefinition().getLocalName().toLowerCase() + ".sql")
 					.withGenSubDir(targetSubDir)
@@ -144,7 +110,7 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 
 	private void generateSql(
 			final MetamodelRepository metamodelRepository,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 
 		final Map<String, List<SqlStudioDtDefinitionModel>> mapListDtDef = new HashMap<>();
@@ -166,7 +132,7 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 			final Collection<SqlStudioAssociationNNModel> associationNNDefinitions = filterAssociationNN(collectionNNAll, dataSpace);
 
 			generateSqlByDataSpace(
-					fileGeneratorConfig,
+					mdaConfig,
 					mdaResultBuilder,
 					associationSimpleDefinitions,
 					associationNNDefinitions,
@@ -176,7 +142,7 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 	}
 
 	private void generateSqlByDataSpace(
-			final FileGeneratorConfig fileGeneratorConfig,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder,
 			final Collection<SqlStudioAssociationSimpleModel> associationSimpleDefinitions,
 			final Collection<SqlStudioAssociationNNModel> associationNNDefinitions,
@@ -189,7 +155,7 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 		}
 		filename.append(".sql");
 		generateFile(
-				fileGeneratorConfig,
+				mdaConfig,
 				mdaResultBuilder,
 				dtDefinitions,
 				associationSimpleDefinitions,
@@ -221,33 +187,37 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 				.collect(Collectors.toList());
 	}
 
-	private void generateFile(
-			final FileGeneratorConfig fileGeneratorConfig,
+	private static void generateFile(
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder,
 			final List<SqlStudioDtDefinitionModel> dtDefinitionModels,
 			final Collection<SqlStudioAssociationSimpleModel> associationSimpleDefinitions,
 			final Collection<SqlStudioAssociationNNModel> associationNNDefinitions,
 			final String fileName) {
+
+		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.domain.sql.targetSubDir", DEFAULT_TARGET_SUBDIR);
+		final String baseCible = mdaConfig.getAsString("vertigo.domain.sql.baseCible");
+		//---
 		final MapBuilder<String, Object> modelBuilder = new MapBuilder<String, Object>()
 				.put("sql", new SqlMethodModel())
 				.put("dtDefinitions", dtDefinitionModels)
 				.put("simpleAssociations", associationSimpleDefinitions)
 				.put("nnAssociations", associationNNDefinitions)
-				.put("drop", generateDrop)
-				// Ne sert actuellement à rien, le sql généré étant le même. Prévu pour le futur
 				.put("basecible", baseCible)
+				.put("drop", mdaConfig.getOrDefaultAsBoolean("vertigo.domain.sql.generateDrop", false))
 				// Oracle limite le nom des entités (index) à 30 charactères. Il faut alors tronquer les noms composés.
-				.put("truncateNames", "Oracle".equals(baseCible));
-
-		tableSpaceDataOpt.ifPresent(
-				tableSpaceData -> modelBuilder.put("tableSpaceData", tableSpaceData));
-		tableSpaceIndexOpt.ifPresent(
-				tableSpaceIndex -> modelBuilder.put("tableSpaceIndex", tableSpaceIndex));
+				.put("truncateNames", isOracle(baseCible));
+		if (mdaConfig.getAsString("vertigo.domain.sql.tableSpaceData") != null) {
+			modelBuilder.put("tableSpaceData", mdaConfig.getAsString("vertigo.domain.sql.tableSpaceData"));
+		}
+		if (mdaConfig.getAsString("vertigo.domain.sql.tableSpaceIndex") != null) {
+			modelBuilder.put("tableSpaceIndex", mdaConfig.getAsString("vertigo.domain.sql.tableSpaceIndex"));
+		}
 
 		final Map<String, Object> model = modelBuilder.build();
-		final String templatName = isSqlServer() ? "template/sqlserver.ftl" : "template/sql.ftl";
+		final String templatName = isSqlServer(baseCible) ? "template/sqlserver.ftl" : "template/sql.ftl";
 
-		FileGenerator.builder(fileGeneratorConfig)
+		FileGenerator.builder(mdaConfig)
 				.withModel(model)
 				.withFileName(fileName)
 				.withGenSubDir(targetSubDir)
@@ -257,13 +227,24 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 				.generateFile(mdaResultBuilder);
 	}
 
-	private boolean isSqlServer() {
+	private static boolean isSqlServer(final String baseCible) {
 		return "sqlserver".equalsIgnoreCase(baseCible) || "sql server".equalsIgnoreCase(baseCible);
 	}
 
+	private static boolean isOracle(final String baseCible) {
+		return "Oracle".equalsIgnoreCase(baseCible);
+	}
+
 	@Override
-	public void clean(final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder) {
-		MdaUtil.deleteFiles(new File(fileGeneratorConfig.getTargetGenDir() + targetSubDir), mdaResultBuilder);
+	public void clean(final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
+		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.domain.sql.targetSubDir", DEFAULT_TARGET_SUBDIR);
+		//---
+		MdaUtil.deleteFiles(new File(mdaConfig.getTargetGenDir() + targetSubDir), mdaResultBuilder);
+	}
+
+	@Override
+	public String getOutputType() {
+		return "vertigo.domain.sql";
 	}
 
 }

@@ -23,17 +23,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.inject.Inject;
-
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.mda.FileGenerator;
-import io.vertigo.studio.impl.mda.FileGeneratorConfig;
 import io.vertigo.studio.impl.mda.GeneratorPlugin;
+import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
 import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.authorization.SecuredFeature;
@@ -45,34 +41,26 @@ import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
 /**
  * Generation des objets relatifs au module Securite.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class AuthorizationGeneratorPlugin implements GeneratorPlugin {
 
-	private final String targetSubDir;
-
-	/**
-	 * Constructeur.
-	 * @param targetSubDirOpt Repertoire de generation des fichiers de ce plugin
-	 */
-	@Inject
-	public AuthorizationGeneratorPlugin(@ParamValue("targetSubDir") final Optional<String> targetSubDirOpt) {
-		//-----
-		targetSubDir = targetSubDirOpt.orElse("javagen");
-	}
+	private static final String DEFAULT_TARGET_SUBDIR = "javagen";
 
 	/** {@inheritDoc} */
 	@Override
 	public void generate(
 			final MetamodelRepository metamodelRepository,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
-		Assertion.checkNotNull(fileGeneratorConfig);
+		Assertion.checkNotNull(mdaConfig);
 		Assertion.checkNotNull(mdaResultBuilder);
 		//-----
-		generateGlobalAuthorizations(metamodelRepository, targetSubDir, fileGeneratorConfig, mdaResultBuilder);
+		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.authorization.targetSubDir", DEFAULT_TARGET_SUBDIR);
 
-		generateOperations(metamodelRepository, targetSubDir, fileGeneratorConfig, mdaResultBuilder);
+		generateGlobalAuthorizations(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder);
+
+		generateOperations(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder);
 	}
 
 	private static List<GlobalAuthorizationModel> getGlobalAuthorizations(final MetamodelRepository metamodelRepository) {
@@ -93,18 +81,18 @@ public final class AuthorizationGeneratorPlugin implements GeneratorPlugin {
 				.collect(Collectors.toList());
 	}
 
-	private static void generateGlobalAuthorizations(final MetamodelRepository metamodelRepository, final String targetSubDir, final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder) {
-		generateDictionnary("GlobalAuthorizations", targetSubDir, fileGeneratorConfig, mdaResultBuilder, getGlobalAuthorizations(metamodelRepository));
+	private static void generateGlobalAuthorizations(final MetamodelRepository metamodelRepository, final String targetSubDir, final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
+		generateDictionnary("GlobalAuthorizations", targetSubDir, mdaConfig, mdaResultBuilder, getGlobalAuthorizations(metamodelRepository));
 	}
 
-	private static void generateOperations(final MetamodelRepository metamodelRepository, final String targetSubDir, final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder) {
-		generateDictionnary("SecuredEntities", targetSubDir, fileGeneratorConfig, mdaResultBuilder, getSecuredEntities(metamodelRepository));
+	private static void generateOperations(final MetamodelRepository metamodelRepository, final String targetSubDir, final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
+		generateDictionnary("SecuredEntities", targetSubDir, mdaConfig, mdaResultBuilder, getSecuredEntities(metamodelRepository));
 	}
 
 	private static void generateDictionnary(
 			final String objectName,
 			final String targetSubDir,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder,
 			final Collection<?> values) {
 		Assertion.checkArgNotEmpty(objectName);
@@ -116,14 +104,14 @@ public final class AuthorizationGeneratorPlugin implements GeneratorPlugin {
 			final Map<String, Object> model = new MapBuilder<String, Object>()
 					.put(lowerCaseObjectName, values)
 					.put("classSimpleName", objectName)
-					.put("packageName", fileGeneratorConfig.getProjectPackageName() + ".authorization")
+					.put("packageName", mdaConfig.getProjectPackageName() + ".authorization")
 					.build();
 
-			FileGenerator.builder(fileGeneratorConfig)
+			FileGenerator.builder(mdaConfig)
 					.withModel(model)
 					.withFileName(objectName + ".java")
 					.withGenSubDir(targetSubDir)
-					.withPackageName(fileGeneratorConfig.getProjectPackageName() + ".authorization")
+					.withPackageName(mdaConfig.getProjectPackageName() + ".authorization")
 					.withTemplateName(AuthorizationGeneratorPlugin.class, "template/" + lowerCaseObjectName + ".ftl")
 					.build()
 					.generateFile(mdaResultBuilder);
@@ -132,7 +120,14 @@ public final class AuthorizationGeneratorPlugin implements GeneratorPlugin {
 	}
 
 	@Override
-	public void clean(final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder) {
-		MdaUtil.deleteFiles(new File(fileGeneratorConfig.getTargetGenDir() + targetSubDir), mdaResultBuilder);
+	public void clean(final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
+		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.authorization.targetSubDir", DEFAULT_TARGET_SUBDIR);
+		//---
+		MdaUtil.deleteFiles(new File(mdaConfig.getTargetGenDir() + targetSubDir), mdaResultBuilder);
+	}
+
+	@Override
+	public String getOutputType() {
+		return "vertigo.authorization";
 	}
 }

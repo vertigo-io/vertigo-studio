@@ -24,7 +24,7 @@ package io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity;
  * - entity
  * - entity Link
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  *
  */
 public interface DslEntityFieldType {

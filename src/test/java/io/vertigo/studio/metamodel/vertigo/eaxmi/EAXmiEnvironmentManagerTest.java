@@ -43,7 +43,7 @@ import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 /**
  * Test de l'implémentation standard.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class EAXmiEnvironmentManagerTest extends AbstractTestCaseJU5 {
 	private MetamodelRepository metamodelRepository;

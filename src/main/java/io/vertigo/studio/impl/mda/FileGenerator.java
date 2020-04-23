@@ -18,6 +18,7 @@
  */
 package io.vertigo.studio.impl.mda;
 
+import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
 
 /**
@@ -39,7 +40,7 @@ public interface FileGenerator {
 	 * @param fileGeneratorConfig the config of the file generator
 	 * @return FileGeneratorBuilder
 	 */
-	static FileGeneratorBuilder builder(final FileGeneratorConfig fileGeneratorConfig) {
+	static FileGeneratorBuilder builder(final MdaConfig fileGeneratorConfig) {
 		return new FileGeneratorBuilder(fileGeneratorConfig);
 	}
 }

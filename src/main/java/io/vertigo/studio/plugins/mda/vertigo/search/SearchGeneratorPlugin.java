@@ -24,15 +24,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.inject.Inject;
-
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.impl.mda.FileGenerator;
-import io.vertigo.studio.impl.mda.FileGeneratorConfig;
 import io.vertigo.studio.impl.mda.GeneratorPlugin;
+import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
 import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
@@ -50,32 +47,23 @@ import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
 /**
  * Génération des objets relatifs au module Task.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class SearchGeneratorPlugin implements GeneratorPlugin {
 
-	private final String targetSubDir;
-
-	/**
-	 * Constructeur.
-	 * @param targetSubDirOpt Repertoire de generation des fichiers de ce plugin
-	 */
-	@Inject
-	public SearchGeneratorPlugin(@ParamValue("targetSubDir") final Optional<String> targetSubDirOpt) {
-		//-----
-		targetSubDir = targetSubDirOpt.orElse("javagen");
-	}
+	private static final String DEFAULT_TARGET_SUBDIR = "javagen";
 
 	/** {@inheritDoc} */
 	@Override
 	public void generate(
 			final MetamodelRepository metamodelRepository,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
-		Assertion.checkNotNull(fileGeneratorConfig);
+		Assertion.checkNotNull(mdaConfig);
 		Assertion.checkNotNull(mdaResultBuilder);
 		//-----
-		generateSearchAos(metamodelRepository, targetSubDir, fileGeneratorConfig, mdaResultBuilder);
+		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.search.targetSubDir", DEFAULT_TARGET_SUBDIR);
+		generateSearchAos(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder);
 	}
 
 	/**
@@ -84,13 +72,13 @@ public final class SearchGeneratorPlugin implements GeneratorPlugin {
 	private static void generateSearchAos(
 			final MetamodelRepository metamodelRepository,
 			final String targetSubDir,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 
 		metamodelRepository.getAll(StudioDtDefinition.class)
 				.stream()
 				.filter(dtDefinition -> dtDefinition.getStereotype() == StudioStereotype.KeyConcept)
-				.forEach(dtDefinition -> generateSearchAo(metamodelRepository, targetSubDir, fileGeneratorConfig, mdaResultBuilder, dtDefinition));
+				.forEach(dtDefinition -> generateSearchAo(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder, dtDefinition));
 
 	}
 
@@ -100,13 +88,13 @@ public final class SearchGeneratorPlugin implements GeneratorPlugin {
 	private static void generateSearchAo(
 			final MetamodelRepository metamodelRepository,
 			final String targetSubDir,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder,
 			final StudioDtDefinition dtDefinition) {
 		Assertion.checkNotNull(dtDefinition);
 
 		final String definitionPackageName = dtDefinition.getPackageName();
-		final String packageNamePrefix = fileGeneratorConfig.getProjectPackageName();
+		final String packageNamePrefix = mdaConfig.getProjectPackageName();
 		Assertion.checkArgument(definitionPackageName.startsWith(packageNamePrefix), "Package name {0}, must begin with normalised prefix: {1}", definitionPackageName, packageNamePrefix);
 		Assertion.checkArgument(definitionPackageName.substring(packageNamePrefix.length()).contains(".domain"), "Package name {0}, must contains the modifier .domain", definitionPackageName);
 		// ---
@@ -120,7 +108,7 @@ public final class SearchGeneratorPlugin implements GeneratorPlugin {
 		// breaking change -> need to redefine what's the desired folder structure in javagen...
 
 		//On construit le nom du package à partir du package de la DT et de la feature.
-		final String packageName = fileGeneratorConfig.getProjectPackageName() + featureName + ".search" + subpackage;
+		final String packageName = mdaConfig.getProjectPackageName() + featureName + ".search" + subpackage;
 
 		final SearchDtDefinitionModel searchDtDefinitionModel = new SearchDtDefinitionModel(dtDefinition);
 
@@ -157,7 +145,7 @@ public final class SearchGeneratorPlugin implements GeneratorPlugin {
 					.put("searchIndexDefinition", new SearchIndexDefinitionModel(searchIndexDefinitionOpt.get()))
 					.build();
 
-			FileGenerator.builder(fileGeneratorConfig)
+			FileGenerator.builder(mdaConfig)
 					.withModel(model)
 					.withFileName(searchDtDefinitionModel.getClassSimpleName() + "SearchClient.java")
 					.withGenSubDir(targetSubDir)
@@ -169,7 +157,14 @@ public final class SearchGeneratorPlugin implements GeneratorPlugin {
 	}
 
 	@Override
-	public void clean(final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder) {
-		MdaUtil.deleteFiles(new File(fileGeneratorConfig.getTargetGenDir() + targetSubDir), mdaResultBuilder);
+	public void clean(final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
+		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.search.targetSubDir", DEFAULT_TARGET_SUBDIR);
+		//---
+		MdaUtil.deleteFiles(new File(mdaConfig.getTargetGenDir() + targetSubDir), mdaResultBuilder);
+	}
+
+	@Override
+	public String getOutputType() {
+		return "vertigo.search";
 	}
 }

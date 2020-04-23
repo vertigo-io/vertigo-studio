@@ -33,7 +33,7 @@ import io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslGrammar;
 import io.vertigo.studio.plugins.metamodel.vertigo.registries.domain.DomainGrammar;
 
 /**
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 final class TaskGrammar implements DslGrammar {
 	/** Attribute name. */

@@ -32,7 +32,7 @@ import io.vertigo.core.node.definition.DefinitionUtil;
 /**
  * Espace de définitions (non threadSafe).
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class MetamodelRepository implements DefinitionSpace {
 	private final Map<String, Definition> definitions = new LinkedHashMap<>();

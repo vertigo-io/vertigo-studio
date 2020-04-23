@@ -24,18 +24,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.inject.Inject;
-
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.mda.FileGenerator;
-import io.vertigo.studio.impl.mda.FileGeneratorConfig;
 import io.vertigo.studio.impl.mda.GeneratorPlugin;
+import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
 import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
@@ -54,95 +50,77 @@ import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
 /**
  * Génération des objets relatifs au module Domain.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class DomainGeneratorPlugin implements GeneratorPlugin {
-	private final String targetSubDir;
-	private final boolean shouldGenerateDtResources;
-	private final boolean shouldGenerateDtDefinitions;
-	private final String dictionaryClassName;
 
-	/**
-	 * Constructeur.
-	 * @param targetSubDirOpt Repertoire de generation des fichiers de ce plugin
-	 * @param generateDtResources Si on génère les fichiers i18n pour MessageText des labels des champs
-	 * @param generateDtDefinitionsOpt Si on génère le fichier fournissant la liste des classes de Dt
-	 * @param generateDtObject Si on génère les classes des Dt
-	 */
-	@Inject
-	public DomainGeneratorPlugin(
-			@ParamValue("targetSubDir") final Optional<String> targetSubDirOpt,
-			@ParamValue("generateDtResources") final Optional<Boolean> generateDtResourcesOpt,
-			@ParamValue("generateDtDefinitions") final Optional<Boolean> generateDtDefinitionsOpt,
-			@ParamValue("dictionaryClassName") final Optional<String> dictionaryClassNameOption) {
-		//-----
-		targetSubDir = targetSubDirOpt.orElse("javagen");
-		shouldGenerateDtResources = generateDtResourcesOpt.orElse(Boolean.TRUE);// true by default
-		shouldGenerateDtDefinitions = generateDtDefinitionsOpt.orElse(Boolean.TRUE);// true by default
-		dictionaryClassName = dictionaryClassNameOption.orElse("DtDefinitions");
-	}
+	private static final String DEFAULT_TARGET_SUBDIR = "javagen";
 
 	/** {@inheritDoc} */
 	@Override
 	public void generate(
 			final MetamodelRepository metamodelRepository,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
-		Assertion.checkNotNull(fileGeneratorConfig);
+		Assertion.checkNotNull(mdaConfig);
 		Assertion.checkNotNull(mdaResultBuilder);
 		//-----
+
+		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.domain.java.targetSubDir", DEFAULT_TARGET_SUBDIR);
 		/* Génération des ressources afférentes au DT. */
-		if (shouldGenerateDtResources) {
-			generateDtResources(metamodelRepository, targetSubDir, fileGeneratorConfig, mdaResultBuilder);
+		if (mdaConfig.getOrDefaultAsBoolean("vertigo.domain.java.generateDtResources", Boolean.TRUE)) {// true by default
+			generateDtResources(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder);
 		}
 
 		/* Génération de la lgeneratee référençant toutes des définitions. */
-		if (shouldGenerateDtDefinitions) {
-			generateDtDefinitions(metamodelRepository, targetSubDir, fileGeneratorConfig, mdaResultBuilder, dictionaryClassName);
+		if (mdaConfig.getOrDefaultAsBoolean("vertigo.domain.java.generateDtDefinitions", Boolean.TRUE)) {// true by default
+			generateDtDefinitions(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder, mdaConfig.getOrDefaultAsString("vertigo.domain.java.dictionaryClassName", "DtDefinitions"));
 		}
 
 		/* Générations des DTO. */
-		generateDtObjects(metamodelRepository, fileGeneratorConfig, mdaResultBuilder);
-		generateJavaEnums(metamodelRepository, fileGeneratorConfig, mdaResultBuilder);
+		generateDtObjects(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder);
+		generateJavaEnums(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder);
 
 	}
 
 	private static void generateDtDefinitions(
 			final MetamodelRepository metamodelRepository,
 			final String targetSubDir,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder,
 			final String dictionaryClassName) {
 
 		final Map<String, Object> model = new MapBuilder<String, Object>()
-				.put("packageName", fileGeneratorConfig.getProjectPackageName() + ".domain")
+				.put("packageName", mdaConfig.getProjectPackageName() + ".domain")
 				.put("classSimpleName", dictionaryClassName)
 				.put("dtDefinitions", toModels(metamodelRepository, DomainUtil.getDtDefinitions(metamodelRepository)))
 				.build();
 
-		FileGenerator.builder(fileGeneratorConfig)
+		FileGenerator.builder(mdaConfig)
 				.withModel(model)
 				.withFileName(dictionaryClassName + ".java")
 				.withGenSubDir(targetSubDir)
-				.withPackageName(fileGeneratorConfig.getProjectPackageName() + ".domain")
+				.withPackageName(mdaConfig.getProjectPackageName() + ".domain")
 				.withTemplateName(DomainGeneratorPlugin.class, "template/dtdefinitions.ftl")
 				.build()
 				.generateFile(mdaResultBuilder);
 
 	}
 
-	private void generateDtObjects(
+	private static void generateDtObjects(
 			final MetamodelRepository metamodelRepository,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final String targetSubDir,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		for (final StudioDtDefinition dtDefinition : DomainUtil.getDtDefinitions(metamodelRepository)) {
-			generateDtObject(metamodelRepository, fileGeneratorConfig, mdaResultBuilder, dtDefinition, getAssociationsByDtDefinition(metamodelRepository, dtDefinition));
+			generateDtObject(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder, dtDefinition, getAssociationsByDtDefinition(metamodelRepository, dtDefinition));
 		}
 	}
 
-	private void generateDtObject(
+	private static void generateDtObject(
 			final MetamodelRepository metamodelRepository,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final String targetSubDir,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder,
 			final StudioDtDefinition dtDefinition,
 			final List<? extends StudioAssociationDefinition> associations) {
@@ -153,7 +131,7 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 				.put("annotations", new MethodAnnotationsModel())
 				.build();
 
-		FileGenerator.builder(fileGeneratorConfig)
+		FileGenerator.builder(mdaConfig)
 				.withModel(model)
 				.withFileName(dtDefinitionModel.getClassSimpleName() + ".java")
 				.withGenSubDir(targetSubDir)
@@ -179,14 +157,11 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 	private static void generateDtResources(
 			final MetamodelRepository metamodelRepository,
 			final String targetSubDir,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		final String simpleClassName = "DtResources";
 		final String resourcesTemplateName = "template/resources.ftl";
 		final String propertiesTemplateName = "template/properties.ftl";
-
-		//pour les .properties on force l'ISO-8859-1 comme la norme l'impose
-		final FileGeneratorConfig propertiesFileConfig = new FileGeneratorConfig(fileGeneratorConfig.getTargetGenDir(), fileGeneratorConfig.getProjectPackageName(), "ISO-8859-1");
 
 		/**
 		 * Génération des ressources afférentes au DT.
@@ -202,7 +177,7 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 					.put("dtDefinitions", toModels(metamodelRepository, dtDefinitions))
 					.build();
 
-			FileGenerator.builder(fileGeneratorConfig)
+			FileGenerator.builder(mdaConfig)
 					.withModel(model)
 					.withFileName(simpleClassName + ".java")
 					.withGenSubDir(targetSubDir)
@@ -211,7 +186,8 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 					.build()
 					.generateFile(mdaResultBuilder);
 
-			FileGenerator.builder(propertiesFileConfig)
+			FileGenerator.builder(mdaConfig)
+					.withEncoding("ISO-8859-1")//pour les .properties on force l'ISO-8859-1 comme la norme l'impose
 					.withModel(model)
 					.withFileName(simpleClassName + ".properties")
 					.withGenSubDir(targetSubDir)
@@ -224,7 +200,8 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 
 	private void generateJavaEnums(
 			final MetamodelRepository metamodelRepository,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final String targetSubDir,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		final Map<String, Map<String, MasterDataValue>> staticMasterDataValues = metamodelRepository.getAll(StaticMasterData.class).stream().collect(Collectors.toMap(StaticMasterData::getEntityClassName, StaticMasterData::getValues));
 
@@ -232,13 +209,15 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 				.stream()
 				.filter(dtDefinition -> dtDefinition.getStereotype() == StudioStereotype.StaticMasterData)
 				.forEach(dtDefintion -> generateJavaEnum(
-						fileGeneratorConfig,
+						targetSubDir,
+						mdaConfig,
 						mdaResultBuilder,
 						dtDefintion, staticMasterDataValues.getOrDefault(dtDefintion.getClassCanonicalName(), Collections.emptyMap())));
 	}
 
-	private void generateJavaEnum(
-			final FileGeneratorConfig fileGeneratorConfig,
+	private static void generateJavaEnum(
+			final String targetSubDir,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder,
 			final StudioDtDefinition dtDefinition,
 			final Map<String, MasterDataValue> values) {
@@ -249,7 +228,7 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 				.put("entity", masterDataDefinitionModel)
 				.build();
 
-		FileGenerator.builder(fileGeneratorConfig)
+		FileGenerator.builder(mdaConfig)
 				.withModel(model)
 				.withFileName(masterDataDefinitionModel.getClassSimpleName() + "Enum.java")
 				.withGenSubDir(targetSubDir)
@@ -261,7 +240,13 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 	}
 
 	@Override
-	public void clean(final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder) {
-		MdaUtil.deleteFiles(new File(fileGeneratorConfig.getTargetGenDir() + targetSubDir), mdaResultBuilder);
+	public void clean(final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
+		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.domain.java.targetSubDir", DEFAULT_TARGET_SUBDIR);
+		MdaUtil.deleteFiles(new File(mdaConfig.getTargetGenDir() + targetSubDir), mdaResultBuilder);
+	}
+
+	@Override
+	public String getOutputType() {
+		return "vertigo.domain.java";
 	}
 }

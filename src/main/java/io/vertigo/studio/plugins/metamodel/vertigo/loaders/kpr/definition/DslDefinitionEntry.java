@@ -28,7 +28,7 @@ import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinition;
  * - soit par un champ et une définition,
  * - soit par un champ et une liste de clés de définition.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class DslDefinitionEntry {
 	/**

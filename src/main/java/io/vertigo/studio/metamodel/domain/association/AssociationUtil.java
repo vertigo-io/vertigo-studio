@@ -21,7 +21,7 @@ package io.vertigo.studio.metamodel.domain.association;
 /**
  * Classe utilitaire permettant de travailler sur les associations.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class AssociationUtil {
 

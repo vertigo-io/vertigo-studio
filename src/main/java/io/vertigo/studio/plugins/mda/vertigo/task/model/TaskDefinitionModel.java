@@ -31,7 +31,7 @@ import io.vertigo.studio.metamodel.task.StudioTaskDefinition;
 /**
  * Génération des classes/méthodes des taches de type DAO.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class TaskDefinitionModel {
 	private final StudioTaskDefinition taskDefinition;

@@ -31,7 +31,7 @@ import io.vertigo.core.util.StringUtil;
  *  - Code de l'entité à laquelle est attachée le noeud.
  *
  *  D'autre part l'association possède son propre code.
- * @author pchretien, pforhan
+ * @author pchretien, mlaroche, pforhan
  */
 public final class XmlAssociation {
 	private static final int SECOND_SEPARATOR = 3;

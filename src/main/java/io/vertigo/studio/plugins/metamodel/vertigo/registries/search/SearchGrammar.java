@@ -30,7 +30,7 @@ import io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslGrammar;
 import io.vertigo.studio.plugins.metamodel.vertigo.registries.domain.DomainGrammar;
 
 /**
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 final class SearchGrammar implements DslGrammar {
 	/** Index definition. */

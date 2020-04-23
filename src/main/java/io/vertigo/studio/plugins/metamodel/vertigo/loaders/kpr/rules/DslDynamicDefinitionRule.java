@@ -33,7 +33,7 @@ import io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslGrammar;
 import io.vertigo.studio.plugins.metamodel.vertigo.loaders.kpr.definition.DslDefinitionEntry;
 
 /*
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class DslDynamicDefinitionRule extends AbstractRule<DslDefinition, PegChoice> {
 

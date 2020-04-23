@@ -21,17 +21,13 @@ package io.vertigo.studio.plugins.mda.vertigo.domain.js;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.inject.Inject;
-
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.mda.FileGenerator;
-import io.vertigo.studio.impl.mda.FileGeneratorConfig;
 import io.vertigo.studio.impl.mda.GeneratorPlugin;
+import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
 import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.plugins.mda.vertigo.domain.js.model.JSDtDefinitionModel;
@@ -41,45 +37,29 @@ import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
 /**
  * Génération des objets relatifs au module Domain.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class JSGeneratorPlugin implements GeneratorPlugin {
-	private final String targetSubDir;
-	private final boolean shouldGenerateDtResourcesJS;
-	private final boolean shouldGenerateJsDtDefinitions;
 
-	/**
-	 * Constructeur.
-	 * @param targetSubDirOpt Repertoire de generation des fichiers de ce plugin
-	 * @param generateDtResourcesJSOpt Si on génère les fichiers i18n pour les labels des champs en JS
-	 * @param generateJsDtDefinitionsOpt Si on génère les classes JS.
-	 */
-	@Inject
-	public JSGeneratorPlugin(
-			@ParamValue("targetSubDir") final Optional<String> targetSubDirOpt,
-			@ParamValue("generateDtResourcesJS") final Optional<Boolean> generateDtResourcesJSOpt,
-			@ParamValue("generateJsDtDefinitions") final Optional<Boolean> generateJsDtDefinitionsOpt) {
-		//-----
-		targetSubDir = targetSubDirOpt.orElse("jsgen");
-		shouldGenerateDtResourcesJS = generateDtResourcesJSOpt.orElse(true); //true by default
-		shouldGenerateJsDtDefinitions = generateJsDtDefinitionsOpt.orElse(true);//true by default
-	}
+	private static final String DEFAULT_TARGET_SUBDIR = "jsgen";
 
 	/** {@inheritDoc} */
 	@Override
 	public void generate(
 			final MetamodelRepository metamodelRepository,
-			final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder) {
-		Assertion.checkNotNull(fileGeneratorConfig);
+			final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
+		Assertion.checkNotNull(mdaConfig);
 		Assertion.checkNotNull(mdaResultBuilder);
 		//-----
+		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.domain.js.targetSubDir", DEFAULT_TARGET_SUBDIR);
+		//---
 		/* Génération des ressources afférentes au DT mais pour la partie JS.*/
-		if (shouldGenerateDtResourcesJS) {
-			generateDtResourcesJS(metamodelRepository, targetSubDir, fileGeneratorConfig, mdaResultBuilder);
+		if (mdaConfig.getOrDefaultAsBoolean("vertigo.domain.js.generateDtResourcesJS", true)) {//true by default
+			generateDtResourcesJS(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder);
 		}
 		/* Génération des fichiers javascripts référençant toutes les définitions. */
-		if (shouldGenerateJsDtDefinitions) {
-			generateJsDtDefinitions(metamodelRepository, targetSubDir, fileGeneratorConfig, mdaResultBuilder);
+		if (mdaConfig.getOrDefaultAsBoolean("vertigo.domain.js.generateJsDtDefinitions", true)) {//true by default
+			generateJsDtDefinitions(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder);
 		}
 	}
 
@@ -92,20 +72,20 @@ public final class JSGeneratorPlugin implements GeneratorPlugin {
 	private static void generateJsDtDefinitions(
 			final MetamodelRepository metamodelRepository,
 			final String targetSubDir,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 
 		final Map<String, Object> model = new MapBuilder<String, Object>()
-				.put("packageName", fileGeneratorConfig.getProjectPackageName() + ".domain")
+				.put("packageName", mdaConfig.getProjectPackageName() + ".domain")
 				.put("classSimpleName", "DtDefinitions")
 				.put("dtDefinitions", getJsDtDefinitionModels(metamodelRepository))
 				.build();
 
-		FileGenerator.builder(fileGeneratorConfig)
+		FileGenerator.builder(mdaConfig)
 				.withModel(model)
 				.withFileName("DtDefinitions.js")
 				.withGenSubDir(targetSubDir)
-				.withPackageName(fileGeneratorConfig.getProjectPackageName() + ".domain")
+				.withPackageName(mdaConfig.getProjectPackageName() + ".domain")
 				.withTemplateName(JSGeneratorPlugin.class, "template/js.ftl")
 				.build()
 				.generateFile(mdaResultBuilder);
@@ -113,15 +93,15 @@ public final class JSGeneratorPlugin implements GeneratorPlugin {
 
 	/**
 	 * Génère les ressources JS pour les traductions.
-	 * @param fileGeneratorConfig Configuration du domaine.
+	 * @param mdaConfig Configuration du domaine.
 	 */
 	private static void generateDtResourcesJS(
 			final MetamodelRepository metamodelRepository,
 			final String targetSubDir,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		final String simpleClassName = "DtDefinitions" + "Label";
-		final String packageName = fileGeneratorConfig.getProjectPackageName() + ".domain";
+		final String packageName = mdaConfig.getProjectPackageName() + ".domain";
 
 		final Map<String, Object> model = new MapBuilder<String, Object>()
 				.put("packageName", packageName)
@@ -129,7 +109,7 @@ public final class JSGeneratorPlugin implements GeneratorPlugin {
 				.put("dtDefinitions", getJsDtDefinitionModels(metamodelRepository))
 				.build();
 
-		FileGenerator.builder(fileGeneratorConfig)
+		FileGenerator.builder(mdaConfig)
 				.withModel(model)
 				.withFileName(simpleClassName + ".js")
 				.withGenSubDir(targetSubDir)
@@ -140,8 +120,15 @@ public final class JSGeneratorPlugin implements GeneratorPlugin {
 	}
 
 	@Override
-	public void clean(final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder) {
-		MdaUtil.deleteFiles(new File(fileGeneratorConfig.getTargetGenDir() + targetSubDir), mdaResultBuilder);
+	public void clean(final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
+		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.domain.js.targetSubDir", DEFAULT_TARGET_SUBDIR);
+		//---
+		MdaUtil.deleteFiles(new File(mdaConfig.getTargetGenDir() + targetSubDir), mdaResultBuilder);
+	}
+
+	@Override
+	public String getOutputType() {
+		return "vertigo.domain.js";
 	}
 
 }

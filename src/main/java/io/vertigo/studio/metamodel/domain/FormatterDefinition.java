@@ -25,7 +25,7 @@ import io.vertigo.core.node.definition.DefinitionPrefix;
 /**
  * Par nature un formatter est une ressource partagée et non modifiable.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 @DefinitionPrefix("Fmt")
 public final class FormatterDefinition implements Definition {

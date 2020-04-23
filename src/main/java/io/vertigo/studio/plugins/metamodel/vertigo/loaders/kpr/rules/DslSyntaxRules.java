@@ -27,7 +27,7 @@ import io.vertigo.commons.peg.PegWordRule;
  * Les lettres interdites dans les mots sont les suivantes espace
  * =();[]"/.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 final class DslSyntaxRules {
 	/** Liste des caractères réservés. */

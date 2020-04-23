@@ -49,7 +49,7 @@ import io.vertigo.studio.metamodel.domain.StudioDtField;
  *  - pour donner les principaux fabricants, (facette de type 'term')
  *  - etc..
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 @DefinitionPrefix("StFct")
 public final class StudioFacetDefinition implements Definition {

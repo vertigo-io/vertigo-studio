@@ -44,7 +44,7 @@ import io.vertigo.core.node.definition.DefinitionUtil;
  *
  *  An application is built with some dozens of domains.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 @DefinitionPrefix("Do")
 public final class Domain implements Definition {

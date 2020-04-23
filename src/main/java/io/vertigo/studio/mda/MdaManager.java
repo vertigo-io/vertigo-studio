@@ -23,18 +23,18 @@ import io.vertigo.studio.metamodel.MetamodelRepository;
 
 /**
  * This class generates files in any text format.
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public interface MdaManager extends Manager {
 	/**
 	 * Generates the files.
 	 * @return the result
 	 */
-	MdaResult generate(MetamodelRepository metamodelRepository);
+	MdaResult generate(MetamodelRepository metamodelRepository, MdaConfig mdaConfig);
 
 	/**
 	 * Clean the gen directory
 	 * @return the result
 	 */
-	MdaResult clean();
+	MdaResult clean(final MdaConfig mdaConfig);
 }

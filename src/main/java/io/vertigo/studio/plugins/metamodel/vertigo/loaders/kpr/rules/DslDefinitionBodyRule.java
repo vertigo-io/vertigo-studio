@@ -44,7 +44,7 @@ import io.vertigo.studio.plugins.metamodel.vertigo.loaders.kpr.definition.DslPro
  * - couple (champ, définition(s)).
  * Une définition étant soit affectée en ligne soit référencée.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class DslDefinitionBodyRule extends AbstractRule<DslDefinitionBody, List<Object>> {
 

@@ -35,7 +35,7 @@ import io.vertigo.core.lang.Assertion;
  * Fait partie du métamodèle lorsque la facette est déclarée par ses ranges.
  * Fait partie du modèle lorsque les valeurs sont déduites.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class StudioFacetValue implements Serializable {
 	private static final long serialVersionUID = -7077655936787603783L;

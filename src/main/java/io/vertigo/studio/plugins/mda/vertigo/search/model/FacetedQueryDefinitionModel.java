@@ -31,7 +31,7 @@ import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
 /**
  * Génération des classes/méthodes des taches de type DAO.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class FacetedQueryDefinitionModel {
 	private final StudioFacetedQueryDefinition facetedQueryDefinition;

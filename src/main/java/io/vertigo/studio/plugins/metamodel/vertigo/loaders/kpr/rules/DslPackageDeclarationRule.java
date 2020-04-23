@@ -32,7 +32,7 @@ import io.vertigo.commons.peg.PegRules;
  *
  * règle spécifiant qu'un package doit commencer par :
  * package nomdupackage;.
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class DslPackageDeclarationRule extends AbstractRule<String, List<Object>> {
 

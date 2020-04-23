@@ -63,68 +63,24 @@ public class StudioFeatures extends Features<StudioFeatures> {
 	}
 
 	@Feature("mda")
-	public StudioFeatures withMda(final Param... params) {
-		getModuleConfigBuilder().addComponent(MdaManager.class, MdaManagerImpl.class, params);
+	public StudioFeatures withMda() {
+		getModuleConfigBuilder().addComponent(MdaManager.class, MdaManagerImpl.class);
 		return this;
 	}
 
-	@Feature("mda.domain.java")
-	public StudioFeatures withJavaDomainGenerator(final Param... params) {
-		getModuleConfigBuilder().addPlugin(DomainGeneratorPlugin.class, params);
-		return this;
-	}
-
-	@Feature("mda.domain.js")
-	public StudioFeatures withJsDomainGenerator(final Param... params) {
-		getModuleConfigBuilder().addPlugin(JSGeneratorPlugin.class, params);
-		return this;
-	}
-
-	@Feature("mda.domain.ts")
-	public StudioFeatures withTsDomainGenerator(final Param... params) {
-		getModuleConfigBuilder().addPlugin(TSGeneratorPlugin.class, params);
-		return this;
-	}
-
-	@Feature("mda.domain.sql")
-	public StudioFeatures withSqlDomainGenerator(final Param... params) {
-		getModuleConfigBuilder().addPlugin(SqlGeneratorPlugin.class, params);
-		return this;
-	}
-
-	@Feature("mda.authorization")
-	public StudioFeatures withAuthorizationGenerator(final Param... params) {
-		getModuleConfigBuilder().addPlugin(AuthorizationGeneratorPlugin.class, params);
-		return this;
-	}
-
-	@Feature("mda.file")
-	public StudioFeatures withFileGenerator(final Param... params) {
-		getModuleConfigBuilder().addPlugin(FileInfoGeneratorPlugin.class, params);
-		return this;
-	}
-
-	@Feature("mda.task")
-	public StudioFeatures withTaskGenerator(final Param... params) {
-		getModuleConfigBuilder().addPlugin(TaskGeneratorPlugin.class, params);
-		return this;
-	}
-
-	@Feature("mda.search")
-	public StudioFeatures withSearchGenerator(final Param... params) {
-		getModuleConfigBuilder().addPlugin(SearchGeneratorPlugin.class, params);
-		return this;
-	}
-
-	@Feature("mda.taskTests")
-	public StudioFeatures withTaskTestsGenerator(final Param... params) {
-		getModuleConfigBuilder().addPlugin(TaskTestGeneratorPlugin.class, params);
-		return this;
-	}
-
-	@Feature("mda.tsWebservices")
-	public StudioFeatures withTsWebServicesGenerator(final Param... params) {
-		getModuleConfigBuilder().addPlugin(WsTsGeneratorPlugin.class, params);
+	@Feature("mda.vertigo")
+	public StudioFeatures withVertigoMda() {
+		getModuleConfigBuilder()
+				.addPlugin(DomainGeneratorPlugin.class)
+				.addPlugin(JSGeneratorPlugin.class)
+				.addPlugin(TSGeneratorPlugin.class)
+				.addPlugin(SqlGeneratorPlugin.class)
+				.addPlugin(AuthorizationGeneratorPlugin.class)
+				.addPlugin(FileInfoGeneratorPlugin.class)
+				.addPlugin(TaskGeneratorPlugin.class)
+				.addPlugin(SearchGeneratorPlugin.class)
+				.addPlugin(TaskTestGeneratorPlugin.class)
+				.addPlugin(WsTsGeneratorPlugin.class);
 		return this;
 	}
 

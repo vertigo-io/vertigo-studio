@@ -29,7 +29,7 @@ import io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslEntityField;
  *
  * Validate a definition considering its own entity.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  *
  */
 final class DsValidator {

@@ -31,7 +31,7 @@ import io.vertigo.studio.metamodel.domain.StudioDtField.FieldType;
 /**
  * Model used by FreeMarker.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class TSStudioDtDefinitionModel {
 	private final StudioDtDefinition dtDefinition;

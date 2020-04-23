@@ -23,7 +23,7 @@ import io.vertigo.core.lang.Assertion;
 /**
  * Identifiant d'un objet powerAMC ou XMI.
  *
- * @author pchretien, pforhan
+ * @author pchretien, mlaroche, pforhan
  */
 public final class XmlId {
 	private final String keyValue;

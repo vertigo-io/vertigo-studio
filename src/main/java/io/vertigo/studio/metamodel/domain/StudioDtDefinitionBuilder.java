@@ -36,7 +36,7 @@ import io.vertigo.core.util.StringUtil;
  *
  * Each dtDefinition must have a name following this pattern DT_XXX_YYYY
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class StudioDtDefinitionBuilder implements Builder<StudioDtDefinition> {
 

@@ -26,7 +26,7 @@ import io.vertigo.core.lang.Assertion;
 
 /**
  * Classe ou entité.
- * @author pchretien, pforhan
+ * @author pchretien, mlaroche, pforhan
  */
 public final class XmlClass {
 	private final String code;

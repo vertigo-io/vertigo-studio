@@ -40,7 +40,7 @@ import io.vertigo.studio.plugins.metamodel.vertigo.loaders.xml.XmlId;
 /**
  * Chargement d'un fichier OOM.
  * Seules les classes et leurs attributs ainsi que les associations sont extraites.
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class OOMLoader extends AbstractXmlLoader {
 	private static final Pattern CODE_PATTERN = Pattern.compile("[a-zA-Z0-9_]+");

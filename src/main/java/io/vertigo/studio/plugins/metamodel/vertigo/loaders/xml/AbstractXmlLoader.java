@@ -47,7 +47,7 @@ import io.vertigo.studio.plugins.metamodel.vertigo.registries.domain.DomainGramm
 /**
  * Parser d'un fichier powerAMC/OOM ou EA/XMI.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public abstract class AbstractXmlLoader implements Loader {
 	private static final int MAX_COLUMN_LENGTH = 30;

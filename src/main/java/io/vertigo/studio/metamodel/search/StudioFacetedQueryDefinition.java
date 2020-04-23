@@ -36,7 +36,7 @@ import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
  *
  * les requêtes sont facettées.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 @DefinitionPrefix("StQry")
 public final class StudioFacetedQueryDefinition implements Definition {

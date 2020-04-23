@@ -33,7 +33,7 @@ import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
 /**
  * Model used to define a DtField.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class StudioDtFieldModel {
 	private final StudioDtDefinition dtDefinition;

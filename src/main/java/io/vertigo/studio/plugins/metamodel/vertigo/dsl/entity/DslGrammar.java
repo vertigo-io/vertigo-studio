@@ -29,7 +29,7 @@ import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinition;
  *
  * Il est possible de composer une grammaire à partir de grammaires.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 @FunctionalInterface
 public interface DslGrammar {

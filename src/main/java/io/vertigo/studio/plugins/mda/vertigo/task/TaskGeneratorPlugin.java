@@ -25,17 +25,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.inject.Inject;
-
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.mda.FileGenerator;
-import io.vertigo.studio.impl.mda.FileGeneratorConfig;
 import io.vertigo.studio.impl.mda.GeneratorPlugin;
+import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
 import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.domain.Domain;
@@ -51,33 +47,25 @@ import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
 /**
  * Génération des objets relatifs au module Task.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class TaskGeneratorPlugin implements GeneratorPlugin {
 
-	private final String targetSubDir;
-
-	/**
-	 * Constructeur.
-	 * @param targetSubDirOpt Repertoire de generation des fichiers de ce plugin
-	 */
-	@Inject
-	public TaskGeneratorPlugin(@ParamValue("targetSubDir") final Optional<String> targetSubDirOpt) {
-		//-----
-		targetSubDir = targetSubDirOpt.orElse("javagen");
-	}
+	private static final String DEFAULT_TARGET_SUBDIR = "javagen";
 
 	/** {@inheritDoc} */
 	@Override
 	public void generate(
 			final MetamodelRepository metamodelRepository,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
-		Assertion.checkNotNull(fileGeneratorConfig);
+		Assertion.checkNotNull(mdaConfig);
 		Assertion.checkNotNull(mdaResultBuilder);
 		//-----
-		generatePaos(metamodelRepository, targetSubDir, fileGeneratorConfig, mdaResultBuilder);
-		generateDaos(metamodelRepository, targetSubDir, fileGeneratorConfig, mdaResultBuilder);
+		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.task.targetSubDir", DEFAULT_TARGET_SUBDIR);
+		//---
+		generatePaos(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder);
+		generateDaos(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder);
 	}
 
 	/**
@@ -86,14 +74,14 @@ public final class TaskGeneratorPlugin implements GeneratorPlugin {
 	private static void generatePaos(
 			final MetamodelRepository metamodelRepository,
 			final String targetSubDir,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		//On liste des taches regroupées par Package.
 		for (final Entry<String, List<StudioTaskDefinition>> entry : buildPackageMap(metamodelRepository).entrySet()) {
 			final Collection<StudioTaskDefinition> taskDefinitionCollection = entry.getValue();
 			if (!taskDefinitionCollection.isEmpty()) {
 				final String packageName = entry.getKey();
-				generatePao(metamodelRepository, targetSubDir, fileGeneratorConfig, mdaResultBuilder, taskDefinitionCollection, packageName);
+				generatePao(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder, taskDefinitionCollection, packageName);
 			}
 		}
 	}
@@ -104,13 +92,13 @@ public final class TaskGeneratorPlugin implements GeneratorPlugin {
 	private static void generateDaos(
 			final MetamodelRepository metamodelRepository,
 			final String targetSubDir,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		for (final Entry<StudioDtDefinition, List<StudioTaskDefinition>> entry : builDtDefinitiondMap(metamodelRepository).entrySet()) {
 			final StudioDtDefinition dtDefinition = entry.getKey();
 			if (dtDefinition.isPersistent()) {
 				//Si DAO est persitant on génère son CRUD.
-				generateDao(metamodelRepository, targetSubDir, fileGeneratorConfig, mdaResultBuilder, dtDefinition, entry.getValue());
+				generateDao(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder, dtDefinition, entry.getValue());
 			}
 		}
 	}
@@ -121,17 +109,17 @@ public final class TaskGeneratorPlugin implements GeneratorPlugin {
 	private static void generateDao(
 			final MetamodelRepository metamodelRepository,
 			final String targetSubDir,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder,
 			final StudioDtDefinition dtDefinition,
 			final Collection<StudioTaskDefinition> taskDefinitions) {
-		final DAOModel daoModel = new DAOModel(fileGeneratorConfig, dtDefinition, taskDefinitions, DomainUtil.createClassNameFromDtFunction(metamodelRepository));
+		final DAOModel daoModel = new DAOModel(mdaConfig, dtDefinition, taskDefinitions, DomainUtil.createClassNameFromDtFunction(metamodelRepository));
 
 		final Map<String, Object> model = new MapBuilder<String, Object>()
 				.put("dao", daoModel)
 				.build();
 
-		FileGenerator.builder(fileGeneratorConfig)
+		FileGenerator.builder(mdaConfig)
 				.withModel(model)
 				.withFileName(daoModel.getClassSimpleName() + ".java")
 				.withGenSubDir(targetSubDir)
@@ -147,17 +135,17 @@ public final class TaskGeneratorPlugin implements GeneratorPlugin {
 	private static void generatePao(
 			final MetamodelRepository metamodelRepository,
 			final String targetSubDir,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder,
 			final Collection<StudioTaskDefinition> taskDefinitionCollection,
 			final String packageName) {
-		final PAOModel paoModel = new PAOModel(fileGeneratorConfig, taskDefinitionCollection, packageName, DomainUtil.createClassNameFromDtFunction(metamodelRepository));
+		final PAOModel paoModel = new PAOModel(mdaConfig, taskDefinitionCollection, packageName, DomainUtil.createClassNameFromDtFunction(metamodelRepository));
 
 		final Map<String, Object> model = new MapBuilder<String, Object>()
 				.put("pao", paoModel)
 				.build();
 
-		FileGenerator.builder(fileGeneratorConfig)
+		FileGenerator.builder(mdaConfig)
 				.withModel(model)
 				.withFileName(paoModel.getClassSimpleName() + ".java")
 				.withGenSubDir(targetSubDir)
@@ -245,7 +233,14 @@ public final class TaskGeneratorPlugin implements GeneratorPlugin {
 	}
 
 	@Override
-	public void clean(final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder) {
-		MdaUtil.deleteFiles(new File(fileGeneratorConfig.getTargetGenDir() + targetSubDir), mdaResultBuilder);
+	public void clean(final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
+		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.task.targetSubDir", DEFAULT_TARGET_SUBDIR);
+		//---
+		MdaUtil.deleteFiles(new File(mdaConfig.getTargetGenDir() + targetSubDir), mdaResultBuilder);
+	}
+
+	@Override
+	public String getOutputType() {
+		return "vertigo.task";
 	}
 }

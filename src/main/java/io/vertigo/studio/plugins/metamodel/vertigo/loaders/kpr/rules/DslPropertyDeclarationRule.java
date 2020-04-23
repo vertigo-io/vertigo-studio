@@ -46,7 +46,7 @@ import io.vertigo.studio.plugins.metamodel.vertigo.loaders.kpr.definition.DslPro
  * Syntaxe : nomPropriété: "valeur";
  * Exemple : maxLength:"10";
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class DslPropertyDeclarationRule extends AbstractRule<DslPropertyEntry, List<Object>> {
 	private final Map<String, String> entityProperties;

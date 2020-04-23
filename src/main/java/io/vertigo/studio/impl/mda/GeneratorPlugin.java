@@ -19,6 +19,7 @@
 package io.vertigo.studio.impl.mda;
 
 import io.vertigo.core.node.component.Plugin;
+import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
 import io.vertigo.studio.metamodel.MetamodelRepository;
 
@@ -30,11 +31,13 @@ import io.vertigo.studio.metamodel.MetamodelRepository;
 public interface GeneratorPlugin extends Plugin {
 	/**
 	 * Génération d'un fichier à partir d'une source et de paramètres.
-	 * @param fileGeneratorConfig general configuration of the generator
+	 * @param mdaConfig general configuration of the generator
 	 * @param mdaResultBuilder Builder
 	 */
-	void generate(final MetamodelRepository metamodelRepository, final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder);
+	void generate(final MetamodelRepository metamodelRepository, final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder);
 
-	void clean(final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder);
+	void clean(final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder);
+
+	String getOutputType();
 
 }

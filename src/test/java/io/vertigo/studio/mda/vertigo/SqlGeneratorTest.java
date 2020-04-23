@@ -20,14 +20,15 @@ package io.vertigo.studio.mda.vertigo;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 import org.junit.jupiter.api.Test;
 
 import io.vertigo.core.node.AutoCloseableApp;
 import io.vertigo.core.node.config.NodeConfig;
-import io.vertigo.core.param.Param;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.studio.StudioFeatures;
+import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaManager;
 import io.vertigo.studio.metamodel.MetamodelResource;
 import io.vertigo.studio.metamodel.StudioMetamodelManager;
@@ -47,14 +48,8 @@ public class SqlGeneratorTest {
 				.addModule(new StudioFeatures()
 						.withMetamodel()
 						.withVertigoMetamodel()
-						.withMda(
-								Param.of("projectPackageName", "io.vertigo.studio"),
-								Param.of("targetGenDir", "target/"))
-						.withSqlDomainGenerator(
-								Param.of("targetSubDir", "databasegenh2"),
-								Param.of("baseCible", "PostgreSql"),
-								Param.of("generateDrop", "false"),
-								Param.of("generateMasterData", "false"))
+						.withMda()
+						.withVertigoMda()
 						.build())
 				.build();
 	}
@@ -70,7 +65,14 @@ public class SqlGeneratorTest {
 					new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"));
 			final StudioMetamodelManager studioMetamodelManager = studioApp.getComponentSpace().resolve(StudioMetamodelManager.class);
 			final MdaManager mdaManager = studioApp.getComponentSpace().resolve(MdaManager.class);
-			mdaManager.generate(studioMetamodelManager.parseResources(resources));
+			final Properties mdaProperties = new Properties();
+			mdaProperties.put("vertigo.domain.sql", "true");
+			mdaProperties.put("vertigo.domain.sql.targetSubDir", "databasegenh2");
+			mdaProperties.put("vertigo.domain.sql.baseCible", "PostgreSql");
+			mdaProperties.put("vertigo.domain.sql.generateDrop", "false");
+			mdaProperties.put("vertigo.domain.sql.generateMasterData", "false");
+
+			mdaManager.generate(studioMetamodelManager.parseResources(resources), MdaConfig.of("target/", "io.vertigo.studio", mdaProperties));
 		}
 
 		try (AutoCloseableApp app = new AutoCloseableApp(SqlTestConfigurator.config())) {

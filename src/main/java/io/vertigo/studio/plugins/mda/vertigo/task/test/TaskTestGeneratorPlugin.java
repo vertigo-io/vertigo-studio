@@ -27,15 +27,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import javax.inject.Inject;
-
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.impl.mda.FileGenerator;
-import io.vertigo.studio.impl.mda.FileGeneratorConfig;
 import io.vertigo.studio.impl.mda.GeneratorPlugin;
+import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
 import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.domain.Domain;
@@ -53,41 +50,26 @@ import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
  */
 public final class TaskTestGeneratorPlugin implements GeneratorPlugin {
 
-	private final String targetSubDir;
-	private final String baseTestClass;
-
-	/**
-	 * Constructeur.
-	 * @param targetSubDir Repertoire de generation des fichiers de ce plugin
-	 * @param baseTestClass Nom canonique de la classe de base pour les tests.
-	 */
-	@Inject
-	public TaskTestGeneratorPlugin(
-			@ParamValue("targetSubDir") final String targetSubDir,
-			@ParamValue("baseTestClass") final String baseTestClass) {
-		//-----
-		this.targetSubDir = targetSubDir;
-		this.baseTestClass = baseTestClass;
-	}
-
 	/** {@inheritDoc} */
 	@Override
-	public void generate(final MetamodelRepository metamodelRepository, final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder) {
-		Assertion.checkNotNull(fileGeneratorConfig);
+	public void generate(final MetamodelRepository metamodelRepository, final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
+		Assertion.checkNotNull(mdaConfig);
 		Assertion.checkNotNull(mdaResultBuilder);
 		//-----
-
-		generatePaos(metamodelRepository, targetSubDir, fileGeneratorConfig, mdaResultBuilder);
-		generateDaos(metamodelRepository, targetSubDir, fileGeneratorConfig, mdaResultBuilder);
+		final String targetSubDir = mdaConfig.getAsString("vertigo.taskTest.targetSubDir");
+		Assertion.checkNotNull(targetSubDir);
+		//---
+		generatePaos(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder);
+		generateDaos(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder);
 	}
 
 	/**
 	 * Génération de tous les PAOs.
 	 */
-	private void generatePaos(
+	private static void generatePaos(
 			final MetamodelRepository metamodelRepository,
 			final String paosTargetSubDir,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 
 		//On liste des taches regroupées par Package.
@@ -98,7 +80,7 @@ public final class TaskTestGeneratorPlugin implements GeneratorPlugin {
 				final String packageName = entry.getKey();
 				final String classSimpleName = getLastPackageName(packageName) + "PAO";
 
-				generateAo(metamodelRepository, paosTargetSubDir, fileGeneratorConfig, mdaResultBuilder, taskDefinitionCollection, packageName,
+				generateAo(metamodelRepository, paosTargetSubDir, mdaConfig, mdaResultBuilder, taskDefinitionCollection, packageName,
 						classSimpleName);
 			}
 		}
@@ -108,35 +90,35 @@ public final class TaskTestGeneratorPlugin implements GeneratorPlugin {
 	/**
 	 * Génération de tous les DAOs.
 	 */
-	private void generateDaos(
+	private static void generateDaos(
 			final MetamodelRepository metamodelRepository,
 			final String daosTargetSubDir,
-			final FileGeneratorConfig fileGeneratorConfig,
+			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 
 		for (final Entry<StudioDtDefinition, List<StudioTaskDefinition>> entry : builDtDefinitiondMap(metamodelRepository).entrySet()) {
 			final StudioDtDefinition dtDefinition = entry.getKey();
 			if (dtDefinition.isPersistent()) {
 				final String definitionPackageName = dtDefinition.getPackageName();
-				final String packageNamePrefix = fileGeneratorConfig.getProjectPackageName() + ".domain";
-				final String packageName = fileGeneratorConfig.getProjectPackageName() + ".dao" + definitionPackageName.substring(packageNamePrefix.length());
+				final String packageNamePrefix = mdaConfig.getProjectPackageName() + ".domain";
+				final String packageName = mdaConfig.getProjectPackageName() + ".dao" + definitionPackageName.substring(packageNamePrefix.length());
 
 				final String classSimpleName = dtDefinition.getClassSimpleName() + "DAO";
 
-				generateAo(metamodelRepository, daosTargetSubDir, fileGeneratorConfig, mdaResultBuilder, entry.getValue(), packageName,
+				generateAo(metamodelRepository, daosTargetSubDir, mdaConfig, mdaResultBuilder, entry.getValue(), packageName,
 						classSimpleName);
 			}
 		}
 	}
 
-	private void generateAo(
+	private static void generateAo(
 			final MetamodelRepository metamodelRepository,
-			final String aoTargetSubDir, final FileGeneratorConfig fileGeneratorConfig,
+			final String aoTargetSubDir, final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder, final Collection<StudioTaskDefinition> taskDefinitionCollection,
 			final String packageName, final String classSimpleName) {
 		for (final StudioTaskDefinition taskDefinition : taskDefinitionCollection) {
-			final TemplateAoTaskTest paoModel = new TemplateAoTaskTest(fileGeneratorConfig, taskDefinition, packageName, classSimpleName, baseTestClass, DomainUtil.createClassNameFromDtFunction(metamodelRepository));
-			generatePaoTaskTest(aoTargetSubDir, fileGeneratorConfig, mdaResultBuilder, paoModel);
+			final TemplateAoTaskTest paoModel = new TemplateAoTaskTest(mdaConfig, taskDefinition, packageName, classSimpleName, mdaConfig.getAsString("vertigo.taskTest.baseTestClass"), DomainUtil.createClassNameFromDtFunction(metamodelRepository));
+			generatePaoTaskTest(aoTargetSubDir, mdaConfig, mdaResultBuilder, paoModel);
 		}
 	}
 
@@ -154,7 +136,7 @@ public final class TaskTestGeneratorPlugin implements GeneratorPlugin {
 		return StringUtil.first2UpperCase(lastPackageName);
 	}
 
-	private static void generatePaoTaskTest(final String targetSubDir, final FileGeneratorConfig fileGeneratorConfig,
+	private static void generatePaoTaskTest(final String targetSubDir, final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder, final TemplateAoTaskTest paoModel) {
 		final Map<String, Object> model = new MapBuilder<String, Object>()
 				.put("pao", paoModel)
@@ -164,7 +146,7 @@ public final class TaskTestGeneratorPlugin implements GeneratorPlugin {
 		final String fileName = paoModel.getTaskDefinition().getTestClassName() + ".java";
 
 		/* Calcule le chemin du fichier à générer. */
-		final String directoryPath = fileGeneratorConfig.getTargetGenDir() + targetSubDir + File.separatorChar + package2directory(testPackageName) + File.separatorChar;
+		final String directoryPath = mdaConfig.getTargetGenDir() + targetSubDir + File.separatorChar + package2directory(testPackageName) + File.separatorChar;
 		final String fullFilePath = directoryPath + fileName;
 
 		/* Vérifie que le fichier n'existe pas déjà. */
@@ -173,7 +155,7 @@ public final class TaskTestGeneratorPlugin implements GeneratorPlugin {
 			return;
 		}
 
-		FileGenerator.builder(fileGeneratorConfig)
+		FileGenerator.builder(mdaConfig)
 				.withModel(model)
 				.withFileName(fileName)
 				.withGenSubDir(targetSubDir)
@@ -265,7 +247,15 @@ public final class TaskTestGeneratorPlugin implements GeneratorPlugin {
 	}
 
 	@Override
-	public void clean(final FileGeneratorConfig fileGeneratorConfig, final MdaResultBuilder mdaResultBuilder) {
-		MdaUtil.deleteFiles(new File(fileGeneratorConfig.getTargetGenDir() + targetSubDir), mdaResultBuilder);
+	public void clean(final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
+		final String targetSubDir = mdaConfig.getAsString("vertigo.taskTest.targetSubDir");
+		Assertion.checkNotNull(targetSubDir);
+		//---
+		MdaUtil.deleteFiles(new File(mdaConfig.getTargetGenDir() + targetSubDir), mdaResultBuilder);
+	}
+
+	@Override
+	public String getOutputType() {
+		return "vertigo.taskTest";
 	}
 }

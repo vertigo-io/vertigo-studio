@@ -29,7 +29,7 @@ import io.vertigo.studio.plugins.metamodel.vertigo.loaders.xml.XmlId;
 /**
  * Handler SAX, permettant de parser le OOM.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 final class OOMHandler extends DefaultHandler {
 	private static final String ATTR_ID = "Id";

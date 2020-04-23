@@ -29,7 +29,7 @@ import io.vertigo.studio.metamodel.domain.Domain.Scope;
 
 /**
  * This class must be used to build a Domain.
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class DomainBuilder implements Builder<Domain> {
 	private final String myName;

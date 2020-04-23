@@ -25,7 +25,7 @@ import io.vertigo.core.node.definition.DefinitionPrefix;
 /**
  * Par nature une contrainte est une ressource partagée et non modifiable.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 @DefinitionPrefix("Ck")
 public final class ConstraintDefinition implements Definition {

@@ -16,7 +16,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.impl.mda;
+package io.vertigo.studio.mda;
+
+import java.util.Properties;
 
 import io.vertigo.core.lang.Assertion;
 
@@ -25,7 +27,7 @@ import io.vertigo.core.lang.Assertion;
  *
  * @author dchallas
  */
-public final class FileGeneratorConfig {
+public final class MdaConfig {
 	/**
 	 * Répertoire des fichiers TOUJOURS générés
 	 * Doit être renseigné dans le fichier properties [targetDir]
@@ -40,21 +42,45 @@ public final class FileGeneratorConfig {
 	 */
 	private final String encoding;
 
+	private final Properties properties;
+
 	/**
 	 * Chargement des paramètres depuis le fichier properties.
 	 */
-	public FileGeneratorConfig(
+	public MdaConfig(
 			final String targetGenDir,
 			final String projectPackageName,
-			final String encoding) {
+			final String encoding,
+			final Properties properties) {
 		Assertion.checkArgNotEmpty(targetGenDir, "Le repertoire des fichiers generes [targetGenDir] doit etre renseigné !");
 		Assertion.checkArgNotEmpty(projectPackageName, "le package racine du projet doit être renseigne ! ");
 		Assertion.checkArgNotEmpty(encoding, "l'encoding des fichiers gérénés [encoding] doit etre renseigné !");
+		Assertion.checkNotNull(properties);
 		//-----
 		this.targetGenDir = targetGenDir;
 		this.projectPackageName = projectPackageName;
 		this.encoding = encoding;
 		Assertion.checkState(targetGenDir.endsWith("/"), "Le chemin doit finir par '/'.");
+		this.properties = properties;
+	}
+
+	/**
+	 * Chargement des paramètres depuis le fichier properties.
+	 */
+	public static MdaConfig of(
+			final String projectPackageName,
+			final Properties properties) {
+		return new MdaConfig("src/main/", projectPackageName, "UTF-8", properties);
+	}
+	
+	/**
+	 * Chargement des paramètres depuis le fichier properties.
+	 */
+	public static MdaConfig of(
+			final String targetGenDir,
+			final String projectPackageName,
+			final Properties properties) {
+		return new MdaConfig(targetGenDir, projectPackageName, "UTF-8", properties);
 	}
 
 	/**
@@ -82,6 +108,28 @@ public final class FileGeneratorConfig {
 	 */
 	public String getEncoding() {
 		return encoding;
+	}
+
+	public Properties getProperties() {
+		return properties;
+	}
+
+	public String getOrDefaultAsString(final String key, final String defaultValue) {
+		return properties.getProperty(key, defaultValue);
+	}
+
+	public String getAsString(final String key) {
+		return properties.getProperty(key);
+	}
+
+	public boolean getAsBoolean(final String key) {
+		final String value = properties.getProperty(key);
+		Assertion.checkNotNull(value);
+		return Boolean.valueOf(value);
+	}
+
+	public boolean getOrDefaultAsBoolean(final String key, final boolean defaultValue) {
+		return properties.containsKey(key) ? Boolean.valueOf(properties.getProperty(key)) : defaultValue;
 	}
 
 }

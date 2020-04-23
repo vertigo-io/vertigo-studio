@@ -26,7 +26,7 @@ import io.vertigo.studio.metamodel.domain.StudioDtField;
 /**
  * Model used to define a DtField.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class SqlStudioDtFieldModel {
 	private final StudioDtField dtField;

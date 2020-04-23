@@ -50,7 +50,7 @@ import io.vertigo.studio.plugins.metamodel.vertigo.registries.domain.DomainGramm
 /**
  * Lecture des annotations présentes sur les objets métier.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class AnnotationLoader implements Loader {
 	private static final String DT_DEFINITION_PREFIX = VertigoConstants.VertigoDefinitionPrefix.DtDefinition.getPrefix();

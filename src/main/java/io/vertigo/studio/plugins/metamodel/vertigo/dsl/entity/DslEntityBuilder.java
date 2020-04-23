@@ -28,7 +28,7 @@ import io.vertigo.core.lang.Cardinality;
 /**
  * This class provides a common way to build an entity.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class DslEntityBuilder implements Builder<DslEntity> {
 	/**

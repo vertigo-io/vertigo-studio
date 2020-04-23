@@ -20,7 +20,7 @@ package io.vertigo.studio.plugins.metamodel.vertigo.loaders.poweramc.core;
 
 /**
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 final class OOMTag {
 	private final OOMTag parent;

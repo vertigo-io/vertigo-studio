@@ -28,7 +28,7 @@ import io.vertigo.core.lang.Builder;
 /**
  * Résultat de la génération.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class MdaResultBuilder implements Builder<MdaResult> {
 	private static final Logger LOGGER = LogManager.getLogger(MdaResultBuilder.class);

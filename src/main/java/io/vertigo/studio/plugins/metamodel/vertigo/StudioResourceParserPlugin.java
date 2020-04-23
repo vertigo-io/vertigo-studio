@@ -53,7 +53,7 @@ import io.vertigo.studio.plugins.metamodel.vertigo.registries.DynamoDynamicRegis
  * - ....
  *  Ces modes de chargement sont extensibles.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public class StudioResourceParserPlugin implements MetamodelResourceParserPlugin {
 

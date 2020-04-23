@@ -30,7 +30,7 @@ import io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslGrammar;
  * - adds dslDefinition from a new DynamicDefinition
  *
  * example : Each time a DtDefinition, two others definitions (domains)  are created (a domain for one object, a domain for a list).
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public interface DynamicRegistry {
 	/**

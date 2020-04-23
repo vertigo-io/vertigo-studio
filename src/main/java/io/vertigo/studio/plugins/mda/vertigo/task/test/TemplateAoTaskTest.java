@@ -21,7 +21,7 @@ package io.vertigo.studio.plugins.mda.vertigo.task.test;
 import java.util.function.Function;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.impl.mda.FileGeneratorConfig;
+import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.metamodel.task.StudioTaskDefinition;
 
 /**
@@ -39,7 +39,7 @@ public final class TemplateAoTaskTest {
 	 * Constructor.
 	 */
 	TemplateAoTaskTest(
-			final FileGeneratorConfig taskConfiguration,
+			final MdaConfig taskConfiguration,
 			final StudioTaskDefinition taskDefinition,
 			final String packageName,
 			final String classSimpleName,

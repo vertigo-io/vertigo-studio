@@ -28,7 +28,7 @@ import io.vertigo.studio.plugins.metamodel.vertigo.loaders.xml.XmlId;
  * Objets de la grammaire powerAMC.
  * Chaque objet de la grammaire possède une série d'attributs, ceux-ci sont présentés ci-dessous.
  * Il s'agit de faciliter la transposition du Modèle générique XML en un Modèle typé.
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 final class OOMObject {
 	private static final String PROPERTY_CODE = "a:Code";

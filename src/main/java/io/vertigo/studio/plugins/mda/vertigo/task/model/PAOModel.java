@@ -25,13 +25,13 @@ import java.util.function.Function;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.studio.impl.mda.FileGeneratorConfig;
+import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.metamodel.task.StudioTaskDefinition;
 
 /**
  * Objet utilisé par FreeMarker.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class PAOModel {
 	private final String packageName;
@@ -42,7 +42,7 @@ public final class PAOModel {
 	/**
 	 * Constructor.
 	 */
-	public PAOModel(final FileGeneratorConfig fileGeneratorConfig, final Collection<StudioTaskDefinition> taskDefinitionCollection, final String packageName, final Function<String, String> classNameFromDt) {
+	public PAOModel(final MdaConfig fileGeneratorConfig, final Collection<StudioTaskDefinition> taskDefinitionCollection, final String packageName, final Function<String, String> classNameFromDt) {
 		Assertion.checkNotNull(fileGeneratorConfig);
 		Assertion.checkNotNull(taskDefinitionCollection);
 		Assertion.checkArgument(!taskDefinitionCollection.isEmpty(), "Aucune tache dans le package {0}", packageName);

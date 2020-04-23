@@ -20,6 +20,7 @@ package io.vertigo.studio.mda.vertigo;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 import javax.inject.Inject;
 
@@ -28,9 +29,9 @@ import org.junit.jupiter.api.Test;
 import io.vertigo.commons.CommonsFeatures;
 import io.vertigo.core.AbstractTestCaseJU5;
 import io.vertigo.core.node.config.NodeConfig;
-import io.vertigo.core.param.Param;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.studio.StudioFeatures;
+import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaManager;
 import io.vertigo.studio.metamodel.MetamodelResource;
 import io.vertigo.studio.metamodel.StudioMetamodelManager;
@@ -52,16 +53,8 @@ public class SqlServerGeneratorTest extends AbstractTestCaseJU5 {
 				.addModule(new StudioFeatures()
 						.withMetamodel()
 						.withVertigoMetamodel()
-						.withMda(
-								Param.of("projectPackageName", "io.vertigo.studio"),
-								Param.of("targetGenDir", "target/"))
-						.withSqlDomainGenerator(
-								Param.of("targetSubDir", "databasegenh2"),
-								Param.of("baseCible", "PostgreSql"),
-								Param.of("generateDrop", "false"),
-								Param.of("tableSpaceData", "TBL_DATA"),
-								Param.of("tableSpaceIndex", "TBL_INDEX"),
-								Param.of("generateMasterData", "false"))
+						.withMda()
+						.withVertigoMda()
 						.build())
 				.build();
 	}
@@ -79,7 +72,17 @@ public class SqlServerGeneratorTest extends AbstractTestCaseJU5 {
 		final List<MetamodelResource> resources = Arrays.asList(
 				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
 				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"));
-		mdaManager.generate(studioMetamodelManager.parseResources(resources));
+
+		final Properties mdaProperties = new Properties();
+		mdaProperties.put("vertigo.domain.sql", "true");
+		mdaProperties.put("vertigo.domain.sql.targetSubDir", "databasegenh2");
+		mdaProperties.put("vertigo.domain.sql.baseCible", "PostgreSql");
+		mdaProperties.put("vertigo.domain.sql.generateDrop", "false");
+		mdaProperties.put("vertigo.domain.sql.generateMasterData", "false");
+		mdaProperties.put("vertigo.domain.sql.tableSpaceData", "TBL_DATA");
+		mdaProperties.put("vertigo.domain.sql.tableSpaceIndex", "TBL_INDEX");
+
+		mdaManager.generate(studioMetamodelManager.parseResources(resources), MdaConfig.of("target/", "io.vertigo.studio", mdaProperties));
 	}
 
 }

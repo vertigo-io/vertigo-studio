@@ -22,7 +22,7 @@ import io.vertigo.core.lang.Assertion;
 
 /**
  * Implémentation de référence.
- * @author pchretien, pforhan
+ * @author pchretien, mlaroche, pforhan
  */
 public final class XmlAttribute {
 	private final String code;

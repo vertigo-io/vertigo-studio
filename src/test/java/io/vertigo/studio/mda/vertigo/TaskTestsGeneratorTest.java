@@ -20,6 +20,7 @@ package io.vertigo.studio.mda.vertigo;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 import javax.inject.Inject;
 
@@ -28,9 +29,9 @@ import org.junit.jupiter.api.Test;
 import io.vertigo.commons.CommonsFeatures;
 import io.vertigo.core.AbstractTestCaseJU5;
 import io.vertigo.core.node.config.NodeConfig;
-import io.vertigo.core.param.Param;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.studio.StudioFeatures;
+import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaManager;
 import io.vertigo.studio.metamodel.MetamodelResource;
 import io.vertigo.studio.metamodel.StudioMetamodelManager;
@@ -53,12 +54,8 @@ public class TaskTestsGeneratorTest extends AbstractTestCaseJU5 {
 				.addModule(new StudioFeatures()
 						.withMetamodel()
 						.withVertigoMetamodel()
-						.withMda(
-								Param.of("projectPackageName", "io.vertigo.studio"),
-								Param.of("targetGenDir", "target/"))
-						.withTaskTestsGenerator(
-								Param.of("targetSubDir", "javagen"),
-								Param.of("baseTestClass", "io.vertigo.studio.data.tasktest.DaoTestClass"))
+						.withMda()
+						.withVertigoMda()
 						.build())
 				.build();
 	}
@@ -77,7 +74,12 @@ public class TaskTestsGeneratorTest extends AbstractTestCaseJU5 {
 				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
 				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"),
 				new MetamodelResource("classes", DtDefinitions.class.getName()));
-		mdaManager.generate(studioMetamodelManager.parseResources(resources));
+
+		final Properties mdaProperties = new Properties();
+		mdaProperties.put("vertigo.taskTest", "true");
+		mdaProperties.put("vertigo.taskTest.targetSubDir", "javagen");
+		mdaProperties.put("vertigo.taskTest.baseTestClass", "io.vertigo.studio.data.tasktest.DaoTestClass");
+		mdaManager.generate(studioMetamodelManager.parseResources(resources), MdaConfig.of("target/", "io.vertigo.studio", mdaProperties));
 	}
 
 }

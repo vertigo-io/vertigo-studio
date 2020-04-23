@@ -41,7 +41,7 @@ import io.vertigo.commons.peg.PegRules;
  *
  * Tout fichier ksp commence par une entête ou est précisé le nom du pacakage.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class DslKspRule extends AbstractRule<Dummy, List<Object>> {
 	private final DslDefinitionRepository dynamicModelrepository;

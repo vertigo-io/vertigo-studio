@@ -22,7 +22,7 @@ import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinitionRepo
 
 /**
  * Chargeur de l'environnement.
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public interface Loader {
 	/**

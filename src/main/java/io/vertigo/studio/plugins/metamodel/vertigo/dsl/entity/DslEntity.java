@@ -35,7 +35,7 @@ import io.vertigo.core.lang.Assertion;
  * Une entité permet, ainsi, d'adopter des comportement dynamique, de fabriquer des grammaires.
  * Si l'ensemble des définitions permet de construire le modèle, l'ensemble des entités permet de décrire le métamodèle.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class DslEntity implements DslEntityFieldType {
 	/**

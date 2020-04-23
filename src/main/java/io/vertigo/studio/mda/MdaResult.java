@@ -25,7 +25,7 @@ import io.vertigo.core.util.StringUtil;
 /**
  * Résultat de la génération.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class MdaResult {
 	/** Nombre de fichiers écrits . */

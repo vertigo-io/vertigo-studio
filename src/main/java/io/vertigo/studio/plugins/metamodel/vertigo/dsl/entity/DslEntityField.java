@@ -24,7 +24,7 @@ import io.vertigo.core.lang.Cardinality;
 /**
  * Field of an entity.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class DslEntityField {
 

@@ -22,7 +22,7 @@ import io.vertigo.core.lang.Assertion;
 
 /**
  * Defines a link to an entity.
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class DslEntityLink implements DslEntityFieldType {
 	private final DslEntity entity;

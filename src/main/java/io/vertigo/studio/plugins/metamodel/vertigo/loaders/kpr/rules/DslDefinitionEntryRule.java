@@ -35,7 +35,7 @@ import io.vertigo.studio.plugins.metamodel.vertigo.loaders.kpr.definition.DslDef
 
 /**
  * Règle de déclaration d'une champ référenéant une listes de clés.
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class DslDefinitionEntryRule extends AbstractRule<DslDefinitionEntry, List<Object>> {
 

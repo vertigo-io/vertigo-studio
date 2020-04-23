@@ -34,7 +34,7 @@ import io.vertigo.studio.plugins.metamodel.vertigo.loaders.kpr.rules.DslKspRule;
 /**
  * Parser d'un fichier KSP.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 final class KspLoader {
 

@@ -22,7 +22,7 @@ package io.vertigo.studio.plugins.metamodel.vertigo.loaders.poweramc.core;
  * Type des objets powerAMC.
  * Les correspondances dynamo sont précisées ci-dessous.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 enum OOMType {
 	/**

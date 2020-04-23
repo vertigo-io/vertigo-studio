@@ -20,6 +20,7 @@ package io.vertigo.studio.mda.vertigo;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 import javax.inject.Inject;
 
@@ -28,9 +29,9 @@ import org.junit.jupiter.api.Test;
 import io.vertigo.commons.CommonsFeatures;
 import io.vertigo.core.AbstractTestCaseJU5;
 import io.vertigo.core.node.config.NodeConfig;
-import io.vertigo.core.param.Param;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.studio.StudioFeatures;
+import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaManager;
 import io.vertigo.studio.metamodel.MetamodelResource;
 import io.vertigo.studio.metamodel.StudioMetamodelManager;
@@ -52,10 +53,8 @@ public class WebServicesGeneratorTest extends AbstractTestCaseJU5 {
 				.addModule(new StudioFeatures()
 						.withMetamodel()
 						.withVertigoMetamodel()
-						.withMda(
-								Param.of("projectPackageName", "io.vertigo.studio"),
-								Param.of("targetGenDir", "target/"))
-						.withTsWebServicesGenerator()
+						.withMda()
+						.withVertigoMda()
 						.build())
 				.build();
 	}
@@ -75,7 +74,9 @@ public class WebServicesGeneratorTest extends AbstractTestCaseJU5 {
 				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"),
 				new MetamodelResource("webservice", "io.vertigo.vega.impl.webservice.catalog.SwaggerWebServices"),
 				new MetamodelResource("webservice", "io.vertigo.studio.data.webservices.*"));
-		mdaManager.generate(studioMetamodelManager.parseResources(resources));
+		final Properties mdaProperties = new Properties();
+		mdaProperties.put("vertigo.tsws", "true");
+		mdaManager.generate(studioMetamodelManager.parseResources(resources), MdaConfig.of("target/", "io.vertigo.studio", mdaProperties));
 	}
 
 }

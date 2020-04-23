@@ -27,7 +27,7 @@ import io.vertigo.core.lang.Assertion;
  * A resource can be a file, a blob or a simple java class.
  * A resource is used to configure a module.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class MetamodelResource {
 	private final String type;

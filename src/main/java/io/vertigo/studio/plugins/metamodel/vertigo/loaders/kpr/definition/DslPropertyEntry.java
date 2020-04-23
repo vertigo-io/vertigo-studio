@@ -23,7 +23,7 @@ import io.vertigo.core.lang.Assertion;
 /**
  * This entry defines a property and its value.
  *
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class DslPropertyEntry {
 	private final String propertyValue;

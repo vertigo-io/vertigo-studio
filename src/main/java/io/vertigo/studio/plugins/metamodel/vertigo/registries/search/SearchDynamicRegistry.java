@@ -47,7 +47,7 @@ import io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslEntity;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslGrammar;
 
 /**
- * @author pchretien
+ * @author pchretien, mlaroche
  */
 public final class SearchDynamicRegistry implements DynamicRegistry {
 
