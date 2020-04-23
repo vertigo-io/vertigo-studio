@@ -42,8 +42,8 @@ public final class PAOModel {
 	/**
 	 * Constructor.
 	 */
-	public PAOModel(final MdaConfig fileGeneratorConfig, final Collection<StudioTaskDefinition> taskDefinitionCollection, final String packageName, final Function<String, String> classNameFromDt) {
-		Assertion.checkNotNull(fileGeneratorConfig);
+	public PAOModel(final MdaConfig mdaConfig, final Collection<StudioTaskDefinition> taskDefinitionCollection, final String packageName, final Function<String, String> classNameFromDt) {
+		Assertion.checkNotNull(mdaConfig);
 		Assertion.checkNotNull(taskDefinitionCollection);
 		Assertion.checkArgument(!taskDefinitionCollection.isEmpty(), "Aucune tache dans le package {0}", packageName);
 		Assertion.checkNotNull(packageName);
