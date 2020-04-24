@@ -20,7 +20,6 @@ package io.vertigo.studio.mda.vertigo;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
 
 import javax.inject.Inject;
 
@@ -72,13 +71,17 @@ public class DomainGeneratorTest extends AbstractTestCaseJU5 {
 		final List<MetamodelResource> resources = Arrays.asList(
 				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
 				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"));
-		final Properties mdaProperties = new Properties();
-		mdaProperties.put("vertigo.domain.java", "true");
-		mdaProperties.put("vertigo.domain.js", "true");
-		mdaProperties.put("vertigo.domain.ts", "true");
-		mdaProperties.put("vertigo.task", "true");
-		mdaProperties.put("vertigo.search", "true");
-		mdaManager.generate(studioMetamodelManager.parseResources(resources), MdaConfig.of("target/", "io.vertigo.studio", mdaProperties));
+
+		final MdaConfig mdaConfig = MdaConfig.builder("io.vertigo.studio")
+				.withTargetGenDir("target/")
+				.addProperty("vertigo.domain.java", "true")
+				.addProperty("vertigo.domain.js", "true")
+				.addProperty("vertigo.domain.ts", "true")
+				.addProperty("vertigo.task", "true")
+				.addProperty("vertigo.search", "true")
+				.build();
+
+		mdaManager.generate(studioMetamodelManager.parseResources(resources), mdaConfig);
 	}
 
 }

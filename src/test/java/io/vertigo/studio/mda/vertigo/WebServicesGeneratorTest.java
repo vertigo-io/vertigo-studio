@@ -20,7 +20,6 @@ package io.vertigo.studio.mda.vertigo;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
 
 import javax.inject.Inject;
 
@@ -74,9 +73,13 @@ public class WebServicesGeneratorTest extends AbstractTestCaseJU5 {
 				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"),
 				new MetamodelResource("webservice", "io.vertigo.vega.impl.webservice.catalog.SwaggerWebServices"),
 				new MetamodelResource("webservice", "io.vertigo.studio.data.webservices.*"));
-		final Properties mdaProperties = new Properties();
-		mdaProperties.put("vertigo.tsws", "true");
-		mdaManager.generate(studioMetamodelManager.parseResources(resources), MdaConfig.of("target/", "io.vertigo.studio", mdaProperties));
+
+		final MdaConfig mdaConfig = MdaConfig.builder("io.vertigo.studio")
+				.withTargetGenDir("target/")
+				.addProperty("vertigo.tsws", "true")
+				.build();
+
+		mdaManager.generate(studioMetamodelManager.parseResources(resources), mdaConfig);
 	}
 
 }

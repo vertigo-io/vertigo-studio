@@ -67,20 +67,9 @@ public final class MdaConfig {
 	/**
 	 * Chargement des paramètres depuis le fichier properties.
 	 */
-	public static MdaConfig of(
-			final String projectPackageName,
-			final Properties properties) {
-		return new MdaConfig("src/main/", projectPackageName, "UTF-8", properties);
-	}
-	
-	/**
-	 * Chargement des paramètres depuis le fichier properties.
-	 */
-	public static MdaConfig of(
-			final String targetGenDir,
-			final String projectPackageName,
-			final Properties properties) {
-		return new MdaConfig(targetGenDir, projectPackageName, "UTF-8", properties);
+	public static MdaConfigBuilder builder(
+			final String projectPackageName) {
+		return new MdaConfigBuilder(projectPackageName);
 	}
 
 	/**

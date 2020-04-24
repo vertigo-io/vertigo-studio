@@ -20,7 +20,6 @@ package io.vertigo.studio.mda.vertigo;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
 
 import javax.inject.Inject;
 
@@ -73,16 +72,18 @@ public class SqlServerGeneratorTest extends AbstractTestCaseJU5 {
 				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
 				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"));
 
-		final Properties mdaProperties = new Properties();
-		mdaProperties.put("vertigo.domain.sql", "true");
-		mdaProperties.put("vertigo.domain.sql.targetSubDir", "databasegenh2");
-		mdaProperties.put("vertigo.domain.sql.baseCible", "PostgreSql");
-		mdaProperties.put("vertigo.domain.sql.generateDrop", "false");
-		mdaProperties.put("vertigo.domain.sql.generateMasterData", "false");
-		mdaProperties.put("vertigo.domain.sql.tableSpaceData", "TBL_DATA");
-		mdaProperties.put("vertigo.domain.sql.tableSpaceIndex", "TBL_INDEX");
+		final MdaConfig mdaConfig = MdaConfig.builder("io.vertigo.studio")
+				.withTargetGenDir("target/")
+				.addProperty("vertigo.domain.sql", "true")
+				.addProperty("vertigo.domain.sql.targetSubDir", "databasegenh2")
+				.addProperty("vertigo.domain.sql.baseCible", "PostgreSql")
+				.addProperty("vertigo.domain.sql.generateDrop", "false")
+				.addProperty("vertigo.domain.sql.generateMasterData", "false")
+				.addProperty("vertigo.domain.sql.tableSpaceData", "TBL_DATA")
+				.addProperty("vertigo.domain.sql.tableSpaceIndex", "TBL_INDEX")
+				.build();
 
-		mdaManager.generate(studioMetamodelManager.parseResources(resources), MdaConfig.of("target/", "io.vertigo.studio", mdaProperties));
+		mdaManager.generate(studioMetamodelManager.parseResources(resources), mdaConfig);
 	}
 
 }

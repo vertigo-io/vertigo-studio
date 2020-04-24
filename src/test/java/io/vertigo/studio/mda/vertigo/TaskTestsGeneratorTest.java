@@ -20,7 +20,6 @@ package io.vertigo.studio.mda.vertigo;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
 
 import javax.inject.Inject;
 
@@ -75,11 +74,14 @@ public class TaskTestsGeneratorTest extends AbstractTestCaseJU5 {
 				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"),
 				new MetamodelResource("classes", DtDefinitions.class.getName()));
 
-		final Properties mdaProperties = new Properties();
-		mdaProperties.put("vertigo.taskTest", "true");
-		mdaProperties.put("vertigo.taskTest.targetSubDir", "javagen");
-		mdaProperties.put("vertigo.taskTest.baseTestClass", "io.vertigo.studio.data.tasktest.DaoTestClass");
-		mdaManager.generate(studioMetamodelManager.parseResources(resources), MdaConfig.of("target/", "io.vertigo.studio", mdaProperties));
+		final MdaConfig mdaConfig = MdaConfig.builder("io.vertigo.studio")
+				.withTargetGenDir("target/")
+				.addProperty("vertigo.taskTest", "true")
+				.addProperty("vertigo.taskTest.targetSubDir", "javagen")
+				.addProperty("vertigo.taskTest.baseTestClass", "io.vertigo.studio.data.tasktest.DaoTestClass")
+				.build();
+
+		mdaManager.generate(studioMetamodelManager.parseResources(resources), mdaConfig);
 	}
 
 }

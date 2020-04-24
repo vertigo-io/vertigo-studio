@@ -20,7 +20,6 @@ package io.vertigo.studio.mda.vertigo;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
 
 import javax.inject.Inject;
 
@@ -74,9 +73,13 @@ public class MasterDataDomainGeneratorTest extends AbstractTestCaseJU5 {
 				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"),
 				new MetamodelResource("staticMasterData", "io/vertigo/studio/metamodel/vertigo/data/masterdata/testJsonMasterDataValues.json"),
 				new MetamodelResource("staticMasterData", "io/vertigo/studio/metamodel/vertigo/data/masterdata/testJsonMasterDataValues2.json"));
-		final Properties mdaProperties = new Properties();
-		mdaProperties.put("vertigo.domain.java", "true");
-		mdaManager.generate(studioMetamodelManager.parseResources(resources), MdaConfig.of("target/", "io.vertigo.studio", mdaProperties));
+
+		final MdaConfig mdaConfig = MdaConfig.builder("io.vertigo.studio")
+				.withTargetGenDir("target/")
+				.addProperty("vertigo.domain.java", "true")
+				.build();
+
+		mdaManager.generate(studioMetamodelManager.parseResources(resources), mdaConfig);
 	}
 
 }

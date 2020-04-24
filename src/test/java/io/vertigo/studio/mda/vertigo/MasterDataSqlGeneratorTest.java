@@ -20,7 +20,6 @@ package io.vertigo.studio.mda.vertigo;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
 
 import org.junit.jupiter.api.Test;
 
@@ -70,14 +69,16 @@ public class MasterDataSqlGeneratorTest {
 			final StudioMetamodelManager studioMetamodelManager = studioApp.getComponentSpace().resolve(StudioMetamodelManager.class);
 			final MdaManager mdaManager = studioApp.getComponentSpace().resolve(MdaManager.class);
 
-			final Properties mdaProperties = new Properties();
-			mdaProperties.put("vertigo.domain.sql", "true");
-			mdaProperties.put("vertigo.domain.sql.targetSubDir", "databasegenMasterdata");
-			mdaProperties.put("vertigo.domain.sql.baseCible", "PostgreSql");
-			mdaProperties.put("vertigo.domain.sql.generateDrop", "false");
-			mdaProperties.put("vertigo.domain.sql.generateMasterData", "true");
+			final MdaConfig mdaConfig = MdaConfig.builder("io.vertigo.studio")
+					.withTargetGenDir("target/")
+					.addProperty("vertigo.domain.sql", "true")
+					.addProperty("vertigo.domain.sql.targetSubDir", "databasegenMasterdata")
+					.addProperty("vertigo.domain.sql.baseCible", "PostgreSql")
+					.addProperty("vertigo.domain.sql.generateDrop", "false")
+					.addProperty("vertigo.domain.sql.generateMasterData", "true")
+					.build();
 
-			mdaManager.generate(studioMetamodelManager.parseResources(resources), MdaConfig.of("target/", "io.vertigo.studio", mdaProperties));
+			mdaManager.generate(studioMetamodelManager.parseResources(resources), mdaConfig);
 		}
 
 		try (AutoCloseableApp app = new AutoCloseableApp(SqlTestConfigurator.config())) {
