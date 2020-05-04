@@ -111,14 +111,14 @@ public final class Domain implements Definition {
 		Assertion.checkArgNotEmpty(name);
 		Assertion.checkNotNull(scope);
 		//---
-		Assertion.when(scope == Scope.PRIMITIVE).check(() -> dataType != null, "a primitive domain must define a primitive type");
-		Assertion.when(scope == Scope.PRIMITIVE).check(() -> dtDefinitionName == null && valueObjectClassName == null, "a primitive domain can't have nor a data-object-definition nor a value-object class");
+		Assertion.when(scope == Scope.PRIMITIVE).state(() -> dataType != null, "a primitive domain must define a primitive type");
+		Assertion.when(scope == Scope.PRIMITIVE).state(() -> dtDefinitionName == null && valueObjectClassName == null, "a primitive domain can't have nor a data-object-definition nor a value-object class");
 		//---
-		Assertion.when(scope == Scope.DATA_OBJECT).check(() -> dtDefinitionName != null, "a data-object domain must define a data-object definition");
-		Assertion.when(scope == Scope.DATA_OBJECT).check(() -> dataType == null && valueObjectClassName == null, "a data-object domain can't have nor a primitive type nor a value-object class");
+		Assertion.when(scope == Scope.DATA_OBJECT).state(() -> dtDefinitionName != null, "a data-object domain must define a data-object definition");
+		Assertion.when(scope == Scope.DATA_OBJECT).state(() -> dataType == null && valueObjectClassName == null, "a data-object domain can't have nor a primitive type nor a value-object class");
 		//---
-		Assertion.when(scope == Scope.VALUE_OBJECT).check(() -> valueObjectClassName != null, "a value-object domain must define a value-object class");
-		Assertion.when(scope == Scope.VALUE_OBJECT).check(() -> dataType == null && dtDefinitionName == null, "a value-object domain can't have nor a primitive type nor a data-object-definition");
+		Assertion.when(scope == Scope.VALUE_OBJECT).state(() -> valueObjectClassName != null, "a value-object domain must define a value-object class");
+		Assertion.when(scope == Scope.VALUE_OBJECT).state(() -> dataType == null && dtDefinitionName == null, "a value-object domain can't have nor a primitive type nor a data-object-definition");
 		//formatterDefinition is nullable
 		Assertion.checkNotNull(constraintDefinitions);
 		Assertion.checkNotNull(properties);

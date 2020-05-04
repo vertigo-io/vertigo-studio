@@ -105,11 +105,11 @@ public final class StudioFacetDefinition implements Definition {
 		Assertion.checkNotNull(facetValues);
 		Assertion.checkNotNull(facetParams);
 		Assertion.when(rangeFacet)
-				.check(() -> !facetValues.isEmpty(), "Les FacetDefinition de type 'range' doivent fournir la liste des segments non vides (FacetValues)");
+				.state(() -> !facetValues.isEmpty(), "Les FacetDefinition de type 'range' doivent fournir la liste des segments non vides (FacetValues)");
 		Assertion.when(customFacet)
-				.check(() -> !facetParams.isEmpty(), "Les FacetDefinition de type 'custom' doivent fournir la liste des params non vides");
+				.state(() -> !facetParams.isEmpty(), "Les FacetDefinition de type 'custom' doivent fournir la liste des params non vides");
 		Assertion.when(!rangeFacet && !customFacet)
-				.check(facetValues::isEmpty, "Les FacetDefinition de type 'term' doivent fournir une liste des segments vide");
+				.state(facetValues::isEmpty, "Les FacetDefinition de type 'term' doivent fournir une liste des segments vide");
 		Assertion.checkNotNull(order);
 		//-----
 		this.name = name;

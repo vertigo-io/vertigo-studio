@@ -46,7 +46,7 @@ public final class TSMasterDataValueModel {
 		final StudioDtField dtField = dtDefinition.getField(fieldName);
 		//---
 		Assertion.when(dtField.getCardinality().hasOne())
-				.check(() -> allFieldValues.containsKey(fieldName),
+				.state(() -> allFieldValues.containsKey(fieldName),
 						"Field '{0}' is required on '{1}' and no value was provided. Provided values '{2}'",
 						fieldName, dtDefinition.getName(), allFieldValues);
 		//---

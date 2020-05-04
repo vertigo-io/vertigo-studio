@@ -74,7 +74,7 @@ public abstract class StudioAssociationDefinition implements Definition {
 	private static void checkNavigability(final StudioAssociationNode associationNode, final String associationName) {
 		//-----
 		Assertion.when(associationNode.isNavigable())
-				.check(() -> associationNode.getDtDefinition().getStereotype().isPersistent(), "assocation : {0}. you cannot navigate towards an object that is not an entity ", associationName);
+				.state(() -> associationNode.getDtDefinition().getStereotype().isPersistent(), "assocation : {0}. you cannot navigate towards an object that is not an entity ", associationName);
 	}
 
 	/**
