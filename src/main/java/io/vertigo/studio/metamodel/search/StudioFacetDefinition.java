@@ -98,12 +98,13 @@ public final class StudioFacetDefinition implements Definition {
 			final boolean customFacet,
 			final boolean multiSelectable,
 			final FacetOrder order) {
-		Assertion.checkArgNotEmpty(name);
-		Assertion.checkNotNull(indexDtDefinition);
-		Assertion.checkNotNull(dtField);
-		Assertion.checkNotNull(label);
-		Assertion.checkNotNull(facetValues);
-		Assertion.checkNotNull(facetParams);
+		Assertion.check()
+				.argNotEmpty(name)
+				.notNull(indexDtDefinition)
+				.notNull(dtField)
+				.notNull(label)
+				.notNull(facetValues)
+				.notNull(facetParams);
 		Assertion.when(rangeFacet)
 				.state(() -> !facetValues.isEmpty(), "Les FacetDefinition de type 'range' doivent fournir la liste des segments non vides (FacetValues)");
 		Assertion.when(customFacet)
