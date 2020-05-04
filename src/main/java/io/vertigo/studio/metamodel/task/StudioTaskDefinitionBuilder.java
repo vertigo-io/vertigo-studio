@@ -111,9 +111,10 @@ public final class StudioTaskDefinitionBuilder implements Builder<StudioTaskDefi
 	 * @return this builder
 	 */
 	public StudioTaskDefinitionBuilder addInAttribute(final String attributeName, final Domain domain, final Cardinality cardinality) {
-		Assertion.checkNotNull(attributeName);
-		Assertion.checkNotNull(domain);
-		Assertion.checkNotNull(cardinality);
+		Assertion.check()
+				.notNull(attributeName)
+				.notNull(domain)
+				.notNull(cardinality);
 		//-----
 		final StudioTaskAttribute taskAttribute = new StudioTaskAttribute(attributeName, domain, cardinality);
 		myInTaskAttributes.add(taskAttribute);

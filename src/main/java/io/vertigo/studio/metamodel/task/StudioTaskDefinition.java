@@ -72,11 +72,12 @@ public final class StudioTaskDefinition implements Definition {
 			final List<StudioTaskAttribute> inTaskAttributes,
 			final Optional<StudioTaskAttribute> outTaskAttributeOption) {
 		DefinitionUtil.checkName(name, StudioTaskDefinition.class);
-		Assertion.checkArgNotEmpty(dataSpace);
-		Assertion.checkArgNotEmpty(taskEngineClassName, "a taskEngineClass is required");
-		Assertion.checkNotNull(request, "a request is required");
-		Assertion.checkNotNull(inTaskAttributes);
-		Assertion.checkNotNull(outTaskAttributeOption);
+		Assertion.check()
+				.argNotEmpty(dataSpace)
+				.argNotEmpty(taskEngineClassName, "a taskEngineClass is required")
+				.notNull(request, "a request is required")
+				.notNull(inTaskAttributes)
+				.notNull(outTaskAttributeOption);
 		//-----
 		this.name = name;
 		this.packageName = packageName;

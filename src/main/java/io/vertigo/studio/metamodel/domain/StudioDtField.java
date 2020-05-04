@@ -118,11 +118,12 @@ public final class StudioDtField {
 			final boolean persistent,
 			final String fkDtDefinitionName,
 			final ComputedExpression computedExpression) {
-		Assertion.checkArgNotEmpty(id);
-		Assertion.checkNotNull(type);
-		Assertion.checkNotNull(domain);
-		Assertion.checkNotNull(type);
-		Assertion.checkNotNull(cardinality);
+		Assertion.check()
+				.argNotEmpty(id)
+				.notNull(type)
+				.notNull(domain)
+				.notNull(type)
+				.notNull(cardinality);
 		//-----
 		this.id = id;
 		domainRef = new DefinitionReference<>(domain);
