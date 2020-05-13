@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -23,21 +25,21 @@
 			<artifactId>vertigo-commons</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
-		
+
+
 		<dependency>
 			<groupId>io.vertigo</groupId>
 			<artifactId>vertigo-account</artifactId>
 			<version>${project.version}</version>
-			<optional>true</optional> <!-- to generate security  -->
+			<optional>true</optional> <!-- to generate security -->
 		</dependency>
 		<dependency>
 			<groupId>io.vertigo</groupId>
 			<artifactId>vertigo-vega</artifactId>
 			<version>${project.version}</version>
-			<optional>true</optional> <!-- to scan vega webservices  -->
+			<optional>true</optional> <!-- to scan vega webservices -->
 		</dependency>
-		
+
 		<dependency>
 			<groupId>io.vertigo</groupId>
 			<artifactId>vertigo-core</artifactId>
@@ -46,7 +48,7 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- Dépendances à des librairies spécifiques au module -->		
+		<!-- Dépendances à des librairies spécifiques au module -->
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
@@ -83,6 +85,45 @@
 	</dependencies>
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.2.1</version>
+				<!-- Congfiguration is needed because of a bug of log4j see : https://issues.apache.org/jira/browse/LOG4J2-673 -->
+				<configuration>
+					<filters>
+						<filter>
+							<artifact>*:*</artifact>
+							<excludes>
+								<exclude>META-INF/*.SF</exclude>
+								<exclude>META-INF/*.DSA</exclude>
+								<exclude>META-INF/*.RSA</exclude>
+							</excludes>
+						</filter>
+					</filters>
+					<transformers>
+						<transformer
+							implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+							<mainClass>io.vertigo.studio.tools.VertigoStudioMda</mainClass>
+						</transformer>
+					</transformers>
+					<shadedArtifactAttached>true</shadedArtifactAttached>
+					<shadedClassifierName>standalone</shadedClassifierName>
+					<minimizeJar>false</minimizeJar>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>

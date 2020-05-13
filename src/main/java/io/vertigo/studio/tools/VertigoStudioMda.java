@@ -18,11 +18,8 @@
  */
 package io.vertigo.studio.tools;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 
 import io.vertigo.commons.CommonsFeatures;
 import io.vertigo.core.lang.WrappedException;
@@ -47,7 +44,6 @@ public final class VertigoStudioMda {
 			final StudioMetamodelManager studioMetamodelManager = studioApp.getComponentSpace().resolve(StudioMetamodelManager.class);
 			final MdaManager mdaManager = studioApp.getComponentSpace().resolve(MdaManager.class);
 			//-----
-
 			final StudioProjectConfig studioProjectConfig = loadStudioProjectConfig(args[0]);
 
 			mdaManager.clean(studioProjectConfig.getMdaConfig());
@@ -77,26 +73,10 @@ public final class VertigoStudioMda {
 	}
 
 	private static StudioProjectConfig loadStudioProjectConfig(final String configFile) {
-
-		final URL url = Thread.currentThread().getContextClassLoader().getResource(configFile);
 		try {
-			return StudioConfigJsonParser.parseJson(readFile(url));
-		} catch (final IOException e) {
+			return StudioConfigJsonParser.parseJson(new URL("file:///" + configFile));
+		} catch (final MalformedURLException e) {
 			throw WrappedException.wrap(e);
-		}
-	}
-
-	private static String readFile(final URL url) throws IOException {
-		try (final BufferedReader reader = new BufferedReader(
-				new InputStreamReader(url.openStream(), StandardCharsets.UTF_8))) {
-			final StringBuilder buff = new StringBuilder();
-			String line = reader.readLine();
-			while (line != null) {
-				buff.append(line);
-				line = reader.readLine();
-				buff.append("\r\n");
-			}
-			return buff.toString();
 		}
 	}
 
