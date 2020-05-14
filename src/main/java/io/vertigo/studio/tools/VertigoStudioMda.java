@@ -72,9 +72,9 @@ public final class VertigoStudioMda {
 
 	}
 
-	private static StudioProjectConfig loadStudioProjectConfig(final String configFile) {
+	private static StudioProjectConfig loadStudioProjectConfig(final String configFileUrl) {
 		try {
-			return StudioConfigJsonParser.parseJson(new URL("file:///" + configFile));
+			return StudioConfigJsonParser.parseJson(new URL(configFileUrl));
 		} catch (final MalformedURLException e) {
 			throw WrappedException.wrap(e);
 		}
