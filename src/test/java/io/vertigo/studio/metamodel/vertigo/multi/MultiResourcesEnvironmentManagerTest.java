@@ -21,10 +21,13 @@ package io.vertigo.studio.metamodel.vertigo.multi;
 import java.util.Arrays;
 import java.util.Collections;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.vertigo.core.AbstractTestCaseJU5;
+import io.vertigo.core.node.AutoCloseableApp;
+import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.studio.StudioFeatures;
@@ -40,10 +43,23 @@ import io.vertigo.studio.metamodel.vertigo.multi.data.DtDefinitions;
  *
  * @author npiedeloup
  */
-public final class MultiResourcesEnvironmentManagerTest extends AbstractTestCaseJU5 {
+public final class MultiResourcesEnvironmentManagerTest {
+	private AutoCloseableApp app;
 
-	@Override
-	protected NodeConfig buildNodeConfig() {
+	@BeforeEach
+	public final void setUp() {
+		app = new AutoCloseableApp(buildNodeConfig());
+		DIInjector.injectMembers(this, app.getComponentSpace());
+	}
+
+	@AfterEach
+	public final void tearDown() {
+		if (app != null) {
+			app.close();
+		}
+	}
+
+	private NodeConfig buildNodeConfig() {
 		return NodeConfig.builder()
 				.beginBoot()
 				.addPlugin(ClassPathResourceResolverPlugin.class)
@@ -57,7 +73,7 @@ public final class MultiResourcesEnvironmentManagerTest extends AbstractTestCase
 
 	@Test
 	public void testFirst() {
-		final MetamodelRepository metamodelRepository = getApp().getComponentSpace().resolve(StudioMetamodelManager.class)
+		final MetamodelRepository metamodelRepository = app.getComponentSpace().resolve(StudioMetamodelManager.class)
 				.parseResources(Collections.singletonList(new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr")));
 		final Domain doString = metamodelRepository.resolve("DoString", Domain.class);
 		Assertions.assertNotNull(doString);
@@ -65,7 +81,7 @@ public final class MultiResourcesEnvironmentManagerTest extends AbstractTestCase
 
 	@Test
 	public void testMergedResources() {
-		final MetamodelRepository metamodelRepository = getApp().getComponentSpace().resolve(StudioMetamodelManager.class)
+		final MetamodelRepository metamodelRepository = app.getComponentSpace().resolve(StudioMetamodelManager.class)
 				.parseResources(Arrays.asList(
 						new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr"),
 						new MetamodelResource("classes", DtDefinitions.class.getCanonicalName())));

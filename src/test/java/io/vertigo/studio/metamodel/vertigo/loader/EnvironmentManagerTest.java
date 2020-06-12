@@ -29,19 +29,36 @@ import static io.vertigo.studio.metamodel.vertigo.loader.PersonGrammar.POSTAL_CO
 import static io.vertigo.studio.metamodel.vertigo.loader.PersonGrammar.STREET;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.vertigo.core.AbstractTestCaseJU5;
+import io.vertigo.core.node.AutoCloseableApp;
+import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.LogConfig;
 import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinition;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinitionRepository;
 
-public final class EnvironmentManagerTest extends AbstractTestCaseJU5 {
-	@Override
-	protected NodeConfig buildNodeConfig() {
+public final class EnvironmentManagerTest {
+	private AutoCloseableApp app;
+
+	@BeforeEach
+	public final void setUp() {
+		app = new AutoCloseableApp(buildNodeConfig());
+		DIInjector.injectMembers(this, app.getComponentSpace());
+	}
+
+	@AfterEach
+	public final void tearDown() {
+		if (app != null) {
+			app.close();
+		}
+	}
+
+	private NodeConfig buildNodeConfig() {
 		return NodeConfig.builder()
 				.beginBoot().withLogConfig(new LogConfig("/log4j.xml")).endBoot()
 				.build();

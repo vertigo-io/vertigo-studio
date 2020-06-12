@@ -36,15 +36,7 @@
 			<artifactId>vertigo-vega</artifactId>
 			<version>${project.version}</version>
 			<optional>true</optional> <!-- to scan vega webservices  -->
-		</dependency>
-		
-		<dependency>
-			<groupId>io.vertigo</groupId>
-			<artifactId>vertigo-core</artifactId>
-			<version>${project.version}</version>
-			<type>test-jar</type>
-			<scope>test</scope>
-		</dependency>
+		</dependency>	
 
 		<!-- Dépendances à des librairies spécifiques au module -->		
 		<dependency>

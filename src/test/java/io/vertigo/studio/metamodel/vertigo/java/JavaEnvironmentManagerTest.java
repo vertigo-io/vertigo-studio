@@ -21,11 +21,14 @@ package io.vertigo.studio.metamodel.vertigo.java;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.vertigo.core.AbstractTestCaseJU5;
 import io.vertigo.core.lang.BasicType;
+import io.vertigo.core.node.AutoCloseableApp;
+import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.datamodel.impl.smarttype.formatter.FormatterDefault;
@@ -43,12 +46,30 @@ import io.vertigo.studio.metamodel.vertigo.java.data.DtDefinitions;
  *
  * @author dchallas
  */
-public final class JavaEnvironmentManagerTest extends AbstractTestCaseJU5 {
+public final class JavaEnvironmentManagerTest {
 
 	private MetamodelRepository metamodelRepository;
+	private AutoCloseableApp app;
 
-	@Override
-	protected NodeConfig buildNodeConfig() {
+	@BeforeEach
+	public final void setUp() {
+		app = new AutoCloseableApp(buildNodeConfig());
+		DIInjector.injectMembers(this, app.getComponentSpace());
+		//---
+		final List<MetamodelResource> resources = Arrays.asList(
+				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/java/data/execution.kpr"),
+				new MetamodelResource("classes", DtDefinitions.class.getName()));
+		metamodelRepository = app.getComponentSpace().resolve(StudioMetamodelManager.class).parseResources(resources);
+	}
+
+	@AfterEach
+	public final void tearDown() {
+		if (app != null) {
+			app.close();
+		}
+	}
+
+	private NodeConfig buildNodeConfig() {
 		return NodeConfig.builder()
 				.beginBoot()
 				.addPlugin(ClassPathResourceResolverPlugin.class)
@@ -58,14 +79,6 @@ public final class JavaEnvironmentManagerTest extends AbstractTestCaseJU5 {
 						.withVertigoMetamodel()
 						.build())
 				.build();
-	}
-
-	@Override
-	protected void doSetUp() throws Exception {
-		final List<MetamodelResource> resources = Arrays.asList(
-				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/java/data/execution.kpr"),
-				new MetamodelResource("classes", DtDefinitions.class.getName()));
-		metamodelRepository = getApp().getComponentSpace().resolve(StudioMetamodelManager.class).parseResources(resources);
 	}
 
 	@Test

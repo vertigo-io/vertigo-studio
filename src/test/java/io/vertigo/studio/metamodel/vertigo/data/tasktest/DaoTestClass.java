@@ -20,12 +20,16 @@ package io.vertigo.studio.metamodel.vertigo.data.tasktest;
 
 import javax.inject.Inject;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+
 import io.vertigo.commons.CommonsFeatures;
 import io.vertigo.commons.transaction.VTransactionManager;
 import io.vertigo.commons.transaction.VTransactionWritable;
-import io.vertigo.core.AbstractTestCaseJU5;
 import io.vertigo.core.node.App;
+import io.vertigo.core.node.AutoCloseableApp;
 import io.vertigo.core.node.Home;
+import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.LogConfig;
 import io.vertigo.core.node.config.ModuleConfig;
 import io.vertigo.core.node.config.NodeConfig;
@@ -46,15 +50,33 @@ import io.vertigo.studio.plugins.mda.vertigo.task.test.TaskTestDaoChecker;
 import io.vertigo.studio.plugins.mda.vertigo.task.test.TaskTestDummyGenerator;
 import io.vertigo.studio.plugins.mda.vertigo.task.test.TaskTestDummyGeneratorBasic;
 
-public class DaoTestClass extends AbstractTestCaseJU5 {
+public class DaoTestClass {
 
 	@Inject
 	private VTransactionManager transactionManager;
 
 	private VTransactionWritable currentTransaction;
+	private AutoCloseableApp app;
 
-	@Override
-	protected NodeConfig buildNodeConfig() {
+	@BeforeEach
+	public final void setUp() {
+		app = new AutoCloseableApp(buildNodeConfig());
+		DIInjector.injectMembers(this, app.getComponentSpace());
+		//---
+		execSqlScript("io/vertigo/studio/metamodel/vertigo/data/sql/crebas.sql", Home.getApp());
+		currentTransaction = transactionManager.createCurrentTransaction();
+
+	}
+
+	@AfterEach
+	public final void tearDown() {
+		if (app != null) {
+			currentTransaction.rollback();
+			app.close();
+		}
+	}
+
+	private NodeConfig buildNodeConfig() {
 		return NodeConfig.builder()
 				.beginBoot()
 				.withLocales("fr")
@@ -87,17 +109,6 @@ public class DaoTestClass extends AbstractTestCaseJU5 {
 						.addComponent(DaoPAO.class)
 						.build())
 				.build();
-	}
-
-	@Override
-	protected void doSetUp() throws Exception {
-		execSqlScript("io/vertigo/studio/metamodel/vertigo/data/sql/crebas.sql", Home.getApp());
-		currentTransaction = transactionManager.createCurrentTransaction();
-	}
-
-	@Override
-	protected void doTearDown() throws Exception {
-		currentTransaction.rollback();
 	}
 
 	private void execSqlScript(final String sqlScript, final App app) {

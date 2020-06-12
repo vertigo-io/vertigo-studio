@@ -21,10 +21,13 @@ package io.vertigo.studio.metamodel.vertigo.eaxmi;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.vertigo.core.AbstractTestCaseJU5;
+import io.vertigo.core.node.AutoCloseableApp;
+import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.studio.StudioFeatures;
@@ -39,12 +42,30 @@ import io.vertigo.studio.metamodel.domain.association.StudioAssociationSimpleDef
  *
  * @author pchretien, mlaroche
  */
-public class EAXmiTestParser extends AbstractTestCaseJU5 {
+public class EAXmiTestParser {
 
 	private MetamodelRepository metamodelRepository;
+	private AutoCloseableApp app;
 
-	@Override
-	protected NodeConfig buildNodeConfig() {
+	@BeforeEach
+	public final void setUp() {
+		app = new AutoCloseableApp(buildNodeConfig());
+		DIInjector.injectMembers(this, app.getComponentSpace());
+		//---
+		final List<MetamodelResource> resources = Arrays.asList(
+				new MetamodelResource("xmi", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/associations.xml"),
+				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/domain.kpr"));
+		metamodelRepository = app.getComponentSpace().resolve(StudioMetamodelManager.class).parseResources(resources);
+	}
+
+	@AfterEach
+	public final void tearDown() {
+		if (app != null) {
+			app.close();
+		}
+	}
+
+	private NodeConfig buildNodeConfig() {
 		return NodeConfig.builder()
 				.beginBoot()
 				.addPlugin(ClassPathResourceResolverPlugin.class)
@@ -54,14 +75,6 @@ public class EAXmiTestParser extends AbstractTestCaseJU5 {
 						.withVertigoMetamodel()
 						.build())
 				.build();
-	}
-
-	@Override
-	protected void doSetUp() throws Exception {
-		final List<MetamodelResource> resources = Arrays.asList(
-				new MetamodelResource("xmi", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/associations.xml"),
-				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/domain.kpr"));
-		metamodelRepository = getApp().getComponentSpace().resolve(StudioMetamodelManager.class).parseResources(resources);
 	}
 
 	/*
