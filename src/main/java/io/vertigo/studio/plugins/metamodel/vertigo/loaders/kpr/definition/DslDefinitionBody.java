@@ -35,8 +35,9 @@ public final class DslDefinitionBody {
 	 * @param propertyEntries
 	 */
 	public DslDefinitionBody(final List<DslDefinitionEntry> definitionEntries, final List<DslPropertyEntry> propertyEntries) {
-		Assertion.checkNotNull(definitionEntries);
-		Assertion.checkNotNull(propertyEntries);
+		Assertion.check()
+				.notNull(definitionEntries)
+				.notNull(propertyEntries);
 		//-----
 		this.definitionEntries = definitionEntries;
 		this.propertyEntries = propertyEntries;

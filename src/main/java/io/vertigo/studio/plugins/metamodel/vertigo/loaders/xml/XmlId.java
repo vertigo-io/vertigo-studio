@@ -33,7 +33,7 @@ public final class XmlId {
 	 * @param keyValue Valeur de l'identiant
 	 */
 	public XmlId(final String keyValue) {
-		Assertion.checkNotNull(keyValue);
+		Assertion.check().notNull(keyValue);
 		//-----
 		this.keyValue = keyValue;
 	}

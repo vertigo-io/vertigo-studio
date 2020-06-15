@@ -38,7 +38,7 @@ public final class TSDomainModel {
 	 * @param domain Domain
 	 */
 	TSDomainModel(final Domain domain) {
-		Assertion.checkNotNull(domain);
+		Assertion.check().notNull(domain);
 		//-----
 		this.domain = domain;
 	}

@@ -37,7 +37,7 @@ public final class TemplateTaskAttribute {
 	private final String value;
 
 	TemplateTaskAttribute(final StudioTaskAttribute taskAttribute, final Function<String, String> classNameFromDt) {
-		Assertion.checkNotNull(taskAttribute);
+		Assertion.check().notNull(taskAttribute);
 		//-----
 		this.taskAttribute = taskAttribute;
 		value = create(this.taskAttribute.getDomain(), this.taskAttribute.getCardinality(), classNameFromDt);

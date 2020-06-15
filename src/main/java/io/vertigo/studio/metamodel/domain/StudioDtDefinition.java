@@ -146,8 +146,9 @@ public final class StudioDtDefinition implements Definition {
 	}
 
 	private void doRegisterDtField(final StudioDtField dtField) {
-		Assertion.checkNotNull(dtField);
-		Assertion.checkArgument(!mappedFields.containsKey(dtField.getName()), "Field {0} déjà enregistré sur {1}", dtField.getName(), this);
+		Assertion.check()
+				.notNull(dtField)
+				.argument(!mappedFields.containsKey(dtField.getName()), "Field {0} déjà enregistré sur {1}", dtField.getName(), this);
 		//-----
 		fields.add(dtField);
 		mappedFields.put(dtField.getName(), dtField);
@@ -196,7 +197,7 @@ public final class StudioDtDefinition implements Definition {
 		//-----
 		final StudioDtField dtField = mappedFields.get(fieldName);
 		//-----
-		Assertion.checkNotNull(dtField, "field '{0}' not found on '{1}'. Available fields are :{2}", fieldName, this, mappedFields.keySet());
+		Assertion.check().notNull(dtField, "field '{0}' not found on '{1}'. Available fields are :{2}", fieldName, this, mappedFields.keySet());
 		return dtField;
 	}
 
@@ -205,7 +206,7 @@ public final class StudioDtDefinition implements Definition {
 	 * @return if this field exists in this DtDefinition
 	 */
 	public boolean contains(final String fieldName) {
-		Assertion.checkNotNull(fieldName);
+		Assertion.check().notNull(fieldName);
 		//-----
 		return mappedFields.containsKey(fieldName);
 	}

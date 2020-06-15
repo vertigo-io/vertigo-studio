@@ -108,8 +108,9 @@ public final class Domain implements Definition {
 			final FormatterDefinition formatterDefinition,
 			final List<ConstraintDefinition> constraintDefinitions,
 			final Properties properties) {
-		Assertion.checkArgNotEmpty(name);
-		Assertion.checkNotNull(scope);
+		Assertion.check()
+				.argNotEmpty(name)
+				.notNull(scope);
 		//---
 		Assertion.when(scope == Scope.PRIMITIVE)
 				.state(() -> dataType != null, "a primitive domain must define a primitive type")
@@ -123,8 +124,9 @@ public final class Domain implements Definition {
 				.state(() -> valueObjectClassName != null, "a value-object domain must define a value-object class")
 				.state(() -> dataType == null && dtDefinitionName == null, "a value-object domain can't have nor a primitive type nor a data-object-definition");
 		//formatterDefinition is nullable
-		Assertion.checkNotNull(constraintDefinitions);
-		Assertion.checkNotNull(properties);
+		Assertion.check()
+				.notNull(constraintDefinitions)
+				.notNull(properties);
 		//-----
 		this.name = name;
 		this.scope = scope;
@@ -188,7 +190,7 @@ public final class Domain implements Definition {
 	 * @return the formatter.
 	 */
 	public FormatterDefinition getFormatterDefinition() {
-		Assertion.checkNotNull(formatterDefinition, "no formatter defined on {0}", this);
+		Assertion.check().notNull(formatterDefinition, "no formatter defined on {0}", this);
 		//-----
 		return formatterDefinition;
 	}

@@ -130,26 +130,27 @@ public final class StudioDtField {
 		this.type = type;
 		this.cardinality = cardinality;
 		//-----
-		Assertion.checkNotNull(fieldName);
-		Assertion.checkArgument(fieldName.length() <= FIELD_NAME_MAX_LENGTH, "the name of the field {0} has a limit size of {1}", fieldName, FIELD_NAME_MAX_LENGTH);
-		Assertion.checkArgument(StringUtil.isLowerCamelCase(fieldName), "the name of the field {0} must be in lowerCamelCase", fieldName);
-		name = fieldName;
+		Assertion.check()
+				.notNull(fieldName)
+				.argument(fieldName.length() <= FIELD_NAME_MAX_LENGTH, "the name of the field {0} has a limit size of {1}", fieldName, FIELD_NAME_MAX_LENGTH)
+				.argument(StringUtil.isLowerCamelCase(fieldName), "the name of the field {0} must be in lowerCamelCase", fieldName)
+				.notNull(label);
 		//-----
-		Assertion.checkNotNull(label);
+		name = fieldName;
 		this.label = label;
 		//-----
 		Assertion.checkArgument(!(getType() == FieldType.COMPUTED && persistent), "a computed field can't be persistent");
 		this.persistent = persistent;
 		//-----
 		if (getType() == FieldType.FOREIGN_KEY) {
-			Assertion.checkNotNull(fkDtDefinitionName, "Le champ {0} de type clé étrangère doit référencer une définition ", fieldName);
+			Assertion.check().notNull(fkDtDefinitionName, "Le champ {0} de type clé étrangère doit référencer une définition ", fieldName);
 		} else {
 			Assertion.checkState(fkDtDefinitionName == null, "Le champ {0} n''est pas une clé étrangère", fieldName);
 		}
 		this.fkDtDefinitionName = fkDtDefinitionName;
 		//-----
 		if (getType() == FieldType.COMPUTED) {
-			Assertion.checkNotNull(computedExpression, "the field {0}, declared as computed, must have an expression", fieldName);
+			Assertion.check().notNull(computedExpression, "the field {0}, declared as computed, must have an expression", fieldName);
 		} else {
 			Assertion.checkState(computedExpression == null, "the field {0}, not declared as computed, must have an empty expression", fieldName);
 		}
@@ -215,7 +216,7 @@ public final class StudioDtField {
 	 */
 	//Todo changer le nom
 	public String getFkDtDefinitionName() {
-		Assertion.checkNotNull(fkDtDefinitionName);
+		Assertion.check().notNull(fkDtDefinitionName);
 		//-----
 		return fkDtDefinitionName;
 	}
@@ -225,7 +226,7 @@ public final class StudioDtField {
 	 *  @return ComputedExpression du champs calculé (caractère obligatoire lié au type)
 	 */
 	public ComputedExpression getComputedExpression() {
-		Assertion.checkNotNull(computedExpression);
+		Assertion.check().notNull(computedExpression);
 		//-----
 		return computedExpression;
 	}

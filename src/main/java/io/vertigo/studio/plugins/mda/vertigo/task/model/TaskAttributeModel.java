@@ -37,8 +37,9 @@ public final class TaskAttributeModel {
 	private final String javaTypeLabel;
 
 	TaskAttributeModel(final StudioTaskAttribute taskAttribute, final Function<String, String> classNameFromDt) {
-		Assertion.checkNotNull(taskAttribute);
-		Assertion.checkNotNull(classNameFromDt);
+		Assertion.check()
+				.notNull(taskAttribute)
+				.notNull(classNameFromDt);
 		//-----
 		this.taskAttribute = taskAttribute;
 		//---

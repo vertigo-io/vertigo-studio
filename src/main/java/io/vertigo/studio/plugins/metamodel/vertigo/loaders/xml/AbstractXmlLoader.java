@@ -63,7 +63,7 @@ public abstract class AbstractXmlLoader implements Loader {
 	 * @param resourceManager the vertigo resourceManager
 	 */
 	public AbstractXmlLoader(final boolean constFieldNameInSource, final ResourceManager resourceManager) {
-		Assertion.checkNotNull(resourceManager);
+		Assertion.check().notNull(resourceManager);
 		//-----
 		this.resourceManager = resourceManager;
 		this.constFieldNameInSource = constFieldNameInSource;
@@ -85,8 +85,9 @@ public abstract class AbstractXmlLoader implements Loader {
 		} catch (final Exception e) {
 			throw WrappedException.wrap(e, "erreur lors de la lecture du fichier xmi : {0}", xmiFileURL);
 		}
-		Assertion.checkArgNotEmpty(resourcePath);
-		Assertion.checkNotNull(dslDefinitionRepository);
+		Assertion.check()
+				.argNotEmpty(resourcePath)
+				.notNull(dslDefinitionRepository);
 		//-----
 
 		for (final XmlClass clazz : getClasses()) {
@@ -238,7 +239,7 @@ public abstract class AbstractXmlLoader implements Loader {
 		}
 		LOGGER.trace(KspProperty.FK_FIELD_NAME + "= {}", fkFieldName);
 		//-----
-		Assertion.checkNotNull(fkFieldName, "La clé primaire n''a pas pu être définie pour l'association '{0}'", association.getCode());
+		Assertion.check().notNull(fkFieldName, "La clé primaire n''a pas pu être définie pour l'association '{0}'", association.getCode());
 		return fkFieldName;
 	}
 

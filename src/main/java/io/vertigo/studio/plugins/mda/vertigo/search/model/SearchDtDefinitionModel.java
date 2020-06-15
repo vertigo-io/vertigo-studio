@@ -35,7 +35,7 @@ public final class SearchDtDefinitionModel {
 	 * @param dtDefinition DtDefinition de l'objet à générer
 	 */
 	public SearchDtDefinitionModel(final StudioDtDefinition dtDefinition) {
-		Assertion.checkNotNull(dtDefinition);
+		Assertion.check().notNull(dtDefinition);
 		//-----
 		this.dtDefinition = dtDefinition;
 

@@ -61,7 +61,7 @@ public class TaskTestDaoChecker {
 		 * on constate la stacktrace suivante :
 		 *
 		 * java.lang.NullPointerException: Attribut task CLASSIFICATION ne doit pas etre null (cf. paramétrage task)
-		at io.vertigo.lang.Assertion.checkNotNull(Assertion.java:71)
+		at io.vertigo.lang.Assertion.check().notNull(Assertion.java:71)
 		at io.vertigo.dynamo.task.metamodel.TaskAttribute.checkAttribute(TaskAttribute.java:102)
 		at io.vertigo.dynamo.task.model.TaskResult.lambda$new$4(TaskResult.java:47)
 		at java.util.Optional.ifPresent(Optional.java:159)

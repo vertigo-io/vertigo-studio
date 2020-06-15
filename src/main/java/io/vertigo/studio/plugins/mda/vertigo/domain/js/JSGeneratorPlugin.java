@@ -48,8 +48,9 @@ public final class JSGeneratorPlugin implements GeneratorPlugin {
 	public void generate(
 			final MetamodelRepository metamodelRepository,
 			final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
-		Assertion.checkNotNull(mdaConfig);
-		Assertion.checkNotNull(mdaResultBuilder);
+		Assertion.check()
+				.notNull(mdaConfig)
+				.notNull(mdaResultBuilder);
 		//-----
 		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.domain.js.targetSubDir", DEFAULT_TARGET_SUBDIR);
 		//---

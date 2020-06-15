@@ -111,7 +111,7 @@ public final class StudioFacetedQueryDefinition implements Definition {
 		//-----
 		final StudioFacetDefinition facetDefinition = facetDefinitions.get(facetName);
 		//-----
-		Assertion.checkNotNull(facetDefinition, "Aucune Définition de facette trouvée pour {0}", facetName);
+		Assertion.check().notNull(facetDefinition, "Aucune Définition de facette trouvée pour {0}", facetName);
 		return facetDefinition;
 	}
 

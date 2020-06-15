@@ -80,8 +80,9 @@ public final class AnnotationLoader implements Loader {
 	/** {@inheritDoc} */
 	@Override
 	public void load(final String resourcePath, final DslDefinitionRepository dslDefinitionRepository) {
-		Assertion.checkArgNotEmpty(resourcePath);
-		Assertion.checkNotNull(dslDefinitionRepository);
+		Assertion.check()
+				.argNotEmpty(resourcePath)
+				.notNull(dslDefinitionRepository);
 		//-----
 		//--Enregistrement des fichiers java annotés
 		for (final Class<DtObject> javaClass : selectClasses(resourcePath, DtObject.class)) {

@@ -11,8 +11,9 @@ public class IndexCopyToModel {
 	private final List<StudioDtField> fromFields;
 
 	public IndexCopyToModel(final StudioDtField toField, final List<StudioDtField> fromFields) {
-		Assertion.checkNotNull(toField);
-		Assertion.checkNotNull(fromFields);
+		Assertion.check()
+				.notNull(toField)
+				.notNull(fromFields);
 		//---
 		this.toField = toField;
 		this.fromFields = fromFields;

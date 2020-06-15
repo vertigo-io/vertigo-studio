@@ -53,11 +53,12 @@ public final class TaskTestGeneratorPlugin implements GeneratorPlugin {
 	/** {@inheritDoc} */
 	@Override
 	public void generate(final MetamodelRepository metamodelRepository, final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
-		Assertion.checkNotNull(mdaConfig);
-		Assertion.checkNotNull(mdaResultBuilder);
+		Assertion.check()
+				.notNull(mdaConfig)
+				.notNull(mdaResultBuilder);
 		//-----
 		final String targetSubDir = mdaConfig.getAsString("vertigo.taskTest.targetSubDir");
-		Assertion.checkNotNull(targetSubDir);
+		Assertion.check().notNull(targetSubDir);
 		//---
 		generatePaos(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder);
 		generateDaos(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder);
@@ -249,7 +250,7 @@ public final class TaskTestGeneratorPlugin implements GeneratorPlugin {
 	@Override
 	public void clean(final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
 		final String targetSubDir = mdaConfig.getAsString("vertigo.taskTest.targetSubDir");
-		Assertion.checkNotNull(targetSubDir);
+		Assertion.check().notNull(targetSubDir);
 		//---
 		MdaUtil.deleteFiles(new File(mdaConfig.getTargetGenDir() + targetSubDir), mdaResultBuilder);
 	}

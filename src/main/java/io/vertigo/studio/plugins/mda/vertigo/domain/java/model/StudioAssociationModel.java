@@ -38,8 +38,9 @@ public final class StudioAssociationModel {
 	 * @param associationNode Noeud de l'association à générer
 	 */
 	StudioAssociationModel(final StudioAssociationDefinition associationDefinition, final StudioAssociationNode associationNode) {
-		Assertion.checkNotNull(associationDefinition);
-		Assertion.checkNotNull(associationNode);
+		Assertion.check()
+				.notNull(associationDefinition)
+				.notNull(associationNode);
 		//-----
 		this.associationDefinition = associationDefinition;
 		this.associationNode = associationNode;

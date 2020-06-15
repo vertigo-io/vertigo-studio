@@ -66,8 +66,9 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 			final MetamodelRepository metamodelRepository,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
-		Assertion.checkNotNull(mdaConfig);
-		Assertion.checkNotNull(mdaResultBuilder);
+		Assertion.check()
+				.notNull(mdaConfig)
+				.notNull(mdaResultBuilder);
 		//-----
 		generateSql(metamodelRepository, mdaConfig, mdaResultBuilder);
 

@@ -256,7 +256,7 @@ final class EAXmiObject {
 	// Gestion des propriétés
 
 	void setProperty(final String propertyName, final Attributes attributes) {
-		Assertion.checkNotNull(propertyName);
+		Assertion.check().notNull(propertyName);
 		//-----
 		//TODO : load stereotype from XMI
 		switch (propertyName) {

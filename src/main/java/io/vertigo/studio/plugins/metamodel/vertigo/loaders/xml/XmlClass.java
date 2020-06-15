@@ -44,9 +44,10 @@ public final class XmlClass {
 	 * @param fieldAttributes Liste des champs non PK.
 	 */
 	public XmlClass(final String code, final String packageName, final String stereotype, final List<XmlAttribute> keyAttributes, final List<XmlAttribute> fieldAttributes) {
-		Assertion.checkArgNotEmpty(code);
-		Assertion.checkNotNull(keyAttributes);
-		Assertion.checkNotNull(fieldAttributes);
+		Assertion.check()
+				.argNotEmpty(code)
+				.notNull(keyAttributes)
+				.notNull(fieldAttributes);
 		//-----
 		this.code = code;
 		this.packageName = packageName;

@@ -35,7 +35,7 @@ public final class DslPropertyEntry {
 	 * @param propertyValue Value of the property
 	 */
 	public DslPropertyEntry(final String propertyName, final String propertyValue) {
-		Assertion.checkNotNull(propertyName);
+		Assertion.check().notNull(propertyName);
 		//-----
 		this.propertyName = propertyName;
 		this.propertyValue = propertyValue;

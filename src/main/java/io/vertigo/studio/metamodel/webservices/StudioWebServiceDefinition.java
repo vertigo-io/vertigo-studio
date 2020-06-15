@@ -65,15 +65,16 @@ public final class StudioWebServiceDefinition implements Definition {
 			final Optional<String> groupNameOpt,
 			final String humanReadableAction,
 			final String doc) {
-		Assertion.checkArgNotEmpty(name);
-		Assertion.checkNotNull(verb);
-		Assertion.checkArgNotEmpty(path);
-		Assertion.checkNotNull(webServiceParams);
-		Assertion.checkNotNull(webServiceResponseContentOpt);
-		Assertion.checkArgNotEmpty(moduleName);
-		Assertion.checkNotNull(groupNameOpt);
-		Assertion.checkArgNotEmpty(humanReadableAction);
-		Assertion.checkNotNull(doc); //doc can be empty
+		Assertion.check()
+				.argNotEmpty(name)
+				.notNull(verb)
+				.argNotEmpty(path)
+				.notNull(webServiceParams)
+				.notNull(webServiceResponseContentOpt)
+				.argNotEmpty(moduleName)
+				.notNull(groupNameOpt)
+				.argNotEmpty(humanReadableAction)
+				.notNull(doc); //doc can be empty
 		//-----
 		this.name = name;
 		this.verb = verb;

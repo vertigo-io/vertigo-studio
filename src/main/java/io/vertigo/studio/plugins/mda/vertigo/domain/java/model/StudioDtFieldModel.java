@@ -47,10 +47,11 @@ public final class StudioDtFieldModel {
 	 * @param dtField Champ à générer
 	 */
 	StudioDtFieldModel(final StudioDtDefinition dtDefinition, final StudioDtField dtField, final List<? extends StudioAssociationDefinition> associationDefinitions, final Function<String, String> classNameFromDt) {
-		Assertion.checkNotNull(dtDefinition);
-		Assertion.checkNotNull(dtField);
-		Assertion.checkNotNull(associationDefinitions);
-		Assertion.checkNotNull(classNameFromDt);
+		Assertion.check()
+				.notNull(dtDefinition)
+				.notNull(dtField)
+				.notNull(associationDefinitions)
+				.notNull(classNameFromDt);
 		//-----
 		this.dtDefinition = dtDefinition;
 		this.dtField = dtField;

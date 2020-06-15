@@ -164,7 +164,7 @@ public final class DslDefinitionBuilder implements Builder<DslDefinition> {
 	}
 
 	private void addAllChildDefinitions(final String fieldName, final List<DslDefinition> dslDefinitions) {
-		Assertion.checkNotNull(dslDefinitions);
+		Assertion.check().notNull(dslDefinitions);
 		final DslEntityField dslEntityField = entity.getField(fieldName);
 		Assertion.checkState(dslEntityField.getType().isEntity(), "expected an entity on {0}", fieldName);
 		//---

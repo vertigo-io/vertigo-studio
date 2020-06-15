@@ -32,8 +32,9 @@ public final class StudioWebServiceResponseContent {
 	public StudioWebServiceResponseContent(
 			final Type type,
 			final Cardinality cardinality) {
-		Assertion.checkNotNull(type);
-		Assertion.checkNotNull(cardinality);
+		Assertion.check()
+				.notNull(type)
+				.notNull(cardinality);
 		//-----
 		this.type = type;
 		this.cardinality = cardinality;

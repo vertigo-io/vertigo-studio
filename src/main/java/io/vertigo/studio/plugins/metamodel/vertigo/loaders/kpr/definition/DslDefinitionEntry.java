@@ -90,7 +90,7 @@ public final class DslDefinitionEntry {
 	 * @return Définition
 	 */
 	public DslDefinition getDefinition() {
-		Assertion.checkNotNull(definition);
+		Assertion.check().notNull(definition);
 		//-----
 		return definition;
 	}

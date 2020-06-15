@@ -36,8 +36,9 @@ final class XmlUtil {
 	 * @return Renvoie le résultat
 	 */
 	static String french2Java(final String str) {
-		Assertion.checkNotNull(str);
-		Assertion.checkArgument(str.length() > 0, "La chaine à modifier ne doit pas être vide.");
+		Assertion.check()
+				.notNull(str)
+				.argument(str.length() > 0, "La chaine à modifier ne doit pas être vide.");
 		//-----
 		final StringBuilder suffix = new StringBuilder();
 		char c;

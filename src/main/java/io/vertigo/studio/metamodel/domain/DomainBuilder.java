@@ -72,8 +72,9 @@ public final class DomainBuilder implements Builder<Domain> {
 	 * @param dtDefinitionName the data-object definition of the domain
 	 */
 	DomainBuilder(final String name, final String dtDefinitionName) {
-		Assertion.checkArgNotEmpty(name);
-		Assertion.checkNotNull(dtDefinitionName);
+		Assertion.check()
+				.argNotEmpty(name)
+				.notNull(dtDefinitionName);
 		//---
 		myName = name;
 		myScope = Scope.DATA_OBJECT;
@@ -89,8 +90,9 @@ public final class DomainBuilder implements Builder<Domain> {
 	 * @param valueObjectClass the value-object class of the domain
 	 */
 	DomainBuilder(final String name, final Class valueObjectClass) {
-		Assertion.checkArgNotEmpty(name);
-		Assertion.checkNotNull(valueObjectClass);
+		Assertion.check()
+				.argNotEmpty(name)
+				.notNull(valueObjectClass);
 		//---
 		myName = name;
 		myScope = Domain.Scope.VALUE_OBJECT;
@@ -105,7 +107,7 @@ public final class DomainBuilder implements Builder<Domain> {
 	 * @return this builder
 	 */
 	public DomainBuilder withFormatter(final FormatterDefinition formatterDefinition) {
-		Assertion.checkNotNull(formatterDefinition);
+		Assertion.check().notNull(formatterDefinition);
 		//---
 		myformatterDefinition = formatterDefinition;
 		return this;
@@ -116,7 +118,7 @@ public final class DomainBuilder implements Builder<Domain> {
 	 * @return this builder
 	 */
 	public DomainBuilder withConstraints(final List<ConstraintDefinition> constraintDefinitions) {
-		Assertion.checkNotNull(constraintDefinitions);
+		Assertion.check().notNull(constraintDefinitions);
 		//---
 		myConstraintDefinitions = constraintDefinitions;
 		return this;
@@ -127,7 +129,7 @@ public final class DomainBuilder implements Builder<Domain> {
 	* @return this builder
 	*/
 	public DomainBuilder withProperties(final Properties properties) {
-		Assertion.checkNotNull(properties);
+		Assertion.check().notNull(properties);
 		//---
 		myProperties = properties;
 		return this;

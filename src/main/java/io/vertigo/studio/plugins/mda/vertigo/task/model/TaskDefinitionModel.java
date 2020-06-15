@@ -107,7 +107,7 @@ public final class TaskDefinitionModel {
 	 * @return Attribut de sortie (Unique)
 	 */
 	public TaskAttributeModel getOutAttribute() {
-		Assertion.checkNotNull(out);
+		Assertion.check().notNull(out);
 		//-----
 		return out;
 	}

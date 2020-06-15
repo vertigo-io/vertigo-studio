@@ -70,7 +70,7 @@ public final class StudioTaskDefinitionBuilder implements Builder<StudioTaskDefi
 	 * @return this builder
 	 */
 	public StudioTaskDefinitionBuilder withRequest(final String request) {
-		Assertion.checkNotNull(request);
+		Assertion.check().notNull(request);
 		//-----
 		//Pour unifier la saisie de la request sous un environnement unix ou dos
 		// et pour éviter la disparité de gestion des retours chariot

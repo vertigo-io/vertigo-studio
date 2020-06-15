@@ -56,7 +56,7 @@ public final class DslPropertyDeclarationRule extends AbstractRule<DslPropertyEn
 	 */
 	public DslPropertyDeclarationRule(final Set<String> entityPropertyNames) {
 		super(createMainRule(entityPropertyNames));
-		Assertion.checkNotNull(entityPropertyNames);
+		Assertion.check().notNull(entityPropertyNames);
 		//-----
 		entityProperties = new HashMap<>();
 		for (final String entityPropertyName : entityPropertyNames) {

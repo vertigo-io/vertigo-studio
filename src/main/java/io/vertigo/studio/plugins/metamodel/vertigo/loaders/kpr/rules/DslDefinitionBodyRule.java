@@ -56,7 +56,7 @@ public final class DslDefinitionBodyRule extends AbstractRule<DslDefinitionBody,
 	}
 
 	private static PegRule<List<Object>> createMainRule(final DslEntity entity) {
-		Assertion.checkNotNull(entity);
+		Assertion.check().notNull(entity);
 		final List<String> attributeNames = new ArrayList<>();
 
 		final List<PegRule<?>> innerDefinitionRules = new ArrayList<>();

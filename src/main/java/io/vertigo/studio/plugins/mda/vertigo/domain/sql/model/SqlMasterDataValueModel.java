@@ -35,8 +35,9 @@ public final class SqlMasterDataValueModel {
 	private final Map<String, String> allFieldValues;
 
 	public SqlMasterDataValueModel(final StudioDtDefinition dtDefinition, final Map<String, String> allFieldValues) {
-		Assertion.checkNotNull(dtDefinition);
-		Assertion.checkNotNull(allFieldValues);
+		Assertion.check()
+				.notNull(dtDefinition)
+				.notNull(allFieldValues);
 		//-----
 		this.dtDefinition = dtDefinition;
 		this.allFieldValues = allFieldValues;

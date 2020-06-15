@@ -50,9 +50,10 @@ public final class StudioFacetValue implements Serializable {
 	 * @param label the label of the facet
 	 */
 	public StudioFacetValue(final String code, final String listFilter, final String label) {
-		Assertion.checkArgNotEmpty(code);
-		Assertion.checkNotNull(listFilter);
-		Assertion.checkNotNull(label);
+		Assertion.check()
+				.argNotEmpty(code)
+				.notNull(listFilter)
+				.notNull(label);
 		//-----
 		this.code = code;
 		this.listFilter = listFilter;

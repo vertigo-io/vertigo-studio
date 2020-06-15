@@ -70,7 +70,7 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 				.withPackageName(xtaskDefinition.getPackageName());
 		for (final DslDefinition xtaskAttribute : xtaskDefinition.getChildDefinitions(TaskGrammar.TASK_ATTRIBUTE)) {
 			final String attributeName = xtaskAttribute.getName();
-			Assertion.checkNotNull(attributeName);
+			Assertion.check().notNull(attributeName);
 			final String smartTypeName = xtaskAttribute.getDefinitionLinkName("domain");
 			final Domain domain = definitionSpace.resolve(smartTypeName, Domain.class);
 			//-----

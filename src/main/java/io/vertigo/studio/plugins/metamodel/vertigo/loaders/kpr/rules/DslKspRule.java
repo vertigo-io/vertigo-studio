@@ -26,11 +26,11 @@ import io.vertigo.commons.peg.AbstractRule;
 import io.vertigo.commons.peg.PegChoice;
 import io.vertigo.commons.peg.PegRule;
 import io.vertigo.commons.peg.PegRule.Dummy;
+import io.vertigo.commons.peg.PegRules;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinition;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinitionRepository;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslGrammar;
-import io.vertigo.commons.peg.PegRules;
 
 /**
  * règle de composition d'un fichier KSP.
@@ -56,7 +56,7 @@ public final class DslKspRule extends AbstractRule<Dummy, List<Object>> {
 	}
 
 	private static PegRule<List<Object>> createMainRule(final DslGrammar grammar) {
-		Assertion.checkNotNull(grammar);
+		Assertion.check().notNull(grammar);
 		//-----
 		final PegRule<DslDefinition> definitionRule = new DslDynamicDefinitionRule("create", grammar);
 		final PegRule<DslDefinition> templateRule = new DslDynamicDefinitionRule("alter", grammar);

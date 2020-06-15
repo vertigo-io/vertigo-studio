@@ -28,7 +28,7 @@ public class SecuredFeatureModel {
 	private final SecuredFeature securedFeature;
 
 	public SecuredFeatureModel(final SecuredFeature securedFeature) {
-		Assertion.checkNotNull(securedFeature);
+		Assertion.check().notNull(securedFeature);
 		//---
 		this.securedFeature = securedFeature;
 	}

@@ -59,8 +59,9 @@ public final class SearchGeneratorPlugin implements GeneratorPlugin {
 			final MetamodelRepository metamodelRepository,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
-		Assertion.checkNotNull(mdaConfig);
-		Assertion.checkNotNull(mdaResultBuilder);
+		Assertion.check()
+				.notNull(mdaConfig)
+				.notNull(mdaResultBuilder);
 		//-----
 		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.search.targetSubDir", DEFAULT_TARGET_SUBDIR);
 		generateSearchAos(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder);
@@ -91,7 +92,7 @@ public final class SearchGeneratorPlugin implements GeneratorPlugin {
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder,
 			final StudioDtDefinition dtDefinition) {
-		Assertion.checkNotNull(dtDefinition);
+		Assertion.check().notNull(dtDefinition);
 
 		final String definitionPackageName = dtDefinition.getPackageName();
 		final String packageNamePrefix = mdaConfig.getProjectPackageName();

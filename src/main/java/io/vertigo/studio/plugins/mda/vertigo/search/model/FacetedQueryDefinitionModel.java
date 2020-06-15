@@ -41,7 +41,7 @@ public final class FacetedQueryDefinitionModel {
 	private final List<FacetDefinitionModel> facetDefinitionModels;
 
 	public FacetedQueryDefinitionModel(final StudioFacetedQueryDefinition facetedQueryDefinition, final Function<String, String> classNameFromDt) {
-		Assertion.checkNotNull(facetedQueryDefinition);
+		Assertion.check().notNull(facetedQueryDefinition);
 		//-----
 		this.facetedQueryDefinition = facetedQueryDefinition;
 		simpleName = DefinitionUtil.getLocalName(facetedQueryDefinition.getName(), StudioFacetedQueryDefinition.class);

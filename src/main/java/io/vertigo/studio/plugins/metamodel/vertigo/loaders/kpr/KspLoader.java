@@ -48,8 +48,9 @@ final class KspLoader {
 	 * @param charset charset d'encoding du fihcier KSP à lire
 	 */
 	KspLoader(final URL kspURL, final Charset charset) {
-		Assertion.checkNotNull(kspURL);
-		Assertion.checkNotNull(charset);
+		Assertion.check()
+				.notNull(kspURL)
+				.notNull(charset);
 		//-----
 		this.kspURL = kspURL;
 		this.charset = charset;
@@ -61,7 +62,7 @@ final class KspLoader {
 	 * @param dynamicModelrepository DynamicDefinitionRepository
 	 */
 	void load(final DslDefinitionRepository dynamicModelrepository) {
-		Assertion.checkNotNull(dynamicModelrepository);
+		Assertion.check().notNull(dynamicModelrepository);
 		try {
 			final String s = parseFile();
 			new DslKspRule(dynamicModelrepository)

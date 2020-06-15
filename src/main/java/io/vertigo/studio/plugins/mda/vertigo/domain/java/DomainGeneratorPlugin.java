@@ -169,7 +169,7 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 		 */
 		for (final Entry<String, Collection<StudioDtDefinition>> entry : DomainUtil.getDtDefinitionCollectionMap(metamodelRepository).entrySet()) {
 			final Collection<StudioDtDefinition> dtDefinitions = entry.getValue();
-			Assertion.checkNotNull(dtDefinitions);
+			Assertion.check().notNull(dtDefinitions);
 			final String packageName = entry.getKey();
 
 			final Map<String, Object> model = new MapBuilder<String, Object>()
