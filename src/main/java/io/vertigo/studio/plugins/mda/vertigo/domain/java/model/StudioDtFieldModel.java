@@ -142,7 +142,7 @@ public final class StudioDtFieldModel {
 	}
 
 	private boolean isChildOfEntity() {
-		return !dtDefinition.getFragment().isPresent();
+		return dtDefinition.getFragment().isEmpty();
 	}
 
 	public boolean isForeignKey() {
