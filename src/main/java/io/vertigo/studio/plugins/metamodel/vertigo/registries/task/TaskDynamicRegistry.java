@@ -60,7 +60,7 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 	private static StudioTaskDefinition createTaskDefinition(final DefinitionSpace definitionSpace, final DslDefinition xtaskDefinition) {
 		final String taskDefinitionName = xtaskDefinition.getName();
 		final String request = (String) xtaskDefinition.getPropertyValue(KspProperty.REQUEST);
-		Assertion.checkNotNull(taskDefinitionName);
+		Assertion.check().notNull(taskDefinitionName);
 		final String taskEngineClassName = getTaskEngineClassName(xtaskDefinition);
 		final String dataSpace = (String) xtaskDefinition.getPropertyValue(KspProperty.DATA_SPACE);
 		final StudioTaskDefinitionBuilder taskDefinitionBuilder = StudioTaskDefinition.builder("St" + taskDefinitionName)

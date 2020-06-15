@@ -49,7 +49,7 @@ public final class StudioDtDefinitionModel {
 	 * @param dtDefinition DtDefinition de l'objet à générer
 	 */
 	public StudioDtDefinitionModel(final StudioDtDefinition dtDefinition, final List<? extends StudioAssociationDefinition> associationDefinitions, final Function<String, String> classNameFromDt) {
-		Assertion.checkNotNull(dtDefinition);
+		Assertion.check().notNull(dtDefinition);
 		//-----
 		this.dtDefinition = dtDefinition;
 

@@ -44,7 +44,7 @@ public final class TSStudioDtDefinitionModel {
 	 * @param dtDefinition DtDefinition de l'objet à générer
 	 */
 	public TSStudioDtDefinitionModel(final StudioDtDefinition dtDefinition) {
-		Assertion.checkNotNull(dtDefinition);
+		Assertion.check().notNull(dtDefinition);
 		//-----
 		this.dtDefinition = dtDefinition;
 

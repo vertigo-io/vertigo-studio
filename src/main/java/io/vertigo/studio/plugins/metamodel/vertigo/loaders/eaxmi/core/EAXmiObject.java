@@ -118,9 +118,10 @@ final class EAXmiObject {
 	}
 
 	private EAXmiObject(final EAXmiObject parent, final XmlId id, final EAXmiType type) {
-		Assertion.checkNotNull(parent);
-		Assertion.checkNotNull(id);
-		Assertion.checkNotNull(type);
+		Assertion.check()
+				.notNull(parent)
+				.notNull(id)
+				.notNull(type);
 		//-----
 		this.parent = parent;
 		this.id = id;

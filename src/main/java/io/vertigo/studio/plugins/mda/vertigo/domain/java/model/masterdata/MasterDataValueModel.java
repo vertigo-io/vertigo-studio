@@ -35,7 +35,7 @@ public final class MasterDataValueModel {
 	private final Map<String, String> allFieldValues;
 
 	public MasterDataValueModel(final StudioDtDefinition dtDefinition, final String enumNameValue, final Map<String, String> allFieldValues) {
-		Assertion.checkNotNull(dtDefinition);
+		Assertion.check().notNull(dtDefinition);
 		//-----
 		this.enumNameValue = enumNameValue;
 		this.allFieldValues = allFieldValues;

@@ -47,7 +47,7 @@ public final class StudioTaskDefinitionBuilder implements Builder<StudioTaskDefi
 	 * @param taskDefinitionName the name of the taskDefinition (TK_XXX_YYY)
 	 */
 	StudioTaskDefinitionBuilder(final String taskDefinitionName) {
-		Assertion.checkNotNull(taskDefinitionName);
+		Assertion.check().notNull(taskDefinitionName);
 		//-----
 		myTaskDefinitionName = taskDefinitionName;
 	}

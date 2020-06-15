@@ -96,7 +96,7 @@ public final class StudioDtDefinitionBuilder implements Builder<StudioDtDefiniti
 	 * @return this builder
 	 */
 	public StudioDtDefinitionBuilder withFragment(final StudioDtDefinition fragment) {
-		Assertion.checkNotNull(fragment);
+		Assertion.check().notNull(fragment);
 		//---
 		myStereotype = StudioStereotype.Fragment;
 		myFragmentRef = new DefinitionReference<>(fragment);
@@ -110,7 +110,7 @@ public final class StudioDtDefinitionBuilder implements Builder<StudioDtDefiniti
 	 * @return this builder
 	 */
 	public StudioDtDefinitionBuilder withStereoType(final StudioStereotype stereotype) {
-		Assertion.checkNotNull(stereotype);
+		Assertion.check().notNull(stereotype);
 		//-----
 		myStereotype = stereotype;
 		return this;

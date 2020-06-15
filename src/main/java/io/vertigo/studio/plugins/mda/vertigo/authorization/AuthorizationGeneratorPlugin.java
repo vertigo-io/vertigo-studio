@@ -53,8 +53,9 @@ public final class AuthorizationGeneratorPlugin implements GeneratorPlugin {
 			final MetamodelRepository metamodelRepository,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
-		Assertion.checkNotNull(mdaConfig);
-		Assertion.checkNotNull(mdaResultBuilder);
+		Assertion.check()
+				.notNull(mdaConfig)
+				.notNull(mdaResultBuilder);
 		//-----
 		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.authorization.targetSubDir", DEFAULT_TARGET_SUBDIR);
 

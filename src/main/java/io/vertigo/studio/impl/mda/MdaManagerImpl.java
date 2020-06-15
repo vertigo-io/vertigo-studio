@@ -45,7 +45,7 @@ public final class MdaManagerImpl implements MdaManager {
 	@Inject
 	public MdaManagerImpl(
 			final List<GeneratorPlugin> generatorPlugins) {
-		Assertion.checkNotNull(generatorPlugins);
+		Assertion.check().notNull(generatorPlugins);
 		//-----
 		this.generatorPlugins = java.util.Collections.unmodifiableList(generatorPlugins);
 	}

@@ -57,7 +57,7 @@ public final class DslDefinitionRepository {
 	 * @param registry DynamicDefinitionHandler
 	 */
 	public DslDefinitionRepository(final DynamicRegistry registry) {
-		Assertion.checkNotNull(registry);
+		Assertion.check().notNull(registry);
 		//-----
 		this.registry = registry;
 		grammar = registry.getGrammar();
@@ -93,7 +93,7 @@ public final class DslDefinitionRepository {
 		//-----
 		final DslDefinition definition = dslDefinitions.get(definitionName);
 		//-----
-		Assertion.checkNotNull(definition, "Clé trouvée mais pas de définition enregistrée trouvée pour {0}", definitionName);
+		Assertion.check().notNull(definition, "Clé trouvée mais pas de définition enregistrée trouvée pour {0}", definitionName);
 		return definition;
 	}
 
@@ -138,7 +138,7 @@ public final class DslDefinitionRepository {
 	 * @param dslDefinition DynamicDefinition
 	 */
 	public void addDefinition(final DslDefinition dslDefinition) {
-		Assertion.checkNotNull(dslDefinition);
+		Assertion.check().notNull(dslDefinition);
 		//---
 		final DslDefinition previousDefinition = dslDefinitions.put(dslDefinition.getName(), dslDefinition);
 		Assertion.checkState(previousDefinition == null, "this definition '{0}' has already be registered", dslDefinition.getName());
@@ -153,7 +153,7 @@ public final class DslDefinitionRepository {
 	 * @param partial the part of a definition
 	 */
 	public void addPartialDefinition(final DslDefinition partial) {
-		Assertion.checkNotNull(partial);
+		Assertion.check().notNull(partial);
 		//---
 		partials.add(partial);
 	}

@@ -55,10 +55,11 @@ public final class SecuredFeature implements Definition {
 			final String label,
 			final Optional<String> comment,
 			final Optional<String> linkedResourceOpt) {
-		Assertion.checkArgNotEmpty(code);
-		Assertion.checkArgNotEmpty(label);
-		Assertion.checkNotNull(comment);
-		Assertion.checkNotNull(linkedResourceOpt);
+		Assertion.check()
+				.argNotEmpty(code)
+				.argNotEmpty(label)
+				.notNull(comment)
+				.notNull(linkedResourceOpt);
 		//-----
 		this.code = code;
 		this.label = label;

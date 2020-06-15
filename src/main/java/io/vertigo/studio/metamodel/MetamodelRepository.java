@@ -42,7 +42,7 @@ public final class MetamodelRepository implements DefinitionSpace {
 	 * @param definition Objet à enregistrer
 	 */
 	public void registerDefinition(final Definition definition) {
-		Assertion.checkNotNull(definition, "A definition can't be null.");
+		Assertion.check().notNull(definition, "A definition can't be null.");
 		final String name = definition.getName();
 		DefinitionUtil.checkName(name, definition.getClass());
 		Assertion.checkArgument(!definitions.containsKey(name), "this definition '{0}' is already registered", name);

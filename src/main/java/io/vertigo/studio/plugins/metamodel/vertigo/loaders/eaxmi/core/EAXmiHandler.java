@@ -54,7 +54,7 @@ public final class EAXmiHandler extends DefaultHandler {
 	private static final Logger LOG = LogManager.getLogger(EAXmiHandler.class);
 
 	EAXmiHandler(final Map<XmlId, EAXmiObject> map) {
-		Assertion.checkNotNull(map);
+		Assertion.check().notNull(map);
 		//-----
 		this.map = map;
 		currentObject = EAXmiObject.createdRoot();

@@ -44,7 +44,7 @@ public final class FileGeneratorBuilder implements Builder<FileGenerator> {
 	 * @param fileGeneratorConfig the config of the file generator
 	*/
 	FileGeneratorBuilder(final MdaConfig fileGeneratorConfig) {
-		Assertion.checkNotNull(fileGeneratorConfig);
+		Assertion.check().notNull(fileGeneratorConfig);
 		//---
 		myEncoding = fileGeneratorConfig.getEncoding();
 		myTargetGenDir = fileGeneratorConfig.getTargetGenDir();
@@ -55,7 +55,7 @@ public final class FileGeneratorBuilder implements Builder<FileGenerator> {
 	 * @return this builder
 	 */
 	public FileGeneratorBuilder withModel(final Map<String, Object> model) {
-		Assertion.checkNotNull(model);
+		Assertion.check().notNull(model);
 		//---
 		myModel = model;
 		return this;
@@ -66,7 +66,7 @@ public final class FileGeneratorBuilder implements Builder<FileGenerator> {
 	 * @return this builder
 	 */
 	public FileGeneratorBuilder withFileName(final String fileName) {
-		Assertion.checkNotNull(fileName);
+		Assertion.check().notNull(fileName);
 		//---
 		myFileName = fileName;
 		return this;
@@ -77,7 +77,7 @@ public final class FileGeneratorBuilder implements Builder<FileGenerator> {
 	 * @return this builder
 	 */
 	public FileGeneratorBuilder withPackageName(final String packageName) {
-		Assertion.checkNotNull(packageName);
+		Assertion.check().notNull(packageName);
 		//---
 		myPackageName = packageName;
 		return this;
@@ -88,7 +88,7 @@ public final class FileGeneratorBuilder implements Builder<FileGenerator> {
 	 * @return this builder
 	 */
 	public FileGeneratorBuilder withEncoding(final String encoding) {
-		Assertion.checkNotNull(encoding);
+		Assertion.check().notNull(encoding);
 		//---
 		myEncoding = encoding;
 		return this;
@@ -99,8 +99,9 @@ public final class FileGeneratorBuilder implements Builder<FileGenerator> {
 	 * @return this builder
 	 */
 	public FileGeneratorBuilder withTemplateName(final Class relativeClass, final String templateName) {
-		Assertion.checkNotNull(relativeClass);
-		Assertion.checkNotNull(templateName);
+		Assertion.check()
+				.notNull(relativeClass)
+				.notNull(templateName);
 		//---
 		myRelativeClass = relativeClass;
 		myTemplateName = templateName;
@@ -112,7 +113,7 @@ public final class FileGeneratorBuilder implements Builder<FileGenerator> {
 	 * @return this builder
 	 */
 	public FileGeneratorBuilder withTargetGenDir(final String targetGenDir) {
-		Assertion.checkNotNull(targetGenDir);
+		Assertion.check().notNull(targetGenDir);
 		//---
 		myTargetGenDir = targetGenDir;
 		return this;
@@ -123,7 +124,7 @@ public final class FileGeneratorBuilder implements Builder<FileGenerator> {
 	 * @return this builder
 	 */
 	public FileGeneratorBuilder withGenSubDir(final String genSubDir) {
-		Assertion.checkNotNull(genSubDir);
+		Assertion.check().notNull(genSubDir);
 		//---
 		myGenSubDir = genSubDir;
 		return this;
@@ -131,14 +132,15 @@ public final class FileGeneratorBuilder implements Builder<FileGenerator> {
 
 	@Override
 	public FileGenerator build() {
-		Assertion.checkNotNull(myModel, "a model is required");
-		Assertion.checkNotNull(myFileName, "a file name is required");
-		Assertion.checkNotNull(myPackageName, "a package is required");
-		Assertion.checkNotNull(myRelativeClass, "a relative class is required to locate template");
-		Assertion.checkNotNull(myTemplateName, "a template is required");
-		Assertion.checkNotNull(myEncoding, "an encoding is required");
-		Assertion.checkNotNull(myTargetGenDir, "a target gen dir is required");
-		Assertion.checkNotNull(myGenSubDir, "a sub directory is required");
+		Assertion.check()
+				.notNull(myModel, "a model is required")
+				.notNull(myFileName, "a file name is required")
+				.notNull(myPackageName, "a package is required")
+				.notNull(myRelativeClass, "a relative class is required to locate template")
+				.notNull(myTemplateName, "a template is required")
+				.notNull(myEncoding, "an encoding is required")
+				.notNull(myTargetGenDir, "a target gen dir is required")
+				.notNull(myGenSubDir, "a sub directory is required");
 		//---
 		final String filePath = buildFilePath();
 		return new FileGeneratorFreeMarker(myModel, filePath, myTemplateName, myEncoding, myRelativeClass);

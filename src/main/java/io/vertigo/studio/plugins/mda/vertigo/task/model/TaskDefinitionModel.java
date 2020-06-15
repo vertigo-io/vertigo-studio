@@ -41,8 +41,9 @@ public final class TaskDefinitionModel {
 	private final boolean optional;
 
 	public TaskDefinitionModel(final StudioTaskDefinition taskDefinition, final Function<String, String> classNameFromDt) {
-		Assertion.checkNotNull(taskDefinition);
-		Assertion.checkNotNull(classNameFromDt);
+		Assertion.check()
+				.notNull(taskDefinition)
+				.notNull(classNameFromDt);
 		//-----
 		this.taskDefinition = taskDefinition;
 		boolean hasOption = false;

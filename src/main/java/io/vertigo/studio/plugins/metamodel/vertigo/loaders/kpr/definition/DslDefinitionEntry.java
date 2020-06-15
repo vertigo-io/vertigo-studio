@@ -45,8 +45,9 @@ public final class DslDefinitionEntry {
 	 * @param fieldName Nom du champ
 	 */
 	public DslDefinitionEntry(final String fieldName, final List<String> definitionNames) {
-		Assertion.checkNotNull(fieldName);
-		Assertion.checkNotNull(definitionNames);
+		Assertion.check()
+				.notNull(fieldName)
+				.notNull(definitionNames);
 		//-----
 		this.fieldName = fieldName;
 		definition = null;
@@ -60,8 +61,9 @@ public final class DslDefinitionEntry {
 	 * @param definition Définition
 	 */
 	public DslDefinitionEntry(final String fieldName, final DslDefinition definition) {
-		Assertion.checkNotNull(fieldName);
-		Assertion.checkNotNull(definition);
+		Assertion.check()
+				.notNull(fieldName)
+				.notNull(definition);
 		//-----
 		this.fieldName = fieldName;
 		this.definition = definition;

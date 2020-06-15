@@ -47,9 +47,10 @@ public final class DAOModel {
 	 * @param dtDefinition DtDefinition de l'objet à générer
 	 */
 	public DAOModel(final MdaConfig mdaConfig, final StudioDtDefinition dtDefinition, final Collection<StudioTaskDefinition> taskDefinitionCollection, final Function<String, String> classNameFromDt) {
-		Assertion.checkNotNull(mdaConfig);
-		Assertion.checkNotNull(dtDefinition);
-		Assertion.checkNotNull(taskDefinitionCollection);
+		Assertion.check()
+				.notNull(mdaConfig)
+				.notNull(dtDefinition)
+				.notNull(taskDefinitionCollection);
 		final String definitionPackageName = dtDefinition.getPackageName();
 		final String packageNamePrefix = mdaConfig.getProjectPackageName();
 		// ---

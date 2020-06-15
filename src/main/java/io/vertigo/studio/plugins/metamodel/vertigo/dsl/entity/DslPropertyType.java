@@ -46,7 +46,7 @@ public enum DslPropertyType implements DslEntityFieldType {
 	 * @param javaClass Classe java encapsulée
 	 */
 	DslPropertyType(final Class<?> javaClass) {
-		Assertion.checkNotNull(javaClass);
+		Assertion.check().notNull(javaClass);
 		//-----
 		this.javaClass = javaClass;
 	}

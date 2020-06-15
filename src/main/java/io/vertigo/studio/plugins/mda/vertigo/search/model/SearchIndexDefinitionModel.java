@@ -14,7 +14,7 @@ public class SearchIndexDefinitionModel {
 	private final List<IndexCopyToModel> copyToModels;
 
 	public SearchIndexDefinitionModel(final StudioSearchIndexDefinition studioSearchIndexDefinition) {
-		Assertion.checkNotNull(studioSearchIndexDefinition);
+		Assertion.check().notNull(studioSearchIndexDefinition);
 		//---
 		this.studioSearchIndexDefinition = studioSearchIndexDefinition;
 		copyToModels = studioSearchIndexDefinition.getIndexCopyToFields().stream()

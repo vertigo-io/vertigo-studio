@@ -66,12 +66,13 @@ public final class DslDefinition {
 			final Map<DslEntityField, Object> propertyValueByFieldName,
 			final Map<DslEntityField, List<String>> definitionLinkNamesByFieldName,
 			final Map<DslEntityField, List<DslDefinition>> childDefinitionsByFieldName) {
-		Assertion.checkNotNull(entity);
-		//packageName can be null
-		Assertion.checkArgNotEmpty(name);
-		Assertion.checkNotNull(propertyValueByFieldName);
-		Assertion.checkNotNull(definitionLinkNamesByFieldName);
-		Assertion.checkNotNull(childDefinitionsByFieldName);
+		Assertion.check()
+				.notNull(entity)
+				//packageName can be null
+				.argNotEmpty(name)
+				.notNull(propertyValueByFieldName)
+				.notNull(definitionLinkNamesByFieldName)
+				.notNull(childDefinitionsByFieldName);
 		//---
 		this.entity = entity;
 		this.packageName = packageName;
@@ -162,7 +163,7 @@ public final class DslDefinition {
 		final String definitionName = list.get(0);
 		//-----
 		// On vérifie qu'il y a une définition pour le champ demandé
-		Assertion.checkNotNull(definitionName);
+		Assertion.check().notNull(definitionName);
 		return definitionName;
 	}
 

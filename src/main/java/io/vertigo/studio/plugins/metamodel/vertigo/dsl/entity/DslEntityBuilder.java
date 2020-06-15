@@ -48,7 +48,7 @@ public final class DslEntityBuilder implements Builder<DslEntity> {
 	 * @param name the name of the entity
 	 */
 	DslEntityBuilder(final String name) {
-		Assertion.checkNotNull(name);
+		Assertion.check().notNull(name);
 		//-----
 		this.name = name;
 		fields = new HashSet<>();

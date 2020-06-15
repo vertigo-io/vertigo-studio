@@ -52,10 +52,11 @@ public final class MdaConfig {
 			final String projectPackageName,
 			final String encoding,
 			final Properties properties) {
-		Assertion.checkArgNotEmpty(targetGenDir, "Le repertoire des fichiers generes [targetGenDir] doit etre renseigné !");
-		Assertion.checkArgNotEmpty(projectPackageName, "le package racine du projet doit être renseigne ! ");
-		Assertion.checkArgNotEmpty(encoding, "l'encoding des fichiers gérénés [encoding] doit etre renseigné !");
-		Assertion.checkNotNull(properties);
+		Assertion.check()
+				.argNotEmpty(targetGenDir, "Le repertoire des fichiers generes [targetGenDir] doit etre renseigné !")
+				.argNotEmpty(projectPackageName, "le package racine du projet doit être renseigne ! ")
+				.argNotEmpty(encoding, "l'encoding des fichiers gérénés [encoding] doit etre renseigné !")
+				.notNull(properties);
 		//-----
 		this.targetGenDir = targetGenDir;
 		this.projectPackageName = projectPackageName;
@@ -113,7 +114,7 @@ public final class MdaConfig {
 
 	public boolean getAsBoolean(final String key) {
 		final String value = properties.getProperty(key);
-		Assertion.checkNotNull(value);
+		Assertion.check().notNull(value);
 		return Boolean.valueOf(value);
 	}
 

@@ -56,9 +56,10 @@ public final class StudioWebServiceParam {
 			final WebServiceParamLocation paramLocation,
 			final Type type,
 			final Cardinality cardinality) {
-		Assertion.checkNotNull(paramLocation);
-		Assertion.checkNotNull(type);
-		Assertion.checkNotNull(cardinality);
+		Assertion.check()
+				.notNull(paramLocation)
+				.notNull(type)
+				.notNull(cardinality);
 		//-----
 		this.paramLocation = paramLocation;
 		this.type = type;

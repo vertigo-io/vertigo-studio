@@ -81,12 +81,13 @@ public final class StudioFacetedQueryDefinition implements Definition {
 			final String listFilterBuilderQuery,
 			final Optional<String> geoSearchQuery) {
 		Assertion.checkArgNotEmpty(name);
-		Assertion.checkNotNull(keyConceptDtDefinition);
-		Assertion.checkNotNull(facetDefinitions);
-		Assertion.checkNotNull(criteriaDomain);
-		Assertion.checkArgNotEmpty(listFilterBuilderClassName);
-		Assertion.checkNotNull(listFilterBuilderQuery);
-		Assertion.checkNotNull(geoSearchQuery);
+		Assertion.check()
+				.notNull(keyConceptDtDefinition)
+				.notNull(facetDefinitions)
+				.notNull(criteriaDomain)
+				.argNotEmpty(listFilterBuilderClassName)
+				.notNull(listFilterBuilderQuery)
+				.notNull(geoSearchQuery);
 		//-----
 		this.name = name;
 		this.keyConceptDtDefinition = keyConceptDtDefinition;

@@ -66,8 +66,9 @@ public final class DslDefinitionBuilder implements Builder<DslDefinition> {
 	 * @param entity Entité
 	 */
 	DslDefinitionBuilder(final String name, final DslEntity entity) {
-		Assertion.checkNotNull(name);
-		Assertion.checkNotNull(entity);
+		Assertion.check()
+				.notNull(name)
+				.notNull(entity);
 		//-----
 		this.name = name;
 		this.entity = entity;
@@ -153,9 +154,9 @@ public final class DslDefinitionBuilder implements Builder<DslDefinition> {
 	 * @return this builder
 	 */
 	public DslDefinitionBuilder addAllDefinitionLinks(final String fieldName, final List<String> definitionNames) {
-		Assertion.checkNotNull(definitionNames);
+		Assertion.check().notNull(definitionNames);
 		final DslEntityField dslEntityField = entity.getField(fieldName);
-		Assertion.checkState(dslEntityField.getType().isEntityLink(), "expected a link on {0}", fieldName);
+		Assertion.check().state(dslEntityField.getType().isEntityLink(), "expected a link on {0}", fieldName);
 		//---
 		definitionLinkNamesByFieldName.get(dslEntityField)
 				.addAll(definitionNames);
@@ -178,7 +179,7 @@ public final class DslDefinitionBuilder implements Builder<DslDefinition> {
 	 * @return this builder
 	 */
 	public DslDefinitionBuilder addChildDefinition(final String fieldName, final DslDefinition definition) {
-		Assertion.checkNotNull(definition);
+		Assertion.check().notNull(definition);
 		addAllChildDefinitions(fieldName, Collections.singletonList(definition));
 		return this;
 	}

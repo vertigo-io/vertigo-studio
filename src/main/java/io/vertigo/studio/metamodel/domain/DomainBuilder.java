@@ -54,8 +54,9 @@ public final class DomainBuilder implements Builder<Domain> {
 	 * @param dataType the dataType of the domain
 	 */
 	DomainBuilder(final String name, final BasicType dataType) {
-		Assertion.checkArgNotEmpty(name);
-		Assertion.checkNotNull(dataType);
+		Assertion.check()
+				.argNotEmpty(name)
+				.notNull(dataType);
 		//---
 		myName = name;
 		myScope = Domain.Scope.PRIMITIVE;

@@ -44,7 +44,7 @@ public final class StudioAssociationNNDefinition extends StudioAssociationDefini
 			final StudioAssociationNode associationNodeB) {
 		super(name, associationNodeA, associationNodeB);
 		//-----
-		Assertion.checkNotNull(tableName);
+		Assertion.check().notNull(tableName);
 		this.tableName = tableName;
 	}
 

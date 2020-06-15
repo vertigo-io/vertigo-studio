@@ -57,8 +57,9 @@ public final class DslEntity implements DslEntityFieldType {
 	 * @param name Classe représentant l'instance métaDéfinition
 	 */
 	DslEntity(final String name, final Set<DslEntityField> fields, final boolean provided) {
-		Assertion.checkNotNull(name);
-		Assertion.checkNotNull(fields);
+		Assertion.check()
+				.notNull(name)
+				.notNull(fields);
 		//-----
 		this.name = name;
 		this.provided = provided;

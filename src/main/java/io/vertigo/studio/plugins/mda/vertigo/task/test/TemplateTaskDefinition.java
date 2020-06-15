@@ -41,9 +41,10 @@ public final class TemplateTaskDefinition {
 	private final String classSimpleName;
 
 	TemplateTaskDefinition(final StudioTaskDefinition taskDefinition, final String packageName, final String classSimpleName, final Function<String, String> classNameFromDt) {
-		Assertion.checkNotNull(taskDefinition);
-		Assertion.checkNotNull(packageName);
-		Assertion.checkNotNull(classSimpleName);
+		Assertion.check()
+				.notNull(taskDefinition)
+				.notNull(packageName)
+				.notNull(classSimpleName);
 		//-----
 		this.taskDefinition = taskDefinition;
 		this.packageName = packageName;

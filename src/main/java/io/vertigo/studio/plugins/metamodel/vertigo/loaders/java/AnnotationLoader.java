@@ -90,7 +90,7 @@ public final class AnnotationLoader implements Loader {
 	}
 
 	private static void load(final Class<DtObject> clazz, final DslDefinitionRepository dslDefinitionRepository) {
-		Assertion.checkNotNull(dslDefinitionRepository);
+		Assertion.check().notNull(dslDefinitionRepository);
 		//-----
 		final String simpleName = clazz.getSimpleName();
 		final String packageName = clazz.getPackage().getName();
@@ -338,7 +338,7 @@ public final class AnnotationLoader implements Loader {
 	 * @return Constante représentant le nom du champ
 	 */
 	private static String createFieldName(final Field field) {
-		Assertion.checkNotNull(field);
+		Assertion.check().notNull(field);
 		//-----
 		final String fieldName = field.getName();
 		if (StringUtil.isLowerCamelCase(fieldName)) {
@@ -353,7 +353,7 @@ public final class AnnotationLoader implements Loader {
 	 * @return Constante représentant le nom du champ
 	 */
 	private static String createFieldName(final Method method) {
-		Assertion.checkNotNull(method);
+		Assertion.check().notNull(method);
 		//-----
 		if (method.getName().startsWith("get")) {
 			final String propertyName = method.getName().substring("get".length());

@@ -36,7 +36,7 @@ public final class SqlStudioAssociationNNModel {
 	 * @param associationNode Noeud de l'association à générer
 	 */
 	public SqlStudioAssociationNNModel(final StudioAssociationNNDefinition associationDefinition) {
-		Assertion.checkNotNull(associationDefinition);
+		Assertion.check().notNull(associationDefinition);
 		//-----
 		this.associationDefinition = associationDefinition;
 	}

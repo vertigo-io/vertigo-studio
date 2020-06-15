@@ -46,8 +46,9 @@ final class DslSolver {
 	* On appelle SyntaxHandler dans le bon Ordre
 	*/
 	static List<DslDefinition> solve(final MetamodelRepository metamodelRepository, final DslDefinitionRepository definitionRepository) {
-		Assertion.checkNotNull(metamodelRepository);
-		Assertion.checkNotNull(definitionRepository);
+		Assertion.check()
+				.notNull(metamodelRepository)
+				.notNull(definitionRepository);
 		//-----
 		//Liste des clés résolues
 		final List<DslDefinition> sortedList = new ArrayList<>();

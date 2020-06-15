@@ -71,11 +71,12 @@ final class FileGeneratorFreeMarker implements FileGenerator {
 	 * @param referenceClass ReferenceClass for ftl loading
 	 */
 	FileGeneratorFreeMarker(final Map<String, Object> model, final String filePath, final String templateName, final String encoding, final Class<?> referenceClass) {
-		Assertion.checkNotNull(model);
-		Assertion.checkNotNull(filePath);
-		Assertion.checkNotNull(templateName);
-		Assertion.checkArgNotEmpty(encoding);
-		Assertion.checkNotNull(referenceClass);
+		Assertion.check()
+				.notNull(model)
+				.notNull(filePath)
+				.notNull(templateName)
+				.argNotEmpty(encoding)
+				.notNull(referenceClass);
 		//-----
 		this.model = model;
 		this.filePath = filePath;

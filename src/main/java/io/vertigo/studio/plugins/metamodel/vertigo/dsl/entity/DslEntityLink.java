@@ -32,7 +32,7 @@ public final class DslEntityLink implements DslEntityFieldType {
 	 * @param entity the entity that is linked
 	 */
 	DslEntityLink(final DslEntity entity) {
-		Assertion.checkNotNull(entity);
+		Assertion.check().notNull(entity);
 		//-----
 		this.entity = entity;
 	}

@@ -19,7 +19,7 @@ public class StudioMetamodelManagerImpl implements StudioMetamodelManager {
 	@Inject
 	public StudioMetamodelManagerImpl(
 			final List<MetamodelResourceParserPlugin> metamodelResourceParserPlugins) {
-		Assertion.checkNotNull(metamodelResourceParserPlugins);
+		Assertion.check().notNull(metamodelResourceParserPlugins);
 		//---
 		for (final MetamodelResourceParserPlugin metamodelResourceParserPlugin : metamodelResourceParserPlugins) {
 			for (final String resourceType : metamodelResourceParserPlugin.getHandledResourceTypes()) {

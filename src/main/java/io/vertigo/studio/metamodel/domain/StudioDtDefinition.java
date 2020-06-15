@@ -83,14 +83,15 @@ public final class StudioDtDefinition implements Definition {
 			final Optional<StudioDtField> displayField,
 			final Optional<StudioDtField> handleField) {
 		DefinitionUtil.checkName(name, StudioDtDefinition.class);
-		Assertion.checkNotNull(fragment);
-		Assertion.checkNotNull(stereotype);
-		Assertion.checkNotNull(dtFields);
-		Assertion.checkArgNotEmpty(dataSpace);
-		Assertion.checkState(REGEX_DATA_SPACE.matcher(dataSpace).matches(), "dataSpace {0} must match pattern {1}", dataSpace, REGEX_DATA_SPACE);
-		Assertion.checkNotNull(sortField);
-		Assertion.checkNotNull(displayField);
-		Assertion.checkNotNull(handleField);
+		Assertion.check()
+				.notNull(fragment)
+				.notNull(stereotype)
+				.notNull(dtFields)
+				.argNotEmpty(dataSpace)
+				.state(REGEX_DATA_SPACE.matcher(dataSpace).matches(), "dataSpace {0} must match pattern {1}", dataSpace, REGEX_DATA_SPACE)
+				.notNull(sortField)
+				.notNull(displayField)
+				.notNull(handleField);
 		//-----
 		this.name = name;
 		//
@@ -137,8 +138,9 @@ public final class StudioDtDefinition implements Definition {
 
 	//TODO A fermer
 	void registerDtField(final StudioDtField dtField) {
-		Assertion.checkNotNull(dtField);
-		Assertion.checkArgument(!dtField.getType().isId(), "interdit d'ajouter les champs ID ");
+		Assertion.check()
+				.notNull(dtField)
+				.argument(!dtField.getType().isId(), "interdit d'ajouter les champs ID ");
 		//-----
 		doRegisterDtField(dtField);
 	}
