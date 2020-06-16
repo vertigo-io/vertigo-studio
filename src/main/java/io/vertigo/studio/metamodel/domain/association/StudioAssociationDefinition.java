@@ -58,8 +58,8 @@ public abstract class StudioAssociationDefinition implements Definition {
 	 * @param associationNodeB Noeud B
 	 */
 	StudioAssociationDefinition(final String name, final StudioAssociationNode associationNodeA, final StudioAssociationNode associationNodeB) {
-		Assertion.checkArgNotEmpty(name);
 		Assertion.check()
+				.argNotEmpty(name)
 				.notNull(associationNodeA)
 				.notNull(associationNodeB);
 		//-----

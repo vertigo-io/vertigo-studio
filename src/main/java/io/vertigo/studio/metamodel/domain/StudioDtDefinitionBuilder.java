@@ -368,7 +368,7 @@ public final class StudioDtDefinitionBuilder implements Builder<StudioDtDefiniti
 	}
 
 	private Optional<StudioDtField> findFieldByName(final String fieldName) {
-		Assertion.checkArgNotEmpty(fieldName);
+		Assertion.check().argNotEmpty(fieldName);
 		return myFields
 				.stream()
 				.filter(dtField -> fieldName.equals(dtField.getName()))

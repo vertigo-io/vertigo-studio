@@ -59,7 +59,7 @@ public final class DslDynamicRegistryMock implements DynamicRegistry {
 		private final String name;
 
 		FakeDefinition(final String name) {
-			Assertion.checkArgNotEmpty(name);
+			Assertion.check().argNotEmpty(name);
 			//-----
 			this.name = name;
 		}

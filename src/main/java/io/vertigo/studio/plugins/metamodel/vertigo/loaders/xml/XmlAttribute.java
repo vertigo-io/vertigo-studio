@@ -35,10 +35,11 @@ public final class XmlAttribute {
 	 * Constructor.
 	 */
 	public XmlAttribute(final String code, final String label, final boolean persistent, final boolean notNull, final String domain) {
-		Assertion.checkArgNotEmpty(code);
-		Assertion.checkArgNotEmpty(label);
-		Assertion.checkArgNotEmpty(code);
-		Assertion.checkArgNotEmpty(domain, "Le domain du champ '{0}' a été oublié.", label);
+		Assertion.check()
+				.argNotEmpty(code)
+				.argNotEmpty(label)
+				.argNotEmpty(code)
+				.argNotEmpty(domain, "Le domain du champ '{0}' a été oublié.", label);
 		//-----
 		this.code = code;
 		this.label = label;

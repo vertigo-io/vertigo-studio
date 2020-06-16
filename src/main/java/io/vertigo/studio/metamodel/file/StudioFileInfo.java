@@ -48,8 +48,9 @@ public final class StudioFileInfo implements Definition {
 	 * @param storeName Nom du store de ces fichiers
 	 */
 	public StudioFileInfo(final String name, final String storeName) {
-		Assertion.checkArgNotEmpty(name);
-		Assertion.checkArgNotEmpty(storeName);
+		Assertion.check()
+				.argNotEmpty(name)
+				.argNotEmpty(storeName);
 		//-----
 		this.name = name;
 		this.storeName = storeName;

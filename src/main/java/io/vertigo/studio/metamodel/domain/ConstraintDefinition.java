@@ -50,8 +50,9 @@ public final class ConstraintDefinition implements Definition {
 	 * @param args the args to configure the constraint checker
 	 */
 	public ConstraintDefinition(final String name, final String constraintClassName, final String msg, final String args) {
-		Assertion.checkArgNotEmpty(constraintClassName);
-		Assertion.checkArgNotEmpty(name);
+		Assertion.check()
+				.argNotEmpty(constraintClassName)
+				.argNotEmpty(name);
 		//-----
 		this.name = name;
 		this.constraintClassName = constraintClassName;

@@ -44,8 +44,9 @@ public final class FormatterDefinition implements Definition {
 	 * @param args args to configure the formatter
 	 */
 	public FormatterDefinition(final String name, final String formatterClassName, final String args) {
-		Assertion.checkArgNotEmpty(formatterClassName);
-		Assertion.checkArgNotEmpty(name);
+		Assertion.check()
+				.argNotEmpty(formatterClassName)
+				.argNotEmpty(name);
 		//-----
 		this.name = name;
 		this.formatterClassName = formatterClassName;
