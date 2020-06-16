@@ -193,7 +193,7 @@ public final class StudioDtDefinition implements Definition {
 	 * @return Champ correspondant
 	 */
 	public StudioDtField getField(final String fieldName) {
-		Assertion.checkArgNotEmpty(fieldName);
+		Assertion.check().argNotEmpty(fieldName);
 		//-----
 		final StudioDtField dtField = mappedFields.get(fieldName);
 		//-----

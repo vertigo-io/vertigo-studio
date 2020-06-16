@@ -36,10 +36,10 @@ import io.vertigo.studio.metamodel.domain.Domain;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 import io.vertigo.studio.metamodel.domain.StudioDtField;
 import io.vertigo.studio.metamodel.search.StudioFacetDefinition;
+import io.vertigo.studio.metamodel.search.StudioFacetDefinition.FacetOrder;
 import io.vertigo.studio.metamodel.search.StudioFacetValue;
 import io.vertigo.studio.metamodel.search.StudioFacetedQueryDefinition;
 import io.vertigo.studio.metamodel.search.StudioSearchIndexDefinition;
-import io.vertigo.studio.metamodel.search.StudioFacetDefinition.FacetOrder;
 import io.vertigo.studio.plugins.metamodel.vertigo.KspProperty;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinition;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DynamicRegistry;
@@ -149,7 +149,7 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 
 	private static FacetOrder getFacetOrder(final DslDefinition xdefinition, final FacetOrder defaultOrder) {
 		final String orderStr = (String) xdefinition.getPropertyValue(SearchGrammar.FACET_ORDER);
-		Assertion.checkArgument(orderStr == null
+		Assertion.check().argument(orderStr == null
 				|| FacetOrder.alpha.name().equals(orderStr)
 				|| FacetOrder.count.name().equals(orderStr)
 				|| FacetOrder.definition.name().equals(orderStr), "Facet order must be one of {0}", Arrays.toString(FacetOrder.values()));
