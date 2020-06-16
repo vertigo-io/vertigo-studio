@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.node.definition.DefinitionSupplier;
-import io.vertigo.core.util.ListBuilder;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinition;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DynamicRegistry;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslEntity;
@@ -45,12 +44,11 @@ public final class DynamoDynamicRegistry implements DynamicRegistry {
 	 * Constructor.
 	 */
 	public DynamoDynamicRegistry() {
-		dynamicRegistries = new ListBuilder()
-				.add(new DomainDynamicRegistry())
-				.add(new TaskDynamicRegistry())
-				.add(new SearchDynamicRegistry())
-				.add(new FileDynamicRegistry())
-				.build();
+		dynamicRegistries = List.of(
+				new DomainDynamicRegistry(),
+				new TaskDynamicRegistry(),
+				new SearchDynamicRegistry(),
+				new FileDynamicRegistry());
 		dslGrammar = createGrammar();
 	}
 

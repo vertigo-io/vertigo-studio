@@ -24,7 +24,6 @@ import java.util.List;
 
 import io.vertigo.core.lang.Cardinality;
 import io.vertigo.core.node.definition.DefinitionUtil;
-import io.vertigo.core.util.ListBuilder;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 import io.vertigo.studio.metamodel.domain.StudioDtField;
 import io.vertigo.studio.metamodel.domain.association.AssociationUtil;
@@ -164,21 +163,20 @@ class AnnotationWriter {
 		final String primaryMultiplicity = AssociationUtil.getMultiplicity(primaryNode.isNotNull(), primaryNode.isMultiple());
 		final String foreignMultiplipicity = AssociationUtil.getMultiplicity(foreignNode.isNotNull(), foreignNode.isMultiple());
 
-		return new ListBuilder<String>()
-				.add("@" + VertigoClassNames.AnnotationAssociation.getClassName() + "(")
-				.add(INDENT + "name = \"" + "A" + associationSimple.getLocalName() + "\",")
-				.add(INDENT + "fkFieldName = \"" + associationSimple.getFKField().getName() + "\",")
-				.add(INDENT + "primaryDtDefinitionName = \"" + "Dt" + primaryNode.getDtDefinition().getLocalName() + "\",")
-				.add(INDENT + "primaryIsNavigable = " + primaryNode.isNavigable() + ',')
-				.add(INDENT + "primaryRole = \"" + primaryNode.getRole() + "\",")
-				.add(INDENT + "primaryLabel = \"" + primaryNode.getLabel() + "\",")
-				.add(INDENT + "primaryMultiplicity = \"" + primaryMultiplicity + "\",")
-				.add(INDENT + "foreignDtDefinitionName = \"" + "Dt" + foreignNode.getDtDefinition().getLocalName() + "\",")
-				.add(INDENT + "foreignIsNavigable = " + foreignNode.isNavigable() + ',')
-				.add(INDENT + "foreignRole = \"" + foreignNode.getRole() + "\",")
-				.add(INDENT + "foreignLabel = \"" + foreignNode.getLabel() + "\",")
-				.add(INDENT + "foreignMultiplicity = \"" + foreignMultiplipicity + "\")")
-				.build();
+		return List.of(
+				"@" + VertigoClassNames.AnnotationAssociation.getClassName() + "(",
+				INDENT + "name = \"" + "A" + associationSimple.getLocalName() + "\",",
+				INDENT + "fkFieldName = \"" + associationSimple.getFKField().getName() + "\",",
+				INDENT + "primaryDtDefinitionName = \"" + "Dt" + primaryNode.getDtDefinition().getLocalName() + "\",",
+				INDENT + "primaryIsNavigable = " + primaryNode.isNavigable() + ',',
+				INDENT + "primaryRole = \"" + primaryNode.getRole() + "\",",
+				INDENT + "primaryLabel = \"" + primaryNode.getLabel() + "\",",
+				INDENT + "primaryMultiplicity = \"" + primaryMultiplicity + "\",",
+				INDENT + "foreignDtDefinitionName = \"" + "Dt" + foreignNode.getDtDefinition().getLocalName() + "\",",
+				INDENT + "foreignIsNavigable = " + foreignNode.isNavigable() + ',',
+				INDENT + "foreignRole = \"" + foreignNode.getRole() + "\",",
+				INDENT + "foreignLabel = \"" + foreignNode.getLabel() + "\",",
+				INDENT + "foreignMultiplicity = \"" + foreignMultiplipicity + "\")");
 	}
 
 	/**
@@ -191,18 +189,17 @@ class AnnotationWriter {
 		final StudioAssociationNode nodeA = associationNN.getAssociationNodeA();
 		final StudioAssociationNode nodeB = associationNN.getAssociationNodeB();
 
-		return new ListBuilder<String>()
-				.add("@" + VertigoClassNames.AnnotationAssociationNN.getClassName() + "(")
-				.add(INDENT + "name = \"" + "Ann" + associationNN.getLocalName() + "\",")
-				.add(INDENT + "tableName = \"" + associationNN.getTableName() + "\",")
-				.add(INDENT + "dtDefinitionA = \"" + "Dt" + nodeA.getDtDefinition().getLocalName() + "\",")
-				.add(INDENT + "dtDefinitionB = \"" + "Dt" + nodeB.getDtDefinition().getLocalName() + "\",")
-				.add(INDENT + "navigabilityA = " + nodeA.isNavigable() + ',')
-				.add(INDENT + "navigabilityB = " + nodeB.isNavigable() + ',')
-				.add(INDENT + "roleA = \"" + nodeA.getRole() + "\",")
-				.add(INDENT + "roleB = \"" + nodeB.getRole() + "\",")
-				.add(INDENT + "labelA = \"" + nodeA.getLabel() + "\",")
-				.add(INDENT + "labelB = \"" + nodeB.getLabel() + "\")")
-				.build();
+		return List.of(
+				"@" + VertigoClassNames.AnnotationAssociationNN.getClassName() + "(",
+				INDENT + "name = \"" + "Ann" + associationNN.getLocalName() + "\",",
+				INDENT + "tableName = \"" + associationNN.getTableName() + "\",",
+				INDENT + "dtDefinitionA = \"" + "Dt" + nodeA.getDtDefinition().getLocalName() + "\",",
+				INDENT + "dtDefinitionB = \"" + "Dt" + nodeB.getDtDefinition().getLocalName() + "\",",
+				INDENT + "navigabilityA = " + nodeA.isNavigable() + ',',
+				INDENT + "navigabilityB = " + nodeB.isNavigable() + ',',
+				INDENT + "roleA = \"" + nodeA.getRole() + "\",",
+				INDENT + "roleB = \"" + nodeB.getRole() + "\",",
+				INDENT + "labelA = \"" + nodeA.getLabel() + "\",",
+				INDENT + "labelB = \"" + nodeB.getLabel() + "\")");
 	}
 }

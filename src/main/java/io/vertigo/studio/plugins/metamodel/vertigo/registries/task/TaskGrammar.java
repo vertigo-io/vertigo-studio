@@ -27,7 +27,6 @@ import static io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslProperty
 
 import java.util.List;
 
-import io.vertigo.core.util.ListBuilder;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslEntity;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslGrammar;
 import io.vertigo.studio.plugins.metamodel.vertigo.registries.domain.DomainGrammar;
@@ -59,9 +58,6 @@ final class TaskGrammar implements DslGrammar {
 
 	@Override
 	public List<DslEntity> getEntities() {
-		return new ListBuilder<DslEntity>()
-				.add(TASK_DEFINITION_ENTITY)
-				.unmodifiable()
-				.build();
+		return List.of(TASK_DEFINITION_ENTITY);
 	}
 }

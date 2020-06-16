@@ -204,18 +204,16 @@ public final class DomainGrammar implements DslGrammar {
 
 	@Override
 	public List<DslEntity> getEntities() {
-		return new ListBuilder<DslEntity>()
-				.add(DATA_TYPE_ENTITY)
-				.add(CONSTRAINT_ENTITY)
-				.add(FORMATTER_ENTITY)
+		return List.of(
+				DATA_TYPE_ENTITY,
+				CONSTRAINT_ENTITY,
+				FORMATTER_ENTITY,
 				//---
-				.add(DOMAIN_ENTITY)
-				.add(FRAGMENT_ENTITY)
-				.add(DT_DEFINITION_ENTITY)
-				.add(ASSOCIATION_ENTITY)
-				.add(ASSOCIATION_NN_ENTITY)
-				.unmodifiable()
-				.build();
+				DOMAIN_ENTITY,
+				FRAGMENT_ENTITY,
+				DT_DEFINITION_ENTITY,
+				ASSOCIATION_ENTITY,
+				ASSOCIATION_NN_ENTITY);
 	}
 
 	@Override

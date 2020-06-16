@@ -25,7 +25,6 @@ import static io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslProperty
 
 import java.util.List;
 
-import io.vertigo.core.util.ListBuilder;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslEntity;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslGrammar;
 
@@ -67,9 +66,6 @@ public final class PersonGrammar implements DslGrammar {
 
 	@Override
 	public List<DslEntity> getEntities() {
-		return new ListBuilder<DslEntity>()
-				.add(PERSON_ENTITY)
-				.unmodifiable()
-				.build();
+		return List.of(PERSON_ENTITY);
 	}
 }

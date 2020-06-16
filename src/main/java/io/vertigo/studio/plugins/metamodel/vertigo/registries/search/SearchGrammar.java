@@ -23,7 +23,6 @@ import static io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslProperty
 
 import java.util.List;
 
-import io.vertigo.core.util.ListBuilder;
 import io.vertigo.studio.plugins.metamodel.vertigo.KspProperty;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslEntity;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslGrammar;
@@ -138,11 +137,9 @@ final class SearchGrammar implements DslGrammar {
 
 	@Override
 	public List<DslEntity> getEntities() {
-		return new ListBuilder<DslEntity>()
-				.add(INDEX_DEFINITION_ENTITY)
-				.add(FACET_DEFINITION_ENTITY)
-				.add(FACETED_QUERY_DEFINITION_ENTITY)
-				.unmodifiable()
-				.build();
+		return List.of(
+				INDEX_DEFINITION_ENTITY,
+				FACET_DEFINITION_ENTITY,
+				FACETED_QUERY_DEFINITION_ENTITY);
 	}
 }
