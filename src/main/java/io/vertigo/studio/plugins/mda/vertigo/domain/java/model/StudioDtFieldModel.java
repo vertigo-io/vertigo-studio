@@ -150,7 +150,7 @@ public final class StudioDtFieldModel {
 	}
 
 	public StudioAssociationModel getAssociation() {
-		Assertion.checkState(isChildOfEntity(), "an association must be declared on an entity");
+		Assertion.check().state(isChildOfEntity(), "an association must be declared on an entity");
 		//---
 		return associationDefinitions
 				.stream()

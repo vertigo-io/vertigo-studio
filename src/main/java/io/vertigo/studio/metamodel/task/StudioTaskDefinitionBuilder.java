@@ -59,7 +59,7 @@ public final class StudioTaskDefinitionBuilder implements Builder<StudioTaskDefi
 	 * @return this builder
 	 */
 	public StudioTaskDefinitionBuilder withEngine(final String taskEngineClassName) {
-		Assertion.checkArgNotEmpty(taskEngineClassName);
+		Assertion.check().argNotEmpty(taskEngineClassName);
 		//---
 		myTaskEngineClassName = taskEngineClassName;
 		return this;

@@ -41,7 +41,7 @@ public final class MasterDataValueModel {
 		this.allFieldValues = allFieldValues;
 		final String idFieldName = dtDefinition.getIdField().get().getName();
 		//--
-		Assertion.checkState(allFieldValues.containsKey(idFieldName), "The id value is not present for the masterdata '{0}' of type {1}", allFieldValues, dtDefinition.getLocalName());
+		Assertion.check().state(allFieldValues.containsKey(idFieldName), "The id value is not present for the masterdata '{0}' of type {1}", allFieldValues, dtDefinition.getLocalName());
 		//---
 		idValue = allFieldValues.get(idFieldName);
 	}

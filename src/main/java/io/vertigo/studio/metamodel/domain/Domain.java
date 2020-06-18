@@ -179,7 +179,7 @@ public final class Domain implements Definition {
 	 * @return the dataType.
 	 */
 	public BasicType getDataType() {
-		Assertion.checkState(scope == Scope.PRIMITIVE, "can only be used with primitives");
+		Assertion.check().state(scope == Scope.PRIMITIVE, "can only be used with primitives");
 		//---
 		return dataType;
 	}
@@ -211,7 +211,7 @@ public final class Domain implements Definition {
 	//==========================================================================
 
 	public String getDtDefinitionName() {
-		Assertion.checkState(scope == Scope.DATA_OBJECT, "can only be used with data-objects");
+		Assertion.check().state(scope == Scope.DATA_OBJECT, "can only be used with data-objects");
 		//---
 		return dtDefinitionName;
 	}
@@ -234,7 +234,7 @@ public final class Domain implements Definition {
 	}
 
 	public String getValueObjectClassName() {
-		Assertion.checkState(scope == Scope.VALUE_OBJECT, "can only be used with value-objects");
+		Assertion.check().state(scope == Scope.VALUE_OBJECT, "can only be used with value-objects");
 		//---
 		return valueObjectClassName;
 	}

@@ -139,20 +139,20 @@ public final class StudioDtField {
 		name = fieldName;
 		this.label = label;
 		//-----
-		Assertion.checkArgument(!(getType() == FieldType.COMPUTED && persistent), "a computed field can't be persistent");
+		Assertion.check().argument(!(getType() == FieldType.COMPUTED && persistent), "a computed field can't be persistent");
 		this.persistent = persistent;
 		//-----
 		if (getType() == FieldType.FOREIGN_KEY) {
 			Assertion.check().notNull(fkDtDefinitionName, "Le champ {0} de type clé étrangère doit référencer une définition ", fieldName);
 		} else {
-			Assertion.checkState(fkDtDefinitionName == null, "Le champ {0} n''est pas une clé étrangère", fieldName);
+			Assertion.check().state(fkDtDefinitionName == null, "Le champ {0} n''est pas une clé étrangère", fieldName);
 		}
 		this.fkDtDefinitionName = fkDtDefinitionName;
 		//-----
 		if (getType() == FieldType.COMPUTED) {
 			Assertion.check().notNull(computedExpression, "the field {0}, declared as computed, must have an expression", fieldName);
 		} else {
-			Assertion.checkState(computedExpression == null, "the field {0}, not declared as computed, must have an empty expression", fieldName);
+			Assertion.check().state(computedExpression == null, "the field {0}, not declared as computed, must have an empty expression", fieldName);
 		}
 		this.computedExpression = computedExpression;
 	}

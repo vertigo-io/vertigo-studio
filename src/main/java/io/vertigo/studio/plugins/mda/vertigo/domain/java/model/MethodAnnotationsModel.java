@@ -55,7 +55,7 @@ public final class MethodAnnotationsModel implements TemplateMethodModelEx {
 	/** {@inheritDoc}*/
 	@Override
 	public TemplateModel exec(final List params) throws TemplateModelException {
-		Assertion.checkArgument(!params.isEmpty(), "Un parametre de type [DtField, DtDefinition, AssociationSimpleDefinition, AssociationNNDefinition] est obligatoire");
+		Assertion.check().argument(!params.isEmpty(), "Un parametre de type [DtField, DtDefinition, AssociationSimpleDefinition, AssociationNNDefinition] est obligatoire");
 		//-----
 		final Object param = params.get(0);
 		final Object type;

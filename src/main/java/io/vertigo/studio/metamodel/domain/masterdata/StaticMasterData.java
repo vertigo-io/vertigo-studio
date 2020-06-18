@@ -41,8 +41,9 @@ public class StaticMasterData implements Definition {
 	private final Map<String, MasterDataValue> values;
 
 	public StaticMasterData(final String entityClassName, final Map<String, MasterDataValue> values) {
-		Assertion.checkArgNotEmpty(entityClassName);
-		Assertion.check().notNull(values);
+		Assertion.check()
+				.argNotEmpty(entityClassName)
+				.notNull(values);
 		//---
 		name = "StMd" + DomainUtil.getSimpleNameFromCanonicalName(entityClassName);
 		this.entityClassName = entityClassName;

@@ -73,7 +73,7 @@ public final class StudioDtDefinitionBuilder implements Builder<StudioDtDefiniti
 	 * @param name the name of the dtDefinition
 	 */
 	StudioDtDefinitionBuilder(final String name) {
-		Assertion.checkArgNotEmpty(name);
+		Assertion.check().argNotEmpty(name);
 		//-----
 		myName = name;
 	}
@@ -220,7 +220,7 @@ public final class StudioDtDefinitionBuilder implements Builder<StudioDtDefiniti
 			final String fieldName,
 			final String label,
 			final Domain domain) {
-		Assertion.checkArgument(myIdField == null, "only one ID per Entity is permitted, error on {0}", myPackageName);
+		Assertion.check().argument(myIdField == null, "only one ID per Entity is permitted, error on {0}", myPackageName);
 		//---
 		//le champ ID est tjrs required
 		final Cardinality cardinality = Cardinality.ONE;
@@ -318,7 +318,7 @@ public final class StudioDtDefinitionBuilder implements Builder<StudioDtDefiniti
 	/** {@inheritDoc} */
 	@Override
 	public StudioDtDefinition build() {
-		Assertion.checkState(dtDefinition == null, "build() already executed");
+		Assertion.check().state(dtDefinition == null, "build() already executed");
 		//-----
 		if (myStereotype == null) {
 			myStereotype = myIdField == null ? StudioStereotype.ValueObject : StudioStereotype.Entity;

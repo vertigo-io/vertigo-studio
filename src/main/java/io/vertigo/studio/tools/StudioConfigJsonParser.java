@@ -36,7 +36,7 @@ public class StudioConfigJsonParser {
 
 			//mdaCondig
 			final JsonObject mdaConfigAsJson = jsonObject.getAsJsonObject("mdaConfig");
-			Assertion.checkState(mdaConfigAsJson.has("projectPackageName"), "A 'projectPackageName' is required in mdaConfig");
+			Assertion.check().state(mdaConfigAsJson.has("projectPackageName"), "A 'projectPackageName' is required in mdaConfig");
 			final MdaConfigBuilder mdaConfigBuilder = MdaConfig.builder(mdaConfigAsJson.get("projectPackageName").getAsString());
 			if (mdaConfigAsJson.has("encoding")) {
 				mdaConfigBuilder.withEncoding(mdaConfigAsJson.get("encoding").getAsString());

@@ -112,7 +112,7 @@ public final class OOMLoader extends AbstractXmlLoader {
 
 	private XmlAttribute createAttribute(final OOMObject obj, final boolean isPK, final boolean constFieldNameInSource) {
 		final String code = obj.getCode();
-		Assertion.checkArgument(CODE_PATTERN.matcher(code).matches(), "Code {0} must use a simple charset a-z A-Z 0-9 or _", code);
+		Assertion.check().argument(CODE_PATTERN.matcher(code).matches(), "Code {0} must use a simple charset a-z A-Z 0-9 or _", code);
 		final String fieldName = constFieldNameInSource ? StringUtil.constToLowerCamelCase(code.toUpperCase(Locale.ENGLISH)) : code;
 		final String label = obj.getLabel();
 		final boolean persistent = !"0".equals(obj.getPersistent());
@@ -130,7 +130,7 @@ public final class OOMLoader extends AbstractXmlLoader {
 		for (final XmlId ref : obj.getRefList()) {
 			final OOMObject childRef = map.get(ref);
 			if (childRef != null && childRef.getType() == OOMType.Domain) {
-				Assertion.checkState(domain == null, "domain deja affecté");
+				Assertion.check().state(domain == null, "domain deja affecté");
 				domain = childRef.getCode();
 			}
 		}

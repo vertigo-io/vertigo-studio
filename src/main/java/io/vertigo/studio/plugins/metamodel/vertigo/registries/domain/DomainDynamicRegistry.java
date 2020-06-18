@@ -298,7 +298,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		for (final DslDefinition field : fields) {
 			final Domain domain = definitionSpace.resolve(field.getDefinitionLinkName("domain"), Domain.class);
 			//--
-			Assertion.checkArgument(field.getPropertyNames().contains(KspProperty.LABEL), "Label est une propriété obligatoire");
+			Assertion.check().argument(field.getPropertyNames().contains(KspProperty.LABEL), "Label est une propriété obligatoire");
 			final String label = (String) field.getPropertyValue(KspProperty.LABEL);
 			//--
 			final Cardinality cardinality = Cardinality.fromSymbol((String) field.getPropertyValue(KspProperty.CARDINALITY));
@@ -327,7 +327,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		for (final DslDefinition field : fields) {
 			final Domain domain = definitionSpace.resolve(field.getDefinitionLinkName("domain"), Domain.class);
 			//--
-			Assertion.checkArgument(field.getPropertyNames().contains(KspProperty.LABEL), "Label est une propriété obligatoire");
+			Assertion.check().argument(field.getPropertyNames().contains(KspProperty.LABEL), "Label est une propriété obligatoire");
 			final String label = (String) field.getPropertyValue(KspProperty.LABEL);
 			//--
 			final Cardinality cardinality = Cardinality.fromSymbol((String) field.getPropertyValue(KspProperty.CARDINALITY));

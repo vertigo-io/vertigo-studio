@@ -25,11 +25,11 @@ public class VertigoConstants {
 		private final String canonicalName;
 
 		VertigoClassNames(final String canonicalName) {
-			Assertion.checkArgNotEmpty(canonicalName);
+			Assertion.check().argNotEmpty(canonicalName);
 			//---
 			this.canonicalName = canonicalName;
 			final int lastDot = canonicalName.lastIndexOf('.');
-			Assertion.checkState(lastDot > 0, "A cananical class name is required, '{0}' does not contain package name", canonicalName);
+			Assertion.check().state(lastDot > 0, "A cananical class name is required, '{0}' does not contain package name", canonicalName);
 			simpleName = canonicalName.substring(lastDot + 1);
 			packageName = canonicalName.substring(0, lastDot);
 		}
@@ -59,7 +59,7 @@ public class VertigoConstants {
 		private final String prefix;
 
 		VertigoDefinitionPrefix(final String prefix) {
-			Assertion.checkArgNotEmpty(prefix);
+			Assertion.check().argNotEmpty(prefix);
 			//---
 			this.prefix = prefix;
 		}

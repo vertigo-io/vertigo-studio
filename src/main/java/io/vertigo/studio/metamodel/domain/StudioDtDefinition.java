@@ -110,7 +110,7 @@ public final class StudioDtDefinition implements Definition {
 					.state(() -> !dtField.getCardinality().hasMany(),
 							"Only non multiple are allowed in entity '{0}'", name);
 			if (dtField.getType().isId()) {
-				Assertion.checkState(id == null, "Only one ID Field is allowed : {0}", name);
+				Assertion.check().state(id == null, "Only one ID Field is allowed : {0}", name);
 				id = dtField;
 			}
 			doRegisterDtField(dtField);

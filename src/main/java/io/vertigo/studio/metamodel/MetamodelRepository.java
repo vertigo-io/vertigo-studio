@@ -45,7 +45,7 @@ public final class MetamodelRepository implements DefinitionSpace {
 		Assertion.check().notNull(definition, "A definition can't be null.");
 		final String name = definition.getName();
 		DefinitionUtil.checkName(name, definition.getClass());
-		Assertion.checkArgument(!definitions.containsKey(name), "this definition '{0}' is already registered", name);
+		Assertion.check().argument(!definitions.containsKey(name), "this definition '{0}' is already registered", name);
 		//-----
 		definitions.put(name, definition);
 	}

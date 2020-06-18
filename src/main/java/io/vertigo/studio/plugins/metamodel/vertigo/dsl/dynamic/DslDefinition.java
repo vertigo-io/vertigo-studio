@@ -121,7 +121,7 @@ public final class DslDefinition {
 	 */
 	public Object getPropertyValue(final String fieldName) {
 		final DslEntityField dslEntityField = entity.getField(fieldName);
-		Assertion.checkState(dslEntityField.getType().isProperty(), "expected a property on {0}", fieldName);
+		Assertion.check().state(dslEntityField.getType().isProperty(), "expected a property on {0}", fieldName);
 		// On ne vérifie rien sur le type retourné par le getter.
 		// le type a été validé lors du put.
 		//-----
@@ -148,7 +148,7 @@ public final class DslDefinition {
 	 */
 	public List<String> getDefinitionLinkNames(final String fieldName) {
 		final DslEntityField dslEntityField = entity.getField(fieldName);
-		Assertion.checkState(dslEntityField.getType().isEntityLink(), "expected a link on {0}", fieldName);
+		Assertion.check().state(dslEntityField.getType().isEntityLink(), "expected a link on {0}", fieldName);
 		//---
 		return definitionLinkNamesByFieldName.get(dslEntityField);
 	}
@@ -182,7 +182,7 @@ public final class DslDefinition {
 	 */
 	public List<DslDefinition> getChildDefinitions(final String fieldName) {
 		final DslEntityField dslEntityField = entity.getField(fieldName);
-		Assertion.checkState(dslEntityField.getType().isEntity(), "expected an entity on {0}", fieldName);
+		Assertion.check().state(dslEntityField.getType().isEntity(), "expected an entity on {0}", fieldName);
 		//---
 		return childDefinitionsByFieldName.get(dslEntityField);
 	}

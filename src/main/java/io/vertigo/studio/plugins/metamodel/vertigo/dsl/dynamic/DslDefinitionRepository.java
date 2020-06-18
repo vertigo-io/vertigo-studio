@@ -89,7 +89,7 @@ public final class DslDefinitionRepository {
 	 * @return DynamicDefinition Définition correspondante ou null.
 	 */
 	public DslDefinition getDefinition(final String definitionName) {
-		Assertion.checkArgument(dslDefinitions.containsKey(definitionName), "Aucune clé enregistrée pour :{0} parmi {1}", definitionName, dslDefinitions.keySet());
+		Assertion.check().argument(dslDefinitions.containsKey(definitionName), "Aucune clé enregistrée pour :{0} parmi {1}", definitionName, dslDefinitions.keySet());
 		//-----
 		final DslDefinition definition = dslDefinitions.get(definitionName);
 		//-----
@@ -141,7 +141,7 @@ public final class DslDefinitionRepository {
 		Assertion.check().notNull(dslDefinition);
 		//---
 		final DslDefinition previousDefinition = dslDefinitions.put(dslDefinition.getName(), dslDefinition);
-		Assertion.checkState(previousDefinition == null, "this definition '{0}' has already be registered", dslDefinition.getName());
+		Assertion.check().state(previousDefinition == null, "this definition '{0}' has already be registered", dslDefinition.getName());
 		//---
 		registry.onNewDefinition(dslDefinition)
 				.stream()

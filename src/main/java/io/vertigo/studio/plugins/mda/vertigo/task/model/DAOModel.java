@@ -54,13 +54,14 @@ public final class DAOModel {
 		final String definitionPackageName = dtDefinition.getPackageName();
 		final String packageNamePrefix = mdaConfig.getProjectPackageName();
 		// ---
-		Assertion.checkArgument(definitionPackageName.startsWith(packageNamePrefix), "Package name {0}, must begin with normalised prefix: {1}", definitionPackageName, packageNamePrefix);
-		Assertion.checkArgument(definitionPackageName.substring(packageNamePrefix.length()).contains(".domain"), "Package name {0}, must contains the modifier .domain", definitionPackageName);
+		Assertion.check()
+				.argument(definitionPackageName.startsWith(packageNamePrefix), "Package name {0}, must begin with normalised prefix: {1}", definitionPackageName, packageNamePrefix)
+				.argument(definitionPackageName.substring(packageNamePrefix.length()).contains(".domain"), "Package name {0}, must contains the modifier .domain", definitionPackageName);
 		// ---
 		//we need to find the featureName, aka between projectpackageName and .domain
 		final String featureName = definitionPackageName.substring(packageNamePrefix.length(), definitionPackageName.indexOf(".domain"));
 		if (!StringUtil.isEmpty(featureName)) {
-			Assertion.checkState(featureName.lastIndexOf('.') == 0, "The feature {0} must not contain any dot", featureName.substring(1));
+			Assertion.check().state(featureName.lastIndexOf('.') == 0, "The feature {0} must not contain any dot", featureName.substring(1));
 		}
 		// the subpackage is what's behind the .domain
 		final String subpackage = definitionPackageName.substring(definitionPackageName.indexOf(".domain") + ".domain".length());
@@ -97,7 +98,7 @@ public final class DAOModel {
 	 * @return Type de la PK
 	 */
 	public String getIdFieldType() {
-		Assertion.checkState(dtDefinition.getIdField().get().getDomain().getScope().isPrimitive(), "An id field should be a primitive");
+		Assertion.check().state(dtDefinition.getIdField().get().getDomain().getScope().isPrimitive(), "An id field should be a primitive");
 		//---
 		return dtDefinition.getIdField().get().getDomain().getDataType().getJavaClass().getCanonicalName();
 	}

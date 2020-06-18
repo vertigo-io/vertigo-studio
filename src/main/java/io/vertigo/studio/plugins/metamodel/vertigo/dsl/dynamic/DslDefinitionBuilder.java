@@ -128,7 +128,7 @@ public final class DslDefinitionBuilder implements Builder<DslDefinition> {
 	 */
 	public DslDefinitionBuilder addPropertyValue(final String fieldName, final Object value) {
 		final DslEntityField dslEntityField = entity.getField(fieldName);
-		Assertion.checkState(dslEntityField.getType().isProperty(), "expected a property on {0}", fieldName);
+		Assertion.check().state(dslEntityField.getType().isProperty(), "expected a property on {0}", fieldName);
 		//----
 		entity.getPropertyType(fieldName).checkValue(value);
 		propertyValueByFieldName.put(dslEntityField, value);
@@ -166,7 +166,7 @@ public final class DslDefinitionBuilder implements Builder<DslDefinition> {
 	private void addAllChildDefinitions(final String fieldName, final List<DslDefinition> dslDefinitions) {
 		Assertion.check().notNull(dslDefinitions);
 		final DslEntityField dslEntityField = entity.getField(fieldName);
-		Assertion.checkState(dslEntityField.getType().isEntity(), "expected an entity on {0}", fieldName);
+		Assertion.check().state(dslEntityField.getType().isEntity(), "expected an entity on {0}", fieldName);
 		//---
 		childDefinitionsByFieldName.get(dslEntityField)
 				.addAll(dslDefinitions);

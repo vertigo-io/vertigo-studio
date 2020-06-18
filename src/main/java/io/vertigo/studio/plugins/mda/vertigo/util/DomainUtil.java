@@ -207,7 +207,7 @@ public final class DomainUtil {
 
 	public static String getSimpleNameFromCanonicalName(final String canonicalClassName) {
 		final int lastDot = canonicalClassName.lastIndexOf('.');
-		Assertion.checkState(lastDot > 0, "A cananical class name is required, '{0}' does not contain package name", canonicalClassName);
+		Assertion.check().state(lastDot > 0, "A cananical class name is required, '{0}' does not contain package name", canonicalClassName);
 		return canonicalClassName.substring(lastDot + 1);
 	}
 
