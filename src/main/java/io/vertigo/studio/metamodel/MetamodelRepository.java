@@ -30,7 +30,7 @@ import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.node.definition.DefinitionUtil;
 
 /**
- * Espace de définitions (non threadSafe).
+ * Definitions Repository. (not threadSafe).
  *
  * @author pchretien, mlaroche
  */
@@ -38,11 +38,12 @@ public final class MetamodelRepository implements DefinitionSpace {
 	private final Map<String, Definition> definitions = new LinkedHashMap<>();
 
 	/**
-	 * Enregistrement d'un nouvel object.
-	 * @param definition Objet à enregistrer
+	 * Register a new Definition.
+	 * The definition must not be already registered.
+	 * @param definition the definition
 	 */
 	public void registerDefinition(final Definition definition) {
-		Assertion.check().notNull(definition, "A definition can't be null.");
+		Assertion.check().notNull(definition);
 		final String name = definition.getName();
 		DefinitionUtil.checkName(name, definition.getClass());
 		Assertion.check().argument(!definitions.containsKey(name), "this definition '{0}' is already registered", name);
@@ -53,6 +54,8 @@ public final class MetamodelRepository implements DefinitionSpace {
 	/** {@inheritDoc} */
 	@Override
 	public boolean contains(final String name) {
+		Assertion.check().notNull(name);
+		//-----
 		return definitions.containsKey(name);
 	}
 
@@ -96,5 +99,4 @@ public final class MetamodelRepository implements DefinitionSpace {
 	public void clear() {
 		definitions.clear();
 	}
-
 }
