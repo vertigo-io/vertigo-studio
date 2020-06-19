@@ -28,7 +28,7 @@ import io.vertigo.studio.mda.MdaResultBuilder;
  *
  * @author dchallas
  */
-public interface GeneratorPlugin extends Plugin {
+public interface MdaGeneratorPlugin extends Plugin {
 	/**
 	 * Génération d'un fichier à partir d'une source et de paramètres.
 	 * @param mdaConfig general configuration of the generator

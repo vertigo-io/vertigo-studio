@@ -30,8 +30,8 @@ import java.util.stream.Collectors;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.util.MapBuilder;
-import io.vertigo.studio.impl.mda.FileGenerator;
-import io.vertigo.studio.impl.mda.GeneratorPlugin;
+import io.vertigo.studio.impl.mda.MdaFileGenerator;
+import io.vertigo.studio.impl.mda.MdaGeneratorPlugin;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
 import io.vertigo.studio.metamodel.domain.Domain;
@@ -49,7 +49,7 @@ import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
  *
  * @author pchretien, mlaroche
  */
-public final class TaskGeneratorPlugin implements GeneratorPlugin {
+public final class TaskGeneratorPlugin implements MdaGeneratorPlugin {
 
 	private static final String DEFAULT_TARGET_SUBDIR = "javagen";
 
@@ -121,7 +121,7 @@ public final class TaskGeneratorPlugin implements GeneratorPlugin {
 				.put("dao", daoModel)
 				.build();
 
-		FileGenerator.builder(mdaConfig)
+		MdaFileGenerator.builder(mdaConfig)
 				.withModel(model)
 				.withFileName(daoModel.getClassSimpleName() + ".java")
 				.withGenSubDir(targetSubDir)
@@ -147,7 +147,7 @@ public final class TaskGeneratorPlugin implements GeneratorPlugin {
 				.put("pao", paoModel)
 				.build();
 
-		FileGenerator.builder(mdaConfig)
+		MdaFileGenerator.builder(mdaConfig)
 				.withModel(model)
 				.withFileName(paoModel.getClassSimpleName() + ".java")
 				.withGenSubDir(targetSubDir)

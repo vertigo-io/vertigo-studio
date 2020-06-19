@@ -30,8 +30,8 @@ import java.util.stream.Collectors;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.util.MapBuilder;
-import io.vertigo.studio.impl.mda.FileGenerator;
-import io.vertigo.studio.impl.mda.GeneratorPlugin;
+import io.vertigo.studio.impl.mda.MdaFileGenerator;
+import io.vertigo.studio.impl.mda.MdaGeneratorPlugin;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
@@ -48,7 +48,7 @@ import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
  *
  * @author rgrange, npiedeloup, pchretien
  */
-public final class TSGeneratorPlugin implements GeneratorPlugin {
+public final class TSGeneratorPlugin implements MdaGeneratorPlugin {
 
 	private static final String DEFAULT_TARGET_SUBDIR = "tsgen";
 
@@ -110,7 +110,7 @@ public final class TSGeneratorPlugin implements GeneratorPlugin {
 				.put("masterdatas", tsMasterDataDefinitionModels)
 				.build();
 
-		FileGenerator.builder(mdaConfig)
+		MdaFileGenerator.builder(mdaConfig)
 				.withModel(model)
 				.withFileName("masterdata.ts")
 				.withGenSubDir(targetSubDir)
@@ -127,7 +127,7 @@ public final class TSGeneratorPlugin implements GeneratorPlugin {
 				.put("dtDefinition", dtDefinitionModel)
 				.build();
 
-		FileGenerator.builder(mdaConfig)
+		MdaFileGenerator.builder(mdaConfig)
 				.withModel(model)
 				.withFileName(dtDefinitionModel.getJsClassFileName() + ".ts")
 				.withGenSubDir(targetSubDir)
@@ -163,7 +163,7 @@ public final class TSGeneratorPlugin implements GeneratorPlugin {
 					.put("dtDefinitions", entry.getValue())
 					.build();
 
-			FileGenerator.builder(mdaConfig)
+			MdaFileGenerator.builder(mdaConfig)
 					.withModel(model)
 					.withFileName(entry.getKey() + ".ts")
 					.withGenSubDir(targetSubDir)

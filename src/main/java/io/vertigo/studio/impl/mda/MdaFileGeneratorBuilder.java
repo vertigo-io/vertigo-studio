@@ -29,7 +29,7 @@ import io.vertigo.studio.mda.MdaConfig;
  * This class provides a way to create a FileFenerator.
  * @author pchretien, mlaroche
  */
-public final class FileGeneratorBuilder implements Builder<FileGenerator> {
+public final class MdaFileGeneratorBuilder implements Builder<MdaFileGenerator> {
 	private Map<String, Object> myModel;
 	private String myFileName;
 	private String myPackageName;
@@ -43,7 +43,7 @@ public final class FileGeneratorBuilder implements Builder<FileGenerator> {
 	/**
 	 * @param mdaConfig the config of the file generator
 	*/
-	FileGeneratorBuilder(final MdaConfig mdaConfig) {
+	MdaFileGeneratorBuilder(final MdaConfig mdaConfig) {
 		Assertion.check().notNull(mdaConfig);
 		//---
 		myEncoding = mdaConfig.getEncoding();
@@ -54,7 +54,7 @@ public final class FileGeneratorBuilder implements Builder<FileGenerator> {
 	 * @param model the model
 	 * @return this builder
 	 */
-	public FileGeneratorBuilder withModel(final Map<String, Object> model) {
+	public MdaFileGeneratorBuilder withModel(final Map<String, Object> model) {
 		Assertion.check().notNull(model);
 		//---
 		myModel = model;
@@ -65,7 +65,7 @@ public final class FileGeneratorBuilder implements Builder<FileGenerator> {
 	 * @param fileName the name of the file including extension
 	 * @return this builder
 	 */
-	public FileGeneratorBuilder withFileName(final String fileName) {
+	public MdaFileGeneratorBuilder withFileName(final String fileName) {
 		Assertion.check().notNull(fileName);
 		//---
 		myFileName = fileName;
@@ -76,7 +76,7 @@ public final class FileGeneratorBuilder implements Builder<FileGenerator> {
 	 * @param packageName the name of the package
 	 * @return this builder
 	 */
-	public FileGeneratorBuilder withPackageName(final String packageName) {
+	public MdaFileGeneratorBuilder withPackageName(final String packageName) {
 		Assertion.check().notNull(packageName);
 		//---
 		myPackageName = packageName;
@@ -87,7 +87,7 @@ public final class FileGeneratorBuilder implements Builder<FileGenerator> {
 	 * @param packageName the name of the package
 	 * @return this builder
 	 */
-	public FileGeneratorBuilder withEncoding(final String encoding) {
+	public MdaFileGeneratorBuilder withEncoding(final String encoding) {
 		Assertion.check().notNull(encoding);
 		//---
 		myEncoding = encoding;
@@ -98,7 +98,7 @@ public final class FileGeneratorBuilder implements Builder<FileGenerator> {
 	 * @param templateName the name of the template
 	 * @return this builder
 	 */
-	public FileGeneratorBuilder withTemplateName(final Class relativeClass, final String templateName) {
+	public MdaFileGeneratorBuilder withTemplateName(final Class relativeClass, final String templateName) {
 		Assertion.check()
 				.notNull(relativeClass)
 				.notNull(templateName);
@@ -112,7 +112,7 @@ public final class FileGeneratorBuilder implements Builder<FileGenerator> {
 	 * @param targetGenDir Repertoire de destination
 	 * @return this builder
 	 */
-	public FileGeneratorBuilder withTargetGenDir(final String targetGenDir) {
+	public MdaFileGeneratorBuilder withTargetGenDir(final String targetGenDir) {
 		Assertion.check().notNull(targetGenDir);
 		//---
 		myTargetGenDir = targetGenDir;
@@ -123,7 +123,7 @@ public final class FileGeneratorBuilder implements Builder<FileGenerator> {
 	 * @param genSubDir Nom subdir de génération
 	 * @return this builder
 	 */
-	public FileGeneratorBuilder withGenSubDir(final String genSubDir) {
+	public MdaFileGeneratorBuilder withGenSubDir(final String genSubDir) {
 		Assertion.check().notNull(genSubDir);
 		//---
 		myGenSubDir = genSubDir;
@@ -131,7 +131,7 @@ public final class FileGeneratorBuilder implements Builder<FileGenerator> {
 	}
 
 	@Override
-	public FileGenerator build() {
+	public MdaFileGenerator build() {
 		Assertion.check()
 				.notNull(myModel, "a model is required")
 				.notNull(myFileName, "a file name is required")
@@ -143,7 +143,7 @@ public final class FileGeneratorBuilder implements Builder<FileGenerator> {
 				.notNull(myGenSubDir, "a sub directory is required");
 		//---
 		final String filePath = buildFilePath();
-		return new FileGeneratorFreeMarker(myModel, filePath, myTemplateName, myEncoding, myRelativeClass);
+		return new MdaFileGeneratorFreeMarker(myModel, filePath, myTemplateName, myEncoding, myRelativeClass);
 	}
 
 	private String buildFilePath() {

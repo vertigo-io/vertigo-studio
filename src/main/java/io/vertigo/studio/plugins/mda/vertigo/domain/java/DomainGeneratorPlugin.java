@@ -30,8 +30,8 @@ import java.util.stream.Stream;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.util.MapBuilder;
-import io.vertigo.studio.impl.mda.FileGenerator;
-import io.vertigo.studio.impl.mda.GeneratorPlugin;
+import io.vertigo.studio.impl.mda.MdaFileGenerator;
+import io.vertigo.studio.impl.mda.MdaGeneratorPlugin;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
@@ -52,7 +52,7 @@ import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
  *
  * @author pchretien, mlaroche
  */
-public final class DomainGeneratorPlugin implements GeneratorPlugin {
+public final class DomainGeneratorPlugin implements MdaGeneratorPlugin {
 
 	private static final String DEFAULT_TARGET_SUBDIR = "javagen";
 
@@ -98,7 +98,7 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 				.put("dtDefinitions", toModels(definitionSpace, DomainUtil.getDtDefinitions(definitionSpace)))
 				.build();
 
-		FileGenerator.builder(mdaConfig)
+		MdaFileGenerator.builder(mdaConfig)
 				.withModel(model)
 				.withFileName(dictionaryClassName + ".java")
 				.withGenSubDir(targetSubDir)
@@ -133,7 +133,7 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 				.put("annotations", new MethodAnnotationsModel())
 				.build();
 
-		FileGenerator.builder(mdaConfig)
+		MdaFileGenerator.builder(mdaConfig)
 				.withModel(model)
 				.withFileName(dtDefinitionModel.getClassSimpleName() + ".java")
 				.withGenSubDir(targetSubDir)
@@ -179,7 +179,7 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 					.put("dtDefinitions", toModels(definitionSpace, dtDefinitions))
 					.build();
 
-			FileGenerator.builder(mdaConfig)
+			MdaFileGenerator.builder(mdaConfig)
 					.withModel(model)
 					.withFileName(simpleClassName + ".java")
 					.withGenSubDir(targetSubDir)
@@ -188,7 +188,7 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 					.build()
 					.generateFile(mdaResultBuilder);
 
-			FileGenerator.builder(mdaConfig)
+			MdaFileGenerator.builder(mdaConfig)
 					.withEncoding("ISO-8859-1")//pour les .properties on force l'ISO-8859-1 comme la norme l'impose
 					.withModel(model)
 					.withFileName(simpleClassName + ".properties")
@@ -230,7 +230,7 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 				.put("entity", masterDataDefinitionModel)
 				.build();
 
-		FileGenerator.builder(mdaConfig)
+		MdaFileGenerator.builder(mdaConfig)
 				.withModel(model)
 				.withFileName(masterDataDefinitionModel.getClassSimpleName() + "Enum.java")
 				.withGenSubDir(targetSubDir)

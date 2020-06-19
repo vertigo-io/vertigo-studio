@@ -32,8 +32,8 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.studio.impl.mda.FileGenerator;
-import io.vertigo.studio.impl.mda.GeneratorPlugin;
+import io.vertigo.studio.impl.mda.MdaFileGenerator;
+import io.vertigo.studio.impl.mda.MdaGeneratorPlugin;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
@@ -55,7 +55,7 @@ import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
  *
  * @author pchretien, mlaroche, gpierre-nicolas
  */
-public final class SqlGeneratorPlugin implements GeneratorPlugin {
+public final class SqlGeneratorPlugin implements MdaGeneratorPlugin {
 
 	private static final String DEFAULT_DATA_SPACE = "main";
 	private static final String DEFAULT_TARGET_SUBDIR = "sqlgen";
@@ -98,7 +98,7 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 					.put("masterdata", sqlMasterDataDefinitionModel)
 					.build();
 
-			FileGenerator.builder(mdaConfig)
+			MdaFileGenerator.builder(mdaConfig)
 					.withModel(model)
 					.withFileName("init_masterdata_" + sqlMasterDataDefinitionModel.getDefinition().getLocalName().toLowerCase() + ".sql")
 					.withGenSubDir(targetSubDir)
@@ -219,7 +219,7 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 		final Map<String, Object> model = modelBuilder.build();
 		final String templatName = isSqlServer(baseCible) ? "template/sqlserver.ftl" : "template/sql.ftl";
 
-		FileGenerator.builder(mdaConfig)
+		MdaFileGenerator.builder(mdaConfig)
 				.withModel(model)
 				.withFileName(fileName)
 				.withGenSubDir(targetSubDir)

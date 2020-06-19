@@ -30,8 +30,8 @@ import java.util.Set;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.util.MapBuilder;
-import io.vertigo.studio.impl.mda.FileGenerator;
-import io.vertigo.studio.impl.mda.GeneratorPlugin;
+import io.vertigo.studio.impl.mda.MdaFileGenerator;
+import io.vertigo.studio.impl.mda.MdaGeneratorPlugin;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
 import io.vertigo.studio.metamodel.webservices.StudioWebServiceDefinition;
@@ -43,7 +43,7 @@ import io.vertigo.studio.plugins.mda.vertigo.webservice.model.WebServiceInitiali
  * Generation des objets relatifs au module Vega.
  * @author npiedeloup
  */
-public final class WsTsGeneratorPlugin implements GeneratorPlugin {
+public final class WsTsGeneratorPlugin implements MdaGeneratorPlugin {
 
 	private static final String DEFAULT_TARGET_SUBDIR = "tsgen";
 
@@ -102,7 +102,7 @@ public final class WsTsGeneratorPlugin implements GeneratorPlugin {
 						.put("importList", importList)
 						.build();
 
-				FileGenerator.builder(mdaConfig)
+				MdaFileGenerator.builder(mdaConfig)
 						.withModel(model)
 						.withFileName(jsFileNameWithoutExtension + ".ts")
 						.withGenSubDir(targetSubDir)
@@ -118,7 +118,7 @@ public final class WsTsGeneratorPlugin implements GeneratorPlugin {
 						.put("serviceList", entry.getValue())
 						.build();
 
-				FileGenerator.builder(mdaConfig)
+				MdaFileGenerator.builder(mdaConfig)
 						.withModel(model)
 						.withFileName("service-gen-initializer.ts")
 						.withGenSubDir(targetSubDir)
@@ -127,7 +127,7 @@ public final class WsTsGeneratorPlugin implements GeneratorPlugin {
 						.build()
 						.generateFile(mdaResultBuilder);
 
-				FileGenerator.builder(mdaConfig)
+				MdaFileGenerator.builder(mdaConfig)
 						.withModel(model)
 						.withFileName("service-type.ts")
 						.withGenSubDir(targetSubDir)

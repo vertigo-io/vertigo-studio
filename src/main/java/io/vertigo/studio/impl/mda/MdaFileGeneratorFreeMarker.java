@@ -47,8 +47,8 @@ import io.vertigo.studio.mda.MdaResultBuilder;
  *
  * @author dchallas
  */
-final class FileGeneratorFreeMarker implements FileGenerator {
-	private static final Logger LOG = LogManager.getLogger(FileGeneratorFreeMarker.class);
+final class MdaFileGeneratorFreeMarker implements MdaFileGenerator {
+	private static final Logger LOG = LogManager.getLogger(MdaFileGeneratorFreeMarker.class);
 	private static final String EOL = System.getProperty("line.separator");
 
 	/**
@@ -70,7 +70,12 @@ final class FileGeneratorFreeMarker implements FileGenerator {
 	 * @param encoding Encoding use
 	 * @param referenceClass ReferenceClass for ftl loading
 	 */
-	FileGeneratorFreeMarker(final Map<String, Object> model, final String filePath, final String templateName, final String encoding, final Class<?> referenceClass) {
+	MdaFileGeneratorFreeMarker(
+			final Map<String, Object> model,
+			final String filePath,
+			final String templateName,
+			final String encoding,
+			final Class<?> referenceClass) {
 		Assertion.check()
 				.notNull(model)
 				.notNull(filePath)

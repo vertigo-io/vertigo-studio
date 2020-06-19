@@ -28,8 +28,8 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.studio.impl.mda.FileGenerator;
-import io.vertigo.studio.impl.mda.GeneratorPlugin;
+import io.vertigo.studio.impl.mda.MdaFileGenerator;
+import io.vertigo.studio.impl.mda.MdaGeneratorPlugin;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
@@ -49,7 +49,7 @@ import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
  *
  * @author pchretien, mlaroche
  */
-public final class SearchGeneratorPlugin implements GeneratorPlugin {
+public final class SearchGeneratorPlugin implements MdaGeneratorPlugin {
 
 	private static final String DEFAULT_TARGET_SUBDIR = "javagen";
 
@@ -148,7 +148,7 @@ public final class SearchGeneratorPlugin implements GeneratorPlugin {
 					.put("searchIndexDefinition", new SearchIndexDefinitionModel(searchIndexDefinitionOpt.get()))
 					.build();
 
-			FileGenerator.builder(mdaConfig)
+			MdaFileGenerator.builder(mdaConfig)
 					.withModel(model)
 					.withFileName(searchDtDefinitionModel.getClassSimpleName() + "SearchClient.java")
 					.withGenSubDir(targetSubDir)

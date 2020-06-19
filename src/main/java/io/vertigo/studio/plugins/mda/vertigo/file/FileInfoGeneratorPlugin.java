@@ -25,8 +25,8 @@ import java.util.Map;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.util.MapBuilder;
-import io.vertigo.studio.impl.mda.FileGenerator;
-import io.vertigo.studio.impl.mda.GeneratorPlugin;
+import io.vertigo.studio.impl.mda.MdaFileGenerator;
+import io.vertigo.studio.impl.mda.MdaGeneratorPlugin;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
 import io.vertigo.studio.metamodel.file.StudioFileInfo;
@@ -38,7 +38,7 @@ import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
  *
  * @author npiedeloup
  */
-public final class FileInfoGeneratorPlugin implements GeneratorPlugin {
+public final class FileInfoGeneratorPlugin implements MdaGeneratorPlugin {
 
 	private static final String DEFAULT_TARGET_SUBDIR = "javagen";
 
@@ -81,7 +81,7 @@ public final class FileInfoGeneratorPlugin implements GeneratorPlugin {
 				.put("packageName", mdaConfig.getProjectPackageName() + ".fileinfo")
 				.build();
 
-		FileGenerator.builder(mdaConfig)
+		MdaFileGenerator.builder(mdaConfig)
 				.withModel(model)
 				.withFileName(fileInfoDefinitionModel.getClassSimpleName() + ".java")
 				.withGenSubDir(targetSubDir)

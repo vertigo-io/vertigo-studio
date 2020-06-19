@@ -36,7 +36,7 @@ import io.vertigo.studio.mda.MdaResultBuilder;
  * @author pchretien, mlaroche, dchallas
  */
 public final class MdaManagerImpl implements MdaManager {
-	private final List<GeneratorPlugin> generatorPlugins;
+	private final List<MdaGeneratorPlugin> generatorPlugins;
 
 	/**
 	 * Constructor.
@@ -44,7 +44,7 @@ public final class MdaManagerImpl implements MdaManager {
 	 */
 	@Inject
 	public MdaManagerImpl(
-			final List<GeneratorPlugin> generatorPlugins) {
+			final List<MdaGeneratorPlugin> generatorPlugins) {
 		Assertion.check().notNull(generatorPlugins);
 		//-----
 		this.generatorPlugins = java.util.Collections.unmodifiableList(generatorPlugins);
@@ -56,7 +56,7 @@ public final class MdaManagerImpl implements MdaManager {
 		//Création d'un objet listant les résultats
 		final MdaResultBuilder mdaResultBuilder = MdaResult.builder();
 		//Génèration des objets issus de la modélisation
-		for (final GeneratorPlugin generatorPlugin : generatorPlugins) {
+		for (final MdaGeneratorPlugin generatorPlugin : generatorPlugins) {
 			if (mdaConfig.getOrDefaultAsBoolean(generatorPlugin.getOutputType(), false)) {
 				generatorPlugin.generate(definitionSpace, mdaConfig, mdaResultBuilder);
 			}
@@ -73,7 +73,7 @@ public final class MdaManagerImpl implements MdaManager {
 		//---
 		// We want to final clean the directory
 		final MdaResultBuilder mdaResultBuilder = MdaResult.builder();
-		for (final GeneratorPlugin generatorPlugin : generatorPlugins) {
+		for (final MdaGeneratorPlugin generatorPlugin : generatorPlugins) {
 			if (mdaConfig.getOrDefaultAsBoolean(generatorPlugin.getOutputType(), false)) {
 				generatorPlugin.clean(mdaConfig, mdaResultBuilder);
 			}

@@ -26,7 +26,7 @@ import io.vertigo.studio.mda.MdaResultBuilder;
  *
  * @author dchallas
  */
-public interface FileGenerator {
+public interface MdaFileGenerator {
 	/**
 	 * Génèration d'un fichier.
 	 * Si le fichier existe déjà, il est regénéré
@@ -40,7 +40,7 @@ public interface FileGenerator {
 	 * @param mdaConfig the config of the file generator
 	 * @return FileGeneratorBuilder
 	 */
-	static FileGeneratorBuilder builder(final MdaConfig mdaConfig) {
-		return new FileGeneratorBuilder(mdaConfig);
+	static MdaFileGeneratorBuilder builder(final MdaConfig mdaConfig) {
+		return new MdaFileGeneratorBuilder(mdaConfig);
 	}
 }
