@@ -37,10 +37,10 @@ public interface FileGenerator {
 
 	/**
 	 * Static method factory for FileGeneratorBuilder
-	 * @param fileGeneratorConfig the config of the file generator
+	 * @param mdaConfig the config of the file generator
 	 * @return FileGeneratorBuilder
 	 */
-	static FileGeneratorBuilder builder(final MdaConfig fileGeneratorConfig) {
-		return new FileGeneratorBuilder(fileGeneratorConfig);
+	static FileGeneratorBuilder builder(final MdaConfig mdaConfig) {
+		return new FileGeneratorBuilder(mdaConfig);
 	}
 }

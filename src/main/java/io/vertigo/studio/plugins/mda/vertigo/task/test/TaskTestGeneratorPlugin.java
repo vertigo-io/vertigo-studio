@@ -54,6 +54,7 @@ public final class TaskTestGeneratorPlugin implements GeneratorPlugin {
 	@Override
 	public void generate(final DefinitionSpace definitionSpace, final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
 		Assertion.check()
+				.notNull(definitionSpace)
 				.notNull(mdaConfig)
 				.notNull(mdaResultBuilder);
 		//-----

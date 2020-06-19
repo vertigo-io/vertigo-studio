@@ -56,8 +56,10 @@ public final class TSGeneratorPlugin implements GeneratorPlugin {
 	@Override
 	public void generate(
 			final DefinitionSpace definitionSpace,
-			final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
+			final MdaConfig mdaConfig,
+			final MdaResultBuilder mdaResultBuilder) {
 		Assertion.check()
+				.notNull(definitionSpace)
 				.notNull(mdaConfig)
 				.notNull(mdaResultBuilder);
 		//-----

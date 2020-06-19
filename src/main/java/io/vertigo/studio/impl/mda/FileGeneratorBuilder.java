@@ -41,13 +41,13 @@ public final class FileGeneratorBuilder implements Builder<FileGenerator> {
 	private String myEncoding;
 
 	/**
-	 * @param fileGeneratorConfig the config of the file generator
+	 * @param mdaConfig the config of the file generator
 	*/
-	FileGeneratorBuilder(final MdaConfig fileGeneratorConfig) {
-		Assertion.check().notNull(fileGeneratorConfig);
+	FileGeneratorBuilder(final MdaConfig mdaConfig) {
+		Assertion.check().notNull(mdaConfig);
 		//---
-		myEncoding = fileGeneratorConfig.getEncoding();
-		myTargetGenDir = fileGeneratorConfig.getTargetGenDir();
+		myEncoding = mdaConfig.getEncoding();
+		myTargetGenDir = mdaConfig.getTargetGenDir();
 	}
 
 	/**

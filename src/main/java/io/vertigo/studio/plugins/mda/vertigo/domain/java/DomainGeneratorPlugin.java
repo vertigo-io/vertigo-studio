@@ -63,6 +63,7 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		Assertion.check()
+				.notNull(definitionSpace)
 				.notNull(mdaConfig)
 				.notNull(mdaResultBuilder);
 		//-----
