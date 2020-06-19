@@ -28,12 +28,12 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.mda.FileGenerator;
 import io.vertigo.studio.impl.mda.GeneratorPlugin;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
-import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 import io.vertigo.studio.metamodel.domain.StudioStereotype;
 import io.vertigo.studio.metamodel.domain.masterdata.MasterDataValue;
@@ -55,7 +55,7 @@ public final class TSGeneratorPlugin implements GeneratorPlugin {
 	/** {@inheritDoc} */
 	@Override
 	public void generate(
-			final MetamodelRepository metamodelRepository,
+			final DefinitionSpace definitionSpace,
 			final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
 		Assertion.check()
 				.notNull(mdaConfig)
@@ -65,40 +65,40 @@ public final class TSGeneratorPlugin implements GeneratorPlugin {
 		//----
 		/* Génération des ressources afférentes au DT mais pour la partie JS.*/
 		if (mdaConfig.getOrDefaultAsBoolean("vertigo.domain.ts.generateDtResourcesTS", true)) {//true by default
-			generateDtResourcesTS(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder);
+			generateDtResourcesTS(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder);
 		}
 		/* Génération des fichiers javascripts référençant toutes les définitions. */
 		if (mdaConfig.getOrDefaultAsBoolean("vertigo.domain.ts.generateTsDtDefinitions", true)) {//true by default
-			generateTsDtDefinitions(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder);
+			generateTsDtDefinitions(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder);
 		}
 		/* Génération des fichiers javascripts référençant toutes les masterdatas. */
 		if (mdaConfig.getOrDefaultAsBoolean("vertigo.domain.ts.generateTsMasterData", false)) {//false by default
-			generateTsMasterData(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder);
+			generateTsMasterData(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder);
 		}
 	}
 
-	private static List<TSStudioDtDefinitionModel> getTsDtDefinitionModels(final MetamodelRepository metamodelRepository) {
-		return DomainUtil.getDtDefinitions(metamodelRepository).stream()
+	private static List<TSStudioDtDefinitionModel> getTsDtDefinitionModels(final DefinitionSpace definitionSpace) {
+		return DomainUtil.getDtDefinitions(definitionSpace).stream()
 				.map(TSStudioDtDefinitionModel::new)
 				.collect(Collectors.toList());
 	}
 
 	private static void generateTsDtDefinitions(
-			final MetamodelRepository metamodelRepository, final String targetSubDir, final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
-		for (final TSStudioDtDefinitionModel dtDefinitionModel : getTsDtDefinitionModels(metamodelRepository)) {
+			final DefinitionSpace definitionSpace, final String targetSubDir, final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
+		for (final TSStudioDtDefinitionModel dtDefinitionModel : getTsDtDefinitionModels(definitionSpace)) {
 			generateTs(dtDefinitionModel, targetSubDir, mdaConfig, mdaResultBuilder);
 		}
 	}
 
 	private static void generateTsMasterData(
-			final MetamodelRepository metamodelRepository,
+			final DefinitionSpace definitionSpace,
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 
-		final Map<String, Map<String, MasterDataValue>> staticMasterDataValues = metamodelRepository.getAll(StaticMasterData.class).stream().collect(Collectors.toMap(StaticMasterData::getEntityClassName, StaticMasterData::getValues));
+		final Map<String, Map<String, MasterDataValue>> staticMasterDataValues = definitionSpace.getAll(StaticMasterData.class).stream().collect(Collectors.toMap(StaticMasterData::getEntityClassName, StaticMasterData::getValues));
 
-		final List<TSMasterDataDefinitionModel> tsMasterDataDefinitionModels = metamodelRepository.getAll(StudioDtDefinition.class)
+		final List<TSMasterDataDefinitionModel> tsMasterDataDefinitionModels = definitionSpace.getAll(StudioDtDefinition.class)
 				.stream()
 				.filter(dtDefinition -> dtDefinition.getStereotype() == StudioStereotype.StaticMasterData)
 				.map(dtDefinition -> new TSMasterDataDefinitionModel(dtDefinition, staticMasterDataValues.getOrDefault(dtDefinition.getClassCanonicalName(), Collections.emptyMap())))
@@ -140,13 +140,13 @@ public final class TSGeneratorPlugin implements GeneratorPlugin {
 	 * @param mdaConfig Configuration du domaine.
 	 */
 	private static void generateDtResourcesTS(
-			final MetamodelRepository metamodelRepository,
+			final DefinitionSpace definitionSpace,
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 
 		final Map<String, List<TSStudioDtDefinitionModel>> packageMap = new HashMap<>();
-		for (final TSStudioDtDefinitionModel dtDefinitionModel : getTsDtDefinitionModels(metamodelRepository)) {
+		for (final TSStudioDtDefinitionModel dtDefinitionModel : getTsDtDefinitionModels(definitionSpace)) {
 			final String packageName = dtDefinitionModel.getFunctionnalPackageName();
 			packageMap.computeIfAbsent(packageName, o -> new ArrayList<>()).add(dtDefinitionModel);
 		}

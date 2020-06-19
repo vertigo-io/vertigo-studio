@@ -28,7 +28,7 @@ import java.util.function.Function;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
-import io.vertigo.studio.metamodel.MetamodelRepository;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.studio.metamodel.domain.Domain;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 import io.vertigo.studio.metamodel.domain.StudioDtField;
@@ -157,20 +157,20 @@ public final class DomainUtil {
 		return classLabel;
 	}
 
-	public static Collection<StudioDtDefinition> getDtDefinitions(final MetamodelRepository metamodelRepository) {
-		return sortDefinitionCollection(metamodelRepository.getAll(StudioDtDefinition.class));
+	public static Collection<StudioDtDefinition> getDtDefinitions(final DefinitionSpace definitionSpace) {
+		return sortDefinitionCollection(definitionSpace.getAll(StudioDtDefinition.class));
 	}
 
-	public static Map<String, Collection<StudioDtDefinition>> getDtDefinitionCollectionMap(final MetamodelRepository metamodelRepository) {
-		return getDefinitionCollectionMap(getDtDefinitions(metamodelRepository));
+	public static Map<String, Collection<StudioDtDefinition>> getDtDefinitionCollectionMap(final DefinitionSpace definitionSpace) {
+		return getDefinitionCollectionMap(getDtDefinitions(definitionSpace));
 	}
 
-	public static Collection<StudioAssociationSimpleDefinition> getSimpleAssociations(final MetamodelRepository metamodelRepository) {
-		return sortAssociationsCollection(metamodelRepository.getAll(StudioAssociationSimpleDefinition.class));
+	public static Collection<StudioAssociationSimpleDefinition> getSimpleAssociations(final DefinitionSpace definitionSpace) {
+		return sortAssociationsCollection(definitionSpace.getAll(StudioAssociationSimpleDefinition.class));
 	}
 
-	public static Collection<StudioAssociationNNDefinition> getNNAssociations(final MetamodelRepository metamodelRepository) {
-		return sortAssociationsCollection(metamodelRepository.getAll(StudioAssociationNNDefinition.class));
+	public static Collection<StudioAssociationNNDefinition> getNNAssociations(final DefinitionSpace definitionSpace) {
+		return sortAssociationsCollection(definitionSpace.getAll(StudioAssociationNNDefinition.class));
 	}
 
 	/**
@@ -211,7 +211,7 @@ public final class DomainUtil {
 		return canonicalClassName.substring(lastDot + 1);
 	}
 
-	public static Function<String, String> createClassNameFromDtFunction(final MetamodelRepository metamodelRepository) {
-		return dtName -> metamodelRepository.resolve(dtName, StudioDtDefinition.class).getClassCanonicalName();
+	public static Function<String, String> createClassNameFromDtFunction(final DefinitionSpace definitionSpace) {
+		return dtName -> definitionSpace.resolve(dtName, StudioDtDefinition.class).getClassCanonicalName();
 	}
 }

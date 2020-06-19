@@ -28,12 +28,12 @@ import java.util.Map;
 import java.util.Set;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.mda.FileGenerator;
 import io.vertigo.studio.impl.mda.GeneratorPlugin;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
-import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.webservices.StudioWebServiceDefinition;
 import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
 import io.vertigo.studio.plugins.mda.vertigo.webservice.model.WebServiceDefinitionModelTs;
@@ -50,7 +50,7 @@ public final class WsTsGeneratorPlugin implements GeneratorPlugin {
 	/** {@inheritDoc} */
 	@Override
 	public void generate(
-			final MetamodelRepository metamodelRepository,
+			final DefinitionSpace definitionSpace,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		Assertion.check()
@@ -58,15 +58,15 @@ public final class WsTsGeneratorPlugin implements GeneratorPlugin {
 				.notNull(mdaResultBuilder);
 		//-----
 		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.wsts.targetSubDir", DEFAULT_TARGET_SUBDIR);
-		generateRoute(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder);
+		generateRoute(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder);
 	}
 
-	private static Collection<StudioWebServiceDefinition> getWebServiceDefinitions(final MetamodelRepository metamodelRepository) {
-		return metamodelRepository.getAll(StudioWebServiceDefinition.class);
+	private static Collection<StudioWebServiceDefinition> getWebServiceDefinitions(final DefinitionSpace definitionSpace) {
+		return definitionSpace.getAll(StudioWebServiceDefinition.class);
 	}
 
-	private static void generateRoute(final MetamodelRepository metamodelRepository, final String targetSubDir, final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
-		final Collection<StudioWebServiceDefinition> webServiceDefinitions = getWebServiceDefinitions(metamodelRepository);
+	private static void generateRoute(final DefinitionSpace definitionSpace, final String targetSubDir, final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
+		final Collection<StudioWebServiceDefinition> webServiceDefinitions = getWebServiceDefinitions(definitionSpace);
 		if (!webServiceDefinitions.isEmpty()) {
 			final Map<String, List<WebServiceDefinitionModelTs>> webServicesPerFacades = new HashMap<>();
 			for (final StudioWebServiceDefinition webServiceDefinition : webServiceDefinitions) {

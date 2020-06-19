@@ -29,13 +29,13 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.impl.mda.FileGenerator;
 import io.vertigo.studio.impl.mda.GeneratorPlugin;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
-import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 import io.vertigo.studio.metamodel.domain.StudioStereotype;
 import io.vertigo.studio.metamodel.domain.association.StudioAssociationNNDefinition;
@@ -63,28 +63,28 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 	/** {@inheritDoc} */
 	@Override
 	public void generate(
-			final MetamodelRepository metamodelRepository,
+			final DefinitionSpace definitionSpace,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		Assertion.check()
 				.notNull(mdaConfig)
 				.notNull(mdaResultBuilder);
 		//-----
-		generateSql(metamodelRepository, mdaConfig, mdaResultBuilder);
+		generateSql(definitionSpace, mdaConfig, mdaResultBuilder);
 
 		if (mdaConfig.getOrDefaultAsBoolean("vertigo.domain.sql.generateMasterData", false)) {
-			generateMasterDataInserts(metamodelRepository, mdaConfig, mdaResultBuilder);
+			generateMasterDataInserts(definitionSpace, mdaConfig, mdaResultBuilder);
 		}
 	}
 
 	private static void generateMasterDataInserts(
-			final MetamodelRepository metamodelRepository,
+			final DefinitionSpace definitionSpace,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 
-		final Map<String, Map<String, MasterDataValue>> staticMasterDataValues = metamodelRepository.getAll(StaticMasterData.class).stream().collect(Collectors.toMap(StaticMasterData::getEntityClassName, StaticMasterData::getValues));
+		final Map<String, Map<String, MasterDataValue>> staticMasterDataValues = definitionSpace.getAll(StaticMasterData.class).stream().collect(Collectors.toMap(StaticMasterData::getEntityClassName, StaticMasterData::getValues));
 
-		final List<SqlMasterDataDefinitionModel> sqlMasterDataDefinitionModels = metamodelRepository.getAll(StudioDtDefinition.class)
+		final List<SqlMasterDataDefinitionModel> sqlMasterDataDefinitionModels = definitionSpace.getAll(StudioDtDefinition.class)
 				.stream()
 				.filter(dtDefinition -> dtDefinition.getStereotype() == StudioStereotype.StaticMasterData)
 				.map(dtDefinition -> new SqlMasterDataDefinitionModel(dtDefinition, staticMasterDataValues.getOrDefault(dtDefinition.getClassCanonicalName(), Collections.emptyMap())))
@@ -110,12 +110,12 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 	}
 
 	private void generateSql(
-			final MetamodelRepository metamodelRepository,
+			final DefinitionSpace definitionSpace,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 
 		final Map<String, List<SqlStudioDtDefinitionModel>> mapListDtDef = new HashMap<>();
-		for (final StudioDtDefinition dtDefinition : DomainUtil.sortDefinitionCollection(DomainUtil.getDtDefinitions(metamodelRepository))) {
+		for (final StudioDtDefinition dtDefinition : DomainUtil.sortDefinitionCollection(DomainUtil.getDtDefinitions(definitionSpace))) {
 			if (dtDefinition.isPersistent()) {
 				final SqlStudioDtDefinitionModel templateDef = new SqlStudioDtDefinitionModel(dtDefinition);
 				final String dataSpace = dtDefinition.getDataSpace();
@@ -124,8 +124,8 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 			}
 		}
 		//
-		final Collection<StudioAssociationSimpleDefinition> collectionSimpleAll = DomainUtil.getSimpleAssociations(metamodelRepository);
-		final Collection<StudioAssociationNNDefinition> collectionNNAll = DomainUtil.getNNAssociations(metamodelRepository);
+		final Collection<StudioAssociationSimpleDefinition> collectionSimpleAll = DomainUtil.getSimpleAssociations(definitionSpace);
+		final Collection<StudioAssociationNNDefinition> collectionNNAll = DomainUtil.getNNAssociations(definitionSpace);
 		//
 		for (final Entry<String, List<SqlStudioDtDefinitionModel>> entry : mapListDtDef.entrySet()) {
 			final String dataSpace = entry.getKey();

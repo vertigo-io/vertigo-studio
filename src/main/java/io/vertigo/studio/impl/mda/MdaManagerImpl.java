@@ -24,11 +24,11 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaManager;
 import io.vertigo.studio.mda.MdaResult;
 import io.vertigo.studio.mda.MdaResultBuilder;
-import io.vertigo.studio.metamodel.MetamodelRepository;
 
 /**
  * Implements MDA.
@@ -52,13 +52,13 @@ public final class MdaManagerImpl implements MdaManager {
 
 	/** {@inheritDoc} */
 	@Override
-	public MdaResult generate(final MetamodelRepository metamodelRepository, final MdaConfig mdaConfig) {
+	public MdaResult generate(final DefinitionSpace definitionSpace, final MdaConfig mdaConfig) {
 		//Création d'un objet listant les résultats
 		final MdaResultBuilder mdaResultBuilder = MdaResult.builder();
 		//Génèration des objets issus de la modélisation
 		for (final GeneratorPlugin generatorPlugin : generatorPlugins) {
 			if (mdaConfig.getOrDefaultAsBoolean(generatorPlugin.getOutputType(), false)) {
-				generatorPlugin.generate(metamodelRepository, mdaConfig, mdaResultBuilder);
+				generatorPlugin.generate(definitionSpace, mdaConfig, mdaResultBuilder);
 			}
 		}
 		return mdaResultBuilder.build();

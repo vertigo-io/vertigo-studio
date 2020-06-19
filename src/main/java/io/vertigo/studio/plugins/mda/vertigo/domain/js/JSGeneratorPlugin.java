@@ -24,12 +24,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.mda.FileGenerator;
 import io.vertigo.studio.impl.mda.GeneratorPlugin;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
-import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.plugins.mda.vertigo.domain.js.model.JSDtDefinitionModel;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
 import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
@@ -46,7 +46,7 @@ public final class JSGeneratorPlugin implements GeneratorPlugin {
 	/** {@inheritDoc} */
 	@Override
 	public void generate(
-			final MetamodelRepository metamodelRepository,
+			final DefinitionSpace definitionSpace,
 			final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
 		Assertion.check()
 				.notNull(mdaConfig)
@@ -56,22 +56,22 @@ public final class JSGeneratorPlugin implements GeneratorPlugin {
 		//---
 		/* Génération des ressources afférentes au DT mais pour la partie JS.*/
 		if (mdaConfig.getOrDefaultAsBoolean("vertigo.domain.js.generateDtResourcesJS", true)) {//true by default
-			generateDtResourcesJS(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder);
+			generateDtResourcesJS(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder);
 		}
 		/* Génération des fichiers javascripts référençant toutes les définitions. */
 		if (mdaConfig.getOrDefaultAsBoolean("vertigo.domain.js.generateJsDtDefinitions", true)) {//true by default
-			generateJsDtDefinitions(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder);
+			generateJsDtDefinitions(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder);
 		}
 	}
 
-	private static List<JSDtDefinitionModel> getJsDtDefinitionModels(final MetamodelRepository metamodelRepository) {
-		return DomainUtil.getDtDefinitions(metamodelRepository).stream()
+	private static List<JSDtDefinitionModel> getJsDtDefinitionModels(final DefinitionSpace definitionSpace) {
+		return DomainUtil.getDtDefinitions(definitionSpace).stream()
 				.map(JSDtDefinitionModel::new)
 				.collect(Collectors.toList());
 	}
 
 	private static void generateJsDtDefinitions(
-			final MetamodelRepository metamodelRepository,
+			final DefinitionSpace definitionSpace,
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
@@ -79,7 +79,7 @@ public final class JSGeneratorPlugin implements GeneratorPlugin {
 		final Map<String, Object> model = new MapBuilder<String, Object>()
 				.put("packageName", mdaConfig.getProjectPackageName() + ".domain")
 				.put("classSimpleName", "DtDefinitions")
-				.put("dtDefinitions", getJsDtDefinitionModels(metamodelRepository))
+				.put("dtDefinitions", getJsDtDefinitionModels(definitionSpace))
 				.build();
 
 		FileGenerator.builder(mdaConfig)
@@ -97,7 +97,7 @@ public final class JSGeneratorPlugin implements GeneratorPlugin {
 	 * @param mdaConfig Configuration du domaine.
 	 */
 	private static void generateDtResourcesJS(
-			final MetamodelRepository metamodelRepository,
+			final DefinitionSpace definitionSpace,
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
@@ -107,7 +107,7 @@ public final class JSGeneratorPlugin implements GeneratorPlugin {
 		final Map<String, Object> model = new MapBuilder<String, Object>()
 				.put("packageName", packageName)
 				.put("simpleClassName", simpleClassName)
-				.put("dtDefinitions", getJsDtDefinitionModels(metamodelRepository))
+				.put("dtDefinitions", getJsDtDefinitionModels(definitionSpace))
 				.build();
 
 		FileGenerator.builder(mdaConfig)

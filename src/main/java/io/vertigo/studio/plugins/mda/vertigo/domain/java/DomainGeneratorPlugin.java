@@ -28,12 +28,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.mda.FileGenerator;
 import io.vertigo.studio.impl.mda.GeneratorPlugin;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
-import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 import io.vertigo.studio.metamodel.domain.StudioStereotype;
 import io.vertigo.studio.metamodel.domain.association.StudioAssociationDefinition;
@@ -59,7 +59,7 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 	/** {@inheritDoc} */
 	@Override
 	public void generate(
-			final MetamodelRepository metamodelRepository,
+			final DefinitionSpace definitionSpace,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		Assertion.check()
@@ -70,22 +70,22 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.domain.java.targetSubDir", DEFAULT_TARGET_SUBDIR);
 		/* Génération des ressources afférentes au DT. */
 		if (mdaConfig.getOrDefaultAsBoolean("vertigo.domain.java.generateDtResources", Boolean.TRUE)) {// true by default
-			generateDtResources(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder);
+			generateDtResources(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder);
 		}
 
 		/* Génération de la lgeneratee référençant toutes des définitions. */
 		if (mdaConfig.getOrDefaultAsBoolean("vertigo.domain.java.generateDtDefinitions", Boolean.TRUE)) {// true by default
-			generateDtDefinitions(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder, mdaConfig.getOrDefaultAsString("vertigo.domain.java.dictionaryClassName", "DtDefinitions"));
+			generateDtDefinitions(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder, mdaConfig.getOrDefaultAsString("vertigo.domain.java.dictionaryClassName", "DtDefinitions"));
 		}
 
 		/* Générations des DTO. */
-		generateDtObjects(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder);
-		generateJavaEnums(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder);
+		generateDtObjects(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder);
+		generateJavaEnums(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder);
 
 	}
 
 	private static void generateDtDefinitions(
-			final MetamodelRepository metamodelRepository,
+			final DefinitionSpace definitionSpace,
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder,
@@ -94,7 +94,7 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 		final Map<String, Object> model = new MapBuilder<String, Object>()
 				.put("packageName", mdaConfig.getProjectPackageName() + ".domain")
 				.put("classSimpleName", dictionaryClassName)
-				.put("dtDefinitions", toModels(metamodelRepository, DomainUtil.getDtDefinitions(metamodelRepository)))
+				.put("dtDefinitions", toModels(definitionSpace, DomainUtil.getDtDefinitions(definitionSpace)))
 				.build();
 
 		FileGenerator.builder(mdaConfig)
@@ -109,23 +109,23 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 	}
 
 	private static void generateDtObjects(
-			final MetamodelRepository metamodelRepository,
+			final DefinitionSpace definitionSpace,
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
-		for (final StudioDtDefinition dtDefinition : DomainUtil.getDtDefinitions(metamodelRepository)) {
-			generateDtObject(metamodelRepository, targetSubDir, mdaConfig, mdaResultBuilder, dtDefinition, getAssociationsByDtDefinition(metamodelRepository, dtDefinition));
+		for (final StudioDtDefinition dtDefinition : DomainUtil.getDtDefinitions(definitionSpace)) {
+			generateDtObject(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder, dtDefinition, getAssociationsByDtDefinition(definitionSpace, dtDefinition));
 		}
 	}
 
 	private static void generateDtObject(
-			final MetamodelRepository metamodelRepository,
+			final DefinitionSpace definitionSpace,
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder,
 			final StudioDtDefinition dtDefinition,
 			final List<? extends StudioAssociationDefinition> associations) {
-		final StudioDtDefinitionModel dtDefinitionModel = new StudioDtDefinitionModel(dtDefinition, associations, DomainUtil.createClassNameFromDtFunction(metamodelRepository));
+		final StudioDtDefinitionModel dtDefinitionModel = new StudioDtDefinitionModel(dtDefinition, associations, DomainUtil.createClassNameFromDtFunction(definitionSpace));
 
 		final Map<String, Object> model = new MapBuilder<String, Object>()
 				.put("dtDefinition", dtDefinitionModel)
@@ -142,21 +142,21 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 				.generateFile(mdaResultBuilder);
 	}
 
-	private static List<StudioDtDefinitionModel> toModels(final MetamodelRepository metamodelRepository, final Collection<StudioDtDefinition> dtDefinitions) {
+	private static List<StudioDtDefinitionModel> toModels(final DefinitionSpace definitionSpace, final Collection<StudioDtDefinition> dtDefinitions) {
 		return dtDefinitions.stream()
-				.map(dtDef -> new StudioDtDefinitionModel(dtDef, getAssociationsByDtDefinition(metamodelRepository, dtDef), DomainUtil.createClassNameFromDtFunction(metamodelRepository)))
+				.map(dtDef -> new StudioDtDefinitionModel(dtDef, getAssociationsByDtDefinition(definitionSpace, dtDef), DomainUtil.createClassNameFromDtFunction(definitionSpace)))
 				.collect(Collectors.toList());
 	}
 
-	private static List<StudioAssociationDefinition> getAssociationsByDtDefinition(final MetamodelRepository metamodelRepository, final StudioDtDefinition studioDtDefinition) {
-		return Stream.concat(metamodelRepository.getAll(StudioAssociationSimpleDefinition.class).stream(), metamodelRepository.getAll(StudioAssociationNNDefinition.class).stream())
+	private static List<StudioAssociationDefinition> getAssociationsByDtDefinition(final DefinitionSpace definitionSpace, final StudioDtDefinition studioDtDefinition) {
+		return Stream.concat(definitionSpace.getAll(StudioAssociationSimpleDefinition.class).stream(), definitionSpace.getAll(StudioAssociationNNDefinition.class).stream())
 				.filter(association -> association.getAssociationNodeA().getDtDefinition().getName().equals(studioDtDefinition.getName())
 						|| association.getAssociationNodeB().getDtDefinition().getName().equals(studioDtDefinition.getName())) // concerns current dt
 				.collect(Collectors.toList());
 	}
 
 	private static void generateDtResources(
-			final MetamodelRepository metamodelRepository,
+			final DefinitionSpace definitionSpace,
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
@@ -167,7 +167,7 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 		/**
 		 * Génération des ressources afférentes au DT.
 		 */
-		for (final Entry<String, Collection<StudioDtDefinition>> entry : DomainUtil.getDtDefinitionCollectionMap(metamodelRepository).entrySet()) {
+		for (final Entry<String, Collection<StudioDtDefinition>> entry : DomainUtil.getDtDefinitionCollectionMap(definitionSpace).entrySet()) {
 			final Collection<StudioDtDefinition> dtDefinitions = entry.getValue();
 			Assertion.check().notNull(dtDefinitions);
 			final String packageName = entry.getKey();
@@ -175,7 +175,7 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 			final Map<String, Object> model = new MapBuilder<String, Object>()
 					.put("packageName", packageName)
 					.put("simpleClassName", simpleClassName)
-					.put("dtDefinitions", toModels(metamodelRepository, dtDefinitions))
+					.put("dtDefinitions", toModels(definitionSpace, dtDefinitions))
 					.build();
 
 			FileGenerator.builder(mdaConfig)
@@ -200,7 +200,7 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 	}
 
 	private void generateJavaEnums(
-			final MetamodelRepository metamodelRepository,
+			final DefinitionSpace metamodelRepository,
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
