@@ -4,7 +4,7 @@ import java.util.Properties;
 
 import io.vertigo.core.lang.Builder;
 
-public class MdaConfigBuilder implements Builder<MdaConfig> {
+public final class MdaConfigBuilder implements Builder<MdaConfig> {
 
 	private final String myProjectPackageName;
 	private final Properties myProperties = new Properties();

@@ -47,7 +47,7 @@ public final class MdaConfig {
 	/**
 	 * Chargement des paramètres depuis le fichier properties.
 	 */
-	public MdaConfig(
+	MdaConfig(
 			final String targetGenDir,
 			final String projectPackageName,
 			final String encoding,

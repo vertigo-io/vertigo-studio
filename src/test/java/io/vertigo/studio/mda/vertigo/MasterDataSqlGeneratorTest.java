@@ -18,7 +18,6 @@
  */
 package io.vertigo.studio.mda.vertigo;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -61,7 +60,7 @@ public class MasterDataSqlGeneratorTest {
 	@Test
 	public void testGenerate() {
 		try (AutoCloseableApp studioApp = new AutoCloseableApp(buildNodeConfig())) {
-			final List<MetamodelResource> resources = Arrays.asList(
+			final List<MetamodelResource> resources = List.of(
 					new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
 					new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"),
 					new MetamodelResource("staticMasterData", "io/vertigo/studio/metamodel/vertigo/data/masterdata/testJsonMasterDataValues.json"),
