@@ -3,9 +3,10 @@ package io.vertigo.studio.metamodel;
 import java.util.List;
 
 import io.vertigo.core.node.component.Manager;
+import io.vertigo.core.node.definition.DefinitionSpace;
 
 public interface StudioMetamodelManager extends Manager {
 
-	MetamodelRepository parseResources(List<MetamodelResource> resources);
+	DefinitionSpace parseResources(List<MetamodelResource> resources);
 
 }

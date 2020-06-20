@@ -30,10 +30,10 @@ import io.vertigo.core.lang.BasicType;
 import io.vertigo.core.node.AutoCloseableApp;
 import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.NodeConfig;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.datamodel.impl.smarttype.formatter.FormatterDefault;
 import io.vertigo.studio.StudioFeatures;
-import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.MetamodelResource;
 import io.vertigo.studio.metamodel.StudioMetamodelManager;
 import io.vertigo.studio.metamodel.domain.Domain;
@@ -48,7 +48,7 @@ import io.vertigo.studio.metamodel.vertigo.java.data.DtDefinitions;
  */
 public final class JavaEnvironmentManagerTest {
 
-	private MetamodelRepository metamodelRepository;
+	private DefinitionSpace definitionSpace;
 	private AutoCloseableApp app;
 
 	@BeforeEach
@@ -59,7 +59,7 @@ public final class JavaEnvironmentManagerTest {
 		final List<MetamodelResource> resources = Arrays.asList(
 				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/java/data/execution.kpr"),
 				new MetamodelResource("classes", DtDefinitions.class.getName()));
-		metamodelRepository = app.getComponentSpace().resolve(StudioMetamodelManager.class).parseResources(resources);
+		definitionSpace = app.getComponentSpace().resolve(StudioMetamodelManager.class).parseResources(resources);
 	}
 
 	@AfterEach
@@ -83,20 +83,20 @@ public final class JavaEnvironmentManagerTest {
 
 	@Test
 	public void testDefaultFormatter() {
-		final FormatterDefinition formatter = metamodelRepository.resolve("FmtDefault", FormatterDefinition.class);
+		final FormatterDefinition formatter = definitionSpace.resolve("FmtDefault", FormatterDefinition.class);
 		Assertions.assertEquals(FormatterDefault.class.getName(), formatter.getFormatterClassName());
 	}
 
 	@Test
 	public void testDomain() {
-		final io.vertigo.studio.metamodel.domain.Domain domain = metamodelRepository.resolve("DoId", Domain.class);
+		final io.vertigo.studio.metamodel.domain.Domain domain = definitionSpace.resolve("DoId", Domain.class);
 		Assertions.assertEquals(BasicType.Long, domain.getDataType());
 		Assertions.assertEquals(FormatterDefault.class.getName(), domain.getFormatterDefinition().getFormatterClassName());
 	}
 
 	@Test
 	public void testCommand() {
-		final StudioDtDefinition dtDefinition = metamodelRepository.resolve("StDtCommand", StudioDtDefinition.class);
+		final StudioDtDefinition dtDefinition = definitionSpace.resolve("StDtCommand", StudioDtDefinition.class);
 		Assertions.assertTrue(dtDefinition.isPersistent());
 		Assertions.assertEquals("io.vertigo.studio.metamodel.vertigo.java.data.domain.Command", dtDefinition.getClassCanonicalName());
 		Assertions.assertEquals("io.vertigo.studio.metamodel.vertigo.java.data.domain", dtDefinition.getPackageName());
@@ -105,7 +105,7 @@ public final class JavaEnvironmentManagerTest {
 
 	@Test
 	public void testCityFragment() {
-		final StudioDtDefinition dtDefinition = metamodelRepository.resolve("StDtCityFragment", StudioDtDefinition.class);
+		final StudioDtDefinition dtDefinition = definitionSpace.resolve("StDtCityFragment", StudioDtDefinition.class);
 		Assertions.assertFalse(dtDefinition.isPersistent());
 		Assertions.assertTrue(dtDefinition.getFragment().isPresent());
 		Assertions.assertTrue("City".equals(dtDefinition.getFragment().get().getClassSimpleName()));

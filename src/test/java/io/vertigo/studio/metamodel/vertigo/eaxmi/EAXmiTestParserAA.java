@@ -29,9 +29,9 @@ import org.junit.jupiter.api.Test;
 import io.vertigo.core.node.AutoCloseableApp;
 import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.NodeConfig;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.studio.StudioFeatures;
-import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.MetamodelResource;
 import io.vertigo.studio.metamodel.StudioMetamodelManager;
 import io.vertigo.studio.metamodel.domain.association.StudioAssociationNNDefinition;
@@ -44,7 +44,7 @@ import io.vertigo.studio.metamodel.domain.association.StudioAssociationSimpleDef
  */
 public final class EAXmiTestParserAA {
 
-	private MetamodelRepository metamodelRepository;
+	private DefinitionSpace definitionSpace;
 	private AutoCloseableApp app;
 
 	@BeforeEach
@@ -55,7 +55,7 @@ public final class EAXmiTestParserAA {
 		final List<MetamodelResource> resources = Arrays.asList(
 				new MetamodelResource("xmi", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/associationAA.xml"),
 				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/domain.kpr"));
-		metamodelRepository = app.getComponentSpace().resolve(StudioMetamodelManager.class).parseResources(resources);
+		definitionSpace = app.getComponentSpace().resolve(StudioMetamodelManager.class).parseResources(resources);
 	}
 
 	@AfterEach
@@ -84,12 +84,12 @@ public final class EAXmiTestParserAA {
 	 * - Navigabilité notée v
 	 */
 	private StudioAssociationSimpleDefinition getAssociationSimpleDefinition(final String urn) {
-		return metamodelRepository
+		return definitionSpace
 				.resolve(urn, StudioAssociationSimpleDefinition.class);
 	}
 
 	private StudioAssociationNNDefinition getAssociationNNDefinition(final String urn) {
-		return metamodelRepository
+		return definitionSpace
 				.resolve(urn, StudioAssociationNNDefinition.class);
 	}
 

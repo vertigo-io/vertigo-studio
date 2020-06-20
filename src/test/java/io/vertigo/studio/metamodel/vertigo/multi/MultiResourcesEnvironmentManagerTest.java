@@ -29,9 +29,9 @@ import org.junit.jupiter.api.Test;
 import io.vertigo.core.node.AutoCloseableApp;
 import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.NodeConfig;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.studio.StudioFeatures;
-import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.MetamodelResource;
 import io.vertigo.studio.metamodel.StudioMetamodelManager;
 import io.vertigo.studio.metamodel.domain.Domain;
@@ -73,22 +73,22 @@ public final class MultiResourcesEnvironmentManagerTest {
 
 	@Test
 	public void testFirst() {
-		final MetamodelRepository metamodelRepository = app.getComponentSpace().resolve(StudioMetamodelManager.class)
+		final DefinitionSpace definitionSpace = app.getComponentSpace().resolve(StudioMetamodelManager.class)
 				.parseResources(Collections.singletonList(new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr")));
-		final Domain doString = metamodelRepository.resolve("DoString", Domain.class);
+		final Domain doString = definitionSpace.resolve("DoString", Domain.class);
 		Assertions.assertNotNull(doString);
 	}
 
 	@Test
 	public void testMergedResources() {
-		final MetamodelRepository metamodelRepository = app.getComponentSpace().resolve(StudioMetamodelManager.class)
+		final DefinitionSpace definitionSpace = app.getComponentSpace().resolve(StudioMetamodelManager.class)
 				.parseResources(Arrays.asList(
 						new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr"),
 						new MetamodelResource("classes", DtDefinitions.class.getCanonicalName())));
 
-		final Domain doString = metamodelRepository.resolve("DoString", Domain.class);
+		final Domain doString = definitionSpace.resolve("DoString", Domain.class);
 		Assertions.assertNotNull(doString);
-		final StudioDtDefinition dtItem = metamodelRepository.resolve("StDtItem", StudioDtDefinition.class);
+		final StudioDtDefinition dtItem = definitionSpace.resolve("StDtItem", StudioDtDefinition.class);
 		Assertions.assertNotNull(dtItem);
 	}
 

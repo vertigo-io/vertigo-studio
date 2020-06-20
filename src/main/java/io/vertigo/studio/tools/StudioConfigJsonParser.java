@@ -20,11 +20,10 @@ import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaConfigBuilder;
 import io.vertigo.studio.metamodel.MetamodelResource;
 
-public class StudioConfigJsonParser {
-
+final class StudioConfigJsonParser {
 	private static final Gson GSON = new Gson();
 
-	public static final StudioProjectConfig parseJson(final URL configUrl) {
+	static final StudioProjectConfig parseJson(final URL configUrl) {
 		try {
 			final JsonObject jsonObject = GSON.fromJson(readFile(configUrl), JsonObject.class);
 			final String rootPath = Path.of(configUrl.toURI()).getParent().toString() + "/";
@@ -65,5 +64,4 @@ public class StudioConfigJsonParser {
 			return buff.toString();
 		}
 	}
-
 }

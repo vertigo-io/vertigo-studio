@@ -30,12 +30,12 @@ import io.vertigo.core.lang.BasicType;
 import io.vertigo.core.node.AutoCloseableApp;
 import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.NodeConfig;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.datamodel.impl.smarttype.constraint.ConstraintRegex;
 import io.vertigo.datamodel.impl.smarttype.formatter.FormatterDefault;
 import io.vertigo.datamodel.impl.smarttype.formatter.FormatterNumber;
 import io.vertigo.studio.StudioFeatures;
-import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.MetamodelResource;
 import io.vertigo.studio.metamodel.StudioMetamodelManager;
 import io.vertigo.studio.metamodel.domain.ConstraintDefinition;
@@ -49,7 +49,7 @@ import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
  * @author pchretien, mlaroche
  */
 public final class OOMEnvironmentManagerTest {
-	private MetamodelRepository metamodelRepository;
+	private DefinitionSpace definitionSpace;
 	private AutoCloseableApp app;
 
 	@BeforeEach
@@ -60,7 +60,7 @@ public final class OOMEnvironmentManagerTest {
 		final List<MetamodelResource> resources = Arrays.asList(
 				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/oom/data/domain.kpr"),
 				new MetamodelResource("oom", "io/vertigo/studio/metamodel/vertigo/oom/data/demo.oom"));
-		metamodelRepository = app.getComponentSpace().resolve(StudioMetamodelManager.class).parseResources(resources);
+		definitionSpace = app.getComponentSpace().resolve(StudioMetamodelManager.class).parseResources(resources);
 	}
 
 	@AfterEach
@@ -84,32 +84,32 @@ public final class OOMEnvironmentManagerTest {
 
 	@Test
 	public void testConstraint() {
-		final ConstraintDefinition constraint = metamodelRepository.resolve("CkTelephone", ConstraintDefinition.class);
+		final ConstraintDefinition constraint = definitionSpace.resolve("CkTelephone", ConstraintDefinition.class);
 		Assertions.assertEquals(ConstraintRegex.class.getName(), constraint.getConstraintClassName());
 	}
 
 	@Test
 	public void testDefaultFormatter() {
-		final FormatterDefinition formatter = metamodelRepository.resolve("FmtDefault", FormatterDefinition.class);
+		final FormatterDefinition formatter = definitionSpace.resolve("FmtDefault", FormatterDefinition.class);
 		Assertions.assertEquals(FormatterDefault.class.getName(), formatter.getFormatterClassName());
 	}
 
 	@Test
 	public void testFormatter() {
-		final FormatterDefinition formatter = metamodelRepository.resolve("FmtTaux", FormatterDefinition.class);
+		final FormatterDefinition formatter = definitionSpace.resolve("FmtTaux", FormatterDefinition.class);
 		Assertions.assertEquals(FormatterNumber.class.getName(), formatter.getFormatterClassName());
 	}
 
 	@Test
 	public void testDomain() {
-		final io.vertigo.studio.metamodel.domain.Domain domain = metamodelRepository.resolve("DoEmail", Domain.class);
+		final io.vertigo.studio.metamodel.domain.Domain domain = definitionSpace.resolve("DoEmail", Domain.class);
 		Assertions.assertEquals(BasicType.String, domain.getDataType());
 		Assertions.assertEquals(FormatterDefault.class.getName(), domain.getFormatterDefinition().getFormatterClassName());
 	}
 
 	@Test
 	public void testDtDefinition() {
-		final StudioDtDefinition dtDefinition = metamodelRepository.resolve("StDtFamille", StudioDtDefinition.class);
+		final StudioDtDefinition dtDefinition = definitionSpace.resolve("StDtFamille", StudioDtDefinition.class);
 		Assertions.assertEquals("io.vertigo.dynamock.domain.famille.Famille", dtDefinition.getClassCanonicalName());
 		Assertions.assertTrue(dtDefinition.isPersistent());
 		Assertions.assertEquals("io.vertigo.dynamock.domain.famille", dtDefinition.getPackageName());

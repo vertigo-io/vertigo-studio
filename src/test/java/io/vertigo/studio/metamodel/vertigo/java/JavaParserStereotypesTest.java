@@ -29,9 +29,9 @@ import org.junit.jupiter.api.Test;
 import io.vertigo.core.node.AutoCloseableApp;
 import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.NodeConfig;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.studio.StudioFeatures;
-import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.MetamodelResource;
 import io.vertigo.studio.metamodel.StudioMetamodelManager;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
@@ -45,7 +45,7 @@ import io.vertigo.studio.metamodel.vertigo.java.data.DtDefinitions;
  */
 public final class JavaParserStereotypesTest {
 
-	private MetamodelRepository metamodelRepository;
+	private DefinitionSpace definitionSpace;
 	private AutoCloseableApp app;
 
 	@BeforeEach
@@ -56,7 +56,7 @@ public final class JavaParserStereotypesTest {
 		final List<MetamodelResource> resources = Arrays.asList(
 				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/java/data/execution.kpr"),
 				new MetamodelResource("classes", DtDefinitions.class.getName()));
-		metamodelRepository = app.getComponentSpace().resolve(StudioMetamodelManager.class).parseResources(resources);
+		definitionSpace = app.getComponentSpace().resolve(StudioMetamodelManager.class).parseResources(resources);
 	}
 
 	@AfterEach
@@ -79,7 +79,7 @@ public final class JavaParserStereotypesTest {
 	}
 
 	private StudioDtDefinition getDtDefinition(final String urn) {
-		return metamodelRepository.resolve(urn, StudioDtDefinition.class);
+		return definitionSpace.resolve(urn, StudioDtDefinition.class);
 	}
 
 	/**

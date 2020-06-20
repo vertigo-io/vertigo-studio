@@ -29,9 +29,9 @@ import org.junit.jupiter.api.Test;
 import io.vertigo.core.node.AutoCloseableApp;
 import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.NodeConfig;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.studio.StudioFeatures;
-import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.MetamodelResource;
 import io.vertigo.studio.metamodel.StudioMetamodelManager;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
@@ -43,7 +43,7 @@ import io.vertigo.studio.metamodel.domain.StudioStereotype;
  * @author npiedeloup
  */
 public final class OOMParserStereotypesTest {
-	private MetamodelRepository metamodelRepository;
+	private DefinitionSpace definitionSpace;
 	private AutoCloseableApp app;
 
 	@BeforeEach
@@ -54,7 +54,7 @@ public final class OOMParserStereotypesTest {
 		final List<MetamodelResource> resources = Arrays.asList(
 				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/oom/data/domain.kpr"),
 				new MetamodelResource("oom", "io/vertigo/studio/metamodel/vertigo/oom/data/Stereotypes.oom"));
-		metamodelRepository = app.getComponentSpace().resolve(StudioMetamodelManager.class).parseResources(resources);
+		definitionSpace = app.getComponentSpace().resolve(StudioMetamodelManager.class).parseResources(resources);
 	}
 
 	@AfterEach
@@ -77,7 +77,7 @@ public final class OOMParserStereotypesTest {
 	}
 
 	private StudioDtDefinition getDtDefinition(final String urn) {
-		return metamodelRepository.resolve(urn, StudioDtDefinition.class);
+		return definitionSpace.resolve(urn, StudioDtDefinition.class);
 	}
 
 	/**
