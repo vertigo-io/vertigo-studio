@@ -3,9 +3,7 @@ package io.vertigo.studio.tools;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -14,6 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.util.FileUtil;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaConfigBuilder;
 import io.vertigo.studio.metamodel.MetamodelResource;
@@ -30,7 +29,7 @@ final class StudioConfigJsonParser {
 	private static final Gson GSON = new Gson();
 
 	static final StudioProjectConfig parseJson(final URL configUrl) throws IOException, URISyntaxException {
-		final JsonObject jsonObject = GSON.fromJson(readFile(configUrl), JsonObject.class);
+		final JsonObject jsonObject = GSON.fromJson(FileUtil.parse(configUrl), JsonObject.class);
 		final String rootPath = Path.of(configUrl.toURI()).getParent().toString() + "/";
 
 		//metamodelresources
@@ -64,7 +63,4 @@ final class StudioConfigJsonParser {
 		return mdaConfigBuilder.build();
 	}
 
-	private static String readFile(final URL url) throws IOException, URISyntaxException {
-		return Files.readString(Paths.get(url.toURI()));
-	}
 }
