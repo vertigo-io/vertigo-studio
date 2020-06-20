@@ -128,7 +128,7 @@ public final class DslDefinitionRepository {
 	}
 
 	private DefinitionSupplier createDefinition(final DslDefinition dslDefinition) {
-		DsValidator.check(dslDefinition);
+		DslDefinitionValidator.check(dslDefinition);
 		//The definition identified as root are not registered.
 		return registry.supplyDefinition(dslDefinition);
 	}

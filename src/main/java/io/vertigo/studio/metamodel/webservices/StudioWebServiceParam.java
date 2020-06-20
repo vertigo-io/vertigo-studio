@@ -43,7 +43,11 @@ public final class StudioWebServiceParam {
 	 * Parameter's source types.
 	 */
 	public enum WebServiceParamLocation {
-		Query, Path, Header, Body, InnerBody;
+		Query,
+		Path,
+		Header,
+		Body,
+		InnerBody;
 	}
 
 	private final WebServiceParamLocation paramLocation;
@@ -57,6 +61,7 @@ public final class StudioWebServiceParam {
 			final Type type,
 			final Cardinality cardinality) {
 		Assertion.check()
+				.argNotEmpty(name)
 				.notNull(paramLocation)
 				.notNull(type)
 				.notNull(cardinality);

@@ -38,7 +38,11 @@ public final class StudioWebServiceDefinition implements Definition {
 	 * HTTP Verb supported.
 	 */
 	public enum Verb {
-		Get, Post, Put, Patch, Delete,
+		Get,
+		Post,
+		Put,
+		Patch,
+		Delete,
 	}
 
 	private final String name;

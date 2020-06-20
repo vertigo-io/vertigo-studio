@@ -83,10 +83,10 @@ public final class DslDefinition {
 	}
 
 	/**
-	 * Static method factory for TaskBuilder
+	 * Static method builder for defintions.
 	 * @param name the name of the dslDefinition
-	 * @param entity Entité
-	 * @return TaskBuilder
+	 * @param entity entity
+	 * @return the definition builder
 	 */
 	public static DslDefinitionBuilder builder(final String name, final DslEntity entity) {
 		return new DslDefinitionBuilder(name, entity);

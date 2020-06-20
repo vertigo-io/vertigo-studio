@@ -32,8 +32,8 @@ import io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslEntityField;
  * @author pchretien, mlaroche
  *
  */
-final class DsValidator {
-	private DsValidator() {
+final class DslDefinitionValidator {
+	private DslDefinitionValidator() {
 		//utility Class
 	}
 

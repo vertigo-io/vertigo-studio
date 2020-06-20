@@ -26,8 +26,8 @@ import io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslGrammar;
 
 /**
  * This handler creates
- * - creates a definition from a DynamicDefinition
- * - adds dslDefinition from a new DynamicDefinition
+ * - creates a definition from a DslDefinition
+ * - adds dslDefinition from a new DslDefinition
  *
  * example : Each time a DtDefinition, two others definitions (domains)  are created (a domain for one object, a domain for a list).
  * @author pchretien, mlaroche
