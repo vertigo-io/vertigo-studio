@@ -25,7 +25,7 @@ import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.MetamodelResource;
 import io.vertigo.studio.metamodel.authorization.SecuredFeature;
 
-public class AccountJsonSecurityResourceParserPlugin implements MetamodelResourceParserPlugin {
+public final class AccountJsonSecurityResourceParserPlugin implements MetamodelResourceParserPlugin {
 
 	private static final Gson gson = new Gson();
 

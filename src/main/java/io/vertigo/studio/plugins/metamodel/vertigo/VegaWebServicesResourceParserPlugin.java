@@ -39,7 +39,7 @@ import io.vertigo.vega.webservice.stereotype.PathParam;
 import io.vertigo.vega.webservice.stereotype.PathPrefix;
 import io.vertigo.vega.webservice.stereotype.QueryParam;
 
-public class VegaWebServicesResourceParserPlugin implements MetamodelResourceParserPlugin {
+public final class VegaWebServicesResourceParserPlugin implements MetamodelResourceParserPlugin {
 
 	private static final int NAME_MAX_SIZE = 40;
 

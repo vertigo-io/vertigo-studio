@@ -55,7 +55,7 @@ import io.vertigo.studio.plugins.metamodel.vertigo.registries.DynamoDynamicRegis
  *
  * @author pchretien, mlaroche
  */
-public class StudioResourceParserPlugin implements MetamodelResourceParserPlugin {
+public final class StudioResourceParserPlugin implements MetamodelResourceParserPlugin {
 
 	private final Map<String, Loader> loadersByType;
 

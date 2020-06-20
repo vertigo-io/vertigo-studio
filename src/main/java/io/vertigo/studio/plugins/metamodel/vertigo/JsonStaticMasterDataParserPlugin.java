@@ -48,7 +48,7 @@ import io.vertigo.studio.metamodel.domain.masterdata.StaticMasterData;
  * @author mlaroche
  *
  */
-public class JsonStaticMasterDataParserPlugin implements MetamodelResourceParserPlugin {
+public final class JsonStaticMasterDataParserPlugin implements MetamodelResourceParserPlugin {
 
 	private final ResourceManager resourceManager;
 
