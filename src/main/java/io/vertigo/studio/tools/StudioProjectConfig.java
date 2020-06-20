@@ -2,6 +2,7 @@ package io.vertigo.studio.tools;
 
 import java.util.List;
 
+import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.metamodel.MetamodelResource;
 
@@ -10,6 +11,10 @@ final class StudioProjectConfig {
 	private final MdaConfig mdaConfig;
 
 	StudioProjectConfig(final List<MetamodelResource> metamodelResources, final MdaConfig mdaConfig) {
+		Assertion.check()
+				.notNull(metamodelResources)
+				.notNull(mdaConfig);
+		//---
 		this.metamodelResources = metamodelResources;
 		this.mdaConfig = mdaConfig;
 	}
@@ -21,5 +26,4 @@ final class StudioProjectConfig {
 	MdaConfig getMdaConfig() {
 		return mdaConfig;
 	}
-
 }

@@ -18,38 +18,49 @@
  */
 package io.vertigo.studio.tools;
 
-import java.net.MalformedURLException;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import io.vertigo.commons.CommonsFeatures;
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.node.AutoCloseableApp;
 import io.vertigo.core.node.config.NodeConfig;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.core.plugins.resource.local.LocalResourceResolverPlugin;
 import io.vertigo.core.plugins.resource.url.URLResourceResolverPlugin;
 import io.vertigo.studio.StudioFeatures;
+import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaManager;
+import io.vertigo.studio.mda.MdaResult;
 import io.vertigo.studio.metamodel.StudioMetamodelManager;
 
 /**
  * Génération des fichiers Java et SQL à patrir de fichiers template freemarker.
  *
- * @author dchallas, pchretien
+ * @author mlaroche, pchretien
  */
 public final class VertigoStudioMda {
 
 	public static void main(final String[] args) {
+		final StudioProjectConfig studioProjectConfig = loadStudioProjectConfig(args[0]);
+		//---
+		MdaResult mdaResult = exec(studioProjectConfig);
+		//---
+		mdaResult.displayResultMessage(System.out);
+	}
+
+	private static MdaResult exec(StudioProjectConfig studioProjectConfig) {
 		try (final AutoCloseableApp studioApp = new AutoCloseableApp(buildNodeConfig())) {
 			final StudioMetamodelManager studioMetamodelManager = studioApp.getComponentSpace().resolve(StudioMetamodelManager.class);
 			final MdaManager mdaManager = studioApp.getComponentSpace().resolve(MdaManager.class);
 			//-----
-			final StudioProjectConfig studioProjectConfig = loadStudioProjectConfig(args[0]);
-
-			mdaManager.clean(studioProjectConfig.getMdaConfig());
-			mdaManager.generate(studioMetamodelManager.parseResources(studioProjectConfig.getMetamodelResources()), studioProjectConfig.getMdaConfig()).displayResultMessage(System.out);
+			MdaConfig mdaConfig = studioProjectConfig.getMdaConfig();
+			mdaManager.clean(mdaConfig);
+			DefinitionSpace definitionSpace = studioMetamodelManager.parseResources(studioProjectConfig.getMetamodelResources());
+			return mdaManager.generate(definitionSpace, mdaConfig);
 		}
-
 	}
 
 	private static NodeConfig buildNodeConfig() {
@@ -75,7 +86,7 @@ public final class VertigoStudioMda {
 	private static StudioProjectConfig loadStudioProjectConfig(final String configFileUrl) {
 		try {
 			return StudioConfigJsonParser.parseJson(new URL(configFileUrl));
-		} catch (final MalformedURLException e) {
+		} catch (IOException | URISyntaxException e) {
 			throw WrappedException.wrap(e);
 		}
 	}
