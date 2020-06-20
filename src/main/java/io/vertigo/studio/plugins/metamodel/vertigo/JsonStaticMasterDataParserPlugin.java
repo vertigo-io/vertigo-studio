@@ -23,10 +23,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
@@ -82,8 +82,8 @@ public class JsonStaticMasterDataParserPlugin implements MetamodelResourceParser
 	}
 
 	@Override
-	public List<String> getHandledResourceTypes() {
-		return Collections.singletonList("staticMasterData");
+	public Set<String> getHandledResourceTypes() {
+		return Set.of("staticMasterData");
 	}
 
 	@Override

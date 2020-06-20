@@ -27,7 +27,6 @@ import io.vertigo.core.lang.Cardinality;
  * @author pchretien, mlaroche
  */
 public final class DslEntityField {
-
 	private final String name;
 	private final Cardinality cardinality;
 	private final DslEntityFieldType type;

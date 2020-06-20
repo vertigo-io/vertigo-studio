@@ -18,10 +18,10 @@
  */
 package io.vertigo.studio.plugins.metamodel.vertigo;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -95,8 +95,8 @@ public class StudioResourceParserPlugin implements MetamodelResourceParserPlugin
 	}
 
 	@Override
-	public List<String> getHandledResourceTypes() {
-		return Arrays.asList("kpr", "oom", "xmi", "classes");
+	public Set<String> getHandledResourceTypes() {
+		return Set.of("kpr", "oom", "xmi", "classes");
 	}
 
 }

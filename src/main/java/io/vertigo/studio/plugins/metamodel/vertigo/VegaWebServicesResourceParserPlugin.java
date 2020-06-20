@@ -6,10 +6,10 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
@@ -182,8 +182,8 @@ public class VegaWebServicesResourceParserPlugin implements MetamodelResourcePar
 	}
 
 	@Override
-	public List<String> getHandledResourceTypes() {
-		return Collections.singletonList("webservice");
+	public Set<String> getHandledResourceTypes() {
+		return Set.of("webservice");
 	}
 
 }
