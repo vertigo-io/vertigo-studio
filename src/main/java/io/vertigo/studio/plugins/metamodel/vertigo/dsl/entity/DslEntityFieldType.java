@@ -31,15 +31,21 @@ public interface DslEntityFieldType {
 	/**
 	 * @return If the field is a property
 	 */
-	boolean isProperty();
+	default boolean isProperty() {
+		return false;
+	}
 
 	/**
 	 * @return If the field is a link towards an entity
 	 */
-	boolean isEntityLink();
+	default boolean isEntityLink() {
+		return false;
+	}
 
 	/**
 	 * @return If the field is a child entity
 	 */
-	boolean isEntity();
+	default boolean isEntity() {
+		return false;
+	}
 }

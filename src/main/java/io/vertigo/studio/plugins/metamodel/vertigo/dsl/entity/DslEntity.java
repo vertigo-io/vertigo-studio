@@ -147,16 +147,6 @@ public final class DslEntity implements DslEntityFieldType {
 	}
 
 	@Override
-	public boolean isProperty() {
-		return false;
-	}
-
-	@Override
-	public boolean isEntityLink() {
-		return false;
-	}
-
-	@Override
 	public boolean isEntity() {
 		return true;
 	}

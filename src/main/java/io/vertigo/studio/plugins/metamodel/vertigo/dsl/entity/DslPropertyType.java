@@ -104,16 +104,4 @@ public enum DslPropertyType implements DslEntityFieldType {
 	public boolean isProperty() {
 		return true;
 	}
-
-	/** {@inheritDoc} */
-	@Override
-	public boolean isEntityLink() {
-		return false;
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public boolean isEntity() {
-		return false;
-	}
 }
