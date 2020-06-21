@@ -40,7 +40,7 @@ import io.vertigo.studio.plugins.metamodel.vertigo.JsonStaticMasterDataParserPlu
 import io.vertigo.studio.plugins.metamodel.vertigo.StudioResourceParserPlugin;
 import io.vertigo.studio.plugins.metamodel.vertigo.VegaWebServicesResourceParserPlugin;
 
-public class StudioFeatures extends Features<StudioFeatures> {
+public final class StudioFeatures extends Features<StudioFeatures> {
 
 	public StudioFeatures() {
 		super("vertigo-studio");
@@ -48,7 +48,8 @@ public class StudioFeatures extends Features<StudioFeatures> {
 
 	@Feature("metamodel")
 	public StudioFeatures withMetamodel() {
-		getModuleConfigBuilder().addComponent(StudioMetamodelManager.class, StudioMetamodelManagerImpl.class);
+		getModuleConfigBuilder()
+				.addComponent(StudioMetamodelManager.class, StudioMetamodelManagerImpl.class);
 		return this;
 	}
 
@@ -64,7 +65,8 @@ public class StudioFeatures extends Features<StudioFeatures> {
 
 	@Feature("mda")
 	public StudioFeatures withMda() {
-		getModuleConfigBuilder().addComponent(MdaManager.class, MdaManagerImpl.class);
+		getModuleConfigBuilder()
+				.addComponent(MdaManager.class, MdaManagerImpl.class);
 		return this;
 	}
 
@@ -87,7 +89,6 @@ public class StudioFeatures extends Features<StudioFeatures> {
 	@Override
 	protected void buildFeatures() {
 		// nothing by default
-
 	}
 
 }

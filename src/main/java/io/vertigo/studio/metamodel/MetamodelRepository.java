@@ -18,10 +18,10 @@
  */
 package io.vertigo.studio.metamodel;
 
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
@@ -73,7 +73,7 @@ public final class MetamodelRepository implements DefinitionSpace {
 
 	/** {@inheritDoc} */
 	@Override
-	public Collection<Class<? extends Definition>> getAllTypes() {
+	public Set<Class<? extends Definition>> getAllTypes() {
 		return definitions.values()
 				.stream()
 				.map(Definition::getClass)
@@ -82,7 +82,7 @@ public final class MetamodelRepository implements DefinitionSpace {
 
 	/** {@inheritDoc} */
 	@Override
-	public <C extends Definition> Collection<C> getAll(final Class<C> clazz) {
+	public <C extends Definition> Set<C> getAll(final Class<C> clazz) {
 		Assertion.check().notNull(clazz); // Le type des objets recherchés ne peut pas être null
 		//-----
 		return definitions.values()
@@ -90,7 +90,7 @@ public final class MetamodelRepository implements DefinitionSpace {
 				.filter(definition -> clazz.isAssignableFrom(definition.getClass()))
 				.map(clazz::cast)
 				.sorted(Comparator.comparing(Definition::getName))
-				.collect(Collectors.toList());
+				.collect(Collectors.toSet());
 	}
 
 	/**

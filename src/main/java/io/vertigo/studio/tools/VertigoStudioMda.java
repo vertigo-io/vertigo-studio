@@ -23,6 +23,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import io.vertigo.commons.CommonsFeatures;
+import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.node.AutoCloseableApp;
 import io.vertigo.core.node.config.NodeConfig;
@@ -44,7 +45,15 @@ import io.vertigo.studio.metamodel.StudioMetamodelManager;
 public final class VertigoStudioMda {
 
 	public static void main(final String[] args) {
-		final StudioProjectConfig studioProjectConfig = loadStudioProjectConfig(args[0]);
+		Assertion.check()
+				.argument(args.length == 1, "expected the studio json config");
+		//--
+		final String studioProjectConfigJson = args[0];
+		doMain(studioProjectConfigJson);
+	}
+
+	private static void doMain(final String studioProjectConfigJson) {
+		final StudioProjectConfig studioProjectConfig = loadStudioProjectConfig(studioProjectConfigJson);
 		//---
 		MdaResult mdaResult = exec(studioProjectConfig);
 		//---
