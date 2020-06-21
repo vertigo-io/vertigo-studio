@@ -18,7 +18,6 @@
  */
 package io.vertigo.studio.mda.vertigo;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -84,9 +83,9 @@ public class FileGeneratorTest {
 	 */
 	@Test
 	public void testGenerate() {
-		final List<MetamodelResource> resources = Arrays.asList(
-				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
-				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"));
+		final List<MetamodelResource> resources = List.of(
+				MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
+				MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"));
 
 		final MdaConfig mdaConfig = MdaConfig.builder("io.vertigo.studio")
 				.withTargetGenDir("target/")

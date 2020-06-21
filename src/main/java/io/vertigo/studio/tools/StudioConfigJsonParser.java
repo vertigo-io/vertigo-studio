@@ -43,7 +43,7 @@ final class StudioConfigJsonParser {
 	private static final List<MetamodelResource> parseMetamodelResource(JsonObject jsonObject, String rootPath) {
 		//metamodelresources
 		return StreamSupport.stream(jsonObject.getAsJsonArray(METAMODEL_RESOURCES).spliterator(), false)
-				.map(jsonElement -> new MetamodelResource(jsonElement.getAsJsonObject().get(TYPE).getAsString(), rootPath + jsonElement.getAsJsonObject().get(PATH).getAsString()))
+				.map(jsonElement -> MetamodelResource.of(jsonElement.getAsJsonObject().get(TYPE).getAsString(), rootPath + jsonElement.getAsJsonObject().get(PATH).getAsString()))
 				.collect(Collectors.toList());
 	}
 

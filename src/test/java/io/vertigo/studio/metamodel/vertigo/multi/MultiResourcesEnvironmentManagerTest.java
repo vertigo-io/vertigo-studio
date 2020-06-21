@@ -18,8 +18,7 @@
  */
 package io.vertigo.studio.metamodel.vertigo.multi;
 
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -74,7 +73,7 @@ public final class MultiResourcesEnvironmentManagerTest {
 	@Test
 	public void testFirst() {
 		final DefinitionSpace definitionSpace = app.getComponentSpace().resolve(StudioMetamodelManager.class)
-				.parseResources(Collections.singletonList(new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr")));
+				.parseResources(List.of(MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr")));
 		final Domain doString = definitionSpace.resolve("DoString", Domain.class);
 		Assertions.assertNotNull(doString);
 	}
@@ -82,9 +81,9 @@ public final class MultiResourcesEnvironmentManagerTest {
 	@Test
 	public void testMergedResources() {
 		final DefinitionSpace definitionSpace = app.getComponentSpace().resolve(StudioMetamodelManager.class)
-				.parseResources(Arrays.asList(
-						new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr"),
-						new MetamodelResource("classes", DtDefinitions.class.getCanonicalName())));
+				.parseResources(List.of(
+						MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr"),
+						MetamodelResource.of("classes", DtDefinitions.class.getCanonicalName())));
 
 		final Domain doString = definitionSpace.resolve("DoString", Domain.class);
 		Assertions.assertNotNull(doString);

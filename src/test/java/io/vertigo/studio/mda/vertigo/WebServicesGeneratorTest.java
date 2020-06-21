@@ -18,7 +18,6 @@
  */
 package io.vertigo.studio.mda.vertigo;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -84,11 +83,11 @@ public class WebServicesGeneratorTest {
 	 */
 	@Test
 	public void testGenerate() {
-		final List<MetamodelResource> resources = Arrays.asList(
-				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
-				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"),
-				new MetamodelResource("webservice", "io.vertigo.vega.impl.webservice.catalog.SwaggerWebServices"),
-				new MetamodelResource("webservice", "io.vertigo.studio.data.webservices.*"));
+		final List<MetamodelResource> resources = List.of(
+				MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
+				MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"),
+				MetamodelResource.of("webservice", "io.vertigo.vega.impl.webservice.catalog.SwaggerWebServices"),
+				MetamodelResource.of("webservice", "io.vertigo.studio.data.webservices.*"));
 
 		final MdaConfig mdaConfig = MdaConfig.builder("io.vertigo.studio")
 				.withTargetGenDir("target/")

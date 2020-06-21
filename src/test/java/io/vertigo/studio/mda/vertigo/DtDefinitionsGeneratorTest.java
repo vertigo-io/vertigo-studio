@@ -84,8 +84,8 @@ public class DtDefinitionsGeneratorTest {
 	@Test
 	public void testGenerate() {
 		final List<MetamodelResource> resources = List.of(
-				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
-				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"));
+				MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
+				MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"));
 
 		final MdaConfig mdaConfig = MdaConfig.builder("io.vertigo.studio")
 				.withTargetGenDir("target/")

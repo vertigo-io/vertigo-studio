@@ -18,7 +18,6 @@
  */
 package io.vertigo.studio.metamodel.vertigo.java;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
@@ -56,9 +55,9 @@ public final class JavaEnvironmentManagerTest {
 		app = new AutoCloseableApp(buildNodeConfig());
 		DIInjector.injectMembers(this, app.getComponentSpace());
 		//---
-		final List<MetamodelResource> resources = Arrays.asList(
-				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/java/data/execution.kpr"),
-				new MetamodelResource("classes", DtDefinitions.class.getName()));
+		final List<MetamodelResource> resources = List.of(
+				MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/java/data/execution.kpr"),
+				MetamodelResource.of("classes", DtDefinitions.class.getName()));
 		definitionSpace = app.getComponentSpace().resolve(StudioMetamodelManager.class).parseResources(resources);
 	}
 

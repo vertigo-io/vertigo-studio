@@ -59,8 +59,8 @@ public class SqlGeneratorTest {
 	public void testGenerate() {
 		try (AutoCloseableApp studioApp = new AutoCloseableApp(buildNodeConfig())) {
 			final List<MetamodelResource> resources = List.of(
-					new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
-					new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"));
+					MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
+					MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"));
 			final StudioMetamodelManager studioMetamodelManager = studioApp.getComponentSpace().resolve(StudioMetamodelManager.class);
 			final MdaManager mdaManager = studioApp.getComponentSpace().resolve(MdaManager.class);
 

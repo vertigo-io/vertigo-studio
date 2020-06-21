@@ -18,7 +18,7 @@
  */
 package io.vertigo.studio.metamodel.vertigo.ksp;
 
-import java.util.Collections;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -69,14 +69,14 @@ public final class KspEnvironmentManagerTest {
 	@Test
 	public void testDomain() {
 		app.getComponentSpace().resolve(StudioMetamodelManager.class)
-				.parseResources(Collections.singletonList(new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/ksp/data/execution.kpr")));
+				.parseResources(List.of(MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/ksp/data/execution.kpr")));
 	}
 
 	@Test
 	public void testWrongNavigability() {
 		Assertions.assertThrows(IllegalStateException.class, () -> {
 			app.getComponentSpace().resolve(StudioMetamodelManager.class)
-					.parseResources(Collections.singletonList(new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/ksp/data/execution-forbidden.kpr")));
+					.parseResources(List.of(MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/ksp/data/execution-forbidden.kpr")));
 		});
 	}
 
@@ -84,7 +84,7 @@ public final class KspEnvironmentManagerTest {
 	public void testNonPossibleAssociation() {
 		Assertions.assertThrows(IllegalStateException.class, () -> {
 			app.getComponentSpace().resolve(StudioMetamodelManager.class)
-					.parseResources(Collections.singletonList(new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/ksp/data/execution-forbidden2.kpr")));
+					.parseResources(List.of(MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/ksp/data/execution-forbidden2.kpr")));
 		});
 	}
 

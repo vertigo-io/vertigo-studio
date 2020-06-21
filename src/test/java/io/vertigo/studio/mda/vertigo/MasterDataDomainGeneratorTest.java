@@ -84,10 +84,10 @@ public class MasterDataDomainGeneratorTest {
 	@Test
 	public void testGenerate() {
 		final List<MetamodelResource> resources = List.of(
-				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
-				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"),
-				new MetamodelResource("staticMasterData", "io/vertigo/studio/metamodel/vertigo/data/masterdata/testJsonMasterDataValues.json"),
-				new MetamodelResource("staticMasterData", "io/vertigo/studio/metamodel/vertigo/data/masterdata/testJsonMasterDataValues2.json"));
+				MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
+				MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"),
+				MetamodelResource.of("staticMasterData", "io/vertigo/studio/metamodel/vertigo/data/masterdata/testJsonMasterDataValues.json"),
+				MetamodelResource.of("staticMasterData", "io/vertigo/studio/metamodel/vertigo/data/masterdata/testJsonMasterDataValues2.json"));
 
 		final MdaConfig mdaConfig = MdaConfig.builder("io.vertigo.studio")
 				.withTargetGenDir("target/")

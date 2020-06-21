@@ -18,7 +18,6 @@
  */
 package io.vertigo.studio.metamodel.vertigo.eaxmi;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
@@ -51,9 +50,9 @@ public final class EAXmiTestParserIdentifiers {
 		app = new AutoCloseableApp(buildNodeConfig());
 		DIInjector.injectMembers(this, app.getComponentSpace());
 		//---
-		final List<MetamodelResource> resources = Arrays.asList(
-				new MetamodelResource("xmi", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/demo.xml"),
-				new MetamodelResource("kpr", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/domain.kpr"));
+		final List<MetamodelResource> resources = List.of(
+				MetamodelResource.of("xmi", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/demo.xml"),
+				MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/domain.kpr"));
 		definitionSpace = app.getComponentSpace().resolve(StudioMetamodelManager.class).parseResources(resources);
 	}
 

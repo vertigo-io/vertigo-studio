@@ -33,7 +33,11 @@ public final class MetamodelResource {
 	private final String type;
 	private final String path;
 
-	public MetamodelResource(final String type, final String path) {
+	public static MetamodelResource of(final String type, final String path) {
+		return new MetamodelResource(type, path);
+	}
+
+	private MetamodelResource(final String type, final String path) {
 		Assertion.check()
 				.argNotEmpty(type)
 				.argNotEmpty(path);
