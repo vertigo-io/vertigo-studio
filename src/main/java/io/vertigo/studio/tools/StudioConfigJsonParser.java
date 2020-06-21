@@ -29,7 +29,7 @@ final class StudioConfigJsonParser {
 	private static final Gson GSON = new Gson();
 
 	static final StudioProjectConfig parseJson(final URL configUrl) throws IOException, URISyntaxException {
-		final JsonObject jsonObject = GSON.fromJson(FileUtil.parse(configUrl), JsonObject.class);
+		final JsonObject jsonObject = GSON.fromJson(FileUtil.read(configUrl), JsonObject.class);
 		final String rootPath = Path.of(configUrl.toURI()).getParent().toString() + "/";
 
 		//metamodelresources

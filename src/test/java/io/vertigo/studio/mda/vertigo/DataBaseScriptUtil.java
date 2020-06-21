@@ -59,17 +59,13 @@ public final class DataBaseScriptUtil {
 				}
 			}
 			in.close();
-		} catch (final IOException e) {
+		} catch (final IOException | SQLException e) {
 			throw WrappedException.wrap(e, "Can't exec script {0}", scriptPath);
 		}
 	}
 
-	private static void execPreparedStatement(final SqlConnection connection, final SqlDataBaseManager sqlDataBaseManager, final String sql) {
-		try {
-			sqlDataBaseManager.executeUpdate(SqlStatement.builder(sql).build(), Collections.emptyMap(), connection);
-		} catch (final SQLException e) {
-			throw WrappedException.wrap(e, "Can't exec command {0}", sql);
-		}
+	private static void execPreparedStatement(final SqlConnection connection, final SqlDataBaseManager sqlDataBaseManager, final String sql) throws SQLException {
+		sqlDataBaseManager.executeUpdate(SqlStatement.builder(sql).build(), Collections.emptyMap(), connection);
 	}
 
 	public static void execSqlScript(final String sqlScript, final App app) {
