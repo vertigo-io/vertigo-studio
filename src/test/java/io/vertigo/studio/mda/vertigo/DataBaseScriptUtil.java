@@ -58,7 +58,6 @@ public final class DataBaseScriptUtil {
 					crebaseSql.setLength(0);
 				}
 			}
-			in.close();
 		} catch (final IOException | SQLException e) {
 			throw WrappedException.wrap(e, "Can't exec script {0}", scriptPath);
 		}
