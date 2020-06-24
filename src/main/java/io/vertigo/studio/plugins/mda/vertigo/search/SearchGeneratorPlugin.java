@@ -103,7 +103,7 @@ public final class SearchGeneratorPlugin implements MdaGeneratorPlugin {
 		// ---
 		//we need to find the featureName, aka between projectpackageName and .domain
 		final String featureName = definitionPackageName.substring(packageNamePrefix.length(), definitionPackageName.indexOf(".domain"));
-		if (!StringUtil.isEmpty(featureName)) {
+		if (!StringUtil.isBlank(featureName)) {
 			Assertion.check().state(featureName.lastIndexOf('.') == 0, "The feature {0} must not contain any dot", featureName.substring(1));
 		}
 		// the subpackage is what's behind the .domain

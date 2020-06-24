@@ -240,7 +240,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		if (stereotype != null) {
 			dtDefinitionBuilder.withStereoType(stereotype);
 		}
-		if (!StringUtil.isEmpty(fragmentOf)) {
+		if (!StringUtil.isBlank(fragmentOf)) {
 			dtDefinitionBuilder.withFragment(definitionSpace.resolve(fragmentOf, StudioDtDefinition.class));
 		}
 

@@ -152,7 +152,7 @@ public final class SqlGeneratorPlugin implements MdaGeneratorPlugin {
 			final List<SqlStudioDtDefinitionModel> dtDefinitions) {
 		final StringBuilder filename = new StringBuilder()
 				.append("crebas");
-		if (!StringUtil.isEmpty(dataSpace) && !DEFAULT_DATA_SPACE.equals(dataSpace)) {
+		if (!StringUtil.isBlank(dataSpace) && !DEFAULT_DATA_SPACE.equals(dataSpace)) {
 			filename.append('_').append(dataSpace);
 		}
 		filename.append(".sql");
