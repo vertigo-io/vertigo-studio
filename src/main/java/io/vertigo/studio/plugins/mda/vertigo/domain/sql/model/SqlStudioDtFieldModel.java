@@ -36,7 +36,7 @@ public final class SqlStudioDtFieldModel {
 	 * @param dtField Champ à générer
 	 */
 	SqlStudioDtFieldModel(final StudioDtField dtField) {
-		Assertion.check().notNull(dtField);
+		Assertion.check().isNotNull(dtField);
 		//-----
 		this.dtField = dtField;
 	}

@@ -75,9 +75,9 @@ public final class StudioTaskDefinition implements Definition {
 		Assertion.check()
 				.isNotBlank(dataSpace)
 				.isNotBlank(taskEngineClassName, "a taskEngineClass is required")
-				.notNull(request, "a request is required")
-				.notNull(inTaskAttributes)
-				.notNull(outTaskAttributeOption);
+				.isNotNull(request, "a request is required")
+				.isNotNull(inTaskAttributes)
+				.isNotNull(outTaskAttributeOption);
 		//-----
 		this.name = name;
 		this.packageName = packageName;
@@ -105,7 +105,7 @@ public final class StudioTaskDefinition implements Definition {
 		final Map<String, StudioTaskAttribute> map = new LinkedHashMap<>();
 		for (final StudioTaskAttribute taskAttribute : taskAttributes) {
 			Assertion.check()
-					.notNull(taskAttribute)
+					.isNotNull(taskAttribute)
 					.argument(!map.containsKey(taskAttribute.getName()), "attribut {0} existe déjà", taskAttribute.getName());
 			//-----
 			map.put(taskAttribute.getName(), taskAttribute);
@@ -120,10 +120,10 @@ public final class StudioTaskDefinition implements Definition {
 	 * @return Définition de l'attribut.
 	 */
 	public StudioTaskAttribute getInAttribute(final String attributeName) {
-		Assertion.check().notNull(attributeName);
+		Assertion.check().isNotNull(attributeName);
 		//-----
 		final StudioTaskAttribute taskAttribute = inTaskAttributes.get(attributeName);
-		Assertion.check().notNull(taskAttribute, "nom d''attribut :{0} non trouvé pour le service :{1}", attributeName, this);
+		Assertion.check().isNotNull(taskAttribute, "nom d''attribut :{0} non trouvé pour le service :{1}", attributeName, this);
 		return taskAttribute;
 	}
 

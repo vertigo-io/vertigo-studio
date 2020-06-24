@@ -43,7 +43,7 @@ public final class MetamodelRepository implements DefinitionSpace {
 	 * @param definition the definition
 	 */
 	public void registerDefinition(final Definition definition) {
-		Assertion.check().notNull(definition);
+		Assertion.check().isNotNull(definition);
 		final String name = definition.getName();
 		DefinitionUtil.checkName(name, definition.getClass());
 		Assertion.check().argument(!definitions.containsKey(name), "this definition '{0}' is already registered", name);
@@ -54,7 +54,7 @@ public final class MetamodelRepository implements DefinitionSpace {
 	/** {@inheritDoc} */
 	@Override
 	public boolean contains(final String name) {
-		Assertion.check().notNull(name);
+		Assertion.check().isNotNull(name);
 		//-----
 		return definitions.containsKey(name);
 	}
@@ -63,11 +63,11 @@ public final class MetamodelRepository implements DefinitionSpace {
 	@Override
 	public <D extends Definition> D resolve(final String name, final Class<D> clazz) {
 		Assertion.check()
-				.notNull(name)
-				.notNull(clazz);
+				.isNotNull(name)
+				.isNotNull(clazz);
 		//-----
 		final Definition definition = definitions.get(name);
-		Assertion.check().notNull(definition, "Definition '{0}' of type '{1}' not found in ({2})", name, clazz.getSimpleName(), definitions.keySet());
+		Assertion.check().isNotNull(definition, "Definition '{0}' of type '{1}' not found in ({2})", name, clazz.getSimpleName(), definitions.keySet());
 		return clazz.cast(definition);
 	}
 
@@ -83,7 +83,7 @@ public final class MetamodelRepository implements DefinitionSpace {
 	/** {@inheritDoc} */
 	@Override
 	public <C extends Definition> Set<C> getAll(final Class<C> clazz) {
-		Assertion.check().notNull(clazz); // Le type des objets recherchés ne peut pas être null
+		Assertion.check().isNotNull(clazz); // Le type des objets recherchés ne peut pas être null
 		//-----
 		return definitions.values()
 				.stream()

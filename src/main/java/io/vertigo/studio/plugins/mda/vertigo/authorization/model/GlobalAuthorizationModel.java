@@ -28,7 +28,7 @@ public class GlobalAuthorizationModel {
 	private final SecuredFeature securedFeature;
 
 	public GlobalAuthorizationModel(final SecuredFeature securedFeature) {
-		Assertion.check().notNull(securedFeature);
+		Assertion.check().isNotNull(securedFeature);
 		//---
 		this.securedFeature = securedFeature;
 	}

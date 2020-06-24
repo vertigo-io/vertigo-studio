@@ -16,7 +16,7 @@ public class FacetDefinitionModel {
 	private List<FacetParamModel> facetParamModels;
 
 	public FacetDefinitionModel(final StudioFacetDefinition studioFacetDefinition) {
-		Assertion.check().notNull(studioFacetDefinition);
+		Assertion.check().isNotNull(studioFacetDefinition);
 		//---
 		this.studioFacetDefinition = studioFacetDefinition;
 		if (studioFacetDefinition.isRangeFacet()) {

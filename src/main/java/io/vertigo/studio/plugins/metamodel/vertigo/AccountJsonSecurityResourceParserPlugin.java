@@ -34,7 +34,7 @@ public final class AccountJsonSecurityResourceParserPlugin implements MetamodelR
 	@Inject
 	public AccountJsonSecurityResourceParserPlugin(
 			final ResourceManager resourceManager) {
-		Assertion.check().notNull(resourceManager);
+		Assertion.check().isNotNull(resourceManager);
 		//---
 		this.resourceManager = resourceManager;
 	}

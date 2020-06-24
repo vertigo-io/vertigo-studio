@@ -44,7 +44,7 @@ final class DslInnerDefinitionRule extends AbstractRule<DslDefinitionEntry, List
 	private static PegRule<List<Object>> createMainRule(final String entityName, final DslEntity entity) {
 		Assertion.check()
 				.isNotBlank(entityName)
-				.notNull(entity);
+				.isNotNull(entity);
 		//-----
 		final DslDefinitionBodyRule definitionBodyRule = new DslDefinitionBodyRule(entity);
 		return PegRules.sequence(//"InnerDefinition"
@@ -106,8 +106,8 @@ final class DslInnerDefinitionRule extends AbstractRule<DslDefinitionEntry, List
 	 */
 	private static Object readProperty(final DslEntity entity, final DslPropertyEntry dslPropertyEntry) {
 		Assertion.check()
-				.notNull(entity)
-				.notNull(dslPropertyEntry);
+				.isNotNull(entity)
+				.isNotNull(dslPropertyEntry);
 		//-----
 		return entity.getPropertyType(dslPropertyEntry.getPropertyName()).cast(dslPropertyEntry.getPropertyValueAsString());
 	}

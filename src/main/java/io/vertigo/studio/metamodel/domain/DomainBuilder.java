@@ -56,7 +56,7 @@ public final class DomainBuilder implements Builder<Domain> {
 	DomainBuilder(final String name, final BasicType dataType) {
 		Assertion.check()
 				.isNotBlank(name)
-				.notNull(dataType);
+				.isNotNull(dataType);
 		//---
 		myName = name;
 		myScope = Domain.Scope.PRIMITIVE;
@@ -74,7 +74,7 @@ public final class DomainBuilder implements Builder<Domain> {
 	DomainBuilder(final String name, final String dtDefinitionName) {
 		Assertion.check()
 				.isNotBlank(name)
-				.notNull(dtDefinitionName);
+				.isNotNull(dtDefinitionName);
 		//---
 		myName = name;
 		myScope = Scope.DATA_OBJECT;
@@ -92,7 +92,7 @@ public final class DomainBuilder implements Builder<Domain> {
 	DomainBuilder(final String name, final Class valueObjectClass) {
 		Assertion.check()
 				.isNotBlank(name)
-				.notNull(valueObjectClass);
+				.isNotNull(valueObjectClass);
 		//---
 		myName = name;
 		myScope = Domain.Scope.VALUE_OBJECT;
@@ -107,7 +107,7 @@ public final class DomainBuilder implements Builder<Domain> {
 	 * @return this builder
 	 */
 	public DomainBuilder withFormatter(final FormatterDefinition formatterDefinition) {
-		Assertion.check().notNull(formatterDefinition);
+		Assertion.check().isNotNull(formatterDefinition);
 		//---
 		myformatterDefinition = formatterDefinition;
 		return this;
@@ -118,7 +118,7 @@ public final class DomainBuilder implements Builder<Domain> {
 	 * @return this builder
 	 */
 	public DomainBuilder withConstraints(final List<ConstraintDefinition> constraintDefinitions) {
-		Assertion.check().notNull(constraintDefinitions);
+		Assertion.check().isNotNull(constraintDefinitions);
 		//---
 		myConstraintDefinitions = constraintDefinitions;
 		return this;
@@ -129,7 +129,7 @@ public final class DomainBuilder implements Builder<Domain> {
 	* @return this builder
 	*/
 	public DomainBuilder withProperties(final Properties properties) {
-		Assertion.check().notNull(properties);
+		Assertion.check().isNotNull(properties);
 		//---
 		myProperties = properties;
 		return this;

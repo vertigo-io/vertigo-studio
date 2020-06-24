@@ -40,7 +40,7 @@ public final class JSDtDefinitionModel {
 	 * @param dtDefinition DtDefinition de l'objet à générer
 	 */
 	public JSDtDefinitionModel(final StudioDtDefinition dtDefinition) {
-		Assertion.check().notNull(dtDefinition);
+		Assertion.check().isNotNull(dtDefinition);
 		//-----
 		this.dtDefinition = dtDefinition;
 

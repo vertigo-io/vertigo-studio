@@ -405,10 +405,10 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 			navigabilityB = (Boolean) xassociation.getPropertyValue(KspProperty.NAVIGABILITY_B);
 			//---
 			Assertion.check()
-					.notNull(multiplicityA)
-					.notNull(navigabilityA)
-					.notNull(multiplicityB)
-					.notNull(navigabilityB);
+					.isNotNull(multiplicityA)
+					.isNotNull(navigabilityA)
+					.isNotNull(multiplicityB)
+					.isNotNull(navigabilityB);
 		}
 		// Vérification que l'on est bien dans le cas d'une association simple de type 1-n
 		if (AssociationUtil.isMultiple(multiplicityB) && AssociationUtil.isMultiple(multiplicityA)) {

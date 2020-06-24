@@ -48,10 +48,10 @@ public final class StudioDtFieldModel {
 	 */
 	StudioDtFieldModel(final StudioDtDefinition dtDefinition, final StudioDtField dtField, final List<? extends StudioAssociationDefinition> associationDefinitions, final Function<String, String> classNameFromDt) {
 		Assertion.check()
-				.notNull(dtDefinition)
-				.notNull(dtField)
-				.notNull(associationDefinitions)
-				.notNull(classNameFromDt);
+				.isNotNull(dtDefinition)
+				.isNotNull(dtField)
+				.isNotNull(associationDefinitions)
+				.isNotNull(classNameFromDt);
 		//-----
 		this.dtDefinition = dtDefinition;
 		this.dtField = dtField;
@@ -150,7 +150,7 @@ public final class StudioDtFieldModel {
 	}
 
 	public StudioAssociationModel getAssociation() {
-		Assertion.check().state(isChildOfEntity(), "an association must be declared on an entity");
+		Assertion.check().isTrue(isChildOfEntity(), "an association must be declared on an entity");
 		//---
 		return associationDefinitions
 				.stream()

@@ -35,13 +35,13 @@ public final class MasterDataValueModel {
 	private final Map<String, String> allFieldValues;
 
 	public MasterDataValueModel(final StudioDtDefinition dtDefinition, final String enumNameValue, final Map<String, String> allFieldValues) {
-		Assertion.check().notNull(dtDefinition);
+		Assertion.check().isNotNull(dtDefinition);
 		//-----
 		this.enumNameValue = enumNameValue;
 		this.allFieldValues = allFieldValues;
 		final String idFieldName = dtDefinition.getIdField().get().getName();
 		//--
-		Assertion.check().state(allFieldValues.containsKey(idFieldName), "The id value is not present for the masterdata '{0}' of type {1}", allFieldValues, dtDefinition.getLocalName());
+		Assertion.check().isTrue(allFieldValues.containsKey(idFieldName), "The id value is not present for the masterdata '{0}' of type {1}", allFieldValues, dtDefinition.getLocalName());
 		//---
 		idValue = allFieldValues.get(idFieldName);
 	}

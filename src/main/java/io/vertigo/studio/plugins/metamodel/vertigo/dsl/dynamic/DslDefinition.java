@@ -67,12 +67,12 @@ public final class DslDefinition {
 			final Map<DslEntityField, List<String>> definitionLinkNamesByFieldName,
 			final Map<DslEntityField, List<DslDefinition>> childDefinitionsByFieldName) {
 		Assertion.check()
-				.notNull(entity)
+				.isNotNull(entity)
 				//packageName can be null
 				.isNotBlank(name)
-				.notNull(propertyValueByFieldName)
-				.notNull(definitionLinkNamesByFieldName)
-				.notNull(childDefinitionsByFieldName);
+				.isNotNull(propertyValueByFieldName)
+				.isNotNull(definitionLinkNamesByFieldName)
+				.isNotNull(childDefinitionsByFieldName);
 		//---
 		this.entity = entity;
 		this.packageName = packageName;
@@ -121,7 +121,7 @@ public final class DslDefinition {
 	 */
 	public Object getPropertyValue(final String fieldName) {
 		final DslEntityField dslEntityField = entity.getField(fieldName);
-		Assertion.check().state(dslEntityField.getType().isProperty(), "expected a property on {0}", fieldName);
+		Assertion.check().isTrue(dslEntityField.getType().isProperty(), "expected a property on {0}", fieldName);
 		// On ne vérifie rien sur le type retourné par le getter.
 		// le type a été validé lors du put.
 		//-----
@@ -148,7 +148,7 @@ public final class DslDefinition {
 	 */
 	public List<String> getDefinitionLinkNames(final String fieldName) {
 		final DslEntityField dslEntityField = entity.getField(fieldName);
-		Assertion.check().state(dslEntityField.getType().isEntityLink(), "expected a link on {0}", fieldName);
+		Assertion.check().isTrue(dslEntityField.getType().isEntityLink(), "expected a link on {0}", fieldName);
 		//---
 		return definitionLinkNamesByFieldName.get(dslEntityField);
 	}
@@ -163,7 +163,7 @@ public final class DslDefinition {
 		final String definitionName = list.get(0);
 		//-----
 		// On vérifie qu'il y a une définition pour le champ demandé
-		Assertion.check().notNull(definitionName);
+		Assertion.check().isNotNull(definitionName);
 		return definitionName;
 	}
 
@@ -182,7 +182,7 @@ public final class DslDefinition {
 	 */
 	public List<DslDefinition> getChildDefinitions(final String fieldName) {
 		final DslEntityField dslEntityField = entity.getField(fieldName);
-		Assertion.check().state(dslEntityField.getType().isEntity(), "expected an entity on {0}", fieldName);
+		Assertion.check().isTrue(dslEntityField.getType().isEntity(), "expected an entity on {0}", fieldName);
 		//---
 		return childDefinitionsByFieldName.get(dslEntityField);
 	}

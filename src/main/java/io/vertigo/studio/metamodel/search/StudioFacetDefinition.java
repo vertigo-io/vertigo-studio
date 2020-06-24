@@ -100,18 +100,18 @@ public final class StudioFacetDefinition implements Definition {
 			final FacetOrder order) {
 		Assertion.check()
 				.isNotBlank(name)
-				.notNull(indexDtDefinition)
-				.notNull(dtField)
-				.notNull(label)
-				.notNull(facetValues)
-				.notNull(facetParams);
+				.isNotNull(indexDtDefinition)
+				.isNotNull(dtField)
+				.isNotNull(label)
+				.isNotNull(facetValues)
+				.isNotNull(facetParams);
 		Assertion.when(rangeFacet)
-				.state(() -> !facetValues.isEmpty(), "Les FacetDefinition de type 'range' doivent fournir la liste des segments non vides (FacetValues)");
+				.isTrue(() -> !facetValues.isEmpty(), "Les FacetDefinition de type 'range' doivent fournir la liste des segments non vides (FacetValues)");
 		Assertion.when(customFacet)
-				.state(() -> !facetParams.isEmpty(), "Les FacetDefinition de type 'custom' doivent fournir la liste des params non vides");
+				.isTrue(() -> !facetParams.isEmpty(), "Les FacetDefinition de type 'custom' doivent fournir la liste des params non vides");
 		Assertion.when(!rangeFacet && !customFacet)
-				.state(facetValues::isEmpty, "Les FacetDefinition de type 'term' doivent fournir une liste des segments vide");
-		Assertion.check().notNull(order);
+				.isTrue(facetValues::isEmpty, "Les FacetDefinition de type 'term' doivent fournir une liste des segments vide");
+		Assertion.check().isNotNull(order);
 		//-----
 		this.name = name;
 		this.indexDtDefinition = indexDtDefinition;

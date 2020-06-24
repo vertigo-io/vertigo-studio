@@ -77,11 +77,11 @@ final class MdaFileGeneratorFreeMarker implements MdaFileGenerator {
 			final String encoding,
 			final Class<?> referenceClass) {
 		Assertion.check()
-				.notNull(model)
-				.notNull(filePath)
-				.notNull(templateName)
+				.isNotNull(model)
+				.isNotNull(filePath)
+				.isNotNull(templateName)
 				.isNotBlank(encoding)
-				.notNull(referenceClass);
+				.isNotNull(referenceClass);
 		//-----
 		this.model = model;
 		this.filePath = filePath;

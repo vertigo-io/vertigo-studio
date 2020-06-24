@@ -8,7 +8,7 @@ public class FacetValueModel {
 	private final StudioFacetValue facetValue;
 
 	public FacetValueModel(final StudioFacetValue facetValue) {
-		Assertion.check().notNull(facetValue);
+		Assertion.check().isNotNull(facetValue);
 		//---
 		this.facetValue = facetValue;
 	}

@@ -60,8 +60,8 @@ public final class KprLoader implements Loader {
 			final ResourceManager resourceManager,
 			@ParamValue("encoding") final Optional<String> encoding) {
 		Assertion.check()
-				.notNull(resourceManager)
-				.notNull(encoding);
+				.isNotNull(resourceManager)
+				.isNotNull(encoding);
 		//-----
 		this.resourceManager = resourceManager;
 		charset = Charset.forName(encoding.orElse("utf-8"));
@@ -72,7 +72,7 @@ public final class KprLoader implements Loader {
 	public void load(final String resourcePath, final DslDefinitionRepository dslDefinitionRepository) {
 		Assertion.check()
 				.isNotBlank(resourcePath)
-				.notNull(dslDefinitionRepository);
+				.isNotNull(dslDefinitionRepository);
 		//-----
 		final URL kprURL = resourceManager.resolve(resourcePath);
 		for (final URL url : getKspFiles(kprURL, charset, resourceManager)) {

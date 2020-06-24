@@ -72,7 +72,7 @@ public final class VegaWebServicesResourceParserPlugin implements MetamodelResou
 	}
 
 	private static List<StudioWebServiceDefinition> scanWebServices(final Class<? extends WebServices> webServicesClass) {
-		Assertion.check().notNull(webServicesClass);
+		Assertion.check().isNotNull(webServicesClass);
 		//-----
 		return Arrays.stream(webServicesClass.getMethods())
 				.map(VegaWebServicesResourceParserPlugin::buildWebServiceDefinition)

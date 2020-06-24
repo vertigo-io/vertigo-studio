@@ -49,9 +49,9 @@ public final class FileInfoGeneratorPlugin implements MdaGeneratorPlugin {
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		Assertion.check()
-				.notNull(definitionSpace)
-				.notNull(mdaConfig)
-				.notNull(mdaResultBuilder);
+				.isNotNull(definitionSpace)
+				.isNotNull(mdaConfig)
+				.isNotNull(mdaResultBuilder);
 		//-----
 		/* Générations des FI. */
 		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.file.targetSubDir", DEFAULT_TARGET_SUBDIR);

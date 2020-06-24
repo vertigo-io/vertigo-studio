@@ -130,11 +130,11 @@ public final class OOMLoader extends AbstractXmlLoader {
 		for (final XmlId ref : obj.getRefList()) {
 			final OOMObject childRef = map.get(ref);
 			if (childRef != null && childRef.getType() == OOMType.Domain) {
-				Assertion.check().state(domain == null, "domain deja affecté");
+				Assertion.check().isTrue(domain == null, "domain deja affecté");
 				domain = childRef.getCode();
 			}
 		}
-		Assertion.check().notNull(domain);
+		Assertion.check().isNotNull(domain);
 		final String domainName = constFieldNameInSource ? StringUtil.constToUpperCamelCase(domain.toUpperCase(Locale.ENGLISH)) : domain;
 		return new XmlAttribute(fieldName, label, persistent, notNull, domainName);
 	}

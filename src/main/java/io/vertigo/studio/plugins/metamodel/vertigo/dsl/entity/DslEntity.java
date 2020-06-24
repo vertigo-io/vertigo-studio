@@ -58,8 +58,8 @@ public final class DslEntity implements DslEntityFieldType {
 	 */
 	DslEntity(final String name, final Set<DslEntityField> fields, final boolean provided) {
 		Assertion.check()
-				.notNull(name)
-				.notNull(fields);
+				.isNotNull(name)
+				.isNotNull(fields);
 		//-----
 		this.name = name;
 		this.provided = provided;
@@ -117,7 +117,7 @@ public final class DslEntity implements DslEntityFieldType {
 	 */
 	public DslEntityField getField(final String fieldName) {
 		Assertion.check()
-				.notNull(fieldName)
+				.isNotNull(fieldName)
 				.argument(fields.containsKey(fieldName), "Field  '{0}' is not declared on entity '{1}'", fieldName, this);
 		//-----
 		return fields.get(fieldName);

@@ -27,7 +27,7 @@ public final class DaoPAO implements StoreServices {
 	 */
 	@Inject
 	public DaoPAO(final TaskManager taskManager) {
-		Assertion.check().notNull(taskManager);
+		Assertion.check().isNotNull(taskManager);
 		//-----
 		this.taskManager = taskManager;
 	}

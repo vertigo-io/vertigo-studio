@@ -39,8 +39,8 @@ public final class StudioAssociationModel {
 	 */
 	StudioAssociationModel(final StudioAssociationDefinition associationDefinition, final StudioAssociationNode associationNode) {
 		Assertion.check()
-				.notNull(associationDefinition)
-				.notNull(associationNode);
+				.isNotNull(associationDefinition)
+				.isNotNull(associationNode);
 		//-----
 		this.associationDefinition = associationDefinition;
 		this.associationNode = associationNode;

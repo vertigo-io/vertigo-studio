@@ -54,9 +54,9 @@ public final class AuthorizationGeneratorPlugin implements MdaGeneratorPlugin {
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		Assertion.check()
-				.notNull(definitionSpace)
-				.notNull(mdaConfig)
-				.notNull(mdaResultBuilder);
+				.isNotNull(definitionSpace)
+				.isNotNull(mdaConfig)
+				.isNotNull(mdaResultBuilder);
 		//-----
 		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.authorization.targetSubDir", DEFAULT_TARGET_SUBDIR);
 

@@ -84,14 +84,14 @@ public final class StudioDtDefinition implements Definition {
 			final Optional<StudioDtField> handleField) {
 		DefinitionUtil.checkName(name, StudioDtDefinition.class);
 		Assertion.check()
-				.notNull(fragment)
-				.notNull(stereotype)
-				.notNull(dtFields)
+				.isNotNull(fragment)
+				.isNotNull(stereotype)
+				.isNotNull(dtFields)
 				.isNotBlank(dataSpace)
-				.state(REGEX_DATA_SPACE.matcher(dataSpace).matches(), "dataSpace {0} must match pattern {1}", dataSpace, REGEX_DATA_SPACE)
-				.notNull(sortField)
-				.notNull(displayField)
-				.notNull(handleField);
+				.isTrue(REGEX_DATA_SPACE.matcher(dataSpace).matches(), "dataSpace {0} must match pattern {1}", dataSpace, REGEX_DATA_SPACE)
+				.isNotNull(sortField)
+				.isNotNull(displayField)
+				.isNotNull(handleField);
 		//-----
 		this.name = name;
 		//
@@ -107,10 +107,10 @@ public final class StudioDtDefinition implements Definition {
 
 		for (final StudioDtField dtField : dtFields) {
 			Assertion.when(stereotype.isPersistent() && dtField.isPersistent())
-					.state(() -> !dtField.getCardinality().hasMany(),
+					.isTrue(() -> !dtField.getCardinality().hasMany(),
 							"Only non multiple are allowed in entity '{0}'", name);
 			if (dtField.getType().isId()) {
-				Assertion.check().state(id == null, "Only one ID Field is allowed : {0}", name);
+				Assertion.check().isTrue(id == null, "Only one ID Field is allowed : {0}", name);
 				id = dtField;
 			}
 			doRegisterDtField(dtField);
@@ -119,12 +119,12 @@ public final class StudioDtDefinition implements Definition {
 		this.dataSpace = dataSpace;
 		//-----
 		Assertion.when(fragment.isPresent())
-				.state(() -> StudioStereotype.Fragment == stereotype, "Error on {0} with sterotype {1}, If an object is a fragment then it must have this stereotype", name, stereotype);
+				.isTrue(() -> StudioStereotype.Fragment == stereotype, "Error on {0} with sterotype {1}, If an object is a fragment then it must have this stereotype", name, stereotype);
 		//Persistent => ID
 		Assertion.when(stereotype.isPersistent())
-				.state(idFieldOpt::isPresent, "Error on {0}, If an object is persistent then it must have an ID", name);
+				.isTrue(idFieldOpt::isPresent, "Error on {0}, If an object is persistent then it must have an ID", name);
 		Assertion.when(!stereotype.isPersistent())
-				.state(() -> idFieldOpt.isEmpty(), "Error on {0}, If an object is not persistent then it must have no ID", name);
+				.isTrue(() -> idFieldOpt.isEmpty(), "Error on {0}, If an object is not persistent then it must have no ID", name);
 	}
 
 	/**
@@ -139,7 +139,7 @@ public final class StudioDtDefinition implements Definition {
 	//TODO A fermer
 	void registerDtField(final StudioDtField dtField) {
 		Assertion.check()
-				.notNull(dtField)
+				.isNotNull(dtField)
 				.argument(!dtField.getType().isId(), "interdit d'ajouter les champs ID ");
 		//-----
 		doRegisterDtField(dtField);
@@ -147,7 +147,7 @@ public final class StudioDtDefinition implements Definition {
 
 	private void doRegisterDtField(final StudioDtField dtField) {
 		Assertion.check()
-				.notNull(dtField)
+				.isNotNull(dtField)
 				.argument(!mappedFields.containsKey(dtField.getName()), "Field {0} déjà enregistré sur {1}", dtField.getName(), this);
 		//-----
 		fields.add(dtField);
@@ -197,7 +197,7 @@ public final class StudioDtDefinition implements Definition {
 		//-----
 		final StudioDtField dtField = mappedFields.get(fieldName);
 		//-----
-		Assertion.check().notNull(dtField, "field '{0}' not found on '{1}'. Available fields are :{2}", fieldName, this, mappedFields.keySet());
+		Assertion.check().isNotNull(dtField, "field '{0}' not found on '{1}'. Available fields are :{2}", fieldName, this, mappedFields.keySet());
 		return dtField;
 	}
 
@@ -206,7 +206,7 @@ public final class StudioDtDefinition implements Definition {
 	 * @return if this field exists in this DtDefinition
 	 */
 	public boolean contains(final String fieldName) {
-		Assertion.check().notNull(fieldName);
+		Assertion.check().isNotNull(fieldName);
 		//-----
 		return mappedFields.containsKey(fieldName);
 	}

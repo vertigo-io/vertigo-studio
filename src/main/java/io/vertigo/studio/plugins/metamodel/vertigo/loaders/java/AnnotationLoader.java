@@ -82,7 +82,7 @@ public final class AnnotationLoader implements Loader {
 	public void load(final String resourcePath, final DslDefinitionRepository dslDefinitionRepository) {
 		Assertion.check()
 				.isNotBlank(resourcePath)
-				.notNull(dslDefinitionRepository);
+				.isNotNull(dslDefinitionRepository);
 		//-----
 		//--Enregistrement des fichiers java annotés
 		for (final Class<DtObject> javaClass : selectClasses(resourcePath, DtObject.class)) {
@@ -91,7 +91,7 @@ public final class AnnotationLoader implements Loader {
 	}
 
 	private static void load(final Class<DtObject> clazz, final DslDefinitionRepository dslDefinitionRepository) {
-		Assertion.check().notNull(dslDefinitionRepository);
+		Assertion.check().isNotNull(dslDefinitionRepository);
 		//-----
 		final String simpleName = clazz.getSimpleName();
 		final String packageName = clazz.getPackage().getName();
@@ -175,7 +175,7 @@ public final class AnnotationLoader implements Loader {
 
 	private static String parseDataSpaceAnnotation(final Class<?> clazz) {
 		final DataSpace[] dataSpaceAnnotations = clazz.getAnnotationsByType(DataSpace.class);
-		Assertion.check().state(dataSpaceAnnotations.length <= 1, "Entity {0} can have at max one DataSpace", clazz.getSimpleName());
+		Assertion.check().isTrue(dataSpaceAnnotations.length <= 1, "Entity {0} can have at max one DataSpace", clazz.getSimpleName());
 		// ---
 		if (dataSpaceAnnotations.length == 1) {
 			return dataSpaceAnnotations[0].value();
@@ -339,7 +339,7 @@ public final class AnnotationLoader implements Loader {
 	 * @return Constante représentant le nom du champ
 	 */
 	private static String createFieldName(final Field field) {
-		Assertion.check().notNull(field);
+		Assertion.check().isNotNull(field);
 		//-----
 		final String fieldName = field.getName();
 		if (StringUtil.isLowerCamelCase(fieldName)) {
@@ -354,7 +354,7 @@ public final class AnnotationLoader implements Loader {
 	 * @return Constante représentant le nom du champ
 	 */
 	private static String createFieldName(final Method method) {
-		Assertion.check().notNull(method);
+		Assertion.check().isNotNull(method);
 		//-----
 		if (method.getName().startsWith("get")) {
 			final String propertyName = method.getName().substring("get".length());

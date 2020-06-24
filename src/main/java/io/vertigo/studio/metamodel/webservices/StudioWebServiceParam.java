@@ -62,9 +62,9 @@ public final class StudioWebServiceParam {
 			final Cardinality cardinality) {
 		Assertion.check()
 				.isNotBlank(name)
-				.notNull(paramLocation)
-				.notNull(type)
-				.notNull(cardinality);
+				.isNotNull(paramLocation)
+				.isNotNull(type)
+				.isNotNull(cardinality);
 		//-----
 		this.paramLocation = paramLocation;
 		this.type = type;

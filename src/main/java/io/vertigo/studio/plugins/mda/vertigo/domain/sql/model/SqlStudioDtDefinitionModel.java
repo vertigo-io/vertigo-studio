@@ -44,7 +44,7 @@ public final class SqlStudioDtDefinitionModel {
 	 * @param dtDefinition DtDefinition de l'objet à générer
 	 */
 	public SqlStudioDtDefinitionModel(final StudioDtDefinition dtDefinition) {
-		Assertion.check().notNull(dtDefinition);
+		Assertion.check().isNotNull(dtDefinition);
 		//-----
 		this.dtDefinition = dtDefinition;
 

@@ -19,11 +19,11 @@ public class StudioMetamodelManagerImpl implements StudioMetamodelManager {
 	@Inject
 	public StudioMetamodelManagerImpl(
 			final List<MetamodelResourceParserPlugin> metamodelResourceParserPlugins) {
-		Assertion.check().notNull(metamodelResourceParserPlugins);
+		Assertion.check().isNotNull(metamodelResourceParserPlugins);
 		//---
 		for (final MetamodelResourceParserPlugin metamodelResourceParserPlugin : metamodelResourceParserPlugins) {
 			for (final String resourceType : metamodelResourceParserPlugin.getHandledResourceTypes()) {
-				Assertion.check().state(!metamodelResourceParserPluginsByType.containsKey(resourceType), "Only one plugin can manage the ResourceType {0}",
+				Assertion.check().isTrue(!metamodelResourceParserPluginsByType.containsKey(resourceType), "Only one plugin can manage the ResourceType {0}",
 						resourceType);
 				metamodelResourceParserPluginsByType.put(resourceType, metamodelResourceParserPlugin);
 			}

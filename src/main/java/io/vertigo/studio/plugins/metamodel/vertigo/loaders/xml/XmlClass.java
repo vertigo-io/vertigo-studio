@@ -46,8 +46,8 @@ public final class XmlClass {
 	public XmlClass(final String code, final String packageName, final String stereotype, final List<XmlAttribute> keyAttributes, final List<XmlAttribute> fieldAttributes) {
 		Assertion.check()
 				.isNotBlank(code)
-				.notNull(keyAttributes)
-				.notNull(fieldAttributes);
+				.isNotNull(keyAttributes)
+				.isNotNull(fieldAttributes);
 		//-----
 		this.code = code;
 		this.packageName = packageName;

@@ -52,7 +52,7 @@ public final class SqlMethodModel implements TemplateMethodModelEx {
 
 	private static String getSqlType(final Domain domain) {
 		final String storeType = domain.getProperties().getProperty("STORE_TYPE");
-		Assertion.check().notNull(storeType, "La propriété StoreType est obligatoire dans le cas de génération de Sql. Domaine incriminé : {0}", domain.getName());
+		Assertion.check().isNotNull(storeType, "La propriété StoreType est obligatoire dans le cas de génération de Sql. Domaine incriminé : {0}", domain.getName());
 		return storeType;
 	}
 

@@ -110,23 +110,23 @@ public final class Domain implements Definition {
 			final Properties properties) {
 		Assertion.check()
 				.isNotBlank(name)
-				.notNull(scope);
+				.isNotNull(scope);
 		//---
 		Assertion.when(scope == Scope.PRIMITIVE)
-				.state(() -> dataType != null, "a primitive domain must define a primitive type")
-				.state(() -> dtDefinitionName == null && valueObjectClassName == null, "a primitive domain can't have nor a data-object-definition nor a value-object class");
+				.isTrue(() -> dataType != null, "a primitive domain must define a primitive type")
+				.isTrue(() -> dtDefinitionName == null && valueObjectClassName == null, "a primitive domain can't have nor a data-object-definition nor a value-object class");
 		//---
 		Assertion.when(scope == Scope.DATA_OBJECT)
-				.state(() -> dtDefinitionName != null, "a data-object domain must define a data-object definition")
-				.state(() -> dataType == null && valueObjectClassName == null, "a data-object domain can't have nor a primitive type nor a value-object class");
+				.isTrue(() -> dtDefinitionName != null, "a data-object domain must define a data-object definition")
+				.isTrue(() -> dataType == null && valueObjectClassName == null, "a data-object domain can't have nor a primitive type nor a value-object class");
 		//---
 		Assertion.when(scope == Scope.VALUE_OBJECT)
-				.state(() -> valueObjectClassName != null, "a value-object domain must define a value-object class")
-				.state(() -> dataType == null && dtDefinitionName == null, "a value-object domain can't have nor a primitive type nor a data-object-definition");
+				.isTrue(() -> valueObjectClassName != null, "a value-object domain must define a value-object class")
+				.isTrue(() -> dataType == null && dtDefinitionName == null, "a value-object domain can't have nor a primitive type nor a data-object-definition");
 		//formatterDefinition is nullable
 		Assertion.check()
-				.notNull(constraintDefinitions)
-				.notNull(properties);
+				.isNotNull(constraintDefinitions)
+				.isNotNull(properties);
 		//-----
 		this.name = name;
 		this.scope = scope;
@@ -179,7 +179,7 @@ public final class Domain implements Definition {
 	 * @return the dataType.
 	 */
 	public BasicType getDataType() {
-		Assertion.check().state(scope == Scope.PRIMITIVE, "can only be used with primitives");
+		Assertion.check().isTrue(scope == Scope.PRIMITIVE, "can only be used with primitives");
 		//---
 		return dataType;
 	}
@@ -190,7 +190,7 @@ public final class Domain implements Definition {
 	 * @return the formatter.
 	 */
 	public FormatterDefinition getFormatterDefinition() {
-		Assertion.check().notNull(formatterDefinition, "no formatter defined on {0}", this);
+		Assertion.check().isNotNull(formatterDefinition, "no formatter defined on {0}", this);
 		//-----
 		return formatterDefinition;
 	}
@@ -211,7 +211,7 @@ public final class Domain implements Definition {
 	//==========================================================================
 
 	public String getDtDefinitionName() {
-		Assertion.check().state(scope == Scope.DATA_OBJECT, "can only be used with data-objects");
+		Assertion.check().isTrue(scope == Scope.DATA_OBJECT, "can only be used with data-objects");
 		//---
 		return dtDefinitionName;
 	}
@@ -234,7 +234,7 @@ public final class Domain implements Definition {
 	}
 
 	public String getValueObjectClassName() {
-		Assertion.check().state(scope == Scope.VALUE_OBJECT, "can only be used with value-objects");
+		Assertion.check().isTrue(scope == Scope.VALUE_OBJECT, "can only be used with value-objects");
 		//---
 		return valueObjectClassName;
 	}

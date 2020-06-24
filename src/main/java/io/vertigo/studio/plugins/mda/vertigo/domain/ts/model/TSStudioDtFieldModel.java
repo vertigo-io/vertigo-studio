@@ -39,7 +39,7 @@ public final class TSStudioDtFieldModel {
 	 * @param dtField Champ Ã  gÃ©nÃ©rer
 	 */
 	TSStudioDtFieldModel(final StudioDtField dtField) {
-		Assertion.check().notNull(dtField);
+		Assertion.check().isNotNull(dtField);
 		//-----
 		this.dtField = dtField;
 	}

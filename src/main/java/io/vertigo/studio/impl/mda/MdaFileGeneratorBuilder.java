@@ -44,7 +44,7 @@ public final class MdaFileGeneratorBuilder implements Builder<MdaFileGenerator> 
 	 * @param mdaConfig the config of the file generator
 	*/
 	MdaFileGeneratorBuilder(final MdaConfig mdaConfig) {
-		Assertion.check().notNull(mdaConfig);
+		Assertion.check().isNotNull(mdaConfig);
 		//---
 		myEncoding = mdaConfig.getEncoding();
 		myTargetGenDir = mdaConfig.getTargetGenDir();
@@ -55,7 +55,7 @@ public final class MdaFileGeneratorBuilder implements Builder<MdaFileGenerator> 
 	 * @return this builder
 	 */
 	public MdaFileGeneratorBuilder withModel(final Map<String, Object> model) {
-		Assertion.check().notNull(model);
+		Assertion.check().isNotNull(model);
 		//---
 		myModel = model;
 		return this;
@@ -66,7 +66,7 @@ public final class MdaFileGeneratorBuilder implements Builder<MdaFileGenerator> 
 	 * @return this builder
 	 */
 	public MdaFileGeneratorBuilder withFileName(final String fileName) {
-		Assertion.check().notNull(fileName);
+		Assertion.check().isNotNull(fileName);
 		//---
 		myFileName = fileName;
 		return this;
@@ -77,7 +77,7 @@ public final class MdaFileGeneratorBuilder implements Builder<MdaFileGenerator> 
 	 * @return this builder
 	 */
 	public MdaFileGeneratorBuilder withPackageName(final String packageName) {
-		Assertion.check().notNull(packageName);
+		Assertion.check().isNotNull(packageName);
 		//---
 		myPackageName = packageName;
 		return this;
@@ -88,7 +88,7 @@ public final class MdaFileGeneratorBuilder implements Builder<MdaFileGenerator> 
 	 * @return this builder
 	 */
 	public MdaFileGeneratorBuilder withEncoding(final String encoding) {
-		Assertion.check().notNull(encoding);
+		Assertion.check().isNotNull(encoding);
 		//---
 		myEncoding = encoding;
 		return this;
@@ -100,8 +100,8 @@ public final class MdaFileGeneratorBuilder implements Builder<MdaFileGenerator> 
 	 */
 	public MdaFileGeneratorBuilder withTemplateName(final Class relativeClass, final String templateName) {
 		Assertion.check()
-				.notNull(relativeClass)
-				.notNull(templateName);
+				.isNotNull(relativeClass)
+				.isNotNull(templateName);
 		//---
 		myRelativeClass = relativeClass;
 		myTemplateName = templateName;
@@ -113,7 +113,7 @@ public final class MdaFileGeneratorBuilder implements Builder<MdaFileGenerator> 
 	 * @return this builder
 	 */
 	public MdaFileGeneratorBuilder withTargetGenDir(final String targetGenDir) {
-		Assertion.check().notNull(targetGenDir);
+		Assertion.check().isNotNull(targetGenDir);
 		//---
 		myTargetGenDir = targetGenDir;
 		return this;
@@ -124,7 +124,7 @@ public final class MdaFileGeneratorBuilder implements Builder<MdaFileGenerator> 
 	 * @return this builder
 	 */
 	public MdaFileGeneratorBuilder withGenSubDir(final String genSubDir) {
-		Assertion.check().notNull(genSubDir);
+		Assertion.check().isNotNull(genSubDir);
 		//---
 		myGenSubDir = genSubDir;
 		return this;
@@ -133,14 +133,14 @@ public final class MdaFileGeneratorBuilder implements Builder<MdaFileGenerator> 
 	@Override
 	public MdaFileGenerator build() {
 		Assertion.check()
-				.notNull(myModel, "a model is required")
-				.notNull(myFileName, "a file name is required")
-				.notNull(myPackageName, "a package is required")
-				.notNull(myRelativeClass, "a relative class is required to locate template")
-				.notNull(myTemplateName, "a template is required")
-				.notNull(myEncoding, "an encoding is required")
-				.notNull(myTargetGenDir, "a target gen dir is required")
-				.notNull(myGenSubDir, "a sub directory is required");
+				.isNotNull(myModel, "a model is required")
+				.isNotNull(myFileName, "a file name is required")
+				.isNotNull(myPackageName, "a package is required")
+				.isNotNull(myRelativeClass, "a relative class is required to locate template")
+				.isNotNull(myTemplateName, "a template is required")
+				.isNotNull(myEncoding, "an encoding is required")
+				.isNotNull(myTargetGenDir, "a target gen dir is required")
+				.isNotNull(myGenSubDir, "a sub directory is required");
 		//---
 		final String filePath = buildFilePath();
 		return new MdaFileGeneratorFreeMarker(myModel, filePath, myTemplateName, myEncoding, myRelativeClass);

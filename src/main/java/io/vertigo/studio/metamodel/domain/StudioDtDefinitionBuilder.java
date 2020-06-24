@@ -96,7 +96,7 @@ public final class StudioDtDefinitionBuilder implements Builder<StudioDtDefiniti
 	 * @return this builder
 	 */
 	public StudioDtDefinitionBuilder withFragment(final StudioDtDefinition fragment) {
-		Assertion.check().notNull(fragment);
+		Assertion.check().isNotNull(fragment);
 		//---
 		myStereotype = StudioStereotype.Fragment;
 		myFragmentRef = new DefinitionReference<>(fragment);
@@ -110,7 +110,7 @@ public final class StudioDtDefinitionBuilder implements Builder<StudioDtDefiniti
 	 * @return this builder
 	 */
 	public StudioDtDefinitionBuilder withStereoType(final StudioStereotype stereotype) {
-		Assertion.check().notNull(stereotype);
+		Assertion.check().isNotNull(stereotype);
 		//-----
 		myStereotype = stereotype;
 		return this;
@@ -318,7 +318,7 @@ public final class StudioDtDefinitionBuilder implements Builder<StudioDtDefiniti
 	/** {@inheritDoc} */
 	@Override
 	public StudioDtDefinition build() {
-		Assertion.check().state(dtDefinition == null, "build() already executed");
+		Assertion.check().isTrue(dtDefinition == null, "build() already executed");
 		//-----
 		if (myStereotype == null) {
 			myStereotype = myIdField == null ? StudioStereotype.ValueObject : StudioStereotype.Entity;

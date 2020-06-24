@@ -54,12 +54,12 @@ public final class TaskTestGeneratorPlugin implements MdaGeneratorPlugin {
 	@Override
 	public void generate(final DefinitionSpace definitionSpace, final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
 		Assertion.check()
-				.notNull(definitionSpace)
-				.notNull(mdaConfig)
-				.notNull(mdaResultBuilder);
+				.isNotNull(definitionSpace)
+				.isNotNull(mdaConfig)
+				.isNotNull(mdaResultBuilder);
 		//-----
 		final String targetSubDir = mdaConfig.getAsString("vertigo.taskTest.targetSubDir");
-		Assertion.check().notNull(targetSubDir);
+		Assertion.check().isNotNull(targetSubDir);
 		//---
 		generatePaos(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder);
 		generateDaos(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder);
@@ -251,7 +251,7 @@ public final class TaskTestGeneratorPlugin implements MdaGeneratorPlugin {
 	@Override
 	public void clean(final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
 		final String targetSubDir = mdaConfig.getAsString("vertigo.taskTest.targetSubDir");
-		Assertion.check().notNull(targetSubDir);
+		Assertion.check().isNotNull(targetSubDir);
 		//---
 		MdaUtil.deleteFiles(new File(mdaConfig.getTargetGenDir() + targetSubDir), mdaResultBuilder);
 	}

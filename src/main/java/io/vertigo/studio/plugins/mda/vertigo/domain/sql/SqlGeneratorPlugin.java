@@ -67,9 +67,9 @@ public final class SqlGeneratorPlugin implements MdaGeneratorPlugin {
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		Assertion.check()
-				.notNull(definitionSpace)
-				.notNull(mdaConfig)
-				.notNull(mdaResultBuilder);
+				.isNotNull(definitionSpace)
+				.isNotNull(mdaConfig)
+				.isNotNull(mdaResultBuilder);
 		//-----
 		generateSql(definitionSpace, mdaConfig, mdaResultBuilder);
 

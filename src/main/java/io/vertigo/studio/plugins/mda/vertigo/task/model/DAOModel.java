@@ -48,9 +48,9 @@ public final class DAOModel {
 	 */
 	public DAOModel(final MdaConfig mdaConfig, final StudioDtDefinition dtDefinition, final Collection<StudioTaskDefinition> taskDefinitionCollection, final Function<String, String> classNameFromDt) {
 		Assertion.check()
-				.notNull(mdaConfig)
-				.notNull(dtDefinition)
-				.notNull(taskDefinitionCollection);
+				.isNotNull(mdaConfig)
+				.isNotNull(dtDefinition)
+				.isNotNull(taskDefinitionCollection);
 		final String definitionPackageName = dtDefinition.getPackageName();
 		final String packageNamePrefix = mdaConfig.getProjectPackageName();
 		// ---
@@ -61,7 +61,7 @@ public final class DAOModel {
 		//we need to find the featureName, aka between projectpackageName and .domain
 		final String featureName = definitionPackageName.substring(packageNamePrefix.length(), definitionPackageName.indexOf(".domain"));
 		if (!StringUtil.isBlank(featureName)) {
-			Assertion.check().state(featureName.lastIndexOf('.') == 0, "The feature {0} must not contain any dot", featureName.substring(1));
+			Assertion.check().isTrue(featureName.lastIndexOf('.') == 0, "The feature {0} must not contain any dot", featureName.substring(1));
 		}
 		// the subpackage is what's behind the .domain
 		final String subpackage = definitionPackageName.substring(definitionPackageName.indexOf(".domain") + ".domain".length());
@@ -98,7 +98,7 @@ public final class DAOModel {
 	 * @return Type de la PK
 	 */
 	public String getIdFieldType() {
-		Assertion.check().state(dtDefinition.getIdField().get().getDomain().getScope().isPrimitive(), "An id field should be a primitive");
+		Assertion.check().isTrue(dtDefinition.getIdField().get().getDomain().getScope().isPrimitive(), "An id field should be a primitive");
 		//---
 		return dtDefinition.getIdField().get().getDomain().getDataType().getJavaClass().getCanonicalName();
 	}

@@ -44,10 +44,10 @@ public final class PAOModel {
 	 */
 	public PAOModel(final MdaConfig mdaConfig, final Collection<StudioTaskDefinition> taskDefinitionCollection, final String packageName, final Function<String, String> classNameFromDt) {
 		Assertion.check()
-				.notNull(mdaConfig)
-				.notNull(taskDefinitionCollection)
+				.isNotNull(mdaConfig)
+				.isNotNull(taskDefinitionCollection)
 				.argument(!taskDefinitionCollection.isEmpty(), "Aucune tache dans le package {0}", packageName)
-				.notNull(packageName);
+				.isNotNull(packageName);
 		//-----
 		this.packageName = packageName;
 

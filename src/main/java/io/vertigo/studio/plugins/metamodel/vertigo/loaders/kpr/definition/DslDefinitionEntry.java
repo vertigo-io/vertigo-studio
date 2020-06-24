@@ -46,8 +46,8 @@ public final class DslDefinitionEntry {
 	 */
 	public DslDefinitionEntry(final String fieldName, final List<String> definitionNames) {
 		Assertion.check()
-				.notNull(fieldName)
-				.notNull(definitionNames);
+				.isNotNull(fieldName)
+				.isNotNull(definitionNames);
 		//-----
 		this.fieldName = fieldName;
 		definition = null;
@@ -62,8 +62,8 @@ public final class DslDefinitionEntry {
 	 */
 	public DslDefinitionEntry(final String fieldName, final DslDefinition definition) {
 		Assertion.check()
-				.notNull(fieldName)
-				.notNull(definition);
+				.isNotNull(fieldName)
+				.isNotNull(definition);
 		//-----
 		this.fieldName = fieldName;
 		this.definition = definition;
@@ -90,7 +90,7 @@ public final class DslDefinitionEntry {
 	 * @return Définition
 	 */
 	public DslDefinition getDefinition() {
-		Assertion.check().notNull(definition);
+		Assertion.check().isNotNull(definition);
 		//-----
 		return definition;
 	}

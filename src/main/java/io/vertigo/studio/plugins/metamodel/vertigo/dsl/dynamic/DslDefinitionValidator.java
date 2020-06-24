@@ -38,7 +38,7 @@ final class DslDefinitionValidator {
 	}
 
 	static void check(final DslDefinition definition) {
-		Assertion.check().notNull(definition);
+		Assertion.check().isNotNull(definition);
 		//-----
 		final DslEntity myEntity = definition.getEntity();
 		// 1.On vérifie la définition par rapport à la métadéfinition

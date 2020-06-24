@@ -83,7 +83,7 @@ final class AnnotationsModel implements TemplateSequenceModel {
 	}
 
 	private AnnotationsModel(final List<String> lines) {
-		Assertion.check().notNull(lines);
+		Assertion.check().isNotNull(lines);
 		//-----
 		this.lines = lines;
 	}

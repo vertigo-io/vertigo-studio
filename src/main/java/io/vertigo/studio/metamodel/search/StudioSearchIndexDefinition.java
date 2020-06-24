@@ -78,12 +78,12 @@ public final class StudioSearchIndexDefinition implements Definition {
 			final String searchLoaderId) {
 		Assertion.check()
 				.isNotBlank(name)
-				.notNull(keyConceptDtDefinition)
+				.isNotNull(keyConceptDtDefinition)
 				.argument(
 						keyConceptDtDefinition.getStereotype() == StudioStereotype.KeyConcept,
 						"keyConceptDtDefinition ({0}) must be a DtDefinition of a KeyConcept class", keyConceptDtDefinition.getName())
-				.notNull(indexDtDefinition)
-				.notNull(indexCopyToFieldsMap)
+				.isNotNull(indexDtDefinition)
+				.isNotNull(indexCopyToFieldsMap)
 				.isNotBlank(searchLoaderId);
 		//-----
 		this.name = name;
@@ -117,7 +117,7 @@ public final class StudioSearchIndexDefinition implements Definition {
 	 */
 	public List<StudioDtField> getIndexCopyToFromFields(final StudioDtField toField) {
 		final List<StudioDtField> copyToFields = indexCopyToFieldsMap.get(toField);
-		Assertion.check().notNull(copyToFields);
+		Assertion.check().isNotNull(copyToFields);
 		//-----
 		return Collections.unmodifiableList(copyToFields);
 	}

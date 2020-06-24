@@ -31,7 +31,7 @@ public final class FileInfoDefinitionModel {
 	private final StudioFileInfo fileInfoDefinition;
 
 	public FileInfoDefinitionModel(final StudioFileInfo fileInfoDefinition) {
-		Assertion.check().notNull(fileInfoDefinition);
+		Assertion.check().isNotNull(fileInfoDefinition);
 		//-----
 		this.fileInfoDefinition = fileInfoDefinition;
 	}

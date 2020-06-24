@@ -38,8 +38,8 @@ public final class TaskAttributeModel {
 
 	TaskAttributeModel(final StudioTaskAttribute taskAttribute, final Function<String, String> classNameFromDt) {
 		Assertion.check()
-				.notNull(taskAttribute)
-				.notNull(classNameFromDt);
+				.isNotNull(taskAttribute)
+				.isNotNull(classNameFromDt);
 		//-----
 		this.taskAttribute = taskAttribute;
 		//---

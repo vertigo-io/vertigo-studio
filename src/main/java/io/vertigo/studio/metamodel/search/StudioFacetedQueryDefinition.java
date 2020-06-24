@@ -83,12 +83,12 @@ public final class StudioFacetedQueryDefinition implements Definition {
 		Assertion
 				.check()
 				.isNotBlank(name)
-				.notNull(keyConceptDtDefinition)
-				.notNull(facetDefinitions)
-				.notNull(criteriaDomain)
+				.isNotNull(keyConceptDtDefinition)
+				.isNotNull(facetDefinitions)
+				.isNotNull(criteriaDomain)
 				.isNotBlank(listFilterBuilderClassName)
-				.notNull(listFilterBuilderQuery)
-				.notNull(geoSearchQuery);
+				.isNotNull(listFilterBuilderQuery)
+				.isNotNull(geoSearchQuery);
 		//-----
 		this.name = name;
 		this.keyConceptDtDefinition = keyConceptDtDefinition;
@@ -112,7 +112,7 @@ public final class StudioFacetedQueryDefinition implements Definition {
 		//-----
 		final StudioFacetDefinition facetDefinition = facetDefinitions.get(facetName);
 		//-----
-		Assertion.check().notNull(facetDefinition, "Aucune Définition de facette trouvée pour {0}", facetName);
+		Assertion.check().isNotNull(facetDefinition, "Aucune Définition de facette trouvée pour {0}", facetName);
 		return facetDefinition;
 	}
 

@@ -31,7 +31,7 @@ public class SecuredEntityModel {
 	private final List<SecuredFeatureModel> securedFeatureModels;
 
 	public SecuredEntityModel(final List<SecuredFeature> securedFeatures, final StudioDtDefinition studioDtDefinition) {
-		Assertion.check().notNull(studioDtDefinition);
+		Assertion.check().isNotNull(studioDtDefinition);
 		//---
 		this.studioDtDefinition = studioDtDefinition;
 		securedFeatureModels = securedFeatures.stream()

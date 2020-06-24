@@ -71,14 +71,14 @@ public final class StudioWebServiceDefinition implements Definition {
 			final String doc) {
 		Assertion.check()
 				.isNotBlank(name)
-				.notNull(verb)
+				.isNotNull(verb)
 				.isNotBlank(path)
-				.notNull(webServiceParams)
-				.notNull(webServiceResponseContentOpt)
+				.isNotNull(webServiceParams)
+				.isNotNull(webServiceResponseContentOpt)
 				.isNotBlank(moduleName)
-				.notNull(groupNameOpt)
+				.isNotNull(groupNameOpt)
 				.isNotBlank(humanReadableAction)
-				.notNull(doc); //doc can be empty
+				.isNotNull(doc); //doc can be empty
 		//-----
 		this.name = name;
 		this.verb = verb;

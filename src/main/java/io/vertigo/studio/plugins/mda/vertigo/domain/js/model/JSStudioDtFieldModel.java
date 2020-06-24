@@ -34,7 +34,7 @@ public final class JSStudioDtFieldModel {
 	 * @param dtField Champ à générer
 	 */
 	JSStudioDtFieldModel(final StudioDtField dtField) {
-		Assertion.check().notNull(dtField);
+		Assertion.check().isNotNull(dtField);
 		//-----
 		this.dtField = dtField;
 	}

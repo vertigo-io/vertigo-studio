@@ -91,9 +91,9 @@ final class OOMObject {
 
 	private OOMObject(final OOMObject parent, final XmlId id, final OOMType type) {
 		Assertion.check()
-				.notNull(parent)
-				.notNull(id)
-				.notNull(type);
+				.isNotNull(parent)
+				.isNotNull(id)
+				.isNotNull(type);
 		//-----
 		this.parent = parent;
 		this.id = id;
@@ -147,12 +147,12 @@ final class OOMObject {
 	}
 
 	String getCode() {
-		Assertion.check().notNull(code);
+		Assertion.check().isNotNull(code);
 		return code;
 	}
 
 	String getName() {
-		Assertion.check().notNull(name);
+		Assertion.check().isNotNull(name);
 		return name;
 	}
 
@@ -209,7 +209,7 @@ final class OOMObject {
 	}
 
 	void setProperty(final String propertyName, final String propertyValue) {
-		Assertion.check().notNull(propertyName);
+		Assertion.check().isNotNull(propertyName);
 		//-----
 		switch (propertyName) {
 			case PROPERTY_CODE:

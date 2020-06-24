@@ -56,12 +56,12 @@ public final class MdaConfig {
 				.isNotBlank(targetGenDir, "Le repertoire des fichiers generes [targetGenDir] doit etre renseigné !")
 				.isNotBlank(projectPackageName, "le package racine du projet doit être renseigne ! ")
 				.isNotBlank(encoding, "l'encoding des fichiers gérénés [encoding] doit etre renseigné !")
-				.notNull(properties);
+				.isNotNull(properties);
 		//-----
 		this.targetGenDir = targetGenDir;
 		this.projectPackageName = projectPackageName;
 		this.encoding = encoding;
-		Assertion.check().state(targetGenDir.endsWith("/"), "Le chemin doit finir par '/'.");
+		Assertion.check().isTrue(targetGenDir.endsWith("/"), "Le chemin doit finir par '/'.");
 		this.properties = properties;
 	}
 
@@ -114,7 +114,7 @@ public final class MdaConfig {
 
 	public boolean getAsBoolean(final String key) {
 		final String value = properties.getProperty(key);
-		Assertion.check().notNull(value);
+		Assertion.check().isNotNull(value);
 		return Boolean.valueOf(value);
 	}
 

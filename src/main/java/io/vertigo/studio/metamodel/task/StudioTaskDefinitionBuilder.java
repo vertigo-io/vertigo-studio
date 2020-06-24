@@ -47,7 +47,7 @@ public final class StudioTaskDefinitionBuilder implements Builder<StudioTaskDefi
 	 * @param taskDefinitionName the name of the taskDefinition (TK_XXX_YYY)
 	 */
 	StudioTaskDefinitionBuilder(final String taskDefinitionName) {
-		Assertion.check().notNull(taskDefinitionName);
+		Assertion.check().isNotNull(taskDefinitionName);
 		//-----
 		myTaskDefinitionName = taskDefinitionName;
 	}
@@ -70,7 +70,7 @@ public final class StudioTaskDefinitionBuilder implements Builder<StudioTaskDefi
 	 * @return this builder
 	 */
 	public StudioTaskDefinitionBuilder withRequest(final String request) {
-		Assertion.check().notNull(request);
+		Assertion.check().isNotNull(request);
 		//-----
 		//Pour unifier la saisie de la request sous un environnement unix ou dos
 		// et pour éviter la disparité de gestion des retours chariot
@@ -112,9 +112,9 @@ public final class StudioTaskDefinitionBuilder implements Builder<StudioTaskDefi
 	 */
 	public StudioTaskDefinitionBuilder addInAttribute(final String attributeName, final Domain domain, final Cardinality cardinality) {
 		Assertion.check()
-				.notNull(attributeName)
-				.notNull(domain)
-				.notNull(cardinality);
+				.isNotNull(attributeName)
+				.isNotNull(domain)
+				.isNotNull(cardinality);
 		//-----
 		final StudioTaskAttribute taskAttribute = new StudioTaskAttribute(attributeName, domain, cardinality);
 		myInTaskAttributes.add(taskAttribute);

@@ -36,7 +36,7 @@ public final class SqlMasterDataDefinitionModel {
 	private final List<SqlMasterDataValueModel> sqlMasterDataValueModels;
 
 	public SqlMasterDataDefinitionModel(final StudioDtDefinition dtDefinition, final Map<String, MasterDataValue> masterDataValuesByDtDefinition) {
-		Assertion.check().notNull(dtDefinition);
+		Assertion.check().isNotNull(dtDefinition);
 		//-----
 		sqlDtDefinitionModel = new SqlStudioDtDefinitionModel(dtDefinition);
 		sqlMasterDataValueModels = masterDataValuesByDtDefinition

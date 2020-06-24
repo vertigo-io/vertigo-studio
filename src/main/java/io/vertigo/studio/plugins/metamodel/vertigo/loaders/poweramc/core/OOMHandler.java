@@ -42,7 +42,7 @@ final class OOMHandler extends DefaultHandler {
 	private String chars;
 
 	OOMHandler(final Map<XmlId, OOMObject> map) {
-		Assertion.check().notNull(map);
+		Assertion.check().isNotNull(map);
 		//-----
 		this.map = map;
 		final OOMObject root = OOMObject.createdRoot();

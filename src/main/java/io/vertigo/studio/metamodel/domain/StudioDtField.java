@@ -120,10 +120,10 @@ public final class StudioDtField {
 			final ComputedExpression computedExpression) {
 		Assertion.check()
 				.isNotBlank(id)
-				.notNull(type)
-				.notNull(domain)
-				.notNull(type)
-				.notNull(cardinality);
+				.isNotNull(type)
+				.isNotNull(domain)
+				.isNotNull(type)
+				.isNotNull(cardinality);
 		//-----
 		this.id = id;
 		domainRef = new DefinitionReference<>(domain);
@@ -131,10 +131,10 @@ public final class StudioDtField {
 		this.cardinality = cardinality;
 		//-----
 		Assertion.check()
-				.notNull(fieldName)
+				.isNotNull(fieldName)
 				.argument(fieldName.length() <= FIELD_NAME_MAX_LENGTH, "the name of the field {0} has a limit size of {1}", fieldName, FIELD_NAME_MAX_LENGTH)
 				.argument(StringUtil.isLowerCamelCase(fieldName), "the name of the field {0} must be in lowerCamelCase", fieldName)
-				.notNull(label);
+				.isNotNull(label);
 		//-----
 		name = fieldName;
 		this.label = label;
@@ -143,16 +143,16 @@ public final class StudioDtField {
 		this.persistent = persistent;
 		//-----
 		if (getType() == FieldType.FOREIGN_KEY) {
-			Assertion.check().notNull(fkDtDefinitionName, "Le champ {0} de type clé étrangère doit référencer une définition ", fieldName);
+			Assertion.check().isNotNull(fkDtDefinitionName, "Le champ {0} de type clé étrangère doit référencer une définition ", fieldName);
 		} else {
-			Assertion.check().state(fkDtDefinitionName == null, "Le champ {0} n''est pas une clé étrangère", fieldName);
+			Assertion.check().isTrue(fkDtDefinitionName == null, "Le champ {0} n''est pas une clé étrangère", fieldName);
 		}
 		this.fkDtDefinitionName = fkDtDefinitionName;
 		//-----
 		if (getType() == FieldType.COMPUTED) {
-			Assertion.check().notNull(computedExpression, "the field {0}, declared as computed, must have an expression", fieldName);
+			Assertion.check().isNotNull(computedExpression, "the field {0}, declared as computed, must have an expression", fieldName);
 		} else {
-			Assertion.check().state(computedExpression == null, "the field {0}, not declared as computed, must have an empty expression", fieldName);
+			Assertion.check().isTrue(computedExpression == null, "the field {0}, not declared as computed, must have an empty expression", fieldName);
 		}
 		this.computedExpression = computedExpression;
 	}
@@ -216,7 +216,7 @@ public final class StudioDtField {
 	 */
 	//Todo changer le nom
 	public String getFkDtDefinitionName() {
-		Assertion.check().notNull(fkDtDefinitionName);
+		Assertion.check().isNotNull(fkDtDefinitionName);
 		//-----
 		return fkDtDefinitionName;
 	}
@@ -226,7 +226,7 @@ public final class StudioDtField {
 	 *  @return ComputedExpression du champs calculé (caractère obligatoire lié au type)
 	 */
 	public ComputedExpression getComputedExpression() {
-		Assertion.check().notNull(computedExpression);
+		Assertion.check().isNotNull(computedExpression);
 		//-----
 		return computedExpression;
 	}

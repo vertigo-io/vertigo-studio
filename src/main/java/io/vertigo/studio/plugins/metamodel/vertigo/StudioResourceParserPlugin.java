@@ -87,7 +87,7 @@ public final class StudioResourceParserPlugin implements MetamodelResourceParser
 		}
 		for (final MetamodelResource resource : resources) {
 			final Loader loaderPlugin = loadersByType.get(resource.getType());
-			Assertion.check().notNull(loaderPlugin, "This resource {0} can not be parse by these loaders : {1}", resource, loadersByType.keySet());
+			Assertion.check().isNotNull(loaderPlugin, "This resource {0} can not be parse by these loaders : {1}", resource, loadersByType.keySet());
 			loaderPlugin.load(resource.getPath(), dslDefinitionRepository);
 		}
 

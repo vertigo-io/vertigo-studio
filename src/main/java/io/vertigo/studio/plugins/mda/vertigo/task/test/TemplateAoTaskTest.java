@@ -46,9 +46,9 @@ public final class TemplateAoTaskTest {
 			final String daoTestBaseClass,
 			final Function<String, String> classNameFromDt) {
 		Assertion.check()
-				.notNull(taskConfiguration)
-				.notNull(taskDefinition)
-				.notNull(packageName);
+				.isNotNull(taskConfiguration)
+				.isNotNull(taskDefinition)
+				.isNotNull(packageName);
 		//-----
 		this.packageName = packageName;
 

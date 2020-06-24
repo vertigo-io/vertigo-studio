@@ -103,7 +103,7 @@ public final class JsonStaticMasterDataParserPlugin implements MetamodelResource
 									.entrySet()
 									.stream()
 									// we check that a name is unique for an object type
-									.peek(newEntry -> Assertion.check().state(!value.containsKey(newEntry.getKey()), "Value with name '{0}' for MasterData '{1}' is declared in two files", newEntry.getKey(), entry.getKey()))
+									.peek(newEntry -> Assertion.check().isTrue(!value.containsKey(newEntry.getKey()), "Value with name '{0}' for MasterData '{1}' is declared in two files", newEntry.getKey(), entry.getKey()))
 									.forEach(newEntry -> value.put(newEntry.getKey(), newEntry.getValue()));
 							return value;
 						});

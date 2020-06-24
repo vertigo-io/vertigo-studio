@@ -36,8 +36,8 @@ public final class TSMasterDataValueModel {
 
 	public TSMasterDataValueModel(final StudioDtDefinition dtDefinition, final Map<String, String> allFieldValues) {
 		Assertion.check()
-				.notNull(dtDefinition)
-				.notNull(allFieldValues);
+				.isNotNull(dtDefinition)
+				.isNotNull(allFieldValues);
 		//-----
 		this.dtDefinition = dtDefinition;
 		this.allFieldValues = allFieldValues;
@@ -47,7 +47,7 @@ public final class TSMasterDataValueModel {
 		final StudioDtField dtField = dtDefinition.getField(fieldName);
 		//---
 		Assertion.when(dtField.getCardinality().hasOne())
-				.state(() -> allFieldValues.containsKey(fieldName),
+				.isTrue(() -> allFieldValues.containsKey(fieldName),
 						"Field '{0}' is required on '{1}' and no value was provided. Provided values '{2}'",
 						fieldName, dtDefinition.getName(), allFieldValues);
 		//---

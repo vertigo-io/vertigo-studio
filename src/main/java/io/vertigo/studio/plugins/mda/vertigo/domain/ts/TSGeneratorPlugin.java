@@ -59,9 +59,9 @@ public final class TSGeneratorPlugin implements MdaGeneratorPlugin {
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		Assertion.check()
-				.notNull(definitionSpace)
-				.notNull(mdaConfig)
-				.notNull(mdaResultBuilder);
+				.isNotNull(definitionSpace)
+				.isNotNull(mdaConfig)
+				.isNotNull(mdaResultBuilder);
 		//-----
 		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.domain.ts.targetSubDir", DEFAULT_TARGET_SUBDIR);
 		//----

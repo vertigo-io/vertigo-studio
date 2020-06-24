@@ -56,7 +56,7 @@ public final class DslKspRule extends AbstractRule<Dummy, List<Object>> {
 	}
 
 	private static PegRule<List<Object>> createMainRule(final DslGrammar grammar) {
-		Assertion.check().notNull(grammar);
+		Assertion.check().isNotNull(grammar);
 		//-----
 		final PegRule<DslDefinition> definitionRule = new DslDynamicDefinitionRule("create", grammar);
 		final PegRule<DslDefinition> templateRule = new DslDynamicDefinitionRule("alter", grammar);

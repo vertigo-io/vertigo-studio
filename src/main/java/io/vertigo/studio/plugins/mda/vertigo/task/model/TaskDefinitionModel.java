@@ -42,8 +42,8 @@ public final class TaskDefinitionModel {
 
 	public TaskDefinitionModel(final StudioTaskDefinition taskDefinition, final Function<String, String> classNameFromDt) {
 		Assertion.check()
-				.notNull(taskDefinition)
-				.notNull(classNameFromDt);
+				.isNotNull(taskDefinition)
+				.isNotNull(classNameFromDt);
 		//-----
 		this.taskDefinition = taskDefinition;
 		boolean hasOption = false;
@@ -107,7 +107,7 @@ public final class TaskDefinitionModel {
 	 * @return Attribut de sortie (Unique)
 	 */
 	public TaskAttributeModel getOutAttribute() {
-		Assertion.check().notNull(out);
+		Assertion.check().isNotNull(out);
 		//-----
 		return out;
 	}

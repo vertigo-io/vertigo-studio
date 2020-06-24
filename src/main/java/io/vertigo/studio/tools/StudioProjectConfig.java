@@ -12,8 +12,8 @@ final class StudioProjectConfig {
 
 	StudioProjectConfig(final List<MetamodelResource> metamodelResources, final MdaConfig mdaConfig) {
 		Assertion.check()
-				.notNull(metamodelResources)
-				.notNull(mdaConfig);
+				.isNotNull(metamodelResources)
+				.isNotNull(mdaConfig);
 		//---
 		this.metamodelResources = metamodelResources;
 		this.mdaConfig = mdaConfig;

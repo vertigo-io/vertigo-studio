@@ -36,7 +36,7 @@ public final class MasterDataDefinitionModel {
 	private final List<MasterDataValueModel> masterDataValueModels;
 
 	public MasterDataDefinitionModel(final StudioDtDefinition dtDefinition, final Map<String, MasterDataValue> masterDataValuesByDtDefinition) {
-		Assertion.check().notNull(dtDefinition);
+		Assertion.check().isNotNull(dtDefinition);
 		//-----
 		this.dtDefinition = dtDefinition;
 		masterDataValueModels = masterDataValuesByDtDefinition

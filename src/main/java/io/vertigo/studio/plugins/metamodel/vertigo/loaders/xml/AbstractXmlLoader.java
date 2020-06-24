@@ -63,7 +63,7 @@ public abstract class AbstractXmlLoader implements Loader {
 	 * @param resourceManager the vertigo resourceManager
 	 */
 	public AbstractXmlLoader(final boolean constFieldNameInSource, final ResourceManager resourceManager) {
-		Assertion.check().notNull(resourceManager);
+		Assertion.check().isNotNull(resourceManager);
 		//-----
 		this.resourceManager = resourceManager;
 		this.constFieldNameInSource = constFieldNameInSource;
@@ -87,7 +87,7 @@ public abstract class AbstractXmlLoader implements Loader {
 		}
 		Assertion.check()
 				.isNotBlank(resourcePath)
-				.notNull(dslDefinitionRepository);
+				.isNotNull(dslDefinitionRepository);
 		//-----
 
 		for (final XmlClass clazz : getClasses()) {
@@ -239,7 +239,7 @@ public abstract class AbstractXmlLoader implements Loader {
 		}
 		LOGGER.trace(KspProperty.FK_FIELD_NAME + "= {}", fkFieldName);
 		//-----
-		Assertion.check().notNull(fkFieldName, "La clé primaire n''a pas pu être définie pour l'association '{0}'", association.getCode());
+		Assertion.check().isNotNull(fkFieldName, "La clé primaire n''a pas pu être définie pour l'association '{0}'", association.getCode());
 		return fkFieldName;
 	}
 

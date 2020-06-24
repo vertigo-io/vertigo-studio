@@ -39,8 +39,8 @@ public final class DslEntityField {
 	DslEntityField(final String name, final DslEntityFieldType type, final Cardinality cardinality) {
 		Assertion.check()
 				.isNotBlank(name)
-				.notNull(type)
-				.notNull(cardinality);
+				.isNotNull(type)
+				.isNotNull(cardinality);
 		//-----
 		this.name = name;
 		this.cardinality = cardinality;

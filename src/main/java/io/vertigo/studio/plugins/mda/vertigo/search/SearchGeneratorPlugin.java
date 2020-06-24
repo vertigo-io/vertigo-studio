@@ -60,9 +60,9 @@ public final class SearchGeneratorPlugin implements MdaGeneratorPlugin {
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		Assertion.check()
-				.notNull(definitionSpace)
-				.notNull(mdaConfig)
-				.notNull(mdaResultBuilder);
+				.isNotNull(definitionSpace)
+				.isNotNull(mdaConfig)
+				.isNotNull(mdaResultBuilder);
 		//-----
 		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.search.targetSubDir", DEFAULT_TARGET_SUBDIR);
 		generateSearchAos(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder);
@@ -93,7 +93,7 @@ public final class SearchGeneratorPlugin implements MdaGeneratorPlugin {
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder,
 			final StudioDtDefinition dtDefinition) {
-		Assertion.check().notNull(dtDefinition);
+		Assertion.check().isNotNull(dtDefinition);
 
 		final String definitionPackageName = dtDefinition.getPackageName();
 		final String packageNamePrefix = mdaConfig.getProjectPackageName();
@@ -104,7 +104,7 @@ public final class SearchGeneratorPlugin implements MdaGeneratorPlugin {
 		//we need to find the featureName, aka between projectpackageName and .domain
 		final String featureName = definitionPackageName.substring(packageNamePrefix.length(), definitionPackageName.indexOf(".domain"));
 		if (!StringUtil.isBlank(featureName)) {
-			Assertion.check().state(featureName.lastIndexOf('.') == 0, "The feature {0} must not contain any dot", featureName.substring(1));
+			Assertion.check().isTrue(featureName.lastIndexOf('.') == 0, "The feature {0} must not contain any dot", featureName.substring(1));
 		}
 		// the subpackage is what's behind the .domain
 		final String subpackage = definitionPackageName.substring(definitionPackageName.indexOf(".domain") + ".domain".length());

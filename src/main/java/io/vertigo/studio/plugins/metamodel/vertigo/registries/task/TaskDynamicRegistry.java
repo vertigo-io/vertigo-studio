@@ -60,7 +60,7 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 	private static StudioTaskDefinition createTaskDefinition(final DefinitionSpace definitionSpace, final DslDefinition xtaskDefinition) {
 		final String taskDefinitionName = xtaskDefinition.getName();
 		final String request = (String) xtaskDefinition.getPropertyValue(KspProperty.REQUEST);
-		Assertion.check().notNull(taskDefinitionName);
+		Assertion.check().isNotNull(taskDefinitionName);
 		final String taskEngineClassName = getTaskEngineClassName(xtaskDefinition);
 		final String dataSpace = (String) xtaskDefinition.getPropertyValue(KspProperty.DATA_SPACE);
 		final StudioTaskDefinitionBuilder taskDefinitionBuilder = StudioTaskDefinition.builder("St" + taskDefinitionName)
@@ -70,7 +70,7 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 				.withPackageName(xtaskDefinition.getPackageName());
 		for (final DslDefinition xtaskAttribute : xtaskDefinition.getChildDefinitions(TaskGrammar.TASK_ATTRIBUTE)) {
 			final String attributeName = xtaskAttribute.getName();
-			Assertion.check().notNull(attributeName);
+			Assertion.check().isNotNull(attributeName);
 			final String smartTypeName = xtaskAttribute.getDefinitionLinkName("domain");
 			final Domain domain = definitionSpace.resolve(smartTypeName, Domain.class);
 			//-----

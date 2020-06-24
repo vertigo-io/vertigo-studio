@@ -119,9 +119,9 @@ final class EAXmiObject {
 
 	private EAXmiObject(final EAXmiObject parent, final XmlId id, final EAXmiType type) {
 		Assertion.check()
-				.notNull(parent)
-				.notNull(id)
-				.notNull(type);
+				.isNotNull(parent)
+				.isNotNull(id)
+				.isNotNull(type);
 		//-----
 		this.parent = parent;
 		this.id = id;
@@ -256,7 +256,7 @@ final class EAXmiObject {
 	// Gestion des propriétés
 
 	void setProperty(final String propertyName, final Attributes attributes) {
-		Assertion.check().notNull(propertyName);
+		Assertion.check().isNotNull(propertyName);
 		//-----
 		//TODO : load stereotype from XMI
 		switch (propertyName) {

@@ -67,8 +67,8 @@ public final class DslDefinitionBuilder implements Builder<DslDefinition> {
 	 */
 	DslDefinitionBuilder(final String name, final DslEntity entity) {
 		Assertion.check()
-				.notNull(name)
-				.notNull(entity);
+				.isNotNull(name)
+				.isNotNull(entity);
 		//-----
 		this.name = name;
 		this.entity = entity;
@@ -128,7 +128,7 @@ public final class DslDefinitionBuilder implements Builder<DslDefinition> {
 	 */
 	public DslDefinitionBuilder addPropertyValue(final String fieldName, final Object value) {
 		final DslEntityField dslEntityField = entity.getField(fieldName);
-		Assertion.check().state(dslEntityField.getType().isProperty(), "expected a property on {0}", fieldName);
+		Assertion.check().isTrue(dslEntityField.getType().isProperty(), "expected a property on {0}", fieldName);
 		//----
 		entity.getPropertyType(fieldName).checkValue(value);
 		propertyValueByFieldName.put(dslEntityField, value);
@@ -154,9 +154,9 @@ public final class DslDefinitionBuilder implements Builder<DslDefinition> {
 	 * @return this builder
 	 */
 	public DslDefinitionBuilder addAllDefinitionLinks(final String fieldName, final List<String> definitionNames) {
-		Assertion.check().notNull(definitionNames);
+		Assertion.check().isNotNull(definitionNames);
 		final DslEntityField dslEntityField = entity.getField(fieldName);
-		Assertion.check().state(dslEntityField.getType().isEntityLink(), "expected a link on {0}", fieldName);
+		Assertion.check().isTrue(dslEntityField.getType().isEntityLink(), "expected a link on {0}", fieldName);
 		//---
 		definitionLinkNamesByFieldName.get(dslEntityField)
 				.addAll(definitionNames);
@@ -164,9 +164,9 @@ public final class DslDefinitionBuilder implements Builder<DslDefinition> {
 	}
 
 	private void addAllChildDefinitions(final String fieldName, final List<DslDefinition> dslDefinitions) {
-		Assertion.check().notNull(dslDefinitions);
+		Assertion.check().isNotNull(dslDefinitions);
 		final DslEntityField dslEntityField = entity.getField(fieldName);
-		Assertion.check().state(dslEntityField.getType().isEntity(), "expected an entity on {0}", fieldName);
+		Assertion.check().isTrue(dslEntityField.getType().isEntity(), "expected an entity on {0}", fieldName);
 		//---
 		childDefinitionsByFieldName.get(dslEntityField)
 				.addAll(dslDefinitions);
@@ -179,7 +179,7 @@ public final class DslDefinitionBuilder implements Builder<DslDefinition> {
 	 * @return this builder
 	 */
 	public DslDefinitionBuilder addChildDefinition(final String fieldName, final DslDefinition definition) {
-		Assertion.check().notNull(definition);
+		Assertion.check().isNotNull(definition);
 		addAllChildDefinitions(fieldName, Collections.singletonList(definition));
 		return this;
 	}

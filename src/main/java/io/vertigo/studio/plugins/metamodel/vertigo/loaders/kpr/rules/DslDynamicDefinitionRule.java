@@ -48,7 +48,7 @@ public final class DslDynamicDefinitionRule extends AbstractRule<DslDefinition, 
 	private static PegRule<PegChoice> createMainRule(final String operation, final DslGrammar grammar) {
 		Assertion.check()
 				.isNotBlank(operation)
-				.notNull(grammar);
+				.isNotNull(grammar);
 		//-----
 		final List<PegRule<?>> rules = grammar.getEntities()
 				.stream()

@@ -58,8 +58,8 @@ public final class SecuredFeature implements Definition {
 		Assertion.check()
 				.isNotBlank(code)
 				.isNotBlank(label)
-				.notNull(comment)
-				.notNull(linkedResourceOpt);
+				.isNotNull(comment)
+				.isNotNull(linkedResourceOpt);
 		//-----
 		this.code = code;
 		this.label = label;

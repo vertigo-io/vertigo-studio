@@ -29,7 +29,7 @@ public class VertigoConstants {
 			//---
 			this.canonicalName = canonicalName;
 			final int lastDot = canonicalName.lastIndexOf('.');
-			Assertion.check().state(lastDot > 0, "A cananical class name is required, '{0}' does not contain package name", canonicalName);
+			Assertion.check().isTrue(lastDot > 0, "A cananical class name is required, '{0}' does not contain package name", canonicalName);
 			simpleName = canonicalName.substring(lastDot + 1);
 			packageName = canonicalName.substring(0, lastDot);
 		}
