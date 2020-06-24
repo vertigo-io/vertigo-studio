@@ -9,8 +9,8 @@ public class FacetParamModel {
 
 	public FacetParamModel(final String paramName, final String paramValue) {
 		Assertion.check()
-				.argNotEmpty(paramName)
-				.argNotEmpty(paramValue);
+				.isNotBlank(paramName)
+				.isNotBlank(paramValue);
 		//---
 		this.paramName = paramName;
 		this.paramValue = paramValue;

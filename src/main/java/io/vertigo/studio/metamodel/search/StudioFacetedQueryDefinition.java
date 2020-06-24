@@ -82,11 +82,11 @@ public final class StudioFacetedQueryDefinition implements Definition {
 			final Optional<String> geoSearchQuery) {
 		Assertion
 				.check()
-				.argNotEmpty(name)
+				.isNotBlank(name)
 				.notNull(keyConceptDtDefinition)
 				.notNull(facetDefinitions)
 				.notNull(criteriaDomain)
-				.argNotEmpty(listFilterBuilderClassName)
+				.isNotBlank(listFilterBuilderClassName)
 				.notNull(listFilterBuilderQuery)
 				.notNull(geoSearchQuery);
 		//-----
@@ -108,7 +108,7 @@ public final class StudioFacetedQueryDefinition implements Definition {
 	 * @return Définition de la facette.
 	 */
 	public StudioFacetDefinition getFacetDefinition(final String facetName) {
-		Assertion.check().argNotEmpty(facetName);
+		Assertion.check().isNotBlank(facetName);
 		//-----
 		final StudioFacetDefinition facetDefinition = facetDefinitions.get(facetName);
 		//-----

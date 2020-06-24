@@ -51,7 +51,7 @@ public final class StudioFacetValue implements Serializable {
 	 */
 	public StudioFacetValue(final String code, final String listFilter, final String label) {
 		Assertion.check()
-				.argNotEmpty(code)
+				.isNotBlank(code)
 				.notNull(listFilter)
 				.notNull(label);
 		//-----

@@ -86,7 +86,7 @@ public abstract class AbstractXmlLoader implements Loader {
 			throw WrappedException.wrap(e, "erreur lors de la lecture du fichier xmi : {0}", xmiFileURL);
 		}
 		Assertion.check()
-				.argNotEmpty(resourcePath)
+				.isNotBlank(resourcePath)
 				.notNull(dslDefinitionRepository);
 		//-----
 

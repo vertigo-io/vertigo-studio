@@ -25,7 +25,7 @@ public class VertigoConstants {
 		private final String canonicalName;
 
 		VertigoClassNames(final String canonicalName) {
-			Assertion.check().argNotEmpty(canonicalName);
+			Assertion.check().isNotBlank(canonicalName);
 			//---
 			this.canonicalName = canonicalName;
 			final int lastDot = canonicalName.lastIndexOf('.');
@@ -59,7 +59,7 @@ public class VertigoConstants {
 		private final String prefix;
 
 		VertigoDefinitionPrefix(final String prefix) {
-			Assertion.check().argNotEmpty(prefix);
+			Assertion.check().isNotBlank(prefix);
 			//---
 			this.prefix = prefix;
 		}

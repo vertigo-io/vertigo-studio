@@ -56,8 +56,8 @@ public final class SecuredFeature implements Definition {
 			final Optional<String> comment,
 			final Optional<String> linkedResourceOpt) {
 		Assertion.check()
-				.argNotEmpty(code)
-				.argNotEmpty(label)
+				.isNotBlank(code)
+				.isNotBlank(label)
 				.notNull(comment)
 				.notNull(linkedResourceOpt);
 		//-----

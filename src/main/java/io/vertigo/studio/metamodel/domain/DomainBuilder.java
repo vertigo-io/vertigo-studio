@@ -55,7 +55,7 @@ public final class DomainBuilder implements Builder<Domain> {
 	 */
 	DomainBuilder(final String name, final BasicType dataType) {
 		Assertion.check()
-				.argNotEmpty(name)
+				.isNotBlank(name)
 				.notNull(dataType);
 		//---
 		myName = name;
@@ -73,7 +73,7 @@ public final class DomainBuilder implements Builder<Domain> {
 	 */
 	DomainBuilder(final String name, final String dtDefinitionName) {
 		Assertion.check()
-				.argNotEmpty(name)
+				.isNotBlank(name)
 				.notNull(dtDefinitionName);
 		//---
 		myName = name;
@@ -91,7 +91,7 @@ public final class DomainBuilder implements Builder<Domain> {
 	 */
 	DomainBuilder(final String name, final Class valueObjectClass) {
 		Assertion.check()
-				.argNotEmpty(name)
+				.isNotBlank(name)
 				.notNull(valueObjectClass);
 		//---
 		myName = name;

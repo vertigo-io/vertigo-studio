@@ -66,14 +66,14 @@ public final class XmlAssociation {
 			final boolean navigabilityA,
 			final boolean navigabilityB) {
 		Assertion.check()
-				.argNotEmpty(code)
+				.isNotBlank(code)
 				/*packageName can be null*/
-				.argNotEmpty(multiplicityA)
-				.argNotEmpty(multiplicityB)
-				.argNotEmpty(roleLabelA)
-				.argNotEmpty(roleLabelB)
-				.argNotEmpty(codeA)
-				.argNotEmpty(codeB);
+				.isNotBlank(multiplicityA)
+				.isNotBlank(multiplicityB)
+				.isNotBlank(roleLabelA)
+				.isNotBlank(roleLabelB)
+				.isNotBlank(codeA)
+				.isNotBlank(codeB);
 		//-----
 		this.code = code;
 		this.packageName = packageName;

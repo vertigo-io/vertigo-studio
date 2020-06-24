@@ -39,8 +39,8 @@ public final class MetamodelResource {
 
 	private MetamodelResource(final String type, final String path) {
 		Assertion.check()
-				.argNotEmpty(type)
-				.argNotEmpty(path);
+				.isNotBlank(type)
+				.isNotBlank(path);
 		//-----
 		this.type = type;
 		this.path = path;

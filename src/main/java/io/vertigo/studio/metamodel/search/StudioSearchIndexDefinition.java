@@ -77,14 +77,14 @@ public final class StudioSearchIndexDefinition implements Definition {
 			final Map<StudioDtField, List<StudioDtField>> indexCopyToFieldsMap,
 			final String searchLoaderId) {
 		Assertion.check()
-				.argNotEmpty(name)
+				.isNotBlank(name)
 				.notNull(keyConceptDtDefinition)
 				.argument(
 						keyConceptDtDefinition.getStereotype() == StudioStereotype.KeyConcept,
 						"keyConceptDtDefinition ({0}) must be a DtDefinition of a KeyConcept class", keyConceptDtDefinition.getName())
 				.notNull(indexDtDefinition)
 				.notNull(indexCopyToFieldsMap)
-				.argNotEmpty(searchLoaderId);
+				.isNotBlank(searchLoaderId);
 		//-----
 		this.name = name;
 		this.keyConceptDtDefinition = keyConceptDtDefinition;

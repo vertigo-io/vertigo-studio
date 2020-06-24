@@ -87,7 +87,7 @@ public final class StudioDtDefinition implements Definition {
 				.notNull(fragment)
 				.notNull(stereotype)
 				.notNull(dtFields)
-				.argNotEmpty(dataSpace)
+				.isNotBlank(dataSpace)
 				.state(REGEX_DATA_SPACE.matcher(dataSpace).matches(), "dataSpace {0} must match pattern {1}", dataSpace, REGEX_DATA_SPACE)
 				.notNull(sortField)
 				.notNull(displayField)
@@ -193,7 +193,7 @@ public final class StudioDtDefinition implements Definition {
 	 * @return Champ correspondant
 	 */
 	public StudioDtField getField(final String fieldName) {
-		Assertion.check().argNotEmpty(fieldName);
+		Assertion.check().isNotBlank(fieldName);
 		//-----
 		final StudioDtField dtField = mappedFields.get(fieldName);
 		//-----

@@ -119,7 +119,7 @@ public final class StudioDtField {
 			final String fkDtDefinitionName,
 			final ComputedExpression computedExpression) {
 		Assertion.check()
-				.argNotEmpty(id)
+				.isNotBlank(id)
 				.notNull(type)
 				.notNull(domain)
 				.notNull(type)

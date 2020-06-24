@@ -69,7 +69,7 @@ public final class DslDefinition {
 		Assertion.check()
 				.notNull(entity)
 				//packageName can be null
-				.argNotEmpty(name)
+				.isNotBlank(name)
 				.notNull(propertyValueByFieldName)
 				.notNull(definitionLinkNamesByFieldName)
 				.notNull(childDefinitionsByFieldName);

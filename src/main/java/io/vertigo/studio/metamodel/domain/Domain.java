@@ -109,7 +109,7 @@ public final class Domain implements Definition {
 			final List<ConstraintDefinition> constraintDefinitions,
 			final Properties properties) {
 		Assertion.check()
-				.argNotEmpty(name)
+				.isNotBlank(name)
 				.notNull(scope);
 		//---
 		Assertion.when(scope == Scope.PRIMITIVE)

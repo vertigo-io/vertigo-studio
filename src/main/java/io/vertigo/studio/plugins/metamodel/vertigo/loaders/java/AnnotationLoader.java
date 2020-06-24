@@ -81,7 +81,7 @@ public final class AnnotationLoader implements Loader {
 	@Override
 	public void load(final String resourcePath, final DslDefinitionRepository dslDefinitionRepository) {
 		Assertion.check()
-				.argNotEmpty(resourcePath)
+				.isNotBlank(resourcePath)
 				.notNull(dslDefinitionRepository);
 		//-----
 		//--Enregistrement des fichiers java annotés

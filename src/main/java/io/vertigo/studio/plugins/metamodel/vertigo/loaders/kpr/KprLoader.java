@@ -71,7 +71,7 @@ public final class KprLoader implements Loader {
 	@Override
 	public void load(final String resourcePath, final DslDefinitionRepository dslDefinitionRepository) {
 		Assertion.check()
-				.argNotEmpty(resourcePath)
+				.isNotBlank(resourcePath)
 				.notNull(dslDefinitionRepository);
 		//-----
 		final URL kprURL = resourceManager.resolve(resourcePath);

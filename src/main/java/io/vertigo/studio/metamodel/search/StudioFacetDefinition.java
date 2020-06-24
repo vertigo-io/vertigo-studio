@@ -99,7 +99,7 @@ public final class StudioFacetDefinition implements Definition {
 			final boolean multiSelectable,
 			final FacetOrder order) {
 		Assertion.check()
-				.argNotEmpty(name)
+				.isNotBlank(name)
 				.notNull(indexDtDefinition)
 				.notNull(dtField)
 				.notNull(label)

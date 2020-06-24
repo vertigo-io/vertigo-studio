@@ -45,8 +45,8 @@ public final class FormatterDefinition implements Definition {
 	 */
 	public FormatterDefinition(final String name, final String formatterClassName, final String args) {
 		Assertion.check()
-				.argNotEmpty(formatterClassName)
-				.argNotEmpty(name);
+				.isNotBlank(formatterClassName)
+				.isNotBlank(name);
 		//-----
 		this.name = name;
 		this.formatterClassName = formatterClassName;

@@ -43,7 +43,7 @@ final class DslInnerDefinitionRule extends AbstractRule<DslDefinitionEntry, List
 
 	private static PegRule<List<Object>> createMainRule(final String entityName, final DslEntity entity) {
 		Assertion.check()
-				.argNotEmpty(entityName)
+				.isNotBlank(entityName)
 				.notNull(entity);
 		//-----
 		final DslDefinitionBodyRule definitionBodyRule = new DslDefinitionBodyRule(entity);

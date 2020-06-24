@@ -51,8 +51,8 @@ public final class ConstraintDefinition implements Definition {
 	 */
 	public ConstraintDefinition(final String name, final String constraintClassName, final String msg, final String args) {
 		Assertion.check()
-				.argNotEmpty(constraintClassName)
-				.argNotEmpty(name);
+				.isNotBlank(constraintClassName)
+				.isNotBlank(name);
 		//-----
 		this.name = name;
 		this.constraintClassName = constraintClassName;

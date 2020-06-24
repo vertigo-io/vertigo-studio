@@ -39,7 +39,7 @@ public final class ComputedExpression {
 	 * @return the java code or expression
 	 */
 	public String getJavaCode() {
-		Assertion.check().argNotEmpty(javaCode, "a java expression is required.");
+		Assertion.check().isNotBlank(javaCode, "a java expression is required.");
 		//-----
 		return javaCode;
 	}

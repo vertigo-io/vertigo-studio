@@ -80,7 +80,7 @@ final class MdaFileGeneratorFreeMarker implements MdaFileGenerator {
 				.notNull(model)
 				.notNull(filePath)
 				.notNull(templateName)
-				.argNotEmpty(encoding)
+				.isNotBlank(encoding)
 				.notNull(referenceClass);
 		//-----
 		this.model = model;

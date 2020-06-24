@@ -49,8 +49,8 @@ public final class StudioFileInfo implements Definition {
 	 */
 	public StudioFileInfo(final String name, final String storeName) {
 		Assertion.check()
-				.argNotEmpty(name)
-				.argNotEmpty(storeName);
+				.isNotBlank(name)
+				.isNotBlank(storeName);
 		//-----
 		this.name = name;
 		this.storeName = storeName;
