@@ -232,7 +232,7 @@ public final class StudioFacetDefinition implements Definition {
 	 * @return Liste des params.
 	 */
 	public Map<String, String> getFacetParams() {
-		Assertion.check().isTrue(!facetParams.isEmpty(), "Cette facette ({0}) n'est pas paramétrée (custom).", getName());
+		Assertion.check().isFalse(facetParams.isEmpty(), "Cette facette ({0}) n'est pas paramétrée (custom).", getName());
 		//-----
 		return facetParams;
 	}

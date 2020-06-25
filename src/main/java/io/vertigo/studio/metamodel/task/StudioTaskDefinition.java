@@ -106,7 +106,7 @@ public final class StudioTaskDefinition implements Definition {
 		for (final StudioTaskAttribute taskAttribute : taskAttributes) {
 			Assertion.check()
 					.isNotNull(taskAttribute)
-					.isTrue(!map.containsKey(taskAttribute.getName()), "attribut {0} existe déjà", taskAttribute.getName());
+					.isFalse(map.containsKey(taskAttribute.getName()), "attribut {0} existe déjà", taskAttribute.getName());
 			//-----
 			map.put(taskAttribute.getName(), taskAttribute);
 		}

@@ -245,7 +245,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		}
 
 		//On enregistre les Builder pour pouvoir les mettre à jour sur les associations.
-		Assertion.check().isTrue(!dtDefinitionBuilders.containsKey(dtDefinitionName), "Definition '{0}' already registered", dtDefinitionName);
+		Assertion.check().isFalse(dtDefinitionBuilders.containsKey(dtDefinitionName), "Definition '{0}' already registered", dtDefinitionName);
 		dtDefinitionBuilders.put(dtDefinitionName, dtDefinitionBuilder);
 
 		//Déclaration de la clé primaire

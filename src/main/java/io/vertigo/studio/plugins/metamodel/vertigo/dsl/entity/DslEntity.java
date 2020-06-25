@@ -65,7 +65,7 @@ public final class DslEntity implements DslEntityFieldType {
 		this.provided = provided;
 		this.fields = new HashMap<>();
 		for (final DslEntityField field : fields) {
-			Assertion.check().isTrue(!this.fields.containsKey(field.getName()), "field {0} is already registered for {1}", field, this);
+			Assertion.check().isFalse(this.fields.containsKey(field.getName()), "field {0} is already registered for {1}", field, this);
 			//Une propriété est unique pour une définition donnée.
 			//Il n'y a jamais de multiplicité
 			this.fields.put(field.getName(), field);
