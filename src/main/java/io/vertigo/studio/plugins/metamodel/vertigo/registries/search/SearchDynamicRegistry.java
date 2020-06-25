@@ -149,7 +149,7 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 
 	private static FacetOrder getFacetOrder(final DslDefinition xdefinition, final FacetOrder defaultOrder) {
 		final String orderStr = (String) xdefinition.getPropertyValue(SearchGrammar.FACET_ORDER);
-		Assertion.check().argument(orderStr == null
+		Assertion.check().isTrue(orderStr == null
 				|| FacetOrder.alpha.name().equals(orderStr)
 				|| FacetOrder.count.name().equals(orderStr)
 				|| FacetOrder.definition.name().equals(orderStr), "Facet order must be one of {0}", Arrays.toString(FacetOrder.values()));

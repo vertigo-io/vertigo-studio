@@ -223,7 +223,7 @@ public final class StudioFacetDefinition implements Definition {
 	 * @return Liste des sélections/range.
 	 */
 	public List<StudioFacetValue> getFacetRanges() {
-		Assertion.check().argument(rangeFacet, "Cette facette ({0}) n'est pas segmentée.", getName());
+		Assertion.check().isTrue(rangeFacet, "Cette facette ({0}) n'est pas segmentée.", getName());
 		//-----
 		return facetValues;
 	}
@@ -232,7 +232,7 @@ public final class StudioFacetDefinition implements Definition {
 	 * @return Liste des params.
 	 */
 	public Map<String, String> getFacetParams() {
-		Assertion.check().argument(!facetParams.isEmpty(), "Cette facette ({0}) n'est pas paramétrée (custom).", getName());
+		Assertion.check().isTrue(!facetParams.isEmpty(), "Cette facette ({0}) n'est pas paramétrée (custom).", getName());
 		//-----
 		return facetParams;
 	}

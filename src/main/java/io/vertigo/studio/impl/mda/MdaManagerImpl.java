@@ -68,8 +68,8 @@ public final class MdaManagerImpl implements MdaManager {
 	public MdaResult clean(final MdaConfig mdaConfig) {
 		final File directory = new File(mdaConfig.getTargetGenDir());
 		Assertion.check()
-				.argument(directory.exists(), "targetGenDir {0} must exist", mdaConfig.getTargetGenDir())
-				.argument(directory.isDirectory(), "targetGenDir {0} must be a directory", mdaConfig.getTargetGenDir());
+				.isTrue(directory.exists(), "targetGenDir {0} must exist", mdaConfig.getTargetGenDir())
+				.isTrue(directory.isDirectory(), "targetGenDir {0} must be a directory", mdaConfig.getTargetGenDir());
 		//---
 		// We want to final clean the directory
 		final MdaResultBuilder mdaResultBuilder = MdaResult.builder();

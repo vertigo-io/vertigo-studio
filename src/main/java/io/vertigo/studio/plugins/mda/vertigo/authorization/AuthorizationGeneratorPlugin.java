@@ -99,8 +99,8 @@ public final class AuthorizationGeneratorPlugin implements MdaGeneratorPlugin {
 			final Collection<?> values) {
 		Assertion.check()
 				.isNotBlank(objectName)
-				.argument(Character.isUpperCase(objectName.charAt(0)) && !objectName.contains("_"), "Object name ({0}) should be in camelcase and starts with UpperCase", objectName)
-				.argument(objectName.charAt(objectName.length() - 1) == 's', "Object name ({0}) should ends with 's'", objectName);
+				.isTrue(Character.isUpperCase(objectName.charAt(0)) && !objectName.contains("_"), "Object name ({0}) should be in camelcase and starts with UpperCase", objectName)
+				.isTrue(objectName.charAt(objectName.length() - 1) == 's', "Object name ({0}) should ends with 's'", objectName);
 		//----
 		if (!values.isEmpty()) {
 			final String lowerCaseObjectName = objectName.toLowerCase(Locale.ROOT);

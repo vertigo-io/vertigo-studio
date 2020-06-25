@@ -46,7 +46,7 @@ public final class PAOModel {
 		Assertion.check()
 				.isNotNull(mdaConfig)
 				.isNotNull(taskDefinitionCollection)
-				.argument(!taskDefinitionCollection.isEmpty(), "Aucune tache dans le package {0}", packageName)
+				.isTrue(!taskDefinitionCollection.isEmpty(), "Aucune tache dans le package {0}", packageName)
 				.isNotNull(packageName);
 		//-----
 		this.packageName = packageName;

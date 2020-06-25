@@ -55,8 +55,8 @@ public final class DAOModel {
 		final String packageNamePrefix = mdaConfig.getProjectPackageName();
 		// ---
 		Assertion.check()
-				.argument(definitionPackageName.startsWith(packageNamePrefix), "Package name {0}, must begin with normalised prefix: {1}", definitionPackageName, packageNamePrefix)
-				.argument(definitionPackageName.substring(packageNamePrefix.length()).contains(".domain"), "Package name {0}, must contains the modifier .domain", definitionPackageName);
+				.isTrue(definitionPackageName.startsWith(packageNamePrefix), "Package name {0}, must begin with normalised prefix: {1}", definitionPackageName, packageNamePrefix)
+				.isTrue(definitionPackageName.substring(packageNamePrefix.length()).contains(".domain"), "Package name {0}, must contains the modifier .domain", definitionPackageName);
 		// ---
 		//we need to find the featureName, aka between projectpackageName and .domain
 		final String featureName = definitionPackageName.substring(packageNamePrefix.length(), definitionPackageName.indexOf(".domain"));

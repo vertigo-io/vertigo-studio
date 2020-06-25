@@ -79,7 +79,7 @@ public final class StudioSearchIndexDefinition implements Definition {
 		Assertion.check()
 				.isNotBlank(name)
 				.isNotNull(keyConceptDtDefinition)
-				.argument(
+				.isTrue(
 						keyConceptDtDefinition.getStereotype() == StudioStereotype.KeyConcept,
 						"keyConceptDtDefinition ({0}) must be a DtDefinition of a KeyConcept class", keyConceptDtDefinition.getName())
 				.isNotNull(indexDtDefinition)

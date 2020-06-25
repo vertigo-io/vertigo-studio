@@ -23,8 +23,8 @@ public class StudioMetamodelManagerImpl implements StudioMetamodelManager {
 		//---
 		for (final MetamodelResourceParserPlugin metamodelResourceParserPlugin : metamodelResourceParserPlugins) {
 			for (final String resourceType : metamodelResourceParserPlugin.getHandledResourceTypes()) {
-				Assertion.check().isTrue(!metamodelResourceParserPluginsByType.containsKey(resourceType), "Only one plugin can manage the ResourceType {0}",
-						resourceType);
+				Assertion.check().isFalse(metamodelResourceParserPluginsByType.containsKey(resourceType),
+						"Only one plugin can manage the ResourceType {0}", resourceType);
 				metamodelResourceParserPluginsByType.put(resourceType, metamodelResourceParserPlugin);
 			}
 		}

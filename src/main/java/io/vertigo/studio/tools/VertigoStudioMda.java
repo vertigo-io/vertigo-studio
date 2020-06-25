@@ -46,7 +46,7 @@ public final class VertigoStudioMda {
 
 	public static void main(final String[] args) {
 		Assertion.check()
-				.argument(args.length == 1, "expected the studio json config");
+				.isTrue(args.length == 1, "expected the studio json config");
 		//--
 		final String studioProjectConfigJson = args[0];
 		doMain(studioProjectConfigJson);

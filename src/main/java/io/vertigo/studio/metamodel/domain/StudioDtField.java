@@ -132,14 +132,14 @@ public final class StudioDtField {
 		//-----
 		Assertion.check()
 				.isNotNull(fieldName)
-				.argument(fieldName.length() <= FIELD_NAME_MAX_LENGTH, "the name of the field {0} has a limit size of {1}", fieldName, FIELD_NAME_MAX_LENGTH)
-				.argument(StringUtil.isLowerCamelCase(fieldName), "the name of the field {0} must be in lowerCamelCase", fieldName)
+				.isTrue(fieldName.length() <= FIELD_NAME_MAX_LENGTH, "the name of the field {0} has a limit size of {1}", fieldName, FIELD_NAME_MAX_LENGTH)
+				.isTrue(StringUtil.isLowerCamelCase(fieldName), "the name of the field {0} must be in lowerCamelCase", fieldName)
 				.isNotNull(label);
 		//-----
 		name = fieldName;
 		this.label = label;
 		//-----
-		Assertion.check().argument(!(getType() == FieldType.COMPUTED && persistent), "a computed field can't be persistent");
+		Assertion.check().isTrue(!(getType() == FieldType.COMPUTED && persistent), "a computed field can't be persistent");
 		this.persistent = persistent;
 		//-----
 		if (getType() == FieldType.FOREIGN_KEY) {

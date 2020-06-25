@@ -56,7 +56,7 @@ public final class StudioTaskAttribute {
 		Assertion.check()
 				.isNotNull(attributeName)
 				.isNotNull(cardinality)
-				.argument(StringUtil.isLowerCamelCase(attributeName), "the name of the attribute {0} must be in lowerCamelCase", attributeName)
+				.isTrue(StringUtil.isLowerCamelCase(attributeName), "the name of the attribute {0} must be in lowerCamelCase", attributeName)
 				.isNotNull(domain);
 		//-----
 		name = attributeName;

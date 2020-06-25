@@ -36,7 +36,7 @@ public class MdaUtil {
 
 	public static void deleteFiles(final File directory, final MdaResultBuilder mdaResultBuilder) {
 		if (directory.exists()) {
-			Assertion.check().argument(directory.isDirectory(), "targetGenDir must be a directory");
+			Assertion.check().isTrue(directory.isDirectory(), "targetGenDir must be a directory");
 			for (final File file : directory.listFiles()) {
 				if (file.isDirectory()) {
 					deleteDirectory(file, mdaResultBuilder);

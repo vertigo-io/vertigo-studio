@@ -89,7 +89,7 @@ public final class DslDefinitionRepository {
 	 * @return DynamicDefinition Définition correspondante ou null.
 	 */
 	public DslDefinition getDefinition(final String definitionName) {
-		Assertion.check().argument(dslDefinitions.containsKey(definitionName), "Aucune clé enregistrée pour :{0} parmi {1}", definitionName, dslDefinitions.keySet());
+		Assertion.check().isTrue(dslDefinitions.containsKey(definitionName), "Aucune clé enregistrée pour :{0} parmi {1}", definitionName, dslDefinitions.keySet());
 		//-----
 		final DslDefinition definition = dslDefinitions.get(definitionName);
 		//-----

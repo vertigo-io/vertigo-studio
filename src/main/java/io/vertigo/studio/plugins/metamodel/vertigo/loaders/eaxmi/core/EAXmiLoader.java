@@ -115,7 +115,7 @@ public final class EAXmiLoader extends AbstractXmlLoader {
 
 	private static XmlAttribute createAttribute(final EAXmiObject obj, final boolean isPK, final boolean constFieldNameInSource) {
 		final String code = obj.getName();
-		Assertion.check().argument(CODE_PATTERN.matcher(code).matches(), "Code {0} must use a simple charset a-z A-Z 0-9 or _", code);
+		Assertion.check().isTrue(CODE_PATTERN.matcher(code).matches(), "Code {0} must use a simple charset a-z A-Z 0-9 or _", code);
 		final String fieldName = constFieldNameInSource ? StringUtil.constToLowerCamelCase(code.toUpperCase(Locale.ENGLISH)) : code;
 		final String domainName = constFieldNameInSource ? StringUtil.constToUpperCamelCase(obj.getDomain().toUpperCase(Locale.ENGLISH)) : obj.getDomain();
 		final String label = obj.getLabel();

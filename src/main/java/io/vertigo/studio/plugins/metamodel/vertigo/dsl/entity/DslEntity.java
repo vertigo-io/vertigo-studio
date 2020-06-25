@@ -65,7 +65,7 @@ public final class DslEntity implements DslEntityFieldType {
 		this.provided = provided;
 		this.fields = new HashMap<>();
 		for (final DslEntityField field : fields) {
-			Assertion.check().argument(!this.fields.containsKey(field.getName()), "field {0} is already registered for {1}", field, this);
+			Assertion.check().isTrue(!this.fields.containsKey(field.getName()), "field {0} is already registered for {1}", field, this);
 			//Une propriété est unique pour une définition donnée.
 			//Il n'y a jamais de multiplicité
 			this.fields.put(field.getName(), field);
@@ -105,7 +105,7 @@ public final class DslEntity implements DslEntityFieldType {
 	 */
 	public DslPropertyType getPropertyType(final String fieldName) {
 		final DslEntityFieldType type = getField(fieldName).getType();
-		Assertion.check().argument(type.isProperty(), "property {0} not found on {1}", fieldName, this);
+		Assertion.check().isTrue(type.isProperty(), "property {0} not found on {1}", fieldName, this);
 		//-----
 		return (DslPropertyType) type;
 	}
@@ -118,7 +118,7 @@ public final class DslEntity implements DslEntityFieldType {
 	public DslEntityField getField(final String fieldName) {
 		Assertion.check()
 				.isNotNull(fieldName)
-				.argument(fields.containsKey(fieldName), "Field  '{0}' is not declared on entity '{1}'", fieldName, this);
+				.isTrue(fields.containsKey(fieldName), "Field  '{0}' is not declared on entity '{1}'", fieldName, this);
 		//-----
 		return fields.get(fieldName);
 	}
