@@ -35,7 +35,6 @@ import io.vertigo.core.lang.VSystemException;
 import io.vertigo.core.node.definition.Definition;
 import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.node.definition.DefinitionSupplier;
-import io.vertigo.core.node.definition.DefinitionUtil;
 import io.vertigo.core.util.ClassUtil;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.metamodel.domain.ComputedExpression;
@@ -62,7 +61,6 @@ import io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslGrammar;
  */
 public final class DomainDynamicRegistry implements DynamicRegistry {
 	private static final Logger LOGGER = LogManager.getLogger(DomainDynamicRegistry.class);
-	private static final String DOMAIN_PREFIX = DefinitionUtil.getPrefix(Domain.class);
 	private final Map<String, StudioDtDefinitionBuilder> dtDefinitionBuilders = new HashMap<>();
 
 	@Override
@@ -490,7 +488,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 
 		final DslEntity metaDefinitionDomain = DomainGrammar.DOMAIN_ENTITY;
 
-		return DslDefinition.builder(DOMAIN_PREFIX + definitionName, metaDefinitionDomain)
+		return DslDefinition.builder(Domain.PREFIX + definitionName, metaDefinitionDomain)
 				.withPackageName(packageName)
 				.addDefinitionLink("dataType", "DtObject")
 				//On dit que le domaine possède une prop définissant le type comme étant le nom du DT

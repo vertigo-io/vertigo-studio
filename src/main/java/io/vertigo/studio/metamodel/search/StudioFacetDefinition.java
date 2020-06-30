@@ -24,7 +24,7 @@ import java.util.Map;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.locale.MessageText;
-import io.vertigo.core.node.definition.Definition;
+import io.vertigo.core.node.definition.AbstractDefinition;
 import io.vertigo.core.node.definition.DefinitionPrefix;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 import io.vertigo.studio.metamodel.domain.StudioDtField;
@@ -51,9 +51,9 @@ import io.vertigo.studio.metamodel.domain.StudioDtField;
  *
  * @author pchretien, mlaroche
  */
-@DefinitionPrefix("StFct")
-public final class StudioFacetDefinition implements Definition {
-	private final String name;
+@DefinitionPrefix(StudioFacetDefinition.PREFIX)
+public final class StudioFacetDefinition extends AbstractDefinition {
+	public static final String PREFIX = "StFct";
 	private final StudioDtDefinition indexDtDefinition;
 	private final StudioDtField dtField;
 	private final MessageText label;
@@ -98,8 +98,9 @@ public final class StudioFacetDefinition implements Definition {
 			final boolean customFacet,
 			final boolean multiSelectable,
 			final FacetOrder order) {
+		super(name);
+		//---
 		Assertion.check()
-				.isNotBlank(name)
 				.isNotNull(indexDtDefinition)
 				.isNotNull(dtField)
 				.isNotNull(label)
@@ -113,7 +114,6 @@ public final class StudioFacetDefinition implements Definition {
 				.isTrue(facetValues::isEmpty, "Les FacetDefinition de type 'term' doivent fournir une liste des segments vide");
 		Assertion.check().isNotNull(order);
 		//-----
-		this.name = name;
 		this.indexDtDefinition = indexDtDefinition;
 		this.dtField = dtField;
 		this.label = label;
@@ -263,17 +263,5 @@ public final class StudioFacetDefinition implements Definition {
 	 */
 	public FacetOrder getOrder() {
 		return order;
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public String toString() {
-		return name;
 	}
 }

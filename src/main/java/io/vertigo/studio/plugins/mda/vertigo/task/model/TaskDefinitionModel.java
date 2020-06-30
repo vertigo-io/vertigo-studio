@@ -23,10 +23,10 @@ import java.util.List;
 import java.util.function.Function;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionUtil;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.metamodel.task.StudioTaskAttribute;
 import io.vertigo.studio.metamodel.task.StudioTaskDefinition;
+import io.vertigo.studio.tools.DefinitionUtil;
 
 /**
  * Génération des classes/méthodes des taches de type DAO.
@@ -85,7 +85,7 @@ public final class TaskDefinitionModel {
 	 */
 	public String getMethodName() {
 		// Nom de la définition sans prefix (XxxYyyy).
-		final String localName = DefinitionUtil.getLocalName(taskDefinition.getName(), StudioTaskDefinition.class);
+		final String localName = DefinitionUtil.getLocalName(taskDefinition.getName(), StudioTaskDefinition.PREFIX);
 		return StringUtil.first2LowerCase(localName);
 	}
 

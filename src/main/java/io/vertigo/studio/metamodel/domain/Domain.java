@@ -23,9 +23,8 @@ import java.util.Properties;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.BasicType;
-import io.vertigo.core.node.definition.Definition;
+import io.vertigo.core.node.definition.AbstractDefinition;
 import io.vertigo.core.node.definition.DefinitionPrefix;
-import io.vertigo.core.node.definition.DefinitionUtil;
 
 /**
  * A domain exists to enrich the primitive datatypes, giving them super powers.
@@ -46,8 +45,10 @@ import io.vertigo.core.node.definition.DefinitionUtil;
  *
  * @author pchretien, mlaroche
  */
-@DefinitionPrefix("Do")
-public final class Domain implements Definition {
+@DefinitionPrefix(Domain.PREFIX)
+public final class Domain extends AbstractDefinition {
+	public static final String PREFIX = "Do";
+
 	public enum Scope {
 		PRIMITIVE, VALUE_OBJECT, DATA_OBJECT;
 
@@ -73,7 +74,6 @@ public final class Domain implements Definition {
 		}
 	}
 
-	private final String name;
 	private final Scope scope;
 	private final BasicType dataType;
 
@@ -108,9 +108,9 @@ public final class Domain implements Definition {
 			final FormatterDefinition formatterDefinition,
 			final List<ConstraintDefinition> constraintDefinitions,
 			final Properties properties) {
-		Assertion.check()
-				.isNotBlank(name)
-				.isNotNull(scope);
+		super(name);
+		//---
+		Assertion.check().isNotNull(scope);
 		//---
 		Assertion.when(scope == Scope.PRIMITIVE)
 				.isTrue(() -> dataType != null, "a primitive domain must define a primitive type")
@@ -128,7 +128,6 @@ public final class Domain implements Definition {
 				.isNotNull(constraintDefinitions)
 				.isNotNull(properties);
 		//-----
-		this.name = name;
 		this.scope = scope;
 		//--- Primitive
 		this.dataType = dataType;
@@ -216,14 +215,8 @@ public final class Domain implements Definition {
 		return dtDefinitionName;
 	}
 
-	/** {@inheritDoc} */
-	@Override
-	public String getName() {
-		return name;
-	}
-
 	public String getSmartTypeName() {
-		return "STy" + DefinitionUtil.getLocalName(name, Domain.class);
+		return "STy" + getLocalName();
 	}
 
 	/**
@@ -238,11 +231,4 @@ public final class Domain implements Definition {
 		//---
 		return valueObjectClassName;
 	}
-
-	/** {@inheritDoc} */
-	@Override
-	public String toString() {
-		return name;
-	}
-
 }

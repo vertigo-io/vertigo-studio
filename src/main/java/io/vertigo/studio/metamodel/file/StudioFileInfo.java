@@ -19,7 +19,7 @@
 package io.vertigo.studio.metamodel.file;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.Definition;
+import io.vertigo.core.node.definition.AbstractDefinition;
 import io.vertigo.core.node.definition.DefinitionPrefix;
 
 /**
@@ -31,12 +31,9 @@ import io.vertigo.core.node.definition.DefinitionPrefix;
  *
  * @author  npiedeloup, pchretien
  */
-@DefinitionPrefix("StFi")
-public final class StudioFileInfo implements Definition {
-	/**
-	 * Nom de la définition.
-	 */
-	private final String name;
+@DefinitionPrefix(StudioFileInfo.PREFIX)
+public final class StudioFileInfo extends AbstractDefinition {
+	public static final String PREFIX = "StFi";
 	/**
 	 * StoreName des fichiers de ce type.
 	 */
@@ -48,18 +45,11 @@ public final class StudioFileInfo implements Definition {
 	 * @param storeName Nom du store de ces fichiers
 	 */
 	public StudioFileInfo(final String name, final String storeName) {
-		Assertion.check()
-				.isNotBlank(name)
-				.isNotBlank(storeName);
+		super(name);
+		//---
+		Assertion.check().isNotBlank(storeName);
 		//-----
-		this.name = name;
 		this.storeName = storeName;
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public String getName() {
-		return name;
 	}
 
 	/**
@@ -68,11 +58,4 @@ public final class StudioFileInfo implements Definition {
 	public String getStoreName() {
 		return storeName;
 	}
-
-	/** {@inheritDoc} */
-	@Override
-	public String toString() {
-		return name;
-	}
-
 }

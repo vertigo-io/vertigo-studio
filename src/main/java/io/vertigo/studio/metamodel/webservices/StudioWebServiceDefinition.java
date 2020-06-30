@@ -24,15 +24,16 @@ import java.util.List;
 import java.util.Optional;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.Definition;
+import io.vertigo.core.node.definition.AbstractDefinition;
 import io.vertigo.core.node.definition.DefinitionPrefix;
 
 /**
  * Web service definition.
  * @author npiedeloup
  */
-@DefinitionPrefix("StWs")
-public final class StudioWebServiceDefinition implements Definition {
+@DefinitionPrefix(StudioWebServiceDefinition.PREFIX)
+public final class StudioWebServiceDefinition extends AbstractDefinition {
+	public static final String PREFIX = "StWs";
 
 	/**
 	 * HTTP Verb supported.
@@ -45,7 +46,6 @@ public final class StudioWebServiceDefinition implements Definition {
 		Delete,
 	}
 
-	private final String name;
 	private final Verb verb;
 	private final String path;
 	private final List<StudioWebServiceParam> webServiceParams;
@@ -69,6 +69,8 @@ public final class StudioWebServiceDefinition implements Definition {
 			final Optional<String> groupNameOpt,
 			final String humanReadableAction,
 			final String doc) {
+		super(name);
+		//---
 		Assertion.check()
 				.isNotBlank(name)
 				.isNotNull(verb)
@@ -80,7 +82,6 @@ public final class StudioWebServiceDefinition implements Definition {
 				.isNotBlank(humanReadableAction)
 				.isNotNull(doc); //doc can be empty
 		//-----
-		this.name = name;
 		this.verb = verb;
 		this.path = path;
 		this.webServiceParams = Collections.unmodifiableList(new ArrayList<>(webServiceParams));
@@ -89,14 +90,6 @@ public final class StudioWebServiceDefinition implements Definition {
 		this.groupNameOpt = groupNameOpt;
 		this.humanReadableAction = humanReadableAction;
 		this.doc = doc;
-	}
-
-	/**
-	 * @return name
-	 */
-	@Override
-	public String getName() {
-		return name;
 	}
 
 	/**

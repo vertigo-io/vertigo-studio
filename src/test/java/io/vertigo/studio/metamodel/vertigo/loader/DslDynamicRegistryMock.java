@@ -18,8 +18,7 @@
  */
 package io.vertigo.studio.metamodel.vertigo.loader;
 
-import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.Definition;
+import io.vertigo.core.node.definition.AbstractDefinition;
 import io.vertigo.core.node.definition.DefinitionPrefix;
 import io.vertigo.core.node.definition.DefinitionSupplier;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinition;
@@ -54,19 +53,12 @@ public final class DslDynamicRegistryMock implements DynamicRegistry {
 		return (definitionSpace) -> new FakeDefinition(definition.getName());
 	}
 
-	@DefinitionPrefix("Mock")
-	public final static class FakeDefinition implements Definition {
-		private final String name;
+	@DefinitionPrefix(FakeDefinition.PREFIX)
+	public final static class FakeDefinition extends AbstractDefinition {
+		public static final String PREFIX = "Mock";
 
 		FakeDefinition(final String name) {
-			Assertion.check().isNotBlank(name);
-			//-----
-			this.name = name;
-		}
-
-		@Override
-		public String getName() {
-			return name;
+			super(name);
 		}
 	}
 }

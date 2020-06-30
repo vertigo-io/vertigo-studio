@@ -20,10 +20,10 @@ package io.vertigo.studio.plugins.mda.vertigo.domain.ts.model;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.BasicType;
-import io.vertigo.core.node.definition.DefinitionUtil;
 import io.vertigo.studio.metamodel.domain.Domain;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
+import io.vertigo.studio.tools.DefinitionUtil;
 
 /**
  * Model used to define a Domain.
@@ -61,7 +61,7 @@ public final class TSDomainModel {
 	 * @return Local name of the domain
 	 */
 	public String getDomainDefinitionName() {
-		return DefinitionUtil.getLocalName("St" + domain.getDtDefinitionName(), StudioDtDefinition.class);
+		return DefinitionUtil.getLocalName("St" + domain.getDtDefinitionName(), StudioDtDefinition.PREFIX);
 	}
 
 	/**
@@ -95,6 +95,6 @@ public final class TSDomainModel {
 		} else if (domain.getScope().isValueObject()) {
 			return DomainUtil.getSimpleNameFromCanonicalName(domain.getValueObjectClassName());
 		}
-		return DefinitionUtil.getLocalName("St" + domain.getDtDefinitionName(), StudioDtDefinition.class) + ((multiple) ? "[]" : "");
+		return DefinitionUtil.getLocalName("St" + domain.getDtDefinitionName(), StudioDtDefinition.PREFIX) + ((multiple) ? "[]" : "");
 	}
 }

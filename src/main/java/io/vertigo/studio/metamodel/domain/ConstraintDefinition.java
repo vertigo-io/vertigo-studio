@@ -19,7 +19,7 @@
 package io.vertigo.studio.metamodel.domain;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.Definition;
+import io.vertigo.core.node.definition.AbstractDefinition;
 import io.vertigo.core.node.definition.DefinitionPrefix;
 
 /**
@@ -27,14 +27,9 @@ import io.vertigo.core.node.definition.DefinitionPrefix;
  *
  * @author pchretien, mlaroche
  */
-@DefinitionPrefix("Ck")
-public final class ConstraintDefinition implements Definition {
-	/**
-	 * Nom de la contrainte.
-	 * On n'utilise pas les génériques car problémes.
-	 */
-	private final String name;
-
+@DefinitionPrefix(ConstraintDefinition.PREFIX)
+public final class ConstraintDefinition extends AbstractDefinition {
+	public static final String PREFIX = "Ck";
 	/**
 	 * Message d'erreur surchargé.
 	 */
@@ -50,19 +45,13 @@ public final class ConstraintDefinition implements Definition {
 	 * @param args the args to configure the constraint checker
 	 */
 	public ConstraintDefinition(final String name, final String constraintClassName, final String msg, final String args) {
+		super(name);
+		//--	
 		Assertion.check()
-				.isNotBlank(constraintClassName)
-				.isNotBlank(name);
+				.isNotBlank(constraintClassName);
 		//-----
-		this.name = name;
 		this.constraintClassName = constraintClassName;
 		this.msg = msg;
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public String getName() {
-		return name;
 	}
 
 	public String getConstraintClassName() {
@@ -75,11 +64,4 @@ public final class ConstraintDefinition implements Definition {
 	public String getErrorMessage() {
 		return msg;
 	}
-
-	/** {@inheritDoc} */
-	@Override
-	public String toString() {
-		return name;
-	}
-
 }

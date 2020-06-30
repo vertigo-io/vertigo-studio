@@ -19,7 +19,7 @@
 package io.vertigo.studio.metamodel.domain;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.Definition;
+import io.vertigo.core.node.definition.AbstractDefinition;
 import io.vertigo.core.node.definition.DefinitionPrefix;
 
 /**
@@ -27,13 +27,13 @@ import io.vertigo.core.node.definition.DefinitionPrefix;
  *
  * @author pchretien, mlaroche
  */
-@DefinitionPrefix("Fmt")
-public final class FormatterDefinition implements Definition {
+@DefinitionPrefix(FormatterDefinition.PREFIX)
+public final class FormatterDefinition extends AbstractDefinition {
+	public static final String PREFIX = "Fmt";
 	/**
 	* Nom de la contrainte.
 	* On n'utilise pas les génériques car problémes.
 	*/
-	private final String name;
 	private final String formatterClassName;
 	private final String args;
 
@@ -44,19 +44,12 @@ public final class FormatterDefinition implements Definition {
 	 * @param args args to configure the formatter
 	 */
 	public FormatterDefinition(final String name, final String formatterClassName, final String args) {
-		Assertion.check()
-				.isNotBlank(formatterClassName)
-				.isNotBlank(name);
-		//-----
-		this.name = name;
+		super(name);
+		//---
+		Assertion.check().isNotBlank(formatterClassName);
+		//---
 		this.formatterClassName = formatterClassName;
 		this.args = args;
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public String getName() {
-		return name;
 	}
 
 	public String getFormatterClassName() {
@@ -66,11 +59,4 @@ public final class FormatterDefinition implements Definition {
 	public String getArgs() {
 		return args;
 	}
-
-	/** {@inheritDoc} */
-	@Override
-	public String toString() {
-		return name;
-	}
-
 }

@@ -20,11 +20,11 @@ package io.vertigo.studio.plugins.mda.vertigo.domain.ts.model;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.BasicType;
-import io.vertigo.core.node.definition.DefinitionUtil;
 import io.vertigo.studio.metamodel.domain.Domain;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 import io.vertigo.studio.metamodel.domain.StudioDtField;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
+import io.vertigo.studio.tools.DefinitionUtil;
 
 /**
  * Model used to define a DtField.
@@ -130,7 +130,7 @@ public final class TSStudioDtFieldModel {
 		} else if (domain.getScope().isValueObject()) {
 			typescriptType = DomainUtil.getSimpleNameFromCanonicalName(domain.getValueObjectClassName());
 		} else {
-			typescriptType = DefinitionUtil.getLocalName("St" + domain.getDtDefinitionName(), StudioDtDefinition.class);
+			typescriptType = DefinitionUtil.getLocalName("St" + domain.getDtDefinitionName(), StudioDtDefinition.PREFIX);
 		}
 		return typescriptType + (withArray ? "[]" : "");
 	}

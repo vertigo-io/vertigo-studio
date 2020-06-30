@@ -21,7 +21,6 @@ package io.vertigo.studio.plugins.mda.vertigo.task.model;
 import java.util.function.Function;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionUtil;
 import io.vertigo.studio.metamodel.domain.Domain;
 import io.vertigo.studio.metamodel.task.StudioTaskAttribute;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
@@ -91,6 +90,6 @@ public final class TaskAttributeModel {
 	}
 
 	public String getSmartTypeName() {
-		return "STy" + DefinitionUtil.getLocalName(taskAttribute.getDomain().getName(), Domain.class);
+		return "STy" + taskAttribute.getDomain().getLocalName();
 	}
 }

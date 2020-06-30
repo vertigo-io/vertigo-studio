@@ -18,6 +18,7 @@
  */
 package io.vertigo.studio.metamodel.vertigo.dsl;
 
+import io.vertigo.core.node.definition.Definition;
 import io.vertigo.core.node.definition.DefinitionSupplier;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinition;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinitionRepository;
@@ -49,7 +50,18 @@ public final class DslDynamicRegistryMock implements DynamicRegistry {
 
 	@Override
 	public DefinitionSupplier supplyDefinition(final DslDefinition definition) {
-		return (definitionSpace) -> () -> "FAKE";
+		return (definitionSpace) -> new Definition() {
+
+			@Override
+			public String getName() {
+				return "FAKE";
+			}
+
+			@Override
+			public String getLocalName() {
+				return "FAKE";
+			}
+		};
 	}
 
 }

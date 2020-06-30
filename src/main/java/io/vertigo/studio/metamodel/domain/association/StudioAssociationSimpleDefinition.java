@@ -20,7 +20,6 @@ package io.vertigo.studio.metamodel.domain.association;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.definition.DefinitionPrefix;
-import io.vertigo.core.node.definition.DefinitionUtil;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.metamodel.domain.StudioDtField;
 
@@ -94,9 +93,5 @@ public final class StudioAssociationSimpleDefinition extends StudioAssociationDe
 	 */
 	public StudioDtField getFKField() {
 		return foreignAssociationNode.getDtDefinition().getField(fkFieldName);
-	}
-
-	public String getLocalName() {
-		return DefinitionUtil.getLocalName(getName(), StudioAssociationSimpleDefinition.class);
 	}
 }

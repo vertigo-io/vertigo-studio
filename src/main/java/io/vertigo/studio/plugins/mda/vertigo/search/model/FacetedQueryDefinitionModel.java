@@ -23,10 +23,10 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionUtil;
 import io.vertigo.studio.metamodel.search.StudioFacetedQueryDefinition;
 import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants.VertigoDefinitionPrefix;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
+import io.vertigo.studio.tools.DefinitionUtil;
 
 /**
  * Génération des classes/méthodes des taches de type DAO.
@@ -44,7 +44,7 @@ public final class FacetedQueryDefinitionModel {
 		Assertion.check().isNotNull(facetedQueryDefinition);
 		//-----
 		this.facetedQueryDefinition = facetedQueryDefinition;
-		simpleName = DefinitionUtil.getLocalName(facetedQueryDefinition.getName(), StudioFacetedQueryDefinition.class);
+		simpleName = DefinitionUtil.getLocalName(facetedQueryDefinition.getName(), StudioFacetedQueryDefinition.PREFIX);
 		criteriaClassCanonicalName = DomainUtil.buildJavaTypeName(facetedQueryDefinition.getCriteriaDomain(), classNameFromDt);
 		facetDefinitionModels = facetedQueryDefinition.getFacetDefinitions().stream().map(FacetDefinitionModel::new).collect(Collectors.toList());
 	}

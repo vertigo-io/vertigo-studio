@@ -21,7 +21,7 @@ package io.vertigo.studio.metamodel.authorization;
 import java.util.Optional;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.Definition;
+import io.vertigo.core.node.definition.AbstractDefinition;
 import io.vertigo.core.node.definition.DefinitionPrefix;
 import io.vertigo.core.util.StringUtil;
 
@@ -32,8 +32,8 @@ import io.vertigo.core.util.StringUtil;
  *
  * @author prahmoune, npiedeloup
  */
-@DefinitionPrefix("SecF")
-public final class SecuredFeature implements Definition {
+@DefinitionPrefix(SecuredFeature.PREFIX)
+public final class SecuredFeature extends AbstractDefinition {
 	public static final String PREFIX = "SecF";
 	//soit authorization globale (sans règle)
 	//soit authorization = une opération sur une entity
@@ -55,6 +55,8 @@ public final class SecuredFeature implements Definition {
 			final String label,
 			final Optional<String> comment,
 			final Optional<String> linkedResourceOpt) {
+		super(PREFIX + StringUtil.first2UpperCase(code));
+		//---
 		Assertion.check()
 				.isNotBlank(code)
 				.isNotBlank(label)
@@ -65,12 +67,6 @@ public final class SecuredFeature implements Definition {
 		this.label = label;
 		this.comment = comment;
 		this.linkedResourceOpt = linkedResourceOpt;
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public String getName() {
-		return PREFIX + StringUtil.first2UpperCase(code);
 	}
 
 	public String getCode() {

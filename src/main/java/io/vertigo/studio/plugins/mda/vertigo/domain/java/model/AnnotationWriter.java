@@ -23,7 +23,6 @@ import java.util.Collections;
 import java.util.List;
 
 import io.vertigo.core.lang.Cardinality;
-import io.vertigo.core.node.definition.DefinitionUtil;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 import io.vertigo.studio.metamodel.domain.StudioDtField;
 import io.vertigo.studio.metamodel.domain.association.AssociationUtil;
@@ -31,6 +30,7 @@ import io.vertigo.studio.metamodel.domain.association.StudioAssociationNNDefinit
 import io.vertigo.studio.metamodel.domain.association.StudioAssociationNode;
 import io.vertigo.studio.metamodel.domain.association.StudioAssociationSimpleDefinition;
 import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants.VertigoClassNames;
+import io.vertigo.studio.tools.DefinitionUtil;
 
 /**
  * Gestion centralisée des annotations sur les objets générés.
@@ -108,7 +108,7 @@ class AnnotationWriter {
 			return Collections.singletonList(new StringBuilder("@").append(VertigoClassNames.AnnotationForeignKey.getClassName()).append("(")
 					.append("smartType = \"").append(dtField.getDomain().getSmartTypeName()).append("\", ")
 					.append("label = \"").append(dtField.getLabel().getDisplay()).append("\", ")
-					.append("fkDefinition = \"").append("Dt").append(DefinitionUtil.getLocalName(dtField.getFkDtDefinitionName(), StudioDtDefinition.class)).append("\" ")
+					.append("fkDefinition = \"").append("Dt").append(DefinitionUtil.getLocalName(dtField.getFkDtDefinitionName(), StudioDtDefinition.PREFIX)).append("\" ")
 					.append(")")
 					.toString());
 		}

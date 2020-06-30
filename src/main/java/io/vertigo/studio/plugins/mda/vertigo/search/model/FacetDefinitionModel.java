@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionUtil;
 import io.vertigo.studio.metamodel.search.StudioFacetDefinition;
 import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants.VertigoDefinitionPrefix;
 
@@ -46,7 +45,7 @@ public class FacetDefinitionModel {
 	}
 
 	public String getName() {
-		return VertigoDefinitionPrefix.FacetDefinition.getPrefix() + DefinitionUtil.getLocalName(studioFacetDefinition.getName(), StudioFacetDefinition.class);
+		return VertigoDefinitionPrefix.FacetDefinition.getPrefix() + studioFacetDefinition.getLocalName();
 	}
 
 	public String getFieldName() {

@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.definition.Definition;
 import io.vertigo.core.node.definition.DefinitionSpace;
-import io.vertigo.core.node.definition.DefinitionUtil;
 
 /**
  * Definitions Repository. (not threadSafe).
@@ -45,7 +44,6 @@ public final class MetamodelRepository implements DefinitionSpace {
 	public void registerDefinition(final Definition definition) {
 		Assertion.check().isNotNull(definition);
 		final String name = definition.getName();
-		DefinitionUtil.checkName(name, definition.getClass());
 		Assertion.check().isFalse(definitions.containsKey(name), "this definition '{0}' is already registered", name);
 		//-----
 		definitions.put(name, definition);

@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.Definition;
+import io.vertigo.core.node.definition.AbstractDefinition;
 import io.vertigo.core.node.definition.DefinitionPrefix;
 import io.vertigo.studio.metamodel.domain.Domain;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
@@ -38,12 +38,9 @@ import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
  *
  * @author pchretien, mlaroche
  */
-@DefinitionPrefix("StQry")
-public final class StudioFacetedQueryDefinition implements Definition {
-	/**
-	 * Nom de la définition.
-	 */
-	private final String name;
+@DefinitionPrefix(StudioFacetedQueryDefinition.PREFIX)
+public final class StudioFacetedQueryDefinition extends AbstractDefinition {
+	public static final String PREFIX = "StQry";
 
 	private final StudioDtDefinition keyConceptDtDefinition;
 
@@ -80,6 +77,8 @@ public final class StudioFacetedQueryDefinition implements Definition {
 			final String listFilterBuilderClassName,
 			final String listFilterBuilderQuery,
 			final Optional<String> geoSearchQuery) {
+		super(name);
+		//---
 		Assertion
 				.check()
 				.isNotBlank(name)
@@ -89,8 +88,7 @@ public final class StudioFacetedQueryDefinition implements Definition {
 				.isNotBlank(listFilterBuilderClassName)
 				.isNotNull(listFilterBuilderQuery)
 				.isNotNull(geoSearchQuery);
-		//-----
-		this.name = name;
+		//---
 		this.keyConceptDtDefinition = keyConceptDtDefinition;
 		for (final StudioFacetDefinition facetDefinition : facetDefinitions) {
 			this.facetDefinitions.put(facetDefinition.getName(), facetDefinition);
@@ -114,12 +112,6 @@ public final class StudioFacetedQueryDefinition implements Definition {
 		//-----
 		Assertion.check().isNotNull(facetDefinition, "Aucune Définition de facette trouvée pour {0}", facetName);
 		return facetDefinition;
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public String getName() {
-		return name;
 	}
 
 	/**
@@ -156,12 +148,6 @@ public final class StudioFacetedQueryDefinition implements Definition {
 	 */
 	public String getListFilterBuilderQuery() {
 		return listFilterBuilderQuery;
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public String toString() {
-		return name;
 	}
 
 	/**

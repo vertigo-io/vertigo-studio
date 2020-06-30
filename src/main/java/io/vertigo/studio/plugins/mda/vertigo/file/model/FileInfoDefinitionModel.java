@@ -19,7 +19,6 @@
 package io.vertigo.studio.plugins.mda.vertigo.file.model;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionUtil;
 import io.vertigo.studio.metamodel.file.StudioFileInfo;
 
 /**
@@ -40,6 +39,6 @@ public final class FileInfoDefinitionModel {
 	 * @return Nom de la class en CamelCase
 	 */
 	public String getClassSimpleName() {
-		return DefinitionUtil.getLocalName(fileInfoDefinition.getName(), StudioFileInfo.class);
+		return fileInfoDefinition.getLocalName();
 	}
 }

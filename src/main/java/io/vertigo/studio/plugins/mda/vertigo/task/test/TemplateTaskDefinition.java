@@ -23,7 +23,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionUtil;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.metamodel.task.StudioTaskDefinition;
 
@@ -63,8 +62,7 @@ public final class TemplateTaskDefinition {
 	 * @return Nom de la méthode en CamelCase
 	 */
 	public String getMethodName() {
-		final String localName = DefinitionUtil.getLocalName(taskDefinition.getName(), StudioTaskDefinition.class);
-		return StringUtil.first2LowerCase(localName);
+		return StringUtil.first2LowerCase(taskDefinition.getLocalName());
 	}
 
 	/**

@@ -20,7 +20,6 @@ package io.vertigo.studio.metamodel.domain.association;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.node.definition.DefinitionPrefix;
-import io.vertigo.core.node.definition.DefinitionUtil;
 
 /**
  * Définition d'une association NN.
@@ -53,9 +52,5 @@ public final class StudioAssociationNNDefinition extends StudioAssociationDefini
 	 */
 	public String getTableName() {
 		return tableName;
-	}
-
-	public String getLocalName() {
-		return DefinitionUtil.getLocalName(getName(), StudioAssociationNNDefinition.class);
 	}
 }

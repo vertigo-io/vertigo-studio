@@ -25,19 +25,17 @@ import java.util.Map;
 import java.util.Optional;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.Definition;
+import io.vertigo.core.node.definition.AbstractDefinition;
 import io.vertigo.core.node.definition.DefinitionPrefix;
-import io.vertigo.core.node.definition.DefinitionUtil;
 
 /**
  * This class defines a task and its attributes.
  *
  * @author  fconstantin, pchretien
  */
-@DefinitionPrefix("StTk")
-public final class StudioTaskDefinition implements Definition {
-	/** the name of the definition. */
-	private final String name;
+@DefinitionPrefix(StudioTaskDefinition.PREFIX)
+public final class StudioTaskDefinition extends AbstractDefinition {
+	public static final String PREFIX = "StTk";
 
 	/** the package name. */
 	private final String packageName;
@@ -71,7 +69,8 @@ public final class StudioTaskDefinition implements Definition {
 			final String request,
 			final List<StudioTaskAttribute> inTaskAttributes,
 			final Optional<StudioTaskAttribute> outTaskAttributeOption) {
-		DefinitionUtil.checkName(name, StudioTaskDefinition.class);
+		super(name);
+		//---
 		Assertion.check()
 				.isNotBlank(dataSpace)
 				.isNotBlank(taskEngineClassName, "a taskEngineClass is required")
@@ -79,7 +78,6 @@ public final class StudioTaskDefinition implements Definition {
 				.isNotNull(inTaskAttributes)
 				.isNotNull(outTaskAttributeOption);
 		//-----
-		this.name = name;
 		this.packageName = packageName;
 		this.dataSpace = dataSpace;
 		this.request = request;
@@ -180,19 +178,7 @@ public final class StudioTaskDefinition implements Definition {
 		return packageName;
 	}
 
-	/** {@inheritDoc} */
-	@Override
-	public String getName() {
-		return name;
-	}
-
 	public String getTaskName() {
-		return "Tk" + DefinitionUtil.getLocalName(name, StudioTaskDefinition.class);
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public String toString() {
-		return name;
+		return "Tk" + getLocalName();
 	}
 }

@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.Set;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.Definition;
+import io.vertigo.core.node.definition.AbstractDefinition;
 import io.vertigo.core.node.definition.DefinitionPrefix;
 import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 import io.vertigo.studio.metamodel.domain.StudioDtField;
@@ -47,11 +47,9 @@ import io.vertigo.studio.metamodel.domain.StudioStereotype;
  *
  * @author dchallas, npiedeloup
  */
-@DefinitionPrefix("StIdx")
-public final class StudioSearchIndexDefinition implements Definition {
-
-	/** Nom de l'index. */
-	private final String name;
+@DefinitionPrefix(StudioSearchIndexDefinition.PREFIX)
+public final class StudioSearchIndexDefinition extends AbstractDefinition {
+	public static final String PREFIX = "StIdx";
 
 	/** Structure des éléments indexés. */
 	private final StudioDtDefinition indexDtDefinition;
@@ -76,8 +74,9 @@ public final class StudioSearchIndexDefinition implements Definition {
 			final StudioDtDefinition indexDtDefinition,
 			final Map<StudioDtField, List<StudioDtField>> indexCopyToFieldsMap,
 			final String searchLoaderId) {
+		super(name);
+		//---	
 		Assertion.check()
-				.isNotBlank(name)
 				.isNotNull(keyConceptDtDefinition)
 				.isTrue(
 						keyConceptDtDefinition.getStereotype() == StudioStereotype.KeyConcept,
@@ -86,12 +85,10 @@ public final class StudioSearchIndexDefinition implements Definition {
 				.isNotNull(indexCopyToFieldsMap)
 				.isNotBlank(searchLoaderId);
 		//-----
-		this.name = name;
 		this.keyConceptDtDefinition = keyConceptDtDefinition;
 		this.indexDtDefinition = indexDtDefinition;
 		this.indexCopyToFieldsMap = indexCopyToFieldsMap;
 		this.searchLoaderId = searchLoaderId;
-
 	}
 
 	/**
@@ -135,17 +132,5 @@ public final class StudioSearchIndexDefinition implements Definition {
 	 */
 	public String getSearchLoaderId() {
 		return searchLoaderId;
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public String toString() {
-		return name;
 	}
 }

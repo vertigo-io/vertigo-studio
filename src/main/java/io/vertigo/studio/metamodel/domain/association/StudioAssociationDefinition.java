@@ -19,7 +19,7 @@
 package io.vertigo.studio.metamodel.domain.association;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.Definition;
+import io.vertigo.core.node.definition.AbstractDefinition;
 
 /**
  * Décrit une association entre deux objets (A et B)
@@ -44,11 +44,10 @@ import io.vertigo.core.node.definition.Definition;
  *
  * @author  jcassignol, pchretien
  */
-public abstract class StudioAssociationDefinition implements Definition {
+public abstract class StudioAssociationDefinition extends AbstractDefinition {
 	/**
 	 * Nom de la définition.
 	 */
-	private final String name;
 	private final StudioAssociationNode associationNodeA;
 	private final StudioAssociationNode associationNodeB;
 
@@ -58,12 +57,12 @@ public abstract class StudioAssociationDefinition implements Definition {
 	 * @param associationNodeB Noeud B
 	 */
 	StudioAssociationDefinition(final String name, final StudioAssociationNode associationNodeA, final StudioAssociationNode associationNodeB) {
+		super(name);
+		//---
 		Assertion.check()
-				.isNotBlank(name)
 				.isNotNull(associationNodeA)
 				.isNotNull(associationNodeB);
 		//-----
-		this.name = name;
 		this.associationNodeA = associationNodeA;
 		this.associationNodeB = associationNodeB;
 		//-----
@@ -92,17 +91,5 @@ public abstract class StudioAssociationDefinition implements Definition {
 	 */
 	public final StudioAssociationNode getAssociationNodeB() {
 		return associationNodeB;
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public final String getName() {
-		return name;
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public final String toString() {
-		return name;
 	}
 }

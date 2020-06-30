@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionUtil;
 import io.vertigo.studio.metamodel.search.StudioSearchIndexDefinition;
 import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants.VertigoDefinitionPrefix;
+import io.vertigo.studio.tools.DefinitionUtil;
 
 public class SearchIndexDefinitionModel {
 
@@ -23,7 +23,7 @@ public class SearchIndexDefinitionModel {
 	}
 
 	public String getName() {
-		return VertigoDefinitionPrefix.SearchIndexDefinition.getPrefix() + DefinitionUtil.getLocalName(studioSearchIndexDefinition.getName(), StudioSearchIndexDefinition.class);
+		return VertigoDefinitionPrefix.SearchIndexDefinition.getPrefix() + DefinitionUtil.getLocalName(studioSearchIndexDefinition.getName(), StudioSearchIndexDefinition.PREFIX);
 	}
 
 	public String getLoaderId() {

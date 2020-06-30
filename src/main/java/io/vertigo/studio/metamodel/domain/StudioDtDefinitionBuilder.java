@@ -28,8 +28,8 @@ import io.vertigo.core.lang.Cardinality;
 import io.vertigo.core.locale.MessageKey;
 import io.vertigo.core.locale.MessageText;
 import io.vertigo.core.node.definition.DefinitionReference;
-import io.vertigo.core.node.definition.DefinitionUtil;
 import io.vertigo.core.util.StringUtil;
+import io.vertigo.studio.tools.DefinitionUtil;
 
 /**
  * This class must be used to build a DtDefinition.
@@ -251,7 +251,7 @@ public final class StudioDtDefinitionBuilder implements Builder<StudioDtDefiniti
 			final String fkDtDefinitionName,
 			final ComputedExpression computedExpression) {
 
-		final String shortName = DefinitionUtil.getLocalName(myName, StudioDtDefinition.class);
+		final String shortName = DefinitionUtil.getLocalName(myName, StudioDtDefinition.PREFIX);
 		//-----
 		// Le DtField vérifie ses propres règles et gère ses propres optimisations
 		final String id = "fld" + shortName + '$' + fieldName;

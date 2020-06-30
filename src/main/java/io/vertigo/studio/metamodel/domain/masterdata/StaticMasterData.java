@@ -21,7 +21,7 @@ package io.vertigo.studio.metamodel.domain.masterdata;
 import java.util.Map;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.Definition;
+import io.vertigo.core.node.definition.AbstractDefinition;
 import io.vertigo.core.node.definition.DefinitionPrefix;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
 
@@ -33,26 +33,22 @@ import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
  * @author mlaroche
  *
  */
-@DefinitionPrefix("StMd")
-public class StaticMasterData implements Definition {
+@DefinitionPrefix(StaticMasterData.PREFIX)
+public final class StaticMasterData extends AbstractDefinition {
+	public static final String PREFIX = "StMd";
 
-	private final String name;
 	private final String entityClassName;
 	private final Map<String, MasterDataValue> values;
 
 	public StaticMasterData(final String entityClassName, final Map<String, MasterDataValue> values) {
+		super(PREFIX + DomainUtil.getSimpleNameFromCanonicalName(entityClassName));
+		//---
 		Assertion.check()
 				.isNotBlank(entityClassName)
 				.isNotNull(values);
 		//---
-		name = "StMd" + DomainUtil.getSimpleNameFromCanonicalName(entityClassName);
 		this.entityClassName = entityClassName;
 		this.values = values;
-	}
-
-	@Override
-	public String getName() {
-		return name;
 	}
 
 	public String getEntityClassName() {
