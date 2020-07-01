@@ -46,10 +46,9 @@ public final class ConstraintDefinition extends AbstractDefinition {
 	 */
 	public ConstraintDefinition(final String name, final String constraintClassName, final String msg, final String args) {
 		super(name);
-		//--	
-		Assertion.check()
-				.isNotBlank(constraintClassName);
-		//-----
+		//---	
+		Assertion.check().isNotBlank(constraintClassName);
+		//---
 		this.constraintClassName = constraintClassName;
 		this.msg = msg;
 	}

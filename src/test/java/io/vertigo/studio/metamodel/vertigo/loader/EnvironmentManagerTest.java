@@ -38,7 +38,8 @@ import io.vertigo.core.node.AutoCloseableApp;
 import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.LogConfig;
 import io.vertigo.core.node.config.NodeConfig;
-import io.vertigo.studio.metamodel.MetamodelRepository;
+import io.vertigo.core.node.definition.DefinitionSpace;
+import io.vertigo.core.node.definition.loader.DefinitionSpaceWritable;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinition;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinitionRepository;
 
@@ -68,7 +69,7 @@ public final class EnvironmentManagerTest {
 
 	@Test
 	public void simpleTest() {
-		final MetamodelRepository metamodelRepository = new MetamodelRepository();
+		final DefinitionSpace definitionSpace = new DefinitionSpaceWritable();
 
 		final DslDefinition address1Definition = DslDefinition.builder("MockMainAddress", PersonGrammar.ADDRESS_ENTITY)
 				.withPackageName("io.vertigo.test.model")
@@ -98,7 +99,7 @@ public final class EnvironmentManagerTest {
 				.build();
 		dslDefinitionRepository.addDefinition(personDefinition);
 
-		dslDefinitionRepository.solve(metamodelRepository);
+		dslDefinitionRepository.solve(definitionSpace);
 		assertNotNull(personDefinition);
 	}
 

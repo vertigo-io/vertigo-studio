@@ -25,7 +25,7 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.VSystemException;
-import io.vertigo.studio.metamodel.MetamodelRepository;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslEntityField;
 
 /**
@@ -45,9 +45,9 @@ final class DslSolver {
 	* Résoltuion des références.
 	* On appelle SyntaxHandler dans le bon Ordre
 	*/
-	static List<DslDefinition> solve(final MetamodelRepository metamodelRepository, final DslDefinitionRepository definitionRepository) {
+	static List<DslDefinition> solve(final DefinitionSpace definitionSpace, final DslDefinitionRepository definitionRepository) {
 		Assertion.check()
-				.isNotNull(metamodelRepository)
+				.isNotNull(definitionSpace)
 				.isNotNull(definitionRepository);
 		//-----
 		//Liste des clés résolues
@@ -68,7 +68,7 @@ final class DslSolver {
 				//==============================================================
 				//==============================================================
 				//On vérifie que les sous éléments sont résolues
-				if (isSolved(metamodelRepository, definitionRepository, sortedList, dslDefinition, dslDefinition)) {
+				if (isSolved(definitionSpace, definitionRepository, sortedList, dslDefinition, dslDefinition)) {
 					sortedList.add(dslDefinition);
 					it.remove();
 				}
@@ -83,7 +83,7 @@ final class DslSolver {
 	}
 
 	private static boolean isSolved(
-			final MetamodelRepository metamodelRepository,
+			final DefinitionSpace definitionSpace,
 			final DslDefinitionRepository definitionRepository,
 			final List<DslDefinition> orderedList,
 			final DslDefinition dslDefinition,
@@ -95,7 +95,7 @@ final class DslSolver {
 			final String fieldName = dslEntityField.getName();
 			for (final String definitionName : dslDefinition.getDefinitionLinkNames(fieldName)) {
 				//reference should be already solved in a previous resources module : then continue
-				if (!metamodelRepository.contains(definitionName)) {
+				if (!definitionSpace.contains(definitionName)) {
 					//or references should be in currently parsed resources
 					if (!definitionRepository.containsDefinitionName(definitionName)) {
 						final String xdefRootName = xdefRoot.getName().equals(dslDefinition.getName()) ? xdefRoot.getName() : (xdefRoot.getName() + "." + dslDefinition.getName());
@@ -112,7 +112,7 @@ final class DslSolver {
 
 		//On vérifie que les composites sont résolues.
 		for (final DslDefinition child : dslDefinition.getAllChildDefinitions()) {
-			if (!isSolved(metamodelRepository, definitionRepository, orderedList, child, xdefRoot)) {
+			if (!isSolved(definitionSpace, definitionRepository, orderedList, child, xdefRoot)) {
 				return false;
 			}
 		}

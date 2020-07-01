@@ -29,8 +29,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.node.definition.DefinitionSupplier;
-import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslGrammar;
 
 /**
@@ -99,13 +99,13 @@ public final class DslDefinitionRepository {
 
 	/**
 	 * Résolution des références de définitions.
-	 * @param metamodelRepository Space where all the definitions are stored
+	 * @param definitionSpace Space where all the definitions are stored
 	 * @return a list of DefinitionSuppliers
 	 */
-	public List<DefinitionSupplier> solve(final MetamodelRepository metamodelRepository) {
+	public List<DefinitionSupplier> solve(final DefinitionSpace definitionSpace) {
 		mergePartials();
 
-		final List<DslDefinition> sortedDslDefinitions = DslSolver.solve(metamodelRepository, this);
+		final List<DslDefinition> sortedDslDefinitions = DslSolver.solve(definitionSpace, this);
 		return createDefinitionStream(sortedDslDefinitions);
 	}
 

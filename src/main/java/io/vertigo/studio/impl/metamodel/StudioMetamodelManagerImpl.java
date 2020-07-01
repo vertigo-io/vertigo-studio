@@ -8,7 +8,8 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.metamodel.MetamodelRepository;
+import io.vertigo.core.node.definition.DefinitionSpace;
+import io.vertigo.core.node.definition.loader.DefinitionSpaceWritable;
 import io.vertigo.studio.metamodel.MetamodelResource;
 import io.vertigo.studio.metamodel.StudioMetamodelManager;
 
@@ -31,16 +32,16 @@ public class StudioMetamodelManagerImpl implements StudioMetamodelManager {
 	}
 
 	@Override
-	public MetamodelRepository parseResources(final List<MetamodelResource> resources) {
+	public DefinitionSpace parseResources(final List<MetamodelResource> resources) {
 		final Map<MetamodelResourceParserPlugin, List<MetamodelResource>> resourcesByPlugin = resources.stream()
 				.collect(Collectors.groupingBy(resource -> metamodelResourceParserPluginsByType.get(resource.getType())));
 
-		final MetamodelRepository metamodelRepository = new MetamodelRepository();
+		final DefinitionSpaceWritable definitionSpaceWritable = new DefinitionSpaceWritable();
 		resourcesByPlugin.entrySet().stream()
-				.flatMap(entry -> entry.getKey().parseResources(entry.getValue(), metamodelRepository).stream())
-				.map(definitionSupplier -> definitionSupplier.get(metamodelRepository))
-				.forEach(metamodelRepository::registerDefinition);
-		return metamodelRepository;
+				.flatMap(entry -> entry.getKey().parseResources(entry.getValue(), definitionSpaceWritable).stream())
+				.map(definitionSupplier -> definitionSupplier.get(definitionSpaceWritable))
+				.forEach(definitionSpaceWritable::registerDefinition);
+		return definitionSpaceWritable;
 	}
 
 }

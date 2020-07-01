@@ -26,12 +26,12 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.node.definition.DefinitionSupplier;
 import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.metamodel.MetamodelResourceParserPlugin;
-import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.MetamodelResource;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinition;
 import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinitionRepository;
@@ -76,7 +76,7 @@ public final class StudioResourceParserPlugin implements MetamodelResourceParser
 	}
 
 	@Override
-	public List<DefinitionSupplier> parseResources(final List<MetamodelResource> resources, final MetamodelRepository metamodelRepository) {
+	public List<DefinitionSupplier> parseResources(final List<MetamodelResource> resources, final DefinitionSpace definitionSpace) {
 		//Création du repositoy des instances le la grammaire (=> model)
 		final DynamicRegistry dynamoDynamicRegistry = new DynamoDynamicRegistry();
 		final DslDefinitionRepository dslDefinitionRepository = new DslDefinitionRepository(dynamoDynamicRegistry);
@@ -91,7 +91,7 @@ public final class StudioResourceParserPlugin implements MetamodelResourceParser
 			loaderPlugin.load(resource.getPath(), dslDefinitionRepository);
 		}
 
-		return dslDefinitionRepository.solve(metamodelRepository);
+		return dslDefinitionRepository.solve(definitionSpace);
 	}
 
 	@Override

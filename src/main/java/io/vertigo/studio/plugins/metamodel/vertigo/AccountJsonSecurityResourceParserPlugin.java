@@ -18,10 +18,10 @@ import com.google.gson.JsonObject;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.WrappedException;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.node.definition.DefinitionSupplier;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.studio.impl.metamodel.MetamodelResourceParserPlugin;
-import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.MetamodelResource;
 import io.vertigo.studio.metamodel.authorization.SecuredFeature;
 
@@ -40,7 +40,7 @@ public final class AccountJsonSecurityResourceParserPlugin implements MetamodelR
 	}
 
 	@Override
-	public List<DefinitionSupplier> parseResources(final List<MetamodelResource> resources, final MetamodelRepository metamodelRepository) {
+	public List<DefinitionSupplier> parseResources(final List<MetamodelResource> resources, final DefinitionSpace definitionSpace) {
 		return resources.stream()
 				.flatMap(metamodelResource -> parseJson(resourceManager.resolve(metamodelResource.getPath())).stream())
 				.map(webserviceDefinition -> (DefinitionSupplier) dS -> webserviceDefinition)

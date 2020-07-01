@@ -14,13 +14,13 @@ import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.node.definition.DefinitionSupplier;
 import io.vertigo.core.util.ClassUtil;
 import io.vertigo.core.util.Selector;
 import io.vertigo.core.util.Selector.ClassConditions;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.impl.metamodel.MetamodelResourceParserPlugin;
-import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.MetamodelResource;
 import io.vertigo.studio.metamodel.webservices.StudioWebServiceDefinition;
 import io.vertigo.studio.metamodel.webservices.StudioWebServiceParam;
@@ -44,7 +44,7 @@ public final class VegaWebServicesResourceParserPlugin implements MetamodelResou
 	private static final int NAME_MAX_SIZE = 40;
 
 	@Override
-	public List<DefinitionSupplier> parseResources(final List<MetamodelResource> resources, final MetamodelRepository metamodelRepository) {
+	public List<DefinitionSupplier> parseResources(final List<MetamodelResource> resources, final DefinitionSpace definitionSpace) {
 		final List<StudioWebServiceDefinition> webServiceDefinitions = new ArrayList<>();
 		for (final MetamodelResource resource : resources) {
 			final String resourcePath = resource.getPath();

@@ -35,10 +35,10 @@ import com.google.gson.Gson;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.WrappedException;
+import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.node.definition.DefinitionSupplier;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.studio.impl.metamodel.MetamodelResourceParserPlugin;
-import io.vertigo.studio.metamodel.MetamodelRepository;
 import io.vertigo.studio.metamodel.MetamodelResource;
 import io.vertigo.studio.metamodel.domain.masterdata.MasterDataValue;
 import io.vertigo.studio.metamodel.domain.masterdata.StaticMasterData;
@@ -87,7 +87,7 @@ public final class JsonStaticMasterDataParserPlugin implements MetamodelResource
 	}
 
 	@Override
-	public List<DefinitionSupplier> parseResources(final List<MetamodelResource> resources, final MetamodelRepository metamodelRepository) {
+	public List<DefinitionSupplier> parseResources(final List<MetamodelResource> resources, final DefinitionSpace definitionSpace) {
 
 		final JsonMasterDataValues result = new JsonMasterDataValues();
 		for (final MetamodelResource resource : resources) {

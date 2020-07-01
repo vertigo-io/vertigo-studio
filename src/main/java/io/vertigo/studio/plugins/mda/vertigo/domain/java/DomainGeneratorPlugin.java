@@ -201,13 +201,13 @@ public final class DomainGeneratorPlugin implements MdaGeneratorPlugin {
 	}
 
 	private void generateJavaEnums(
-			final DefinitionSpace metamodelRepository,
+			final DefinitionSpace definitionSpace,
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
-		final Map<String, Map<String, MasterDataValue>> staticMasterDataValues = metamodelRepository.getAll(StaticMasterData.class).stream().collect(Collectors.toMap(StaticMasterData::getEntityClassName, StaticMasterData::getValues));
+		final Map<String, Map<String, MasterDataValue>> staticMasterDataValues = definitionSpace.getAll(StaticMasterData.class).stream().collect(Collectors.toMap(StaticMasterData::getEntityClassName, StaticMasterData::getValues));
 
-		metamodelRepository.getAll(StudioDtDefinition.class)
+		definitionSpace.getAll(StudioDtDefinition.class)
 				.stream()
 				.filter(dtDefinition -> dtDefinition.getStereotype() == StudioStereotype.StaticMasterData)
 				.forEach(dtDefintion -> generateJavaEnum(
