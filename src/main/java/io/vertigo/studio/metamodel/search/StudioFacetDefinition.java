@@ -106,11 +106,11 @@ public final class StudioFacetDefinition extends AbstractDefinition {
 				.isNotNull(label)
 				.isNotNull(facetValues)
 				.isNotNull(facetParams)
-				.when(rangeFacet, () -> Assertion.test()
+				.when(rangeFacet, () -> Assertion.check()
 						.isFalse(facetValues.isEmpty(), "Les FacetDefinition de type 'range' doivent fournir la liste des segments non vides (FacetValues)"))
-				.when(customFacet, () -> Assertion.test()
+				.when(customFacet, () -> Assertion.check()
 						.isFalse(facetParams.isEmpty(), "Les FacetDefinition de type 'custom' doivent fournir la liste des params non vides"))
-				.when(!rangeFacet && !customFacet, () -> Assertion.test()
+				.when(!rangeFacet && !customFacet, () -> Assertion.check()
 						.isTrue(facetValues.isEmpty(), "Les FacetDefinition de type 'term' doivent fournir une liste des segments vide"))
 				.isNotNull(order);
 		//-----

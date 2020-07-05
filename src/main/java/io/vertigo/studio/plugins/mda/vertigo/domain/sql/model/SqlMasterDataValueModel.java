@@ -48,7 +48,7 @@ public final class SqlMasterDataValueModel {
 		final StudioDtField dtField = dtDefinition.getField(fieldName);
 		//---
 		Assertion.check()
-				.when(dtField.getCardinality().hasOne(), () -> Assertion.test()
+				.when(dtField.getCardinality().hasOne(), () -> Assertion.check()
 						.isTrue(allFieldValues.containsKey(fieldName),
 								"Field '{0}' is required on '{1}' and no value was provided. Provided values '{2}'",
 								fieldName, dtDefinition.getName(), allFieldValues));

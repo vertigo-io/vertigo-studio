@@ -220,7 +220,7 @@ public final class StudioDtDefinitionBuilder implements Builder<StudioDtDefiniti
 			final String fieldName,
 			final String label,
 			final Domain domain) {
-		Assertion.check().isTrue(myIdField == null, "only one ID per Entity is permitted, error on {0}", myPackageName);
+		Assertion.check().isNull(myIdField, "only one ID per Entity is permitted, error on {0}", myPackageName);
 		//---
 		//le champ ID est tjrs required
 		final Cardinality cardinality = Cardinality.ONE;
@@ -318,7 +318,7 @@ public final class StudioDtDefinitionBuilder implements Builder<StudioDtDefiniti
 	/** {@inheritDoc} */
 	@Override
 	public StudioDtDefinition build() {
-		Assertion.check().isTrue(dtDefinition == null, "build() already executed");
+		Assertion.check().isNull(dtDefinition, "build() already executed");
 		//-----
 		if (myStereotype == null) {
 			myStereotype = myIdField == null ? StudioStereotype.ValueObject : StudioStereotype.Entity;

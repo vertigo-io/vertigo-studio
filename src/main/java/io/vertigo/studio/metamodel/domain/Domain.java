@@ -113,15 +113,15 @@ public final class Domain extends AbstractDefinition {
 		Assertion.check()
 				.isNotNull(scope)
 				//---
-				.when(scope.isPrimitive(), () -> Assertion.test()
+				.when(scope.isPrimitive(), () -> Assertion.check()
 						.isTrue(dataType != null, "a primitive domain must define a primitive type")
 						.isTrue(dtDefinitionName == null && valueObjectClassName == null, "a primitive domain can't have nor a data-object-definition nor a value-object class"))
 				//---
-				.when(scope.isDataObject(), () -> Assertion.test()
+				.when(scope.isDataObject(), () -> Assertion.check()
 						.isTrue(dtDefinitionName != null, "a data-object domain must define a data-object definition")
 						.isTrue(dataType == null && valueObjectClassName == null, "a data-object domain can't have nor a primitive type nor a value-object class"))
 				//---
-				.when(scope.isValueObject(), () -> Assertion.test()
+				.when(scope.isValueObject(), () -> Assertion.check()
 						.isTrue(valueObjectClassName != null, "a value-object domain must define a value-object class")
 						.isTrue(dataType == null && dtDefinitionName == null, "a value-object domain can't have nor a primitive type nor a data-object-definition"))
 				//formatterDefinition is nullable

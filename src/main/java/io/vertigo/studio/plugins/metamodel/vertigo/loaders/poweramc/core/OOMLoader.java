@@ -130,7 +130,7 @@ public final class OOMLoader extends AbstractXmlLoader {
 		for (final XmlId ref : obj.getRefList()) {
 			final OOMObject childRef = map.get(ref);
 			if (childRef != null && childRef.getType() == OOMType.Domain) {
-				Assertion.check().isTrue(domain == null, "domain deja affecté");
+				Assertion.check().isNull(domain, "domain already set");
 				domain = childRef.getCode();
 			}
 		}

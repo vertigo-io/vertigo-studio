@@ -141,7 +141,7 @@ public final class DslDefinitionRepository {
 		Assertion.check().isNotNull(dslDefinition);
 		//---
 		final DslDefinition previousDefinition = dslDefinitions.put(dslDefinition.getName(), dslDefinition);
-		Assertion.check().isTrue(previousDefinition == null, "this definition '{0}' has already be registered", dslDefinition.getName());
+		Assertion.check().isNull(previousDefinition, "this definition '{0}' has already be registered", dslDefinition.getName());
 		//---
 		registry.onNewDefinition(dslDefinition)
 				.stream()
