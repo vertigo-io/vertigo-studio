@@ -110,21 +110,21 @@ public final class Domain extends AbstractDefinition {
 			final Properties properties) {
 		super(name);
 		//---
-		Assertion.check().isNotNull(scope);
-		//---
-		Assertion.when(scope == Scope.PRIMITIVE)
-				.isTrue(() -> dataType != null, "a primitive domain must define a primitive type")
-				.isTrue(() -> dtDefinitionName == null && valueObjectClassName == null, "a primitive domain can't have nor a data-object-definition nor a value-object class");
-		//---
-		Assertion.when(scope == Scope.DATA_OBJECT)
-				.isTrue(() -> dtDefinitionName != null, "a data-object domain must define a data-object definition")
-				.isTrue(() -> dataType == null && valueObjectClassName == null, "a data-object domain can't have nor a primitive type nor a value-object class");
-		//---
-		Assertion.when(scope == Scope.VALUE_OBJECT)
-				.isTrue(() -> valueObjectClassName != null, "a value-object domain must define a value-object class")
-				.isTrue(() -> dataType == null && dtDefinitionName == null, "a value-object domain can't have nor a primitive type nor a data-object-definition");
-		//formatterDefinition is nullable
 		Assertion.check()
+				.isNotNull(scope)
+				//---
+				.when(scope.isPrimitive(), () -> Assertion.test()
+						.isTrue(dataType != null, "a primitive domain must define a primitive type")
+						.isTrue(dtDefinitionName == null && valueObjectClassName == null, "a primitive domain can't have nor a data-object-definition nor a value-object class"))
+				//---
+				.when(scope.isDataObject(), () -> Assertion.test()
+						.isTrue(dtDefinitionName != null, "a data-object domain must define a data-object definition")
+						.isTrue(dataType == null && valueObjectClassName == null, "a data-object domain can't have nor a primitive type nor a value-object class"))
+				//---
+				.when(scope.isValueObject(), () -> Assertion.test()
+						.isTrue(valueObjectClassName != null, "a value-object domain must define a value-object class")
+						.isTrue(dataType == null && dtDefinitionName == null, "a value-object domain can't have nor a primitive type nor a data-object-definition"))
+				//formatterDefinition is nullable
 				.isNotNull(constraintDefinitions)
 				.isNotNull(properties);
 		//-----
@@ -178,7 +178,7 @@ public final class Domain extends AbstractDefinition {
 	 * @return the dataType.
 	 */
 	public BasicType getDataType() {
-		Assertion.check().isTrue(scope == Scope.PRIMITIVE, "can only be used with primitives");
+		Assertion.check().isTrue(scope.isPrimitive(), "can only be used with primitives");
 		//---
 		return dataType;
 	}
@@ -210,7 +210,7 @@ public final class Domain extends AbstractDefinition {
 	//==========================================================================
 
 	public String getDtDefinitionName() {
-		Assertion.check().isTrue(scope == Scope.DATA_OBJECT, "can only be used with data-objects");
+		Assertion.check().isTrue(scope.isDataObject(), "can only be used with data-objects");
 		//---
 		return dtDefinitionName;
 	}
@@ -227,7 +227,7 @@ public final class Domain extends AbstractDefinition {
 	}
 
 	public String getValueObjectClassName() {
-		Assertion.check().isTrue(scope == Scope.VALUE_OBJECT, "can only be used with value-objects");
+		Assertion.check().isTrue(scope.isValueObject(), "can only be used with value-objects");
 		//---
 		return valueObjectClassName;
 	}

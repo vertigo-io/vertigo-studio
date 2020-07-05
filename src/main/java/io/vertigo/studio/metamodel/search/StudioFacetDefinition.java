@@ -105,14 +105,14 @@ public final class StudioFacetDefinition extends AbstractDefinition {
 				.isNotNull(dtField)
 				.isNotNull(label)
 				.isNotNull(facetValues)
-				.isNotNull(facetParams);
-		Assertion.when(rangeFacet)
-				.isTrue(() -> !facetValues.isEmpty(), "Les FacetDefinition de type 'range' doivent fournir la liste des segments non vides (FacetValues)");
-		Assertion.when(customFacet)
-				.isTrue(() -> !facetParams.isEmpty(), "Les FacetDefinition de type 'custom' doivent fournir la liste des params non vides");
-		Assertion.when(!rangeFacet && !customFacet)
-				.isTrue(facetValues::isEmpty, "Les FacetDefinition de type 'term' doivent fournir une liste des segments vide");
-		Assertion.check().isNotNull(order);
+				.isNotNull(facetParams)
+				.when(rangeFacet, () -> Assertion.test()
+						.isFalse(facetValues.isEmpty(), "Les FacetDefinition de type 'range' doivent fournir la liste des segments non vides (FacetValues)"))
+				.when(customFacet, () -> Assertion.test()
+						.isFalse(facetParams.isEmpty(), "Les FacetDefinition de type 'custom' doivent fournir la liste des params non vides"))
+				.when(!rangeFacet && !customFacet, () -> Assertion.test()
+						.isTrue(facetValues.isEmpty(), "Les FacetDefinition de type 'term' doivent fournir une liste des segments vide"))
+				.isNotNull(order);
 		//-----
 		this.indexDtDefinition = indexDtDefinition;
 		this.dtField = dtField;
