@@ -30,6 +30,7 @@ import io.vertigo.core.node.App;
 import io.vertigo.core.node.AutoCloseableApp;
 import io.vertigo.core.node.Home;
 import io.vertigo.core.node.component.di.DIInjector;
+import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.LogConfig;
 import io.vertigo.core.node.config.ModuleConfig;
 import io.vertigo.core.node.config.NodeConfig;
@@ -78,12 +79,12 @@ public class DaoTestClass {
 
 	private NodeConfig buildNodeConfig() {
 		return NodeConfig.builder()
-				.beginBoot()
-				.withLocales("fr")
-				.addPlugin(ClassPathResourceResolverPlugin.class)
-				.addPlugin(LocalResourceResolverPlugin.class)
-				.withLogConfig(new LogConfig("/log4j.xml"))
-				.endBoot()
+				.withBoot(BootConfig.builder()
+						.withLocales("fr")
+						.addPlugin(ClassPathResourceResolverPlugin.class)
+						.addPlugin(LocalResourceResolverPlugin.class)
+						.withLogConfig(new LogConfig("/log4j.xml"))
+						.build())
 				.addModule(new CommonsFeatures()
 						.withScript()
 						.withJaninoScript()

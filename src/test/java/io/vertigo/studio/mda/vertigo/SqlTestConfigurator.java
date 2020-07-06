@@ -19,6 +19,7 @@
 package io.vertigo.studio.mda.vertigo;
 
 import io.vertigo.commons.CommonsFeatures;
+import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.LogConfig;
 import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.param.Param;
@@ -32,12 +33,12 @@ import io.vertigo.datastore.plugins.entitystore.sql.SqlEntityStorePlugin;
 public final class SqlTestConfigurator {
 	public static NodeConfig config() {
 		return NodeConfig.builder()
-				.beginBoot()
-				.withLocales("fr")
-				.addPlugin(ClassPathResourceResolverPlugin.class)
-				.addPlugin(LocalResourceResolverPlugin.class)
-				.withLogConfig(new LogConfig("/log4j.xml"))
-				.endBoot()
+				.withBoot(BootConfig.builder()
+						.withLocales("fr")
+						.addPlugin(ClassPathResourceResolverPlugin.class)
+						.addPlugin(LocalResourceResolverPlugin.class)
+						.withLogConfig(new LogConfig("/log4j.xml"))
+						.build())
 				.addModule(new CommonsFeatures()
 						.build())
 				.addModule(new DatabaseFeatures()

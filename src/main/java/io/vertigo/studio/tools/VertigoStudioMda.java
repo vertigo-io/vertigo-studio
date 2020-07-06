@@ -26,6 +26,7 @@ import io.vertigo.commons.CommonsFeatures;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.node.AutoCloseableApp;
+import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
@@ -74,12 +75,12 @@ public final class VertigoStudioMda {
 
 	private static NodeConfig buildNodeConfig() {
 		return NodeConfig.builder()
-				.beginBoot()
-				.withLocales("fr_FR")
-				.addPlugin(ClassPathResourceResolverPlugin.class)
-				.addPlugin(URLResourceResolverPlugin.class)
-				.addPlugin(LocalResourceResolverPlugin.class)
-				.endBoot()
+				.withBoot(BootConfig.builder()
+						.withLocales("fr_FR")
+						.addPlugin(ClassPathResourceResolverPlugin.class)
+						.addPlugin(URLResourceResolverPlugin.class)
+						.addPlugin(LocalResourceResolverPlugin.class)
+						.build())
 				.addModule(new CommonsFeatures().build())
 				// ---StudioFeature
 				.addModule(new StudioFeatures()

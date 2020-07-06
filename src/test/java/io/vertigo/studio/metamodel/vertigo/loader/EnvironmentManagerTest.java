@@ -36,6 +36,7 @@ import org.junit.jupiter.api.Test;
 
 import io.vertigo.core.node.AutoCloseableApp;
 import io.vertigo.core.node.component.di.DIInjector;
+import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.LogConfig;
 import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.node.definition.DefinitionSpace;
@@ -61,7 +62,9 @@ public final class EnvironmentManagerTest {
 
 	private NodeConfig buildNodeConfig() {
 		return NodeConfig.builder()
-				.beginBoot().withLogConfig(new LogConfig("/log4j.xml")).endBoot()
+				.withBoot(BootConfig.builder()
+						.withLogConfig(new LogConfig("/log4j.xml"))
+						.build())
 				.build();
 	}
 
