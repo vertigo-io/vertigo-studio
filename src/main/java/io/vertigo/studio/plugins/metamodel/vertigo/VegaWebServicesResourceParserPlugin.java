@@ -60,7 +60,7 @@ public final class VegaWebServicesResourceParserPlugin implements MetamodelResou
 	}
 
 	private static void scanAndAddPackage(final String packagePath, final List<StudioWebServiceDefinition> webServiceDefinitions) {
-		final Collection<Class> webServicesClasses = new Selector()
+		final Collection<Class> webServicesClasses = Selector
 				.from(packagePath)
 				.filterClasses(ClassConditions.subTypeOf(WebServices.class))
 				.findClasses();

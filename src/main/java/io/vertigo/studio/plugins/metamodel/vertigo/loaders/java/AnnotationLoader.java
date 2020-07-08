@@ -22,6 +22,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -59,15 +61,20 @@ public final class AnnotationLoader implements Loader {
 	 * @return Liste des fichiers Java représentant des objets métiers.
 	 */
 	private static <F> Set<Class<F>> selectClasses(final String resourcePath, final Class<F> filterClass) {
-		final Selector selector = new Selector();
+		final Selector selector;
 		if (resourcePath.endsWith("*")) {
 			//by package
 			final String packageName = resourcePath.substring(0, resourcePath.length() - 1);
-			selector.from(packageName);
+			selector = Selector
+					.from(packageName);
 		} else {
 			//by Iterable of classes
 			final Iterable dtDefinitionsClass = ClassUtil.newInstance(resourcePath, Iterable.class);
-			selector.from(dtDefinitionsClass);
+			Iterator<Class> iterator = dtDefinitionsClass.iterator();
+			Set<Class> classes = new HashSet();
+			iterator.forEachRemaining(c -> classes.add(c));
+			selector = Selector
+					.from(classes);
 		}
 		return selector
 				.filterClasses(ClassConditions.subTypeOf(filterClass))
