@@ -112,7 +112,7 @@ public class DaoTestClass {
 				.build();
 	}
 
-	private void execSqlScript(final String sqlScript, final App app) {
+	private static void execSqlScript(final String sqlScript, final App app) {
 		final ResourceManager resourceManager = app.getComponentSpace().resolve(ResourceManager.class);
 		final SqlDataBaseManager sqlDataBaseManager = app.getComponentSpace().resolve(SqlDataBaseManager.class);
 

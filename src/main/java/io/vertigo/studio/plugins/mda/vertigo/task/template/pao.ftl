@@ -29,7 +29,7 @@ public final class ${pao.classSimpleName} implements StoreServices {
 	 */
 	@Inject
 	public ${pao.classSimpleName}(final TaskManager taskManager) {
-		Assertion.checkNotNull(taskManager);
+		Assertion.check().isNotNull(taskManager);
 		//-----
 		this.taskManager = taskManager;
 	}
