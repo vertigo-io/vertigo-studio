@@ -48,9 +48,9 @@ public final class SqlStudioDtDefinitionModel {
 		//-----
 		this.dtDefinition = dtDefinition;
 
-		final Optional<StudioDtField> pkField = dtDefinition.getIdField();
-		if (pkField.isPresent()) {
-			final BasicType pkDataType = pkField.get().getDomain().getDataType();
+		final Optional<StudioDtField> pkFieldOpt = dtDefinition.getIdField();
+		if (pkFieldOpt.isPresent()) {
+			final BasicType pkDataType = pkFieldOpt.get().getDomain().getDataType();
 			hasSequence = pkDataType.isNumber();
 		} else {
 			hasSequence = false;

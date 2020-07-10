@@ -54,8 +54,8 @@ public final class TaskDefinitionModel {
 			hasOption = hasOption || attribute.getCardinality().isOptionalOrNullable();
 		}
 
-		if (taskDefinition.getOutAttributeOption().isPresent()) {
-			final StudioTaskAttribute attribute = taskDefinition.getOutAttributeOption().get();
+		if (taskDefinition.getOutAttributeOpt().isPresent()) {
+			final StudioTaskAttribute attribute = taskDefinition.getOutAttributeOpt().get();
 			final TaskAttributeModel templateTaskAttribute = new TaskAttributeModel(attribute, classNameFromDt);
 			//On est dans le cas des paramètres OUT
 			out = templateTaskAttribute;

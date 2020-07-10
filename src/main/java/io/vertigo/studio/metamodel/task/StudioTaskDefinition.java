@@ -49,7 +49,7 @@ public final class StudioTaskDefinition extends AbstractDefinition {
 	/** Map des (Nom, TaskAttribute) définissant les attributs de tache. */
 	private final Map<String, StudioTaskAttribute> inTaskAttributes;
 
-	private final Optional<StudioTaskAttribute> outTaskAttributeOption;
+	private final Optional<StudioTaskAttribute> outTaskAttributeOpt;
 
 	/**
 	 * Moyen de réaliser la tache.
@@ -68,7 +68,7 @@ public final class StudioTaskDefinition extends AbstractDefinition {
 			final String taskEngineClassName,
 			final String request,
 			final List<StudioTaskAttribute> inTaskAttributes,
-			final Optional<StudioTaskAttribute> outTaskAttributeOption) {
+			final Optional<StudioTaskAttribute> outTaskAttributeOpt) {
 		super(name);
 		//---
 		Assertion.check()
@@ -76,13 +76,13 @@ public final class StudioTaskDefinition extends AbstractDefinition {
 				.isNotBlank(taskEngineClassName, "a taskEngineClass is required")
 				.isNotNull(request, "a request is required")
 				.isNotNull(inTaskAttributes)
-				.isNotNull(outTaskAttributeOption);
+				.isNotNull(outTaskAttributeOpt);
 		//-----
 		this.packageName = packageName;
 		this.dataSpace = dataSpace;
 		this.request = request;
 		this.inTaskAttributes = createMap(inTaskAttributes);
-		this.outTaskAttributeOption = outTaskAttributeOption;
+		this.outTaskAttributeOpt = outTaskAttributeOpt;
 		this.taskEngineClassName = taskEngineClassName;
 	}
 
@@ -158,8 +158,8 @@ public final class StudioTaskDefinition extends AbstractDefinition {
 	 *
 	 * @return Attribut OUT
 	 */
-	public Optional<StudioTaskAttribute> getOutAttributeOption() {
-		return outTaskAttributeOption;
+	public Optional<StudioTaskAttribute> getOutAttributeOpt() {
+		return outTaskAttributeOpt;
 	}
 
 	/**

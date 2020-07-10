@@ -53,18 +53,18 @@ public final class KprLoader implements Loader {
 	 * Constructor.
 	 *
 	 * @param resourceManager the resourceManager
-	 * @param encoding encoding des KSP
+	 * @param encodingOpt encoding des KSP
 	 */
 	@Inject
 	public KprLoader(
 			final ResourceManager resourceManager,
-			@ParamValue("encoding") final Optional<String> encoding) {
+			@ParamValue("encoding") final Optional<String> encodingOpt) {
 		Assertion.check()
 				.isNotNull(resourceManager)
-				.isNotNull(encoding);
+				.isNotNull(encodingOpt);
 		//-----
 		this.resourceManager = resourceManager;
-		charset = Charset.forName(encoding.orElse("utf-8"));
+		charset = Charset.forName(encodingOpt.orElse("utf-8"));
 	}
 
 	/** {@inheritDoc} */

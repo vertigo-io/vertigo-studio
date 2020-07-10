@@ -53,7 +53,7 @@ public final class StudioFacetedQueryDefinition extends AbstractDefinition {
 	/** Query du listFilterBuilder. */
 	private final String listFilterBuilderQuery;
 	/** Query du geoSearchQuery. */
-	private final Optional<String> geoSearchQuery;
+	private final Optional<String> geoSearchQueryOpt;
 
 	/**
 	 * Moyen de créer le ListFilter à partir du Criteria.
@@ -96,7 +96,7 @@ public final class StudioFacetedQueryDefinition extends AbstractDefinition {
 		this.criteriaDomain = criteriaDomain;
 		this.listFilterBuilderClassName = listFilterBuilderClassName;
 		this.listFilterBuilderQuery = listFilterBuilderQuery;
-		this.geoSearchQuery = geoSearchQuery;
+		this.geoSearchQueryOpt = geoSearchQuery;
 	}
 
 	/**
@@ -154,13 +154,13 @@ public final class StudioFacetedQueryDefinition extends AbstractDefinition {
 	 * @return if there is a geoSearchQuery.
 	 */
 	public String getGeoSearchQuery() {
-		return geoSearchQuery.get();
+		return geoSearchQueryOpt.get();
 	}
 
 	/**
 	 * @return Query du geoSearch.
 	 */
 	public boolean hasGeoSearch() {
-		return geoSearchQuery.isPresent();
+		return geoSearchQueryOpt.isPresent();
 	}
 }

@@ -37,7 +37,7 @@ public final class SecuredFeature extends AbstractDefinition {
 	public static final String PREFIX = "SecF";
 	//soit authorization globale (sans règle)
 	//soit authorization = une opération sur une entity
-	private final Optional<String> comment;
+	private final Optional<String> commentOpt;
 	private final String code;
 	private final String label;
 
@@ -48,24 +48,24 @@ public final class SecuredFeature extends AbstractDefinition {
 	 *
 	 * @param code Code de l'authorization
 	 * @param label Label
-	 * @param comment Comment
+	 * @param commentOpt Comment
 	 */
 	public SecuredFeature(
 			final String code,
 			final String label,
-			final Optional<String> comment,
+			final Optional<String> commentOpt,
 			final Optional<String> linkedResourceOpt) {
 		super(PREFIX + StringUtil.first2UpperCase(code));
 		//---
 		Assertion.check()
 				.isNotBlank(code)
 				.isNotBlank(label)
-				.isNotNull(comment)
+				.isNotNull(commentOpt)
 				.isNotNull(linkedResourceOpt);
 		//-----
 		this.code = code;
 		this.label = label;
-		this.comment = comment;
+		this.commentOpt = commentOpt;
 		this.linkedResourceOpt = linkedResourceOpt;
 	}
 
@@ -84,7 +84,7 @@ public final class SecuredFeature extends AbstractDefinition {
 	 * @return Comment de la authorization
 	 */
 	public Optional<String> getComment() {
-		return comment;
+		return commentOpt;
 	}
 
 	public Optional<String> getLinkedResourceOpt() {

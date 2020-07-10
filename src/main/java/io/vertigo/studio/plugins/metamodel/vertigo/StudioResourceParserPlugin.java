@@ -62,12 +62,15 @@ public final class StudioResourceParserPlugin implements MetamodelResourceParser
 	/**
 	 * Constructeur injectable.
 	 * @param resourceManager the component for finding resources
-	 * @param encoding the encoding to use for reading ksp files
+	 * @param encodingOpt the encoding to use for reading ksp files
 	 */
 	@Inject
-	public StudioResourceParserPlugin(final ResourceManager resourceManager, @ParamValue("encoding") final Optional<String> encoding, @ParamValue("constFieldName") final Optional<Boolean> constFieldName) {
+	public StudioResourceParserPlugin(
+			final ResourceManager resourceManager,
+			@ParamValue("encoding") final Optional<String> encodingOpt,
+			@ParamValue("constFieldName") final Optional<Boolean> constFieldName) {
 		loadersByType = new MapBuilder<String, Loader>()
-				.put("kpr", new KprLoader(resourceManager, encoding))
+				.put("kpr", new KprLoader(resourceManager, encodingOpt))
 				.put("oom", new OOMLoader(constFieldName.orElse(true), resourceManager))
 				.put("xmi", new EAXmiLoader(constFieldName.orElse(true), resourceManager))
 				.put("classes", new AnnotationLoader())

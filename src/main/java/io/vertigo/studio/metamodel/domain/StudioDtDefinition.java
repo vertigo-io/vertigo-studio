@@ -71,35 +71,35 @@ public final class StudioDtDefinition extends AbstractDefinition {
 	 */
 	StudioDtDefinition(
 			final String name,
-			final Optional<DefinitionReference<StudioDtDefinition>> fragment,
+			final Optional<DefinitionReference<StudioDtDefinition>> fragmentOpt,
 			final String packageName,
 			final StudioStereotype stereotype,
 			final List<StudioDtField> dtFields,
 			final String dataSpace,
-			final Optional<StudioDtField> sortField,
-			final Optional<StudioDtField> displayField,
-			final Optional<StudioDtField> handleField) {
+			final Optional<StudioDtField> sortFieldOpt,
+			final Optional<StudioDtField> displayFieldOpt,
+			final Optional<StudioDtField> handleFieldOpt) {
 		super(name);
 		//---
 		Assertion.check()
-				.isNotNull(fragment)
+				.isNotNull(fragmentOpt)
 				.isNotNull(stereotype)
 				.isNotNull(dtFields)
 				.isNotBlank(dataSpace)
 				.isTrue(REGEX_DATA_SPACE.matcher(dataSpace).matches(), "dataSpace {0} must match pattern {1}", dataSpace, REGEX_DATA_SPACE)
-				.isNotNull(sortField)
-				.isNotNull(displayField)
-				.isNotNull(handleField);
+				.isNotNull(sortFieldOpt)
+				.isNotNull(displayFieldOpt)
+				.isNotNull(handleFieldOpt);
 		//-----
-		fragmentOpt = fragment;
+		this.fragmentOpt = fragmentOpt;
 		//
 		this.stereotype = stereotype;
 		this.packageName = packageName;
 		StudioDtField id = null;
 
-		sortFieldOpt = sortField;
-		displayFieldOpt = displayField;
-		handleFieldOpt = handleField;
+		this.sortFieldOpt = sortFieldOpt;
+		this.displayFieldOpt = displayFieldOpt;
+		this.handleFieldOpt = handleFieldOpt;
 
 		for (final StudioDtField dtField : dtFields) {
 			Assertion.check()
@@ -116,7 +116,7 @@ public final class StudioDtDefinition extends AbstractDefinition {
 		this.dataSpace = dataSpace;
 		//---
 		Assertion.check()
-				.when(fragment.isPresent(), () -> Assertion.check()
+				.when(fragmentOpt.isPresent(), () -> Assertion.check()
 						.isTrue(StudioStereotype.Fragment == stereotype, "Error on {0} with sterotype {1}, If an object is a fragment then it must have this stereotype", name, stereotype))
 				//Persistent => ID
 				.when(stereotype.isPersistent(), () -> Assertion.check()
