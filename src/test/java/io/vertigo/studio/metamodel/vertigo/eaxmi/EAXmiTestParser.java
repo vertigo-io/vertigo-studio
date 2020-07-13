@@ -29,13 +29,13 @@ import io.vertigo.core.node.AutoCloseableApp;
 import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.NodeConfig;
-import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.studio.StudioFeatures;
-import io.vertigo.studio.metamodel.MetamodelResource;
-import io.vertigo.studio.metamodel.StudioMetamodelManager;
-import io.vertigo.studio.metamodel.domain.association.StudioAssociationNNDefinition;
-import io.vertigo.studio.metamodel.domain.association.StudioAssociationSimpleDefinition;
+import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.domain.association.AssociationNNSketch;
+import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
+import io.vertigo.studio.source.NotebookSource;
+import io.vertigo.studio.source.NotebookSourceManager;
 
 /**
  * Test de lecture d'un OOM.
@@ -44,7 +44,7 @@ import io.vertigo.studio.metamodel.domain.association.StudioAssociationSimpleDef
  */
 public class EAXmiTestParser {
 
-	private DefinitionSpace definitionSpace;
+	private Notebook notebook;
 	private AutoCloseableApp app;
 
 	@BeforeEach
@@ -52,10 +52,10 @@ public class EAXmiTestParser {
 		app = new AutoCloseableApp(buildNodeConfig());
 		DIInjector.injectMembers(this, app.getComponentSpace());
 		//---
-		final List<MetamodelResource> resources = List.of(
-				MetamodelResource.of("xmi", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/associations.xml"),
-				MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/domain.kpr"));
-		definitionSpace = app.getComponentSpace().resolve(StudioMetamodelManager.class).parseResources(resources);
+		final List<NotebookSource> resources = List.of(
+				NotebookSource.of("xmi", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/associations.xml"),
+				NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/domain.kpr"));
+		notebook = app.getComponentSpace().resolve(NotebookSourceManager.class).read(resources);
 	}
 
 	@AfterEach
@@ -83,14 +83,14 @@ public class EAXmiTestParser {
 	 * - Cardinalité notée 	1 ou n
 	 * - Navigabilité notée v
 	 */
-	private StudioAssociationSimpleDefinition getAssociationSimpleDefinition(final String urn) {
-		return definitionSpace
-				.resolve(urn, StudioAssociationSimpleDefinition.class);
+	private AssociationSimpleSketch getAssociationSimpleDefinition(final String urn) {
+		return notebook
+				.resolve(urn, AssociationSimpleSketch.class);
 	}
 
-	private StudioAssociationNNDefinition getAssociationNNDefinition(final String urn) {
-		return definitionSpace
-				.resolve(urn, StudioAssociationNNDefinition.class);
+	private AssociationNNSketch getAssociationNNDefinition(final String urn) {
+		return notebook
+				.resolve(urn, AssociationNNSketch.class);
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class EAXmiTestParser {
 	 */
 	@Test
 	public void testAssoctationA1Bnv() {
-		final StudioAssociationSimpleDefinition association = getAssociationSimpleDefinition("StAChaChi1");
+		final AssociationSimpleSketch association = getAssociationSimpleDefinition("StAChaChi1");
 		Assertions.assertNotNull(association);
 		/* "0..1" */
 		Assertions.assertFalse(association.getAssociationNodeA().isMultiple());
@@ -120,7 +120,7 @@ public class EAXmiTestParser {
 	 */
 	@Test
 	public void testAssoctationA1vBnv() {
-		final StudioAssociationSimpleDefinition association = getAssociationSimpleDefinition("StAChaChi2");
+		final AssociationSimpleSketch association = getAssociationSimpleDefinition("StAChaChi2");
 		/* "0..1" */
 		Assertions.assertFalse(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());
@@ -140,7 +140,7 @@ public class EAXmiTestParser {
 	 */
 	@Test
 	public void testAssoctationSimpleA1vBn() {
-		final StudioAssociationSimpleDefinition association = getAssociationSimpleDefinition("StAChaChi3");
+		final AssociationSimpleSketch association = getAssociationSimpleDefinition("StAChaChi3");
 		/* "0..1" */
 		Assertions.assertFalse(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());
@@ -160,7 +160,7 @@ public class EAXmiTestParser {
 	 */
 	@Test
 	public void testAssoctationSimpleAnB1v() {
-		final StudioAssociationSimpleDefinition association = getAssociationSimpleDefinition("StAChaChi4");
+		final AssociationSimpleSketch association = getAssociationSimpleDefinition("StAChaChi4");
 		/* "0..*" */
 		Assertions.assertTrue(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());
@@ -180,7 +180,7 @@ public class EAXmiTestParser {
 	 */
 	@Test
 	public void testAssoctationSimpleAnvB1() {
-		final StudioAssociationSimpleDefinition association = getAssociationSimpleDefinition("StAChaChi5");
+		final AssociationSimpleSketch association = getAssociationSimpleDefinition("StAChaChi5");
 		/* "0..*" */
 		Assertions.assertTrue(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());
@@ -200,7 +200,7 @@ public class EAXmiTestParser {
 	 */
 	@Test
 	public void testAssoctationAnvB1v() {
-		final StudioAssociationSimpleDefinition association = getAssociationSimpleDefinition("StAChaChi6");
+		final AssociationSimpleSketch association = getAssociationSimpleDefinition("StAChaChi6");
 		/* "0..*" */
 		Assertions.assertTrue(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());
@@ -220,7 +220,7 @@ public class EAXmiTestParser {
 	 */
 	@Test
 	public void testAssoctationAnBnv() {
-		final StudioAssociationNNDefinition association = getAssociationNNDefinition("StAnnChaChi7");
+		final AssociationNNSketch association = getAssociationNNDefinition("StAnnChaChi7");
 		/* "0..*" */
 		Assertions.assertTrue(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());
@@ -240,7 +240,7 @@ public class EAXmiTestParser {
 	 */
 	@Test
 	public void testAssoctationAnvBnv() {
-		final StudioAssociationNNDefinition association = getAssociationNNDefinition("StAnnChaChi8");
+		final AssociationNNSketch association = getAssociationNNDefinition("StAnnChaChi8");
 		/* "0..*" */
 		Assertions.assertTrue(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());
@@ -260,7 +260,7 @@ public class EAXmiTestParser {
 	 */
 	@Test
 	public void testAssoctationAnBn() {
-		final StudioAssociationNNDefinition association = getAssociationNNDefinition("StAnnChaChi9");
+		final AssociationNNSketch association = getAssociationNNDefinition("StAnnChaChi9");
 		/* "0..*" */
 		Assertions.assertTrue(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());
@@ -280,7 +280,7 @@ public class EAXmiTestParser {
 	 */
 	@Test
 	public void testAssoctationAnvBn() {
-		final StudioAssociationNNDefinition association = getAssociationNNDefinition("StAnnChaChi10");
+		final AssociationNNSketch association = getAssociationNNDefinition("StAnnChaChi10");
 		/* "0..*" */
 		Assertions.assertTrue(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());

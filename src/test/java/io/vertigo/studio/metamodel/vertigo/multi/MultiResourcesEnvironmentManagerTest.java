@@ -29,14 +29,14 @@ import io.vertigo.core.node.AutoCloseableApp;
 import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.NodeConfig;
-import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.studio.StudioFeatures;
-import io.vertigo.studio.metamodel.MetamodelResource;
-import io.vertigo.studio.metamodel.StudioMetamodelManager;
-import io.vertigo.studio.metamodel.domain.Domain;
-import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 import io.vertigo.studio.metamodel.vertigo.multi.data.DtDefinitions;
+import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.domain.DomainSketch;
+import io.vertigo.studio.notebook.domain.DtSketch;
+import io.vertigo.studio.source.NotebookSource;
+import io.vertigo.studio.source.NotebookSourceManager;
 
 /**
  * Test de l'implémentation standard.
@@ -73,22 +73,22 @@ public final class MultiResourcesEnvironmentManagerTest {
 
 	@Test
 	public void testFirst() {
-		final DefinitionSpace definitionSpace = app.getComponentSpace().resolve(StudioMetamodelManager.class)
-				.parseResources(List.of(MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr")));
-		final Domain doString = definitionSpace.resolve("DoString", Domain.class);
+		final Notebook notebook = app.getComponentSpace().resolve(NotebookSourceManager.class)
+				.read(List.of(NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr")));
+		final DomainSketch doString = notebook.resolve("DoString", DomainSketch.class);
 		Assertions.assertNotNull(doString);
 	}
 
 	@Test
 	public void testMergedResources() {
-		final DefinitionSpace definitionSpace = app.getComponentSpace().resolve(StudioMetamodelManager.class)
-				.parseResources(List.of(
-						MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr"),
-						MetamodelResource.of("classes", DtDefinitions.class.getCanonicalName())));
+		final Notebook notebook = app.getComponentSpace().resolve(NotebookSourceManager.class)
+				.read(List.of(
+						NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr"),
+						NotebookSource.of("classes", DtDefinitions.class.getCanonicalName())));
 
-		final Domain doString = definitionSpace.resolve("DoString", Domain.class);
+		final DomainSketch doString = notebook.resolve("DoString", DomainSketch.class);
 		Assertions.assertNotNull(doString);
-		final StudioDtDefinition dtItem = definitionSpace.resolve("StDtItem", StudioDtDefinition.class);
+		final DtSketch dtItem = notebook.resolve("StDtItem", DtSketch.class);
 		Assertions.assertNotNull(dtItem);
 	}
 

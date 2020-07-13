@@ -28,13 +28,13 @@ import java.util.Map;
 import java.util.Set;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.mda.MdaFileGenerator;
 import io.vertigo.studio.impl.mda.MdaGeneratorPlugin;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
-import io.vertigo.studio.metamodel.webservices.StudioWebServiceDefinition;
+import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.webservices.WebServiceSketch;
 import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
 import io.vertigo.studio.plugins.mda.vertigo.webservice.model.WebServiceDefinitionModelTs;
 import io.vertigo.studio.plugins.mda.vertigo.webservice.model.WebServiceInitializerModelTs;
@@ -50,27 +50,27 @@ public final class WsTsGeneratorPlugin implements MdaGeneratorPlugin {
 	/** {@inheritDoc} */
 	@Override
 	public void generate(
-			final DefinitionSpace definitionSpace,
+			final Notebook notebook,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		Assertion.check()
-				.isNotNull(definitionSpace)
+				.isNotNull(notebook)
 				.isNotNull(mdaConfig)
 				.isNotNull(mdaResultBuilder);
 		//-----
 		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.wsts.targetSubDir", DEFAULT_TARGET_SUBDIR);
-		generateRoute(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder);
+		generateRoute(notebook, targetSubDir, mdaConfig, mdaResultBuilder);
 	}
 
-	private static Collection<StudioWebServiceDefinition> getWebServiceDefinitions(final DefinitionSpace definitionSpace) {
-		return definitionSpace.getAll(StudioWebServiceDefinition.class);
+	private static Collection<WebServiceSketch> getWebServiceDefinitions(final Notebook notebook) {
+		return notebook.getAll(WebServiceSketch.class);
 	}
 
-	private static void generateRoute(final DefinitionSpace definitionSpace, final String targetSubDir, final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
-		final Collection<StudioWebServiceDefinition> webServiceDefinitions = getWebServiceDefinitions(definitionSpace);
+	private static void generateRoute(final Notebook notebook, final String targetSubDir, final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
+		final Collection<WebServiceSketch> webServiceDefinitions = getWebServiceDefinitions(notebook);
 		if (!webServiceDefinitions.isEmpty()) {
 			final Map<String, List<WebServiceDefinitionModelTs>> webServicesPerFacades = new HashMap<>();
-			for (final StudioWebServiceDefinition webServiceDefinition : webServiceDefinitions) {
+			for (final WebServiceSketch webServiceDefinition : webServiceDefinitions) {
 				//final String facadeName = webServiceDefinition.getMethod().getDeclaringClass().getSimpleName().replaceAll("WebServices", "");
 				final String facadeName = webServiceDefinition.getGroupNameOpt().orElseGet(() -> webServiceDefinition.getModuleName());
 				List<WebServiceDefinitionModelTs> facadeWebServiceDefinitions = webServicesPerFacades.get(facadeName);

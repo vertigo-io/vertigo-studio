@@ -21,7 +21,7 @@ package io.vertigo.studio.plugins.mda.vertigo.domain.sql.model;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.BasicType;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.studio.metamodel.domain.StudioDtField;
+import io.vertigo.studio.notebook.domain.DtSketchField;
 
 /**
  * Model used to define a DtField.
@@ -29,13 +29,13 @@ import io.vertigo.studio.metamodel.domain.StudioDtField;
  * @author pchretien, mlaroche
  */
 public final class SqlStudioDtFieldModel {
-	private final StudioDtField dtField;
+	private final DtSketchField dtField;
 
 	/***
 	 * Constructeur.
 	 * @param dtField Champ à générer
 	 */
-	SqlStudioDtFieldModel(final StudioDtField dtField) {
+	SqlStudioDtFieldModel(final DtSketchField dtField) {
 		Assertion.check().isNotNull(dtField);
 		//-----
 		this.dtField = dtField;
@@ -64,7 +64,7 @@ public final class SqlStudioDtFieldModel {
 	/**
 	 * @return DtField
 	 */
-	public StudioDtField getSource() {
+	public DtSketchField getSource() {
 		return dtField;
 	}
 

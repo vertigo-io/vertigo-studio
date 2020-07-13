@@ -25,8 +25,8 @@ import java.util.stream.Collectors;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.BasicType;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
-import io.vertigo.studio.metamodel.domain.StudioDtField;
+import io.vertigo.studio.notebook.domain.DtSketch;
+import io.vertigo.studio.notebook.domain.DtSketchField;
 
 /**
  * Model used by FreeMarker.
@@ -34,7 +34,7 @@ import io.vertigo.studio.metamodel.domain.StudioDtField;
  * @author pchretien, mlaroche
  */
 public final class SqlStudioDtDefinitionModel {
-	private final StudioDtDefinition dtDefinition;
+	private final DtSketch dtDefinition;
 	private final boolean hasSequence;
 	private final List<SqlStudioDtFieldModel> dtFieldModels;
 
@@ -43,12 +43,12 @@ public final class SqlStudioDtDefinitionModel {
 	 *
 	 * @param dtDefinition DtDefinition de l'objet à générer
 	 */
-	public SqlStudioDtDefinitionModel(final StudioDtDefinition dtDefinition) {
+	public SqlStudioDtDefinitionModel(final DtSketch dtDefinition) {
 		Assertion.check().isNotNull(dtDefinition);
 		//-----
 		this.dtDefinition = dtDefinition;
 
-		final Optional<StudioDtField> pkFieldOpt = dtDefinition.getIdField();
+		final Optional<DtSketchField> pkFieldOpt = dtDefinition.getIdField();
 		if (pkFieldOpt.isPresent()) {
 			final BasicType pkDataType = pkFieldOpt.get().getDomain().getDataType();
 			hasSequence = pkDataType.isNumber();
@@ -57,7 +57,7 @@ public final class SqlStudioDtDefinitionModel {
 		}
 
 		dtFieldModels = dtDefinition.getFields().stream()
-				.filter(dtField -> StudioDtField.FieldType.COMPUTED != dtField.getType())
+				.filter(dtField -> DtSketchField.FieldType.COMPUTED != dtField.getType())
 				.map(SqlStudioDtFieldModel::new)
 				.collect(Collectors.toList());
 	}

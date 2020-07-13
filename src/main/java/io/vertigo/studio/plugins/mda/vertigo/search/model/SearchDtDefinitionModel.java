@@ -19,7 +19,7 @@
 package io.vertigo.studio.plugins.mda.vertigo.search.model;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
+import io.vertigo.studio.notebook.domain.DtSketch;
 
 /**
  * Model used by FreeMarker.
@@ -27,14 +27,14 @@ import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
  * @author pchretien, mlaroche
  */
 public final class SearchDtDefinitionModel {
-	private final StudioDtDefinition dtDefinition;
+	private final DtSketch dtDefinition;
 
 	/**
 	 * Constructeur.
 	 *
 	 * @param dtDefinition DtDefinition de l'objet à générer
 	 */
-	public SearchDtDefinitionModel(final StudioDtDefinition dtDefinition) {
+	public SearchDtDefinitionModel(final DtSketch dtDefinition) {
 		Assertion.check().isNotNull(dtDefinition);
 		//-----
 		this.dtDefinition = dtDefinition;

@@ -30,18 +30,18 @@ import io.vertigo.core.node.AutoCloseableApp;
 import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.NodeConfig;
-import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.datamodel.impl.smarttype.constraint.ConstraintRegex;
 import io.vertigo.datamodel.impl.smarttype.formatter.FormatterDefault;
 import io.vertigo.datamodel.impl.smarttype.formatter.FormatterNumber;
 import io.vertigo.studio.StudioFeatures;
-import io.vertigo.studio.metamodel.MetamodelResource;
-import io.vertigo.studio.metamodel.StudioMetamodelManager;
-import io.vertigo.studio.metamodel.domain.ConstraintDefinition;
-import io.vertigo.studio.metamodel.domain.Domain;
-import io.vertigo.studio.metamodel.domain.FormatterDefinition;
-import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
+import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.domain.ConstraintSketch;
+import io.vertigo.studio.notebook.domain.DomainSketch;
+import io.vertigo.studio.notebook.domain.FormatterSketch;
+import io.vertigo.studio.notebook.domain.DtSketch;
+import io.vertigo.studio.source.NotebookSource;
+import io.vertigo.studio.source.NotebookSourceManager;
 
 /**
  * Test de l'implémentation standard.
@@ -49,7 +49,7 @@ import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
  * @author pchretien, mlaroche
  */
 public final class EAXmiEnvironmentManagerTest {
-	private DefinitionSpace definitionSpace;
+	private Notebook notebook;
 	private AutoCloseableApp app;
 
 	@BeforeEach
@@ -57,10 +57,10 @@ public final class EAXmiEnvironmentManagerTest {
 		app = new AutoCloseableApp(buildNodeConfig());
 		DIInjector.injectMembers(this, app.getComponentSpace());
 		//---
-		final List<MetamodelResource> resources = List.of(
-				MetamodelResource.of("xmi", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/demo.xml"),
-				MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/domain.kpr"));
-		definitionSpace = app.getComponentSpace().resolve(StudioMetamodelManager.class).parseResources(resources);
+		final List<NotebookSource> resources = List.of(
+				NotebookSource.of("xmi", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/demo.xml"),
+				NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/domain.kpr"));
+		notebook = app.getComponentSpace().resolve(NotebookSourceManager.class).read(resources);
 	}
 
 	@AfterEach
@@ -84,33 +84,33 @@ public final class EAXmiEnvironmentManagerTest {
 
 	@Test
 	public void testConstraint() {
-		final ConstraintDefinition constraint = definitionSpace.resolve("CkTelephone", ConstraintDefinition.class);
+		final ConstraintSketch constraint = notebook.resolve("CkTelephone", ConstraintSketch.class);
 		Assertions.assertEquals(ConstraintRegex.class.getName(), constraint.getConstraintClassName());
 
 	}
 
 	@Test
 	public void testDefaultFormatter() {
-		final FormatterDefinition formatter = definitionSpace.resolve("FmtDefault", FormatterDefinition.class);
+		final FormatterSketch formatter = notebook.resolve("FmtDefault", FormatterSketch.class);
 		Assertions.assertEquals(FormatterDefault.class.getName(), formatter.getFormatterClassName());
 	}
 
 	@Test
 	public void testFormatter() {
-		final FormatterDefinition formatter = definitionSpace.resolve("FmtTaux", FormatterDefinition.class);
+		final FormatterSketch formatter = notebook.resolve("FmtTaux", FormatterSketch.class);
 		Assertions.assertEquals(FormatterNumber.class.getName(), formatter.getFormatterClassName());
 	}
 
 	@Test
 	public void testDomain() {
-		final io.vertigo.studio.metamodel.domain.Domain domain = definitionSpace.resolve("DoEmail", Domain.class);
-		Assertions.assertEquals(BasicType.String, domain.getDataType());
-		Assertions.assertEquals(FormatterDefault.class.getName(), domain.getFormatterDefinition().getFormatterClassName());
+		final io.vertigo.studio.notebook.domain.DomainSketch domainSketch = notebook.resolve("DoEmail", DomainSketch.class);
+		Assertions.assertEquals(BasicType.String, domainSketch.getDataType());
+		Assertions.assertEquals(FormatterDefault.class.getName(), domainSketch.getFormatterDefinition().getFormatterClassName());
 	}
 
 	@Test
 	public void testDtDefinition() {
-		final StudioDtDefinition dtDefinition = definitionSpace.resolve("StDtFamille", StudioDtDefinition.class);
+		final DtSketch dtDefinition = notebook.resolve("StDtFamille", DtSketch.class);
 		Assertions.assertEquals("io.vertigo.dynamock.domain.famille.Famille", dtDefinition.getClassCanonicalName());
 		Assertions.assertTrue(dtDefinition.isPersistent());
 		Assertions.assertEquals("io.vertigo.dynamock.domain.famille", dtDefinition.getPackageName());

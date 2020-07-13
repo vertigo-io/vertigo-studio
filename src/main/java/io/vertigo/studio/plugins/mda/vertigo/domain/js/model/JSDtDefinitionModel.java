@@ -22,8 +22,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
-import io.vertigo.studio.metamodel.domain.StudioDtField;
+import io.vertigo.studio.notebook.domain.DtSketch;
+import io.vertigo.studio.notebook.domain.DtSketchField;
 
 /**
  * Model used by FreeMarker.
@@ -31,7 +31,7 @@ import io.vertigo.studio.metamodel.domain.StudioDtField;
  * @author pchretien, mlaroche
  */
 public final class JSDtDefinitionModel {
-	private final StudioDtDefinition dtDefinition;
+	private final DtSketch dtDefinition;
 	private final List<JSStudioDtFieldModel> dtFieldModels;
 
 	/**
@@ -39,13 +39,13 @@ public final class JSDtDefinitionModel {
 	 *
 	 * @param dtDefinition DtDefinition de l'objet à générer
 	 */
-	public JSDtDefinitionModel(final StudioDtDefinition dtDefinition) {
+	public JSDtDefinitionModel(final DtSketch dtDefinition) {
 		Assertion.check().isNotNull(dtDefinition);
 		//-----
 		this.dtDefinition = dtDefinition;
 
 		dtFieldModels = dtDefinition.getFields().stream()
-				.filter(dtField -> StudioDtField.FieldType.COMPUTED != dtField.getType())
+				.filter(dtField -> DtSketchField.FieldType.COMPUTED != dtField.getType())
 				.map(JSStudioDtFieldModel::new)
 				.collect(Collectors.toList());
 	}
@@ -53,7 +53,7 @@ public final class JSDtDefinitionModel {
 	/**
 	 * @return DT définition
 	 */
-	public StudioDtDefinition getDtDefinition() {
+	public DtSketch getDtDefinition() {
 		return dtDefinition;
 	}
 

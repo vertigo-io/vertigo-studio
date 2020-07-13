@@ -19,8 +19,8 @@
 package io.vertigo.studio.plugins.mda.vertigo.webservice.model;
 
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.studio.metamodel.webservices.StudioWebServiceParam;
-import io.vertigo.studio.metamodel.webservices.StudioWebServiceParam.WebServiceParamLocation;
+import io.vertigo.studio.notebook.webservices.WebServiceSketchParam;
+import io.vertigo.studio.notebook.webservices.WebServiceSketchParam.WebServiceParamLocation;
 
 /**
  * FreeMarker Model of WebServiceParamModel.
@@ -28,14 +28,14 @@ import io.vertigo.studio.metamodel.webservices.StudioWebServiceParam.WebServiceP
  */
 public final class WebServiceParamModelTs {
 
-	private final StudioWebServiceParam webServiceParam;
+	private final WebServiceSketchParam webServiceParam;
 	private final TypeModelTs typeModelTs;
 
 	/**
 	 * Constructor.
 	 * @param webServiceParam web service param
 	 */
-	public WebServiceParamModelTs(final StudioWebServiceParam webServiceParam) {
+	public WebServiceParamModelTs(final WebServiceSketchParam webServiceParam) {
 		this.webServiceParam = webServiceParam;
 		typeModelTs = new TypeModelTs(webServiceParam.getGenericType());
 	}

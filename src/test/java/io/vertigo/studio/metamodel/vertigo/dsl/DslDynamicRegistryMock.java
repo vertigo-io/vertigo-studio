@@ -18,13 +18,13 @@
  */
 package io.vertigo.studio.metamodel.vertigo.dsl;
 
-import io.vertigo.core.node.definition.Definition;
-import io.vertigo.core.node.definition.DefinitionSupplier;
-import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinition;
-import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinitionRepository;
-import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DynamicRegistry;
-import io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslGrammar;
-import io.vertigo.studio.plugins.metamodel.vertigo.registries.domain.DomainGrammar;
+import io.vertigo.studio.notebook.Sketch;
+import io.vertigo.studio.notebook.SketchSupplier;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinition;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinitionRepository;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DynamicRegistry;
+import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
+import io.vertigo.studio.plugins.source.vertigo.registries.domain.DomainGrammar;
 
 /**
  * Mock pour les tests de regles sur les Definitions.
@@ -49,8 +49,8 @@ public final class DslDynamicRegistryMock implements DynamicRegistry {
 	}
 
 	@Override
-	public DefinitionSupplier supplyDefinition(final DslDefinition definition) {
-		return (definitionSpace) -> new Definition() {
+	public SketchSupplier supplyModel(final DslDefinition definition) {
+		return (workbook) -> new Sketch() {
 
 			@Override
 			public String getName() {

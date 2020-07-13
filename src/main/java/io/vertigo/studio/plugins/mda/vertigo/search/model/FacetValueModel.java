@@ -1,13 +1,13 @@
 package io.vertigo.studio.plugins.mda.vertigo.search.model;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.metamodel.search.StudioFacetValue;
+import io.vertigo.studio.notebook.search.FacetSketchValue;
 
 public class FacetValueModel {
 
-	private final StudioFacetValue facetValue;
+	private final FacetSketchValue facetValue;
 
-	public FacetValueModel(final StudioFacetValue facetValue) {
+	public FacetValueModel(final FacetSketchValue facetValue) {
 		Assertion.check().isNotNull(facetValue);
 		//---
 		this.facetValue = facetValue;

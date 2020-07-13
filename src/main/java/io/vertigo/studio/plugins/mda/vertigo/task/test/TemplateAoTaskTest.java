@@ -22,7 +22,7 @@ import java.util.function.Function;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.mda.MdaConfig;
-import io.vertigo.studio.metamodel.task.StudioTaskDefinition;
+import io.vertigo.studio.notebook.task.TaskSketch;
 
 /**
  * Template used by freemarker.
@@ -40,7 +40,7 @@ public final class TemplateAoTaskTest {
 	 */
 	TemplateAoTaskTest(
 			final MdaConfig taskConfiguration,
-			final StudioTaskDefinition taskDefinition,
+			final TaskSketch taskDefinition,
 			final String packageName,
 			final String classSimpleName,
 			final String daoTestBaseClass,

@@ -21,8 +21,8 @@ package io.vertigo.studio.plugins.mda.vertigo.task.model;
 import java.util.function.Function;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.metamodel.domain.Domain;
-import io.vertigo.studio.metamodel.task.StudioTaskAttribute;
+import io.vertigo.studio.notebook.domain.DomainSketch;
+import io.vertigo.studio.notebook.task.TaskSketchAttribute;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
 
 /**
@@ -31,11 +31,11 @@ import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
  * @author pchretien, mlaroche
  */
 public final class TaskAttributeModel {
-	private final StudioTaskAttribute taskAttribute;
+	private final TaskSketchAttribute taskAttribute;
 	private final String javaType;
 	private final String javaTypeLabel;
 
-	TaskAttributeModel(final StudioTaskAttribute taskAttribute, final Function<String, String> classNameFromDt) {
+	TaskAttributeModel(final TaskSketchAttribute taskAttribute, final Function<String, String> classNameFromDt) {
 		Assertion.check()
 				.isNotNull(taskAttribute)
 				.isNotNull(classNameFromDt);
@@ -85,7 +85,7 @@ public final class TaskAttributeModel {
 	/**
 	 * @return Domain.
 	 */
-	public Domain getDomain() {
+	public DomainSketch getDomain() {
 		return taskAttribute.getDomain();
 	}
 

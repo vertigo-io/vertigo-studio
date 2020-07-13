@@ -18,13 +18,13 @@
  */
 package io.vertigo.studio.metamodel.vertigo.loader;
 
-import io.vertigo.core.node.definition.AbstractDefinition;
 import io.vertigo.core.node.definition.DefinitionPrefix;
-import io.vertigo.core.node.definition.DefinitionSupplier;
-import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinition;
-import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinitionRepository;
-import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DynamicRegistry;
-import io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslGrammar;
+import io.vertigo.studio.notebook.AbstractSketch;
+import io.vertigo.studio.notebook.SketchSupplier;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinition;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinitionRepository;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DynamicRegistry;
+import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
 
 /**
  * Mock pour les tests de regles sur les Definitions.
@@ -49,15 +49,15 @@ public final class DslDynamicRegistryMock implements DynamicRegistry {
 	}
 
 	@Override
-	public DefinitionSupplier supplyDefinition(final DslDefinition definition) {
-		return (definitionSpace) -> new FakeDefinition(definition.getName());
+	public SketchSupplier supplyModel(final DslDefinition definition) {
+		return (workbook) -> new FakeModel(definition.getName());
 	}
 
-	@DefinitionPrefix(FakeDefinition.PREFIX)
-	public final static class FakeDefinition extends AbstractDefinition {
+	@DefinitionPrefix(FakeModel.PREFIX)
+	public final static class FakeModel extends AbstractSketch {
 		public static final String PREFIX = "Mock";
 
-		FakeDefinition(final String name) {
+		FakeModel(final String name) {
 			super(name);
 		}
 	}

@@ -31,8 +31,8 @@ import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.studio.StudioFeatures;
-import io.vertigo.studio.metamodel.MetamodelResource;
-import io.vertigo.studio.metamodel.StudioMetamodelManager;
+import io.vertigo.studio.source.NotebookSourceManager;
+import io.vertigo.studio.source.NotebookSource;
 
 /**
  * Test ksp model.
@@ -69,23 +69,23 @@ public final class KspEnvironmentManagerTest {
 
 	@Test
 	public void testDomain() {
-		app.getComponentSpace().resolve(StudioMetamodelManager.class)
-				.parseResources(List.of(MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/ksp/data/execution.kpr")));
+		app.getComponentSpace().resolve(NotebookSourceManager.class)
+				.read(List.of(NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/ksp/data/execution.kpr")));
 	}
 
 	@Test
 	public void testWrongNavigability() {
 		Assertions.assertThrows(IllegalStateException.class, () -> {
-			app.getComponentSpace().resolve(StudioMetamodelManager.class)
-					.parseResources(List.of(MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/ksp/data/execution-forbidden.kpr")));
+			app.getComponentSpace().resolve(NotebookSourceManager.class)
+					.read(List.of(NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/ksp/data/execution-forbidden.kpr")));
 		});
 	}
 
 	@Test
 	public void testNonPossibleAssociation() {
 		Assertions.assertThrows(IllegalStateException.class, () -> {
-			app.getComponentSpace().resolve(StudioMetamodelManager.class)
-					.parseResources(List.of(MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/ksp/data/execution-forbidden2.kpr")));
+			app.getComponentSpace().resolve(NotebookSourceManager.class)
+					.read(List.of(NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/ksp/data/execution-forbidden2.kpr")));
 		});
 	}
 

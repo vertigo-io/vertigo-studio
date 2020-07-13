@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.studio.metamodel.task.StudioTaskDefinition;
+import io.vertigo.studio.notebook.task.TaskSketch;
 
 /**
  * Génération des classes/méthodes des taches de type DAO.
@@ -32,14 +32,14 @@ import io.vertigo.studio.metamodel.task.StudioTaskDefinition;
  * @author sezratty, mlaroche
  */
 public final class TemplateTaskDefinition {
-	private final StudioTaskDefinition taskDefinition;
+	private final TaskSketch taskDefinition;
 	private final List<TemplateTaskAttribute> templateInTaskAttributes;
 	private final String testPackageName;
 	private final String testClassSimpleName;
 	private final String packageName;
 	private final String classSimpleName;
 
-	TemplateTaskDefinition(final StudioTaskDefinition taskDefinition, final String packageName, final String classSimpleName, final Function<String, String> classNameFromDt) {
+	TemplateTaskDefinition(final TaskSketch taskDefinition, final String packageName, final String classSimpleName, final Function<String, String> classNameFromDt) {
 		Assertion.check()
 				.isNotNull(taskDefinition)
 				.isNotNull(packageName)

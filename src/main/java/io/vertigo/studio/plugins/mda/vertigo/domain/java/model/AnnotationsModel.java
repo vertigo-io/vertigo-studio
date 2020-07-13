@@ -24,9 +24,9 @@ import freemarker.template.SimpleScalar;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateSequenceModel;
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
-import io.vertigo.studio.metamodel.domain.association.StudioAssociationNNDefinition;
-import io.vertigo.studio.metamodel.domain.association.StudioAssociationSimpleDefinition;
+import io.vertigo.studio.notebook.domain.DtSketch;
+import io.vertigo.studio.notebook.domain.association.AssociationNNSketch;
+import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
 
 /**
  * Permet de construire les lignes décritants l'annotation.
@@ -50,7 +50,7 @@ final class AnnotationsModel implements TemplateSequenceModel {
 	 * @param annotationWriter AnnotationWriter
 	 * @param dtDefinition DtDefinition
 	 */
-	public AnnotationsModel(final AnnotationWriter annotationWriter, final StudioDtDefinition dtDefinition) {
+	public AnnotationsModel(final AnnotationWriter annotationWriter, final DtSketch dtDefinition) {
 		this(annotationWriter.writeAnnotations(dtDefinition));
 	}
 
@@ -69,7 +69,7 @@ final class AnnotationsModel implements TemplateSequenceModel {
 	 * @param annotationWriter AnnotationWriter
 	 * @param associationSimple définition de l'association
 	 */
-	AnnotationsModel(final AnnotationWriter annotationWriter, final StudioAssociationSimpleDefinition associationSimple) {
+	AnnotationsModel(final AnnotationWriter annotationWriter, final AssociationSimpleSketch associationSimple) {
 		this(annotationWriter.writeSimpleAssociationAnnotation(associationSimple));
 	}
 
@@ -78,7 +78,7 @@ final class AnnotationsModel implements TemplateSequenceModel {
 	 * @param annotationWriter AnnotationWriter
 	 * @param associationNN définition de l'association
 	 */
-	AnnotationsModel(final AnnotationWriter annotationWriter, final StudioAssociationNNDefinition associationNN) {
+	AnnotationsModel(final AnnotationWriter annotationWriter, final AssociationNNSketch associationNN) {
 		this(annotationWriter.writeNNAssociationAnnotation(associationNN));
 	}
 

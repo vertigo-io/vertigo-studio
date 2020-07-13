@@ -26,14 +26,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.mda.MdaFileGenerator;
 import io.vertigo.studio.impl.mda.MdaGeneratorPlugin;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
-import io.vertigo.studio.metamodel.authorization.SecuredFeature;
-import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
+import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.authorization.SecuredFeatureSketch;
+import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.plugins.mda.vertigo.authorization.model.GlobalAuthorizationModel;
 import io.vertigo.studio.plugins.mda.vertigo.authorization.model.SecuredEntityModel;
 import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
@@ -50,45 +50,45 @@ public final class AuthorizationGeneratorPlugin implements MdaGeneratorPlugin {
 	/** {@inheritDoc} */
 	@Override
 	public void generate(
-			final DefinitionSpace definitionSpace,
+			final Notebook notebook,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		Assertion.check()
-				.isNotNull(definitionSpace)
+				.isNotNull(notebook)
 				.isNotNull(mdaConfig)
 				.isNotNull(mdaResultBuilder);
 		//-----
 		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.authorization.targetSubDir", DEFAULT_TARGET_SUBDIR);
 
-		generateGlobalAuthorizations(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder);
+		generateGlobalAuthorizations(notebook, targetSubDir, mdaConfig, mdaResultBuilder);
 
-		generateOperations(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder);
+		generateOperations(notebook, targetSubDir, mdaConfig, mdaResultBuilder);
 	}
 
-	private static List<GlobalAuthorizationModel> getGlobalAuthorizations(final DefinitionSpace definitionSpace) {
-		return definitionSpace.getAll(SecuredFeature.class).stream()
+	private static List<GlobalAuthorizationModel> getGlobalAuthorizations(final Notebook notebook) {
+		return notebook.getAll(SecuredFeatureSketch.class).stream()
 				.filter(o -> o.getLinkedResourceOpt().isEmpty())
 				.map(GlobalAuthorizationModel::new)
 				.collect(Collectors.toList());
 	}
 
-	private static Collection<SecuredEntityModel> getSecuredEntities(final DefinitionSpace definitionSpace) {
-		return definitionSpace.getAll(SecuredFeature.class)
+	private static Collection<SecuredEntityModel> getSecuredEntities(final Notebook notebook) {
+		return notebook.getAll(SecuredFeatureSketch.class)
 				.stream()
 				.filter(securedFeature -> securedFeature.getLinkedResourceOpt().isPresent())
 				.collect(Collectors.groupingBy(securedFeature -> securedFeature.getLinkedResourceOpt().get(), Collectors.toList()))
 				.entrySet().stream()
-				.filter(entry -> definitionSpace.contains("StDt" + entry.getKey()))// we have the studioDtDefinition
-				.map(entry -> new SecuredEntityModel(entry.getValue(), definitionSpace.resolve("StDt" + entry.getKey(), StudioDtDefinition.class)))
+				.filter(entry -> notebook.contains("StDt" + entry.getKey()))// we have the studioDtDefinition
+				.map(entry -> new SecuredEntityModel(entry.getValue(), notebook.resolve("StDt" + entry.getKey(), DtSketch.class)))
 				.collect(Collectors.toList());
 	}
 
-	private static void generateGlobalAuthorizations(final DefinitionSpace definitionSpace, final String targetSubDir, final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
-		generateDictionnary("GlobalAuthorizations", targetSubDir, mdaConfig, mdaResultBuilder, getGlobalAuthorizations(definitionSpace));
+	private static void generateGlobalAuthorizations(final Notebook notebook, final String targetSubDir, final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
+		generateDictionnary("GlobalAuthorizations", targetSubDir, mdaConfig, mdaResultBuilder, getGlobalAuthorizations(notebook));
 	}
 
-	private static void generateOperations(final DefinitionSpace definitionSpace, final String targetSubDir, final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
-		generateDictionnary("SecuredEntities", targetSubDir, mdaConfig, mdaResultBuilder, getSecuredEntities(definitionSpace));
+	private static void generateOperations(final Notebook notebook, final String targetSubDir, final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
+		generateDictionnary("SecuredEntities", targetSubDir, mdaConfig, mdaResultBuilder, getSecuredEntities(notebook));
 	}
 
 	private static void generateDictionnary(

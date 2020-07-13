@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
 
 import io.vertigo.commons.peg.PegNoMatchFoundException;
 import io.vertigo.commons.peg.PegResult;
-import io.vertigo.studio.plugins.metamodel.vertigo.loaders.kpr.rules.DslPackageDeclarationRule;
+import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslPackageDeclarationRule;
 
 public final class DslPackageDeclarationRuleTest {
 	private static final DslPackageDeclarationRule PACKAGE_DECLARATION_RULE = new DslPackageDeclarationRule();

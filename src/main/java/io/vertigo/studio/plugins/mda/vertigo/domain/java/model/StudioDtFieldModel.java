@@ -23,11 +23,11 @@ import java.util.NoSuchElementException;
 import java.util.function.Function;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
-import io.vertigo.studio.metamodel.domain.StudioDtField;
-import io.vertigo.studio.metamodel.domain.StudioDtField.FieldType;
-import io.vertigo.studio.metamodel.domain.association.StudioAssociationDefinition;
-import io.vertigo.studio.metamodel.domain.association.StudioAssociationSimpleDefinition;
+import io.vertigo.studio.notebook.domain.DtSketch;
+import io.vertigo.studio.notebook.domain.DtSketchField;
+import io.vertigo.studio.notebook.domain.DtSketchField.FieldType;
+import io.vertigo.studio.notebook.domain.association.AssociationSketch;
+import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
 
 /**
@@ -36,9 +36,9 @@ import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
  * @author pchretien, mlaroche
  */
 public final class StudioDtFieldModel {
-	private final StudioDtDefinition dtDefinition;
-	private final StudioDtField dtField;
-	private final List<? extends StudioAssociationDefinition> associationDefinitions;
+	private final DtSketch dtDefinition;
+	private final DtSketchField dtField;
+	private final List<? extends AssociationSketch> associationDefinitions;
 	private final String javaType;
 	private final String javaTypeLabel;
 
@@ -46,7 +46,7 @@ public final class StudioDtFieldModel {
 	 * Constructeur.
 	 * @param dtField Champ à générer
 	 */
-	StudioDtFieldModel(final StudioDtDefinition dtDefinition, final StudioDtField dtField, final List<? extends StudioAssociationDefinition> associationDefinitions, final Function<String, String> classNameFromDt) {
+	StudioDtFieldModel(final DtSketch dtDefinition, final DtSketchField dtField, final List<? extends AssociationSketch> associationDefinitions, final Function<String, String> classNameFromDt) {
 		Assertion.check()
 				.isNotNull(dtDefinition)
 				.isNotNull(dtField)
@@ -73,7 +73,7 @@ public final class StudioDtFieldModel {
 	/**
 	 * @return DtField
 	 */
-	public StudioDtField getSource() {
+	public DtSketchField getSource() {
 		return dtField;
 	}
 
@@ -154,8 +154,8 @@ public final class StudioDtFieldModel {
 		//---
 		return associationDefinitions
 				.stream()
-				.filter(association -> association instanceof StudioAssociationSimpleDefinition)
-				.map(association -> (StudioAssociationSimpleDefinition) association)
+				.filter(association -> association instanceof AssociationSimpleSketch)
+				.map(association -> (AssociationSimpleSketch) association)
 				.filter(association -> association.getFKField().equals(dtField))
 				.map(association -> new StudioAssociationModel(association, association.getPrimaryAssociationNode()))
 				.findFirst()

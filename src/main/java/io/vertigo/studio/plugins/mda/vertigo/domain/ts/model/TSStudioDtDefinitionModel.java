@@ -24,9 +24,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
-import io.vertigo.studio.metamodel.domain.StudioDtField;
-import io.vertigo.studio.metamodel.domain.StudioDtField.FieldType;
+import io.vertigo.studio.notebook.domain.DtSketch;
+import io.vertigo.studio.notebook.domain.DtSketchField;
+import io.vertigo.studio.notebook.domain.DtSketchField.FieldType;
 
 /**
  * Model used by FreeMarker.
@@ -34,7 +34,7 @@ import io.vertigo.studio.metamodel.domain.StudioDtField.FieldType;
  * @author pchretien, mlaroche
  */
 public final class TSStudioDtDefinitionModel {
-	private final StudioDtDefinition dtDefinition;
+	private final DtSketch dtDefinition;
 	private final List<TSStudioDtFieldModel> dtFieldModels;
 	private final Set<TSDomainModel> domainModels;
 
@@ -43,7 +43,7 @@ public final class TSStudioDtDefinitionModel {
 	 *
 	 * @param dtDefinition DtDefinition de l'objet à générer
 	 */
-	public TSStudioDtDefinitionModel(final StudioDtDefinition dtDefinition) {
+	public TSStudioDtDefinitionModel(final DtSketch dtDefinition) {
 		Assertion.check().isNotNull(dtDefinition);
 		//-----
 		this.dtDefinition = dtDefinition;
@@ -55,7 +55,7 @@ public final class TSStudioDtDefinitionModel {
 
 		domainModels = dtDefinition.getFields().stream()
 				.filter(dtField -> FieldType.COMPUTED != dtField.getType())
-				.map(StudioDtField::getDomain)
+				.map(DtSketchField::getDomain)
 				.distinct()
 				.map(TSDomainModel::new)
 				.collect(Collectors.toSet());
@@ -64,7 +64,7 @@ public final class TSStudioDtDefinitionModel {
 	/**
 	 * @return DT definition
 	 */
-	public StudioDtDefinition getDtDefinition() {
+	public DtSketch getDtDefinition() {
 		return dtDefinition;
 	}
 

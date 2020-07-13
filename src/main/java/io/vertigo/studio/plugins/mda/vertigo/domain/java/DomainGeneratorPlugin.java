@@ -28,19 +28,19 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.mda.MdaFileGenerator;
 import io.vertigo.studio.impl.mda.MdaGeneratorPlugin;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
-import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
-import io.vertigo.studio.metamodel.domain.StudioStereotype;
-import io.vertigo.studio.metamodel.domain.association.StudioAssociationDefinition;
-import io.vertigo.studio.metamodel.domain.association.StudioAssociationNNDefinition;
-import io.vertigo.studio.metamodel.domain.association.StudioAssociationSimpleDefinition;
-import io.vertigo.studio.metamodel.domain.masterdata.MasterDataValue;
-import io.vertigo.studio.metamodel.domain.masterdata.StaticMasterData;
+import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.domain.DtSketch;
+import io.vertigo.studio.notebook.domain.StudioStereotype;
+import io.vertigo.studio.notebook.domain.association.AssociationSketch;
+import io.vertigo.studio.notebook.domain.association.AssociationNNSketch;
+import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
+import io.vertigo.studio.notebook.domain.masterdata.MasterDataValue;
+import io.vertigo.studio.notebook.domain.masterdata.StaticMasterDataSketch;
 import io.vertigo.studio.plugins.mda.vertigo.domain.java.model.MethodAnnotationsModel;
 import io.vertigo.studio.plugins.mda.vertigo.domain.java.model.StudioDtDefinitionModel;
 import io.vertigo.studio.plugins.mda.vertigo.domain.java.model.masterdata.MasterDataDefinitionModel;
@@ -59,11 +59,11 @@ public final class DomainGeneratorPlugin implements MdaGeneratorPlugin {
 	/** {@inheritDoc} */
 	@Override
 	public void generate(
-			final DefinitionSpace definitionSpace,
+			final Notebook notebook,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		Assertion.check()
-				.isNotNull(definitionSpace)
+				.isNotNull(notebook)
 				.isNotNull(mdaConfig)
 				.isNotNull(mdaResultBuilder);
 		//-----
@@ -71,22 +71,22 @@ public final class DomainGeneratorPlugin implements MdaGeneratorPlugin {
 		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.domain.java.targetSubDir", DEFAULT_TARGET_SUBDIR);
 		/* Génération des ressources afférentes au DT. */
 		if (mdaConfig.getOrDefaultAsBoolean("vertigo.domain.java.generateDtResources", Boolean.TRUE)) {// true by default
-			generateDtResources(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder);
+			generateDtResources(notebook, targetSubDir, mdaConfig, mdaResultBuilder);
 		}
 
 		/* Génération de la lgeneratee référençant toutes des définitions. */
 		if (mdaConfig.getOrDefaultAsBoolean("vertigo.domain.java.generateDtDefinitions", Boolean.TRUE)) {// true by default
-			generateDtDefinitions(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder, mdaConfig.getOrDefaultAsString("vertigo.domain.java.dictionaryClassName", "DtDefinitions"));
+			generateDtDefinitions(notebook, targetSubDir, mdaConfig, mdaResultBuilder, mdaConfig.getOrDefaultAsString("vertigo.domain.java.dictionaryClassName", "DtDefinitions"));
 		}
 
 		/* Générations des DTO. */
-		generateDtObjects(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder);
-		generateJavaEnums(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder);
+		generateDtObjects(notebook, targetSubDir, mdaConfig, mdaResultBuilder);
+		generateJavaEnums(notebook, targetSubDir, mdaConfig, mdaResultBuilder);
 
 	}
 
 	private static void generateDtDefinitions(
-			final DefinitionSpace definitionSpace,
+			final Notebook notebook,
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder,
@@ -95,7 +95,7 @@ public final class DomainGeneratorPlugin implements MdaGeneratorPlugin {
 		final Map<String, Object> model = new MapBuilder<String, Object>()
 				.put("packageName", mdaConfig.getProjectPackageName() + ".domain")
 				.put("classSimpleName", dictionaryClassName)
-				.put("dtDefinitions", toModels(definitionSpace, DomainUtil.getDtDefinitions(definitionSpace)))
+				.put("dtDefinitions", toModels(notebook, DomainUtil.getDtDefinitions(notebook)))
 				.build();
 
 		MdaFileGenerator.builder(mdaConfig)
@@ -110,23 +110,23 @@ public final class DomainGeneratorPlugin implements MdaGeneratorPlugin {
 	}
 
 	private static void generateDtObjects(
-			final DefinitionSpace definitionSpace,
+			final Notebook notebook,
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
-		for (final StudioDtDefinition dtDefinition : DomainUtil.getDtDefinitions(definitionSpace)) {
-			generateDtObject(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder, dtDefinition, getAssociationsByDtDefinition(definitionSpace, dtDefinition));
+		for (final DtSketch dtDefinition : DomainUtil.getDtDefinitions(notebook)) {
+			generateDtObject(notebook, targetSubDir, mdaConfig, mdaResultBuilder, dtDefinition, getAssociationsByDtDefinition(notebook, dtDefinition));
 		}
 	}
 
 	private static void generateDtObject(
-			final DefinitionSpace definitionSpace,
+			final Notebook notebook,
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder,
-			final StudioDtDefinition dtDefinition,
-			final List<? extends StudioAssociationDefinition> associations) {
-		final StudioDtDefinitionModel dtDefinitionModel = new StudioDtDefinitionModel(dtDefinition, associations, DomainUtil.createClassNameFromDtFunction(definitionSpace));
+			final DtSketch dtDefinition,
+			final List<? extends AssociationSketch> associations) {
+		final StudioDtDefinitionModel dtDefinitionModel = new StudioDtDefinitionModel(dtDefinition, associations, DomainUtil.createClassNameFromDtFunction(notebook));
 
 		final Map<String, Object> model = new MapBuilder<String, Object>()
 				.put("dtDefinition", dtDefinitionModel)
@@ -143,21 +143,21 @@ public final class DomainGeneratorPlugin implements MdaGeneratorPlugin {
 				.generateFile(mdaResultBuilder);
 	}
 
-	private static List<StudioDtDefinitionModel> toModels(final DefinitionSpace definitionSpace, final Collection<StudioDtDefinition> dtDefinitions) {
+	private static List<StudioDtDefinitionModel> toModels(final Notebook notebook, final Collection<DtSketch> dtDefinitions) {
 		return dtDefinitions.stream()
-				.map(dtDef -> new StudioDtDefinitionModel(dtDef, getAssociationsByDtDefinition(definitionSpace, dtDef), DomainUtil.createClassNameFromDtFunction(definitionSpace)))
+				.map(dtDef -> new StudioDtDefinitionModel(dtDef, getAssociationsByDtDefinition(notebook, dtDef), DomainUtil.createClassNameFromDtFunction(notebook)))
 				.collect(Collectors.toList());
 	}
 
-	private static List<StudioAssociationDefinition> getAssociationsByDtDefinition(final DefinitionSpace definitionSpace, final StudioDtDefinition studioDtDefinition) {
-		return Stream.concat(definitionSpace.getAll(StudioAssociationSimpleDefinition.class).stream(), definitionSpace.getAll(StudioAssociationNNDefinition.class).stream())
-				.filter(association -> association.getAssociationNodeA().getDtDefinition().getName().equals(studioDtDefinition.getName())
-						|| association.getAssociationNodeB().getDtDefinition().getName().equals(studioDtDefinition.getName())) // concerns current dt
+	private static List<AssociationSketch> getAssociationsByDtDefinition(final Notebook notebook, final DtSketch dtSketch) {
+		return Stream.concat(notebook.getAll(AssociationSimpleSketch.class).stream(), notebook.getAll(AssociationNNSketch.class).stream())
+				.filter(association -> association.getAssociationNodeA().getDtDefinition().getName().equals(dtSketch.getName())
+						|| association.getAssociationNodeB().getDtDefinition().getName().equals(dtSketch.getName())) // concerns current dt
 				.collect(Collectors.toList());
 	}
 
 	private static void generateDtResources(
-			final DefinitionSpace definitionSpace,
+			final Notebook notebook,
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
@@ -168,15 +168,15 @@ public final class DomainGeneratorPlugin implements MdaGeneratorPlugin {
 		/**
 		 * Génération des ressources afférentes au DT.
 		 */
-		for (final Entry<String, Collection<StudioDtDefinition>> entry : DomainUtil.getDtDefinitionCollectionMap(definitionSpace).entrySet()) {
-			final Collection<StudioDtDefinition> dtDefinitions = entry.getValue();
+		for (final Entry<String, Collection<DtSketch>> entry : DomainUtil.getDtDefinitionCollectionMap(notebook).entrySet()) {
+			final Collection<DtSketch> dtDefinitions = entry.getValue();
 			Assertion.check().isNotNull(dtDefinitions);
 			final String packageName = entry.getKey();
 
 			final Map<String, Object> model = new MapBuilder<String, Object>()
 					.put("packageName", packageName)
 					.put("simpleClassName", simpleClassName)
-					.put("dtDefinitions", toModels(definitionSpace, dtDefinitions))
+					.put("dtDefinitions", toModels(notebook, dtDefinitions))
 					.build();
 
 			MdaFileGenerator.builder(mdaConfig)
@@ -201,13 +201,13 @@ public final class DomainGeneratorPlugin implements MdaGeneratorPlugin {
 	}
 
 	private void generateJavaEnums(
-			final DefinitionSpace definitionSpace,
+			final Notebook notebook,
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
-		final Map<String, Map<String, MasterDataValue>> staticMasterDataValues = definitionSpace.getAll(StaticMasterData.class).stream().collect(Collectors.toMap(StaticMasterData::getEntityClassName, StaticMasterData::getValues));
+		final Map<String, Map<String, MasterDataValue>> staticMasterDataValues = notebook.getAll(StaticMasterDataSketch.class).stream().collect(Collectors.toMap(StaticMasterDataSketch::getEntityClassName, StaticMasterDataSketch::getValues));
 
-		definitionSpace.getAll(StudioDtDefinition.class)
+		notebook.getAll(DtSketch.class)
 				.stream()
 				.filter(dtDefinition -> dtDefinition.getStereotype() == StudioStereotype.StaticMasterData)
 				.forEach(dtDefintion -> generateJavaEnum(
@@ -221,7 +221,7 @@ public final class DomainGeneratorPlugin implements MdaGeneratorPlugin {
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder,
-			final StudioDtDefinition dtDefinition,
+			final DtSketch dtDefinition,
 			final Map<String, MasterDataValue> values) {
 
 		final MasterDataDefinitionModel masterDataDefinitionModel = new MasterDataDefinitionModel(dtDefinition, values);

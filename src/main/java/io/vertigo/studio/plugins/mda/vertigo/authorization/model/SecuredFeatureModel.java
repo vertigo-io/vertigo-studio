@@ -21,24 +21,24 @@ package io.vertigo.studio.plugins.mda.vertigo.authorization.model;
 import java.util.Optional;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.metamodel.authorization.SecuredFeature;
+import io.vertigo.studio.notebook.authorization.SecuredFeatureSketch;
 
 public class SecuredFeatureModel {
 
-	private final SecuredFeature securedFeature;
+	private final SecuredFeatureSketch securedFeatureSketch;
 
-	public SecuredFeatureModel(final SecuredFeature securedFeature) {
-		Assertion.check().isNotNull(securedFeature);
+	public SecuredFeatureModel(final SecuredFeatureSketch securedFeatureSketch) {
+		Assertion.check().isNotNull(securedFeatureSketch);
 		//---
-		this.securedFeature = securedFeature;
+		this.securedFeatureSketch = securedFeatureSketch;
 	}
 
 	public Optional<String> getComment() {
-		return securedFeature.getComment();
+		return securedFeatureSketch.getComment();
 	}
 
 	public String getOperationName() {
-		return securedFeature.getCode();
+		return securedFeatureSketch.getCode();
 	}
 
 }

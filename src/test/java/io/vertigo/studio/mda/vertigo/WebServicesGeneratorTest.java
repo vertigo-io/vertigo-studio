@@ -35,8 +35,8 @@ import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugi
 import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaManager;
-import io.vertigo.studio.metamodel.MetamodelResource;
-import io.vertigo.studio.metamodel.StudioMetamodelManager;
+import io.vertigo.studio.source.NotebookSourceManager;
+import io.vertigo.studio.source.NotebookSource;
 
 /**
  * Test la génération à partir des oom et ksp.
@@ -75,7 +75,7 @@ public class WebServicesGeneratorTest {
 	}
 
 	@Inject
-	private StudioMetamodelManager studioMetamodelManager;
+	private NotebookSourceManager notebookSourceManager;
 	@Inject
 	private MdaManager mdaManager;
 
@@ -84,18 +84,18 @@ public class WebServicesGeneratorTest {
 	 */
 	@Test
 	public void testGenerate() {
-		final List<MetamodelResource> resources = List.of(
-				MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
-				MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"),
-				MetamodelResource.of("webservice", "io.vertigo.vega.impl.webservice.catalog.SwaggerWebServices"),
-				MetamodelResource.of("webservice", "io.vertigo.studio.data.webservices.*"));
+		final List<NotebookSource> resources = List.of(
+				NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
+				NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"),
+				NotebookSource.of("webservice", "io.vertigo.vega.impl.webservice.catalog.SwaggerWebServices"),
+				NotebookSource.of("webservice", "io.vertigo.studio.data.webservices.*"));
 
 		final MdaConfig mdaConfig = MdaConfig.builder("io.vertigo.studio")
 				.withTargetGenDir("target/")
 				.addProperty("vertigo.tsws", "true")
 				.build();
 
-		mdaManager.generate(studioMetamodelManager.parseResources(resources), mdaConfig);
+		mdaManager.generate(notebookSourceManager.read(resources), mdaConfig);
 	}
 
 }

@@ -26,9 +26,9 @@ import freemarker.template.TemplateMethodModelEx;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
-import io.vertigo.studio.metamodel.domain.association.StudioAssociationNNDefinition;
-import io.vertigo.studio.metamodel.domain.association.StudioAssociationSimpleDefinition;
+import io.vertigo.studio.notebook.domain.DtSketch;
+import io.vertigo.studio.notebook.domain.association.AssociationNNSketch;
+import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
 
 /**
  * Méthode Freemarker 'annotations'.
@@ -65,14 +65,14 @@ public final class MethodAnnotationsModel implements TemplateMethodModelEx {
 			type = ((StringModel) param).getWrappedObject();
 		}
 
-		if (type instanceof StudioDtDefinition) {
-			return new AnnotationsModel(annotationWriter, (StudioDtDefinition) type);
+		if (type instanceof DtSketch) {
+			return new AnnotationsModel(annotationWriter, (DtSketch) type);
 		} else if (type instanceof StudioDtFieldModel) {
 			return new AnnotationsModel(annotationWriter, (StudioDtFieldModel) type);
-		} else if (type instanceof StudioAssociationSimpleDefinition) {
-			return new AnnotationsModel(annotationWriter, (StudioAssociationSimpleDefinition) type);
-		} else if (type instanceof StudioAssociationNNDefinition) {
-			return new AnnotationsModel(annotationWriter, (StudioAssociationNNDefinition) type);
+		} else if (type instanceof AssociationSimpleSketch) {
+			return new AnnotationsModel(annotationWriter, (AssociationSimpleSketch) type);
+		} else if (type instanceof AssociationNNSketch) {
+			return new AnnotationsModel(annotationWriter, (AssociationNNSketch) type);
 		} else if (type instanceof String) {
 			return new AnnotationsModel(annotationWriter, (String) type);
 		} else {

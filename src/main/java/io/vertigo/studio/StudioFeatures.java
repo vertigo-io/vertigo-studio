@@ -22,9 +22,8 @@ import io.vertigo.core.node.config.Feature;
 import io.vertigo.core.node.config.Features;
 import io.vertigo.core.param.Param;
 import io.vertigo.studio.impl.mda.MdaManagerImpl;
-import io.vertigo.studio.impl.metamodel.StudioMetamodelManagerImpl;
+import io.vertigo.studio.impl.source.NotebookSourceManagerImpl;
 import io.vertigo.studio.mda.MdaManager;
-import io.vertigo.studio.metamodel.StudioMetamodelManager;
 import io.vertigo.studio.plugins.mda.vertigo.authorization.AuthorizationGeneratorPlugin;
 import io.vertigo.studio.plugins.mda.vertigo.domain.java.DomainGeneratorPlugin;
 import io.vertigo.studio.plugins.mda.vertigo.domain.js.JSGeneratorPlugin;
@@ -35,10 +34,11 @@ import io.vertigo.studio.plugins.mda.vertigo.search.SearchGeneratorPlugin;
 import io.vertigo.studio.plugins.mda.vertigo.task.TaskGeneratorPlugin;
 import io.vertigo.studio.plugins.mda.vertigo.task.test.TaskTestGeneratorPlugin;
 import io.vertigo.studio.plugins.mda.vertigo.webservice.WsTsGeneratorPlugin;
-import io.vertigo.studio.plugins.metamodel.vertigo.AccountJsonSecurityResourceParserPlugin;
-import io.vertigo.studio.plugins.metamodel.vertigo.JsonStaticMasterDataParserPlugin;
-import io.vertigo.studio.plugins.metamodel.vertigo.StudioResourceParserPlugin;
-import io.vertigo.studio.plugins.metamodel.vertigo.VegaWebServicesResourceParserPlugin;
+import io.vertigo.studio.plugins.source.vertigo.AccountJsonSecuritySourceReaderPlugin;
+import io.vertigo.studio.plugins.source.vertigo.JsonStaticMasterDataSourceReaderPlugin;
+import io.vertigo.studio.plugins.source.vertigo.StudioSourceReaderPlugin;
+import io.vertigo.studio.plugins.source.vertigo.VegaWebServicesSourceReaderPlugin;
+import io.vertigo.studio.source.NotebookSourceManager;
 
 public final class StudioFeatures extends Features<StudioFeatures> {
 
@@ -49,17 +49,17 @@ public final class StudioFeatures extends Features<StudioFeatures> {
 	@Feature("metamodel")
 	public StudioFeatures withMetamodel() {
 		getModuleConfigBuilder()
-				.addComponent(StudioMetamodelManager.class, StudioMetamodelManagerImpl.class);
+				.addComponent(NotebookSourceManager.class, NotebookSourceManagerImpl.class);
 		return this;
 	}
 
 	@Feature("metamodel.vertigo")
 	public StudioFeatures withVertigoMetamodel(final Param... params) {
 		getModuleConfigBuilder()
-				.addPlugin(StudioResourceParserPlugin.class, params)
-				.addPlugin(AccountJsonSecurityResourceParserPlugin.class)
-				.addPlugin(VegaWebServicesResourceParserPlugin.class)
-				.addPlugin(JsonStaticMasterDataParserPlugin.class);
+				.addPlugin(StudioSourceReaderPlugin.class, params)
+				.addPlugin(AccountJsonSecuritySourceReaderPlugin.class)
+				.addPlugin(VegaWebServicesSourceReaderPlugin.class)
+				.addPlugin(JsonStaticMasterDataSourceReaderPlugin.class);
 		return this;
 	}
 

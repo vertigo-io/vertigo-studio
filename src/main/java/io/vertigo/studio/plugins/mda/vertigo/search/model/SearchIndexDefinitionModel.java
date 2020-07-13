@@ -4,38 +4,38 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.metamodel.search.StudioSearchIndexDefinition;
+import io.vertigo.studio.notebook.search.SearchIndexSketch;
 import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants.VertigoDefinitionPrefix;
 import io.vertigo.studio.tools.DefinitionUtil;
 
 public class SearchIndexDefinitionModel {
 
-	private final StudioSearchIndexDefinition studioSearchIndexDefinition;
+	private final SearchIndexSketch searchIndexSketch;
 	private final List<IndexCopyToModel> copyToModels;
 
-	public SearchIndexDefinitionModel(final StudioSearchIndexDefinition studioSearchIndexDefinition) {
-		Assertion.check().isNotNull(studioSearchIndexDefinition);
+	public SearchIndexDefinitionModel(final SearchIndexSketch searchIndexSketch) {
+		Assertion.check().isNotNull(searchIndexSketch);
 		//---
-		this.studioSearchIndexDefinition = studioSearchIndexDefinition;
-		copyToModels = studioSearchIndexDefinition.getIndexCopyToFields().stream()
-				.map(fromField -> new IndexCopyToModel(fromField, studioSearchIndexDefinition.getIndexCopyToFromFields(fromField)))
+		this.searchIndexSketch = searchIndexSketch;
+		copyToModels = searchIndexSketch.getIndexCopyToFields().stream()
+				.map(fromField -> new IndexCopyToModel(fromField, searchIndexSketch.getIndexCopyToFromFields(fromField)))
 				.collect(Collectors.toList());
 	}
 
 	public String getName() {
-		return VertigoDefinitionPrefix.SearchIndexDefinition.getPrefix() + DefinitionUtil.getLocalName(studioSearchIndexDefinition.getName(), StudioSearchIndexDefinition.PREFIX);
+		return VertigoDefinitionPrefix.SearchIndexDefinition.getPrefix() + DefinitionUtil.getLocalName(searchIndexSketch.getName(), SearchIndexSketch.PREFIX);
 	}
 
 	public String getLoaderId() {
-		return studioSearchIndexDefinition.getSearchLoaderId();
+		return searchIndexSketch.getSearchLoaderId();
 	}
 
 	public String getIndexDtDefinition() {
-		return "Dt" + studioSearchIndexDefinition.getIndexDtDefinition().getLocalName();
+		return "Dt" + searchIndexSketch.getIndexDtDefinition().getLocalName();
 	}
 
 	public String getKeyConceptDtDefinition() {
-		return "Dt" + studioSearchIndexDefinition.getKeyConceptDtDefinition().getLocalName();
+		return "Dt" + searchIndexSketch.getKeyConceptDtDefinition().getLocalName();
 	}
 
 	public List<IndexCopyToModel> getCopyToModels() {

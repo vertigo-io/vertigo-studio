@@ -28,16 +28,16 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.mda.MdaFileGenerator;
 import io.vertigo.studio.impl.mda.MdaGeneratorPlugin;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
-import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
-import io.vertigo.studio.metamodel.domain.StudioStereotype;
-import io.vertigo.studio.metamodel.domain.masterdata.MasterDataValue;
-import io.vertigo.studio.metamodel.domain.masterdata.StaticMasterData;
+import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.domain.DtSketch;
+import io.vertigo.studio.notebook.domain.StudioStereotype;
+import io.vertigo.studio.notebook.domain.masterdata.MasterDataValue;
+import io.vertigo.studio.notebook.domain.masterdata.StaticMasterDataSketch;
 import io.vertigo.studio.plugins.mda.vertigo.domain.ts.model.TSMasterDataDefinitionModel;
 import io.vertigo.studio.plugins.mda.vertigo.domain.ts.model.TSStudioDtDefinitionModel;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
@@ -55,11 +55,11 @@ public final class TSGeneratorPlugin implements MdaGeneratorPlugin {
 	/** {@inheritDoc} */
 	@Override
 	public void generate(
-			final DefinitionSpace definitionSpace,
+			final Notebook notebook,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		Assertion.check()
-				.isNotNull(definitionSpace)
+				.isNotNull(notebook)
 				.isNotNull(mdaConfig)
 				.isNotNull(mdaResultBuilder);
 		//-----
@@ -67,40 +67,40 @@ public final class TSGeneratorPlugin implements MdaGeneratorPlugin {
 		//----
 		/* Génération des ressources afférentes au DT mais pour la partie JS.*/
 		if (mdaConfig.getOrDefaultAsBoolean("vertigo.domain.ts.generateDtResourcesTS", true)) {//true by default
-			generateDtResourcesTS(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder);
+			generateDtResourcesTS(notebook, targetSubDir, mdaConfig, mdaResultBuilder);
 		}
 		/* Génération des fichiers javascripts référençant toutes les définitions. */
 		if (mdaConfig.getOrDefaultAsBoolean("vertigo.domain.ts.generateTsDtDefinitions", true)) {//true by default
-			generateTsDtDefinitions(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder);
+			generateTsDtDefinitions(notebook, targetSubDir, mdaConfig, mdaResultBuilder);
 		}
 		/* Génération des fichiers javascripts référençant toutes les masterdatas. */
 		if (mdaConfig.getOrDefaultAsBoolean("vertigo.domain.ts.generateTsMasterData", false)) {//false by default
-			generateTsMasterData(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder);
+			generateTsMasterData(notebook, targetSubDir, mdaConfig, mdaResultBuilder);
 		}
 	}
 
-	private static List<TSStudioDtDefinitionModel> getTsDtDefinitionModels(final DefinitionSpace definitionSpace) {
-		return DomainUtil.getDtDefinitions(definitionSpace).stream()
+	private static List<TSStudioDtDefinitionModel> getTsDtDefinitionModels(final Notebook notebook) {
+		return DomainUtil.getDtDefinitions(notebook).stream()
 				.map(TSStudioDtDefinitionModel::new)
 				.collect(Collectors.toList());
 	}
 
 	private static void generateTsDtDefinitions(
-			final DefinitionSpace definitionSpace, final String targetSubDir, final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
-		for (final TSStudioDtDefinitionModel dtDefinitionModel : getTsDtDefinitionModels(definitionSpace)) {
+			final Notebook notebook, final String targetSubDir, final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
+		for (final TSStudioDtDefinitionModel dtDefinitionModel : getTsDtDefinitionModels(notebook)) {
 			generateTs(dtDefinitionModel, targetSubDir, mdaConfig, mdaResultBuilder);
 		}
 	}
 
 	private static void generateTsMasterData(
-			final DefinitionSpace definitionSpace,
+			final Notebook notebook,
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 
-		final Map<String, Map<String, MasterDataValue>> staticMasterDataValues = definitionSpace.getAll(StaticMasterData.class).stream().collect(Collectors.toMap(StaticMasterData::getEntityClassName, StaticMasterData::getValues));
+		final Map<String, Map<String, MasterDataValue>> staticMasterDataValues = notebook.getAll(StaticMasterDataSketch.class).stream().collect(Collectors.toMap(StaticMasterDataSketch::getEntityClassName, StaticMasterDataSketch::getValues));
 
-		final List<TSMasterDataDefinitionModel> tsMasterDataDefinitionModels = definitionSpace.getAll(StudioDtDefinition.class)
+		final List<TSMasterDataDefinitionModel> tsMasterDataDefinitionModels = notebook.getAll(DtSketch.class)
 				.stream()
 				.filter(dtDefinition -> dtDefinition.getStereotype() == StudioStereotype.StaticMasterData)
 				.map(dtDefinition -> new TSMasterDataDefinitionModel(dtDefinition, staticMasterDataValues.getOrDefault(dtDefinition.getClassCanonicalName(), Collections.emptyMap())))
@@ -142,13 +142,13 @@ public final class TSGeneratorPlugin implements MdaGeneratorPlugin {
 	 * @param mdaConfig Configuration du domaine.
 	 */
 	private static void generateDtResourcesTS(
-			final DefinitionSpace definitionSpace,
+			final Notebook notebook,
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 
 		final Map<String, List<TSStudioDtDefinitionModel>> packageMap = new HashMap<>();
-		for (final TSStudioDtDefinitionModel dtDefinitionModel : getTsDtDefinitionModels(definitionSpace)) {
+		for (final TSStudioDtDefinitionModel dtDefinitionModel : getTsDtDefinitionModels(notebook)) {
 			final String packageName = dtDefinitionModel.getFunctionnalPackageName();
 			packageMap.computeIfAbsent(packageName, o -> new ArrayList<>()).add(dtDefinitionModel);
 		}

@@ -4,13 +4,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.metamodel.domain.StudioDtField;
+import io.vertigo.studio.notebook.domain.DtSketchField;
 
 public class IndexCopyToModel {
-	private final StudioDtField toField;
-	private final List<StudioDtField> fromFields;
+	private final DtSketchField toField;
+	private final List<DtSketchField> fromFields;
 
-	public IndexCopyToModel(final StudioDtField toField, final List<StudioDtField> fromFields) {
+	public IndexCopyToModel(final DtSketchField toField, final List<DtSketchField> fromFields) {
 		Assertion.check()
 				.isNotNull(toField)
 				.isNotNull(fromFields);
@@ -24,7 +24,7 @@ public class IndexCopyToModel {
 	}
 
 	public List<String> getFrom() {
-		return fromFields.stream().map(StudioDtField::getName).collect(Collectors.toList());
+		return fromFields.stream().map(DtSketchField::getName).collect(Collectors.toList());
 	}
 
 }

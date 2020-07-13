@@ -23,8 +23,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
-import io.vertigo.studio.metamodel.domain.masterdata.MasterDataValue;
+import io.vertigo.studio.notebook.domain.DtSketch;
+import io.vertigo.studio.notebook.domain.masterdata.MasterDataValue;
 
 /**
  * Model Sql des materdata.
@@ -35,7 +35,7 @@ public final class SqlMasterDataDefinitionModel {
 	private final SqlStudioDtDefinitionModel sqlDtDefinitionModel;
 	private final List<SqlMasterDataValueModel> sqlMasterDataValueModels;
 
-	public SqlMasterDataDefinitionModel(final StudioDtDefinition dtDefinition, final Map<String, MasterDataValue> masterDataValuesByDtDefinition) {
+	public SqlMasterDataDefinitionModel(final DtSketch dtDefinition, final Map<String, MasterDataValue> masterDataValuesByDtDefinition) {
 		Assertion.check().isNotNull(dtDefinition);
 		//-----
 		sqlDtDefinitionModel = new SqlStudioDtDefinitionModel(dtDefinition);

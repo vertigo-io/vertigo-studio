@@ -23,7 +23,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.metamodel.search.StudioFacetedQueryDefinition;
+import io.vertigo.studio.notebook.search.FacetedQuerySketch;
 import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants.VertigoDefinitionPrefix;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
 import io.vertigo.studio.tools.DefinitionUtil;
@@ -34,17 +34,17 @@ import io.vertigo.studio.tools.DefinitionUtil;
  * @author pchretien, mlaroche
  */
 public final class FacetedQueryDefinitionModel {
-	private final StudioFacetedQueryDefinition facetedQueryDefinition;
+	private final FacetedQuerySketch facetedQueryDefinition;
 
 	private final String simpleName;
 	private final String criteriaClassCanonicalName;
 	private final List<FacetDefinitionModel> facetDefinitionModels;
 
-	public FacetedQueryDefinitionModel(final StudioFacetedQueryDefinition facetedQueryDefinition, final Function<String, String> classNameFromDt) {
+	public FacetedQueryDefinitionModel(final FacetedQuerySketch facetedQueryDefinition, final Function<String, String> classNameFromDt) {
 		Assertion.check().isNotNull(facetedQueryDefinition);
 		//-----
 		this.facetedQueryDefinition = facetedQueryDefinition;
-		simpleName = DefinitionUtil.getLocalName(facetedQueryDefinition.getName(), StudioFacetedQueryDefinition.PREFIX);
+		simpleName = DefinitionUtil.getLocalName(facetedQueryDefinition.getName(), FacetedQuerySketch.PREFIX);
 		criteriaClassCanonicalName = DomainUtil.buildJavaTypeName(facetedQueryDefinition.getCriteriaDomain(), classNameFromDt);
 		facetDefinitionModels = facetedQueryDefinition.getFacetDefinitions().stream().map(FacetDefinitionModel::new).collect(Collectors.toList());
 	}

@@ -26,7 +26,7 @@ import java.util.function.Function;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.mda.MdaConfig;
-import io.vertigo.studio.metamodel.task.StudioTaskDefinition;
+import io.vertigo.studio.notebook.task.TaskSketch;
 
 /**
  * Objet utilisé par FreeMarker.
@@ -42,7 +42,7 @@ public final class PAOModel {
 	/**
 	 * Constructor.
 	 */
-	public PAOModel(final MdaConfig mdaConfig, final Collection<StudioTaskDefinition> taskDefinitionCollection, final String packageName, final Function<String, String> classNameFromDt) {
+	public PAOModel(final MdaConfig mdaConfig, final Collection<TaskSketch> taskDefinitionCollection, final String packageName, final Function<String, String> classNameFromDt) {
 		Assertion.check()
 				.isNotNull(mdaConfig)
 				.isNotNull(taskDefinitionCollection)
@@ -54,7 +54,7 @@ public final class PAOModel {
 		className = getLastPackagename(packageName) + "PAO";
 		boolean hasOption = false;
 		taskDefinitionModels = new ArrayList<>();
-		for (final StudioTaskDefinition taskDefinition : taskDefinitionCollection) {
+		for (final TaskSketch taskDefinition : taskDefinitionCollection) {
 			final TaskDefinitionModel templateTaskDefinition = new TaskDefinitionModel(taskDefinition, classNameFromDt);
 			taskDefinitionModels.add(templateTaskDefinition);
 			hasOption = hasOption || templateTaskDefinition.hasOptions();

@@ -20,9 +20,9 @@ package io.vertigo.studio.plugins.mda.vertigo.domain.ts.model;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.BasicType;
-import io.vertigo.studio.metamodel.domain.Domain;
-import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
-import io.vertigo.studio.metamodel.domain.StudioDtField;
+import io.vertigo.studio.notebook.domain.DomainSketch;
+import io.vertigo.studio.notebook.domain.DtSketch;
+import io.vertigo.studio.notebook.domain.DtSketchField;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
 import io.vertigo.studio.tools.DefinitionUtil;
 
@@ -32,13 +32,13 @@ import io.vertigo.studio.tools.DefinitionUtil;
  * @author pchretien, mlaroche
  */
 public final class TSStudioDtFieldModel {
-	private final StudioDtField dtField;
+	private final DtSketchField dtField;
 
 	/***
 	 * Constructeur.
 	 * @param dtField Champ Ã  gÃ©nÃ©rer
 	 */
-	TSStudioDtFieldModel(final StudioDtField dtField) {
+	TSStudioDtFieldModel(final DtSketchField dtField) {
 		Assertion.check().isNotNull(dtField);
 		//-----
 		this.dtField = dtField;
@@ -113,13 +113,13 @@ public final class TSStudioDtFieldModel {
 
 	/**
 	 * Returns the javascript type.
-	 * @param  domain DtDomain
+	 * @param  domainSketch DtDomain
 	 * @return String
 	 */
-	private static String buildTypescriptType(final Domain domain, final boolean withArray) {
+	private static String buildTypescriptType(final DomainSketch domainSketch, final boolean withArray) {
 		final String typescriptType;
-		if (domain.getScope().isPrimitive()) {
-			final BasicType dataType = domain.getDataType();
+		if (domainSketch.getScope().isPrimitive()) {
+			final BasicType dataType = domainSketch.getDataType();
 			if (dataType.isNumber()) {
 				typescriptType = "number";
 			} else if (dataType == BasicType.Boolean) {
@@ -127,10 +127,10 @@ public final class TSStudioDtFieldModel {
 			} else {
 				typescriptType = "string";
 			}
-		} else if (domain.getScope().isValueObject()) {
-			typescriptType = DomainUtil.getSimpleNameFromCanonicalName(domain.getValueObjectClassName());
+		} else if (domainSketch.getScope().isValueObject()) {
+			typescriptType = DomainUtil.getSimpleNameFromCanonicalName(domainSketch.getValueObjectClassName());
 		} else {
-			typescriptType = DefinitionUtil.getLocalName("St" + domain.getDtDefinitionName(), StudioDtDefinition.PREFIX);
+			typescriptType = DefinitionUtil.getLocalName("St" + domainSketch.getDtDefinitionName(), DtSketch.PREFIX);
 		}
 		return typescriptType + (withArray ? "[]" : "");
 	}

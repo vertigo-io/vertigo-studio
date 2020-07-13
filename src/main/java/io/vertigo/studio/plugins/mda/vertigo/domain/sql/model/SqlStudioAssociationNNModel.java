@@ -20,8 +20,8 @@ package io.vertigo.studio.plugins.mda.vertigo.domain.sql.model;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.studio.metamodel.domain.Domain;
-import io.vertigo.studio.metamodel.domain.association.StudioAssociationNNDefinition;
+import io.vertigo.studio.notebook.domain.DomainSketch;
+import io.vertigo.studio.notebook.domain.association.AssociationNNSketch;
 
 /**
  * Objet utilisé par FreeMarker.
@@ -29,13 +29,13 @@ import io.vertigo.studio.metamodel.domain.association.StudioAssociationNNDefinit
  * @author pchretien, mlaroche
  */
 public final class SqlStudioAssociationNNModel {
-	private final StudioAssociationNNDefinition associationDefinition;
+	private final AssociationNNSketch associationDefinition;
 
 	/**
 	 * Constructeur.
 	 * @param associationNode Noeud de l'association à générer
 	 */
-	public SqlStudioAssociationNNModel(final StudioAssociationNNDefinition associationDefinition) {
+	public SqlStudioAssociationNNModel(final AssociationNNSketch associationDefinition) {
 		Assertion.check().isNotNull(associationDefinition);
 		//-----
 		this.associationDefinition = associationDefinition;
@@ -72,7 +72,7 @@ public final class SqlStudioAssociationNNModel {
 	/**
 	 * @return Association nodeA Id domain
 	 */
-	public Domain getNodeAPKDomain() {
+	public DomainSketch getNodeAPKDomain() {
 		return associationDefinition.getAssociationNodeA().getDtDefinition().getIdField().get().getDomain();
 	}
 
@@ -93,7 +93,7 @@ public final class SqlStudioAssociationNNModel {
 	/**
 	 * @return Association nodeB Id domain
 	 */
-	public Domain getNodeBPKDomain() {
+	public DomainSketch getNodeBPKDomain() {
 		return associationDefinition.getAssociationNodeB().getDtDefinition().getIdField().get().getDomain();
 	}
 

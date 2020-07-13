@@ -29,12 +29,12 @@ import io.vertigo.core.node.AutoCloseableApp;
 import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.NodeConfig;
-import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.studio.StudioFeatures;
-import io.vertigo.studio.metamodel.MetamodelResource;
-import io.vertigo.studio.metamodel.StudioMetamodelManager;
-import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
+import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.domain.DtSketch;
+import io.vertigo.studio.source.NotebookSource;
+import io.vertigo.studio.source.NotebookSourceManager;
 
 /**
  * Test de lecture d'un OOM.
@@ -43,7 +43,7 @@ import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
  */
 public final class EAXmiTestParserIdentifiers {
 
-	private DefinitionSpace definitionSpace;
+	private Notebook notebook;
 	private AutoCloseableApp app;
 
 	@BeforeEach
@@ -51,10 +51,10 @@ public final class EAXmiTestParserIdentifiers {
 		app = new AutoCloseableApp(buildNodeConfig());
 		DIInjector.injectMembers(this, app.getComponentSpace());
 		//---
-		final List<MetamodelResource> resources = List.of(
-				MetamodelResource.of("xmi", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/demo.xml"),
-				MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/domain.kpr"));
-		definitionSpace = app.getComponentSpace().resolve(StudioMetamodelManager.class).parseResources(resources);
+		final List<NotebookSource> resources = List.of(
+				NotebookSource.of("xmi", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/demo.xml"),
+				NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/domain.kpr"));
+		notebook = app.getComponentSpace().resolve(NotebookSourceManager.class).read(resources);
 	}
 
 	@AfterEach
@@ -76,14 +76,14 @@ public final class EAXmiTestParserIdentifiers {
 				.build();
 	}
 
-	private StudioDtDefinition getDtDefinition(final String urn) {
-		return definitionSpace
-				.resolve(urn, StudioDtDefinition.class);
+	private DtSketch getDtDefinition(final String urn) {
+		return notebook
+				.resolve(urn, DtSketch.class);
 	}
 
 	@Test
 	public void testIdentifiersVsPrimaryKey() {
-		final StudioDtDefinition loginDefinition = getDtDefinition("StDtLogin");
+		final DtSketch loginDefinition = getDtDefinition("StDtLogin");
 		Assertions.assertTrue(loginDefinition.getIdField().isPresent());
 	}
 }

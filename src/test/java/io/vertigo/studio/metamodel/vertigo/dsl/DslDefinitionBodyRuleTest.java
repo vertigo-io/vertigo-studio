@@ -25,10 +25,10 @@ import org.junit.jupiter.api.Test;
 
 import io.vertigo.commons.peg.PegNoMatchFoundException;
 import io.vertigo.core.lang.VSystemException;
-import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinitionRepository;
-import io.vertigo.studio.plugins.metamodel.vertigo.dsl.entity.DslEntity;
-import io.vertigo.studio.plugins.metamodel.vertigo.loaders.kpr.definition.DslDefinitionBody;
-import io.vertigo.studio.plugins.metamodel.vertigo.loaders.kpr.rules.DslDefinitionBodyRule;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinitionRepository;
+import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
+import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslDefinitionBody;
+import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslDefinitionBodyRule;
 
 public class DslDefinitionBodyRuleTest {
 	private final DslDefinitionRepository dslDefinitionRepository = DslDynamicRegistryMock.createDynamicDefinitionRepository();

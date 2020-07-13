@@ -19,7 +19,7 @@
 package io.vertigo.studio.plugins.mda.vertigo.domain.js.model;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.metamodel.domain.StudioDtField;
+import io.vertigo.studio.notebook.domain.DtSketchField;
 
 /**
  * Model used to define a DtField.
@@ -27,13 +27,13 @@ import io.vertigo.studio.metamodel.domain.StudioDtField;
  * @author pchretien, mlaroche
  */
 public final class JSStudioDtFieldModel {
-	private final StudioDtField dtField;
+	private final DtSketchField dtField;
 
 	/***
 	 * Constructeur.
 	 * @param dtField Champ à générer
 	 */
-	JSStudioDtFieldModel(final StudioDtField dtField) {
+	JSStudioDtFieldModel(final DtSketchField dtField) {
 		Assertion.check().isNotNull(dtField);
 		//-----
 		this.dtField = dtField;

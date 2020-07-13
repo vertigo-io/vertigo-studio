@@ -23,13 +23,13 @@ import java.util.Collection;
 import java.util.Map;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.mda.MdaFileGenerator;
 import io.vertigo.studio.impl.mda.MdaGeneratorPlugin;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
-import io.vertigo.studio.metamodel.file.StudioFileInfo;
+import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.file.FileInfoSketch;
 import io.vertigo.studio.plugins.mda.vertigo.file.model.FileInfoDefinitionModel;
 import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
 
@@ -45,26 +45,26 @@ public final class FileInfoGeneratorPlugin implements MdaGeneratorPlugin {
 	/** {@inheritDoc} */
 	@Override
 	public void generate(
-			final DefinitionSpace definitionSpace,
+			final Notebook notebook,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		Assertion.check()
-				.isNotNull(definitionSpace)
+				.isNotNull(notebook)
 				.isNotNull(mdaConfig)
 				.isNotNull(mdaResultBuilder);
 		//-----
 		/* Générations des FI. */
 		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.file.targetSubDir", DEFAULT_TARGET_SUBDIR);
-		generateFileInfos(definitionSpace, targetSubDir, mdaConfig, mdaResultBuilder);
+		generateFileInfos(notebook, targetSubDir, mdaConfig, mdaResultBuilder);
 	}
 
 	private static void generateFileInfos(
-			final DefinitionSpace definitionSpace,
+			final Notebook notebook,
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
-		final Collection<StudioFileInfo> fileInfoDefinitions = definitionSpace.getAll(StudioFileInfo.class);
-		for (final StudioFileInfo fileInfoDefinition : fileInfoDefinitions) {
+		final Collection<FileInfoSketch> fileInfoDefinitions = notebook.getAll(FileInfoSketch.class);
+		for (final FileInfoSketch fileInfoDefinition : fileInfoDefinitions) {
 			generateFileInfo(targetSubDir, mdaConfig, mdaResultBuilder, fileInfoDefinition);
 		}
 	}
@@ -73,7 +73,7 @@ public final class FileInfoGeneratorPlugin implements MdaGeneratorPlugin {
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder,
-			final StudioFileInfo fileInfoDefinition) {
+			final FileInfoSketch fileInfoDefinition) {
 		final FileInfoDefinitionModel fileInfoDefinitionModel = new FileInfoDefinitionModel(fileInfoDefinition);
 
 		final Map<String, Object> model = new MapBuilder<String, Object>()

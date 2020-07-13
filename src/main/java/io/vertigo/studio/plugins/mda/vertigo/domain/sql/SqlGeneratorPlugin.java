@@ -29,19 +29,19 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.impl.mda.MdaFileGenerator;
 import io.vertigo.studio.impl.mda.MdaGeneratorPlugin;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
-import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
-import io.vertigo.studio.metamodel.domain.StudioStereotype;
-import io.vertigo.studio.metamodel.domain.association.StudioAssociationNNDefinition;
-import io.vertigo.studio.metamodel.domain.association.StudioAssociationSimpleDefinition;
-import io.vertigo.studio.metamodel.domain.masterdata.MasterDataValue;
-import io.vertigo.studio.metamodel.domain.masterdata.StaticMasterData;
+import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.domain.DtSketch;
+import io.vertigo.studio.notebook.domain.StudioStereotype;
+import io.vertigo.studio.notebook.domain.association.AssociationNNSketch;
+import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
+import io.vertigo.studio.notebook.domain.masterdata.MasterDataValue;
+import io.vertigo.studio.notebook.domain.masterdata.StaticMasterDataSketch;
 import io.vertigo.studio.plugins.mda.vertigo.domain.sql.model.SqlMasterDataDefinitionModel;
 import io.vertigo.studio.plugins.mda.vertigo.domain.sql.model.SqlMethodModel;
 import io.vertigo.studio.plugins.mda.vertigo.domain.sql.model.SqlStudioAssociationNNModel;
@@ -63,29 +63,29 @@ public final class SqlGeneratorPlugin implements MdaGeneratorPlugin {
 	/** {@inheritDoc} */
 	@Override
 	public void generate(
-			final DefinitionSpace definitionSpace,
+			final Notebook notebook,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		Assertion.check()
-				.isNotNull(definitionSpace)
+				.isNotNull(notebook)
 				.isNotNull(mdaConfig)
 				.isNotNull(mdaResultBuilder);
 		//-----
-		generateSql(definitionSpace, mdaConfig, mdaResultBuilder);
+		generateSql(notebook, mdaConfig, mdaResultBuilder);
 
 		if (mdaConfig.getOrDefaultAsBoolean("vertigo.domain.sql.generateMasterData", false)) {
-			generateMasterDataInserts(definitionSpace, mdaConfig, mdaResultBuilder);
+			generateMasterDataInserts(notebook, mdaConfig, mdaResultBuilder);
 		}
 	}
 
 	private static void generateMasterDataInserts(
-			final DefinitionSpace definitionSpace,
+			final Notebook notebook,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 
-		final Map<String, Map<String, MasterDataValue>> staticMasterDataValues = definitionSpace.getAll(StaticMasterData.class).stream().collect(Collectors.toMap(StaticMasterData::getEntityClassName, StaticMasterData::getValues));
+		final Map<String, Map<String, MasterDataValue>> staticMasterDataValues = notebook.getAll(StaticMasterDataSketch.class).stream().collect(Collectors.toMap(StaticMasterDataSketch::getEntityClassName, StaticMasterDataSketch::getValues));
 
-		final List<SqlMasterDataDefinitionModel> sqlMasterDataDefinitionModels = definitionSpace.getAll(StudioDtDefinition.class)
+		final List<SqlMasterDataDefinitionModel> sqlMasterDataDefinitionModels = notebook.getAll(DtSketch.class)
 				.stream()
 				.filter(dtDefinition -> dtDefinition.getStereotype() == StudioStereotype.StaticMasterData)
 				.map(dtDefinition -> new SqlMasterDataDefinitionModel(dtDefinition, staticMasterDataValues.getOrDefault(dtDefinition.getClassCanonicalName(), Collections.emptyMap())))
@@ -111,12 +111,12 @@ public final class SqlGeneratorPlugin implements MdaGeneratorPlugin {
 	}
 
 	private void generateSql(
-			final DefinitionSpace definitionSpace,
+			final Notebook notebook,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 
 		final Map<String, List<SqlStudioDtDefinitionModel>> mapListDtDef = new HashMap<>();
-		for (final StudioDtDefinition dtDefinition : DomainUtil.sortDefinitionCollection(DomainUtil.getDtDefinitions(definitionSpace))) {
+		for (final DtSketch dtDefinition : DomainUtil.sortDefinitionCollection(DomainUtil.getDtDefinitions(notebook))) {
 			if (dtDefinition.isPersistent()) {
 				final SqlStudioDtDefinitionModel templateDef = new SqlStudioDtDefinitionModel(dtDefinition);
 				final String dataSpace = dtDefinition.getDataSpace();
@@ -125,8 +125,8 @@ public final class SqlGeneratorPlugin implements MdaGeneratorPlugin {
 			}
 		}
 		//
-		final Collection<StudioAssociationSimpleDefinition> collectionSimpleAll = DomainUtil.getSimpleAssociations(definitionSpace);
-		final Collection<StudioAssociationNNDefinition> collectionNNAll = DomainUtil.getNNAssociations(definitionSpace);
+		final Collection<AssociationSimpleSketch> collectionSimpleAll = DomainUtil.getSimpleAssociations(notebook);
+		final Collection<AssociationNNSketch> collectionNNAll = DomainUtil.getNNAssociations(notebook);
 		//
 		for (final Entry<String, List<SqlStudioDtDefinitionModel>> entry : mapListDtDef.entrySet()) {
 			final String dataSpace = entry.getKey();
@@ -170,7 +170,7 @@ public final class SqlGeneratorPlugin implements MdaGeneratorPlugin {
 	}
 
 	private static Collection<SqlStudioAssociationSimpleModel> filterAssociationSimple(
-			final Collection<StudioAssociationSimpleDefinition> collectionSimpleAll,
+			final Collection<AssociationSimpleSketch> collectionSimpleAll,
 			final String dataSpace) {
 		return collectionSimpleAll.stream()
 				.filter(a -> dataSpace.equals(a.getAssociationNodeA().getDtDefinition().getDataSpace()))
@@ -180,7 +180,7 @@ public final class SqlGeneratorPlugin implements MdaGeneratorPlugin {
 	}
 
 	private static Collection<SqlStudioAssociationNNModel> filterAssociationNN(
-			final Collection<StudioAssociationNNDefinition> collectionNNAll,
+			final Collection<AssociationNNSketch> collectionNNAll,
 			final String dataSpace) {
 		return collectionNNAll.stream()
 				.filter(a -> dataSpace.equals(a.getAssociationNodeA().getDtDefinition().getDataSpace()))

@@ -30,8 +30,8 @@ import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugi
 import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaManager;
-import io.vertigo.studio.metamodel.MetamodelResource;
-import io.vertigo.studio.metamodel.StudioMetamodelManager;
+import io.vertigo.studio.source.NotebookSourceManager;
+import io.vertigo.studio.source.NotebookSource;
 
 /**
  * Test la génération à partir des oom et ksp.
@@ -61,12 +61,12 @@ public class MasterDataSqlGeneratorTest {
 	@Test
 	public void testGenerate() {
 		try (AutoCloseableApp studioApp = new AutoCloseableApp(buildNodeConfig())) {
-			final List<MetamodelResource> resources = List.of(
-					MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
-					MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"),
-					MetamodelResource.of("staticMasterData", "io/vertigo/studio/metamodel/vertigo/data/masterdata/testJsonMasterDataValues.json"),
-					MetamodelResource.of("staticMasterData", "io/vertigo/studio/metamodel/vertigo/data/masterdata/testJsonMasterDataValues2.json"));
-			final StudioMetamodelManager studioMetamodelManager = studioApp.getComponentSpace().resolve(StudioMetamodelManager.class);
+			final List<NotebookSource> resources = List.of(
+					NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
+					NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"),
+					NotebookSource.of("staticMasterData", "io/vertigo/studio/metamodel/vertigo/data/masterdata/testJsonMasterDataValues.json"),
+					NotebookSource.of("staticMasterData", "io/vertigo/studio/metamodel/vertigo/data/masterdata/testJsonMasterDataValues2.json"));
+			final NotebookSourceManager notebookSourceManager = studioApp.getComponentSpace().resolve(NotebookSourceManager.class);
 			final MdaManager mdaManager = studioApp.getComponentSpace().resolve(MdaManager.class);
 
 			final MdaConfig mdaConfig = MdaConfig.builder("io.vertigo.studio")
@@ -78,7 +78,7 @@ public class MasterDataSqlGeneratorTest {
 					.addProperty("vertigo.domain.sql.generateMasterData", "true")
 					.build();
 
-			mdaManager.generate(studioMetamodelManager.parseResources(resources), mdaConfig);
+			mdaManager.generate(notebookSourceManager.read(resources), mdaConfig);
 		}
 
 		try (AutoCloseableApp app = new AutoCloseableApp(SqlTestConfigurator.config())) {

@@ -20,8 +20,8 @@ package io.vertigo.studio.plugins.mda.vertigo.domain.ts.model;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.BasicType;
-import io.vertigo.studio.metamodel.domain.Domain;
-import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
+import io.vertigo.studio.notebook.domain.DomainSketch;
+import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
 import io.vertigo.studio.tools.DefinitionUtil;
 
@@ -31,70 +31,70 @@ import io.vertigo.studio.tools.DefinitionUtil;
  * @author npiedeloup
  */
 public final class TSDomainModel {
-	private final Domain domain;
+	private final DomainSketch domainSketch;
 
 	/***
 	 * Constructor.
-	 * @param domain Domain
+	 * @param domainSketch Domain
 	 */
-	TSDomainModel(final Domain domain) {
-		Assertion.check().isNotNull(domain);
+	TSDomainModel(final DomainSketch domainSketch) {
+		Assertion.check().isNotNull(domainSketch);
 		//-----
-		this.domain = domain;
+		this.domainSketch = domainSketch;
 	}
 
 	/**
 	 * @return Type javascript du champ with cardinality
 	 */
 	public String getTypescriptType() {
-		return buildTypescriptType(domain, true);
+		return buildTypescriptType(domainSketch, true);
 	}
 
 	/**
 	 * @return Name of the domain
 	 */
 	public String getDomainName() {
-		return domain.getName();
+		return domainSketch.getName();
 	}
 
 	/**
 	 * @return Local name of the domain
 	 */
 	public String getDomainDefinitionName() {
-		return DefinitionUtil.getLocalName("St" + domain.getDtDefinitionName(), StudioDtDefinition.PREFIX);
+		return DefinitionUtil.getLocalName("St" + domainSketch.getDtDefinitionName(), DtSketch.PREFIX);
 	}
 
 	/**
 	 * @return Simple TS type
 	 */
 	public String getDomainTypeName() {
-		return buildTypescriptType(domain, false);
+		return buildTypescriptType(domainSketch, false);
 	}
 
 	/**
 	 * @return True si le type est une primitive.
 	 */
 	public boolean isPrimitive() {
-		return domain.getScope().isPrimitive();
+		return domainSketch.getScope().isPrimitive();
 	}
 
 	/**
 	 * Returns the javascript type.
-	 * @param  domain DtDomain
+	 * @param  domainSketch DtDomain
 	 * @return String
 	 */
-	private static String buildTypescriptType(final Domain domain, final boolean multiple) {
-		if (domain.getScope().isPrimitive()) {
-			final BasicType dataType = domain.getDataType();
+	private static String buildTypescriptType(final DomainSketch domainSketch, final boolean multiple) {
+		if (domainSketch.getScope().isPrimitive()) {
+			final BasicType dataType = domainSketch.getDataType();
 			if (dataType.isNumber()) {
 				return "number";
 			} else if (dataType == BasicType.Boolean) {
 				return "boolean";
 			}
 			return "string";
-		} else if (domain.getScope().isValueObject()) {
-			return DomainUtil.getSimpleNameFromCanonicalName(domain.getValueObjectClassName());
+		} else if (domainSketch.getScope().isValueObject()) {
+			return DomainUtil.getSimpleNameFromCanonicalName(domainSketch.getValueObjectClassName());
 		}
-		return DefinitionUtil.getLocalName("St" + domain.getDtDefinitionName(), StudioDtDefinition.PREFIX) + ((multiple) ? "[]" : "");
+		return DefinitionUtil.getLocalName("St" + domainSketch.getDtDefinitionName(), DtSketch.PREFIX) + ((multiple) ? "[]" : "");
 	}
 }

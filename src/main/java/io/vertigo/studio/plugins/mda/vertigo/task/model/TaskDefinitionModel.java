@@ -24,8 +24,8 @@ import java.util.function.Function;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.studio.metamodel.task.StudioTaskAttribute;
-import io.vertigo.studio.metamodel.task.StudioTaskDefinition;
+import io.vertigo.studio.notebook.task.TaskSketch;
+import io.vertigo.studio.notebook.task.TaskSketchAttribute;
 import io.vertigo.studio.tools.DefinitionUtil;
 
 /**
@@ -34,13 +34,13 @@ import io.vertigo.studio.tools.DefinitionUtil;
  * @author pchretien, mlaroche
  */
 public final class TaskDefinitionModel {
-	private final StudioTaskDefinition taskDefinition;
+	private final TaskSketch taskDefinition;
 	private final List<TaskAttributeModel> ins = new ArrayList<>();
 
 	private final TaskAttributeModel out;
 	private final boolean optional;
 
-	public TaskDefinitionModel(final StudioTaskDefinition taskDefinition, final Function<String, String> classNameFromDt) {
+	public TaskDefinitionModel(final TaskSketch taskDefinition, final Function<String, String> classNameFromDt) {
 		Assertion.check()
 				.isNotNull(taskDefinition)
 				.isNotNull(classNameFromDt);
@@ -48,14 +48,14 @@ public final class TaskDefinitionModel {
 		this.taskDefinition = taskDefinition;
 		boolean hasOption = false;
 
-		for (final StudioTaskAttribute attribute : taskDefinition.getInAttributes()) {
+		for (final TaskSketchAttribute attribute : taskDefinition.getInAttributes()) {
 			final TaskAttributeModel templateTaskAttribute = new TaskAttributeModel(attribute, classNameFromDt);
 			ins.add(templateTaskAttribute);
 			hasOption = hasOption || attribute.getCardinality().isOptionalOrNullable();
 		}
 
 		if (taskDefinition.getOutAttributeOpt().isPresent()) {
-			final StudioTaskAttribute attribute = taskDefinition.getOutAttributeOpt().get();
+			final TaskSketchAttribute attribute = taskDefinition.getOutAttributeOpt().get();
 			final TaskAttributeModel templateTaskAttribute = new TaskAttributeModel(attribute, classNameFromDt);
 			//On est dans le cas des paramètres OUT
 			out = templateTaskAttribute;
@@ -85,7 +85,7 @@ public final class TaskDefinitionModel {
 	 */
 	public String getMethodName() {
 		// Nom de la définition sans prefix (XxxYyyy).
-		final String localName = DefinitionUtil.getLocalName(taskDefinition.getName(), StudioTaskDefinition.PREFIX);
+		final String localName = DefinitionUtil.getLocalName(taskDefinition.getName(), TaskSketch.PREFIX);
 		return StringUtil.first2LowerCase(localName);
 	}
 

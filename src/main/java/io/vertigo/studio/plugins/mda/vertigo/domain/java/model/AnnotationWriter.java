@@ -23,12 +23,12 @@ import java.util.Collections;
 import java.util.List;
 
 import io.vertigo.core.lang.Cardinality;
-import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
-import io.vertigo.studio.metamodel.domain.StudioDtField;
-import io.vertigo.studio.metamodel.domain.association.AssociationUtil;
-import io.vertigo.studio.metamodel.domain.association.StudioAssociationNNDefinition;
-import io.vertigo.studio.metamodel.domain.association.StudioAssociationNode;
-import io.vertigo.studio.metamodel.domain.association.StudioAssociationSimpleDefinition;
+import io.vertigo.studio.notebook.domain.DtSketch;
+import io.vertigo.studio.notebook.domain.DtSketchField;
+import io.vertigo.studio.notebook.domain.association.AssociationUtil;
+import io.vertigo.studio.notebook.domain.association.AssociationNNSketch;
+import io.vertigo.studio.notebook.domain.association.AssociationSketchNode;
+import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
 import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants.VertigoClassNames;
 import io.vertigo.studio.tools.DefinitionUtil;
 
@@ -71,7 +71,7 @@ class AnnotationWriter {
 	 * @param dtDefinition DtDefinition
 	 * @return Liste des lignes de code java à ajouter.
 	 */
-	List<String> writeAnnotations(final StudioDtDefinition dtDefinition) {
+	List<String> writeAnnotations(final DtSketch dtDefinition) {
 		final List<String> lines = new ArrayList<>();
 		if (dtDefinition.getFragment().isPresent()) {
 			// Générations des annotations Dynamo
@@ -101,14 +101,14 @@ class AnnotationWriter {
 	 * @param dtField Champ de la DT_DEFINITION
 	 * @return Liste des lignes de code java à ajouter.
 	 */
-	List<String> writeAnnotations(final StudioDtField dtField) {
+	List<String> writeAnnotations(final DtSketchField dtField) {
 		// Générations des annotations Dynamo
 		// if we are a foreign key
-		if (dtField.getType() == StudioDtField.FieldType.FOREIGN_KEY) {
+		if (dtField.getType() == DtSketchField.FieldType.FOREIGN_KEY) {
 			return Collections.singletonList(new StringBuilder("@").append(VertigoClassNames.AnnotationForeignKey.getClassName()).append("(")
 					.append("smartType = \"").append(dtField.getDomain().getSmartTypeName()).append("\", ")
 					.append("label = \"").append(dtField.getLabel().getDisplay()).append("\", ")
-					.append("fkDefinition = \"").append("Dt").append(DefinitionUtil.getLocalName(dtField.getFkDtDefinitionName(), StudioDtDefinition.PREFIX)).append("\" ")
+					.append("fkDefinition = \"").append("Dt").append(DefinitionUtil.getLocalName(dtField.getFkDtDefinitionName(), DtSketch.PREFIX)).append("\" ")
 					.append(")")
 					.toString());
 		}
@@ -117,7 +117,7 @@ class AnnotationWriter {
 		// we are other type of field
 		final StringBuilder buffer = new StringBuilder("@Field(")
 				.append("smartType = \"").append(dtField.getDomain().getSmartTypeName()).append("\", ");
-		if (dtField.getType() != StudioDtField.FieldType.DATA) {
+		if (dtField.getType() != DtSketchField.FieldType.DATA) {
 			// "DATA" est la valeur par défaut de type dans l'annotation Field
 			buffer.append("type = \"").append(dtField.getType()).append("\", ");
 		}
@@ -157,9 +157,9 @@ class AnnotationWriter {
 	 * @param associationSimple Definition de l'association
 	 * @return Liste des lignes de code java à ajouter.
 	 */
-	List<String> writeSimpleAssociationAnnotation(final StudioAssociationSimpleDefinition associationSimple) {
-		final StudioAssociationNode primaryNode = associationSimple.getPrimaryAssociationNode();
-		final StudioAssociationNode foreignNode = associationSimple.getForeignAssociationNode();
+	List<String> writeSimpleAssociationAnnotation(final AssociationSimpleSketch associationSimple) {
+		final AssociationSketchNode primaryNode = associationSimple.getPrimaryAssociationNode();
+		final AssociationSketchNode foreignNode = associationSimple.getForeignAssociationNode();
 		final String primaryMultiplicity = AssociationUtil.getMultiplicity(primaryNode.isNotNull(), primaryNode.isMultiple());
 		final String foreignMultiplipicity = AssociationUtil.getMultiplicity(foreignNode.isNotNull(), foreignNode.isMultiple());
 
@@ -185,9 +185,9 @@ class AnnotationWriter {
 	 * @param associationNN Definition de l'association
 	 * @return Liste des lignes de code java à ajouter.
 	 */
-	List<String> writeNNAssociationAnnotation(final StudioAssociationNNDefinition associationNN) {
-		final StudioAssociationNode nodeA = associationNN.getAssociationNodeA();
-		final StudioAssociationNode nodeB = associationNN.getAssociationNodeB();
+	List<String> writeNNAssociationAnnotation(final AssociationNNSketch associationNN) {
+		final AssociationSketchNode nodeA = associationNN.getAssociationNodeA();
+		final AssociationSketchNode nodeB = associationNN.getAssociationNodeB();
 
 		return List.of(
 				"@" + VertigoClassNames.AnnotationAssociationNN.getClassName() + "(",

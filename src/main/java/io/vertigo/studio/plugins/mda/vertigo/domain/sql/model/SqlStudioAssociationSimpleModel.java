@@ -20,7 +20,7 @@ package io.vertigo.studio.plugins.mda.vertigo.domain.sql.model;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.studio.metamodel.domain.association.StudioAssociationSimpleDefinition;
+import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
 
 /**
  * Objet utilisé par FreeMarker.
@@ -28,13 +28,13 @@ import io.vertigo.studio.metamodel.domain.association.StudioAssociationSimpleDef
  * @author pchretien, mlaroche
  */
 public final class SqlStudioAssociationSimpleModel {
-	private final StudioAssociationSimpleDefinition associationDefinition;
+	private final AssociationSimpleSketch associationDefinition;
 
 	/**
 	 * Constructeur.
 	 * @param associationNode Noeud de l'association à générer
 	 */
-	public SqlStudioAssociationSimpleModel(final StudioAssociationSimpleDefinition associationDefinition) {
+	public SqlStudioAssociationSimpleModel(final AssociationSimpleSketch associationDefinition) {
 		Assertion.check().isNotNull(associationDefinition);
 		//-----
 		this.associationDefinition = associationDefinition;

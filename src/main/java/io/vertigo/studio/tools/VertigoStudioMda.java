@@ -28,7 +28,6 @@ import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.node.AutoCloseableApp;
 import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.NodeConfig;
-import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.core.plugins.resource.local.LocalResourceResolverPlugin;
 import io.vertigo.core.plugins.resource.url.URLResourceResolverPlugin;
@@ -36,7 +35,9 @@ import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaManager;
 import io.vertigo.studio.mda.MdaResult;
-import io.vertigo.studio.metamodel.StudioMetamodelManager;
+import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.NotebookConfig;
+import io.vertigo.studio.source.NotebookSourceManager;
 
 /**
  * Génération des fichiers Java et SQL à patrir de fichiers template freemarker.
@@ -54,22 +55,22 @@ public final class VertigoStudioMda {
 	}
 
 	private static void doMain(final String studioProjectConfigJson) {
-		final StudioProjectConfig studioProjectConfig = loadStudioProjectConfig(studioProjectConfigJson);
+		final NotebookConfig notebookConfig = loadStudioProjectConfig(studioProjectConfigJson);
 		//---
-		MdaResult mdaResult = exec(studioProjectConfig);
+		final MdaResult mdaResult = exec(notebookConfig);
 		//---
 		mdaResult.displayResultMessage(System.out);
 	}
 
-	private static MdaResult exec(StudioProjectConfig studioProjectConfig) {
+	private static MdaResult exec(final NotebookConfig notebookConfig) {
 		try (final AutoCloseableApp studioApp = new AutoCloseableApp(buildNodeConfig())) {
-			final StudioMetamodelManager studioMetamodelManager = studioApp.getComponentSpace().resolve(StudioMetamodelManager.class);
+			final NotebookSourceManager notebookSourceManager = studioApp.getComponentSpace().resolve(NotebookSourceManager.class);
 			final MdaManager mdaManager = studioApp.getComponentSpace().resolve(MdaManager.class);
 			//-----
-			MdaConfig mdaConfig = studioProjectConfig.getMdaConfig();
+			final MdaConfig mdaConfig = notebookConfig.getMdaConfig();
 			mdaManager.clean(mdaConfig);
-			DefinitionSpace definitionSpace = studioMetamodelManager.parseResources(studioProjectConfig.getMetamodelResources());
-			return mdaManager.generate(definitionSpace, mdaConfig);
+			final Notebook notebook = notebookSourceManager.read(notebookConfig.getMetamodelResources());
+			return mdaManager.generate(notebook, mdaConfig);
 		}
 	}
 
@@ -93,7 +94,7 @@ public final class VertigoStudioMda {
 
 	}
 
-	private static StudioProjectConfig loadStudioProjectConfig(final String configFileUrl) {
+	private static NotebookConfig loadStudioProjectConfig(final String configFileUrl) {
 		try {
 			return StudioConfigJsonParser.parseJson(new URL(configFileUrl));
 		} catch (IOException | URISyntaxException e) {

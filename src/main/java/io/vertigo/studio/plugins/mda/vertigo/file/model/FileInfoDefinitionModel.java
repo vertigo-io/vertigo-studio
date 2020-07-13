@@ -19,7 +19,7 @@
 package io.vertigo.studio.plugins.mda.vertigo.file.model;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.metamodel.file.StudioFileInfo;
+import io.vertigo.studio.notebook.file.FileInfoSketch;
 
 /**
  * Génération des classes/méthodes des fileInfo.
@@ -27,9 +27,9 @@ import io.vertigo.studio.metamodel.file.StudioFileInfo;
  * @author npiedeloup
  */
 public final class FileInfoDefinitionModel {
-	private final StudioFileInfo fileInfoDefinition;
+	private final FileInfoSketch fileInfoDefinition;
 
-	public FileInfoDefinitionModel(final StudioFileInfo fileInfoDefinition) {
+	public FileInfoDefinitionModel(final FileInfoSketch fileInfoDefinition) {
 		Assertion.check().isNotNull(fileInfoDefinition);
 		//-----
 		this.fileInfoDefinition = fileInfoDefinition;

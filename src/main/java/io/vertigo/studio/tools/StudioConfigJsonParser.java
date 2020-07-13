@@ -15,7 +15,8 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.util.FileUtil;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaConfigBuilder;
-import io.vertigo.studio.metamodel.MetamodelResource;
+import io.vertigo.studio.notebook.NotebookConfig;
+import io.vertigo.studio.source.NotebookSource;
 
 final class StudioConfigJsonParser {
 	private static final String PATH = "path";
@@ -28,22 +29,22 @@ final class StudioConfigJsonParser {
 	private static final String TARGET_GEN_DIR = "targetGenDir";
 	private static final Gson GSON = new Gson();
 
-	static final StudioProjectConfig parseJson(final URL configUrl) throws IOException, URISyntaxException {
+	static final NotebookConfig parseJson(final URL configUrl) throws IOException, URISyntaxException {
 		final JsonObject jsonObject = GSON.fromJson(FileUtil.read(configUrl), JsonObject.class);
 		final String rootPath = Path.of(configUrl.toURI()).getParent().toString() + "/";
 
 		//metamodelresources
-		final List<MetamodelResource> metamodelResources = parseMetamodelResource(jsonObject, rootPath);
+		final List<NotebookSource> notebookSources = parseMetamodelResource(jsonObject, rootPath);
 		//mdaCondig
 		final MdaConfig mdaConfig = parseMdaConfig(jsonObject, rootPath);
 		//---
-		return new StudioProjectConfig(metamodelResources, mdaConfig);
+		return new NotebookConfig(notebookSources, mdaConfig);
 	}
 
-	private static final List<MetamodelResource> parseMetamodelResource(JsonObject jsonObject, String rootPath) {
+	private static final List<NotebookSource> parseMetamodelResource(JsonObject jsonObject, String rootPath) {
 		//metamodelresources
 		return StreamSupport.stream(jsonObject.getAsJsonArray(METAMODEL_RESOURCES).spliterator(), false)
-				.map(jsonElement -> MetamodelResource.of(jsonElement.getAsJsonObject().get(TYPE).getAsString(), rootPath + jsonElement.getAsJsonObject().get(PATH).getAsString()))
+				.map(jsonElement -> NotebookSource.of(jsonElement.getAsJsonObject().get(TYPE).getAsString(), rootPath + jsonElement.getAsJsonObject().get(PATH).getAsString()))
 				.collect(Collectors.toList());
 	}
 

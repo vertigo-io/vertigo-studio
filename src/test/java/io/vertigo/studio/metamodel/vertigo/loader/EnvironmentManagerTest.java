@@ -39,10 +39,9 @@ import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.LogConfig;
 import io.vertigo.core.node.config.NodeConfig;
-import io.vertigo.core.node.definition.DefinitionSpace;
-import io.vertigo.core.node.definition.loader.DefinitionSpaceWritable;
-import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinition;
-import io.vertigo.studio.plugins.metamodel.vertigo.dsl.dynamic.DslDefinitionRepository;
+import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinition;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinitionRepository;
 
 public final class EnvironmentManagerTest {
 	private AutoCloseableApp app;
@@ -72,7 +71,7 @@ public final class EnvironmentManagerTest {
 
 	@Test
 	public void simpleTest() {
-		final DefinitionSpace definitionSpace = new DefinitionSpaceWritable();
+		final Notebook notebook = new Notebook();
 
 		final DslDefinition address1Definition = DslDefinition.builder("MockMainAddress", PersonGrammar.ADDRESS_ENTITY)
 				.withPackageName("io.vertigo.test.model")
@@ -102,7 +101,7 @@ public final class EnvironmentManagerTest {
 				.build();
 		dslDefinitionRepository.addDefinition(personDefinition);
 
-		dslDefinitionRepository.solve(definitionSpace);
+		dslDefinitionRepository.solve(notebook);
 		assertNotNull(personDefinition);
 	}
 

@@ -24,8 +24,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import io.vertigo.studio.metamodel.webservices.StudioWebServiceDefinition;
-import io.vertigo.studio.metamodel.webservices.StudioWebServiceParam;
+import io.vertigo.studio.notebook.webservices.WebServiceSketch;
+import io.vertigo.studio.notebook.webservices.WebServiceSketchParam;
 
 /**
  * Model for TypeScript generation.
@@ -33,7 +33,7 @@ import io.vertigo.studio.metamodel.webservices.StudioWebServiceParam;
  */
 public class WebServiceDefinitionModelTs {
 
-	private final StudioWebServiceDefinition webServiceDefinition;
+	private final WebServiceSketch webServiceDefinition;
 	private final List<WebServiceParamModelTs> webServiceParamModelTsList = new ArrayList<>();
 	private final TypeModelTs returnType;
 
@@ -41,10 +41,10 @@ public class WebServiceDefinitionModelTs {
 	 * Constructor.
 	 * @param webServiceDefinition WebService to generate
 	 */
-	public WebServiceDefinitionModelTs(final StudioWebServiceDefinition webServiceDefinition) {
+	public WebServiceDefinitionModelTs(final WebServiceSketch webServiceDefinition) {
 		this.webServiceDefinition = webServiceDefinition;
 
-		for (final StudioWebServiceParam wsParam : webServiceDefinition.getWebServiceParams()) {
+		for (final WebServiceSketchParam wsParam : webServiceDefinition.getWebServiceParams()) {
 			webServiceParamModelTsList.add(new WebServiceParamModelTs(wsParam));
 		}
 

@@ -19,10 +19,10 @@
 package io.vertigo.studio.plugins.mda.vertigo.domain.java.model;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.metamodel.domain.StudioStereotype;
-import io.vertigo.studio.metamodel.domain.association.StudioAssociationDefinition;
-import io.vertigo.studio.metamodel.domain.association.StudioAssociationNode;
-import io.vertigo.studio.metamodel.domain.association.StudioAssociationSimpleDefinition;
+import io.vertigo.studio.notebook.domain.StudioStereotype;
+import io.vertigo.studio.notebook.domain.association.AssociationSketch;
+import io.vertigo.studio.notebook.domain.association.AssociationSketchNode;
+import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
 
 /**
  * Objet utilisé par FreeMarker.
@@ -30,26 +30,26 @@ import io.vertigo.studio.metamodel.domain.association.StudioAssociationSimpleDef
  * @author pchretien, mlaroche
  */
 public final class StudioAssociationModel {
-	private final StudioAssociationDefinition associationDefinition;
-	private final StudioAssociationNode associationNode;
+	private final AssociationSketch associationDefinition;
+	private final AssociationSketchNode associationSketchNode;
 
 	/**
 	 * Constructeur.
-	 * @param associationNode Noeud de l'association à générer
+	 * @param associationSketchNode Noeud de l'association à générer
 	 */
-	StudioAssociationModel(final StudioAssociationDefinition associationDefinition, final StudioAssociationNode associationNode) {
+	StudioAssociationModel(final AssociationSketch associationDefinition, final AssociationSketchNode associationSketchNode) {
 		Assertion.check()
 				.isNotNull(associationDefinition)
-				.isNotNull(associationNode);
+				.isNotNull(associationSketchNode);
 		//-----
 		this.associationDefinition = associationDefinition;
-		this.associationNode = associationNode;
+		this.associationSketchNode = associationSketchNode;
 	}
 
 	/**
 	 * @return Definition d'une association.
 	 */
-	public StudioAssociationDefinition getDefinition() {
+	public AssociationSketch getDefinition() {
 		return associationDefinition;
 	}
 
@@ -57,56 +57,56 @@ public final class StudioAssociationModel {
 	 * @return Label du noeud
 	 */
 	public String getLabel() {
-		return associationNode.getLabel();
+		return associationSketchNode.getLabel();
 	}
 
 	/**
 	 * @return Role du noeud
 	 */
 	public String getRole() {
-		return associationNode.getRole();
+		return associationSketchNode.getRole();
 	}
 
 	/**
 	 * @return Si la cardinalité max du noeud est multiple
 	 */
 	public boolean isMultiple() {
-		return associationNode.isMultiple();
+		return associationSketchNode.isMultiple();
 	}
 
 	/**
 	 * @return Type de l'association : Simple ou NN
 	 */
 	public boolean isSimple() {
-		return getDefinition() instanceof StudioAssociationSimpleDefinition;
+		return getDefinition() instanceof AssociationSimpleSketch;
 	}
 
 	/**
 	 * @return Si le noeud est navigable
 	 */
 	public boolean isNavigable() {
-		return associationNode.isNavigable();
+		return associationSketchNode.isNavigable();
 	}
 
 	/**
 	 * @return Type à retourner
 	 */
 	public String getReturnType() {
-		return associationNode.getDtDefinition().getClassCanonicalName();
+		return associationSketchNode.getDtDefinition().getClassCanonicalName();
 	}
 
 	/**
 	 * @return Type à retourner
 	 */
 	public String getReturnTypeSimpleName() {
-		return associationNode.getDtDefinition().getClassSimpleName();
+		return associationSketchNode.getDtDefinition().getClassSimpleName();
 	}
 
 	/**
 	 * @return Type à retourner
 	 */
 	public boolean isTargetStaticMasterData() {
-		return associationNode.getDtDefinition().getStereotype() == StudioStereotype.StaticMasterData;
+		return associationSketchNode.getDtDefinition().getStereotype() == StudioStereotype.StaticMasterData;
 	}
 
 	/**
@@ -120,6 +120,6 @@ public final class StudioAssociationModel {
 	 * @return Nom du champ fk en camelCase.
 	 */
 	public String getFkFieldName() {
-		return ((StudioAssociationSimpleDefinition) associationDefinition).getFKField().getName();
+		return ((AssociationSimpleSketch) associationDefinition).getFKField().getName();
 	}
 }

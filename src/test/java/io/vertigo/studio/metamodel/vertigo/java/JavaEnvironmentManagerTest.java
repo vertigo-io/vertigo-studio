@@ -30,16 +30,16 @@ import io.vertigo.core.node.AutoCloseableApp;
 import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.NodeConfig;
-import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.datamodel.impl.smarttype.formatter.FormatterDefault;
 import io.vertigo.studio.StudioFeatures;
-import io.vertigo.studio.metamodel.MetamodelResource;
-import io.vertigo.studio.metamodel.StudioMetamodelManager;
-import io.vertigo.studio.metamodel.domain.Domain;
-import io.vertigo.studio.metamodel.domain.FormatterDefinition;
-import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
 import io.vertigo.studio.metamodel.vertigo.java.data.DtDefinitions;
+import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.domain.DomainSketch;
+import io.vertigo.studio.notebook.domain.FormatterSketch;
+import io.vertigo.studio.notebook.domain.DtSketch;
+import io.vertigo.studio.source.NotebookSource;
+import io.vertigo.studio.source.NotebookSourceManager;
 
 /**
  * Test de l'implémentation standard.
@@ -48,7 +48,7 @@ import io.vertigo.studio.metamodel.vertigo.java.data.DtDefinitions;
  */
 public final class JavaEnvironmentManagerTest {
 
-	private DefinitionSpace definitionSpace;
+	private Notebook notebook;
 	private AutoCloseableApp app;
 
 	@BeforeEach
@@ -56,10 +56,10 @@ public final class JavaEnvironmentManagerTest {
 		app = new AutoCloseableApp(buildNodeConfig());
 		DIInjector.injectMembers(this, app.getComponentSpace());
 		//---
-		final List<MetamodelResource> resources = List.of(
-				MetamodelResource.of("kpr", "io/vertigo/studio/metamodel/vertigo/java/data/execution.kpr"),
-				MetamodelResource.of("classes", DtDefinitions.class.getName()));
-		definitionSpace = app.getComponentSpace().resolve(StudioMetamodelManager.class).parseResources(resources);
+		final List<NotebookSource> resources = List.of(
+				NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/java/data/execution.kpr"),
+				NotebookSource.of("classes", DtDefinitions.class.getName()));
+		notebook = app.getComponentSpace().resolve(NotebookSourceManager.class).read(resources);
 	}
 
 	@AfterEach
@@ -83,20 +83,20 @@ public final class JavaEnvironmentManagerTest {
 
 	@Test
 	public void testDefaultFormatter() {
-		final FormatterDefinition formatter = definitionSpace.resolve("FmtDefault", FormatterDefinition.class);
+		final FormatterSketch formatter = notebook.resolve("FmtDefault", FormatterSketch.class);
 		Assertions.assertEquals(FormatterDefault.class.getName(), formatter.getFormatterClassName());
 	}
 
 	@Test
 	public void testDomain() {
-		final io.vertigo.studio.metamodel.domain.Domain domain = definitionSpace.resolve("DoId", Domain.class);
-		Assertions.assertEquals(BasicType.Long, domain.getDataType());
-		Assertions.assertEquals(FormatterDefault.class.getName(), domain.getFormatterDefinition().getFormatterClassName());
+		final io.vertigo.studio.notebook.domain.DomainSketch domainSketch = notebook.resolve("DoId", DomainSketch.class);
+		Assertions.assertEquals(BasicType.Long, domainSketch.getDataType());
+		Assertions.assertEquals(FormatterDefault.class.getName(), domainSketch.getFormatterDefinition().getFormatterClassName());
 	}
 
 	@Test
 	public void testCommand() {
-		final StudioDtDefinition dtDefinition = definitionSpace.resolve("StDtCommand", StudioDtDefinition.class);
+		final DtSketch dtDefinition = notebook.resolve("StDtCommand", DtSketch.class);
 		Assertions.assertTrue(dtDefinition.isPersistent());
 		Assertions.assertEquals("io.vertigo.studio.metamodel.vertigo.java.data.domain.Command", dtDefinition.getClassCanonicalName());
 		Assertions.assertEquals("io.vertigo.studio.metamodel.vertigo.java.data.domain", dtDefinition.getPackageName());
@@ -105,7 +105,7 @@ public final class JavaEnvironmentManagerTest {
 
 	@Test
 	public void testCityFragment() {
-		final StudioDtDefinition dtDefinition = definitionSpace.resolve("StDtCityFragment", StudioDtDefinition.class);
+		final DtSketch dtDefinition = notebook.resolve("StDtCityFragment", DtSketch.class);
 		Assertions.assertFalse(dtDefinition.isPersistent());
 		Assertions.assertTrue(dtDefinition.getFragment().isPresent());
 		Assertions.assertTrue("City".equals(dtDefinition.getFragment().get().getClassSimpleName()));

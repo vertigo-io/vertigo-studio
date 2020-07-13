@@ -23,8 +23,8 @@ import java.util.function.Function;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
-import io.vertigo.studio.metamodel.domain.Domain;
-import io.vertigo.studio.metamodel.task.StudioTaskAttribute;
+import io.vertigo.studio.notebook.domain.DomainSketch;
+import io.vertigo.studio.notebook.task.TaskSketchAttribute;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
 
 /**
@@ -33,10 +33,10 @@ import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
  * @author sezratty, mlaroche
  */
 public final class TemplateTaskAttribute {
-	private final StudioTaskAttribute taskAttribute;
+	private final TaskSketchAttribute taskAttribute;
 	private final String value;
 
-	TemplateTaskAttribute(final StudioTaskAttribute taskAttribute, final Function<String, String> classNameFromDt) {
+	TemplateTaskAttribute(final TaskSketchAttribute taskAttribute, final Function<String, String> classNameFromDt) {
 		Assertion.check().isNotNull(taskAttribute);
 		//-----
 		this.taskAttribute = taskAttribute;
@@ -60,14 +60,14 @@ public final class TemplateTaskAttribute {
 	/**
 	 * @return Domain.
 	 */
-	Domain getDomain() {
+	DomainSketch getDomain() {
 		return taskAttribute.getDomain();
 	}
 
-	private static String create(final Domain domain, final Cardinality cardinality, final Function<String, String> classNameFromDt) {
+	private static String create(final DomainSketch domainSketch, final Cardinality cardinality, final Function<String, String> classNameFromDt) {
 		final String dumFunction;
 		if (cardinality.hasMany()) {
-			if (domain.getScope().isDataObject()) {
+			if (domainSketch.getScope().isDataObject()) {
 				dumFunction = "dumDtList";
 			} else {
 				dumFunction = "dumList";
@@ -76,7 +76,7 @@ public final class TemplateTaskAttribute {
 			dumFunction = "dum";
 		}
 		//we don't have generated classes right now... so we need to only we the domain info and can't use domain.getJavaClass() for this case
-		final String javaClassName = DomainUtil.buildJavaTypeName(domain, classNameFromDt);
+		final String javaClassName = DomainUtil.buildJavaTypeName(domainSketch, classNameFromDt);
 		//---
 		final String rawExpression = "dum()." + dumFunction + "(" + javaClassName + ".class)";
 		final String expression = cardinality.isOptionalOrNullable() ? Optional.class.getCanonicalName() + ".ofNullable(" + rawExpression + ")" : rawExpression;

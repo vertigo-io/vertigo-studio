@@ -25,9 +25,9 @@ import java.util.function.Function;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.mda.MdaConfig;
-import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
-import io.vertigo.studio.metamodel.domain.StudioStereotype;
-import io.vertigo.studio.metamodel.task.StudioTaskDefinition;
+import io.vertigo.studio.notebook.domain.DtSketch;
+import io.vertigo.studio.notebook.domain.StudioStereotype;
+import io.vertigo.studio.notebook.task.TaskSketch;
 
 /**
  * Objet utilisé par FreeMarker.
@@ -35,7 +35,7 @@ import io.vertigo.studio.metamodel.task.StudioTaskDefinition;
  * @author pchretien, mlaroche
  */
 public final class DAOModel {
-	private final StudioDtDefinition dtDefinition;
+	private final DtSketch dtDefinition;
 	private final String packageName;
 	private final Collection<TaskDefinitionModel> taskDefinitions = new ArrayList<>();
 
@@ -46,7 +46,7 @@ public final class DAOModel {
 	 *
 	 * @param dtDefinition DtDefinition de l'objet à générer
 	 */
-	public DAOModel(final MdaConfig mdaConfig, final StudioDtDefinition dtDefinition, final Collection<StudioTaskDefinition> taskDefinitionCollection, final Function<String, String> classNameFromDt) {
+	public DAOModel(final MdaConfig mdaConfig, final DtSketch dtDefinition, final Collection<TaskSketch> taskDefinitionCollection, final Function<String, String> classNameFromDt) {
 		Assertion.check()
 				.isNotNull(mdaConfig)
 				.isNotNull(dtDefinition)
@@ -72,7 +72,7 @@ public final class DAOModel {
 		packageName = mdaConfig.getProjectPackageName() + featureName + ".dao" + subpackage;
 
 		boolean hasOption = false;
-		for (final StudioTaskDefinition taskDefinition : taskDefinitionCollection) {
+		for (final TaskSketch taskDefinition : taskDefinitionCollection) {
 			final TaskDefinitionModel templateTaskDefinition = new TaskDefinitionModel(taskDefinition, classNameFromDt);
 			taskDefinitions.add(templateTaskDefinition);
 			hasOption = hasOption || templateTaskDefinition.hasOptions();

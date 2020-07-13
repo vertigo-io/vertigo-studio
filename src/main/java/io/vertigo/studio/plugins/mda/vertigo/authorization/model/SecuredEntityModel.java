@@ -22,29 +22,29 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.metamodel.authorization.SecuredFeature;
-import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
+import io.vertigo.studio.notebook.authorization.SecuredFeatureSketch;
+import io.vertigo.studio.notebook.domain.DtSketch;
 
 public class SecuredEntityModel {
 
-	private final StudioDtDefinition studioDtDefinition;
+	private final DtSketch dtSketch;
 	private final List<SecuredFeatureModel> securedFeatureModels;
 
-	public SecuredEntityModel(final List<SecuredFeature> securedFeatures, final StudioDtDefinition studioDtDefinition) {
-		Assertion.check().isNotNull(studioDtDefinition);
+	public SecuredEntityModel(final List<SecuredFeatureSketch> securedFeatureSketchs, final DtSketch dtSketch) {
+		Assertion.check().isNotNull(dtSketch);
 		//---
-		this.studioDtDefinition = studioDtDefinition;
-		securedFeatureModels = securedFeatures.stream()
+		this.dtSketch = dtSketch;
+		securedFeatureModels = securedFeatureSketchs.stream()
 				.map(SecuredFeatureModel::new)
 				.collect(Collectors.toList());
 	}
 
 	public String getClassSimpleName() {
-		return studioDtDefinition.getClassSimpleName();
+		return dtSketch.getClassSimpleName();
 	}
 
 	public String getClassCanonicalName() {
-		return studioDtDefinition.getClassCanonicalName();
+		return dtSketch.getClassCanonicalName();
 	}
 
 	public List<SecuredFeatureModel> getOperations() {

@@ -21,8 +21,8 @@ package io.vertigo.studio.plugins.mda.vertigo.domain.ts.model;
 import java.util.Map;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.metamodel.domain.StudioDtDefinition;
-import io.vertigo.studio.metamodel.domain.StudioDtField;
+import io.vertigo.studio.notebook.domain.DtSketch;
+import io.vertigo.studio.notebook.domain.DtSketchField;
 
 /**
  * Model TS des materdata.
@@ -31,10 +31,10 @@ import io.vertigo.studio.metamodel.domain.StudioDtField;
  */
 public final class TSMasterDataValueModel {
 
-	private final StudioDtDefinition dtDefinition;
+	private final DtSketch dtDefinition;
 	private final Map<String, String> allFieldValues;
 
-	public TSMasterDataValueModel(final StudioDtDefinition dtDefinition, final Map<String, String> allFieldValues) {
+	public TSMasterDataValueModel(final DtSketch dtDefinition, final Map<String, String> allFieldValues) {
 		Assertion.check()
 				.isNotNull(dtDefinition)
 				.isNotNull(allFieldValues);
@@ -44,7 +44,7 @@ public final class TSMasterDataValueModel {
 	}
 
 	public String getFieldValue(final String fieldName) {
-		final StudioDtField dtField = dtDefinition.getField(fieldName);
+		final DtSketchField dtField = dtDefinition.getField(fieldName);
 		//---
 		Assertion.check()
 				.when(dtField.getCardinality().hasOne(), () -> Assertion.check()
