@@ -72,7 +72,7 @@ comment on column ${dtDefinition.localName}.${field.constName} is
 </#list>
 
 <#list simpleAssociations as associationDefinition>
-<#assign associationLocalName = associationDefinition.getName()?substring(3)> 
+<#assign associationLocalName = associationDefinition.getName()> 
 alter table ${associationDefinition.foreignTable}
 	add constraint FK_${associationLocalName}_${associationDefinition.primaryTable} foreign key (${associationDefinition.foreignColumn})
 	references ${associationDefinition.primaryTable} (${associationDefinition.primaryIdColumn});
@@ -83,7 +83,7 @@ TABLESPACE :TABLESPACE_NAME_INDEX</#if>;
 </#list>
 
 <#list nnAssociations as associationDefinition>
-<#assign associationLocalName = associationDefinition.getName()?substring(3)> 
+<#assign associationLocalName = associationDefinition.getName()> 
 create table ${associationDefinition.tableName}
 (
 	${associationDefinition.nodeAPKName?right_pad(12)}${"\t"} ${sql(associationDefinition.nodeAPKDomain)?right_pad(12)}${"\t"} not null,
