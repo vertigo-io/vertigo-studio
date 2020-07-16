@@ -63,9 +63,9 @@ public final class FileInfoGeneratorPlugin implements MdaGeneratorPlugin {
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
-		final Collection<FileInfoSketch> fileInfoDefinitions = notebook.getAll(FileInfoSketch.class);
-		for (final FileInfoSketch fileInfoDefinition : fileInfoDefinitions) {
-			generateFileInfo(targetSubDir, mdaConfig, mdaResultBuilder, fileInfoDefinition);
+		final Collection<FileInfoSketch> fileInfoSketchs = notebook.getAll(FileInfoSketch.class);
+		for (final FileInfoSketch fileInfoSketch : fileInfoSketchs) {
+			generateFileInfo(targetSubDir, mdaConfig, mdaResultBuilder, fileInfoSketch);
 		}
 	}
 

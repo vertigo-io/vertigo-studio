@@ -79,8 +79,8 @@ public final class SearchGeneratorPlugin implements MdaGeneratorPlugin {
 
 		notebook.getAll(DtSketch.class)
 				.stream()
-				.filter(dtDefinition -> dtDefinition.getStereotype() == StudioStereotype.KeyConcept)
-				.forEach(dtDefinition -> generateSearchAo(notebook, targetSubDir, mdaConfig, mdaResultBuilder, dtDefinition));
+				.filter(dtSketch -> dtSketch.getStereotype() == StudioStereotype.KeyConcept)
+				.forEach(dtSketch -> generateSearchAo(notebook, targetSubDir, mdaConfig, mdaResultBuilder, dtSketch));
 
 	}
 
@@ -92,10 +92,10 @@ public final class SearchGeneratorPlugin implements MdaGeneratorPlugin {
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder,
-			final DtSketch dtDefinition) {
-		Assertion.check().isNotNull(dtDefinition);
+			final DtSketch dtSketch) {
+		Assertion.check().isNotNull(dtSketch);
 
-		final String definitionPackageName = dtDefinition.getPackageName();
+		final String definitionPackageName = dtSketch.getPackageName();
 		final String packageNamePrefix = mdaConfig.getProjectPackageName();
 		Assertion.check()
 				.isTrue(definitionPackageName.startsWith(packageNamePrefix), "Package name {0}, must begin with normalised prefix: {1}", definitionPackageName, packageNamePrefix)
@@ -113,25 +113,25 @@ public final class SearchGeneratorPlugin implements MdaGeneratorPlugin {
 		//On construit le nom du package à partir du package de la DT et de la feature.
 		final String packageName = mdaConfig.getProjectPackageName() + featureName + ".search" + subpackage;
 
-		final SearchDtDefinitionModel searchDtDefinitionModel = new SearchDtDefinitionModel(dtDefinition);
+		final SearchDtDefinitionModel searchDtDefinitionModel = new SearchDtDefinitionModel(dtSketch);
 
 		final Optional<SearchIndexSketch> searchIndexDefinitionOpt = notebook.getAll(SearchIndexSketch.class).stream()
-				.filter(indexDefinition -> indexDefinition.getKeyConceptDtDefinition().equals(dtDefinition))
+				.filter(indexSketch -> indexSketch.getKeyConceptDtSketch().equals(dtSketch))
 				.findFirst();
 
 		final List<FacetedQueryDefinitionModel> facetedQueryDefinitions = new ArrayList<>();
-		for (final FacetedQuerySketch facetedQueryDefinition : notebook.getAll(FacetedQuerySketch.class)) {
-			if (facetedQueryDefinition.getKeyConceptDtDefinition().equals(dtDefinition)) {
-				final FacetedQueryDefinitionModel templateFacetedQueryDefinition = new FacetedQueryDefinitionModel(facetedQueryDefinition, DomainUtil.createClassNameFromDtFunction(notebook));
+		for (final FacetedQuerySketch facetedQuerySketch : notebook.getAll(FacetedQuerySketch.class)) {
+			if (facetedQuerySketch.getKeyConceptDtSketch().equals(dtSketch)) {
+				final FacetedQueryDefinitionModel templateFacetedQueryDefinition = new FacetedQueryDefinitionModel(facetedQuerySketch, DomainUtil.createClassNameFromDtFunction(notebook));
 				facetedQueryDefinitions.add(templateFacetedQueryDefinition);
 			}
 		}
 
 		final List<FacetDefinitionModel> facetDefinitions = new ArrayList<>();
 		if (searchIndexDefinitionOpt.isPresent()) {
-			for (final FacetSketch facetDefinition : notebook.getAll(FacetSketch.class)) {
-				if (facetDefinition.getIndexDtDefinition().equals(searchIndexDefinitionOpt.get().getIndexDtDefinition())) {
-					final FacetDefinitionModel templateFacetedQueryDefinition = new FacetDefinitionModel(facetDefinition);
+			for (final FacetSketch facetSketch : notebook.getAll(FacetSketch.class)) {
+				if (facetSketch.getIndexDtSketch().equals(searchIndexDefinitionOpt.get().getIndexDtSketch())) {
+					final FacetDefinitionModel templateFacetedQueryDefinition = new FacetDefinitionModel(facetSketch);
 					facetDefinitions.add(templateFacetedQueryDefinition);
 				}
 			}
@@ -144,7 +144,7 @@ public final class SearchGeneratorPlugin implements MdaGeneratorPlugin {
 					.put("facetedQueryDefinitions", facetedQueryDefinitions)
 					.put("facetDefinitions", facetDefinitions)
 					.put("dtDefinition", searchDtDefinitionModel)
-					.put("indexDtDefinition", new SearchDtDefinitionModel(searchIndexDefinitionOpt.get().getIndexDtDefinition()))
+					.put("indexDtDefinition", new SearchDtDefinitionModel(searchIndexDefinitionOpt.get().getIndexDtSketch()))
 					.put("searchIndexDefinition", new SearchIndexDefinitionModel(searchIndexDefinitionOpt.get()))
 					.build();
 

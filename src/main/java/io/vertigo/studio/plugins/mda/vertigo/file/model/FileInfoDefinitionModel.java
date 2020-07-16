@@ -27,18 +27,18 @@ import io.vertigo.studio.notebook.file.FileInfoSketch;
  * @author npiedeloup
  */
 public final class FileInfoDefinitionModel {
-	private final FileInfoSketch fileInfoDefinition;
+	private final FileInfoSketch fileInfoSketch;
 
-	public FileInfoDefinitionModel(final FileInfoSketch fileInfoDefinition) {
-		Assertion.check().isNotNull(fileInfoDefinition);
+	public FileInfoDefinitionModel(final FileInfoSketch fileInfoSketch) {
+		Assertion.check().isNotNull(fileInfoSketch);
 		//-----
-		this.fileInfoDefinition = fileInfoDefinition;
+		this.fileInfoSketch = fileInfoSketch;
 	}
 
 	/**
 	 * @return Nom de la class en CamelCase
 	 */
 	public String getClassSimpleName() {
-		return fileInfoDefinition.getLocalName();
+		return fileInfoSketch.getLocalName();
 	}
 }

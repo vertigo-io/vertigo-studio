@@ -35,7 +35,7 @@ import io.vertigo.studio.notebook.task.TaskSketch;
  * @author pchretien, mlaroche
  */
 public final class DAOModel {
-	private final DtSketch dtDefinition;
+	private final DtSketch dtSketch;
 	private final String packageName;
 	private final Collection<TaskDefinitionModel> taskDefinitions = new ArrayList<>();
 
@@ -44,14 +44,14 @@ public final class DAOModel {
 	/**
 	 * Constructeur.
 	 *
-	 * @param dtDefinition DtDefinition de l'objet à générer
+	 * @param dtSketch DtDefinition de l'objet à générer
 	 */
-	public DAOModel(final MdaConfig mdaConfig, final DtSketch dtDefinition, final Collection<TaskSketch> taskDefinitionCollection, final Function<String, String> classNameFromDt) {
+	public DAOModel(final MdaConfig mdaConfig, final DtSketch dtSketch, final Collection<TaskSketch> taskDefinitionCollection, final Function<String, String> classNameFromDt) {
 		Assertion.check()
 				.isNotNull(mdaConfig)
-				.isNotNull(dtDefinition)
+				.isNotNull(dtSketch)
 				.isNotNull(taskDefinitionCollection);
-		final String definitionPackageName = dtDefinition.getPackageName();
+		final String definitionPackageName = dtSketch.getPackageName();
 		final String packageNamePrefix = mdaConfig.getProjectPackageName();
 		// ---
 		Assertion.check()
@@ -67,13 +67,13 @@ public final class DAOModel {
 		final String subpackage = definitionPackageName.substring(definitionPackageName.indexOf(".domain") + ".domain".length());
 		// breaking change -> need to redefine what's the desired folder structure in javagen...
 
-		this.dtDefinition = dtDefinition;
+		this.dtSketch = dtSketch;
 		//On construit le nom du package à partir du package de la DT et de la feature.
 		packageName = mdaConfig.getProjectPackageName() + featureName + ".dao" + subpackage;
 
 		boolean hasOption = false;
-		for (final TaskSketch taskDefinition : taskDefinitionCollection) {
-			final TaskDefinitionModel templateTaskDefinition = new TaskDefinitionModel(taskDefinition, classNameFromDt);
+		for (final TaskSketch taskSketch : taskDefinitionCollection) {
+			final TaskDefinitionModel templateTaskDefinition = new TaskDefinitionModel(taskSketch, classNameFromDt);
 			taskDefinitions.add(templateTaskDefinition);
 			hasOption = hasOption || templateTaskDefinition.hasOptions();
 		}
@@ -84,37 +84,37 @@ public final class DAOModel {
 	 * @return Simple Nom (i.e. sans le package) de la classe d'implémentation du DtObject
 	 */
 	public String getClassSimpleName() {
-		return dtDefinition.getClassSimpleName() + "DAO";
+		return dtSketch.getClassSimpleName() + "DAO";
 	}
 
 	/**
 	 * @return Si l'entité est un keyConcept
 	 */
 	public boolean isKeyConcept() {
-		return dtDefinition.getStereotype() == StudioStereotype.KeyConcept;
+		return dtSketch.getStereotype() == StudioStereotype.KeyConcept;
 	}
 
 	/**
 	 * @return Type de la PK
 	 */
 	public String getIdFieldType() {
-		Assertion.check().isTrue(dtDefinition.getIdField().get().getDomain().getScope().isPrimitive(), "An id field should be a primitive");
+		Assertion.check().isTrue(dtSketch.getIdField().get().getDomain().getScope().isPrimitive(), "An id field should be a primitive");
 		//---
-		return dtDefinition.getIdField().get().getDomain().getDataType().getJavaClass().getCanonicalName();
+		return dtSketch.getIdField().get().getDomain().getDataType().getJavaClass().getCanonicalName();
 	}
 
 	/**
 	 * @return Nom de la classe du Dt
 	 */
 	public String getDtClassCanonicalName() {
-		return dtDefinition.getClassCanonicalName();
+		return dtSketch.getClassCanonicalName();
 	}
 
 	/**
 	 * @return Nom simple de la classe du Dt
 	 */
 	public String getDtClassSimpleName() {
-		return dtDefinition.getClassSimpleName();
+		return dtSketch.getClassSimpleName();
 	}
 
 	/**

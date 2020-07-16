@@ -36,14 +36,14 @@ public final class DomainBuilder implements Builder<DomainSketch> {
 	private final DomainSketch.Scope myScope;
 
 	private final BasicType myDataType;
-	private final String myDtDefinitionName;
+	private final String myDtSketchName;
 	private final Class myValueObjectClass;
 
 	/** Formatter. */
-	private FormatterSketch myformatterDefinition;
+	private FormatterSketch myformatterSketch;
 
 	/** list of constraints */
-	private List<ConstraintSketch> myConstraintDefinitions;
+	private List<ConstraintSketch> myConstraintSketchs;
 
 	/** List of property-value tuples */
 	private Properties myProperties;
@@ -62,25 +62,25 @@ public final class DomainBuilder implements Builder<DomainSketch> {
 		myScope = DomainSketch.Scope.PRIMITIVE;
 
 		myDataType = dataType;
-		myDtDefinitionName = null;
+		myDtSketchName = null;
 		myValueObjectClass = null;
 	}
 
 	/**
 	 * Constructor.
 	 * @param name the name of the domain
-	 * @param dtDefinitionName the data-object definition of the domain
+	 * @param dtSketchName the data-object definition of the domain
 	 */
-	DomainBuilder(final String name, final String dtDefinitionName) {
+	DomainBuilder(final String name, final String dtSketchName) {
 		Assertion.check()
 				.isNotBlank(name)
-				.isNotNull(dtDefinitionName);
+				.isNotNull(dtSketchName);
 		//---
 		myName = name;
 		myScope = Scope.DATA_OBJECT;
 
 		myDataType = null;
-		myDtDefinitionName = dtDefinitionName;
+		myDtSketchName = dtSketchName;
 		myValueObjectClass = null;
 	}
 
@@ -98,29 +98,29 @@ public final class DomainBuilder implements Builder<DomainSketch> {
 		myScope = DomainSketch.Scope.VALUE_OBJECT;
 
 		myDataType = null;
-		myDtDefinitionName = null;
+		myDtSketchName = null;
 		myValueObjectClass = valueObjectClass;
 	}
 
 	/**
-	 * @param formatterSketch the FormatterDefinition
+	 * @param formatterSketch the FormatterSketch
 	 * @return this builder
 	 */
 	public DomainBuilder withFormatter(final FormatterSketch formatterSketch) {
 		Assertion.check().isNotNull(formatterSketch);
 		//---
-		myformatterDefinition = formatterSketch;
+		myformatterSketch = formatterSketch;
 		return this;
 	}
 
 	/**
-	 * @param constraintSketchs the list of constraintDefinitions
+	 * @param constraintSketchs the list of constraintSketchs
 	 * @return this builder
 	 */
 	public DomainBuilder withConstraints(final List<ConstraintSketch> constraintSketchs) {
 		Assertion.check().isNotNull(constraintSketchs);
 		//---
-		myConstraintDefinitions = constraintSketchs;
+		myConstraintSketchs = constraintSketchs;
 		return this;
 	}
 
@@ -141,10 +141,10 @@ public final class DomainBuilder implements Builder<DomainSketch> {
 				myName,
 				myScope,
 				myDataType,
-				myDtDefinitionName,
+				myDtSketchName,
 				myValueObjectClass != null ? myValueObjectClass.getCanonicalName() : null,
-				myformatterDefinition,
-				myConstraintDefinitions == null ? Collections.emptyList() : myConstraintDefinitions,
+				myformatterSketch,
+				myConstraintSketchs == null ? Collections.emptyList() : myConstraintSketchs,
 				myProperties == null ? new Properties() : myProperties);
 	}
 }

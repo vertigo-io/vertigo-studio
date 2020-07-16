@@ -81,7 +81,7 @@ public final class DomainSketch extends AbstractSketch {
 	/**
 	 * Name of the DtDefinition (for the DtObject or DtList)
 	 */
-	private final String dtDefinitionName;
+	private final String dtSketchName;
 
 	/** Formatter. */
 	private final FormatterSketch formatterSketch;
@@ -132,7 +132,7 @@ public final class DomainSketch extends AbstractSketch {
 		//--- Primitive
 		this.dataType = dataType;
 		//---data-object
-		this.dtDefinitionName = dtDefinitionName;
+		this.dtSketchName = dtDefinitionName;
 		//---
 		this.valueObjectClassName = valueObjectClassName;
 		//---
@@ -209,10 +209,10 @@ public final class DomainSketch extends AbstractSketch {
 	//for these domains : DtList or DtObject
 	//==========================================================================
 
-	public String getDtDefinitionName() {
+	public String getDtSketchName() {
 		Assertion.check().isTrue(scope.isDataObject(), "can only be used with data-objects");
 		//---
-		return dtDefinitionName;
+		return dtSketchName;
 	}
 
 	public String getSmartTypeName() {

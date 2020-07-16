@@ -66,16 +66,16 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 		final DslEntity dslEntity = dslDefinition.getEntity();
 
 		if (SearchGrammar.INDEX_DEFINITION_ENTITY.equals(dslEntity)) {
-			return createIndexDefinition(notebook, dslDefinition);
+			return createIndexSketch(notebook, dslDefinition);
 		} else if (SearchGrammar.FACET_DEFINITION_ENTITY.equals(dslEntity)) {
-			return createFacetDefinition(notebook, dslDefinition);
+			return createFacetSketch(notebook, dslDefinition);
 		} else if (SearchGrammar.FACETED_QUERY_DEFINITION_ENTITY.equals(dslEntity)) {
-			return createFacetedQueryDefinition(notebook, dslDefinition);
+			return createFacetedQuerySketch(notebook, dslDefinition);
 		}
 		throw new IllegalStateException("The type of definition" + dslDefinition + " is not managed by me");
 	}
 
-	private static SearchIndexSketch createIndexDefinition(final Notebook notebook, final DslDefinition xsearchObjet) {
+	private static SearchIndexSketch createIndexSketch(final Notebook notebook, final DslDefinition xsearchObjet) {
 		final DtSketch keyConceptDtDefinition = notebook.resolve(xsearchObjet.getDefinitionLinkName("keyConcept"), DtSketch.class);
 		final DtSketch indexDtDefinition = notebook.resolve(xsearchObjet.getDefinitionLinkName("dtIndex"), DtSketch.class);
 		final String definitionName = xsearchObjet.getName();
@@ -99,7 +99,7 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 		return copyToFields;
 	}
 
-	private static FacetSketch createFacetDefinition(final Notebook notebook, final DslDefinition xdefinition) {
+	private static FacetSketch createFacetSketch(final Notebook notebook, final DslDefinition xdefinition) {
 		final String definitionName = xdefinition.getName();
 		final DtSketch indexDtDefinition = notebook.resolve(xdefinition.getDefinitionLinkName("dtDefinition"), DtSketch.class);
 		final String dtFieldName = (String) xdefinition.getPropertyValue(SearchGrammar.FIELD_NAME);
@@ -115,7 +115,7 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 			final List<FacetSketchValue> facetValues = rangeDefinitions.stream()
 					.map(SearchDynamicRegistry::createFacetValue)
 					.collect(Collectors.toList());
-			facetDefinition = FacetSketch.createFacetDefinitionByRange(
+			facetDefinition = FacetSketch.createFacetSketchByRange(
 					definitionName,
 					indexDtDefinition,
 					dtField,
@@ -127,7 +127,7 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 			final Map<String, String> facetParams = paramsDefinitions.stream()
 					.map(SearchDynamicRegistry::createFacetParam)
 					.collect(Collectors.toMap(Tuple::getVal1, Tuple::getVal2));
-			facetDefinition = FacetSketch.createCustomFacetDefinition(
+			facetDefinition = FacetSketch.createCustomFacetSketch(
 					definitionName,
 					indexDtDefinition,
 					dtField,
@@ -136,7 +136,7 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 					isMultiSelectable(xdefinition, false),
 					getFacetOrder(xdefinition, FacetOrder.definition));
 		} else {
-			facetDefinition = FacetSketch.createFacetDefinitionByTerm(
+			facetDefinition = FacetSketch.createFacetSketchByTerm(
 					definitionName,
 					indexDtDefinition,
 					dtField,
@@ -174,7 +174,7 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 		return Tuple.of(name, value);
 	}
 
-	private static FacetedQuerySketch createFacetedQueryDefinition(final Notebook notebook, final DslDefinition xdefinition) {
+	private static FacetedQuerySketch createFacetedQuerySketch(final Notebook notebook, final DslDefinition xdefinition) {
 		final String definitionName = xdefinition.getName();
 		final DtSketch keyConceptDtDefinition = notebook.resolve(xdefinition.getDefinitionLinkName("keyConcept"), DtSketch.class);
 		final List<String> dynamicFacetDefinitionNames = xdefinition.getDefinitionLinkNames("facets");

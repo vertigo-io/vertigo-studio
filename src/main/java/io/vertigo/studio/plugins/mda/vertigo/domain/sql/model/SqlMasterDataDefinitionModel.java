@@ -35,14 +35,14 @@ public final class SqlMasterDataDefinitionModel {
 	private final SqlStudioDtDefinitionModel sqlDtDefinitionModel;
 	private final List<SqlMasterDataValueModel> sqlMasterDataValueModels;
 
-	public SqlMasterDataDefinitionModel(final DtSketch dtDefinition, final Map<String, MasterDataValue> masterDataValuesByDtDefinition) {
-		Assertion.check().isNotNull(dtDefinition);
+	public SqlMasterDataDefinitionModel(final DtSketch dtSketch, final Map<String, MasterDataValue> masterDataValuesByDtSketch) {
+		Assertion.check().isNotNull(dtSketch);
 		//-----
-		sqlDtDefinitionModel = new SqlStudioDtDefinitionModel(dtDefinition);
-		sqlMasterDataValueModels = masterDataValuesByDtDefinition
+		sqlDtDefinitionModel = new SqlStudioDtDefinitionModel(dtSketch);
+		sqlMasterDataValueModels = masterDataValuesByDtSketch
 				.entrySet()
 				.stream()
-				.map(entry -> new SqlMasterDataValueModel(dtDefinition, entry.getValue()))
+				.map(entry -> new SqlMasterDataValueModel(dtSketch, entry.getValue()))
 				.collect(Collectors.toList());
 	}
 

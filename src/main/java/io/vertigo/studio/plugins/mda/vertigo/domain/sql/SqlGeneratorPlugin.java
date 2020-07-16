@@ -87,8 +87,8 @@ public final class SqlGeneratorPlugin implements MdaGeneratorPlugin {
 
 		final List<SqlMasterDataDefinitionModel> sqlMasterDataDefinitionModels = notebook.getAll(DtSketch.class)
 				.stream()
-				.filter(dtDefinition -> dtDefinition.getStereotype() == StudioStereotype.StaticMasterData)
-				.map(dtDefinition -> new SqlMasterDataDefinitionModel(dtDefinition, staticMasterDataValues.getOrDefault(dtDefinition.getClassCanonicalName(), Collections.emptyMap())))
+				.filter(dtSketch -> dtSketch.getStereotype() == StudioStereotype.StaticMasterData)
+				.map(dtSketch -> new SqlMasterDataDefinitionModel(dtSketch, staticMasterDataValues.getOrDefault(dtSketch.getClassCanonicalName(), Collections.emptyMap())))
 				.collect(Collectors.toList());
 
 		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.domain.sql.targetSubDir", DEFAULT_TARGET_SUBDIR);
@@ -116,11 +116,11 @@ public final class SqlGeneratorPlugin implements MdaGeneratorPlugin {
 			final MdaResultBuilder mdaResultBuilder) {
 
 		final Map<String, List<SqlStudioDtDefinitionModel>> mapListDtDef = new HashMap<>();
-		for (final DtSketch dtDefinition : DomainUtil.sortDefinitionCollection(DomainUtil.getDtDefinitions(notebook))) {
-			if (dtDefinition.isPersistent()) {
-				final SqlStudioDtDefinitionModel templateDef = new SqlStudioDtDefinitionModel(dtDefinition);
-				final String dataSpace = dtDefinition.getDataSpace();
-				final List<SqlStudioDtDefinitionModel> listDtDef = obtainListDtDefinitionPerDataSpace(mapListDtDef, dataSpace);
+		for (final DtSketch dtSketch : DomainUtil.sortSketchCollection(DomainUtil.getDtSketchs(notebook))) {
+			if (dtSketch.isPersistent()) {
+				final SqlStudioDtDefinitionModel templateDef = new SqlStudioDtDefinitionModel(dtSketch);
+				final String dataSpace = dtSketch.getDataSpace();
+				final List<SqlStudioDtDefinitionModel> listDtDef = obtainListDtSketchPerDataSpace(mapListDtDef, dataSpace);
 				listDtDef.add(templateDef);
 			}
 		}
@@ -165,7 +165,7 @@ public final class SqlGeneratorPlugin implements MdaGeneratorPlugin {
 				filename.toString());
 	}
 
-	private static List<SqlStudioDtDefinitionModel> obtainListDtDefinitionPerDataSpace(final Map<String, List<SqlStudioDtDefinitionModel>> mapListDtDef, final String dataSpace) {
+	private static List<SqlStudioDtDefinitionModel> obtainListDtSketchPerDataSpace(final Map<String, List<SqlStudioDtDefinitionModel>> mapListDtDef, final String dataSpace) {
 		return mapListDtDef.computeIfAbsent(dataSpace, k -> new ArrayList<>());
 	}
 
@@ -173,8 +173,8 @@ public final class SqlGeneratorPlugin implements MdaGeneratorPlugin {
 			final Collection<AssociationSimpleSketch> collectionSimpleAll,
 			final String dataSpace) {
 		return collectionSimpleAll.stream()
-				.filter(a -> dataSpace.equals(a.getAssociationNodeA().getDtDefinition().getDataSpace()))
-				.filter(a -> a.getAssociationNodeA().getDtDefinition().isPersistent() && a.getAssociationNodeB().getDtDefinition().isPersistent())
+				.filter(a -> dataSpace.equals(a.getAssociationNodeA().getDtSketch().getDataSpace()))
+				.filter(a -> a.getAssociationNodeA().getDtSketch().isPersistent() && a.getAssociationNodeB().getDtSketch().isPersistent())
 				.map(a -> new SqlStudioAssociationSimpleModel(a))
 				.collect(Collectors.toList());
 	}
@@ -183,8 +183,8 @@ public final class SqlGeneratorPlugin implements MdaGeneratorPlugin {
 			final Collection<AssociationNNSketch> collectionNNAll,
 			final String dataSpace) {
 		return collectionNNAll.stream()
-				.filter(a -> dataSpace.equals(a.getAssociationNodeA().getDtDefinition().getDataSpace()))
-				.filter(a -> a.getAssociationNodeA().getDtDefinition().isPersistent() && a.getAssociationNodeB().getDtDefinition().isPersistent())
+				.filter(a -> dataSpace.equals(a.getAssociationNodeA().getDtSketch().getDataSpace()))
+				.filter(a -> a.getAssociationNodeA().getDtSketch().isPersistent() && a.getAssociationNodeB().getDtSketch().isPersistent())
 				.map(a -> new SqlStudioAssociationNNModel(a))
 				.collect(Collectors.toList());
 	}

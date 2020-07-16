@@ -26,7 +26,7 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.search.FacetedQuerySketch;
 import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants.VertigoDefinitionPrefix;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
-import io.vertigo.studio.tools.DefinitionUtil;
+import io.vertigo.studio.tools.SketchUtil;
 
 /**
  * Génération des classes/méthodes des taches de type DAO.
@@ -34,19 +34,19 @@ import io.vertigo.studio.tools.DefinitionUtil;
  * @author pchretien, mlaroche
  */
 public final class FacetedQueryDefinitionModel {
-	private final FacetedQuerySketch facetedQueryDefinition;
+	private final FacetedQuerySketch facetedQuerySketch;
 
 	private final String simpleName;
 	private final String criteriaClassCanonicalName;
 	private final List<FacetDefinitionModel> facetDefinitionModels;
 
-	public FacetedQueryDefinitionModel(final FacetedQuerySketch facetedQueryDefinition, final Function<String, String> classNameFromDt) {
-		Assertion.check().isNotNull(facetedQueryDefinition);
+	public FacetedQueryDefinitionModel(final FacetedQuerySketch facetedQuerySketch, final Function<String, String> classNameFromDt) {
+		Assertion.check().isNotNull(facetedQuerySketch);
 		//-----
-		this.facetedQueryDefinition = facetedQueryDefinition;
-		simpleName = DefinitionUtil.getLocalName(facetedQueryDefinition.getName(), FacetedQuerySketch.PREFIX);
-		criteriaClassCanonicalName = DomainUtil.buildJavaTypeName(facetedQueryDefinition.getCriteriaDomain(), classNameFromDt);
-		facetDefinitionModels = facetedQueryDefinition.getFacetDefinitions().stream().map(FacetDefinitionModel::new).collect(Collectors.toList());
+		this.facetedQuerySketch = facetedQuerySketch;
+		simpleName = SketchUtil.getLocalName(facetedQuerySketch.getName(), FacetedQuerySketch.PREFIX);
+		criteriaClassCanonicalName = DomainUtil.buildJavaTypeName(facetedQuerySketch.getCriteriaDomain(), classNameFromDt);
+		facetDefinitionModels = facetedQuerySketch.getFacetSketchs().stream().map(FacetDefinitionModel::new).collect(Collectors.toList());
 	}
 
 	/**
@@ -60,7 +60,7 @@ public final class FacetedQueryDefinitionModel {
 	 * @return Urn de la facetedQueryDefinition
 	 */
 	public String getUrn() {
-		return facetedQueryDefinition.getName();
+		return facetedQuerySketch.getName();
 	}
 
 	public String getQueryName() {
@@ -68,27 +68,27 @@ public final class FacetedQueryDefinitionModel {
 	}
 
 	public String getCriteriaSmartType() {
-		return facetedQueryDefinition.getCriteriaDomain().getSmartTypeName();
+		return facetedQuerySketch.getCriteriaDomain().getSmartTypeName();
 	}
 
 	public String getListFilterBuilderQuery() {
-		return facetedQueryDefinition.getListFilterBuilderQuery();
+		return facetedQuerySketch.getListFilterBuilderQuery();
 	}
 
 	public boolean hasGeoSearch() {
-		return facetedQueryDefinition.hasGeoSearch();
+		return facetedQuerySketch.hasGeoSearch();
 	}
 
 	public String getGeoSearchQuery() {
-		return facetedQueryDefinition.getGeoSearchQuery();
+		return facetedQuerySketch.getGeoSearchQuery();
 	}
 
 	public String getKeyConceptDtDefinition() {
-		return VertigoDefinitionPrefix.DtDefinition.getPrefix() + facetedQueryDefinition.getKeyConceptDtDefinition().getLocalName();
+		return VertigoDefinitionPrefix.DtDefinition.getPrefix() + facetedQuerySketch.getKeyConceptDtSketch().getLocalName();
 	}
 
 	public String getListFilterClassName() {
-		return facetedQueryDefinition.getListFilterBuilderClassName();
+		return facetedQuerySketch.getListFilterBuilderClassName();
 	}
 
 	/**

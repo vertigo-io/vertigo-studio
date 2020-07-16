@@ -27,17 +27,17 @@ import io.vertigo.studio.notebook.domain.DtSketch;
  * @author pchretien, mlaroche
  */
 public final class SearchDtDefinitionModel {
-	private final DtSketch dtDefinition;
+	private final DtSketch dtSketch;
 
 	/**
 	 * Constructeur.
 	 *
-	 * @param dtDefinition DtDefinition de l'objet à générer
+	 * @param dtSketch DtDefinition de l'objet à générer
 	 */
-	public SearchDtDefinitionModel(final DtSketch dtDefinition) {
-		Assertion.check().isNotNull(dtDefinition);
+	public SearchDtDefinitionModel(final DtSketch dtSketch) {
+		Assertion.check().isNotNull(dtSketch);
 		//-----
-		this.dtDefinition = dtDefinition;
+		this.dtSketch = dtSketch;
 
 	}
 
@@ -45,14 +45,14 @@ public final class SearchDtDefinitionModel {
 	 * @return Nom canonique (i.e. avec le package) de la classe d'implémentation du DtObject
 	 */
 	public String getClassCanonicalName() {
-		return dtDefinition.getClassCanonicalName();
+		return dtSketch.getClassCanonicalName();
 	}
 
 	/**
 	 * @return Simple Nom (i.e. sans le package) de la classe d'implémentation du DtObject
 	 */
 	public String getClassSimpleName() {
-		return dtDefinition.getClassSimpleName();
+		return dtSketch.getClassSimpleName();
 	}
 
 	/**
@@ -60,14 +60,14 @@ public final class SearchDtDefinitionModel {
 	 * @return Simple Nom (i.e. sans le package) de la definition du DtObject
 	 */
 	public String getLocalName() {
-		return dtDefinition.getLocalName();
+		return dtSketch.getLocalName();
 	}
 
 	/**
 	 * @return Nom du package
 	 */
 	public String getPackageName() {
-		return dtDefinition.getPackageName();
+		return dtSketch.getPackageName();
 	}
 
 }

@@ -117,7 +117,7 @@ public final class DomainUtil {
 				className = javaType;
 				break;
 			case DATA_OBJECT:
-				className = classNameFromDt.apply(domainSketch.getDtDefinitionName());
+				className = classNameFromDt.apply(domainSketch.getDtSketchName());
 				break;
 			case VALUE_OBJECT:
 				className = domainSketch.getValueObjectClassName();
@@ -143,7 +143,7 @@ public final class DomainUtil {
 				classLabel = domainSketch.getDataType().getJavaClass().getSimpleName();
 				break;
 			case DATA_OBJECT:
-				classLabel = getSimpleNameFromCanonicalName(classNameFromDt.apply(domainSketch.getDtDefinitionName()));
+				classLabel = getSimpleNameFromCanonicalName(classNameFromDt.apply(domainSketch.getDtSketchName()));
 				break;
 			case VALUE_OBJECT:
 				classLabel = getSimpleNameFromCanonicalName(domainSketch.getValueObjectClassName());
@@ -157,12 +157,12 @@ public final class DomainUtil {
 		return classLabel;
 	}
 
-	public static Collection<DtSketch> getDtDefinitions(final Notebook notebook) {
-		return sortDefinitionCollection(notebook.getAll(DtSketch.class));
+	public static Collection<DtSketch> getDtSketchs(final Notebook notebook) {
+		return sortSketchCollection(notebook.getAll(DtSketch.class));
 	}
 
-	public static Map<String, Collection<DtSketch>> getDtDefinitionCollectionMap(final Notebook notebook) {
-		return getDefinitionCollectionMap(getDtDefinitions(notebook));
+	public static Map<String, Collection<DtSketch>> getDtSketchCollectionMap(final Notebook notebook) {
+		return getSketchCollectionMap(getDtSketchs(notebook));
 	}
 
 	public static Collection<AssociationSimpleSketch> getSimpleAssociations(final Notebook notebook) {
@@ -175,11 +175,11 @@ public final class DomainUtil {
 
 	/**
 	 * trie de la collection.
-	 * @param definitionCollection collection à trier
+	 * @param sketchCollection collection à trier
 	 * @return collection triée
 	 */
-	public static List<DtSketch> sortDefinitionCollection(final Collection<DtSketch> definitionCollection) {
-		final List<DtSketch> list = new ArrayList<>(definitionCollection);
+	public static List<DtSketch> sortSketchCollection(final Collection<DtSketch> sketchCollection) {
+		final List<DtSketch> list = new ArrayList<>(sketchCollection);
 		list.sort(Comparator.comparing(DtSketch::getName));
 		return list;
 	}
@@ -188,13 +188,13 @@ public final class DomainUtil {
 	 * @param definitionCollection collection à traiter
 	 * @return map ayant le package name en clef
 	 */
-	private static Map<String, Collection<DtSketch>> getDefinitionCollectionMap(final Collection<DtSketch> definitions) {
+	private static Map<String, Collection<DtSketch>> getSketchCollectionMap(final Collection<DtSketch> dtSketchs) {
 		final Map<String, Collection<DtSketch>> map = new LinkedHashMap<>();
 
-		for (final DtSketch definition : definitions) {
-			map.computeIfAbsent(definition.getPackageName(),
+		for (final DtSketch dtSketch : dtSketchs) {
+			map.computeIfAbsent(dtSketch.getPackageName(),
 					k -> new ArrayList<>())
-					.add(definition);
+					.add(dtSketch);
 		}
 		return map;
 	}

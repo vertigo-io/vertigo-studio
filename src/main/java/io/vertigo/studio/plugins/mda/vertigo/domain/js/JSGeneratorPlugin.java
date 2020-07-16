@@ -67,7 +67,7 @@ public final class JSGeneratorPlugin implements MdaGeneratorPlugin {
 	}
 
 	private static List<JSDtDefinitionModel> getJsDtDefinitionModels(final Notebook notebook) {
-		return DomainUtil.getDtDefinitions(notebook).stream()
+		return DomainUtil.getDtSketchs(notebook).stream()
 				.map(JSDtDefinitionModel::new)
 				.collect(Collectors.toList());
 	}

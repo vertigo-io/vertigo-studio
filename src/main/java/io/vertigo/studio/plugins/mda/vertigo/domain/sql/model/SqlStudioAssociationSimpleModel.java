@@ -28,50 +28,50 @@ import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
  * @author pchretien, mlaroche
  */
 public final class SqlStudioAssociationSimpleModel {
-	private final AssociationSimpleSketch associationDefinition;
+	private final AssociationSimpleSketch associationSketch;
 
 	/**
 	 * Constructeur.
 	 * @param associationNode Noeud de l'association à générer
 	 */
-	public SqlStudioAssociationSimpleModel(final AssociationSimpleSketch associationDefinition) {
-		Assertion.check().isNotNull(associationDefinition);
+	public SqlStudioAssociationSimpleModel(final AssociationSimpleSketch associationSketch) {
+		Assertion.check().isNotNull(associationSketch);
 		//-----
-		this.associationDefinition = associationDefinition;
+		this.associationSketch = associationSketch;
 	}
 
 	/**
 	 * @return Association name in CONST_CASE
 	 */
 	public String getName() {
-		return StringUtil.camelToConstCase(associationDefinition.getName());
+		return StringUtil.camelToConstCase(associationSketch.getName());
 	}
 
 	/**
 	 * @return Association foreign table
 	 */
 	public String getForeignTable() {
-		return StringUtil.camelToConstCase(associationDefinition.getForeignAssociationNode().getDtDefinition().getLocalName());
+		return StringUtil.camelToConstCase(associationSketch.getForeignAssociationNode().getDtSketch().getLocalName());
 	}
 
 	/**
 	 * @return Association primary table
 	 */
 	public String getPrimaryTable() {
-		return StringUtil.camelToConstCase(associationDefinition.getPrimaryAssociationNode().getDtDefinition().getLocalName());
+		return StringUtil.camelToConstCase(associationSketch.getPrimaryAssociationNode().getDtSketch().getLocalName());
 	}
 
 	/**
 	 * @return Association FK
 	 */
 	public String getForeignColumn() {
-		return StringUtil.camelToConstCase(associationDefinition.getFKField().getName());
+		return StringUtil.camelToConstCase(associationSketch.getFKField().getName());
 	}
 
 	/**
 	 * @return Association PK
 	 */
 	public String getPrimaryIdColumn() {
-		return StringUtil.camelToConstCase(associationDefinition.getPrimaryAssociationNode().getDtDefinition().getIdField().get().getName());
+		return StringUtil.camelToConstCase(associationSketch.getPrimaryAssociationNode().getDtSketch().getIdField().get().getName());
 	}
 }

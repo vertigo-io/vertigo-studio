@@ -95,7 +95,7 @@ public final class DomainGeneratorPlugin implements MdaGeneratorPlugin {
 		final Map<String, Object> model = new MapBuilder<String, Object>()
 				.put("packageName", mdaConfig.getProjectPackageName() + ".domain")
 				.put("classSimpleName", dictionaryClassName)
-				.put("dtDefinitions", toModels(notebook, DomainUtil.getDtDefinitions(notebook)))
+				.put("dtDefinitions", toModels(notebook, DomainUtil.getDtSketchs(notebook)))
 				.build();
 
 		MdaFileGenerator.builder(mdaConfig)
@@ -114,7 +114,7 @@ public final class DomainGeneratorPlugin implements MdaGeneratorPlugin {
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
-		for (final DtSketch dtDefinition : DomainUtil.getDtDefinitions(notebook)) {
+		for (final DtSketch dtDefinition : DomainUtil.getDtSketchs(notebook)) {
 			generateDtObject(notebook, targetSubDir, mdaConfig, mdaResultBuilder, dtDefinition, getAssociationsByDtDefinition(notebook, dtDefinition));
 		}
 	}
@@ -151,8 +151,8 @@ public final class DomainGeneratorPlugin implements MdaGeneratorPlugin {
 
 	private static List<AssociationSketch> getAssociationsByDtDefinition(final Notebook notebook, final DtSketch dtSketch) {
 		return Stream.concat(notebook.getAll(AssociationSimpleSketch.class).stream(), notebook.getAll(AssociationNNSketch.class).stream())
-				.filter(association -> association.getAssociationNodeA().getDtDefinition().getName().equals(dtSketch.getName())
-						|| association.getAssociationNodeB().getDtDefinition().getName().equals(dtSketch.getName())) // concerns current dt
+				.filter(association -> association.getAssociationNodeA().getDtSketch().getName().equals(dtSketch.getName())
+						|| association.getAssociationNodeB().getDtSketch().getName().equals(dtSketch.getName())) // concerns current dt
 				.collect(Collectors.toList());
 	}
 
@@ -168,7 +168,7 @@ public final class DomainGeneratorPlugin implements MdaGeneratorPlugin {
 		/**
 		 * Génération des ressources afférentes au DT.
 		 */
-		for (final Entry<String, Collection<DtSketch>> entry : DomainUtil.getDtDefinitionCollectionMap(notebook).entrySet()) {
+		for (final Entry<String, Collection<DtSketch>> entry : DomainUtil.getDtSketchCollectionMap(notebook).entrySet()) {
 			final Collection<DtSketch> dtDefinitions = entry.getValue();
 			Assertion.check().isNotNull(dtDefinitions);
 			final String packageName = entry.getKey();

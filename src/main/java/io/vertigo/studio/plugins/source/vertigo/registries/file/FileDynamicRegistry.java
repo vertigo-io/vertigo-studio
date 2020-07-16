@@ -42,12 +42,12 @@ public final class FileDynamicRegistry implements DynamicRegistry {
 		final DslEntity dslEntity = dslDefinition.getEntity();
 		if (FileGrammar.FILE_INFO_DEFINITION_ENTITY.equals(dslEntity)) {
 			//Seuls les taches sont gérées.
-			return notebook -> createFileDefinition(dslDefinition);
+			return notebook -> createFileSketch(dslDefinition);
 		}
 		throw new IllegalStateException("The type of definition" + dslDefinition + " is not managed by me");
 	}
 
-	private static FileInfoSketch createFileDefinition(final DslDefinition xFileDefinition) {
+	private static FileInfoSketch createFileSketch(final DslDefinition xFileDefinition) {
 		final String fileDefinitionName = xFileDefinition.getName();
 		final String storeName = (String) xFileDefinition.getPropertyValue(KspProperty.DATA_SPACE);
 

@@ -23,7 +23,7 @@ import io.vertigo.core.lang.BasicType;
 import io.vertigo.studio.notebook.domain.DomainSketch;
 import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
-import io.vertigo.studio.tools.DefinitionUtil;
+import io.vertigo.studio.tools.SketchUtil;
 
 /**
  * Model used to define a Domain.
@@ -61,7 +61,7 @@ public final class TSDomainModel {
 	 * @return Local name of the domain
 	 */
 	public String getDomainDefinitionName() {
-		return DefinitionUtil.getLocalName(domainSketch.getDtDefinitionName(), DtSketch.PREFIX);
+		return SketchUtil.getLocalName(domainSketch.getDtSketchName(), DtSketch.PREFIX);
 	}
 
 	/**
@@ -95,6 +95,6 @@ public final class TSDomainModel {
 		} else if (domainSketch.getScope().isValueObject()) {
 			return DomainUtil.getSimpleNameFromCanonicalName(domainSketch.getValueObjectClassName());
 		}
-		return DefinitionUtil.getLocalName(domainSketch.getDtDefinitionName(), DtSketch.PREFIX) + ((multiple) ? "[]" : "");
+		return SketchUtil.getLocalName(domainSketch.getDtSketchName(), DtSketch.PREFIX) + ((multiple) ? "[]" : "");
 	}
 }

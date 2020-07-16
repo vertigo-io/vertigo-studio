@@ -86,7 +86,7 @@ public final class DtSketchField {
 	private final boolean persistent;
 
 	/** Cas des FK ; référence à une FK. */
-	private final String fkDtDefinitionName;
+	private final String fkDtSketchName;
 
 	/** ComputedExpression des champs Computed. */
 	private final ComputedExpression computedExpression;
@@ -103,7 +103,7 @@ public final class DtSketchField {
 	 * @param label the label of the field
 	 * @param required if the field is required
 	 * @param persistent if the field is persistent
-	 * @param fkDtDefinitionName Nom de la DtDefinition de la FK (noNull si type=FK)
+	 * @param fkDtSketchName Nom de la DtSketch de la FK (noNull si type=FK)
 	 * @param computedExpression Expression du computed (noNull si type=Computed)
 	 * @param dynamic if the field is dynamic
 	 */
@@ -115,7 +115,7 @@ public final class DtSketchField {
 			final MessageText label,
 			final Cardinality cardinality,
 			final boolean persistent,
-			final String fkDtDefinitionName,
+			final String fkDtSketchName,
 			final ComputedExpression computedExpression) {
 		Assertion.check()
 				.isNotBlank(id)
@@ -142,11 +142,11 @@ public final class DtSketchField {
 		this.persistent = persistent;
 		//-----
 		if (getType() == FieldType.FOREIGN_KEY) {
-			Assertion.check().isNotNull(fkDtDefinitionName, "Le champ {0} de type clé étrangère doit référencer une définition ", fieldName);
+			Assertion.check().isNotNull(fkDtSketchName, "Le champ {0} de type clé étrangère doit référencer une définition ", fieldName);
 		} else {
-			Assertion.check().isNull(fkDtDefinitionName, "Le champ {0} n''est pas une clé étrangère", fieldName);
+			Assertion.check().isNull(fkDtSketchName, "Le champ {0} n''est pas une clé étrangère", fieldName);
 		}
-		this.fkDtDefinitionName = fkDtDefinitionName;
+		this.fkDtSketchName = fkDtSketchName;
 		//-----
 		if (getType() == FieldType.COMPUTED) {
 			Assertion.check().isNotNull(computedExpression, "the field {0}, declared as computed, must have an expression", fieldName);
@@ -207,13 +207,13 @@ public final class DtSketchField {
 	}
 
 	/**
-	 *  @return DtDefinition de la ForeignKey (caractère obligatoire lié au type)
+	 *  @return DtSketch de la ForeignKey (caractère obligatoire lié au type)
 	 */
 	//Todo changer le nom
-	public String getFkDtDefinitionName() {
-		Assertion.check().isNotNull(fkDtDefinitionName);
+	public String getFkDtSketchName() {
+		Assertion.check().isNotNull(fkDtSketchName);
 		//-----
-		return fkDtDefinitionName;
+		return fkDtSketchName;
 	}
 
 	/**

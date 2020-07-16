@@ -20,6 +20,7 @@ package io.vertigo.studio.notebook;
 
 import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -36,8 +37,8 @@ public final class Notebook {
 	private final Map<String, Sketch> sketchs = new LinkedHashMap<>();
 
 	/**
-	 * Register a new Definition.
-	 * The definition must not be already registered.
+	 * Register a new Sketch.
+	 * The sketch must not be already registered.
 	 * @param sketch the definition
 	 */
 	public void registerModel(final Sketch sketch) {
@@ -75,7 +76,7 @@ public final class Notebook {
 	}
 
 	/** {@inheritDoc} */
-	public <C extends Sketch> Set<C> getAll(final Class<C> clazz) {
+	public <C extends Sketch> List<C> getAll(final Class<C> clazz) {
 		Assertion.check().isNotNull(clazz); // Le type des objets recherchés ne peut pas être null
 		//-----
 		return sketchs.values()
@@ -83,7 +84,7 @@ public final class Notebook {
 				.filter(model -> clazz.isAssignableFrom(model.getClass()))
 				.map(clazz::cast)
 				.sorted(Comparator.comparing(Sketch::getName))
-				.collect(Collectors.toSet());
+				.collect(Collectors.toList());
 	}
 
 	/**

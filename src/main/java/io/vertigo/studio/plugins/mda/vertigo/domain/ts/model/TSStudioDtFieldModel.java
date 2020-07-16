@@ -24,7 +24,7 @@ import io.vertigo.studio.notebook.domain.DomainSketch;
 import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.notebook.domain.DtSketchField;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
-import io.vertigo.studio.tools.DefinitionUtil;
+import io.vertigo.studio.tools.SketchUtil;
 
 /**
  * Model used to define a DtField.
@@ -130,7 +130,7 @@ public final class TSStudioDtFieldModel {
 		} else if (domainSketch.getScope().isValueObject()) {
 			typescriptType = DomainUtil.getSimpleNameFromCanonicalName(domainSketch.getValueObjectClassName());
 		} else {
-			typescriptType = DefinitionUtil.getLocalName(domainSketch.getDtDefinitionName(), DtSketch.PREFIX);
+			typescriptType = SketchUtil.getLocalName(domainSketch.getDtSketchName(), DtSketch.PREFIX);
 		}
 		return typescriptType + (withArray ? "[]" : "");
 	}

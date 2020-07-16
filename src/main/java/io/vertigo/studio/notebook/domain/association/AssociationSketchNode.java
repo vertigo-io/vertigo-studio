@@ -27,7 +27,7 @@ import io.vertigo.studio.notebook.domain.DtSketch;
  * @author  jcassignol, pchretien
  */
 public final class AssociationSketchNode {
-	private final DtSketch dtDefinition;
+	private final DtSketch dtSketch;
 	private final boolean navigable;
 	private final String role;
 	private final String label;
@@ -36,7 +36,7 @@ public final class AssociationSketchNode {
 
 	/**
 	 * Constructeur d'un noeud.
-	 * @param dtDefinition Définition de DT
+	 * @param dtSketch Définition de DT
 	 * @param isNavigable Si le noeud est navigable (i.e. visible)
 	 * @param role Role
 	 * @param label Label
@@ -44,19 +44,19 @@ public final class AssociationSketchNode {
 	 * @param isNotNull Si la cardinalité min est non null (au moins)
 	 */
 	public AssociationSketchNode(
-			final DtSketch dtDefinition,
+			final DtSketch dtSketch,
 			final boolean isNavigable,
 			final String role,
 			final String label,
 			final boolean isMultiple,
 			final boolean isNotNull) {
 		Assertion.check()
-				.isNotNull(dtDefinition)
+				.isNotNull(dtSketch)
 				.isNotNull(label)
 				.isNotNull(role)
 				.isTrue(role.indexOf(' ') == -1, "Le role ne doit pas être un label : {0}", role);
 		//-----
-		this.dtDefinition = dtDefinition;
+		this.dtSketch = dtSketch;
 		this.role = role;
 		this.label = label;
 		navigable = isNavigable;
@@ -67,8 +67,8 @@ public final class AssociationSketchNode {
 	/**
 	 * @return DT (classe de l'objet métier) associé au noeud
 	 */
-	public DtSketch getDtDefinition() {
-		return dtDefinition;
+	public DtSketch getDtSketch() {
+		return dtSketch;
 	}
 
 	/**

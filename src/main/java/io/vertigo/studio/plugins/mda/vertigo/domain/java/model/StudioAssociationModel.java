@@ -92,21 +92,21 @@ public final class StudioAssociationModel {
 	 * @return Type à retourner
 	 */
 	public String getReturnType() {
-		return associationSketchNode.getDtDefinition().getClassCanonicalName();
+		return associationSketchNode.getDtSketch().getClassCanonicalName();
 	}
 
 	/**
 	 * @return Type à retourner
 	 */
 	public String getReturnTypeSimpleName() {
-		return associationSketchNode.getDtDefinition().getClassSimpleName();
+		return associationSketchNode.getDtSketch().getClassSimpleName();
 	}
 
 	/**
 	 * @return Type à retourner
 	 */
 	public boolean isTargetStaticMasterData() {
-		return associationSketchNode.getDtDefinition().getStereotype() == StudioStereotype.StaticMasterData;
+		return associationSketchNode.getDtSketch().getStereotype() == StudioStereotype.StaticMasterData;
 	}
 
 	/**

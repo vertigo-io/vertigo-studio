@@ -80,7 +80,7 @@ public final class TSGeneratorPlugin implements MdaGeneratorPlugin {
 	}
 
 	private static List<TSStudioDtDefinitionModel> getTsDtDefinitionModels(final Notebook notebook) {
-		return DomainUtil.getDtDefinitions(notebook).stream()
+		return DomainUtil.getDtSketchs(notebook).stream()
 				.map(TSStudioDtDefinitionModel::new)
 				.collect(Collectors.toList());
 	}
@@ -102,8 +102,8 @@ public final class TSGeneratorPlugin implements MdaGeneratorPlugin {
 
 		final List<TSMasterDataDefinitionModel> tsMasterDataDefinitionModels = notebook.getAll(DtSketch.class)
 				.stream()
-				.filter(dtDefinition -> dtDefinition.getStereotype() == StudioStereotype.StaticMasterData)
-				.map(dtDefinition -> new TSMasterDataDefinitionModel(dtDefinition, staticMasterDataValues.getOrDefault(dtDefinition.getClassCanonicalName(), Collections.emptyMap())))
+				.filter(dtSketch -> dtSketch.getStereotype() == StudioStereotype.StaticMasterData)
+				.map(dtSketch -> new TSMasterDataDefinitionModel(dtSketch, staticMasterDataValues.getOrDefault(dtSketch.getClassCanonicalName(), Collections.emptyMap())))
 				.collect(Collectors.toList());
 
 		final Map<String, Object> model = new MapBuilder<String, Object>()

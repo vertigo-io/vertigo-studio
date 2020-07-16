@@ -48,7 +48,7 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 
 		if (TaskGrammar.TASK_DEFINITION_ENTITY.equals(dslEntity)) {
 			//Only taskDefinitions are concerned
-			return notebook -> createTaskDefinition(notebook, dslDefinition);
+			return notebook -> createTaskSketch(notebook, dslDefinition);
 		}
 		throw new IllegalStateException("The type of definition" + dslDefinition + " is not managed by me");
 	}
@@ -57,13 +57,13 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 		return (String) xtaskDefinition.getPropertyValue(KspProperty.CLASS_NAME);
 	}
 
-	private static TaskSketch createTaskDefinition(final Notebook notebook, final DslDefinition xtaskDefinition) {
+	private static TaskSketch createTaskSketch(final Notebook notebook, final DslDefinition xtaskDefinition) {
 		final String taskDefinitionName = xtaskDefinition.getName();
 		final String request = (String) xtaskDefinition.getPropertyValue(KspProperty.REQUEST);
 		Assertion.check().isNotNull(taskDefinitionName);
 		final String taskEngineClassName = getTaskEngineClassName(xtaskDefinition);
 		final String dataSpace = (String) xtaskDefinition.getPropertyValue(KspProperty.DATA_SPACE);
-		final TaskSketchBuilder taskDefinitionBuilder = TaskSketch.builder(taskDefinitionName)
+		final TaskSketchBuilder taskSketchBuilder = TaskSketch.builder(taskDefinitionName)
 				.withEngine(taskEngineClassName)
 				.withDataSpace(dataSpace)
 				.withRequest(request)
@@ -76,12 +76,12 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 			//-----
 			final Cardinality cardinality = Cardinality.fromSymbol((String) xtaskAttribute.getPropertyValue(KspProperty.CARDINALITY));
 			if (isInValue((String) xtaskAttribute.getPropertyValue(KspProperty.IN_OUT))) {
-				taskDefinitionBuilder.addInAttribute(attributeName, domainSketch, cardinality);
+				taskSketchBuilder.addInAttribute(attributeName, domainSketch, cardinality);
 			} else {
-				taskDefinitionBuilder.withOutAttribute(attributeName, domainSketch, cardinality);
+				taskSketchBuilder.withOutAttribute(attributeName, domainSketch, cardinality);
 			}
 		}
-		return taskDefinitionBuilder.build();
+		return taskSketchBuilder.build();
 	}
 
 	private static boolean isInValue(final String sText) {

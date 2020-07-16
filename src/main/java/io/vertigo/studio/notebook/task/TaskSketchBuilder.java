@@ -28,14 +28,14 @@ import io.vertigo.core.lang.Cardinality;
 import io.vertigo.studio.notebook.domain.DomainSketch;
 
 /**
- * Builder of taskDefinition.
+ * Builder of taskSketch.
  *
  * @author  fconstantin, pchretien
  */
 public final class TaskSketchBuilder implements Builder<TaskSketch> {
 	private final List<TaskSketchAttribute> myInTaskAttributes = new ArrayList<>();
 	private TaskSketchAttribute myOutTaskAttribute;
-	private final String myTaskDefinitionName;
+	private final String myTaskSketchName;
 	private String myTaskEngineClassName;
 	private String myRequest;
 	private String myPackageName;
@@ -44,12 +44,12 @@ public final class TaskSketchBuilder implements Builder<TaskSketch> {
 	/**
 	 * Constructor.
 	 *
-	 * @param taskDefinitionName the name of the taskDefinition (TK_XXX_YYY)
+	 * @param taskSketchName the name of the taskSketch (TK_XXX_YYY)
 	 */
-	TaskSketchBuilder(final String taskDefinitionName) {
-		Assertion.check().isNotNull(taskDefinitionName);
+	TaskSketchBuilder(final String taskSketchName) {
+		Assertion.check().isNotNull(taskSketchName);
 		//-----
-		myTaskDefinitionName = taskDefinitionName;
+		myTaskSketchName = taskSketchName;
 	}
 
 	/**
@@ -139,7 +139,7 @@ public final class TaskSketchBuilder implements Builder<TaskSketch> {
 	@Override
 	public TaskSketch build() {
 		return new TaskSketch(
-				myTaskDefinitionName,
+				myTaskSketchName,
 				myPackageName,
 				myDataSpace == null ? "main" : myDataSpace,
 				myTaskEngineClassName,

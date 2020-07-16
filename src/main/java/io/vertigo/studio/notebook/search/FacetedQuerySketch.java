@@ -42,10 +42,10 @@ import io.vertigo.studio.notebook.domain.DtSketch;
 public final class FacetedQuerySketch extends AbstractSketch {
 	public static final String PREFIX = "Qry";
 
-	private final DtSketch keyConceptDtDefinition;
+	private final DtSketch keyConceptDtSketch;
 
 	/** Liste indexée des facettes.*/
-	private final Map<String, FacetSketch> facetDefinitions = new LinkedHashMap<>();
+	private final Map<String, FacetSketch> facetSketchs = new LinkedHashMap<>();
 
 	/** Domain du criteria. */
 	private final DomainSketch criteriaDomain;
@@ -63,16 +63,16 @@ public final class FacetedQuerySketch extends AbstractSketch {
 	/**
 	 * Constructor.
 	 * @param name Nom de la definition
-	 * @param keyConceptDtDefinition Definition du keyConcept sur lequel s'applique cette recherche
-	 * @param facetDefinitions Liste des facettes
+	 * @param keyConceptDtSketch Sketch du keyConcept sur lequel s'applique cette recherche
+	 * @param facetSketchs Liste des facettes
 	 * @param criteriaDomain Criteria's domain
 	 * @param listFilterBuilderClassName listFilterBuilderClass to use
 	 * @param listFilterBuilderQuery listFilterBuilderQuery to use
 	 */
 	public FacetedQuerySketch(
 			final String name,
-			final DtSketch keyConceptDtDefinition,
-			final List<FacetSketch> facetDefinitions,
+			final DtSketch keyConceptDtSketch,
+			final List<FacetSketch> facetSketchs,
 			final DomainSketch criteriaDomain,
 			final String listFilterBuilderClassName,
 			final String listFilterBuilderQuery,
@@ -82,16 +82,16 @@ public final class FacetedQuerySketch extends AbstractSketch {
 		Assertion
 				.check()
 				.isNotBlank(name)
-				.isNotNull(keyConceptDtDefinition)
-				.isNotNull(facetDefinitions)
+				.isNotNull(keyConceptDtSketch)
+				.isNotNull(facetSketchs)
 				.isNotNull(criteriaDomain)
 				.isNotBlank(listFilterBuilderClassName)
 				.isNotNull(listFilterBuilderQuery)
 				.isNotNull(geoSearchQuery);
 		//---
-		this.keyConceptDtDefinition = keyConceptDtDefinition;
-		for (final FacetSketch facetDefinition : facetDefinitions) {
-			this.facetDefinitions.put(facetDefinition.getName(), facetDefinition);
+		this.keyConceptDtSketch = keyConceptDtSketch;
+		for (final FacetSketch facetSketch : facetSketchs) {
+			this.facetSketchs.put(facetSketch.getName(), facetSketch);
 		}
 		this.criteriaDomain = criteriaDomain;
 		this.listFilterBuilderClassName = listFilterBuilderClassName;
@@ -105,28 +105,28 @@ public final class FacetedQuerySketch extends AbstractSketch {
 	 * @param facetName Nom de la facette recherché.
 	 * @return Définition de la facette.
 	 */
-	public FacetSketch getFacetDefinition(final String facetName) {
+	public FacetSketch getFacetSketch(final String facetName) {
 		Assertion.check().isNotBlank(facetName);
 		//-----
-		final FacetSketch facetDefinition = facetDefinitions.get(facetName);
+		final FacetSketch facetSketch = facetSketchs.get(facetName);
 		//-----
-		Assertion.check().isNotNull(facetDefinition, "Aucune Définition de facette trouvée pour {0}", facetName);
-		return facetDefinition;
+		Assertion.check().isNotNull(facetSketch, "Aucune Définition de facette trouvée pour {0}", facetName);
+		return facetSketch;
 	}
 
 	/**
 	 * Définition du keyConcept de cette recherche.
 	 * @return Définition du keyConcept.
 	 */
-	public DtSketch getKeyConceptDtDefinition() {
-		return keyConceptDtDefinition;
+	public DtSketch getKeyConceptDtSketch() {
+		return keyConceptDtSketch;
 	}
 
 	/**
 	 * @return Liste des facettes portées par l'index.
 	 */
-	public Collection<FacetSketch> getFacetDefinitions() {
-		return Collections.unmodifiableCollection(facetDefinitions.values());
+	public Collection<FacetSketch> getFacetSketchs() {
+		return Collections.unmodifiableCollection(facetSketchs.values());
 	}
 
 	/**

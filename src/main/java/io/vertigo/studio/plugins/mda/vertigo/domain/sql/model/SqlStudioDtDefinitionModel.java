@@ -34,21 +34,21 @@ import io.vertigo.studio.notebook.domain.DtSketchField;
  * @author pchretien, mlaroche
  */
 public final class SqlStudioDtDefinitionModel {
-	private final DtSketch dtDefinition;
+	private final DtSketch dtSketch;
 	private final boolean hasSequence;
 	private final List<SqlStudioDtFieldModel> dtFieldModels;
 
 	/**
 	 * Constructeur.
 	 *
-	 * @param dtDefinition DtDefinition de l'objet à générer
+	 * @param dtSketch DtDefinition de l'objet à générer
 	 */
-	public SqlStudioDtDefinitionModel(final DtSketch dtDefinition) {
-		Assertion.check().isNotNull(dtDefinition);
+	public SqlStudioDtDefinitionModel(final DtSketch dtSketch) {
+		Assertion.check().isNotNull(dtSketch);
 		//-----
-		this.dtDefinition = dtDefinition;
+		this.dtSketch = dtSketch;
 
-		final Optional<DtSketchField> pkFieldOpt = dtDefinition.getIdField();
+		final Optional<DtSketchField> pkFieldOpt = dtSketch.getIdField();
 		if (pkFieldOpt.isPresent()) {
 			final BasicType pkDataType = pkFieldOpt.get().getDomain().getDataType();
 			hasSequence = pkDataType.isNumber();
@@ -56,14 +56,14 @@ public final class SqlStudioDtDefinitionModel {
 			hasSequence = false;
 		}
 
-		dtFieldModels = dtDefinition.getFields().stream()
+		dtFieldModels = dtSketch.getFields().stream()
 				.filter(dtField -> DtSketchField.FieldType.COMPUTED != dtField.getType())
 				.map(SqlStudioDtFieldModel::new)
 				.collect(Collectors.toList());
 	}
 
 	public String getLocalName() {
-		return StringUtil.camelToConstCase(dtDefinition.getLocalName());
+		return StringUtil.camelToConstCase(dtSketch.getLocalName());
 	}
 
 	/**

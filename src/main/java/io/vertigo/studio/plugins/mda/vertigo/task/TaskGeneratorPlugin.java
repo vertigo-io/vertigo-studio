@@ -80,10 +80,10 @@ public final class TaskGeneratorPlugin implements MdaGeneratorPlugin {
 			final MdaResultBuilder mdaResultBuilder) {
 		//On liste des taches regroupées par Package.
 		for (final Entry<String, List<TaskSketch>> entry : buildPackageMap(notebook).entrySet()) {
-			final Collection<TaskSketch> taskDefinitionCollection = entry.getValue();
-			if (!taskDefinitionCollection.isEmpty()) {
+			final Collection<TaskSketch> taskSketchs = entry.getValue();
+			if (!taskSketchs.isEmpty()) {
 				final String packageName = entry.getKey();
-				generatePao(notebook, targetSubDir, mdaConfig, mdaResultBuilder, taskDefinitionCollection, packageName);
+				generatePao(notebook, targetSubDir, mdaConfig, mdaResultBuilder, taskSketchs, packageName);
 			}
 		}
 	}
@@ -96,7 +96,7 @@ public final class TaskGeneratorPlugin implements MdaGeneratorPlugin {
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
-		for (final Entry<DtSketch, List<TaskSketch>> entry : builDtDefinitiondMap(notebook).entrySet()) {
+		for (final Entry<DtSketch, List<TaskSketch>> entry : builDtSketchsMap(notebook).entrySet()) {
 			final DtSketch dtDefinition = entry.getKey();
 			if (dtDefinition.isPersistent()) {
 				//Si DAO est persitant on génère son CRUD.
@@ -166,7 +166,7 @@ public final class TaskGeneratorPlugin implements MdaGeneratorPlugin {
 			//si out on regarde si en sortie on a un DTO ou une DTC typé.
 			final DomainSketch outDomain = templateTaskDefinition.getOutAttribute().getDomain();
 			if (outDomain.getScope().isDataObject()) {
-				return outDomain.getDtDefinitionName();
+				return outDomain.getDtSketchName();
 			}
 			return null;
 		}
@@ -179,58 +179,58 @@ public final class TaskGeneratorPlugin implements MdaGeneratorPlugin {
 				.collect(Collectors.toList());
 		//There MUST be only ONE candidate
 		if (candidates.size() == 1) {
-			return candidates.get(0).getDtDefinitionName();
+			return candidates.get(0).getDtSketchName();
 		}
 		//Ambiguosity => PAO
 		return null;
 	}
 
 	private static Map<String, List<TaskSketch>> buildPackageMap(final Notebook notebook) {
-		final Collection<TaskSketch> taskDefinitions = notebook.getAll(TaskSketch.class);
-		final Map<String, List<TaskSketch>> taskDefinitionsMap = new LinkedHashMap<>();
+		final Collection<TaskSketch> taskSketchs = notebook.getAll(TaskSketch.class);
+		final Map<String, List<TaskSketch>> taskSketchsMap = new LinkedHashMap<>();
 		//---
-		for (final TaskSketch taskDefinition : taskDefinitions) {
-			final TaskDefinitionModel templateTaskDefinition = new TaskDefinitionModel(taskDefinition, DomainUtil.createClassNameFromDtFunction(notebook));
-			final String dtDefinition = getDtDefinition(templateTaskDefinition);
+		for (final TaskSketch taskSketch : taskSketchs) {
+			final TaskDefinitionModel templateTaskDefinition = new TaskDefinitionModel(taskSketch, DomainUtil.createClassNameFromDtFunction(notebook));
+			final String dtSketchName = getDtDefinition(templateTaskDefinition);
 			// Correction bug : task avec retour DtObject (non persistant) non générée
 			//Les taches sont générées dans les pao
 			// - si il n'esxiste pas de définition associées à la tache
 			// - ou si la définition est considérée comme non persistante.
-			final boolean pao = dtDefinition == null || !notebook.resolve(dtDefinition, DtSketch.class).isPersistent();
+			final boolean pao = dtSketchName == null || !notebook.resolve(dtSketchName, DtSketch.class).isPersistent();
 			if (pao) {
 				//La tache est liée au package. (PAO)
-				final List<TaskSketch> list = taskDefinitionsMap
-						.computeIfAbsent(taskDefinition.getPackageName(), k -> new ArrayList<>());
+				final List<TaskSketch> list = taskSketchsMap
+						.computeIfAbsent(taskSketch.getPackageName(), k -> new ArrayList<>());
 				//on ajoute la tache aux taches du package.
-				list.add(taskDefinition);
+				list.add(taskSketch);
 			}
 		}
-		return taskDefinitionsMap;
+		return taskSketchsMap;
 
 	}
 
-	private static Map<DtSketch, List<TaskSketch>> builDtDefinitiondMap(final Notebook notebook) {
-		final Collection<TaskSketch> taskDefinitions = notebook.getAll(TaskSketch.class);
-		final Map<DtSketch, List<TaskSketch>> taskDefinitionsMap = new LinkedHashMap<>();
+	private static Map<DtSketch, List<TaskSketch>> builDtSketchsMap(final Notebook notebook) {
+		final Collection<TaskSketch> taskSketchs = notebook.getAll(TaskSketch.class);
+		final Map<DtSketch, List<TaskSketch>> taskSketchsMap = new LinkedHashMap<>();
 
 		//---
 		//Par défaut, On crée pour chaque DT une liste vide des taches lui étant associées.
-		final Collection<DtSketch> dtDefinitions = notebook.getAll(DtSketch.class);
-		for (final DtSketch dtDefinition : dtDefinitions) {
-			taskDefinitionsMap.put(dtDefinition, new ArrayList<TaskSketch>());
+		final Collection<DtSketch> dtSketchs = notebook.getAll(DtSketch.class);
+		for (final DtSketch dtSketch : dtSketchs) {
+			taskSketchsMap.put(dtSketch, new ArrayList<TaskSketch>());
 		}
 		//---
-		for (final TaskSketch taskDefinition : taskDefinitions) {
-			final TaskDefinitionModel templateTaskDefinition = new TaskDefinitionModel(taskDefinition, DomainUtil.createClassNameFromDtFunction(notebook));
+		for (final TaskSketch taskSketch : taskSketchs) {
+			final TaskDefinitionModel templateTaskDefinition = new TaskDefinitionModel(taskSketch, DomainUtil.createClassNameFromDtFunction(notebook));
 
-			final String dtDefinition = getDtDefinition(templateTaskDefinition);
-			final boolean dao = dtDefinition != null;
+			final String dtSketchName = getDtDefinition(templateTaskDefinition);
+			final boolean dao = dtSketchName != null;
 			if (dao) {
 				//Dans le cas d'un DTO ou DTC en sortie on considère que la tache est liée au DAO.
-				taskDefinitionsMap.get(notebook.resolve(dtDefinition, DtSketch.class)).add(taskDefinition);
+				taskSketchsMap.get(notebook.resolve(dtSketchName, DtSketch.class)).add(taskSketch);
 			}
 		}
-		return taskDefinitionsMap;
+		return taskSketchsMap;
 
 	}
 

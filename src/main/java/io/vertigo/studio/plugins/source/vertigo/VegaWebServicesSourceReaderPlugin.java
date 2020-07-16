@@ -75,32 +75,32 @@ public final class VegaWebServicesSourceReaderPlugin implements NotebookSourceRe
 		Assertion.check().isNotNull(webServicesClass);
 		//-----
 		return Arrays.stream(webServicesClass.getMethods())
-				.map(VegaWebServicesSourceReaderPlugin::buildWebServiceDefinition)
-				.filter(webServiceDefinitionOptional -> webServiceDefinitionOptional.isPresent())
-				.map(webServiceDefinitionOptional -> webServiceDefinitionOptional.get())
+				.map(VegaWebServicesSourceReaderPlugin::buildWebServiceSketch)
+				.filter(webServiceSketchOptional -> webServiceSketchOptional.isPresent())
+				.map(webServiceSketchOptional -> webServiceSketchOptional.get())
 				.collect(Collectors.toList());
 	}
 
-	private static Optional<WebServiceSketch> buildWebServiceDefinition(final Method method) {
+	private static Optional<WebServiceSketch> buildWebServiceSketch(final Method method) {
 		final PathPrefix pathPrefixAnnotation = method.getDeclaringClass().getAnnotation(PathPrefix.class);
 		final String pathPrefix = pathPrefixAnnotation != null ? pathPrefixAnnotation.value() : "";
 		for (final Annotation annotation : method.getAnnotations()) {
 			if (annotation instanceof GET) {
-				return Optional.of(createStudioWebServiceDefinition(method, WebServiceSketch.Verb.Get, pathPrefix + ((GET) annotation).value()));
+				return Optional.of(createWebServiceSketch(method, WebServiceSketch.Verb.Get, pathPrefix + ((GET) annotation).value()));
 			} else if (annotation instanceof POST) {
-				return Optional.of(createStudioWebServiceDefinition(method, WebServiceSketch.Verb.Post, pathPrefix + ((POST) annotation).value()));
+				return Optional.of(createWebServiceSketch(method, WebServiceSketch.Verb.Post, pathPrefix + ((POST) annotation).value()));
 			} else if (annotation instanceof PUT) {
-				return Optional.of(createStudioWebServiceDefinition(method, WebServiceSketch.Verb.Put, pathPrefix + ((PUT) annotation).value()));
+				return Optional.of(createWebServiceSketch(method, WebServiceSketch.Verb.Put, pathPrefix + ((PUT) annotation).value()));
 			} else if (annotation instanceof PATCH) {
-				return Optional.of(createStudioWebServiceDefinition(method, WebServiceSketch.Verb.Patch, pathPrefix + ((PATCH) annotation).value()));
+				return Optional.of(createWebServiceSketch(method, WebServiceSketch.Verb.Patch, pathPrefix + ((PATCH) annotation).value()));
 			} else if (annotation instanceof DELETE) {
-				return Optional.of(createStudioWebServiceDefinition(method, WebServiceSketch.Verb.Delete, pathPrefix + ((DELETE) annotation).value()));
+				return Optional.of(createWebServiceSketch(method, WebServiceSketch.Verb.Delete, pathPrefix + ((DELETE) annotation).value()));
 			}
 		}
 		return Optional.empty();
 	}
 
-	private static WebServiceSketch createStudioWebServiceDefinition(final Method method, final WebServiceSketch.Verb verb, final String path) {
+	private static WebServiceSketch createWebServiceSketch(final Method method, final WebServiceSketch.Verb verb, final String path) {
 		final Type returnType = method.getGenericReturnType();
 		final boolean isVoid = void.class.isAssignableFrom(returnType.getClass());
 		final Cardinality cardinality = getCardinalityFromType(returnType);

@@ -84,13 +84,13 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		} else if (dslEntity.equals(DomainGrammar.DOMAIN_ENTITY)) {
 			return createDomain(notebook, dslDefinition);
 		} else if (dslEntity.equals(DomainGrammar.DT_DEFINITION_ENTITY)) {
-			return createStudioDtDefinition(notebook, dslDefinition);
+			return createDtSketch(notebook, dslDefinition);
 		} else if (dslEntity.equals(DomainGrammar.FRAGMENT_ENTITY)) {
-			return createFragmentStudioDtDefinition(notebook, dslDefinition);
+			return createFragmentDtSketch(notebook, dslDefinition);
 		} else if (dslEntity.equals(DomainGrammar.ASSOCIATION_ENTITY)) {
-			return createStudioAssociationSimpleDefinition(notebook, dslDefinition);
+			return createAssociationSimpleSketch(notebook, dslDefinition);
 		} else if (dslEntity.equals(DomainGrammar.ASSOCIATION_NN_ENTITY)) {
-			return createStudioAssociationNNDefinition(notebook, dslDefinition);
+			return createAssociationNNSketch(notebook, dslDefinition);
 		}
 		throw new IllegalStateException("The type of definition" + dslDefinition + " is not managed by me");
 	}
@@ -146,7 +146,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 				.build();
 	}
 
-	private static DtSketch createFragmentStudioDtDefinition(final Notebook notebook, final DslDefinition xdtDefinition) {
+	private static DtSketch createFragmentDtSketch(final Notebook notebook, final DslDefinition xdtDefinition) {
 		final DtSketch from = notebook.resolve(xdtDefinition.getDefinitionLinkName("from"), DtSketch.class);
 
 		final String sortFieldName = (String) xdtDefinition.getPropertyValue(KspProperty.SORT_FIELD);
@@ -212,7 +212,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 	/**
 	 * @param xdtDefinition Définition de DT
 	 */
-	private DtSketch createStudioDtDefinition(final Notebook notebook, final DslDefinition xdtDefinition) {
+	private DtSketch createDtSketch(final Notebook notebook, final DslDefinition xdtDefinition) {
 		//Déclaration de la définition
 		final String sortFieldName = (String) xdtDefinition.getPropertyValue(KspProperty.SORT_FIELD);
 		final String displayFieldName = (String) xdtDefinition.getPropertyValue(KspProperty.DISPLAY_FIELD);
@@ -340,7 +340,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		}
 	}
 
-	private static AssociationNNSketch createStudioAssociationNNDefinition(final Notebook notebook, final DslDefinition xassociation) {
+	private static AssociationNNSketch createAssociationNNSketch(final Notebook notebook, final DslDefinition xassociation) {
 		final String tableName = (String) xassociation.getPropertyValue(KspProperty.TABLE_NAME);
 
 		final DtSketch dtDefinitionA = notebook.resolve(xassociation.getDefinitionLinkName("dtDefinitionA"), DtSketch.class);
@@ -365,7 +365,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 				.collect(Collectors.toList());
 	}
 
-	private AssociationSimpleSketch createStudioAssociationSimpleDefinition(final Notebook notebook, final DslDefinition xassociation) {
+	private AssociationSimpleSketch createAssociationSimpleSketch(final Notebook notebook, final DslDefinition xassociation) {
 
 		final String associationType = (String) xassociation.getPropertyValue("type");
 
@@ -439,13 +439,13 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		final AssociationSketchNode primaryAssociationNode = associationSimpleDefinition.getPrimaryAssociationNode();
 		final AssociationSketchNode foreignAssociationNode = associationSimpleDefinition.getForeignAssociationNode();
 
-		final DtSketch fkDefinition = primaryAssociationNode.getDtDefinition();
+		final DtSketch fkDefinition = primaryAssociationNode.getDtSketch();
 
-		LOGGER.trace("{} : ajout d'une FK [{}] sur la table '{}'", xassociation.getName(), fkFieldName, foreignAssociationNode.getDtDefinition().getName());
+		LOGGER.trace("{} : ajout d'une FK [{}] sur la table '{}'", xassociation.getName(), fkFieldName, foreignAssociationNode.getDtSketch().getName());
 
 		final String label = primaryAssociationNode.getLabel();
 		final Cardinality fieldCardinality = primaryAssociationNode.isNotNull() ? Cardinality.ONE : Cardinality.OPTIONAL_OR_NULLABLE;
-		dtDefinitionBuilders.get(foreignAssociationNode.getDtDefinition().getName())
+		dtDefinitionBuilders.get(foreignAssociationNode.getDtSketch().getName())
 				.addForeignKey(fkFieldName, label, fkDefinition.getIdField().get().getDomain(), fieldCardinality, fkDefinition.getName());
 		//On estime qu'une FK n'est ni une colonne de tri ni un champ d'affichage
 

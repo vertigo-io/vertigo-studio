@@ -54,7 +54,7 @@ import io.vertigo.studio.notebook.domain.DtSketchField;
 @SkecthPrefix(FacetSketch.PREFIX)
 public final class FacetSketch extends AbstractSketch {
 	public static final String PREFIX = "Fct";
-	private final DtSketch indexDtDefinition;
+	private final DtSketch indexDtSketch;
 	private final DtSketchField dtField;
 	private final MessageText label;
 	private final List<FacetSketchValue> facetValues;
@@ -79,7 +79,7 @@ public final class FacetSketch extends AbstractSketch {
 	/**
 	 * Constructor.
 	 * @param name the name of the facet
-	 * @param indexDtDefinition the dtDefinition of the facet
+	 * @param indexDtSketch the dtSketch of the facet
 	 * @param dtField the field of the facet
 	 * @param facetValues the list of filters
 	 * @param rangeFacet if the facet is of type 'range'
@@ -89,7 +89,7 @@ public final class FacetSketch extends AbstractSketch {
 	 */
 	private FacetSketch(
 			final String name,
-			final DtSketch indexDtDefinition,
+			final DtSketch indexDtSketch,
 			final DtSketchField dtField,
 			final MessageText label,
 			final List<FacetSketchValue> facetValues,
@@ -101,20 +101,20 @@ public final class FacetSketch extends AbstractSketch {
 		super(name);
 		//---
 		Assertion.check()
-				.isNotNull(indexDtDefinition)
+				.isNotNull(indexDtSketch)
 				.isNotNull(dtField)
 				.isNotNull(label)
 				.isNotNull(facetValues)
 				.isNotNull(facetParams)
 				.when(rangeFacet, () -> Assertion.check()
-						.isFalse(facetValues.isEmpty(), "Les FacetDefinition de type 'range' doivent fournir la liste des segments non vides (FacetValues)"))
+						.isFalse(facetValues.isEmpty(), "Les FacetSketch de type 'range' doivent fournir la liste des segments non vides (FacetValues)"))
 				.when(customFacet, () -> Assertion.check()
-						.isFalse(facetParams.isEmpty(), "Les FacetDefinition de type 'custom' doivent fournir la liste des params non vides"))
+						.isFalse(facetParams.isEmpty(), "Les FacetSketch de type 'custom' doivent fournir la liste des params non vides"))
 				.when(!rangeFacet && !customFacet, () -> Assertion.check()
-						.isTrue(facetValues.isEmpty(), "Les FacetDefinition de type 'term' doivent fournir une liste des segments vide"))
+						.isTrue(facetValues.isEmpty(), "Les FacetSketch de type 'term' doivent fournir une liste des segments vide"))
 				.isNotNull(order);
 		//-----
-		this.indexDtDefinition = indexDtDefinition;
+		this.indexDtSketch = indexDtSketch;
 		this.dtField = dtField;
 		this.label = label;
 		this.facetValues = Collections.unmodifiableList(facetValues);
@@ -126,7 +126,7 @@ public final class FacetSketch extends AbstractSketch {
 	}
 
 	/**
-	 * Creates a new facetDefinition of type 'range'.
+	 * Creates a new facetSketch of type 'range'.
 	 *
 	 * A range facet is defined by a list of filters.
 	 * Examples :
@@ -134,66 +134,66 @@ public final class FacetSketch extends AbstractSketch {
 	 * [0-100[
 	 * [100-*[
 	 * @param name the name of the facet
-	 * @param indexDtDefinition the dtDefinition of the facet
+	 * @param indexDtSketch the dtSketch of the facet
 	 * @param dtField the field of the facet
 	 * @param label the label of the facet
 	 * @param facetValues the list of filters
 	 * @param multiSelectable Can select multiple values
 	 * @param order Facet Order
-	 * @return new facetDefinition of type 'range'
+	 * @return new facetSketch of type 'range'
 	 */
-	public static FacetSketch createFacetDefinitionByRange(
+	public static FacetSketch createFacetSketchByRange(
 			final String name,
-			final DtSketch indexDtDefinition,
+			final DtSketch indexDtSketch,
 			final DtSketchField dtField,
 			final MessageText label,
 			final List<FacetSketchValue> facetValues,
 			final boolean multiSelectable,
 			final FacetOrder order) {
-		return new FacetSketch(name, indexDtDefinition, dtField, label, facetValues, Collections.emptyMap(), true, false, multiSelectable, order);
+		return new FacetSketch(name, indexDtSketch, dtField, label, facetValues, Collections.emptyMap(), true, false, multiSelectable, order);
 	}
 
 	/**
-	 * Creates a new facetDefinition of type 'term'.
+	 * Creates a new facetSketch of type 'term'.
 	 *
 	 * @param name the name of the facet
-	 * @param indexDtDefinition the dtDefinition of the facet
+	 * @param indexDtSketch the dtSketch of the facet
 	 * @param dtField the field of the facet
 	 * @param label the label of the facet
 	 * @param multiSelectable Can select multiple values
 	 * @param order Facet Order
-	 * @return new facetDefinition of type 'term'
+	 * @return new facetSketch of type 'term'
 	 */
-	public static FacetSketch createFacetDefinitionByTerm(
+	public static FacetSketch createFacetSketchByTerm(
 			final String name,
-			final DtSketch indexDtDefinition,
+			final DtSketch indexDtSketch,
 			final DtSketchField dtField,
 			final MessageText label,
 			final boolean multiSelectable,
 			final FacetOrder order) {
-		return new FacetSketch(name, indexDtDefinition, dtField, label, Collections.emptyList(), Collections.emptyMap(), false, false, multiSelectable, order);
+		return new FacetSketch(name, indexDtSketch, dtField, label, Collections.emptyList(), Collections.emptyMap(), false, false, multiSelectable, order);
 	}
 
 	/**
-	 * Creates a new facetDefinition of type 'custom'.
+	 * Creates a new facetSketch of type 'custom'.
 	 *
 	 * @param name the name of the facet
-	 * @param indexDtDefinition the dtDefinition of the facet
+	 * @param indexDtSketch the dtSketch of the facet
 	 * @param dtField the field of the facet
 	 * @param label the label of the facet
 	 * @param multiSelectable Can select multiple values
 	 * @param order Facet Order
-	 * @return new facetDefinition of type 'term'
+	 * @return new facetSketch of type 'term'
 	 */
-	public static FacetSketch createCustomFacetDefinition(
+	public static FacetSketch createCustomFacetSketch(
 			final String name,
-			final DtSketch indexDtDefinition,
+			final DtSketch indexDtSketch,
 			final DtSketchField dtField,
 			final MessageText label,
 			final Map<String, String> facetParams,
 			final boolean multiSelectable,
 			final FacetOrder order) {
-		return new FacetSketch(name, indexDtDefinition, dtField, label, Collections.emptyList(), facetParams, false, true, multiSelectable, order);
+		return new FacetSketch(name, indexDtSketch, dtField, label, Collections.emptyList(), facetParams, false, true, multiSelectable, order);
 	}
 
 	/**
@@ -204,11 +204,11 @@ public final class FacetSketch extends AbstractSketch {
 	}
 
 	/**
-	 * Le DtDefinition de l'index.
-	 * @return DtDefinition sur lequel porte la facette
+	 * Le DtSketch de l'index.
+	 * @return DtSketch sur lequel porte la facette
 	 */
-	public DtSketch getIndexDtDefinition() {
-		return indexDtDefinition;
+	public DtSketch getIndexDtSketch() {
+		return indexDtSketch;
 	}
 
 	/**

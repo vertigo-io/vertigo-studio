@@ -74,7 +74,7 @@ public abstract class AssociationSketch extends AbstractSketch {
 	private static void checkNavigability(final AssociationSketchNode associationSketchNode, final String associationName) {
 		Assertion.check()
 				.when(associationSketchNode.isNavigable(), () -> Assertion.check()
-						.isTrue(associationSketchNode.getDtDefinition().getStereotype().isPersistent(), "assocation : {0}. you cannot navigate towards an object that is not an entity ", associationName));
+						.isTrue(associationSketchNode.getDtSketch().getStereotype().isPersistent(), "assocation : {0}. you cannot navigate towards an object that is not an entity ", associationName));
 	}
 
 	/**

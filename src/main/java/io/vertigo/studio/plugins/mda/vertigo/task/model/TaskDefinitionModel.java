@@ -26,7 +26,7 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.notebook.task.TaskSketch;
 import io.vertigo.studio.notebook.task.TaskSketchAttribute;
-import io.vertigo.studio.tools.DefinitionUtil;
+import io.vertigo.studio.tools.SketchUtil;
 
 /**
  * Génération des classes/méthodes des taches de type DAO.
@@ -34,28 +34,28 @@ import io.vertigo.studio.tools.DefinitionUtil;
  * @author pchretien, mlaroche
  */
 public final class TaskDefinitionModel {
-	private final TaskSketch taskDefinition;
+	private final TaskSketch taskSketch;
 	private final List<TaskAttributeModel> ins = new ArrayList<>();
 
 	private final TaskAttributeModel out;
 	private final boolean optional;
 
-	public TaskDefinitionModel(final TaskSketch taskDefinition, final Function<String, String> classNameFromDt) {
+	public TaskDefinitionModel(final TaskSketch taskSketch, final Function<String, String> classNameFromDt) {
 		Assertion.check()
-				.isNotNull(taskDefinition)
+				.isNotNull(taskSketch)
 				.isNotNull(classNameFromDt);
 		//-----
-		this.taskDefinition = taskDefinition;
+		this.taskSketch = taskSketch;
 		boolean hasOption = false;
 
-		for (final TaskSketchAttribute attribute : taskDefinition.getInAttributes()) {
+		for (final TaskSketchAttribute attribute : taskSketch.getInAttributes()) {
 			final TaskAttributeModel templateTaskAttribute = new TaskAttributeModel(attribute, classNameFromDt);
 			ins.add(templateTaskAttribute);
 			hasOption = hasOption || attribute.getCardinality().isOptionalOrNullable();
 		}
 
-		if (taskDefinition.getOutAttributeOpt().isPresent()) {
-			final TaskSketchAttribute attribute = taskDefinition.getOutAttributeOpt().get();
+		if (taskSketch.getOutAttributeOpt().isPresent()) {
+			final TaskSketchAttribute attribute = taskSketch.getOutAttributeOpt().get();
 			final TaskAttributeModel templateTaskAttribute = new TaskAttributeModel(attribute, classNameFromDt);
 			//On est dans le cas des paramètres OUT
 			out = templateTaskAttribute;
@@ -70,14 +70,14 @@ public final class TaskDefinitionModel {
 	 * @return Name of taskDefinition
 	 */
 	public String getName() {
-		return taskDefinition.getName();
+		return taskSketch.getName();
 	}
 
 	/**
 	 * @return Name of taskDefinition
 	 */
 	public String getTaskName() {
-		return taskDefinition.getTaskName();
+		return taskSketch.getTaskName();
 	}
 
 	/**
@@ -85,7 +85,7 @@ public final class TaskDefinitionModel {
 	 */
 	public String getMethodName() {
 		// Nom de la définition sans prefix (XxxYyyy).
-		final String localName = DefinitionUtil.getLocalName(taskDefinition.getName(), TaskSketch.PREFIX);
+		final String localName = SketchUtil.getLocalName(taskSketch.getName(), TaskSketch.PREFIX);
 		return StringUtil.first2LowerCase(localName);
 	}
 
@@ -116,7 +116,7 @@ public final class TaskDefinitionModel {
 	 * @return Attribut de sortie (Unique)
 	 */
 	public String getRequest() {
-		return taskDefinition.getRequest()
+		return taskSketch.getRequest()
 				.replaceAll("\"", "\\\\\"")
 				.replaceAll("\\n", "\" + \n \"");
 	}
@@ -125,7 +125,7 @@ public final class TaskDefinitionModel {
 	 * @return Attribut de sortie (Unique)
 	 */
 	public String getTaskEngineClass() {
-		return taskDefinition.getTaskEngineClassName();
+		return taskSketch.getTaskEngineClassName();
 	}
 
 	/**
@@ -139,13 +139,13 @@ public final class TaskDefinitionModel {
 	 * @return Si cette task est liée à un dataspace spécifique (différent de main)
 	 */
 	public boolean hasSpecificDataSpace() {
-		return !"main".equals(taskDefinition.getDataSpace());
+		return !"main".equals(taskSketch.getDataSpace());
 	}
 
 	/**
 	 * @return Si cette task est liée à un dataspace spécifique (différent de main)
 	 */
 	public String getDataSpace() {
-		return taskDefinition.getDataSpace();
+		return taskSketch.getDataSpace();
 	}
 }

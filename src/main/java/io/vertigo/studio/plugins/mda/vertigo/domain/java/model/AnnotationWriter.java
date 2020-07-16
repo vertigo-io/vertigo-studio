@@ -30,7 +30,7 @@ import io.vertigo.studio.notebook.domain.association.AssociationNNSketch;
 import io.vertigo.studio.notebook.domain.association.AssociationSketchNode;
 import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
 import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants.VertigoClassNames;
-import io.vertigo.studio.tools.DefinitionUtil;
+import io.vertigo.studio.tools.SketchUtil;
 
 /**
  * Gestion centralisée des annotations sur les objets générés.
@@ -108,7 +108,7 @@ class AnnotationWriter {
 			return Collections.singletonList(new StringBuilder("@").append(VertigoClassNames.AnnotationForeignKey.getClassName()).append("(")
 					.append("smartType = \"").append(dtField.getDomain().getSmartTypeName()).append("\", ")
 					.append("label = \"").append(dtField.getLabel().getDisplay()).append("\", ")
-					.append("fkDefinition = \"").append("Dt").append(DefinitionUtil.getLocalName(dtField.getFkDtDefinitionName(), DtSketch.PREFIX)).append("\" ")
+					.append("fkDefinition = \"").append("Dt").append(SketchUtil.getLocalName(dtField.getFkDtSketchName(), DtSketch.PREFIX)).append("\" ")
 					.append(")")
 					.toString());
 		}
@@ -167,12 +167,12 @@ class AnnotationWriter {
 				"@" + VertigoClassNames.AnnotationAssociation.getClassName() + "(",
 				INDENT + "name = \"" + "A" + associationSimple.getLocalName() + "\",",
 				INDENT + "fkFieldName = \"" + associationSimple.getFKField().getName() + "\",",
-				INDENT + "primaryDtDefinitionName = \"" + "Dt" + primaryNode.getDtDefinition().getLocalName() + "\",",
+				INDENT + "primaryDtDefinitionName = \"" + "Dt" + primaryNode.getDtSketch().getLocalName() + "\",",
 				INDENT + "primaryIsNavigable = " + primaryNode.isNavigable() + ',',
 				INDENT + "primaryRole = \"" + primaryNode.getRole() + "\",",
 				INDENT + "primaryLabel = \"" + primaryNode.getLabel() + "\",",
 				INDENT + "primaryMultiplicity = \"" + primaryMultiplicity + "\",",
-				INDENT + "foreignDtDefinitionName = \"" + "Dt" + foreignNode.getDtDefinition().getLocalName() + "\",",
+				INDENT + "foreignDtDefinitionName = \"" + "Dt" + foreignNode.getDtSketch().getLocalName() + "\",",
 				INDENT + "foreignIsNavigable = " + foreignNode.isNavigable() + ',',
 				INDENT + "foreignRole = \"" + foreignNode.getRole() + "\",",
 				INDENT + "foreignLabel = \"" + foreignNode.getLabel() + "\",",
@@ -193,8 +193,8 @@ class AnnotationWriter {
 				"@" + VertigoClassNames.AnnotationAssociationNN.getClassName() + "(",
 				INDENT + "name = \"" + "Ann" + associationNN.getLocalName() + "\",",
 				INDENT + "tableName = \"" + associationNN.getTableName() + "\",",
-				INDENT + "dtDefinitionA = \"" + "Dt" + nodeA.getDtDefinition().getLocalName() + "\",",
-				INDENT + "dtDefinitionB = \"" + "Dt" + nodeB.getDtDefinition().getLocalName() + "\",",
+				INDENT + "dtDefinitionA = \"" + "Dt" + nodeA.getDtSketch().getLocalName() + "\",",
+				INDENT + "dtDefinitionB = \"" + "Dt" + nodeB.getDtSketch().getLocalName() + "\",",
 				INDENT + "navigabilityA = " + nodeA.isNavigable() + ',',
 				INDENT + "navigabilityB = " + nodeB.isNavigable() + ',',
 				INDENT + "roleA = \"" + nodeA.getRole() + "\",",

@@ -31,26 +31,26 @@ import io.vertigo.studio.notebook.domain.DtSketchField;
  */
 public final class TSMasterDataValueModel {
 
-	private final DtSketch dtDefinition;
+	private final DtSketch dtSketch;
 	private final Map<String, String> allFieldValues;
 
-	public TSMasterDataValueModel(final DtSketch dtDefinition, final Map<String, String> allFieldValues) {
+	public TSMasterDataValueModel(final DtSketch dtSketch, final Map<String, String> allFieldValues) {
 		Assertion.check()
-				.isNotNull(dtDefinition)
+				.isNotNull(dtSketch)
 				.isNotNull(allFieldValues);
 		//-----
-		this.dtDefinition = dtDefinition;
+		this.dtSketch = dtSketch;
 		this.allFieldValues = allFieldValues;
 	}
 
 	public String getFieldValue(final String fieldName) {
-		final DtSketchField dtField = dtDefinition.getField(fieldName);
+		final DtSketchField dtField = dtSketch.getField(fieldName);
 		//---
 		Assertion.check()
 				.when(dtField.getCardinality().hasOne(), () -> Assertion.check()
 						.isTrue(allFieldValues.containsKey(fieldName),
 								"Field '{0}' is required on '{1}' and no value was provided. Provided values '{2}'",
-								fieldName, dtDefinition.getName(), allFieldValues));
+								fieldName, dtSketch.getName(), allFieldValues));
 		//---
 		return allFieldValues.getOrDefault(fieldName, "null");
 	}

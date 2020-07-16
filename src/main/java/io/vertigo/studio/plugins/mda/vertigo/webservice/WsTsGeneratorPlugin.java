@@ -62,23 +62,23 @@ public final class WsTsGeneratorPlugin implements MdaGeneratorPlugin {
 		generateRoute(notebook, targetSubDir, mdaConfig, mdaResultBuilder);
 	}
 
-	private static Collection<WebServiceSketch> getWebServiceDefinitions(final Notebook notebook) {
+	private static Collection<WebServiceSketch> getWebServiceSketchs(final Notebook notebook) {
 		return notebook.getAll(WebServiceSketch.class);
 	}
 
 	private static void generateRoute(final Notebook notebook, final String targetSubDir, final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
-		final Collection<WebServiceSketch> webServiceDefinitions = getWebServiceDefinitions(notebook);
-		if (!webServiceDefinitions.isEmpty()) {
+		final Collection<WebServiceSketch> webServiceSketchs = getWebServiceSketchs(notebook);
+		if (!webServiceSketchs.isEmpty()) {
 			final Map<String, List<WebServiceDefinitionModelTs>> webServicesPerFacades = new HashMap<>();
-			for (final WebServiceSketch webServiceDefinition : webServiceDefinitions) {
+			for (final WebServiceSketch webServiceSketch : webServiceSketchs) {
 				//final String facadeName = webServiceDefinition.getMethod().getDeclaringClass().getSimpleName().replaceAll("WebServices", "");
-				final String facadeName = webServiceDefinition.getGroupNameOpt().orElseGet(() -> webServiceDefinition.getModuleName());
+				final String facadeName = webServiceSketch.getGroupNameOpt().orElseGet(() -> webServiceSketch.getModuleName());
 				List<WebServiceDefinitionModelTs> facadeWebServiceDefinitions = webServicesPerFacades.get(facadeName);
 				if (facadeWebServiceDefinitions == null) {
 					facadeWebServiceDefinitions = new ArrayList<>();
 					webServicesPerFacades.put(facadeName, facadeWebServiceDefinitions);
 				}
-				facadeWebServiceDefinitions.add(new WebServiceDefinitionModelTs(webServiceDefinition));
+				facadeWebServiceDefinitions.add(new WebServiceDefinitionModelTs(webServiceSketch));
 			}
 
 			final Map<String, List<WebServiceInitializerModelTs>> facadeByPackage = new HashMap<>();

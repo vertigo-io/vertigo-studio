@@ -32,7 +32,7 @@ import io.vertigo.studio.notebook.task.TaskSketch;
  * @author sezratty, mlaroche
  */
 public final class TemplateTaskDefinition {
-	private final TaskSketch taskDefinition;
+	private final TaskSketch taskSketch;
 	private final List<TemplateTaskAttribute> templateInTaskAttributes;
 	private final String testPackageName;
 	private final String testClassSimpleName;
@@ -45,7 +45,7 @@ public final class TemplateTaskDefinition {
 				.isNotNull(packageName)
 				.isNotNull(classSimpleName);
 		//-----
-		this.taskDefinition = taskDefinition;
+		this.taskSketch = taskDefinition;
 		this.packageName = packageName;
 		this.classSimpleName = classSimpleName;
 
@@ -62,7 +62,7 @@ public final class TemplateTaskDefinition {
 	 * @return Nom de la méthode en CamelCase
 	 */
 	public String getMethodName() {
-		return StringUtil.first2LowerCase(taskDefinition.getLocalName());
+		return StringUtil.first2LowerCase(taskSketch.getLocalName());
 	}
 
 	/**

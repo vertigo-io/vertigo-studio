@@ -33,23 +33,23 @@ import io.vertigo.studio.notebook.webservices.WebServiceSketchParam;
  */
 public class WebServiceDefinitionModelTs {
 
-	private final WebServiceSketch webServiceDefinition;
+	private final WebServiceSketch webServiceSketch;
 	private final List<WebServiceParamModelTs> webServiceParamModelTsList = new ArrayList<>();
 	private final TypeModelTs returnType;
 
 	/**
 	 * Constructor.
-	 * @param webServiceDefinition WebService to generate
+	 * @param webServiceSketch WebService to generate
 	 */
-	public WebServiceDefinitionModelTs(final WebServiceSketch webServiceDefinition) {
-		this.webServiceDefinition = webServiceDefinition;
+	public WebServiceDefinitionModelTs(final WebServiceSketch webServiceSketch) {
+		this.webServiceSketch = webServiceSketch;
 
-		for (final WebServiceSketchParam wsParam : webServiceDefinition.getWebServiceParams()) {
+		for (final WebServiceSketchParam wsParam : webServiceSketch.getWebServiceParams()) {
 			webServiceParamModelTsList.add(new WebServiceParamModelTs(wsParam));
 		}
 
-		if (webServiceDefinition.getWebServiceResponseContentOpt().isPresent()) {
-			returnType = new TypeModelTs(webServiceDefinition.getWebServiceResponseContentOpt().get().getGenericType());
+		if (webServiceSketch.getWebServiceResponseContentOpt().isPresent()) {
+			returnType = new TypeModelTs(webServiceSketch.getWebServiceResponseContentOpt().get().getGenericType());
 
 		} else {
 			returnType = new TypeModelTs(Void.TYPE);
@@ -60,7 +60,7 @@ public class WebServiceDefinitionModelTs {
 	 * @return Method name
 	 */
 	public String getMethodName() {
-		return webServiceDefinition.getHumanReadableAction();
+		return webServiceSketch.getHumanReadableAction();
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class WebServiceDefinitionModelTs {
 	 * @return Js Server Call Method
 	 */
 	public String getJsServerCallMethod() {
-		String verb = webServiceDefinition.getVerb().toString().toLowerCase(Locale.ROOT);
+		String verb = webServiceSketch.getVerb().toString().toLowerCase(Locale.ROOT);
 		if (isDelete()) {
 			verb = "del";
 		}
@@ -92,7 +92,7 @@ public class WebServiceDefinitionModelTs {
 	 * @return Extract functional modul from package name
 	 */
 	public String getFunctionnalPackageName() {
-		return webServiceDefinition.getModuleName();
+		return webServiceSketch.getModuleName();
 
 	}
 
@@ -100,21 +100,21 @@ public class WebServiceDefinitionModelTs {
 	 * @return if get
 	 */
 	public boolean isGet() {
-		return "GET".equals(webServiceDefinition.getVerb().toString());
+		return "GET".equals(webServiceSketch.getVerb().toString());
 	}
 
 	/**
 	 * @return if delete
 	 */
 	public boolean isDelete() {
-		return "DELETE".equals(webServiceDefinition.getVerb().toString());
+		return "DELETE".equals(webServiceSketch.getVerb().toString());
 	}
 
 	/**
 	 * @return WebService path
 	 */
 	public String getPath() {
-		final String path = webServiceDefinition.getPath();
+		final String path = webServiceSketch.getPath();
 		return path.replaceAll("\\{(.+?)\\}", "\\${$1}");
 	}
 

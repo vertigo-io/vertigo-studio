@@ -34,26 +34,26 @@ import io.vertigo.studio.notebook.domain.DtSketchField.FieldType;
  * @author pchretien, mlaroche
  */
 public final class TSStudioDtDefinitionModel {
-	private final DtSketch dtDefinition;
+	private final DtSketch dtSketch;
 	private final List<TSStudioDtFieldModel> dtFieldModels;
 	private final Set<TSDomainModel> domainModels;
 
 	/**
 	 * Constructeur.
 	 *
-	 * @param dtDefinition DtDefinition de l'objet à générer
+	 * @param dtSketch DtDefinition de l'objet à générer
 	 */
-	public TSStudioDtDefinitionModel(final DtSketch dtDefinition) {
-		Assertion.check().isNotNull(dtDefinition);
+	public TSStudioDtDefinitionModel(final DtSketch dtSketch) {
+		Assertion.check().isNotNull(dtSketch);
 		//-----
-		this.dtDefinition = dtDefinition;
+		this.dtSketch = dtSketch;
 
-		dtFieldModels = dtDefinition.getFields().stream()
+		dtFieldModels = dtSketch.getFields().stream()
 				.filter(dtField -> FieldType.COMPUTED != dtField.getType())
 				.map(TSStudioDtFieldModel::new)
 				.collect(Collectors.toList());
 
-		domainModels = dtDefinition.getFields().stream()
+		domainModels = dtSketch.getFields().stream()
 				.filter(dtField -> FieldType.COMPUTED != dtField.getType())
 				.map(DtSketchField::getDomain)
 				.distinct()
@@ -65,14 +65,14 @@ public final class TSStudioDtDefinitionModel {
 	 * @return DT definition
 	 */
 	public DtSketch getDtDefinition() {
-		return dtDefinition;
+		return dtSketch;
 	}
 
 	/**
 	 * @return Simple Nom (i.e. sans le package) de la classe d'implementation du DtObject
 	 */
 	public String getClassSimpleName() {
-		return dtDefinition.getClassSimpleName();
+		return dtSketch.getClassSimpleName();
 	}
 
 	/**
@@ -106,18 +106,18 @@ public final class TSStudioDtDefinitionModel {
 	 * @return Nom du fichier de la classe normalisÃ© (AAA_BBB_CCC => aaa-bbb-ccc).
 	 */
 	public String getJsClassFileName() {
-		return dtDefinition.getLocalName().toLowerCase(Locale.ENGLISH).replaceAll("_", "-");
+		return dtSketch.getLocalName().toLowerCase(Locale.ENGLISH).replaceAll("_", "-");
 	}
 
 	/**
 	 * @return Nom du package
 	 */
 	public String getFunctionnalPackageName() {
-		final String[] splittedPackage = dtDefinition.getPackageName().split("\\.");
+		final String[] splittedPackage = dtSketch.getPackageName().split("\\.");
 		if (splittedPackage.length > 1) {
 			return splittedPackage[splittedPackage.length - 1];
 		}
-		return dtDefinition.getPackageName();
+		return dtSketch.getPackageName();
 
 	}
 

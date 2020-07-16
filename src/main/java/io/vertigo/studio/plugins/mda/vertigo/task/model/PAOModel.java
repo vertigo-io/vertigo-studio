@@ -42,11 +42,11 @@ public final class PAOModel {
 	/**
 	 * Constructor.
 	 */
-	public PAOModel(final MdaConfig mdaConfig, final Collection<TaskSketch> taskDefinitionCollection, final String packageName, final Function<String, String> classNameFromDt) {
+	public PAOModel(final MdaConfig mdaConfig, final Collection<TaskSketch> taskSketchs, final String packageName, final Function<String, String> classNameFromDt) {
 		Assertion.check()
 				.isNotNull(mdaConfig)
-				.isNotNull(taskDefinitionCollection)
-				.isFalse(taskDefinitionCollection.isEmpty(), "Aucune tache dans le package {0}", packageName)
+				.isNotNull(taskSketchs)
+				.isFalse(taskSketchs.isEmpty(), "Aucune tache dans le package {0}", packageName)
 				.isNotNull(packageName);
 		//-----
 		this.packageName = packageName;
@@ -54,8 +54,8 @@ public final class PAOModel {
 		className = getLastPackagename(packageName) + "PAO";
 		boolean hasOption = false;
 		taskDefinitionModels = new ArrayList<>();
-		for (final TaskSketch taskDefinition : taskDefinitionCollection) {
-			final TaskDefinitionModel templateTaskDefinition = new TaskDefinitionModel(taskDefinition, classNameFromDt);
+		for (final TaskSketch taskSketch : taskSketchs) {
+			final TaskDefinitionModel templateTaskDefinition = new TaskDefinitionModel(taskSketch, classNameFromDt);
 			taskDefinitionModels.add(templateTaskDefinition);
 			hasOption = hasOption || templateTaskDefinition.hasOptions();
 		}

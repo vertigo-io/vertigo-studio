@@ -52,9 +52,9 @@ public final class SearchIndexSketch extends AbstractSketch {
 	public static final String PREFIX = "Idx";
 
 	/** Structure des éléments indexés. */
-	private final DtSketch indexDtDefinition;
+	private final DtSketch indexDtSketch;
 
-	private final DtSketch keyConceptDtDefinition;
+	private final DtSketch keyConceptDtSketch;
 
 	private final Map<DtSketchField, List<DtSketchField>> indexCopyToFieldsMap;
 
@@ -63,30 +63,30 @@ public final class SearchIndexSketch extends AbstractSketch {
 	/**
 	 * Constructor.
 	 * @param name Index name
-	 * @param keyConceptDtDefinition KeyConcept associé à l'index
-	 * @param indexDtDefinition Structure des éléments indexés.
+	 * @param keyConceptDtSketch KeyConcept associé à l'index
+	 * @param indexDtSketch Structure des éléments indexés.
 	 * @param indexCopyToFieldsMap CopyField map : (map fromField : [toField, toField, ...])
 	 * @param searchLoaderId Loader de chargement des éléments indéxés et résultat
 	 */
 	public SearchIndexSketch(
 			final String name,
-			final DtSketch keyConceptDtDefinition,
-			final DtSketch indexDtDefinition,
+			final DtSketch keyConceptDtSketch,
+			final DtSketch indexDtSketch,
 			final Map<DtSketchField, List<DtSketchField>> indexCopyToFieldsMap,
 			final String searchLoaderId) {
 		super(name);
 		//---
 		Assertion.check()
-				.isNotNull(keyConceptDtDefinition)
+				.isNotNull(keyConceptDtSketch)
 				.isTrue(
-						keyConceptDtDefinition.getStereotype() == StudioStereotype.KeyConcept,
-						"keyConceptDtDefinition ({0}) must be a DtDefinition of a KeyConcept class", keyConceptDtDefinition.getName())
-				.isNotNull(indexDtDefinition)
+						keyConceptDtSketch.getStereotype() == StudioStereotype.KeyConcept,
+						"keyConceptDtSketch ({0}) must be a DtSketch of a KeyConcept class", keyConceptDtSketch.getName())
+				.isNotNull(indexDtSketch)
 				.isNotNull(indexCopyToFieldsMap)
 				.isNotBlank(searchLoaderId);
 		//-----
-		this.keyConceptDtDefinition = keyConceptDtDefinition;
-		this.indexDtDefinition = indexDtDefinition;
+		this.keyConceptDtSketch = keyConceptDtSketch;
+		this.indexDtSketch = indexDtSketch;
 		this.indexCopyToFieldsMap = indexCopyToFieldsMap;
 		this.searchLoaderId = searchLoaderId;
 	}
@@ -95,8 +95,8 @@ public final class SearchIndexSketch extends AbstractSketch {
 	 * Définition de l'objet représentant le contenu de l'index (indexé et résultat).
 	 * @return Définition des champs indexés.
 	 */
-	public DtSketch getIndexDtDefinition() {
-		return indexDtDefinition;
+	public DtSketch getIndexDtSketch() {
+		return indexDtSketch;
 	}
 
 	/**
@@ -104,8 +104,8 @@ public final class SearchIndexSketch extends AbstractSketch {
 	 * Le keyConcept de l'index est surveillé pour rafraichir l'index.
 	 * @return Définition du keyConcept.
 	 */
-	public DtSketch getKeyConceptDtDefinition() {
-		return keyConceptDtDefinition;
+	public DtSketch getKeyConceptDtSketch() {
+		return keyConceptDtSketch;
 	}
 
 	/**

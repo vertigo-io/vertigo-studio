@@ -29,72 +29,72 @@ import io.vertigo.studio.notebook.domain.association.AssociationNNSketch;
  * @author pchretien, mlaroche
  */
 public final class SqlStudioAssociationNNModel {
-	private final AssociationNNSketch associationDefinition;
+	private final AssociationNNSketch associationSketch;
 
 	/**
 	 * Constructeur.
 	 * @param associationNode Noeud de l'association à générer
 	 */
-	public SqlStudioAssociationNNModel(final AssociationNNSketch associationDefinition) {
-		Assertion.check().isNotNull(associationDefinition);
+	public SqlStudioAssociationNNModel(final AssociationNNSketch associationSketch) {
+		Assertion.check().isNotNull(associationSketch);
 		//-----
-		this.associationDefinition = associationDefinition;
+		this.associationSketch = associationSketch;
 	}
 
 	/**
 	 * @return Association name
 	 */
 	public String getName() {
-		return StringUtil.camelToConstCase(associationDefinition.getName());
+		return StringUtil.camelToConstCase(associationSketch.getName());
 	}
 
 	/**
 	 * @return Association NN table
 	 */
 	public String getTableName() {
-		return associationDefinition.getTableName();
+		return associationSketch.getTableName();
 	}
 
 	/**
 	 * @return Association nodeA table
 	 */
 	public String getNodeATableName() {
-		return StringUtil.camelToConstCase(associationDefinition.getAssociationNodeA().getDtDefinition().getLocalName());
+		return StringUtil.camelToConstCase(associationSketch.getAssociationNodeA().getDtSketch().getLocalName());
 	}
 
 	/**
 	 * @return Association nodeA Id column name
 	 */
 	public String getNodeAPKName() {
-		return StringUtil.camelToConstCase(associationDefinition.getAssociationNodeA().getDtDefinition().getIdField().get().getName());
+		return StringUtil.camelToConstCase(associationSketch.getAssociationNodeA().getDtSketch().getIdField().get().getName());
 	}
 
 	/**
 	 * @return Association nodeA Id domain
 	 */
 	public DomainSketch getNodeAPKDomain() {
-		return associationDefinition.getAssociationNodeA().getDtDefinition().getIdField().get().getDomain();
+		return associationSketch.getAssociationNodeA().getDtSketch().getIdField().get().getDomain();
 	}
 
 	/**
 	 * @return Association nodeB table
 	 */
 	public String getNodeBTableName() {
-		return StringUtil.camelToConstCase(associationDefinition.getAssociationNodeB().getDtDefinition().getLocalName());
+		return StringUtil.camelToConstCase(associationSketch.getAssociationNodeB().getDtSketch().getLocalName());
 	}
 
 	/**
 	 * @return Association nodeB Id column name
 	 */
 	public String getNodeBPKName() {
-		return StringUtil.camelToConstCase(associationDefinition.getAssociationNodeB().getDtDefinition().getIdField().get().getName());
+		return StringUtil.camelToConstCase(associationSketch.getAssociationNodeB().getDtSketch().getIdField().get().getName());
 	}
 
 	/**
 	 * @return Association nodeB Id domain
 	 */
 	public DomainSketch getNodeBPKDomain() {
-		return associationDefinition.getAssociationNodeB().getDtDefinition().getIdField().get().getDomain();
+		return associationSketch.getAssociationNodeB().getDtSketch().getIdField().get().getDomain();
 	}
 
 }

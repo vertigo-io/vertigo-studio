@@ -40,20 +40,20 @@ public final class TemplateAoTaskTest {
 	 */
 	TemplateAoTaskTest(
 			final MdaConfig taskConfiguration,
-			final TaskSketch taskDefinition,
+			final TaskSketch taskSketch,
 			final String packageName,
 			final String classSimpleName,
 			final String daoTestBaseClass,
 			final Function<String, String> classNameFromDt) {
 		Assertion.check()
 				.isNotNull(taskConfiguration)
-				.isNotNull(taskDefinition)
+				.isNotNull(taskSketch)
 				.isNotNull(packageName);
 		//-----
 		this.packageName = packageName;
 
 		this.classSimpleName = classSimpleName;
-		templateTaskDefinition = new TemplateTaskDefinition(taskDefinition, packageName, classSimpleName, classNameFromDt);
+		templateTaskDefinition = new TemplateTaskDefinition(taskSketch, packageName, classSimpleName, classNameFromDt);
 		this.daoTestBaseClass = daoTestBaseClass;
 	}
 

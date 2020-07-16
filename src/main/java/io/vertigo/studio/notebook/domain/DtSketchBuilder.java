@@ -28,12 +28,12 @@ import io.vertigo.core.lang.Cardinality;
 import io.vertigo.core.locale.MessageKey;
 import io.vertigo.core.locale.MessageText;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.studio.tools.DefinitionUtil;
+import io.vertigo.studio.tools.SketchUtil;
 
 /**
- * This class must be used to build a DtDefinition.
+ * This class must be used to build a DtSketch.
  *
- * Each dtDefinition must have a name following this pattern DT_XXX_YYYY
+ * Each dtSketch must have a name following this pattern DT_XXX_YYYY
  *
  * @author pchretien, mlaroche
  */
@@ -55,7 +55,7 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 		}
 	}
 
-	private DtSketch dtDefinition;
+	private DtSketch dtSketch;
 	private final String myName;
 	private DtSketch myFragment;
 	private String myPackageName;
@@ -69,7 +69,7 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 
 	/**
 	 * Constructor.
-	 * @param name the name of the dtDefinition
+	 * @param name the name of the dtSketch
 	 */
 	DtSketchBuilder(final String name) {
 		Assertion.check().isNotBlank(name);
@@ -91,7 +91,7 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 
 	/**
 	 * Sets fragment
-	 * @param fragment Persistent root DtDefinition for this fragment
+	 * @param fragment Persistent root DtSketch for this fragment
 	 * @return this builder
 	 */
 	public DtSketchBuilder withFragment(final DtSketch fragment) {
@@ -103,9 +103,9 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 	}
 
 	/**
-	 * Sets the stereotype of the dtDefinition.
+	 * Sets the stereotype of the dtSketch.
 	 *
-	 * @param stereotype the stereotype of the dtDefinition
+	 * @param stereotype the stereotype of the dtSketch
 	 * @return this builder
 	 */
 	public DtSketchBuilder withStereoType(final StudioStereotype stereotype) {
@@ -116,10 +116,10 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 	}
 
 	/**
-	 * Adds a field linked to another dtDefinition (aka foreign key).
+	 * Adds a field linked to another dtSketch (aka foreign key).
 	 *
 	 * @param fieldName the name of the field
-	 * @param fkDtDefinitionName the name of the linked definition
+	 * @param fkDtSketchName the name of the linked definition
 	 * @param label the label of the field
 	 * @param domainSketch the domain of the field
 	 * @param required if the field is required
@@ -130,7 +130,7 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 			final String label,
 			final DomainSketch domainSketch,
 			final Cardinality cardinality,
-			final String fkDtDefinitionName) {
+			final String fkDtSketchName) {
 		//Pour l'instant on ne gère pas les chamsp computed dynamiques
 		final boolean persistent = true;
 		final DtSketchField dtField = createField(
@@ -140,10 +140,10 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 				label,
 				cardinality,
 				persistent,
-				fkDtDefinitionName,
+				fkDtSketchName,
 				null);
 		//On suppose que le build est déjà effectué. TODO: WTF
-		dtDefinition.registerDtField(dtField);
+		dtSketch.registerDtField(dtField);
 		return this;
 	}
 
@@ -192,7 +192,7 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 			final DomainSketch domainSketch,
 			final Cardinality cardinality,
 			final boolean persistent) {
-		//the field is dynamic if and only if the dtDefinition is dynamic
+		//the field is dynamic if and only if the dtSketch is dynamic
 		final DtSketchField dtField = createField(
 				fieldName,
 				DtSketchField.FieldType.DATA,
@@ -247,10 +247,10 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 			final String strLabel,
 			final Cardinality cardinality,
 			final boolean persistent,
-			final String fkDtDefinitionName,
+			final String fkDtSketchName,
 			final ComputedExpression computedExpression) {
 
-		final String shortName = DefinitionUtil.getLocalName(myName, DtSketch.PREFIX);
+		final String shortName = SketchUtil.getLocalName(myName, DtSketch.PREFIX);
 		//-----
 		// Le DtField vérifie ses propres règles et gère ses propres optimisations
 		final String id = "fld" + shortName + '$' + fieldName;
@@ -268,13 +268,13 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 				labelMsg,
 				cardinality,
 				persistent,
-				fkDtDefinitionName,
+				fkDtSketchName,
 				computedExpression);
 	}
 
 	/**
-	 * Sets the dataSpace to which the dtDefinition belongs.
-	 * @param dataSpace the dataSpace to which the DtDefinition is mapped.
+	 * Sets the dataSpace to which the dtSketch belongs.
+	 * @param dataSpace the dataSpace to which the DtSketch is mapped.
 	 * @return this builder
 	 */
 	public DtSketchBuilder withDataSpace(final String dataSpace) {
@@ -317,7 +317,7 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 	/** {@inheritDoc} */
 	@Override
 	public DtSketch build() {
-		Assertion.check().isNull(dtDefinition, "build() already executed");
+		Assertion.check().isNull(dtSketch, "build() already executed");
 		//-----
 		if (myStereotype == null) {
 			myStereotype = myIdField == null ? StudioStereotype.ValueObject : StudioStereotype.Entity;
@@ -326,7 +326,7 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 		final DtSketchField sortField;
 		if (mySortFieldName != null) {
 			sortField = findFieldByName(mySortFieldName)
-					.orElseThrow(() -> new IllegalStateException(StringUtil.format("Sort field '{0}' not found on '{1}'", mySortFieldName, dtDefinition.getName())));
+					.orElseThrow(() -> new IllegalStateException(StringUtil.format("Sort field '{0}' not found on '{1}'", mySortFieldName, dtSketch.getName())));
 		} else if (myStereotype == StudioStereotype.Fragment) {
 			sortField = myFragment.getSortField().orElse(null);
 		} else {
@@ -336,7 +336,7 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 		final DtSketchField displayField;
 		if (myDisplayFieldName != null) {
 			displayField = findFieldByName(myDisplayFieldName)
-					.orElseThrow(() -> new IllegalStateException(StringUtil.format("Display field '{0}' not found on '{1}'", myDisplayFieldName, dtDefinition.getName())));
+					.orElseThrow(() -> new IllegalStateException(StringUtil.format("Display field '{0}' not found on '{1}'", myDisplayFieldName, dtSketch.getName())));
 		} else if (myStereotype == StudioStereotype.Fragment) {
 			displayField = myFragment.getDisplayField().orElse(null);
 		} else {
@@ -346,14 +346,14 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 		final DtSketchField handleField;
 		if (myHandleFieldName != null) {
 			handleField = findFieldByName(myHandleFieldName)
-					.orElseThrow(() -> new IllegalStateException(StringUtil.format("Handle field '{0}' not found on '{1}'", myHandleFieldName, dtDefinition.getName())));
+					.orElseThrow(() -> new IllegalStateException(StringUtil.format("Handle field '{0}' not found on '{1}'", myHandleFieldName, dtSketch.getName())));
 		} else if (myStereotype == StudioStereotype.Fragment) {
 			handleField = myFragment.getHandleField().orElse(null);
 		} else {
 			handleField = null;
 		}
 
-		dtDefinition = new DtSketch(
+		dtSketch = new DtSketch(
 				myName,
 				Optional.ofNullable(myFragment),
 				myPackageName,
@@ -363,7 +363,7 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 				Optional.ofNullable(sortField),
 				Optional.ofNullable(displayField),
 				Optional.ofNullable(handleField));
-		return dtDefinition;
+		return dtSketch;
 	}
 
 	private Optional<DtSketchField> findFieldByName(final String fieldName) {
