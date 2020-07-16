@@ -22,8 +22,10 @@ import io.vertigo.core.node.config.Feature;
 import io.vertigo.core.node.config.Features;
 import io.vertigo.core.param.Param;
 import io.vertigo.studio.impl.mda.MdaManagerImpl;
+import io.vertigo.studio.impl.notebook.NotebookManagerImpl;
 import io.vertigo.studio.impl.source.NotebookSourceManagerImpl;
 import io.vertigo.studio.mda.MdaManager;
+import io.vertigo.studio.notebook.NotebookManager;
 import io.vertigo.studio.plugins.mda.vertigo.authorization.AuthorizationGeneratorPlugin;
 import io.vertigo.studio.plugins.mda.vertigo.domain.java.DomainGeneratorPlugin;
 import io.vertigo.studio.plugins.mda.vertigo.domain.js.JSGeneratorPlugin;
@@ -46,15 +48,15 @@ public final class StudioFeatures extends Features<StudioFeatures> {
 		super("vertigo-studio");
 	}
 
-	@Feature("metamodel")
-	public StudioFeatures withMetamodel() {
+	@Feature("source")
+	public StudioFeatures withSource() {
 		getModuleConfigBuilder()
 				.addComponent(NotebookSourceManager.class, NotebookSourceManagerImpl.class);
 		return this;
 	}
 
-	@Feature("metamodel.vertigo")
-	public StudioFeatures withVertigoMetamodel(final Param... params) {
+	@Feature("source.vertigo")
+	public StudioFeatures withVertigoSource(final Param... params) {
 		getModuleConfigBuilder()
 				.addPlugin(StudioSourceReaderPlugin.class, params)
 				.addPlugin(AccountJsonSecuritySourceReaderPlugin.class)
@@ -88,7 +90,8 @@ public final class StudioFeatures extends Features<StudioFeatures> {
 
 	@Override
 	protected void buildFeatures() {
-		// nothing by default
+		getModuleConfigBuilder()
+				.addComponent(NotebookManager.class, NotebookManagerImpl.class);
 	}
 
 }

@@ -85,8 +85,8 @@ public final class VertigoStudioMda {
 				.addModule(new CommonsFeatures().build())
 				// ---StudioFeature
 				.addModule(new StudioFeatures()
-						.withMetamodel()
-						.withVertigoMetamodel()
+						.withSource()
+						.withVertigoSource()
 						.withMda()
 						.withVertigoMda()
 						.build())

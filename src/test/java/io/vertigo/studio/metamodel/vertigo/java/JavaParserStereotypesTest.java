@@ -72,8 +72,8 @@ public final class JavaParserStereotypesTest {
 						.addPlugin(ClassPathResourceResolverPlugin.class)
 						.build())
 				.addModule(new StudioFeatures()
-						.withMetamodel()
-						.withVertigoMetamodel()
+						.withSource()
+						.withVertigoSource()
 						.build())
 				.build();
 	}

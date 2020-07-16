@@ -75,8 +75,8 @@ public final class JavaEnvironmentManagerTest {
 						.addPlugin(ClassPathResourceResolverPlugin.class)
 						.build())
 				.addModule(new StudioFeatures()
-						.withMetamodel()
-						.withVertigoMetamodel()
+						.withSource()
+						.withVertigoSource()
 						.build())
 				.build();
 	}

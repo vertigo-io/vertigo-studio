@@ -61,8 +61,8 @@ public final class KspEnvironmentManagerTest {
 						.addPlugin(ClassPathResourceResolverPlugin.class)
 						.build())
 				.addModule(new StudioFeatures()
-						.withMetamodel()
-						.withVertigoMetamodel()
+						.withSource()
+						.withVertigoSource()
 						.build())
 				.build();
 	}

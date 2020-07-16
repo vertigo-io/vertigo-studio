@@ -70,8 +70,8 @@ public class OOMParserTest {
 						.addPlugin(ClassPathResourceResolverPlugin.class)
 						.build())
 				.addModule(new StudioFeatures()
-						.withMetamodel()
-						.withVertigoMetamodel()
+						.withSource()
+						.withVertigoSource()
 						.build())
 				.build();
 	}
