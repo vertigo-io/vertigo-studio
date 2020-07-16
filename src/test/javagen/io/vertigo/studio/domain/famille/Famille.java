@@ -2,10 +2,10 @@ package io.vertigo.studio.domain.famille;
 
 import io.vertigo.core.lang.Generated;
 import io.vertigo.datamodel.structure.model.Entity;
-import io.vertigo.datastore.impl.entitystore.StoreListVAccessor;
 import io.vertigo.datamodel.structure.model.UID;
 import io.vertigo.datamodel.structure.stereotype.Field;
 import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datastore.impl.entitystore.StoreListVAccessor;
 
 /**
  * This class is automatically generated.
@@ -31,7 +31,7 @@ public final class Famille implements Entity {
 			foreignRole = "VoituresFamille",
 			foreignLabel = "Voitures de la famille",
 			foreignMultiplicity = "0..*")
-	private final StoreListVAccessor<io.vertigo.studio.domain.car.Car> voituresFamilleAccessor = new StoreListVAccessor<>(this, "StAFamCarFamille", "VoituresFamille");
+	private final StoreListVAccessor<io.vertigo.studio.domain.car.Car> voituresFamilleAccessor = new StoreListVAccessor<>(this, "AFamCarFamille", "VoituresFamille");
 
 	@io.vertigo.datamodel.structure.stereotype.AssociationNN(
 			name = "AnnFamCarLocation",
@@ -44,14 +44,14 @@ public final class Famille implements Entity {
 			roleB = "VoituresLocation",
 			labelA = "Famille",
 			labelB = "Voitures de location")
-	private final StoreListVAccessor<io.vertigo.studio.domain.car.Car> voituresLocationAccessor = new StoreListVAccessor<>(this, "StAnnFamCarLocation", "VoituresLocation");
+	private final StoreListVAccessor<io.vertigo.studio.domain.car.Car> voituresLocationAccessor = new StoreListVAccessor<>(this, "AnnFamCarLocation", "VoituresLocation");
 
 	/** {@inheritDoc} */
 	@Override
 	public UID<Famille> getUID() {
 		return UID.of(this);
 	}
-	
+
 	/**
 	 * Champ : ID.
 	 * Récupère la valeur de la propriété 'identifiant de la famille'.
@@ -70,7 +70,7 @@ public final class Famille implements Entity {
 	public void setFamId(final Long famId) {
 		this.famId = famId;
 	}
-	
+
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Libelle'.
@@ -89,7 +89,7 @@ public final class Famille implements Entity {
 	public void setLibelle(final String libelle) {
 		this.libelle = libelle;
 	}
-	
+
 	/**
 	 * Champ : COMPUTED.
 	 * Récupère la valeur de la propriété calculée 'Libelle'.
@@ -98,11 +98,11 @@ public final class Famille implements Entity {
 	@Field(smartType = "STyLibelleLong", type = "COMPUTED", cardinality = io.vertigo.core.lang.Cardinality.ONE, persistent = false, label = "Libelle")
 	public String getDescription() {
 		final StringBuilder builder = new StringBuilder();
-        builder.append(getLibelle());
-        builder.append('[');
-        builder.append(getFamId());
-        builder.append(']');
-        return builder.toString();
+		builder.append(getLibelle());
+		builder.append('[');
+		builder.append(getFamId());
+		builder.append(']');
+		return builder.toString();
 	}
 
 	/**
@@ -120,7 +120,7 @@ public final class Famille implements Entity {
 	public StoreListVAccessor<io.vertigo.studio.domain.car.Car> voituresLocation() {
 		return voituresLocationAccessor;
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {

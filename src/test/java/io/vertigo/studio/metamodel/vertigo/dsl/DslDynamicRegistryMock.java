@@ -50,7 +50,7 @@ public final class DslDynamicRegistryMock implements DynamicRegistry {
 
 	@Override
 	public SketchSupplier supplyModel(final DslDefinition definition) {
-		return (workbook) -> new Sketch() {
+		return (notebook) -> new Sketch() {
 
 			@Override
 			public String getName() {

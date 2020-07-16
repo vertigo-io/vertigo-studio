@@ -83,7 +83,7 @@ public final class EAXmiTestParserIdentifiers {
 
 	@Test
 	public void testIdentifiersVsPrimaryKey() {
-		final DtSketch loginDefinition = getDtDefinition("StDtLogin");
+		final DtSketch loginDefinition = getDtDefinition("DtLogin");
 		Assertions.assertTrue(loginDefinition.getIdField().isPresent());
 	}
 }

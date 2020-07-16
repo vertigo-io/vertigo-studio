@@ -130,7 +130,7 @@ public final class TSStudioDtFieldModel {
 		} else if (domainSketch.getScope().isValueObject()) {
 			typescriptType = DomainUtil.getSimpleNameFromCanonicalName(domainSketch.getValueObjectClassName());
 		} else {
-			typescriptType = DefinitionUtil.getLocalName("St" + domainSketch.getDtDefinitionName(), DtSketch.PREFIX);
+			typescriptType = DefinitionUtil.getLocalName(domainSketch.getDtDefinitionName(), DtSketch.PREFIX);
 		}
 		return typescriptType + (withArray ? "[]" : "");
 	}

@@ -24,8 +24,8 @@ import java.util.Map;
 import java.util.Set;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionPrefix;
 import io.vertigo.studio.notebook.AbstractSketch;
+import io.vertigo.studio.notebook.SkecthPrefix;
 import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.notebook.domain.DtSketchField;
 import io.vertigo.studio.notebook.domain.StudioStereotype;
@@ -47,9 +47,9 @@ import io.vertigo.studio.notebook.domain.StudioStereotype;
  *
  * @author dchallas, npiedeloup
  */
-@DefinitionPrefix(SearchIndexSketch.PREFIX)
+@SkecthPrefix(SearchIndexSketch.PREFIX)
 public final class SearchIndexSketch extends AbstractSketch {
-	public static final String PREFIX = "StIdx";
+	public static final String PREFIX = "Idx";
 
 	/** Structure des éléments indexés. */
 	private final DtSketch indexDtDefinition;

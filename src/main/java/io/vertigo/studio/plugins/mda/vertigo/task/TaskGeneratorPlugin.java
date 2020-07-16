@@ -196,7 +196,7 @@ public final class TaskGeneratorPlugin implements MdaGeneratorPlugin {
 			//Les taches sont générées dans les pao
 			// - si il n'esxiste pas de définition associées à la tache
 			// - ou si la définition est considérée comme non persistante.
-			final boolean pao = dtDefinition == null || !notebook.resolve("St" + dtDefinition, DtSketch.class).isPersistent();
+			final boolean pao = dtDefinition == null || !notebook.resolve(dtDefinition, DtSketch.class).isPersistent();
 			if (pao) {
 				//La tache est liée au package. (PAO)
 				final List<TaskSketch> list = taskDefinitionsMap
@@ -227,7 +227,7 @@ public final class TaskGeneratorPlugin implements MdaGeneratorPlugin {
 			final boolean dao = dtDefinition != null;
 			if (dao) {
 				//Dans le cas d'un DTO ou DTC en sortie on considère que la tache est liée au DAO.
-				taskDefinitionsMap.get(notebook.resolve("St" + dtDefinition, DtSketch.class)).add(taskDefinition);
+				taskDefinitionsMap.get(notebook.resolve(dtDefinition, DtSketch.class)).add(taskDefinition);
 			}
 		}
 		return taskDefinitionsMap;

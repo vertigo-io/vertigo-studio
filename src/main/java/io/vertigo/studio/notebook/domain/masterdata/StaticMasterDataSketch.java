@@ -21,8 +21,8 @@ package io.vertigo.studio.notebook.domain.masterdata;
 import java.util.Map;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionPrefix;
 import io.vertigo.studio.notebook.AbstractSketch;
+import io.vertigo.studio.notebook.SkecthPrefix;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
 
 /**
@@ -33,9 +33,9 @@ import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
  * @author mlaroche
  *
  */
-@DefinitionPrefix(StaticMasterDataSketch.PREFIX)
+@SkecthPrefix(StaticMasterDataSketch.PREFIX)
 public final class StaticMasterDataSketch extends AbstractSketch {
-	public static final String PREFIX = "StMd";
+	public static final String PREFIX = "Md";
 
 	private final String entityClassName;
 	private final Map<String, MasterDataValue> values;

@@ -24,8 +24,8 @@ import java.util.Map;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.locale.MessageText;
-import io.vertigo.core.node.definition.DefinitionPrefix;
 import io.vertigo.studio.notebook.AbstractSketch;
+import io.vertigo.studio.notebook.SkecthPrefix;
 import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.notebook.domain.DtSketchField;
 
@@ -51,9 +51,9 @@ import io.vertigo.studio.notebook.domain.DtSketchField;
  *
  * @author pchretien, mlaroche
  */
-@DefinitionPrefix(FacetSketch.PREFIX)
+@SkecthPrefix(FacetSketch.PREFIX)
 public final class FacetSketch extends AbstractSketch {
-	public static final String PREFIX = "StFct";
+	public static final String PREFIX = "Fct";
 	private final DtSketch indexDtDefinition;
 	private final DtSketchField dtField;
 	private final MessageText label;

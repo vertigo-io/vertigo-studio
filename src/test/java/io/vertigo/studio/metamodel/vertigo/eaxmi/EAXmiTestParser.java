@@ -98,7 +98,7 @@ public class EAXmiTestParser {
 	 */
 	@Test
 	public void testAssoctationA1Bnv() {
-		final AssociationSimpleSketch association = getAssociationSimpleDefinition("StAChaChi1");
+		final AssociationSimpleSketch association = getAssociationSimpleDefinition("AChaChi1");
 		Assertions.assertNotNull(association);
 		/* "0..1" */
 		Assertions.assertFalse(association.getAssociationNodeA().isMultiple());
@@ -120,7 +120,7 @@ public class EAXmiTestParser {
 	 */
 	@Test
 	public void testAssoctationA1vBnv() {
-		final AssociationSimpleSketch association = getAssociationSimpleDefinition("StAChaChi2");
+		final AssociationSimpleSketch association = getAssociationSimpleDefinition("AChaChi2");
 		/* "0..1" */
 		Assertions.assertFalse(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());
@@ -140,7 +140,7 @@ public class EAXmiTestParser {
 	 */
 	@Test
 	public void testAssoctationSimpleA1vBn() {
-		final AssociationSimpleSketch association = getAssociationSimpleDefinition("StAChaChi3");
+		final AssociationSimpleSketch association = getAssociationSimpleDefinition("AChaChi3");
 		/* "0..1" */
 		Assertions.assertFalse(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());
@@ -160,7 +160,7 @@ public class EAXmiTestParser {
 	 */
 	@Test
 	public void testAssoctationSimpleAnB1v() {
-		final AssociationSimpleSketch association = getAssociationSimpleDefinition("StAChaChi4");
+		final AssociationSimpleSketch association = getAssociationSimpleDefinition("AChaChi4");
 		/* "0..*" */
 		Assertions.assertTrue(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());
@@ -180,7 +180,7 @@ public class EAXmiTestParser {
 	 */
 	@Test
 	public void testAssoctationSimpleAnvB1() {
-		final AssociationSimpleSketch association = getAssociationSimpleDefinition("StAChaChi5");
+		final AssociationSimpleSketch association = getAssociationSimpleDefinition("AChaChi5");
 		/* "0..*" */
 		Assertions.assertTrue(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());
@@ -200,7 +200,7 @@ public class EAXmiTestParser {
 	 */
 	@Test
 	public void testAssoctationAnvB1v() {
-		final AssociationSimpleSketch association = getAssociationSimpleDefinition("StAChaChi6");
+		final AssociationSimpleSketch association = getAssociationSimpleDefinition("AChaChi6");
 		/* "0..*" */
 		Assertions.assertTrue(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());
@@ -220,7 +220,7 @@ public class EAXmiTestParser {
 	 */
 	@Test
 	public void testAssoctationAnBnv() {
-		final AssociationNNSketch association = getAssociationNNDefinition("StAnnChaChi7");
+		final AssociationNNSketch association = getAssociationNNDefinition("AnnChaChi7");
 		/* "0..*" */
 		Assertions.assertTrue(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());
@@ -240,7 +240,7 @@ public class EAXmiTestParser {
 	 */
 	@Test
 	public void testAssoctationAnvBnv() {
-		final AssociationNNSketch association = getAssociationNNDefinition("StAnnChaChi8");
+		final AssociationNNSketch association = getAssociationNNDefinition("AnnChaChi8");
 		/* "0..*" */
 		Assertions.assertTrue(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());
@@ -260,7 +260,7 @@ public class EAXmiTestParser {
 	 */
 	@Test
 	public void testAssoctationAnBn() {
-		final AssociationNNSketch association = getAssociationNNDefinition("StAnnChaChi9");
+		final AssociationNNSketch association = getAssociationNNDefinition("AnnChaChi9");
 		/* "0..*" */
 		Assertions.assertTrue(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());
@@ -280,7 +280,7 @@ public class EAXmiTestParser {
 	 */
 	@Test
 	public void testAssoctationAnvBn() {
-		final AssociationNNSketch association = getAssociationNNDefinition("StAnnChaChi10");
+		final AssociationNNSketch association = getAssociationNNDefinition("AnnChaChi10");
 		/* "0..*" */
 		Assertions.assertTrue(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());

@@ -87,11 +87,11 @@ public final class JavaParserStereotypesTest {
 	 */
 	@Test
 	public void testStereotypeMasterData() {
-		final DtSketch dtDefinitionCity = getDtDefinition("StDtCity");
+		final DtSketch dtDefinitionCity = getDtDefinition("DtCity");
 		Assertions.assertNotNull(dtDefinitionCity);
 		Assertions.assertEquals(StudioStereotype.MasterData, dtDefinitionCity.getStereotype());
 
-		final DtSketch dtDefinitionCommandType = getDtDefinition("StDtCommandType");
+		final DtSketch dtDefinitionCommandType = getDtDefinition("DtCommandType");
 		Assertions.assertNotNull(dtDefinitionCommandType);
 		Assertions.assertEquals(StudioStereotype.StaticMasterData, dtDefinitionCommandType.getStereotype());
 	}
@@ -101,7 +101,7 @@ public final class JavaParserStereotypesTest {
 	 */
 	@Test
 	public void testStereotypeKeyConcept() {
-		final DtSketch dtDefinitionCommand = getDtDefinition("StDtCommand");
+		final DtSketch dtDefinitionCommand = getDtDefinition("DtCommand");
 		Assertions.assertNotNull(dtDefinitionCommand);
 		Assertions.assertEquals(StudioStereotype.KeyConcept, dtDefinitionCommand.getStereotype());
 
@@ -112,18 +112,18 @@ public final class JavaParserStereotypesTest {
 	 */
 	@Test
 	public void testStereotypeEntity() {
-		final DtSketch dtDefinitionAttachment = getDtDefinition("StDtAttachment");
+		final DtSketch dtDefinitionAttachment = getDtDefinition("DtAttachment");
 		Assertions.assertNotNull(dtDefinitionAttachment);
 		Assertions.assertEquals(StudioStereotype.Entity, dtDefinitionAttachment.getStereotype());
 
-		final DtSketch dtDefinitionCommandValidation = getDtDefinition("StDtCommandValidation");
+		final DtSketch dtDefinitionCommandValidation = getDtDefinition("DtCommandValidation");
 		Assertions.assertNotNull(dtDefinitionCommandValidation);
 		Assertions.assertEquals(StudioStereotype.Entity, dtDefinitionCommandValidation.getStereotype());
 	}
 
 	@Test
 	public void testStereotypeData() {
-		final DtSketch dtDefinitionAttachment = getDtDefinition("StDtCommandCriteria");
+		final DtSketch dtDefinitionAttachment = getDtDefinition("DtCommandCriteria");
 		Assertions.assertNotNull(dtDefinitionAttachment);
 		Assertions.assertEquals(StudioStereotype.ValueObject, dtDefinitionAttachment.getStereotype());
 

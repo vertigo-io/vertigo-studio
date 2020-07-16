@@ -27,17 +27,17 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionPrefix;
 import io.vertigo.studio.notebook.AbstractSketch;
+import io.vertigo.studio.notebook.SkecthPrefix;
 
 /**
  * The DtDefinition class defines the definition of data.
  *
  * @author pchretien, mlaroche
  */
-@DefinitionPrefix(DtSketch.PREFIX)
+@SkecthPrefix(DtSketch.PREFIX)
 public final class DtSketch extends AbstractSketch {
-	public static final String PREFIX = "StDt";
+	public static final String PREFIX = "Dt";
 	/** the dataSpace must match this pattern. */
 	public static final Pattern REGEX_DATA_SPACE = Pattern.compile("[a-z][a-zA-Z0-9]{3,60}");
 	public static final String DEFAULT_DATA_SPACE = "main";

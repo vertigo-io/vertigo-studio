@@ -36,8 +36,8 @@ import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.metamodel.vertigo.java.data.DtDefinitions;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.domain.DomainSketch;
-import io.vertigo.studio.notebook.domain.FormatterSketch;
 import io.vertigo.studio.notebook.domain.DtSketch;
+import io.vertigo.studio.notebook.domain.FormatterSketch;
 import io.vertigo.studio.source.NotebookSource;
 import io.vertigo.studio.source.NotebookSourceManager;
 
@@ -96,7 +96,7 @@ public final class JavaEnvironmentManagerTest {
 
 	@Test
 	public void testCommand() {
-		final DtSketch dtDefinition = notebook.resolve("StDtCommand", DtSketch.class);
+		final DtSketch dtDefinition = notebook.resolve("DtCommand", DtSketch.class);
 		Assertions.assertTrue(dtDefinition.isPersistent());
 		Assertions.assertEquals("io.vertigo.studio.metamodel.vertigo.java.data.domain.Command", dtDefinition.getClassCanonicalName());
 		Assertions.assertEquals("io.vertigo.studio.metamodel.vertigo.java.data.domain", dtDefinition.getPackageName());
@@ -105,14 +105,14 @@ public final class JavaEnvironmentManagerTest {
 
 	@Test
 	public void testCityFragment() {
-		final DtSketch dtDefinition = notebook.resolve("StDtCityFragment", DtSketch.class);
+		final DtSketch dtDefinition = notebook.resolve("DtCityFragment", DtSketch.class);
 		Assertions.assertFalse(dtDefinition.isPersistent());
 		Assertions.assertTrue(dtDefinition.getFragment().isPresent());
 		Assertions.assertTrue("City".equals(dtDefinition.getFragment().get().getClassSimpleName()));
 		Assertions.assertEquals("io.vertigo.studio.metamodel.vertigo.java.data.domain.CityFragment", dtDefinition.getClassCanonicalName());
 		Assertions.assertEquals("io.vertigo.studio.metamodel.vertigo.java.data.domain", dtDefinition.getPackageName());
 		Assertions.assertEquals("CityFragment", dtDefinition.getClassSimpleName());
-		Assertions.assertTrue("StDtCity".equals(dtDefinition.getField("citId").getFkDtDefinitionName()));
+		Assertions.assertTrue("DtCity".equals(dtDefinition.getField("citId").getFkDtDefinitionName()));
 	}
 
 	//	@Test

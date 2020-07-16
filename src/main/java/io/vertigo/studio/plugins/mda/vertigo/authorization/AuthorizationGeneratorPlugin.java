@@ -78,8 +78,8 @@ public final class AuthorizationGeneratorPlugin implements MdaGeneratorPlugin {
 				.filter(securedFeature -> securedFeature.getLinkedResourceOpt().isPresent())
 				.collect(Collectors.groupingBy(securedFeature -> securedFeature.getLinkedResourceOpt().get(), Collectors.toList()))
 				.entrySet().stream()
-				.filter(entry -> notebook.contains("StDt" + entry.getKey()))// we have the studioDtDefinition
-				.map(entry -> new SecuredEntityModel(entry.getValue(), notebook.resolve("StDt" + entry.getKey(), DtSketch.class)))
+				.filter(entry -> notebook.contains("Dt" + entry.getKey()))// we have the studioDtDefinition
+				.map(entry -> new SecuredEntityModel(entry.getValue(), notebook.resolve("Dt" + entry.getKey(), DtSketch.class)))
 				.collect(Collectors.toList());
 	}
 

@@ -32,9 +32,9 @@ import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.domain.DomainSketch;
 import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.notebook.domain.DtSketchField;
-import io.vertigo.studio.notebook.domain.association.AssociationSketch;
 import io.vertigo.studio.notebook.domain.association.AssociationNNSketch;
 import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
+import io.vertigo.studio.notebook.domain.association.AssociationSketch;
 import io.vertigo.studio.notebook.task.TaskSketchAttribute;
 
 /**
@@ -117,7 +117,7 @@ public final class DomainUtil {
 				className = javaType;
 				break;
 			case DATA_OBJECT:
-				className = classNameFromDt.apply("St" + domainSketch.getDtDefinitionName());
+				className = classNameFromDt.apply(domainSketch.getDtDefinitionName());
 				break;
 			case VALUE_OBJECT:
 				className = domainSketch.getValueObjectClassName();
@@ -143,7 +143,7 @@ public final class DomainUtil {
 				classLabel = domainSketch.getDataType().getJavaClass().getSimpleName();
 				break;
 			case DATA_OBJECT:
-				classLabel = getSimpleNameFromCanonicalName(classNameFromDt.apply("St" + domainSketch.getDtDefinitionName()));
+				classLabel = getSimpleNameFromCanonicalName(classNameFromDt.apply(domainSketch.getDtDefinitionName()));
 				break;
 			case VALUE_OBJECT:
 				classLabel = getSimpleNameFromCanonicalName(domainSketch.getValueObjectClassName());

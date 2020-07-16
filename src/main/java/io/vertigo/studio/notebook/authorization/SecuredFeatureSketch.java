@@ -21,9 +21,9 @@ package io.vertigo.studio.notebook.authorization;
 import java.util.Optional;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionPrefix;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.notebook.AbstractSketch;
+import io.vertigo.studio.notebook.SkecthPrefix;
 
 /**
  * Une authorization est un droit sur une fonction de l'application.
@@ -32,7 +32,7 @@ import io.vertigo.studio.notebook.AbstractSketch;
  *
  * @author prahmoune, npiedeloup
  */
-@DefinitionPrefix(SecuredFeatureSketch.PREFIX)
+@SkecthPrefix(SecuredFeatureSketch.PREFIX)
 public final class SecuredFeatureSketch extends AbstractSketch {
 	public static final String PREFIX = "SecF";
 	//soit authorization globale (sans règle)

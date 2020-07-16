@@ -78,7 +78,7 @@ public final class OOMParserIdentifiersTest {
 
 	@Test
 	public void testIdentifiersVsPrimaryKey() {
-		final DtSketch loginDefinition = notebook.resolve("StDtLogin", DtSketch.class);
+		final DtSketch loginDefinition = notebook.resolve("DtLogin", DtSketch.class);
 		Assertions.assertTrue(loginDefinition.getIdField().isPresent());
 	}
 }

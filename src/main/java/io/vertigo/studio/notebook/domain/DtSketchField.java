@@ -206,10 +206,6 @@ public final class DtSketchField {
 		return persistent;
 	}
 
-	public boolean isDtList() {
-		return getDomain().getScope().isDataObject() && cardinality.hasMany();
-	}
-
 	/**
 	 *  @return DtDefinition de la ForeignKey (caractère obligatoire lié au type)
 	 */

@@ -88,7 +88,7 @@ public final class MultiResourcesEnvironmentManagerTest {
 
 		final DomainSketch doString = notebook.resolve("DoString", DomainSketch.class);
 		Assertions.assertNotNull(doString);
-		final DtSketch dtItem = notebook.resolve("StDtItem", DtSketch.class);
+		final DtSketch dtItem = notebook.resolve("DtItem", DtSketch.class);
 		Assertions.assertNotNull(dtItem);
 	}
 

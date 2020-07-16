@@ -25,17 +25,17 @@ import java.util.Map;
 import java.util.Optional;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionPrefix;
 import io.vertigo.studio.notebook.AbstractSketch;
+import io.vertigo.studio.notebook.SkecthPrefix;
 
 /**
  * This class defines a task and its attributes.
  *
  * @author  fconstantin, pchretien
  */
-@DefinitionPrefix(TaskSketch.PREFIX)
+@SkecthPrefix(TaskSketch.PREFIX)
 public final class TaskSketch extends AbstractSketch {
-	public static final String PREFIX = "StTk";
+	public static final String PREFIX = "Tk";
 
 	/** the package name. */
 	private final String packageName;
@@ -109,20 +109,6 @@ public final class TaskSketch extends AbstractSketch {
 			map.put(taskAttribute.getName(), taskAttribute);
 		}
 		return java.util.Collections.unmodifiableMap(map);
-	}
-
-	/**
-	 * Retourne l'attribut de la tache identifié par son nom.
-	 *
-	 * @param attributeName Nom de l'attribut recherché.
-	 * @return Définition de l'attribut.
-	 */
-	public TaskSketchAttribute getInAttribute(final String attributeName) {
-		Assertion.check().isNotNull(attributeName);
-		//-----
-		final TaskSketchAttribute taskAttribute = inTaskAttributes.get(attributeName);
-		Assertion.check().isNotNull(taskAttribute, "nom d''attribut :{0} non trouvé pour le service :{1}", attributeName, this);
-		return taskAttribute;
 	}
 
 	/**

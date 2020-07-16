@@ -2,12 +2,12 @@ package io.vertigo.studio.domain.stereotype;
 
 import io.vertigo.core.lang.Generated;
 import io.vertigo.datamodel.structure.model.KeyConcept;
-import io.vertigo.datastore.impl.entitystore.EnumStoreVAccessor;
-import io.vertigo.datastore.impl.entitystore.StoreListVAccessor;
 import io.vertigo.datamodel.structure.model.UID;
-import io.vertigo.datastore.impl.entitystore.StoreVAccessor;
 import io.vertigo.datamodel.structure.stereotype.Field;
 import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datastore.impl.entitystore.EnumStoreVAccessor;
+import io.vertigo.datastore.impl.entitystore.StoreListVAccessor;
+import io.vertigo.datastore.impl.entitystore.StoreVAccessor;
 
 /**
  * This class is automatically generated.
@@ -62,14 +62,14 @@ public final class Command implements KeyConcept {
 			foreignRole = "Attachment",
 			foreignLabel = "Attachment",
 			foreignMultiplicity = "0..*")
-	private final StoreListVAccessor<io.vertigo.studio.domain.stereotype.Attachment> attachmentAccessor = new StoreListVAccessor<>(this, "StACmdAtt", "Attachment");
+	private final StoreListVAccessor<io.vertigo.studio.domain.stereotype.Attachment> attachmentAccessor = new StoreListVAccessor<>(this, "ACmdAtt", "Attachment");
 
 	/** {@inheritDoc} */
 	@Override
 	public UID<Command> getUID() {
 		return UID.of(this);
 	}
-	
+
 	/**
 	 * Champ : ID.
 	 * Récupère la valeur de la propriété 'id'.
@@ -88,13 +88,13 @@ public final class Command implements KeyConcept {
 	public void setCmdId(final Long cmdId) {
 		this.cmdId = cmdId;
 	}
-	
+
 	/**
 	 * Champ : FOREIGN_KEY.
 	 * Récupère la valeur de la propriété 'Command type'.
 	 * @return Long ctyId
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Command type", fkDefinition = "DtCommandType" )
+	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Command type", fkDefinition = "DtCommandType")
 	public Long getCtyId() {
 		return (Long) ctyIdAccessor.getId();
 	}
@@ -107,13 +107,13 @@ public final class Command implements KeyConcept {
 	public void setCtyId(final Long ctyId) {
 		ctyIdAccessor.setId(ctyId);
 	}
-	
+
 	/**
 	 * Champ : FOREIGN_KEY.
 	 * Récupère la valeur de la propriété 'City'.
 	 * @return Long citId
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "City", fkDefinition = "DtCity" )
+	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "City", fkDefinition = "DtCity")
 	public Long getCitId() {
 		return (Long) citIdAccessor.getId();
 	}
@@ -127,7 +127,7 @@ public final class Command implements KeyConcept {
 		citIdAccessor.setId(citId);
 	}
 
- 	/**
+	/**
 	 * Association : City.
 	 * @return l'accesseur vers la propriété 'City'
 	 */
@@ -143,14 +143,14 @@ public final class Command implements KeyConcept {
 		return attachmentAccessor;
 	}
 
- 	/**
+	/**
 	 * Association : Command type.
 	 * @return l'accesseur vers la propriété 'Command type'
 	 */
 	public EnumStoreVAccessor<io.vertigo.studio.domain.stereotype.CommandType, io.vertigo.studio.domain.stereotype.CommandTypeEnum> commandType() {
 		return ctyIdAccessor;
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {

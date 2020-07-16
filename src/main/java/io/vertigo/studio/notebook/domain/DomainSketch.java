@@ -23,8 +23,8 @@ import java.util.Properties;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.BasicType;
-import io.vertigo.core.node.definition.DefinitionPrefix;
 import io.vertigo.studio.notebook.AbstractSketch;
+import io.vertigo.studio.notebook.SkecthPrefix;
 
 /**
  * A domain exists to enrich the primitive datatypes, giving them super powers.
@@ -45,7 +45,7 @@ import io.vertigo.studio.notebook.AbstractSketch;
  *
  * @author pchretien, mlaroche
  */
-@DefinitionPrefix(DomainSketch.PREFIX)
+@SkecthPrefix(DomainSketch.PREFIX)
 public final class DomainSketch extends AbstractSketch {
 	public static final String PREFIX = "Do";
 

@@ -20,8 +20,8 @@ package io.vertigo.studio.plugins.source.vertigo.registries.task;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
-import io.vertigo.studio.notebook.SketchSupplier;
 import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.SketchSupplier;
 import io.vertigo.studio.notebook.domain.DomainSketch;
 import io.vertigo.studio.notebook.task.TaskSketch;
 import io.vertigo.studio.notebook.task.TaskSketchBuilder;
@@ -48,7 +48,7 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 
 		if (TaskGrammar.TASK_DEFINITION_ENTITY.equals(dslEntity)) {
 			//Only taskDefinitions are concerned
-			return workbook -> createTaskDefinition(workbook, dslDefinition);
+			return notebook -> createTaskDefinition(notebook, dslDefinition);
 		}
 		throw new IllegalStateException("The type of definition" + dslDefinition + " is not managed by me");
 	}
@@ -63,7 +63,7 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 		Assertion.check().isNotNull(taskDefinitionName);
 		final String taskEngineClassName = getTaskEngineClassName(xtaskDefinition);
 		final String dataSpace = (String) xtaskDefinition.getPropertyValue(KspProperty.DATA_SPACE);
-		final TaskSketchBuilder taskDefinitionBuilder = TaskSketch.builder("St" + taskDefinitionName)
+		final TaskSketchBuilder taskDefinitionBuilder = TaskSketch.builder(taskDefinitionName)
 				.withEngine(taskEngineClassName)
 				.withDataSpace(dataSpace)
 				.withRequest(request)

@@ -61,7 +61,7 @@ public final class TSDomainModel {
 	 * @return Local name of the domain
 	 */
 	public String getDomainDefinitionName() {
-		return DefinitionUtil.getLocalName("St" + domainSketch.getDtDefinitionName(), DtSketch.PREFIX);
+		return DefinitionUtil.getLocalName(domainSketch.getDtDefinitionName(), DtSketch.PREFIX);
 	}
 
 	/**
@@ -95,6 +95,6 @@ public final class TSDomainModel {
 		} else if (domainSketch.getScope().isValueObject()) {
 			return DomainUtil.getSimpleNameFromCanonicalName(domainSketch.getValueObjectClassName());
 		}
-		return DefinitionUtil.getLocalName("St" + domainSketch.getDtDefinitionName(), DtSketch.PREFIX) + ((multiple) ? "[]" : "");
+		return DefinitionUtil.getLocalName(domainSketch.getDtDefinitionName(), DtSketch.PREFIX) + ((multiple) ? "[]" : "");
 	}
 }

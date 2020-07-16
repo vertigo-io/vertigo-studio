@@ -19,8 +19,8 @@
 package io.vertigo.studio.notebook.domain.association;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionPrefix;
 import io.vertigo.core.util.StringUtil;
+import io.vertigo.studio.notebook.SkecthPrefix;
 import io.vertigo.studio.notebook.domain.DtSketchField;
 
 /**
@@ -29,7 +29,7 @@ import io.vertigo.studio.notebook.domain.DtSketchField;
  *
  * @author  jcassignol, pchretien
  */
-@DefinitionPrefix("StA")
+@SkecthPrefix("A")
 public final class AssociationSimpleSketch extends AssociationSketch {
 	private final AssociationSketchNode foreignAssociationNode;
 	private final AssociationSketchNode primaryAssociationNode;
@@ -37,7 +37,7 @@ public final class AssociationSimpleSketch extends AssociationSketch {
 
 	/**
 	 * Constructor.
-	
+
 	 * @param name the name of the association
 	 * @param fkFieldName the fieldname that represents the foreign key
 	 * @param associationNodeA the A node for this assocation

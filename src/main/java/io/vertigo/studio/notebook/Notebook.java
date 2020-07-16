@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 import io.vertigo.core.lang.Assertion;
 
 /**
- * A Studio workbook is a space where models can be shared and modified. (not threadSafe).
+ * A Studio notebook is a space where models can be shared and modified. (not threadSafe).
  * It is a conceptual representation of a project design that is human readable, storable and comparable
  *
  * @author mlaroche, pchretien

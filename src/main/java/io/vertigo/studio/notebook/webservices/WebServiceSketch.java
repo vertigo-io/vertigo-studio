@@ -24,16 +24,16 @@ import java.util.List;
 import java.util.Optional;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionPrefix;
 import io.vertigo.studio.notebook.AbstractSketch;
+import io.vertigo.studio.notebook.SkecthPrefix;
 
 /**
  * Web service definition.
  * @author npiedeloup
  */
-@DefinitionPrefix(WebServiceSketch.PREFIX)
+@SkecthPrefix(WebServiceSketch.PREFIX)
 public final class WebServiceSketch extends AbstractSketch {
-	public static final String PREFIX = "StWs";
+	public static final String PREFIX = "Ws";
 
 	/**
 	 * HTTP Verb supported.

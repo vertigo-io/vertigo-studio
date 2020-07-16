@@ -18,8 +18,8 @@
  */
 package io.vertigo.studio.metamodel.vertigo.loader;
 
-import io.vertigo.core.node.definition.DefinitionPrefix;
 import io.vertigo.studio.notebook.AbstractSketch;
+import io.vertigo.studio.notebook.SkecthPrefix;
 import io.vertigo.studio.notebook.SketchSupplier;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinition;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinitionRepository;
@@ -50,10 +50,10 @@ public final class DslDynamicRegistryMock implements DynamicRegistry {
 
 	@Override
 	public SketchSupplier supplyModel(final DslDefinition definition) {
-		return (workbook) -> new FakeModel(definition.getName());
+		return (notebook) -> new FakeModel(definition.getName());
 	}
 
-	@DefinitionPrefix(FakeModel.PREFIX)
+	@SkecthPrefix(FakeModel.PREFIX)
 	public final static class FakeModel extends AbstractSketch {
 		public static final String PREFIX = "Mock";
 

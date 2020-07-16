@@ -19,12 +19,12 @@ import io.vertigo.core.util.Selector;
 import io.vertigo.core.util.Selector.ClassConditions;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.impl.source.NotebookSourceReaderPlugin;
-import io.vertigo.studio.notebook.SketchSupplier;
 import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.SketchSupplier;
 import io.vertigo.studio.notebook.webservices.WebServiceSketch;
 import io.vertigo.studio.notebook.webservices.WebServiceSketchParam;
-import io.vertigo.studio.notebook.webservices.WebServiceSketchResponseContent;
 import io.vertigo.studio.notebook.webservices.WebServiceSketchParam.WebServiceParamLocation;
+import io.vertigo.studio.notebook.webservices.WebServiceSketchResponseContent;
 import io.vertigo.studio.source.NotebookSource;
 import io.vertigo.vega.webservice.WebServices;
 import io.vertigo.vega.webservice.stereotype.DELETE;
@@ -121,7 +121,7 @@ public final class VegaWebServicesSourceReaderPlugin implements NotebookSourceRe
 		final String moduleName = fullPackageNameSplited[fullPackageNameSplited.length - 1];
 		//---
 		return new WebServiceSketch(
-				"StWs" + verb + normalizePath(path),
+				"Ws" + verb + normalizePath(path),
 				verb,
 				path,
 				webServiceParams,

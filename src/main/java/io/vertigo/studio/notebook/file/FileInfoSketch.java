@@ -19,8 +19,8 @@
 package io.vertigo.studio.notebook.file;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionPrefix;
 import io.vertigo.studio.notebook.AbstractSketch;
+import io.vertigo.studio.notebook.SkecthPrefix;
 
 /**
  * Définition d'un FileInfo.
@@ -31,9 +31,9 @@ import io.vertigo.studio.notebook.AbstractSketch;
  *
  * @author  npiedeloup, pchretien
  */
-@DefinitionPrefix(FileInfoSketch.PREFIX)
+@SkecthPrefix(FileInfoSketch.PREFIX)
 public final class FileInfoSketch extends AbstractSketch {
-	public static final String PREFIX = "StFi";
+	public static final String PREFIX = "Fi";
 	/**
 	 * StoreName des fichiers de ce type.
 	 */

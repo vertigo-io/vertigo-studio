@@ -19,15 +19,15 @@
 package io.vertigo.studio.notebook.domain;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionPrefix;
 import io.vertigo.studio.notebook.AbstractSketch;
+import io.vertigo.studio.notebook.SkecthPrefix;
 
 /**
  * Par nature un formatter est une ressource partagée et non modifiable.
  *
  * @author pchretien, mlaroche
  */
-@DefinitionPrefix(FormatterSketch.PREFIX)
+@SkecthPrefix(FormatterSketch.PREFIX)
 public final class FormatterSketch extends AbstractSketch {
 	public static final String PREFIX = "Fmt";
 	/**

@@ -38,8 +38,8 @@ import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.domain.ConstraintSketch;
 import io.vertigo.studio.notebook.domain.DomainSketch;
-import io.vertigo.studio.notebook.domain.FormatterSketch;
 import io.vertigo.studio.notebook.domain.DtSketch;
+import io.vertigo.studio.notebook.domain.FormatterSketch;
 import io.vertigo.studio.source.NotebookSource;
 import io.vertigo.studio.source.NotebookSourceManager;
 
@@ -109,7 +109,7 @@ public final class OOMEnvironmentManagerTest {
 
 	@Test
 	public void testDtDefinition() {
-		final DtSketch dtDefinition = notebook.resolve("StDtFamille", DtSketch.class);
+		final DtSketch dtDefinition = notebook.resolve("DtFamille", DtSketch.class);
 		Assertions.assertEquals("io.vertigo.dynamock.domain.famille.Famille", dtDefinition.getClassCanonicalName());
 		Assertions.assertTrue(dtDefinition.isPersistent());
 		Assertions.assertEquals("io.vertigo.dynamock.domain.famille", dtDefinition.getPackageName());

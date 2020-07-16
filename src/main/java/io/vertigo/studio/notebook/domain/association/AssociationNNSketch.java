@@ -19,13 +19,13 @@
 package io.vertigo.studio.notebook.domain.association;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionPrefix;
+import io.vertigo.studio.notebook.SkecthPrefix;
 
 /**
  * Définition d'une association NN.
  * @author  jcassignol, pchretien
  */
-@DefinitionPrefix("StAnn")
+@SkecthPrefix("Ann")
 public final class AssociationNNSketch extends AssociationSketch {
 	private final String tableName;
 

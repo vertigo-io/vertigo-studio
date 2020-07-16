@@ -26,8 +26,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.node.definition.DefinitionPrefix;
 import io.vertigo.studio.notebook.AbstractSketch;
+import io.vertigo.studio.notebook.SkecthPrefix;
 import io.vertigo.studio.notebook.domain.DomainSketch;
 import io.vertigo.studio.notebook.domain.DtSketch;
 
@@ -38,9 +38,9 @@ import io.vertigo.studio.notebook.domain.DtSketch;
  *
  * @author pchretien, mlaroche
  */
-@DefinitionPrefix(FacetedQuerySketch.PREFIX)
+@SkecthPrefix(FacetedQuerySketch.PREFIX)
 public final class FacetedQuerySketch extends AbstractSketch {
-	public static final String PREFIX = "StQry";
+	public static final String PREFIX = "Qry";
 
 	private final DtSketch keyConceptDtDefinition;
 
@@ -96,7 +96,7 @@ public final class FacetedQuerySketch extends AbstractSketch {
 		this.criteriaDomain = criteriaDomain;
 		this.listFilterBuilderClassName = listFilterBuilderClassName;
 		this.listFilterBuilderQuery = listFilterBuilderQuery;
-		this.geoSearchQueryOpt = geoSearchQuery;
+		geoSearchQueryOpt = geoSearchQuery;
 	}
 
 	/**
