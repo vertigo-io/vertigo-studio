@@ -18,6 +18,9 @@
  */
 package io.vertigo.studio.plugins.source.vertigo.loaders.poweramc.core;
 
+import java.util.Optional;
+import java.util.stream.Stream;
+
 /**
  * Type des objets powerAMC.
  * Les correspondances dynamo sont précisées ci-dessous.
@@ -64,27 +67,10 @@ enum OOMType {
 		return code;
 	}
 
-	static OOMType getType(final String name) {
-		final OOMType type;
-		if (Domain.getCode().equals(name)) {
-			type = Domain;
-		} else if (Package.getCode().equals(name)) {
-			type = Package;
-		} else if (Class.getCode().equals(name)) {
-			type = Class;
-		} else if (Shortcut.getCode().equals(name)) {
-			type = Shortcut;
-		} else if (Attribute.getCode().equals(name)) {
-			type = Attribute;
-		} else if (Identifier.getCode().equals(name)) {
-			type = Identifier;
-		} else if (Association.getCode().equals(name)) {
-			type = Association;
-		} else {
-			//rien trouvé
-			type = null;
-		}
-		return type;
+	static Optional<OOMType> getType(final String name) {
+		return Stream.of(OOMType.values())
+				.filter(type -> type.getCode().equals(name))
+				.findFirst();
 	}
 
 	static boolean isNodeByRef(final String name) {

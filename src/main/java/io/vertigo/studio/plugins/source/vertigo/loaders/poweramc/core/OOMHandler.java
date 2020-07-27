@@ -19,6 +19,7 @@
 package io.vertigo.studio.plugins.source.vertigo.loaders.poweramc.core;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -64,11 +65,11 @@ final class OOMHandler extends DefaultHandler {
 		final boolean isObj = name.startsWith("o:");
 		if (isObj) {
 			final String id = attributes.getValue(ATTR_ID);
-			final OOMType type = OOMType.getType(name);
-			if (type != null && id != null) {
+			final Optional<OOMType> typeOpt = OOMType.getType(name);
+			if (typeOpt.isPresent() && id != null) {
 				//Il existe un nouvel objet géré associé à ce Tag
 				final XmlId idOOM = new XmlId(id);
-				final OOMObject obj = currentTag.getParentOOM().createObjectOOM(idOOM, type);
+				final OOMObject obj = currentTag.getParentOOM().createObjectOOM(idOOM, typeOpt.get());
 				map.put(idOOM, obj);
 				currentTag = currentTag.createTag(obj);
 			} else {
