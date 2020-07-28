@@ -20,9 +20,9 @@ package io.vertigo.studio.plugins.mda.vertigo.domain.java.model;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.domain.StudioStereotype;
+import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
 import io.vertigo.studio.notebook.domain.association.AssociationSketch;
 import io.vertigo.studio.notebook.domain.association.AssociationSketchNode;
-import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
 
 /**
  * Objet utilisé par FreeMarker.

@@ -2,7 +2,7 @@ package ${packageName};
 
 import io.vertigo.account.authorization.metamodel.Authorization;
 import io.vertigo.account.authorization.metamodel.AuthorizationName;
-import io.vertigo.core.node.Home;
+import io.vertigo.core.node.App;
 
 /**
  * Warning. This class is generated automatically !
@@ -25,7 +25,7 @@ public enum ${classSimpleName} implements AuthorizationName {
 	 * @return authorization
 	 */
 	public static Authorization of(final String code) {
-		return Home.getApp().getDefinitionSpace().resolve(code, Authorization.class);
+		return App.getApp().getDefinitionSpace().resolve(code, Authorization.class);
 	}
 
 	/**

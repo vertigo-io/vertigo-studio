@@ -35,8 +35,8 @@ import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugi
 import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaManager;
-import io.vertigo.studio.source.NotebookSourceManager;
 import io.vertigo.studio.source.NotebookSource;
+import io.vertigo.studio.source.NotebookSourceManager;
 
 /**
  * Test la génération à partir des oom et ksp.

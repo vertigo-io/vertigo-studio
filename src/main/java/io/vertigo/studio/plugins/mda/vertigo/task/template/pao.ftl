@@ -6,7 +6,7 @@ import javax.inject.Inject;
 <#if pao.options >
 import java.util.Optional;
 </#if>
-import io.vertigo.core.node.Home;
+import io.vertigo.core.node.App;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Generated;
 import io.vertigo.datamodel.task.TaskManager;

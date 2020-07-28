@@ -31,8 +31,8 @@ import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.studio.StudioFeatures;
-import io.vertigo.studio.source.NotebookSourceManager;
 import io.vertigo.studio.source.NotebookSource;
+import io.vertigo.studio.source.NotebookSourceManager;
 
 /**
  * Test ksp model.

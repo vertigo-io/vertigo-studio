@@ -29,8 +29,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.notebook.SketchSupplier;
 import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.SketchSupplier;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
 
 /**

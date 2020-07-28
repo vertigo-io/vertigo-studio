@@ -25,10 +25,10 @@ import java.util.List;
 import io.vertigo.core.lang.Cardinality;
 import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.notebook.domain.DtSketchField;
-import io.vertigo.studio.notebook.domain.association.AssociationUtil;
 import io.vertigo.studio.notebook.domain.association.AssociationNNSketch;
-import io.vertigo.studio.notebook.domain.association.AssociationSketchNode;
 import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
+import io.vertigo.studio.notebook.domain.association.AssociationSketchNode;
+import io.vertigo.studio.notebook.domain.association.AssociationUtil;
 import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants.VertigoClassNames;
 import io.vertigo.studio.tools.SketchUtil;
 

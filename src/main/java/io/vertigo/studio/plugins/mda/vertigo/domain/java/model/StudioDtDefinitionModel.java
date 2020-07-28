@@ -25,10 +25,10 @@ import java.util.function.Function;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.notebook.domain.DtSketchField;
-import io.vertigo.studio.notebook.domain.StudioStereotype;
 import io.vertigo.studio.notebook.domain.DtSketchField.FieldType;
-import io.vertigo.studio.notebook.domain.association.AssociationSketch;
+import io.vertigo.studio.notebook.domain.StudioStereotype;
 import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
+import io.vertigo.studio.notebook.domain.association.AssociationSketch;
 import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants.VertigoClassNames;
 
 /**

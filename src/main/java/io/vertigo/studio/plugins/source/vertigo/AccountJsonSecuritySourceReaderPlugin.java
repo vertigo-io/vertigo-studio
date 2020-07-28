@@ -20,8 +20,8 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.studio.impl.source.NotebookSourceReaderPlugin;
-import io.vertigo.studio.notebook.SketchSupplier;
 import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.SketchSupplier;
 import io.vertigo.studio.notebook.authorization.SecuredFeatureSketch;
 import io.vertigo.studio.source.NotebookSource;
 
