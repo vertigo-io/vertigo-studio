@@ -26,7 +26,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import io.vertigo.core.lang.BasicType;
-import io.vertigo.core.node.AutoCloseableApp;
+import io.vertigo.core.node.AutoCloseableNode;
 import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.NodeConfig;
@@ -49,23 +49,23 @@ import io.vertigo.studio.source.NotebookSourceManager;
 public final class JavaEnvironmentManagerTest {
 
 	private Notebook notebook;
-	private AutoCloseableApp app;
+	private AutoCloseableNode node;
 
 	@BeforeEach
 	public final void setUp() {
-		app = new AutoCloseableApp(buildNodeConfig());
-		DIInjector.injectMembers(this, app.getComponentSpace());
+		node = new AutoCloseableNode(buildNodeConfig());
+		DIInjector.injectMembers(this, node.getComponentSpace());
 		//---
 		final List<NotebookSource> resources = List.of(
 				NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/java/data/execution.kpr"),
 				NotebookSource.of("classes", DtDefinitions.class.getName()));
-		notebook = app.getComponentSpace().resolve(NotebookSourceManager.class).read(resources);
+		notebook = node.getComponentSpace().resolve(NotebookSourceManager.class).read(resources);
 	}
 
 	@AfterEach
 	public final void tearDown() {
-		if (app != null) {
-			app.close();
+		if (node != null) {
+			node.close();
 		}
 	}
 

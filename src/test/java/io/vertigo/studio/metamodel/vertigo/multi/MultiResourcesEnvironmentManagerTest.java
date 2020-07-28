@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.vertigo.core.node.AutoCloseableApp;
+import io.vertigo.core.node.AutoCloseableNode;
 import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.NodeConfig;
@@ -44,18 +44,18 @@ import io.vertigo.studio.source.NotebookSourceManager;
  * @author npiedeloup
  */
 public final class MultiResourcesEnvironmentManagerTest {
-	private AutoCloseableApp app;
+	private AutoCloseableNode node;
 
 	@BeforeEach
 	public final void setUp() {
-		app = new AutoCloseableApp(buildNodeConfig());
-		DIInjector.injectMembers(this, app.getComponentSpace());
+		node = new AutoCloseableNode(buildNodeConfig());
+		DIInjector.injectMembers(this, node.getComponentSpace());
 	}
 
 	@AfterEach
 	public final void tearDown() {
-		if (app != null) {
-			app.close();
+		if (node != null) {
+			node.close();
 		}
 	}
 
@@ -73,7 +73,7 @@ public final class MultiResourcesEnvironmentManagerTest {
 
 	@Test
 	public void testFirst() {
-		final Notebook notebook = app.getComponentSpace().resolve(NotebookSourceManager.class)
+		final Notebook notebook = node.getComponentSpace().resolve(NotebookSourceManager.class)
 				.read(List.of(NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr")));
 		final DomainSketch doString = notebook.resolve("DoString", DomainSketch.class);
 		Assertions.assertNotNull(doString);
@@ -81,7 +81,7 @@ public final class MultiResourcesEnvironmentManagerTest {
 
 	@Test
 	public void testMergedResources() {
-		final Notebook notebook = app.getComponentSpace().resolve(NotebookSourceManager.class)
+		final Notebook notebook = node.getComponentSpace().resolve(NotebookSourceManager.class)
 				.read(List.of(
 						NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr"),
 						NotebookSource.of("classes", DtDefinitions.class.getCanonicalName())));

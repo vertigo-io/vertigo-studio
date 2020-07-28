@@ -25,7 +25,7 @@ import java.net.URL;
 import io.vertigo.commons.CommonsFeatures;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.WrappedException;
-import io.vertigo.core.node.AutoCloseableApp;
+import io.vertigo.core.node.AutoCloseableNode;
 import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
@@ -63,7 +63,7 @@ public final class VertigoStudioMda {
 	}
 
 	private static MdaResult exec(final NotebookConfig notebookConfig) {
-		try (final AutoCloseableApp studioApp = new AutoCloseableApp(buildNodeConfig())) {
+		try (final AutoCloseableNode studioApp = new AutoCloseableNode(buildNodeConfig())) {
 			final NotebookSourceManager notebookSourceManager = studioApp.getComponentSpace().resolve(NotebookSourceManager.class);
 			final MdaManager mdaManager = studioApp.getComponentSpace().resolve(MdaManager.class);
 			//-----

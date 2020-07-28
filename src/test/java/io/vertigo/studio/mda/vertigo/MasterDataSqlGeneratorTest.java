@@ -23,7 +23,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import io.vertigo.commons.CommonsFeatures;
-import io.vertigo.core.node.AutoCloseableApp;
+import io.vertigo.core.node.AutoCloseableNode;
 import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
@@ -60,7 +60,7 @@ public class MasterDataSqlGeneratorTest {
 	 */
 	@Test
 	public void testGenerate() {
-		try (AutoCloseableApp studioApp = new AutoCloseableApp(buildNodeConfig())) {
+		try (AutoCloseableNode studioApp = new AutoCloseableNode(buildNodeConfig())) {
 			final List<NotebookSource> resources = List.of(
 					NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
 					NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"),
@@ -81,10 +81,10 @@ public class MasterDataSqlGeneratorTest {
 			mdaManager.generate(notebookSourceManager.read(resources), mdaConfig);
 		}
 
-		try (AutoCloseableApp app = new AutoCloseableApp(SqlTestConfigurator.config())) {
-			DataBaseScriptUtil.execSqlScript("target/databasegenMasterdata/crebas.sql", app);
-			DataBaseScriptUtil.execSqlScript("target/databasegenMasterdata/init_masterdata_command_type.sql", app);
-			DataBaseScriptUtil.execSqlScript("target/databasegenMasterdata/init_masterdata_motor_type.sql", app);
+		try (AutoCloseableNode node = new AutoCloseableNode(SqlTestConfigurator.config())) {
+			DataBaseScriptUtil.execSqlScript("target/databasegenMasterdata/crebas.sql", node);
+			DataBaseScriptUtil.execSqlScript("target/databasegenMasterdata/init_masterdata_command_type.sql", node);
+			DataBaseScriptUtil.execSqlScript("target/databasegenMasterdata/init_masterdata_motor_type.sql", node);
 		}
 	}
 

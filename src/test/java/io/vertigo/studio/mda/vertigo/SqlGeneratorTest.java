@@ -22,7 +22,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import io.vertigo.core.node.AutoCloseableApp;
+import io.vertigo.core.node.AutoCloseableNode;
 import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
@@ -58,7 +58,7 @@ public class SqlGeneratorTest {
 	 */
 	@Test
 	public void testGenerate() {
-		try (AutoCloseableApp studioApp = new AutoCloseableApp(buildNodeConfig())) {
+		try (AutoCloseableNode studioApp = new AutoCloseableNode(buildNodeConfig())) {
 			final List<NotebookSource> resources = List.of(
 					NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
 					NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"));
@@ -77,8 +77,8 @@ public class SqlGeneratorTest {
 			mdaManager.generate(notebookSourceManager.read(resources), mdaConfig);
 		}
 
-		try (AutoCloseableApp app = new AutoCloseableApp(SqlTestConfigurator.config())) {
-			DataBaseScriptUtil.execSqlScript("target/databasegenh2/crebas.sql", app);
+		try (AutoCloseableNode node = new AutoCloseableNode(SqlTestConfigurator.config())) {
+			DataBaseScriptUtil.execSqlScript("target/databasegenh2/crebas.sql", node);
 		}
 	}
 

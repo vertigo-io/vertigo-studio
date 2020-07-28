@@ -6,7 +6,7 @@ import io.vertigo.account.authorization.metamodel.Authorization;
 import io.vertigo.account.authorization.metamodel.AuthorizationName;
 import io.vertigo.account.authorization.metamodel.OperationName;
 <#if securedentities?size != 0 >
-import io.vertigo.core.node.App;
+import io.vertigo.core.node.Node;
 </#if>
 <#list securedentities as securedEntity>
 import ${securedEntity.classCanonicalName};
@@ -40,7 +40,7 @@ public final class ${classSimpleName} {
 		 * @return authorization
 		 */
 		public static Authorization of(final String code) {
-			return App.getApp().getDefinitionSpace().resolve(code, Authorization.class);
+			return Node.getNode().getDefinitionSpace().resolve(code, Authorization.class);
 		}
 
 		/**

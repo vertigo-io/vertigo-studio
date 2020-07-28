@@ -28,7 +28,7 @@ import java.sql.SQLException;
 import java.util.Collections;
 
 import io.vertigo.core.lang.WrappedException;
-import io.vertigo.core.node.App;
+import io.vertigo.core.node.Node;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.database.sql.SqlDataBaseManager;
 import io.vertigo.database.sql.connection.SqlConnection;
@@ -67,9 +67,9 @@ public final class DataBaseScriptUtil {
 		sqlDataBaseManager.executeUpdate(SqlStatement.builder(sql).build(), Collections.emptyMap(), connection);
 	}
 
-	public static void execSqlScript(final String sqlScript, final App app) {
-		final ResourceManager resourceManager = app.getComponentSpace().resolve(ResourceManager.class);
-		final SqlDataBaseManager sqlDataBaseManager = app.getComponentSpace().resolve(SqlDataBaseManager.class);
+	public static void execSqlScript(final String sqlScript, final Node node) {
+		final ResourceManager resourceManager = node.getComponentSpace().resolve(ResourceManager.class);
+		final SqlDataBaseManager sqlDataBaseManager = node.getComponentSpace().resolve(SqlDataBaseManager.class);
 
 		final SqlConnection connection = sqlDataBaseManager.getConnectionProvider(SqlDataBaseManager.MAIN_CONNECTION_PROVIDER_NAME).obtainConnection();
 		DataBaseScriptUtil.execSqlScript(connection, sqlScript, resourceManager, sqlDataBaseManager);

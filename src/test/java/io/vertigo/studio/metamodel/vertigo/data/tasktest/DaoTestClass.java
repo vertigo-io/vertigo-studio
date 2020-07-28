@@ -26,8 +26,8 @@ import org.junit.jupiter.api.BeforeEach;
 import io.vertigo.commons.CommonsFeatures;
 import io.vertigo.commons.transaction.VTransactionManager;
 import io.vertigo.commons.transaction.VTransactionWritable;
-import io.vertigo.core.node.App;
-import io.vertigo.core.node.AutoCloseableApp;
+import io.vertigo.core.node.Node;
+import io.vertigo.core.node.AutoCloseableNode;
 import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.LogConfig;
@@ -54,23 +54,23 @@ public class DaoTestClass {
 	private VTransactionManager transactionManager;
 
 	private VTransactionWritable currentTransaction;
-	private AutoCloseableApp app;
+	private AutoCloseableNode node;
 
 	@BeforeEach
 	public final void setUp() {
-		app = new AutoCloseableApp(buildNodeConfig());
-		DIInjector.injectMembers(this, app.getComponentSpace());
+		node = new AutoCloseableNode(buildNodeConfig());
+		DIInjector.injectMembers(this, node.getComponentSpace());
 		//---
-		execSqlScript("io/vertigo/studio/metamodel/vertigo/data/sql/crebas.sql", App.getApp());
+		execSqlScript("io/vertigo/studio/metamodel/vertigo/data/sql/crebas.sql", Node.getNode());
 		currentTransaction = transactionManager.createCurrentTransaction();
 
 	}
 
 	@AfterEach
 	public final void tearDown() {
-		if (app != null) {
+		if (node != null) {
 			currentTransaction.rollback();
-			app.close();
+			node.close();
 		}
 	}
 
@@ -109,9 +109,9 @@ public class DaoTestClass {
 				.build();
 	}
 
-	private static void execSqlScript(final String sqlScript, final App app) {
-		final ResourceManager resourceManager = app.getComponentSpace().resolve(ResourceManager.class);
-		final SqlDataBaseManager sqlDataBaseManager = app.getComponentSpace().resolve(SqlDataBaseManager.class);
+	private static void execSqlScript(final String sqlScript, final Node node) {
+		final ResourceManager resourceManager = node.getComponentSpace().resolve(ResourceManager.class);
+		final SqlDataBaseManager sqlDataBaseManager = node.getComponentSpace().resolve(SqlDataBaseManager.class);
 
 		final SqlConnection connection = sqlDataBaseManager.getConnectionProvider(SqlDataBaseManager.MAIN_CONNECTION_PROVIDER_NAME).obtainConnection();
 		DataBaseScriptUtil.execSqlScript(connection, sqlScript, resourceManager, sqlDataBaseManager);
