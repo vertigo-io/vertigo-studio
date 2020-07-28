@@ -39,12 +39,10 @@ import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugi
 import io.vertigo.core.plugins.resource.local.LocalResourceResolverPlugin;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.database.DatabaseFeatures;
-import io.vertigo.database.plugins.sql.connection.c3p0.C3p0ConnectionProviderPlugin;
 import io.vertigo.database.sql.SqlDataBaseManager;
 import io.vertigo.database.sql.connection.SqlConnection;
 import io.vertigo.datamodel.DataModelFeatures;
 import io.vertigo.datastore.DataStoreFeatures;
-import io.vertigo.datastore.plugins.entitystore.sql.SqlEntityStorePlugin;
 import io.vertigo.studio.dao.DaoPAO;
 import io.vertigo.studio.mda.vertigo.DataBaseScriptUtil;
 import io.vertigo.studio.plugins.mda.vertigo.task.test.TaskTestDaoChecker;
@@ -91,7 +89,7 @@ public class DaoTestClass {
 						.build())
 				.addModule(new DatabaseFeatures()
 						.withSqlDataBase()
-						.addPlugin(C3p0ConnectionProviderPlugin.class,
+						.withC3p0(
 								Param.of("dataBaseClass", "io.vertigo.database.impl.sql.vendor.h2.H2DataBase"),
 								Param.of("jdbcDriver", "org.h2.Driver"),
 								Param.of("jdbcUrl", "jdbc:h2:mem:database"))
@@ -101,7 +99,7 @@ public class DaoTestClass {
 						.withCache()
 						.withMemoryCache()
 						.withEntityStore()
-						.addPlugin(SqlEntityStorePlugin.class,
+						.withSqlEntityStore(
 								Param.of("sequencePrefix", "SEQ_"))
 						.build())
 				.addModule(ModuleConfig.builder("dao")

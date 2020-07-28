@@ -28,7 +28,6 @@ import io.vertigo.core.plugins.resource.local.LocalResourceResolverPlugin;
 import io.vertigo.database.DatabaseFeatures;
 import io.vertigo.datamodel.DataModelFeatures;
 import io.vertigo.datastore.DataStoreFeatures;
-import io.vertigo.datastore.plugins.entitystore.sql.SqlEntityStorePlugin;
 
 public final class SqlTestConfigurator {
 	public static NodeConfig config() {
@@ -53,7 +52,7 @@ public final class SqlTestConfigurator {
 						.withCache()
 						.withMemoryCache()
 						.withEntityStore()
-						.addPlugin(SqlEntityStorePlugin.class,
+						.withSqlEntityStore(
 								Param.of("sequencePrefix", "SEQ_"))
 						.build())
 				.build();
