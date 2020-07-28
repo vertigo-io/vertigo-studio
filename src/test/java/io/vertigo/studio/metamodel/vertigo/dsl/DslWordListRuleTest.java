@@ -32,7 +32,7 @@ public final class DslWordListRuleTest {
 	@Test
 	public void testList0() throws PegNoMatchFoundException {
 		final List<String> list = wordListRule
-				.parse("[ ]", 0)
+				.parse("[ ]")
 				.getValue();
 		Assertions.assertEquals(0, list.size());
 	}
@@ -40,7 +40,7 @@ public final class DslWordListRuleTest {
 	@Test
 	public void testList1() throws PegNoMatchFoundException {
 		final List<String> list = wordListRule
-				.parse("[BLEU, VerT, ROUGE ]", 0)
+				.parse("[BLEU, VerT, ROUGE ]")
 				.getValue();
 		Assertions.assertEquals(3, list.size());
 		Assertions.assertTrue(list.contains("BLEU"));
@@ -51,7 +51,7 @@ public final class DslWordListRuleTest {
 	@Test
 	public void testList2() throws PegNoMatchFoundException {
 		final List<String> list = wordListRule
-				.parse("[BLEU, VERT, ROUGE ]", 0)
+				.parse("[BLEU, VERT, ROUGE ]")
 				.getValue();
 		Assertions.assertEquals(3, list.size());
 		Assertions.assertTrue(list.contains("BLEU"));
@@ -63,7 +63,7 @@ public final class DslWordListRuleTest {
 	public void testList3() {
 		Assertions.assertThrows(Exception.class, () -> {
 			final List<String> list = wordListRule
-					.parse(" [BLEU  ,	VERT,   ROUGE ,  Orange,] ", 0)
+					.parse(" [BLEU  ,	VERT,   ROUGE ,  Orange,] ")
 					.getValue();
 			Assertions.fail("liste :" + list);
 		});
@@ -73,7 +73,7 @@ public final class DslWordListRuleTest {
 	public void testList4() {
 		Assertions.assertThrows(Exception.class, () -> {
 			final List<String> list = wordListRule
-					.parse(" [ , BLEU,VERT,   ROUGE ,  Violet] ", 0)
+					.parse(" [ , BLEU,VERT,   ROUGE ,  Violet] ")
 					.getValue();
 			Assertions.fail("liste :" + list);
 		});
@@ -82,7 +82,7 @@ public final class DslWordListRuleTest {
 	@Test
 	public void testList5() throws PegNoMatchFoundException {
 		final List<String> list = wordListRule
-				.parse("[BLEU ]", 0)
+				.parse("[BLEU ]")
 				.getValue();
 		Assertions.assertEquals(1, list.size());
 		Assertions.assertTrue(list.contains("BLEU"));

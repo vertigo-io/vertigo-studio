@@ -35,7 +35,7 @@ public final class DslDefinitionEntryRuleTest {
 	public void test0() throws PegNoMatchFoundException {
 		final String text = "myFirstProperty : [BLEU ], non reconnu";
 		final PegResult<DslDefinitionEntry> cursor = MAIN
-				.parse(text, 0);
+				.parse(text);
 		final DslDefinitionEntry xDefinitionEntry = cursor.getValue();
 		Assertions.assertEquals("myFirstProperty", xDefinitionEntry.getFieldName());
 		Assertions.assertEquals(1, xDefinitionEntry.getDefinitionNames().size());
@@ -47,7 +47,7 @@ public final class DslDefinitionEntryRuleTest {
 	public void test1() throws PegNoMatchFoundException {
 		final String text = "myFirstProperty : [BLEU, VerT, ROUGE, T_REX ], non reconnu";
 		final PegResult<DslDefinitionEntry> cursor = MAIN
-				.parse(text, 0);
+				.parse(text);
 		final DslDefinitionEntry xDefinitionEntry = cursor.getValue();
 		Assertions.assertEquals("myFirstProperty", xDefinitionEntry.getFieldName());
 		Assertions.assertEquals(4, xDefinitionEntry.getDefinitionNames().size());
@@ -60,7 +60,7 @@ public final class DslDefinitionEntryRuleTest {
 	public void test2() throws PegNoMatchFoundException {
 		final String text = "myLastProperty : [ ],";
 		final PegResult<DslDefinitionEntry> cursor = MAIN
-				.parse(text, 0);
+				.parse(text);
 
 		final DslDefinitionEntry xDefinitionEntry = cursor.getValue();
 		Assertions.assertEquals("myLastProperty", xDefinitionEntry.getFieldName());
@@ -72,7 +72,7 @@ public final class DslDefinitionEntryRuleTest {
 	public void test3() throws PegNoMatchFoundException {
 		final String text = "myFirstProperty    :    [BLEU,VerT,    ROUGE    ]";
 		final PegResult<DslDefinitionEntry> cursor = MAIN
-				.parse(text, 0);
+				.parse(text);
 		final DslDefinitionEntry xDefinitionEntry = cursor.getValue();
 		Assertions.assertEquals("myFirstProperty", xDefinitionEntry.getFieldName());
 		Assertions.assertEquals(3, xDefinitionEntry.getDefinitionNames().size());
@@ -84,7 +84,7 @@ public final class DslDefinitionEntryRuleTest {
 	public void test4() throws PegNoMatchFoundException {
 		final String text = "myFirstProperty : BLEU,";
 		final PegResult<DslDefinitionEntry> cursor = MAIN
-				.parse(text, 0);
+				.parse(text);
 		final DslDefinitionEntry xDefinitionEntry = cursor.getValue();
 		Assertions.assertEquals("myFirstProperty", xDefinitionEntry.getFieldName());
 		Assertions.assertEquals(1, xDefinitionEntry.getDefinitionNames().size());
@@ -98,7 +98,7 @@ public final class DslDefinitionEntryRuleTest {
 			final String text = "myLastProperty : [BLEU;";
 			//on ne ferme pas l'accolade
 			final PegResult<DslDefinitionEntry> cursor = MAIN
-					.parse(text, 0); //<-- an exception is expected here
+					.parse(text); //<-- an exception is expected here
 			Assertions.assertNotNull(cursor);
 		});
 	}
@@ -108,7 +108,7 @@ public final class DslDefinitionEntryRuleTest {
 		Assertions.assertThrows(PegNoMatchFoundException.class, () -> {
 			final String text = "myUnknownProperty : BLEU";
 			//on positionne un nom erroné de propriété
-			MAIN.parse(text, 0);
+			MAIN.parse(text);
 		});
 	}
 }

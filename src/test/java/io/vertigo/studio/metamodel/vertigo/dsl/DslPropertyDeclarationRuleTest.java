@@ -45,7 +45,7 @@ public final class DslPropertyDeclarationRuleTest {
 	public void test() throws PegNoMatchFoundException {
 		final String text = "label   : \"BLeU\", non reconnu";
 		final PegResult<DslPropertyEntry> cursor = MAIN
-				.parse(text, 0);
+				.parse(text);
 		final DslPropertyEntry propertyEntry = cursor.getValue();
 		Assertions.assertEquals(LABEL, propertyEntry.getPropertyName());
 		Assertions.assertEquals("BLeU", propertyEntry.getPropertyValueAsString());
@@ -57,7 +57,7 @@ public final class DslPropertyDeclarationRuleTest {
 	public void test2() throws PegNoMatchFoundException {
 		final String text = "label  :    \" vert \"";
 		final PegResult<DslPropertyEntry> cursor = MAIN
-				.parse(text, 0);
+				.parse(text);
 		//On ne met pas de séparateur final et on met un espace
 		final DslPropertyEntry propertyEntry = cursor.getValue();
 		Assertions.assertEquals(LABEL, propertyEntry.getPropertyName());
@@ -69,7 +69,7 @@ public final class DslPropertyDeclarationRuleTest {
 	public void test3() throws PegNoMatchFoundException {
 		final String text = "size   : \"54\",";
 		final PegResult<DslPropertyEntry> cursor = MAIN
-				.parse(text, 0);
+				.parse(text);
 
 		final DslPropertyEntry propertyEntry = cursor.getValue();
 		Assertions.assertEquals(SIZE, propertyEntry.getPropertyName());
@@ -82,7 +82,7 @@ public final class DslPropertyDeclarationRuleTest {
 		Assertions.assertThrows(PegNoMatchFoundException.class, () -> {
 			final String text = "maxlength   : \"54\";";
 			//La propriété maxlength n'est pas enregistrée
-			MAIN.parse(text, 0);
+			MAIN.parse(text);
 		});
 	}
 
@@ -90,7 +90,7 @@ public final class DslPropertyDeclarationRuleTest {
 	public void testFail2() {
 		Assertions.assertThrows(PegNoMatchFoundException.class, () -> {
 			final String text = "label  :    vert \"";
-			MAIN.parse(text, 0); //On omet la quote de début
+			MAIN.parse(text); //On omet la quote de début
 		});
 	}
 

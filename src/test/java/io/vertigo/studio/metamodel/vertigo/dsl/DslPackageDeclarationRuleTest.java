@@ -31,7 +31,7 @@ public final class DslPackageDeclarationRuleTest {
 	@Test
 	public void testExpression() throws PegNoMatchFoundException {
 		final PegResult<String> result = PACKAGE_DECLARATION_RULE
-				.parse("package io.vertigo  xxxx", 0);
+				.parse("package io.vertigo  xxxx");
 		Assertions.assertEquals("io.vertigo", result.getValue());
 		Assertions.assertEquals("package io.vertigo".length(), result.getIndex());
 	}
@@ -40,7 +40,7 @@ public final class DslPackageDeclarationRuleTest {
 	public void testMalFormedExpression() {
 		Assertions.assertThrows(Exception.class, () -> {
 			final PegResult<String> result = PACKAGE_DECLARATION_RULE
-					.parse("packageio.vertigo", 0);//<-- en exception is excpected here
+					.parse("packageio.vertigo");//<-- en exception is excpected here
 			Assertions.assertNotNull(result);
 		});
 	}
@@ -49,7 +49,7 @@ public final class DslPackageDeclarationRuleTest {
 	public void testMalFormedExpression2() {
 		Assertions.assertThrows(Exception.class, () -> {
 			final PegResult<String> cursor = PACKAGE_DECLARATION_RULE
-					.parse("  packageio.vertigo", 0);//<-- en exception is excpected here
+					.parse("  packageio.vertigo");//<-- en exception is excpected here
 			Assertions.assertNotNull(cursor);
 		});
 	}

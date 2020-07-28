@@ -47,7 +47,7 @@ public class DslDefinitionBodyRuleTest {
 		final DslEntity entity = find(entities, "Formatter");
 
 		final DslDefinitionBody definitionBody = new DslDefinitionBodyRule(entity)
-				.parse("{ args : \"UPPER\" }", 0)
+				.parse("{ args : \"UPPER\" }")
 				.getValue();
 
 		Assertions.assertEquals(1, definitionBody.getPropertyEntries().size());
@@ -65,7 +65,7 @@ public class DslDefinitionBodyRuleTest {
 		final DslEntity entity = find(entities, "Domain");
 
 		final DslDefinitionBody definitionBody = new DslDefinitionBodyRule(entity)
-				.parse("{ dataType : String ,  formatter : FmtDefault,  constraint : [ CkCodePostal ]    } ", 0)
+				.parse("{ dataType : String ,  formatter : FmtDefault,  constraint : [ CkCodePostal ]    } ")
 				.getValue();
 
 		Assertions.assertNotNull(definitionBody);
@@ -78,7 +78,7 @@ public class DslDefinitionBodyRuleTest {
 		final String testValue = "{ dataType : String ,  formatter : FmtDefault,  constraint : [ CkCodePostal ] , maxLengh:\"true\"   } ";
 		try {
 			new DslDefinitionBodyRule(entity)
-					.parse(testValue, 0);
+					.parse(testValue);
 			Assertions.fail();
 		} catch (final PegNoMatchFoundException e) {
 			//System.out.println(e.getFullMessage());

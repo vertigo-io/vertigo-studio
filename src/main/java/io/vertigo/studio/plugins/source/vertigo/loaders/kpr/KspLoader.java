@@ -66,7 +66,7 @@ final class KspLoader {
 		try {
 			final String s = parseFile();
 			new DslKspRule(dynamicModelrepository)
-					.parse(s, 0);
+					.parse(s);
 		} catch (final PegNoMatchFoundException e) {
 			final String message = StringUtil.format("Echec de lecture du fichier KSP {0}\n{1}", kspURL.getFile(), e.getFullMessage());
 			throw WrappedException.wrap(e, message);
