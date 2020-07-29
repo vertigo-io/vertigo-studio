@@ -196,17 +196,16 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 				.build();
 
 		//0. adds ID field -->>> Should be first, but needs an already build DtDefinition
-		if (from.getIdField().isPresent()) {
-			final DtSketchField idField = from.getIdField().get();
-			dtDefinitionBuilder.addForeignKey(
-					idField.getName(),
-					idField.getLabel().getDisplay(),
-					idField.getDomain(),
-					Cardinality.ONE,
-					from.getName());
-		}
+		from.getIdField()
+				.ifPresent(idField -> dtDefinitionBuilder.addForeignKey(
+						idField.getName(),
+						idField.getLabel().getDisplay(),
+						idField.getDomain(),
+						Cardinality.ONE,
+						from.getName()));
 
 		return dtDefinition;
+
 	}
 
 	/**

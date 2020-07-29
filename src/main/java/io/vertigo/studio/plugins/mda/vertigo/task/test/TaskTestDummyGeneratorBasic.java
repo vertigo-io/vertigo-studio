@@ -98,9 +98,8 @@ public class TaskTestDummyGeneratorBasic implements TaskTestDummyGenerator {
 	public <D extends DtObject> D dumNew(final Class<D> dtoClass) {
 		final DtDefinition dtDefinition = DtObjectUtil.findDtDefinition(dtoClass);
 		final D object = dum(dtoClass);
-		if (dtDefinition.getIdField().isPresent()) {
-			dtDefinition.getIdField().get().getDataAccessor().setValue(object, null);// we make it pristine
-		}
+		dtDefinition.getIdField()
+				.ifPresent(idField -> idField.getDataAccessor().setValue(object, null));// we make it pristine
 		return object;
 
 	}
