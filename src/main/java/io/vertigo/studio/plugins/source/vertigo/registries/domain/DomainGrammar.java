@@ -115,14 +115,13 @@ public final class DomainGrammar implements DslGrammar {
 
 		DT_DATA_FIELD_ENTITY = DslEntity.builder("DataField")
 				.addRequiredField(LABEL, String)
-				.addRequiredField(CARDINALITY, String)
+				.addOptionalField(CARDINALITY, String)
 				.addRequiredField("domain", DOMAIN_ENTITY.getLink())
 				.addOptionalField(PERSISTENT, Boolean)
 				.build();
 
 		DT_COMPUTED_FIELD_ENTITY = DslEntity.builder("ComputedField")
 				.addRequiredField(LABEL, String)
-				.addRequiredField(CARDINALITY, String)
 				.addRequiredField("domain", DOMAIN_ENTITY.getLink())
 				.addOptionalField(EXPRESSION, String)
 				.build();

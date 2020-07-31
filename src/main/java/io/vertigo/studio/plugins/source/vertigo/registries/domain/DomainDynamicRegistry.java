@@ -258,8 +258,8 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 			Assertion.check().isTrue(field.getPropertyNames().contains(KspProperty.LABEL), "Label est une propriété obligatoire");
 			final String label = (String) field.getPropertyValue(KspProperty.LABEL);
 			//--
-			final Cardinality cardinality = Cardinality.fromSymbol((String) field.getPropertyValue(KspProperty.CARDINALITY));
-			Assertion.check().isTrue(field.getPropertyNames().contains(KspProperty.CARDINALITY), "cardinality is a required property.");
+			String sCardinality = (String) field.getPropertyValue(KspProperty.CARDINALITY);
+			final Cardinality cardinality = sCardinality == null ? Cardinality.OPTIONAL_OR_NULLABLE : Cardinality.fromSymbol(sCardinality);
 			//--
 			final Boolean tmpPersistent = (Boolean) field.getPropertyValue(KspProperty.PERSISTENT);
 			//Si PERSISTENT est non renseigné on suppose que le champ est à priori persistant .
@@ -287,15 +287,12 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 			Assertion.check().isTrue(field.getPropertyNames().contains(KspProperty.LABEL), "Label est une propriété obligatoire");
 			final String label = (String) field.getPropertyValue(KspProperty.LABEL);
 			//--
-			final Cardinality cardinality = Cardinality.fromSymbol((String) field.getPropertyValue(KspProperty.CARDINALITY));
-			Assertion.check().isTrue(field.getPropertyNames().contains(KspProperty.CARDINALITY), "cardinality is a required property.");
-			//---
 			final String expression = (String) field.getPropertyValue(KspProperty.EXPRESSION);
 			final ComputedExpression computedExpression = new ComputedExpression(expression);
 			//--
 			final String fieldName = field.getName();
 
-			dtDefinitionBuilder.addComputedField(fieldName, label, domainSketch, cardinality, computedExpression);
+			dtDefinitionBuilder.addComputedField(fieldName, label, domainSketch, computedExpression);
 		}
 	}
 
