@@ -119,40 +119,32 @@ public final class DtSketchField {
 			final ComputedExpression computedExpression) {
 		Assertion.check()
 				.isNotBlank(id)
+				.isNotNull(fieldName)
+				.isTrue(fieldName.length() <= FIELD_NAME_MAX_LENGTH, "the name of the field {0} has a limit size of {1}", fieldName, FIELD_NAME_MAX_LENGTH)
+				.isTrue(StringUtil.isLowerCamelCase(fieldName), "the name of the field {0} must be in lowerCamelCase", fieldName)
 				.isNotNull(type)
 				.isNotNull(domainSketch)
-				.isNotNull(type)
-				.isNotNull(cardinality);
+				.isNotNull(label)
+				.isNotNull(cardinality)
+				.when(type == FieldType.FOREIGN_KEY,
+						() -> Assertion.check().isNotNull(fkDtSketchName, "Le champ {0} de type clé étrangère doit référencer une définition ", fieldName))
+				.when(type != FieldType.FOREIGN_KEY,
+						() -> Assertion.check().isNull(fkDtSketchName, "Le champ {0} n''est pas une clé étrangère", fieldName))
+				.when(type == FieldType.COMPUTED,
+						() -> Assertion.check()
+								.isFalse(persistent, "a computed field can't be persistent")
+								.isNotNull(computedExpression, "the field {0}, declared as computed, must have an expression", fieldName))
+				.when(type != FieldType.COMPUTED,
+						() -> Assertion.check().isNull(computedExpression, "the field {0}, not declared as computed, must have an empty expression", fieldName));
 		//-----
 		this.id = id;
 		this.domainSketch = domainSketch;
 		this.type = type;
 		this.cardinality = cardinality;
-		//-----
-		Assertion.check()
-				.isNotNull(fieldName)
-				.isTrue(fieldName.length() <= FIELD_NAME_MAX_LENGTH, "the name of the field {0} has a limit size of {1}", fieldName, FIELD_NAME_MAX_LENGTH)
-				.isTrue(StringUtil.isLowerCamelCase(fieldName), "the name of the field {0} must be in lowerCamelCase", fieldName)
-				.isNotNull(label);
-		//-----
 		name = fieldName;
 		this.label = label;
-		//-----
-		Assertion.check().isFalse(getType() == FieldType.COMPUTED && persistent, "a computed field can't be persistent");
 		this.persistent = persistent;
-		//-----
-		if (getType() == FieldType.FOREIGN_KEY) {
-			Assertion.check().isNotNull(fkDtSketchName, "Le champ {0} de type clé étrangère doit référencer une définition ", fieldName);
-		} else {
-			Assertion.check().isNull(fkDtSketchName, "Le champ {0} n''est pas une clé étrangère", fieldName);
-		}
 		this.fkDtSketchName = fkDtSketchName;
-		//-----
-		if (getType() == FieldType.COMPUTED) {
-			Assertion.check().isNotNull(computedExpression, "the field {0}, declared as computed, must have an expression", fieldName);
-		} else {
-			Assertion.check().isNull(computedExpression, "the field {0}, not declared as computed, must have an empty expression", fieldName);
-		}
 		this.computedExpression = computedExpression;
 	}
 
