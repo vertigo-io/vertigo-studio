@@ -76,6 +76,14 @@ public final class DtSketchField {
 		public boolean isId() {
 			return this == ID;
 		}
+
+		public boolean isForeignKey() {
+			return this == FOREIGN_KEY;
+		}
+
+		public boolean isComputed() {
+			return this == COMPUTED;
+		}
 	}
 
 	private final String name;
@@ -203,7 +211,7 @@ public final class DtSketchField {
 	 */
 	//Todo changer le nom
 	public String getFkDtSketchName() {
-		Assertion.check().isNotNull(fkDtSketchName);
+		Assertion.check().isTrue(type.isForeignKey(), "A foreign field is expected");
 		//-----
 		return fkDtSketchName;
 	}
@@ -213,7 +221,7 @@ public final class DtSketchField {
 	 *  @return ComputedExpression du champs calculé (caractère obligatoire lié au type)
 	 */
 	public ComputedExpression getComputedExpression() {
-		Assertion.check().isNotNull(computedExpression);
+		Assertion.check().isTrue(type.isComputed(), "A computed field is expected");
 		//-----
 		return computedExpression;
 	}

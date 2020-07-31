@@ -74,7 +74,7 @@ public final class TaskSketch extends AbstractSketch {
 		Assertion.check()
 				.isNotBlank(dataSpace)
 				.isNotBlank(taskEngineClassName, "a taskEngineClass is required")
-				.isNotNull(request, "a request is required")
+				.isNotBlank(request, "a request is required")
 				.isNotNull(inTaskAttributes)
 				.isNotNull(outTaskAttributeOpt);
 		//-----
@@ -165,6 +165,6 @@ public final class TaskSketch extends AbstractSketch {
 	}
 
 	public String getTaskName() {
-		return "Tk" + getLocalName();
+		return PREFIX + getLocalName();
 	}
 }

@@ -54,7 +54,7 @@ public final class TaskSketchAttribute {
 	 */
 	TaskSketchAttribute(final String attributeName, final DomainSketch domainSketch, final Cardinality cardinality) {
 		Assertion.check()
-				.isNotNull(attributeName)
+				.isNotBlank(attributeName)
 				.isNotNull(cardinality)
 				.isTrue(StringUtil.isLowerCamelCase(attributeName), "the name of the attribute {0} must be in lowerCamelCase", attributeName)
 				.isNotNull(domainSketch);
