@@ -41,31 +41,12 @@ public class DslDefinitionBodyRuleTest {
 	}
 
 	@Test
-	public void test1() throws PegNoMatchFoundException {
-		final List<DslEntity> entities = dslDefinitionRepository.getGrammar().getEntities();
-
-		final DslEntity entity = find(entities, "Formatter");
-
-		final DslDefinitionBody definitionBody = new DslDefinitionBodyRule(entity)
-				.parse("{ args : \"UPPER\" }")
-				.getValue();
-
-		Assertions.assertEquals(1, definitionBody.getPropertyEntries().size());
-	}
-
-	//Exemple de test sur la déclaration d'un Domain
-	//	create Domain DO_CODE_POSTAL (
-	//			dataType : String;
-	//			formatter : FMT_DEFAULT;
-	//			constraint : {CK_CODE_POSTAL}
-	//		)
-	@Test
 	public void test2() throws PegNoMatchFoundException {
 		final List<DslEntity> entities = dslDefinitionRepository.getGrammar().getEntities();
 		final DslEntity entity = find(entities, "Domain");
 
 		final DslDefinitionBody definitionBody = new DslDefinitionBodyRule(entity)
-				.parse("{ dataType : String ,  formatter : FmtDefault,  constraint : [ CkCodePostal ]    } ")
+				.parse("{ dataType : String } ")
 				.getValue();
 
 		Assertions.assertNotNull(definitionBody);
@@ -75,7 +56,7 @@ public class DslDefinitionBodyRuleTest {
 	public void testError() {
 		final List<DslEntity> entities = dslDefinitionRepository.getGrammar().getEntities();
 		final DslEntity entity = find(entities, "Domain");
-		final String testValue = "{ dataType : String ,  formatter : FmtDefault,  constraint : [ CkCodePostal ] , maxLengh:\"true\"   } ";
+		final String testValue = "{ dataType : String,  maxLengh:\"true\"   } ";
 		try {
 			new DslDefinitionBodyRule(entity)
 					.parse(testValue);

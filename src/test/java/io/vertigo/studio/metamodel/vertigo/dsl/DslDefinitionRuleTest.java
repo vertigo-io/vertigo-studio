@@ -30,24 +30,9 @@ public class DslDefinitionRuleTest {
 	private final DslDefinitionRepository dslDefinitionRepository = DslDynamicRegistryMock.createDynamicDefinitionRepository();
 
 	@Test
-	public void test1() throws PegNoMatchFoundException {
-		final DslDefinition dslDefinition = new DslDynamicDefinitionRule("create", dslDefinitionRepository.getGrammar())
-				.parse("create Formatter FmtTest { args : \"UPPER\" }")
-				.getValue();
-
-		Assertions.assertNotNull(dslDefinition);
-	}
-
-	//Exemple de test sur la déclaration d'un Domain
-	//	create Domain DO_CODE_POSTAL (
-	//			dataType : String;
-	//			formatter : FMT_DEFAULT;
-	//			constraint : {CK_CODE_POSTAL}
-	//		)
-	@Test
 	public void test2() throws PegNoMatchFoundException {
 		final DslDefinition dslDefinition = new DslDynamicDefinitionRule("create", dslDefinitionRepository.getGrammar())
-				.parse("create Domain DoCodePostal { dataType : String ,  formatter:FmtDefault, constraint : [ CkCodePostal ]   } ")
+				.parse("create Domain DoCodePostal { dataType : String } ")
 				.getValue();
 		Assertions.assertNotNull(dslDefinition);
 	}
@@ -55,6 +40,9 @@ public class DslDefinitionRuleTest {
 	@Test
 	public void testTemplate() throws PegNoMatchFoundException {
 		new DslDynamicDefinitionRule("alter", dslDefinitionRepository.getGrammar())
-				.parse("alter Formatter FmtDefault {args : \"UPPER\"}");
+				.parse("alter DtDefinition DtTag {\r\n" +
+						"	sortField : \"label\"\r\n" +
+						" 	displayField : \"label\"\r\n" +
+						"}");
 	}
 }
