@@ -18,7 +18,6 @@
  */
 package io.vertigo.studio.notebook.domain;
 
-import java.util.List;
 import java.util.Properties;
 
 import io.vertigo.core.lang.Assertion;
@@ -83,12 +82,8 @@ public final class DomainSketch extends AbstractSketch {
 	 */
 	private final String dtSketchName;
 
-	/** Formatter. */
-	private final FormatterSketch formatterSketch;
-
 	/** List of property-value tuples */
 	private final Properties properties;
-	private final List<ConstraintSketch> constraintSketchs;
 
 	/**
 	 * Constructor.
@@ -105,8 +100,6 @@ public final class DomainSketch extends AbstractSketch {
 			final BasicType dataType,
 			final String dtDefinitionName,
 			final String valueObjectClassName,
-			final FormatterSketch formatterSketch,
-			final List<ConstraintSketch> constraintSketchs,
 			final Properties properties) {
 		super(name);
 		//---
@@ -124,8 +117,6 @@ public final class DomainSketch extends AbstractSketch {
 				.when(scope.isValueObject(), () -> Assertion.check()
 						.isTrue(valueObjectClassName != null, "a value-object domain must define a value-object class")
 						.isTrue(dataType == null && dtDefinitionName == null, "a value-object domain can't have nor a primitive type nor a data-object-definition"))
-				//formatterDefinition is nullable
-				.isNotNull(constraintSketchs)
 				.isNotNull(properties);
 		//-----
 		this.scope = scope;
@@ -135,9 +126,6 @@ public final class DomainSketch extends AbstractSketch {
 		this.dtSketchName = dtDefinitionName;
 		//---
 		this.valueObjectClassName = valueObjectClassName;
-		//---
-		this.formatterSketch = formatterSketch;
-		this.constraintSketchs = constraintSketchs;
 		//---Properties
 		this.properties = properties;
 	}
@@ -181,21 +169,6 @@ public final class DomainSketch extends AbstractSketch {
 		Assertion.check().isTrue(scope.isPrimitive(), "can only be used with primitives");
 		//---
 		return dataType;
-	}
-
-	/**
-	 * Returns the formatter of the domain.
-	 *
-	 * @return the formatter.
-	 */
-	public FormatterSketch getFormatterDefinition() {
-		Assertion.check().isNotNull(formatterSketch, "no formatter defined on {0}", this);
-		//-----
-		return formatterSketch;
-	}
-
-	public List<ConstraintSketch> getConstraintDefinitions() {
-		return constraintSketchs;
 	}
 
 	/**

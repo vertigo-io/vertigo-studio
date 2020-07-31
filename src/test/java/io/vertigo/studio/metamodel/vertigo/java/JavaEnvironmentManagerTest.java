@@ -31,13 +31,11 @@ import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
-import io.vertigo.datamodel.impl.smarttype.formatter.FormatterDefault;
 import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.metamodel.vertigo.java.data.DtDefinitions;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.domain.DomainSketch;
 import io.vertigo.studio.notebook.domain.DtSketch;
-import io.vertigo.studio.notebook.domain.FormatterSketch;
 import io.vertigo.studio.source.NotebookSource;
 import io.vertigo.studio.source.NotebookSourceManager;
 
@@ -82,16 +80,9 @@ public final class JavaEnvironmentManagerTest {
 	}
 
 	@Test
-	public void testDefaultFormatter() {
-		final FormatterSketch formatter = notebook.resolve("FmtDefault", FormatterSketch.class);
-		Assertions.assertEquals(FormatterDefault.class.getName(), formatter.getFormatterClassName());
-	}
-
-	@Test
 	public void testDomain() {
 		final io.vertigo.studio.notebook.domain.DomainSketch domainSketch = notebook.resolve("DoId", DomainSketch.class);
 		Assertions.assertEquals(BasicType.Long, domainSketch.getDataType());
-		Assertions.assertEquals(FormatterDefault.class.getName(), domainSketch.getFormatterDefinition().getFormatterClassName());
 	}
 
 	@Test

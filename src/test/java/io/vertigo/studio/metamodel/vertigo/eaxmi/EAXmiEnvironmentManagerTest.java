@@ -31,15 +31,10 @@ import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
-import io.vertigo.datamodel.impl.smarttype.constraint.ConstraintRegex;
-import io.vertigo.datamodel.impl.smarttype.formatter.FormatterDefault;
-import io.vertigo.datamodel.impl.smarttype.formatter.FormatterNumber;
 import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.domain.ConstraintSketch;
 import io.vertigo.studio.notebook.domain.DomainSketch;
 import io.vertigo.studio.notebook.domain.DtSketch;
-import io.vertigo.studio.notebook.domain.FormatterSketch;
 import io.vertigo.studio.source.NotebookSource;
 import io.vertigo.studio.source.NotebookSourceManager;
 
@@ -83,29 +78,9 @@ public final class EAXmiEnvironmentManagerTest {
 	}
 
 	@Test
-	public void testConstraint() {
-		final ConstraintSketch constraint = notebook.resolve("CkTelephone", ConstraintSketch.class);
-		Assertions.assertEquals(ConstraintRegex.class.getName(), constraint.getConstraintClassName());
-
-	}
-
-	@Test
-	public void testDefaultFormatter() {
-		final FormatterSketch formatter = notebook.resolve("FmtDefault", FormatterSketch.class);
-		Assertions.assertEquals(FormatterDefault.class.getName(), formatter.getFormatterClassName());
-	}
-
-	@Test
-	public void testFormatter() {
-		final FormatterSketch formatter = notebook.resolve("FmtTaux", FormatterSketch.class);
-		Assertions.assertEquals(FormatterNumber.class.getName(), formatter.getFormatterClassName());
-	}
-
-	@Test
 	public void testDomain() {
 		final io.vertigo.studio.notebook.domain.DomainSketch domainSketch = notebook.resolve("DoEmail", DomainSketch.class);
 		Assertions.assertEquals(BasicType.String, domainSketch.getDataType());
-		Assertions.assertEquals(FormatterDefault.class.getName(), domainSketch.getFormatterDefinition().getFormatterClassName());
 	}
 
 	@Test

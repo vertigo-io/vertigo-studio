@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,13 +37,11 @@ import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
 import io.vertigo.studio.notebook.SketchSupplier;
 import io.vertigo.studio.notebook.domain.ComputedExpression;
-import io.vertigo.studio.notebook.domain.ConstraintSketch;
 import io.vertigo.studio.notebook.domain.DomainBuilder;
 import io.vertigo.studio.notebook.domain.DomainSketch;
 import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.notebook.domain.DtSketchBuilder;
 import io.vertigo.studio.notebook.domain.DtSketchField;
-import io.vertigo.studio.notebook.domain.FormatterSketch;
 import io.vertigo.studio.notebook.domain.StudioStereotype;
 import io.vertigo.studio.notebook.domain.association.AssociationNNSketch;
 import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
@@ -77,11 +74,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 	private Sketch createModel(final Notebook notebook, final DslDefinition dslDefinition) {
 
 		final DslEntity dslEntity = dslDefinition.getEntity();
-		if (dslEntity.equals(DomainGrammar.CONSTRAINT_ENTITY)) {
-			return createConstraint(dslDefinition);
-		} else if (dslEntity.equals(DomainGrammar.FORMATTER_ENTITY)) {
-			return createFormatter(dslDefinition);
-		} else if (dslEntity.equals(DomainGrammar.DOMAIN_ENTITY)) {
+		if (dslEntity.equals(DomainGrammar.DOMAIN_ENTITY)) {
 			return createDomain(notebook, dslDefinition);
 		} else if (dslEntity.equals(DomainGrammar.DT_DEFINITION_ENTITY)) {
 			return createDtSketch(notebook, dslDefinition);
@@ -95,32 +88,8 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		throw new IllegalStateException("The type of definition" + dslDefinition + " is not managed by me");
 	}
 
-	/**
-	 * Enregistrement de contrainte
-	 *
-	 * @param xconstraint Définition de contrainte
-	 * @return DefinitionStandard Définition typée créée.
-	 */
-	private static ConstraintSketch createConstraint(final DslDefinition xconstraint) {
-		//On transforme la liste des paramètres (Liste de String) sous forme de tableau de String pour éviter
-		//le sous typage de List et pour se rapprocher de la syntaxe connue de Main.
-		final String name = xconstraint.getName();
-		final String args = (String) xconstraint.getPropertyValue(KspProperty.ARGS);
-		final String msg = (String) xconstraint.getPropertyValue(KspProperty.MSG);
-		final String className = (String) xconstraint.getPropertyValue(KspProperty.CLASS_NAME);
-		return new ConstraintSketch(name, className, msg, args);
-	}
-
-	private static FormatterSketch createFormatter(final DslDefinition xformatter) {
-		final String name = xformatter.getName();
-		final String args = (String) xformatter.getPropertyValue(KspProperty.ARGS);
-		final String className = (String) xformatter.getPropertyValue(KspProperty.CLASS_NAME);
-		return new FormatterSketch(name, className, args);
-	}
-
 	private static DomainSketch createDomain(final Notebook notebook, final DslDefinition xdomain) {
 		final String domainName = xdomain.getName();
-		final List<String> constraintNames = xdomain.getDefinitionLinkNames("constraint");
 		final String type = xdomain.getDefinitionLinkName("dataType");
 		final Properties properties = extractProperties(xdomain);
 		final DomainBuilder domainBuilder;
@@ -131,17 +100,8 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		} else {
 			final BasicType dataType = BasicType.valueOf(type);
 			domainBuilder = DomainSketch.builder(domainName, dataType);
-			//only primitive can have a formatter
-			final boolean hasFormatter = !xdomain.getDefinitionLinkNames("formatter").isEmpty();
-			if (hasFormatter) {
-				final String formatterName = xdomain.getDefinitionLinkName("formatter");
-				final FormatterSketch formatterSketch = notebook.resolve(formatterName, FormatterSketch.class);
-				//---
-				domainBuilder.withFormatter(formatterSketch);
-			}
 		}
 		return domainBuilder
-				.withConstraints(createConstraints(notebook, constraintNames))
 				.withProperties(properties)
 				.build();
 	}
@@ -355,13 +315,6 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		final AssociationSketchNode associationNodeA = new AssociationSketchNode(dtDefinitionA, navigabilityA, roleA, labelA, true, false);
 		final AssociationSketchNode associationNodeB = new AssociationSketchNode(dtDefinitionB, navigabilityB, roleB, labelB, true, false);
 		return new AssociationNNSketch(xassociation.getName(), tableName, associationNodeA, associationNodeB);
-	}
-
-	// méthode permettant de créer une liste de contraintes à partir d'une liste de noms de contrainte
-	private static List<ConstraintSketch> createConstraints(final Notebook notebook, final List<String> constraintNames) {
-		return constraintNames.stream()
-				.map(constraintName -> notebook.resolve(constraintName, ConstraintSketch.class))
-				.collect(Collectors.toList());
 	}
 
 	private AssociationSimpleSketch createAssociationSimpleSketch(final Notebook notebook, final DslDefinition xassociation) {

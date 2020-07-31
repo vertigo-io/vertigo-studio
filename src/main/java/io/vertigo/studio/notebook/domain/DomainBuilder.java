@@ -18,8 +18,6 @@
  */
 package io.vertigo.studio.notebook.domain;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Properties;
 
 import io.vertigo.core.lang.Assertion;
@@ -38,12 +36,6 @@ public final class DomainBuilder implements Builder<DomainSketch> {
 	private final BasicType myDataType;
 	private final String myDtSketchName;
 	private final Class myValueObjectClass;
-
-	/** Formatter. */
-	private FormatterSketch myformatterSketch;
-
-	/** list of constraints */
-	private List<ConstraintSketch> myConstraintSketchs;
 
 	/** List of property-value tuples */
 	private Properties myProperties;
@@ -103,28 +95,6 @@ public final class DomainBuilder implements Builder<DomainSketch> {
 	}
 
 	/**
-	 * @param formatterSketch the FormatterSketch
-	 * @return this builder
-	 */
-	public DomainBuilder withFormatter(final FormatterSketch formatterSketch) {
-		Assertion.check().isNotNull(formatterSketch);
-		//---
-		myformatterSketch = formatterSketch;
-		return this;
-	}
-
-	/**
-	 * @param constraintSketchs the list of constraintSketchs
-	 * @return this builder
-	 */
-	public DomainBuilder withConstraints(final List<ConstraintSketch> constraintSketchs) {
-		Assertion.check().isNotNull(constraintSketchs);
-		//---
-		myConstraintSketchs = constraintSketchs;
-		return this;
-	}
-
-	/**
 	* @param properties the properties
 	* @return this builder
 	*/
@@ -143,8 +113,6 @@ public final class DomainBuilder implements Builder<DomainSketch> {
 				myDataType,
 				myDtSketchName,
 				myValueObjectClass != null ? myValueObjectClass.getCanonicalName() : null,
-				myformatterSketch,
-				myConstraintSketchs == null ? Collections.emptyList() : myConstraintSketchs,
 				myProperties == null ? new Properties() : myProperties);
 	}
 }

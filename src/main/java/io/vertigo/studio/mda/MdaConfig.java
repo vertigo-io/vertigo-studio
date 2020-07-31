@@ -61,7 +61,7 @@ public final class MdaConfig {
 		this.targetGenDir = targetGenDir;
 		this.projectPackageName = projectPackageName;
 		this.encoding = encoding;
-		Assertion.check().isTrue(targetGenDir.endsWith("/"), "Le chemin doit finir par '/'.");
+		Assertion.check().isTrue(targetGenDir.endsWith("/"), "Le chemin {0} doit finir par '/'.", targetGenDir);
 		this.properties = properties;
 	}
 

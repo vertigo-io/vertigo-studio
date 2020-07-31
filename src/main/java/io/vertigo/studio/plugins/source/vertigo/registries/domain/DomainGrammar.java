@@ -18,9 +18,7 @@
  */
 package io.vertigo.studio.plugins.source.vertigo.registries.domain;
 
-import static io.vertigo.studio.plugins.source.vertigo.KspProperty.ARGS;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.CARDINALITY;
-import static io.vertigo.studio.plugins.source.vertigo.KspProperty.CLASS_NAME;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.DATA_SPACE;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.DISPLAY_FIELD;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.EXPRESSION;
@@ -32,7 +30,6 @@ import static io.vertigo.studio.plugins.source.vertigo.KspProperty.LABEL;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.LABEL_A;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.LABEL_B;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.MAX_LENGTH;
-import static io.vertigo.studio.plugins.source.vertigo.KspProperty.MSG;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.MULTIPLICITY_A;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.MULTIPLICITY_B;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.NAVIGABILITY_A;
@@ -77,10 +74,6 @@ public final class DomainGrammar implements DslGrammar {
 	 */
 	public static final String COMPUTED_FIELD = "computed";
 
-	/**Définition d'une constraint.*/
-	public static final DslEntity CONSTRAINT_ENTITY;
-	/**Définition d'un formatter.*/
-	public static final DslEntity FORMATTER_ENTITY;
 	/**Définition d'un domain.*/
 	public static final DslEntity DOMAIN_ENTITY;
 
@@ -106,25 +99,13 @@ public final class DomainGrammar implements DslGrammar {
 	public static final DslEntity FRAGMENT_ENTITY;
 
 	static {
-		CONSTRAINT_ENTITY = DslEntity.builder("Constraint")
-				.addRequiredField(CLASS_NAME, String)
-				.addOptionalField(ARGS, String)
-				.addOptionalField(MSG, String)
-				.build();
-		FORMATTER_ENTITY = DslEntity.builder("Formatter")
-				.addRequiredField(CLASS_NAME, String)
-				.addOptionalField(ARGS, String)
-				.build();
-
 		DOMAIN_ENTITY = DslEntity.builder("Domain")
 				.addOptionalField(MAX_LENGTH, Integer)
 				.addOptionalField(TYPE, String)
 				.addOptionalField(UNIT, String)
 				.addOptionalField(INDEX_TYPE, String)
 				.addOptionalField(STORE_TYPE, String)
-				.addRequiredField("formatter", FORMATTER_ENTITY.getLink())
 				.addRequiredField("dataType", DATA_TYPE_ENTITY.getLink())
-				.addManyFields("constraint", CONSTRAINT_ENTITY.getLink())
 				.build();
 
 		DT_ID_FIELD_ENTITY = DslEntity.builder("IdField")
@@ -206,8 +187,6 @@ public final class DomainGrammar implements DslGrammar {
 	public List<DslEntity> getEntities() {
 		return List.of(
 				DATA_TYPE_ENTITY,
-				CONSTRAINT_ENTITY,
-				FORMATTER_ENTITY,
 				//---
 				DOMAIN_ENTITY,
 				FRAGMENT_ENTITY,
