@@ -74,7 +74,8 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 			final String smartTypeName = xtaskAttribute.getDefinitionLinkName("domain");
 			final DomainSketch domainSketch = notebook.resolve(smartTypeName, DomainSketch.class);
 			//-----
-			final Cardinality cardinality = Cardinality.fromSymbol((String) xtaskAttribute.getPropertyValue(KspProperty.CARDINALITY));
+			final String sCardinality = (String) xtaskAttribute.getPropertyValue(KspProperty.CARDINALITY);
+			final Cardinality cardinality = sCardinality == null ? Cardinality.OPTIONAL_OR_NULLABLE : Cardinality.fromSymbol((sCardinality));
 			if (isInValue((String) xtaskAttribute.getPropertyValue(KspProperty.IN_OUT))) {
 				taskSketchBuilder.addInAttribute(attributeName, domainSketch, cardinality);
 			} else {
