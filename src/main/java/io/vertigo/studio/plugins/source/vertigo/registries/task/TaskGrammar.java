@@ -21,7 +21,6 @@ package io.vertigo.studio.plugins.source.vertigo.registries.task;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.CARDINALITY;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.CLASS_NAME;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.DATA_SPACE;
-import static io.vertigo.studio.plugins.source.vertigo.KspProperty.IN_OUT;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.REQUEST;
 import static io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslPropertyType.String;
 
@@ -36,15 +35,19 @@ import io.vertigo.studio.plugins.source.vertigo.registries.domain.DomainGrammar;
  */
 final class TaskGrammar implements DslGrammar {
 	/** Attribute name. */
-	public static final String TASK_ATTRIBUTE = "attribute";
+	public static final String TASK_ATTRIBUTE_IN = "in";
+	public static final String TASK_ATTRIBUTE_OUT = "out";
 
 	/**Définition de tache.*/
 	public static final DslEntity TASK_DEFINITION_ENTITY;
 
 	static {
-		final DslEntity taskAttributeDefinitionEntity = DslEntity.builder("Attribute")
+		final DslEntity taskAttributeInEntity = DslEntity.builder(TASK_ATTRIBUTE_IN)
 				.addOptionalField(CARDINALITY, String)
-				.addRequiredField(IN_OUT, String)
+				.addRequiredField("domain", DomainGrammar.DOMAIN_ENTITY.getLink())
+				.build();
+		final DslEntity taskAttributeOutEntity = DslEntity.builder(TASK_ATTRIBUTE_OUT)
+				.addOptionalField(CARDINALITY, String)
 				.addRequiredField("domain", DomainGrammar.DOMAIN_ENTITY.getLink())
 				.build();
 
@@ -52,7 +55,8 @@ final class TaskGrammar implements DslGrammar {
 				.addRequiredField(REQUEST, String)
 				.addOptionalField(DATA_SPACE, String)
 				.addRequiredField(CLASS_NAME, String)
-				.addManyFields(TASK_ATTRIBUTE, taskAttributeDefinitionEntity)
+				.addManyFields(TASK_ATTRIBUTE_IN, taskAttributeInEntity)
+				.addOptionalField(TASK_ATTRIBUTE_OUT, taskAttributeOutEntity)
 				.build();
 	}
 

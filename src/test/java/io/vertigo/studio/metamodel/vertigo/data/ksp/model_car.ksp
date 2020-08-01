@@ -38,6 +38,6 @@ create Association AMtyCar {
 create Task TkListCars {
 	className : "io.vertigo.studio.data.domain.CarEngine"
 	request : "hello"
-    attribute dtoCarIn 	{domain:DoDtCar, cardinality:"1", inOut :"in"}
-    attribute dtoCarOut 	{domain:DoDtCar, cardinality:"1", inOut :"out"}
+    in 	dtoCarIn 	{domain:DoDtCar, cardinality:"1" }
+    out dtoCarOut 	{domain:DoDtCar, cardinality:"1" }
 }

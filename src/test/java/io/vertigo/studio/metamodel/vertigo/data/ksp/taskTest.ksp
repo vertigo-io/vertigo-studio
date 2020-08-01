@@ -6,7 +6,7 @@ create Task TkGetFirstCar {
 				select * from car
 				limit 1
 			"
-	attribute dtoCar {domain : DoDtCar  cardinality:"?" inOut :"out"}
+	out dtoCar {domain : DoDtCar  cardinality:"?" }
 }
 
 
@@ -16,7 +16,7 @@ create Task TkPing {
     request : "
 				select 1
 			"
-	attribute result {domain : DoInteger  cardinality:"?" inOut :"out"}
+	out result {domain : DoInteger  cardinality:"?" }
 }
 
 
@@ -26,8 +26,8 @@ create Task TkOneParamSelect {
 				select 1 where 1 = #input#
 	
 			"
-	attribute input {domain : DoInteger  cardinality:"1" inOut :"in"}
-	attribute result {domain : DoInteger  cardinality:"1" inOut :"out"}
+	in 	input 	{domain : DoInteger  cardinality:"1" }
+	out result 	{domain : DoInteger  cardinality:"1" }
 }
 
 create Task TkOneListParamSelect {
@@ -36,8 +36,8 @@ create Task TkOneListParamSelect {
 				select 1 where 1 in  (#input.rownum#)
 	
 			"
-	attribute input {domain : DoInteger  cardinality:"*" inOut :"in"}
-	attribute result {domain : DoInteger  cardinality:"1" inOut :"out"}
+	in 	input 	{domain : DoInteger  cardinality:"*" }
+	out result 	{domain : DoInteger  cardinality:"1" }
 }
 
 
@@ -46,6 +46,6 @@ create Task TkSelectCarByIds {
     request : "
 				select * from car where id in (#input.rownum.id#)
 			"
-	attribute input {domain : DoDtCar  cardinality:"*" inOut :"in"}		
-	attribute dtoCar {domain : DoDtCar  cardinality:"*" inOut :"out"}
+	in 	input 	{domain : DoDtCar  cardinality:"*" }		
+	out dtoCar 	{domain : DoDtCar  cardinality:"*" }
 }

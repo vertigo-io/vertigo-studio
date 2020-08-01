@@ -68,31 +68,35 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 				.withDataSpace(dataSpace)
 				.withRequest(request)
 				.withPackageName(xtaskDefinition.getPackageName());
-		for (final DslDefinition xtaskAttribute : xtaskDefinition.getChildDefinitions(TaskGrammar.TASK_ATTRIBUTE)) {
+		for (final DslDefinition xtaskAttribute : xtaskDefinition.getChildDefinitions(TaskGrammar.TASK_ATTRIBUTE_IN)) {
 			final String attributeName = xtaskAttribute.getName();
 			Assertion.check().isNotNull(attributeName);
-			final String smartTypeName = xtaskAttribute.getDefinitionLinkName("domain");
-			final DomainSketch domainSketch = notebook.resolve(smartTypeName, DomainSketch.class);
 			//-----
-			final String sCardinality = (String) xtaskAttribute.getPropertyValue(KspProperty.CARDINALITY);
-			final Cardinality cardinality = sCardinality == null ? Cardinality.OPTIONAL_OR_NULLABLE : Cardinality.fromSymbol((sCardinality));
-			if (isInValue((String) xtaskAttribute.getPropertyValue(KspProperty.IN_OUT))) {
-				taskSketchBuilder.addInAttribute(attributeName, domainSketch, cardinality);
-			} else {
-				taskSketchBuilder.withOutAttribute(attributeName, domainSketch, cardinality);
-			}
+			taskSketchBuilder.addInAttribute(attributeName,
+					buildDomainSketch(notebook, xtaskAttribute),
+					buildCardinality(xtaskAttribute));
+		}
+		for (final DslDefinition xtaskAttribute : xtaskDefinition.getChildDefinitions(TaskGrammar.TASK_ATTRIBUTE_OUT)) {
+			final String attributeName = xtaskAttribute.getName();
+			Assertion.check().isNotNull(attributeName);
+			//-----
+			taskSketchBuilder.withOutAttribute(attributeName,
+					buildDomainSketch(notebook, xtaskAttribute),
+					buildCardinality(xtaskAttribute));
 		}
 		return taskSketchBuilder.build();
 	}
 
-	private static boolean isInValue(final String sText) {
-		switch (sText) {
-			case "in":
-				return true;
-			case "out":
-				return false;
-			default:
-				throw new IllegalArgumentException("les seuls types autorises sont 'in' ou 'out' et non > " + sText);
-		}
+	private static Cardinality buildCardinality(DslDefinition xtaskAttribute) {
+		final String sCardinality = (String) xtaskAttribute.getPropertyValue(KspProperty.CARDINALITY);
+		final Cardinality cardinality = sCardinality == null ? Cardinality.OPTIONAL_OR_NULLABLE : Cardinality.fromSymbol((sCardinality));
+		return cardinality;
 	}
+
+	private static DomainSketch buildDomainSketch(Notebook notebook, DslDefinition xtaskAttribute) {
+		final String smartTypeName = xtaskAttribute.getDefinitionLinkName("domain");
+		final DomainSketch domainSketch = notebook.resolve(smartTypeName, DomainSketch.class);
+		return domainSketch;
+	}
+
 }

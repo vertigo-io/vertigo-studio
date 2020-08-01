@@ -139,12 +139,6 @@ public final class KspProperty {
 	 * Requête ou plus générallement paramètre d'une tache.
 	 */
 	public static final String REQUEST = "REQUEST";
-
-	/**
-	 * Type in ou out d'un attribut de tache.
-	 */
-	public static final String IN_OUT = "IN_OUT";
-
 	//==============================
 	//----FileInfo
 	//==============================

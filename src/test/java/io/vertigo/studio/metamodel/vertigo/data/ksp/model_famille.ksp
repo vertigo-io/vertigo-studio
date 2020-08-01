@@ -6,7 +6,7 @@ create DtDefinition DtFamille {
 }
 
 alter DtDefinition DtFamille {
-    computed description {domain : DoLibelleLong, label:"Libelle" cardinality:"1"
+    computed description {domain : DoLibelleLong, label:"Libelle"
         expression:"final StringBuilder builder = new StringBuilder();
         builder.append(getLibelle());
         builder.append('[');
