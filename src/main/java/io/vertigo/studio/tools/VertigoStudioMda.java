@@ -21,9 +21,29 @@ package io.vertigo.studio.tools;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardWatchEventKinds;
+import java.nio.file.WatchEvent;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import io.vertigo.commons.CommonsFeatures;
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.VSystemException;
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.node.AutoCloseableNode;
 import io.vertigo.core.node.config.BootConfig;
@@ -31,6 +51,7 @@ import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.core.plugins.resource.local.LocalResourceResolverPlugin;
 import io.vertigo.core.plugins.resource.url.URLResourceResolverPlugin;
+import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaManager;
@@ -46,23 +67,38 @@ import io.vertigo.studio.source.NotebookSourceManager;
  */
 public final class VertigoStudioMda {
 
+	private static final Logger STUDIO_LOGGER = LogManager.getLogger(VertigoStudioMda.class);
+
+	private enum StudioTarget {
+		generate, watch;
+	}
+
 	public static void main(final String[] args) {
 		Assertion.check()
-				.isTrue(args.length == 1, "expected the studio json config");
+				.isTrue(args.length == 2, "expected the target (watch or generate) and the studio json config");
 		//--
-		final String studioProjectConfigJson = args[0];
-		doMain(studioProjectConfigJson);
+		final StudioTarget studioTarget = StudioTarget.valueOf(args[0]);
+		final String studioProjectConfigJson = args[1];
+		doMain(studioTarget, studioProjectConfigJson);
 	}
 
-	private static void doMain(final String studioProjectConfigJson) {
+	private static void doMain(final StudioTarget studioTarget, final String studioProjectConfigJson) {
 		final NotebookConfig notebookConfig = loadStudioProjectConfig(studioProjectConfigJson);
 		//---
-		final MdaResult mdaResult = exec(notebookConfig);
-		//---
-		mdaResult.displayResultMessage(System.out);
+		switch (studioTarget) {
+			case generate:
+				generate(notebookConfig);
+				break;
+			case watch:
+				watch(notebookConfig);
+				break;
+			default:
+				break;
+		}
+
 	}
 
-	private static MdaResult exec(final NotebookConfig notebookConfig) {
+	private static void generate(final NotebookConfig notebookConfig) {
 		try (final AutoCloseableNode studioApp = new AutoCloseableNode(buildNodeConfig())) {
 			final NotebookSourceManager notebookSourceManager = studioApp.getComponentSpace().resolve(NotebookSourceManager.class);
 			final MdaManager mdaManager = studioApp.getComponentSpace().resolve(MdaManager.class);
@@ -70,8 +106,94 @@ public final class VertigoStudioMda {
 			final MdaConfig mdaConfig = notebookConfig.getMdaConfig();
 			mdaManager.clean(mdaConfig);
 			final Notebook notebook = notebookSourceManager.read(notebookConfig.getMetamodelResources());
-			return mdaManager.generate(notebook, mdaConfig);
+			final MdaResult mdaResult = mdaManager.generate(notebook, mdaConfig);
+			mdaResult.displayResultMessage(System.out);
 		}
+	}
+
+	private static void watch(final NotebookConfig notebookConfig) {
+		try (final AutoCloseableNode studioApp = new AutoCloseableNode(buildNodeConfig())) {
+			final NotebookSourceManager notebookSourceManager = studioApp.getComponentSpace().resolve(NotebookSourceManager.class);
+			final MdaManager mdaManager = studioApp.getComponentSpace().resolve(MdaManager.class);
+			final ResourceManager resourceManager = studioApp.getComponentSpace().resolve(ResourceManager.class);
+			//-----
+			final MdaConfig mdaConfig = notebookConfig.getMdaConfig();
+			final List<Path> pathsToWatch = listPathToWatch(notebookConfig, resourceManager);
+			STUDIO_LOGGER.info("Monitored file for generation are {}", pathsToWatch);
+
+			final Set<Path> directoriesToWatch = pathsToWatch.stream().map(Path::getParent)
+					.collect(Collectors.toSet());
+
+			final Debouncer debouncer = new Debouncer();
+
+			try (final FileSystem fs = FileSystems.getDefault()) {
+				try (final WatchService watcher = fs.newWatchService()) {
+					try {
+						directoriesToWatch.forEach(directory -> {
+							try {
+								directory.register(watcher, StandardWatchEventKinds.ENTRY_MODIFY);
+							} catch (final IOException e) {
+								throw WrappedException.wrap(e);
+							}
+						});
+						while (true) {
+							final WatchKey key = watcher.take(); // waits
+							for (final WatchEvent<?> event : key.pollEvents()) {
+								if (pathsToWatch.contains(Path.of(key.watchable().toString(), event.context().toString()))) {
+									debouncer.debounce(() -> {
+										STUDIO_LOGGER.info("Regeneration started");
+										try {
+											mdaManager.clean(mdaConfig);
+											final Notebook notebook = notebookSourceManager.read(notebookConfig.getMetamodelResources());
+											mdaManager.generate(notebook, mdaConfig);
+										} catch (final Exception e) {
+											STUDIO_LOGGER.error("Error regenerating : ", e);
+										}
+										STUDIO_LOGGER.info("Regeneration completed");
+
+									}, 1);
+								}
+							}
+							key.reset();
+						}
+					} catch (final InterruptedException e) {
+						throw WrappedException.wrap(e);
+					}
+
+				}
+			} catch (final IOException e) {
+				throw WrappedException.wrap(e);
+			}
+
+		}
+	}
+
+	private static List<Path> listPathToWatch(final NotebookConfig notebookConfig, final ResourceManager resourceManager) {
+		final List<Path> pathsToWatch = notebookConfig.getMetamodelResources()
+				.stream()
+				.map(source -> resourceManager.resolve(source.getPath()))
+				.filter(url -> {
+					try {
+						return "file".equals(url.toURI().getScheme());
+					} catch (final URISyntaxException e) {
+						throw WrappedException.wrap(e);
+					}
+				})
+				.map(url -> {
+					try {
+						return Path.of(url.toURI());
+					} catch (final URISyntaxException e) {
+						throw WrappedException.wrap(e);
+					}
+				})
+				.flatMap(sourcePath -> {
+					if (sourcePath.toString().endsWith(".kpr")) {
+						return Stream.concat(Stream.of(sourcePath), getKspFiles(sourcePath).stream());
+					}
+					return Stream.of(sourcePath);
+				})
+				.collect(Collectors.toList());
+		return pathsToWatch;
 	}
 
 	private static NodeConfig buildNodeConfig() {
@@ -99,6 +221,55 @@ public final class VertigoStudioMda {
 			return StudioConfigJsonParser.parseJson(new URL(configFileUrl));
 		} catch (IOException | URISyntaxException e) {
 			throw WrappedException.wrap(e);
+		}
+	}
+
+	private static List<Path> getKspFiles(final Path kprUrl) {
+		try {
+			return doGetKspFiles(kprUrl);
+		} catch (final Exception e) {
+			throw WrappedException.wrap(e, "Echec de lecture du fichier KPR {0}", kprUrl);
+		}
+	}
+
+	private static List<Path> doGetKspFiles(final Path krpUrl) throws Exception {
+		return Files.readAllLines(krpUrl)
+				.stream()
+				.flatMap(fileName -> {
+					if (fileName.length() > 0) {
+						// voir http://commons.apache.org/vfs/filesystems.html
+						// Protocol : vfszip pour jboss par exemple
+						final Path url = Path.of(krpUrl.getParent().toString(), fileName);
+						if (fileName.endsWith(".kpr")) {
+							// kpr
+							return getKspFiles(url).stream();
+						} else if (fileName.endsWith(".ksp")) {
+							// ksp
+							return Stream.of(url);
+						} else {
+							throw new VSystemException("Type de fichier inconnu : {0}", fileName);
+						}
+					}
+					return Stream.empty();
+				})
+				.collect(Collectors.toList());
+	}
+
+	static class Debouncer {
+
+		private final ScheduledExecutorService scheduledExecutorService;
+		private Future previousFuture;
+
+		public Debouncer() {
+			scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+			previousFuture = null;
+		}
+
+		public synchronized void debounce(final Runnable runnable, final int delay) {
+			if (previousFuture != null) {
+				previousFuture.cancel(false);
+			}
+			previousFuture = scheduledExecutorService.schedule(runnable, delay, TimeUnit.SECONDS);
 		}
 	}
 
