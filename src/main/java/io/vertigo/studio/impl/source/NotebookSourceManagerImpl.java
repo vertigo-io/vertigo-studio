@@ -32,11 +32,13 @@ public class NotebookSourceManagerImpl implements NotebookSourceManager {
 
 	@Override
 	public Notebook read(final List<NotebookSource> resources) {
-		final Map<NotebookSourceReaderPlugin, List<NotebookSource>> resourcesByPlugin = resources.stream()
+		final Map<NotebookSourceReaderPlugin, List<NotebookSource>> resourcesByPlugin = resources
+				.stream()
 				.collect(Collectors.groupingBy(resource -> metamodelResourceParserPluginsByType.get(resource.getType())));
 
 		final Notebook notebook = new Notebook();
-		resourcesByPlugin.entrySet().stream()
+		resourcesByPlugin.entrySet()
+				.stream()
 				.flatMap(entry -> entry.getKey().parseResources(entry.getValue(), notebook).stream())
 				.map(definitionSupplier -> definitionSupplier.get(notebook))
 				.forEach(notebook::register);

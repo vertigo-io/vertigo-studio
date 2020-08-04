@@ -36,7 +36,9 @@ public final class TSMasterDataDefinitionModel {
 	private final List<TSMasterDataValueModel> tsMasterDataValueModels;
 
 	public TSMasterDataDefinitionModel(final DtSketch dtSketch, final Map<String, MasterDataValue> masterDataValuesByDtDefinition) {
-		Assertion.check().isNotNull(dtSketch);
+		Assertion.check()
+				.isNotNull(dtSketch)
+				.isNotNull(masterDataValuesByDtDefinition);
 		//-----
 		tsDtDefinitionModel = new TSStudioDtDefinitionModel(dtSketch);
 		tsMasterDataValueModels = masterDataValuesByDtDefinition

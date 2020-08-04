@@ -31,7 +31,7 @@ import io.vertigo.studio.notebook.webservices.WebServiceSketchParam;
  * Model for TypeScript generation.
  * @author npiedeloup
  */
-public class WebServiceDefinitionModelTs {
+public final class WebServiceDefinitionModelTs {
 
 	private final WebServiceSketch webServiceSketch;
 	private final List<WebServiceParamModelTs> webServiceParamModelTsList = new ArrayList<>();

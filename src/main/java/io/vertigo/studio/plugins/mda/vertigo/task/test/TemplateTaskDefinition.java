@@ -53,7 +53,8 @@ public final class TemplateTaskDefinition {
 		testClassSimpleName = StringUtil.first2UpperCase(getMethodName()) + "Test";
 
 		// Paramètres in
-		templateInTaskAttributes = taskDefinition.getInAttributes().stream()
+		templateInTaskAttributes = taskDefinition.getInAttributes()
+				.stream()
 				.map(taskAttribute -> new TemplateTaskAttribute(taskAttribute, classNameFromDt))
 				.collect(Collectors.toList());
 	}

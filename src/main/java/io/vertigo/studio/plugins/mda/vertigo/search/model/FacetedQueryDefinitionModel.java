@@ -45,7 +45,10 @@ public final class FacetedQueryDefinitionModel {
 		this.facetedQuerySketch = facetedQuerySketch;
 		simpleName = facetedQuerySketch.getLocalName();
 		criteriaClassCanonicalName = DomainUtil.buildJavaTypeName(facetedQuerySketch.getCriteriaDomain(), classNameFromDt);
-		facetDefinitionModels = facetedQuerySketch.getFacetSketchs().stream().map(FacetDefinitionModel::new).collect(Collectors.toList());
+		facetDefinitionModels = facetedQuerySketch.getFacetSketchs()
+				.stream()
+				.map(FacetDefinitionModel::new)
+				.collect(Collectors.toList());
 	}
 
 	/**

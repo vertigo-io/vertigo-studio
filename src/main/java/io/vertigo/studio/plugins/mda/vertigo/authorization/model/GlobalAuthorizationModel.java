@@ -23,7 +23,7 @@ import java.util.Optional;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.authorization.SecuredFeatureSketch;
 
-public class GlobalAuthorizationModel {
+public final class GlobalAuthorizationModel {
 
 	private final SecuredFeatureSketch securedFeatureSketch;
 

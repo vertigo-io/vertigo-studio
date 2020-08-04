@@ -108,7 +108,8 @@ public class TaskTestDummyGeneratorBasic implements TaskTestDummyGenerator {
 		/* Créé une instance du dto. */
 		final DtObject dto = DtObjectUtil.createDtObject(def);
 		/* Parcourt les champs */
-		def.getFields().stream()
+		def.getFields()
+				.stream()
 				.filter(dtField -> dtField.getType() == FieldType.COMPUTED)// we don't treat computed field (no setter)
 				.forEach(dtField -> {
 					final Class javaClass = dtField.getSmartTypeDefinition().getJavaClass();

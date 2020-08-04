@@ -7,7 +7,7 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.search.SearchIndexSketch;
 import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants.VertigoDefinitionPrefix;
 
-public class SearchIndexDefinitionModel {
+public final class SearchIndexDefinitionModel {
 
 	private final SearchIndexSketch searchIndexSketch;
 	private final List<IndexCopyToModel> copyToModels;
@@ -16,7 +16,8 @@ public class SearchIndexDefinitionModel {
 		Assertion.check().isNotNull(searchIndexSketch);
 		//---
 		this.searchIndexSketch = searchIndexSketch;
-		copyToModels = searchIndexSketch.getIndexCopyToFields().stream()
+		copyToModels = searchIndexSketch.getIndexCopyToFields()
+				.stream()
 				.map(fromField -> new IndexCopyToModel(fromField, searchIndexSketch.getIndexCopyToFromFields(fromField)))
 				.collect(Collectors.toList());
 	}

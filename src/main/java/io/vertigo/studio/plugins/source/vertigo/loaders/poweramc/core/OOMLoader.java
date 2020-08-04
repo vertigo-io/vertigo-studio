@@ -62,7 +62,8 @@ public final class OOMLoader extends AbstractXmlLoader {
 
 	@Override
 	public List<XmlClass> getClasses() {
-		return map.values().stream()
+		return map.values()
+				.stream()
 				//On ne conserve que les classes et les domaines
 				.filter(obj -> obj.getType() == OOMType.Class)
 				.map(obj -> createClass(obj, isConstFieldNameInSource()))
@@ -71,7 +72,8 @@ public final class OOMLoader extends AbstractXmlLoader {
 
 	@Override
 	public List<XmlAssociation> getAssociations() {
-		return map.values().stream()
+		return map.values()
+				.stream()
 				.filter(obj -> obj.getType() == OOMType.Association)
 				.map(obj -> createAssociation(obj, isConstFieldNameInSource()))
 				.collect(Collectors.toList());

@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.domain.DtSketchField;
 
-public class IndexCopyToModel {
+public final class IndexCopyToModel {
 	private final DtSketchField toField;
 	private final List<DtSketchField> fromFields;
 
@@ -24,7 +24,10 @@ public class IndexCopyToModel {
 	}
 
 	public List<String> getFrom() {
-		return fromFields.stream().map(DtSketchField::getName).collect(Collectors.toList());
+		return fromFields
+				.stream()
+				.map(DtSketchField::getName)
+				.collect(Collectors.toList());
 	}
 
 }

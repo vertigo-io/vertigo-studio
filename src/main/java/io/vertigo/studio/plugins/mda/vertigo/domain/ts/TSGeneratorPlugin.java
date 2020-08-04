@@ -80,7 +80,8 @@ public final class TSGeneratorPlugin implements MdaGeneratorPlugin {
 	}
 
 	private static List<TSStudioDtDefinitionModel> getTsDtDefinitionModels(final Notebook notebook) {
-		return DomainUtil.getDtSketchs(notebook).stream()
+		return DomainUtil.getDtSketchs(notebook)
+				.stream()
 				.map(TSStudioDtDefinitionModel::new)
 				.collect(Collectors.toList());
 	}
@@ -98,7 +99,9 @@ public final class TSGeneratorPlugin implements MdaGeneratorPlugin {
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 
-		final Map<String, Map<String, MasterDataValue>> staticMasterDataValues = notebook.getAll(StaticMasterDataSketch.class).stream().collect(Collectors.toMap(StaticMasterDataSketch::getEntityClassName, StaticMasterDataSketch::getValues));
+		final Map<String, Map<String, MasterDataValue>> staticMasterDataValues = notebook.getAll(StaticMasterDataSketch.class)
+				.stream()
+				.collect(Collectors.toMap(StaticMasterDataSketch::getEntityClassName, StaticMasterDataSketch::getValues));
 
 		final List<TSMasterDataDefinitionModel> tsMasterDataDefinitionModels = notebook.getAll(DtSketch.class)
 				.stream()

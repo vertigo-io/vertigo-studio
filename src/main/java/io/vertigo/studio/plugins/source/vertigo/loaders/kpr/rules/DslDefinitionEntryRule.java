@@ -50,7 +50,8 @@ public final class DslDefinitionEntryRule extends AbstractRule<DslDefinitionEntr
 	private static PegRule<List<Object>> createMainRule(final List<String> fieldNames) {
 		Assertion.check().isNotNull(fieldNames);
 		//-----
-		final List<PegRule<?>> fieldNamesRules = fieldNames.stream()
+		final List<PegRule<?>> fieldNamesRules = fieldNames
+				.stream()
 				.map(PegRules::term)
 				.collect(Collectors.toList());
 		//-----

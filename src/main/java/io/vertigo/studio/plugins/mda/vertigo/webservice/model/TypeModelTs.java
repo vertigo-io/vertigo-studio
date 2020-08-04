@@ -28,7 +28,7 @@ import io.vertigo.studio.plugins.mda.vertigo.webservice.JsFileNameUtil;
  * FreeMarker Model of Java Type
  * @author npiedeloup
  */
-public class TypeModelTs {
+public final class TypeModelTs {
 
 	private boolean isObject = false;
 	private boolean isList = false;

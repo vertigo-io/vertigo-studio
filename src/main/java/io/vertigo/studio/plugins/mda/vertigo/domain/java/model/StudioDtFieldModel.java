@@ -46,7 +46,11 @@ public final class StudioDtFieldModel {
 	 * Constructeur.
 	 * @param dtField Champ à générer
 	 */
-	StudioDtFieldModel(final DtSketch dtDefinition, final DtSketchField dtField, final List<? extends AssociationSketch> associationDefinitions, final Function<String, String> classNameFromDt) {
+	StudioDtFieldModel(
+			final DtSketch dtDefinition,
+			final DtSketchField dtField,
+			final List<? extends AssociationSketch> associationDefinitions,
+			final Function<String, String> classNameFromDt) {
 		Assertion.check()
 				.isNotNull(dtDefinition)
 				.isNotNull(dtField)

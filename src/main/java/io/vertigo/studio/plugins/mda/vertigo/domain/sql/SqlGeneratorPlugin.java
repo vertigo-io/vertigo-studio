@@ -83,7 +83,9 @@ public final class SqlGeneratorPlugin implements MdaGeneratorPlugin {
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 
-		final Map<String, Map<String, MasterDataValue>> staticMasterDataValues = notebook.getAll(StaticMasterDataSketch.class).stream().collect(Collectors.toMap(StaticMasterDataSketch::getEntityClassName, StaticMasterDataSketch::getValues));
+		final Map<String, Map<String, MasterDataValue>> staticMasterDataValues = notebook.getAll(StaticMasterDataSketch.class)
+				.stream()
+				.collect(Collectors.toMap(StaticMasterDataSketch::getEntityClassName, StaticMasterDataSketch::getValues));
 
 		final List<SqlMasterDataDefinitionModel> sqlMasterDataDefinitionModels = notebook.getAll(DtSketch.class)
 				.stream()
@@ -172,20 +174,22 @@ public final class SqlGeneratorPlugin implements MdaGeneratorPlugin {
 	private static Collection<SqlStudioAssociationSimpleModel> filterAssociationSimple(
 			final Collection<AssociationSimpleSketch> collectionSimpleAll,
 			final String dataSpace) {
-		return collectionSimpleAll.stream()
+		return collectionSimpleAll
+				.stream()
 				.filter(a -> dataSpace.equals(a.getAssociationNodeA().getDtSketch().getDataSpace()))
 				.filter(a -> a.getAssociationNodeA().getDtSketch().isPersistent() && a.getAssociationNodeB().getDtSketch().isPersistent())
-				.map(a -> new SqlStudioAssociationSimpleModel(a))
+				.map(SqlStudioAssociationSimpleModel::new)
 				.collect(Collectors.toList());
 	}
 
 	private static Collection<SqlStudioAssociationNNModel> filterAssociationNN(
 			final Collection<AssociationNNSketch> collectionNNAll,
 			final String dataSpace) {
-		return collectionNNAll.stream()
+		return collectionNNAll
+				.stream()
 				.filter(a -> dataSpace.equals(a.getAssociationNodeA().getDtSketch().getDataSpace()))
 				.filter(a -> a.getAssociationNodeA().getDtSketch().isPersistent() && a.getAssociationNodeB().getDtSketch().isPersistent())
-				.map(a -> new SqlStudioAssociationNNModel(a))
+				.map(SqlStudioAssociationNNModel::new)
 				.collect(Collectors.toList());
 	}
 

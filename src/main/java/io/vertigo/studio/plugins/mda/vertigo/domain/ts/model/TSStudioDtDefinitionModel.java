@@ -48,12 +48,14 @@ public final class TSStudioDtDefinitionModel {
 		//-----
 		this.dtSketch = dtSketch;
 
-		dtFieldModels = dtSketch.getFields().stream()
+		dtFieldModels = dtSketch.getFields()
+				.stream()
 				.filter(dtField -> FieldType.COMPUTED != dtField.getType())
 				.map(TSStudioDtFieldModel::new)
 				.collect(Collectors.toList());
 
-		domainModels = dtSketch.getFields().stream()
+		domainModels = dtSketch.getFields()
+				.stream()
 				.filter(dtField -> FieldType.COMPUTED != dtField.getType())
 				.map(DtSketchField::getDomain)
 				.distinct()

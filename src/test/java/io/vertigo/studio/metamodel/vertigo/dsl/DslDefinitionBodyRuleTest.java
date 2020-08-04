@@ -34,7 +34,8 @@ public class DslDefinitionBodyRuleTest {
 	private final DslDefinitionRepository dslDefinitionRepository = DslDynamicRegistryMock.createDynamicDefinitionRepository();
 
 	private static DslEntity find(final List<DslEntity> entities, final String entityName) {
-		return entities.stream()
+		return entities
+				.stream()
 				.filter(entity -> entity.getName().equals(entityName))
 				.findFirst()
 				.orElseThrow(() -> new VSystemException("not found {0}", entityName));

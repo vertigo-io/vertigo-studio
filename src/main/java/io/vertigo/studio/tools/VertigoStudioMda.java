@@ -121,7 +121,9 @@ public final class VertigoStudioMda {
 			final List<Path> pathsToWatch = listPathToWatch(notebookConfig, resourceManager);
 			STUDIO_LOGGER.info("Monitored file for generation are {}", pathsToWatch);
 
-			final Set<Path> directoriesToWatch = pathsToWatch.stream().map(Path::getParent)
+			final Set<Path> directoriesToWatch = pathsToWatch
+					.stream()
+					.map(Path::getParent)
 					.collect(Collectors.toSet());
 
 			final Debouncer debouncer = new Debouncer();

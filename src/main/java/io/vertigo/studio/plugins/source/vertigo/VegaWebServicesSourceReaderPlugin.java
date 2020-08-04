@@ -56,7 +56,10 @@ public final class VegaWebServicesSourceReaderPlugin implements NotebookSourceRe
 			}
 		}
 
-		return webServiceDefinitions.stream().map(webserviceDefinition -> (SketchSupplier) wB -> webserviceDefinition).collect(Collectors.toList());
+		return webServiceDefinitions
+				.stream()
+				.map(webserviceDefinition -> (SketchSupplier) wB -> webserviceDefinition)
+				.collect(Collectors.toList());
 	}
 
 	private static void scanAndAddPackage(final String packagePath, final List<WebServiceSketch> webServiceDefinitions) {

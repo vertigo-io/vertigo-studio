@@ -113,7 +113,8 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 		final MessageText labelMsg = MessageText.of(label);
 		final FacetSketch facetDefinition;
 		if (!rangeDefinitions.isEmpty()) {
-			final List<FacetSketchValue> facetValues = rangeDefinitions.stream()
+			final List<FacetSketchValue> facetValues = rangeDefinitions
+					.stream()
 					.map(SearchDynamicRegistry::createFacetValue)
 					.collect(Collectors.toList());
 			facetDefinition = FacetSketch.createFacetSketchByRange(
@@ -179,7 +180,8 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 		final String definitionName = xdefinition.getName();
 		final DtSketch keyConceptDtDefinition = notebook.resolve(SketchKey.of(xdefinition.getDefinitionLinkName("keyConcept")), DtSketch.class);
 		final List<String> dynamicFacetDefinitionNames = xdefinition.getDefinitionLinkNames("facets");
-		final List<FacetSketch> facetDefinitions = dynamicFacetDefinitionNames.stream()
+		final List<FacetSketch> facetDefinitions = dynamicFacetDefinitionNames
+				.stream()
 				.map(dynamicDefinitionName -> notebook.resolve(SketchKey.of(dynamicDefinitionName), FacetSketch.class))
 				.collect(Collectors.toList());
 		final String listFilterBuilderQuery = (String) xdefinition.getPropertyValue(SearchGrammar.LIST_FILTER_BUILDER_QUERY);

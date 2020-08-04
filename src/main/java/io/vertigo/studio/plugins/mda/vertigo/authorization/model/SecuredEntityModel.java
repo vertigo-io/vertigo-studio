@@ -25,7 +25,7 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.authorization.SecuredFeatureSketch;
 import io.vertigo.studio.notebook.domain.DtSketch;
 
-public class SecuredEntityModel {
+public final class SecuredEntityModel {
 
 	private final DtSketch dtSketch;
 	private final List<SecuredFeatureModel> securedFeatureModels;

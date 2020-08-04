@@ -2,7 +2,7 @@ package io.vertigo.studio.plugins.mda.vertigo.search.model;
 
 import io.vertigo.core.lang.Assertion;
 
-public class FacetParamModel {
+public final class FacetParamModel {
 
 	private final String paramName;
 	private final String paramValue;

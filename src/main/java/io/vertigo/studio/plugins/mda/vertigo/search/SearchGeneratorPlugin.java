@@ -115,7 +115,8 @@ public final class SearchGeneratorPlugin implements MdaGeneratorPlugin {
 
 		final SearchDtDefinitionModel searchDtDefinitionModel = new SearchDtDefinitionModel(dtSketch);
 
-		final Optional<SearchIndexSketch> searchIndexDefinitionOpt = notebook.getAll(SearchIndexSketch.class).stream()
+		final Optional<SearchIndexSketch> searchIndexDefinitionOpt = notebook.getAll(SearchIndexSketch.class)
+				.stream()
 				.filter(indexSketch -> indexSketch.getKeyConceptDtSketch().equals(dtSketch))
 				.findFirst();
 

@@ -41,7 +41,8 @@ public final class AccountJsonSecuritySourceReaderPlugin implements NotebookSour
 
 	@Override
 	public List<SketchSupplier> parseResources(final List<NotebookSource> resources, final Notebook notebook) {
-		return resources.stream()
+		return resources
+				.stream()
 				.flatMap(metamodelResource -> parseJson(resourceManager.resolve(metamodelResource.getPath())).stream())
 				.map(securedFeature -> (SketchSupplier) dS -> securedFeature)
 				.collect(Collectors.toList());

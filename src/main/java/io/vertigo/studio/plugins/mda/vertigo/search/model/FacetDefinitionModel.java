@@ -8,7 +8,7 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.search.FacetSketch;
 import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants.VertigoDefinitionPrefix;
 
-public class FacetDefinitionModel {
+public final class FacetDefinitionModel {
 
 	private final FacetSketch facetSketch;
 	private List<FacetValueModel> facetValueModels;
@@ -19,11 +19,15 @@ public class FacetDefinitionModel {
 		//---
 		this.facetSketch = facetSketch;
 		if (facetSketch.isRangeFacet()) {
-			facetValueModels = facetSketch.getFacetRanges().stream().map(FacetValueModel::new).collect(Collectors.toList());
+			facetValueModels = facetSketch.getFacetRanges()
+					.stream()
+					.map(FacetValueModel::new)
+					.collect(Collectors.toList());
 			facetParamModels = Collections.emptyList();
 		} else if (facetSketch.isCustomFacet()) {
 			facetValueModels = Collections.emptyList();
-			facetParamModels = facetSketch.getFacetParams().entrySet().stream()
+			facetParamModels = facetSketch.getFacetParams().entrySet()
+					.stream()
 					.map(entry -> new FacetParamModel(entry.getKey(), entry.getValue()))
 					.collect(Collectors.toList());
 		} else {
