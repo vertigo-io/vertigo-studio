@@ -20,6 +20,8 @@ package io.vertigo.studio.metamodel.vertigo.ksp;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,6 +43,9 @@ import io.vertigo.studio.source.NotebookSourceManager;
  */
 public final class KspEnvironmentManagerTest {
 	private AutoCloseableNode node;
+
+	@Inject
+	private NotebookSourceManager notebookSourceManager;
 
 	@BeforeEach
 	public final void setUp() {
@@ -69,23 +74,20 @@ public final class KspEnvironmentManagerTest {
 
 	@Test
 	public void testDomain() {
-		node.getComponentSpace().resolve(NotebookSourceManager.class)
-				.read(List.of(NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/ksp/data/execution.kpr")));
+		notebookSourceManager.read(List.of(NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/ksp/data/execution.kpr")));
 	}
 
 	@Test
 	public void testWrongNavigability() {
 		Assertions.assertThrows(IllegalStateException.class, () -> {
-			node.getComponentSpace().resolve(NotebookSourceManager.class)
-					.read(List.of(NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/ksp/data/execution-forbidden.kpr")));
+			notebookSourceManager.read(List.of(NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/ksp/data/execution-forbidden.kpr")));
 		});
 	}
 
 	@Test
 	public void testNonPossibleAssociation() {
 		Assertions.assertThrows(IllegalStateException.class, () -> {
-			node.getComponentSpace().resolve(NotebookSourceManager.class)
-					.read(List.of(NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/ksp/data/execution-forbidden2.kpr")));
+			notebookSourceManager.read(List.of(NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/ksp/data/execution-forbidden2.kpr")));
 		});
 	}
 

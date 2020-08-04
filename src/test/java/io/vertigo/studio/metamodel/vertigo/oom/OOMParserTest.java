@@ -48,6 +48,7 @@ import io.vertigo.studio.source.NotebookSourceManager;
 public class OOMParserTest {
 	private Notebook notebook;
 	private AutoCloseableNode node;
+
 	@Inject
 	private NotebookSourceManager notebookSourceManager;
 

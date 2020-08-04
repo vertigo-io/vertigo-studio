@@ -49,6 +49,7 @@ import io.vertigo.studio.source.NotebookSourceManager;
 public final class EAXmiEnvironmentManagerTest {
 	private Notebook notebook;
 	private AutoCloseableNode node;
+
 	@Inject
 	private NotebookSourceManager notebookSourceManager;
 

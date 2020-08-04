@@ -48,6 +48,7 @@ import io.vertigo.studio.source.NotebookSourceManager;
 public class EAXmiTestParser {
 	private Notebook notebook;
 	private AutoCloseableNode node;
+
 	@Inject
 	private NotebookSourceManager notebookSourceManager;
 

@@ -29,44 +29,14 @@ import static io.vertigo.studio.metamodel.vertigo.loader.PersonGrammar.POSTAL_CO
 import static io.vertigo.studio.metamodel.vertigo.loader.PersonGrammar.STREET;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.vertigo.core.node.AutoCloseableNode;
-import io.vertigo.core.node.component.di.DIInjector;
-import io.vertigo.core.node.config.BootConfig;
-import io.vertigo.core.node.config.LogConfig;
-import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinition;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinitionRepository;
 
 public final class EnvironmentManagerTest {
-	private AutoCloseableNode node;
-
-	@BeforeEach
-	public final void setUp() {
-		node = new AutoCloseableNode(buildNodeConfig());
-		DIInjector.injectMembers(this, node.getComponentSpace());
-	}
-
-	@AfterEach
-	public final void tearDown() {
-		if (node != null) {
-			node.close();
-		}
-	}
-
-	private NodeConfig buildNodeConfig() {
-		return NodeConfig.builder()
-				.withBoot(BootConfig.builder()
-						.withLogConfig(new LogConfig("/log4j.xml"))
-						.build())
-				.build();
-	}
-
 	private final DslDefinitionRepository dslDefinitionRepository = DslDynamicRegistryMock.createDynamicDefinitionRepository();
 
 	@Test

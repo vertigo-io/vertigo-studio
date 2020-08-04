@@ -48,6 +48,7 @@ public final class EAXmiTestParserIdentifiers {
 
 	private Notebook notebook;
 	private AutoCloseableNode node;
+
 	@Inject
 	private NotebookSourceManager notebookSourceManager;
 

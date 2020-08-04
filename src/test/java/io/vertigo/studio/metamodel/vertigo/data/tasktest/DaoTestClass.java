@@ -26,8 +26,8 @@ import org.junit.jupiter.api.BeforeEach;
 import io.vertigo.commons.CommonsFeatures;
 import io.vertigo.commons.transaction.VTransactionManager;
 import io.vertigo.commons.transaction.VTransactionWritable;
-import io.vertigo.core.node.Node;
 import io.vertigo.core.node.AutoCloseableNode;
+import io.vertigo.core.node.Node;
 import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.LogConfig;
@@ -52,6 +52,10 @@ public class DaoTestClass {
 
 	@Inject
 	private VTransactionManager transactionManager;
+	@Inject
+	private ResourceManager resourceManager;
+	@Inject
+	private SqlDataBaseManager sqlDataBaseManager;
 
 	private VTransactionWritable currentTransaction;
 	private AutoCloseableNode node;
@@ -109,10 +113,7 @@ public class DaoTestClass {
 				.build();
 	}
 
-	private static void execSqlScript(final String sqlScript, final Node node) {
-		final ResourceManager resourceManager = node.getComponentSpace().resolve(ResourceManager.class);
-		final SqlDataBaseManager sqlDataBaseManager = node.getComponentSpace().resolve(SqlDataBaseManager.class);
-
+	private void execSqlScript(final String sqlScript, final Node node) {
 		final SqlConnection connection = sqlDataBaseManager.getConnectionProvider(SqlDataBaseManager.MAIN_CONNECTION_PROVIDER_NAME).obtainConnection();
 		DataBaseScriptUtil.execSqlScript(connection, sqlScript, resourceManager, sqlDataBaseManager);
 	}

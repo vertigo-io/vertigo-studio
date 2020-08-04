@@ -47,6 +47,11 @@ import io.vertigo.studio.source.NotebookSourceManager;
 public class TaskTestsGeneratorTest {
 	private AutoCloseableNode node;
 
+	@Inject
+	private NotebookSourceManager notebookSourceManager;
+	@Inject
+	private MdaManager mdaManager;
+
 	@BeforeEach
 	public final void setUp() {
 		node = new AutoCloseableNode(buildNodeConfig());
@@ -75,11 +80,6 @@ public class TaskTestsGeneratorTest {
 						.build())
 				.build();
 	}
-
-	@Inject
-	private NotebookSourceManager notebookSourceManager;
-	@Inject
-	private MdaManager mdaManager;
 
 	/**
 	 * Lancement du test.
