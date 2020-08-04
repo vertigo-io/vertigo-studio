@@ -56,7 +56,8 @@ public final class SqlStudioDtDefinitionModel {
 			hasSequence = false;
 		}
 
-		dtFieldModels = dtSketch.getFields().stream()
+		dtFieldModels = dtSketch.getFields()
+				.stream()
 				.filter(dtField -> DtSketchField.FieldType.COMPUTED != dtField.getType())
 				.map(SqlStudioDtFieldModel::new)
 				.collect(Collectors.toList());

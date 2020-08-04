@@ -35,6 +35,7 @@ import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugi
 import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaManager;
+import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.source.NotebookSource;
 import io.vertigo.studio.source.NotebookSourceManager;
 
@@ -95,7 +96,8 @@ public class WebServicesGeneratorTest {
 				.addProperty("vertigo.tsws", "true")
 				.build();
 
-		mdaManager.generate(notebookSourceManager.read(resources), mdaConfig);
+		final Notebook notebook = notebookSourceManager.read(resources);
+		mdaManager.generate(notebook, mdaConfig);
 	}
 
 }

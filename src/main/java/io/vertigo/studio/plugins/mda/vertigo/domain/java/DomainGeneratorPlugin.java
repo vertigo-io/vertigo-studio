@@ -144,7 +144,8 @@ public final class DomainGeneratorPlugin implements MdaGeneratorPlugin {
 	}
 
 	private static List<StudioDtDefinitionModel> toModels(final Notebook notebook, final Collection<DtSketch> dtDefinitions) {
-		return dtDefinitions.stream()
+		return dtDefinitions
+				.stream()
 				.map(dtDef -> new StudioDtDefinitionModel(dtDef, getAssociationsByDtDefinition(notebook, dtDef), DomainUtil.createClassNameFromDtFunction(notebook)))
 				.collect(Collectors.toList());
 	}

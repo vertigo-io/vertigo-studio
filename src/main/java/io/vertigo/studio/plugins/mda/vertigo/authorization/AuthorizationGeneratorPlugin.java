@@ -68,7 +68,8 @@ public final class AuthorizationGeneratorPlugin implements MdaGeneratorPlugin {
 	}
 
 	private static List<GlobalAuthorizationModel> getGlobalAuthorizations(final Notebook notebook) {
-		return notebook.getAll(SecuredFeatureSketch.class).stream()
+		return notebook.getAll(SecuredFeatureSketch.class)
+				.stream()
 				.filter(o -> o.getLinkedResourceOpt().isEmpty())
 				.map(GlobalAuthorizationModel::new)
 				.collect(Collectors.toList());
@@ -79,7 +80,8 @@ public final class AuthorizationGeneratorPlugin implements MdaGeneratorPlugin {
 				.stream()
 				.filter(securedFeature -> securedFeature.getLinkedResourceOpt().isPresent())
 				.collect(Collectors.groupingBy(securedFeature -> securedFeature.getLinkedResourceOpt().get(), Collectors.toList()))
-				.entrySet().stream()
+				.entrySet()
+				.stream()
 				.filter(entry -> notebook.contains(SketchKey.of(DtDefinition.PREFIX + entry.getKey())))// we have the studioDtDefinition
 				.map(entry -> new SecuredEntityModel(entry.getValue(), notebook.resolve(SketchKey.of(DtDefinition.PREFIX + entry.getKey()), DtSketch.class)))
 				.collect(Collectors.toList());

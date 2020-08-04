@@ -20,6 +20,8 @@ package io.vertigo.studio.metamodel.vertigo.eaxmi;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,9 +46,10 @@ import io.vertigo.studio.source.NotebookSourceManager;
  * @author pchretien, mlaroche
  */
 public final class EAXmiTestParserAA {
-
 	private Notebook notebook;
 	private AutoCloseableNode node;
+	@Inject
+	private NotebookSourceManager notebookSourceManager;
 
 	@BeforeEach
 	public final void setUp() {
@@ -56,7 +59,7 @@ public final class EAXmiTestParserAA {
 		final List<NotebookSource> resources = List.of(
 				NotebookSource.of("xmi", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/associationAA.xml"),
 				NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/domain.kpr"));
-		notebook = node.getComponentSpace().resolve(NotebookSourceManager.class).read(resources);
+		notebook = notebookSourceManager.read(resources);
 	}
 
 	@AfterEach
@@ -90,8 +93,7 @@ public final class EAXmiTestParserAA {
 	}
 
 	private AssociationNNSketch getAssociationNNDefinition(final SketchKey key) {
-		return notebook
-				.resolve(key, AssociationNNSketch.class);
+		return notebook.resolve(key, AssociationNNSketch.class);
 	}
 
 	/**

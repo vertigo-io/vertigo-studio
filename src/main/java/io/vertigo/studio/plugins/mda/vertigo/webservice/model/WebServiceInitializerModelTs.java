@@ -22,7 +22,7 @@ package io.vertigo.studio.plugins.mda.vertigo.webservice.model;
  * FreeMarker Model of WebServiceInitializer.
  * @author npiedeloup
  */
-public class WebServiceInitializerModelTs {
+public final class WebServiceInitializerModelTs {
 
 	private final String jsFileName;
 	private final String simpleClassName;

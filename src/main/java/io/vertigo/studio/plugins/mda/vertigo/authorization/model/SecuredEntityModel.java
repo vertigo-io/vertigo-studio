@@ -34,7 +34,8 @@ public final class SecuredEntityModel {
 		Assertion.check().isNotNull(dtSketch);
 		//---
 		this.dtSketch = dtSketch;
-		securedFeatureModels = securedFeatureSketchs.stream()
+		securedFeatureModels = securedFeatureSketchs
+				.stream()
 				.map(SecuredFeatureModel::new)
 				.collect(Collectors.toList());
 	}

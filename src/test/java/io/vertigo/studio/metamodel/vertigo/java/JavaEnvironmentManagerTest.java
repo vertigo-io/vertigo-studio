@@ -20,6 +20,8 @@ package io.vertigo.studio.metamodel.vertigo.java;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,9 +48,10 @@ import io.vertigo.studio.source.NotebookSourceManager;
  * @author dchallas
  */
 public final class JavaEnvironmentManagerTest {
-
 	private Notebook notebook;
 	private AutoCloseableNode node;
+	@Inject
+	private NotebookSourceManager notebookSourceManager;
 
 	@BeforeEach
 	public final void setUp() {
@@ -58,7 +61,7 @@ public final class JavaEnvironmentManagerTest {
 		final List<NotebookSource> resources = List.of(
 				NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/java/data/execution.kpr"),
 				NotebookSource.of("classes", DtDefinitions.class.getName()));
-		notebook = node.getComponentSpace().resolve(NotebookSourceManager.class).read(resources);
+		notebook = notebookSourceManager.read(resources);
 	}
 
 	@AfterEach

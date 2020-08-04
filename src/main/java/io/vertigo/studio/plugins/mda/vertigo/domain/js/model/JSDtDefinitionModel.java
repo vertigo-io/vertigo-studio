@@ -44,7 +44,8 @@ public final class JSDtDefinitionModel {
 		//-----
 		this.dtDefinition = dtDefinition;
 
-		dtFieldModels = dtDefinition.getFields().stream()
+		dtFieldModels = dtDefinition.getFields()
+				.stream()
 				.filter(dtField -> DtSketchField.FieldType.COMPUTED != dtField.getType())
 				.map(JSStudioDtFieldModel::new)
 				.collect(Collectors.toList());

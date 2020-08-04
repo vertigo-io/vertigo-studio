@@ -3,7 +3,7 @@ package io.vertigo.studio.plugins.mda.vertigo.search.model;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.search.FacetSketchValue;
 
-public class FacetValueModel {
+public final class FacetValueModel {
 
 	private final FacetSketchValue facetValue;
 

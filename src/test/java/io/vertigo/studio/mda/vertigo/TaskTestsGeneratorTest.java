@@ -36,6 +36,7 @@ import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaManager;
 import io.vertigo.studio.metamodel.vertigo.data.DtDefinitions;
+import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.source.NotebookSource;
 import io.vertigo.studio.source.NotebookSourceManager;
 
@@ -97,7 +98,8 @@ public class TaskTestsGeneratorTest {
 				.addProperty("vertigo.taskTest.baseTestClass", "io.vertigo.studio.data.tasktest.DaoTestClass")
 				.build();
 
-		mdaManager.generate(notebookSourceManager.read(resources), mdaConfig);
+		final Notebook notebook = notebookSourceManager.read(resources);
+		mdaManager.generate(notebook, mdaConfig);
 	}
 
 }
