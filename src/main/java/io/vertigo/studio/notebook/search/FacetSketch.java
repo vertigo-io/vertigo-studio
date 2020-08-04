@@ -223,7 +223,7 @@ public final class FacetSketch extends AbstractSketch {
 	 * @return Liste des sélections/range.
 	 */
 	public List<FacetSketchValue> getFacetRanges() {
-		Assertion.check().isTrue(rangeFacet, "Cette facette ({0}) n'est pas segmentée.", getName());
+		Assertion.check().isTrue(rangeFacet, "Cette facette ({0}) n'est pas segmentée.", this);
 		//-----
 		return facetValues;
 	}
@@ -232,7 +232,7 @@ public final class FacetSketch extends AbstractSketch {
 	 * @return Liste des params.
 	 */
 	public Map<String, String> getFacetParams() {
-		Assertion.check().isFalse(facetParams.isEmpty(), "Cette facette ({0}) n'est pas paramétrée (custom).", getName());
+		Assertion.check().isFalse(facetParams.isEmpty(), "Cette facette ({0}) n'est pas paramétrée (custom).", this);
 		//-----
 		return facetParams;
 	}

@@ -51,7 +51,7 @@ public final class JSStudioDtFieldModel {
 	}
 
 	public String getDomainName() {
-		return dtField.getDomain().getName();
+		return dtField.getDomain().getKey().getName();
 	}
 
 	/**

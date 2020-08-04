@@ -28,69 +28,61 @@ import java.util.stream.Collectors;
 import io.vertigo.core.lang.Assertion;
 
 /**
- * A Studio notebook is a space where models can be shared and modified. (not threadSafe).
- * It is a conceptual representation of a project design that is human readable, storable and comparable
- *
+ * A Studio notebook is a space where sketches are shared and modified. (not threadSafe).
+ * It's a conceptual representation of a project design that is human readable, storable and comparable
+ *, 
  * @author mlaroche, pchretien
  */
 public final class Notebook {
-	private final Map<String, Sketch> sketchs = new LinkedHashMap<>();
+	private final Map<SketchKey, Sketch> sketches = new LinkedHashMap<>();
 
 	/**
-	 * Register a new Sketch.
+	 * Registers a new Sketch.
 	 * The sketch must not be already registered.
 	 * @param sketch the definition
 	 */
-	public void registerModel(final Sketch sketch) {
-		Assertion.check().isNotNull(sketch);
-		final String name = sketch.getName();
-		Assertion.check().isFalse(sketchs.containsKey(name), "this model '{0}' is already registered", name);
-		//-----
-		sketchs.put(name, sketch);
-	}
-
-	/** {@inheritDoc} */
-	public boolean contains(final String name) {
-		Assertion.check().isNotNull(name);
-		//-----
-		return sketchs.containsKey(name);
-	}
-
-	/** {@inheritDoc} */
-	public <D extends Sketch> D resolve(final String name, final Class<D> clazz) {
+	public void register(final Sketch sketch) {
 		Assertion.check()
-				.isNotNull(name)
-				.isNotNull(clazz);
-		//-----
-		final Sketch sketch = sketchs.get(name);
-		Assertion.check().isNotNull(sketch, "Model '{0}' of type '{1}' not found in ({2})", name, clazz.getSimpleName(), sketchs.keySet());
-		return clazz.cast(sketch);
+				.isNotNull(sketch)
+				.isFalse(contains(sketch.getKey()), "this sketch '{0}' is already registered", sketch);
+		//---
+		sketches.put(sketch.getKey(), sketch);
+	}
+
+	/** {@inheritDoc} */
+	public boolean contains(final SketchKey key) {
+		Assertion.check().isNotNull(key);
+		//---
+		return sketches.containsKey(key);
+	}
+
+	/** {@inheritDoc} */
+	public <D extends Sketch> D resolve(final SketchKey key, final Class<D> clazz) {
+		Assertion.check()
+				.isNotNull(key)
+				.isNotNull(clazz)
+				.isTrue(contains(key), "no sketch found with key {0} in {1}", key, sketches.keySet());
+		//---
+		return clazz.cast(sketches.get(key));
 	}
 
 	/** {@inheritDoc} */
 	public Set<Class<? extends Sketch>> getAllTypes() {
-		return sketchs.values()
+		return sketches.values()
 				.stream()
 				.map(Sketch::getClass)
 				.collect(Collectors.toSet());
 	}
 
 	/** {@inheritDoc} */
-	public <C extends Sketch> List<C> getAll(final Class<C> clazz) {
-		Assertion.check().isNotNull(clazz); // Le type des objets recherchés ne peut pas être null
-		//-----
-		return sketchs.values()
+	public <S extends Sketch> List<S> getAll(final Class<S> clazz) {
+		Assertion.check().isNotNull(clazz);
+		//---
+		return sketches.values()
 				.stream()
 				.filter(model -> clazz.isAssignableFrom(model.getClass()))
 				.map(clazz::cast)
-				.sorted(Comparator.comparing(Sketch::getName))
+				.sorted(Comparator.comparing(s -> s.getKey().getName()))
 				.collect(Collectors.toList());
-	}
-
-	/**
-	 * Clear all known models
-	 */
-	public void clear() {
-		sketchs.clear();
 	}
 }

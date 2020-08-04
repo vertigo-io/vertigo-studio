@@ -66,14 +66,14 @@ public final class TSStudioDtFieldModel {
 	 * @return Name of the domain
 	 */
 	public String getDomainName() {
-		return dtField.getDomain().getName();
+		return dtField.getDomain().getKey().getName();
 	}
 
 	/**
 	 * @return Local name of the domain
 	 */
 	public String getDomainDefinitionName() {
-		return dtField.getDomain().getName();
+		return dtField.getDomain().getKey().getName();
 	}
 
 	/**

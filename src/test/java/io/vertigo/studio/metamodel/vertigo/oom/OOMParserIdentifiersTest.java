@@ -32,6 +32,7 @@ import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.source.NotebookSource;
 import io.vertigo.studio.source.NotebookSourceManager;
@@ -78,7 +79,7 @@ public final class OOMParserIdentifiersTest {
 
 	@Test
 	public void testIdentifiersVsPrimaryKey() {
-		final DtSketch loginDefinition = notebook.resolve("DtLogin", DtSketch.class);
+		final DtSketch loginDefinition = notebook.resolve(SketchKey.of("DtLogin"), DtSketch.class);
 		Assertions.assertTrue(loginDefinition.getIdField().isPresent());
 	}
 }

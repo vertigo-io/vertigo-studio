@@ -64,10 +64,10 @@ public final class StudioDtDefinitionModel {
 		}
 
 		for (final AssociationSketch associationDefinition : associationDefinitions) {
-			if (associationDefinition.getAssociationNodeA().getDtSketch().getName().equals(dtDefinition.getName())) {
+			if (associationDefinition.getAssociationNodeA().getDtSketch().getKey().equals(dtDefinition.getKey())) {
 				associationModels.add(new StudioAssociationModel(associationDefinition, associationDefinition.getAssociationNodeB()));
 			}
-			if (associationDefinition.getAssociationNodeB().getDtSketch().getName().equals(dtDefinition.getName())) {
+			if (associationDefinition.getAssociationNodeB().getDtSketch().getKey().equals(dtDefinition.getKey())) {
 				associationModels.add(new StudioAssociationModel(associationDefinition, associationDefinition.getAssociationNodeA()));
 			}
 		}
@@ -194,7 +194,7 @@ public final class StudioDtDefinitionModel {
 						//only simple
 						.filter(StudioAssociationModel::isSimple)
 						.map(associationModel -> (AssociationSimpleSketch) associationModel.getDefinition())
-						.filter(association -> association.getForeignAssociationNode().getDtSketch().getName().equals(dtDefinition.getName())) // only when we are on the foreign node with a fk field
+						.filter(association -> association.getForeignAssociationNode().getDtSketch().getKey().equals(dtDefinition.getKey())) // only when we are on the foreign node with a fk field
 						.anyMatch(association -> association.getPrimaryAssociationNode().getDtSketch().getStereotype() != StudioStereotype.StaticMasterData); // any that IS NOT a static master data
 
 	}
@@ -206,7 +206,7 @@ public final class StudioDtDefinitionModel {
 						//only simple
 						.filter(StudioAssociationModel::isSimple)
 						.map(associationModel -> (AssociationSimpleSketch) associationModel.getDefinition())
-						.filter(association -> association.getForeignAssociationNode().getDtSketch().getName().equals(dtDefinition.getName())) // only when we are on the primary node
+						.filter(association -> association.getForeignAssociationNode().getDtSketch().getKey().equals(dtDefinition.getKey())) // only when we are on the primary node
 						.anyMatch(association -> association.getPrimaryAssociationNode().getDtSketch().getStereotype() == StudioStereotype.StaticMasterData); // any that IS  a static master data
 
 	}

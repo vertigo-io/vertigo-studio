@@ -39,7 +39,7 @@ public class NotebookSourceManagerImpl implements NotebookSourceManager {
 		resourcesByPlugin.entrySet().stream()
 				.flatMap(entry -> entry.getKey().parseResources(entry.getValue(), notebook).stream())
 				.map(definitionSupplier -> definitionSupplier.get(notebook))
-				.forEach(notebook::registerModel);
+				.forEach(notebook::register);
 		return notebook;
 	}
 

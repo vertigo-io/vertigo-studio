@@ -80,7 +80,7 @@ public final class SearchIndexSketch extends AbstractSketch {
 				.isNotNull(keyConceptDtSketch)
 				.isTrue(
 						keyConceptDtSketch.getStereotype() == StudioStereotype.KeyConcept,
-						"keyConceptDtSketch ({0}) must be a DtSketch of a KeyConcept class", keyConceptDtSketch.getName())
+						"keyConceptDtSketch ({0}) must be a DtSketch of a KeyConcept class", keyConceptDtSketch)
 				.isNotNull(indexDtSketch)
 				.isNotNull(indexCopyToFieldsMap)
 				.isNotBlank(searchLoaderId);

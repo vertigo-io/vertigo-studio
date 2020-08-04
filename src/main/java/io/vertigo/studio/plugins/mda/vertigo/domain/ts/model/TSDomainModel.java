@@ -54,7 +54,7 @@ public final class TSDomainModel {
 	 * @return Name of the domain
 	 */
 	public String getDomainName() {
-		return domainSketch.getName();
+		return domainSketch.getKey().getName();
 	}
 
 	/**

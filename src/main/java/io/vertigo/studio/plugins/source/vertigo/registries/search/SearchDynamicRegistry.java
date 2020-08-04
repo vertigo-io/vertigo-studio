@@ -31,6 +31,7 @@ import io.vertigo.core.lang.Tuple;
 import io.vertigo.core.locale.MessageText;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
+import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.SketchSupplier;
 import io.vertigo.studio.notebook.domain.DomainSketch;
 import io.vertigo.studio.notebook.domain.DtSketch;
@@ -76,8 +77,8 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 	}
 
 	private static SearchIndexSketch createIndexSketch(final Notebook notebook, final DslDefinition xsearchObjet) {
-		final DtSketch keyConceptDtDefinition = notebook.resolve(xsearchObjet.getDefinitionLinkName("keyConcept"), DtSketch.class);
-		final DtSketch indexDtDefinition = notebook.resolve(xsearchObjet.getDefinitionLinkName("dtIndex"), DtSketch.class);
+		final DtSketch keyConceptDtDefinition = notebook.resolve(SketchKey.of(xsearchObjet.getDefinitionLinkName("keyConcept")), DtSketch.class);
+		final DtSketch indexDtDefinition = notebook.resolve(SketchKey.of(xsearchObjet.getDefinitionLinkName("dtIndex")), DtSketch.class);
 		final String definitionName = xsearchObjet.getName();
 
 		//Déclaration des copyField
@@ -101,7 +102,7 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 
 	private static FacetSketch createFacetSketch(final Notebook notebook, final DslDefinition xdefinition) {
 		final String definitionName = xdefinition.getName();
-		final DtSketch indexDtDefinition = notebook.resolve(xdefinition.getDefinitionLinkName("dtDefinition"), DtSketch.class);
+		final DtSketch indexDtDefinition = notebook.resolve(SketchKey.of(xdefinition.getDefinitionLinkName("dtDefinition")), DtSketch.class);
 		final String dtFieldName = (String) xdefinition.getPropertyValue(SearchGrammar.FIELD_NAME);
 		final DtSketchField dtField = indexDtDefinition.getField(dtFieldName);
 		final String label = (String) xdefinition.getPropertyValue(KspProperty.LABEL);
@@ -176,16 +177,16 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 
 	private static FacetedQuerySketch createFacetedQuerySketch(final Notebook notebook, final DslDefinition xdefinition) {
 		final String definitionName = xdefinition.getName();
-		final DtSketch keyConceptDtDefinition = notebook.resolve(xdefinition.getDefinitionLinkName("keyConcept"), DtSketch.class);
+		final DtSketch keyConceptDtDefinition = notebook.resolve(SketchKey.of(xdefinition.getDefinitionLinkName("keyConcept")), DtSketch.class);
 		final List<String> dynamicFacetDefinitionNames = xdefinition.getDefinitionLinkNames("facets");
 		final List<FacetSketch> facetDefinitions = dynamicFacetDefinitionNames.stream()
-				.map(dynamicDefinitionName -> notebook.resolve(dynamicDefinitionName, FacetSketch.class))
+				.map(dynamicDefinitionName -> notebook.resolve(SketchKey.of(dynamicDefinitionName), FacetSketch.class))
 				.collect(Collectors.toList());
 		final String listFilterBuilderQuery = (String) xdefinition.getPropertyValue(SearchGrammar.LIST_FILTER_BUILDER_QUERY);
 		final String geoSearchQuery = (String) xdefinition.getPropertyValue(SearchGrammar.GEO_SEARCH_QUERY);
 		final String listFilterBuilderClassName = getListFilterBuilderClassName(xdefinition);
 		final String criteriaDomainName = xdefinition.getDefinitionLinkName("domainCriteria");
-		final DomainSketch criteriaDomain = notebook.resolve(criteriaDomainName, DomainSketch.class);
+		final DomainSketch criteriaDomain = notebook.resolve(SketchKey.of(criteriaDomainName), DomainSketch.class);
 
 		return new FacetedQuerySketch(
 				definitionName,

@@ -19,6 +19,7 @@
 package io.vertigo.studio.metamodel.vertigo.dsl;
 
 import io.vertigo.studio.notebook.Sketch;
+import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.SketchSupplier;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinition;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinitionRepository;
@@ -53,8 +54,8 @@ public final class DslDynamicRegistryMock implements DynamicRegistry {
 		return (notebook) -> new Sketch() {
 
 			@Override
-			public String getName() {
-				return "FAKE";
+			public SketchKey getKey() {
+				return SketchKey.of("FAKE");
 			}
 
 			@Override

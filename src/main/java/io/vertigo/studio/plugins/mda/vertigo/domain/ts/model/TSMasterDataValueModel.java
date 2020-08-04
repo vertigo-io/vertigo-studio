@@ -50,7 +50,7 @@ public final class TSMasterDataValueModel {
 				.when(dtField.getCardinality().hasOne(), () -> Assertion.check()
 						.isTrue(allFieldValues.containsKey(fieldName),
 								"Field '{0}' is required on '{1}' and no value was provided. Provided values '{2}'",
-								fieldName, dtSketch.getName(), allFieldValues));
+								fieldName, dtSketch, allFieldValues));
 		//---
 		return allFieldValues.getOrDefault(fieldName, "null");
 	}

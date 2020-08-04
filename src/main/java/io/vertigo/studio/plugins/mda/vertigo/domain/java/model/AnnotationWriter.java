@@ -79,7 +79,7 @@ class AnnotationWriter {
 					.append('@').append(VertigoClassNames.Fragment.getClassName());
 			if (dtDefinition.getFragment().isPresent()) {
 				buffer.append('(')
-						.append("fragmentOf = \"").append(dtDefinition.getFragment().get().getName()).append('\"')
+						.append("fragmentOf = \"").append(dtDefinition.getFragment().get().getKey().getName()).append('\"')
 						.append(')');
 			}
 

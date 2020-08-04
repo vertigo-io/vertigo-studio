@@ -13,9 +13,9 @@ public interface Sketch {
 	Pattern REGEX_SKETCH_NAME = Pattern.compile("[A-Z][a-zA-Z0-9]{2,60}([$][a-z][a-zA-Z0-9]{2,60})?");
 
 	/**
-	 * @return The name of the sketch
+	 * @return The key of the sketch
 	 */
-	String getName();
+	SketchKey getKey();
 
 	/**
 	 * @return The short name of the sketch without prefix

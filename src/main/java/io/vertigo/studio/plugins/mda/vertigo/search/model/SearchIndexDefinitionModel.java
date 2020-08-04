@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.search.SearchIndexSketch;
 import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants.VertigoDefinitionPrefix;
-import io.vertigo.studio.tools.SketchUtil;
 
 public class SearchIndexDefinitionModel {
 
@@ -23,7 +22,7 @@ public class SearchIndexDefinitionModel {
 	}
 
 	public String getName() {
-		return VertigoDefinitionPrefix.SearchIndexDefinition.getPrefix() + SketchUtil.getLocalName(searchIndexSketch.getName(), SearchIndexSketch.PREFIX);
+		return VertigoDefinitionPrefix.SearchIndexDefinition.getPrefix() + searchIndexSketch.getLocalName();
 	}
 
 	public String getLoaderId() {

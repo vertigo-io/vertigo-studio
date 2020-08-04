@@ -35,6 +35,7 @@ import io.vertigo.studio.impl.mda.MdaGeneratorPlugin;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
 import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.domain.DomainSketch;
 import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.notebook.task.TaskSketch;
@@ -210,7 +211,7 @@ public final class TaskTestGeneratorPlugin implements MdaGeneratorPlugin {
 			//Les taches sont générées dans les pao
 			// - si il n'esxiste pas de définition associées à la tache
 			// - ou si la définition est considérée comme non persistante.
-			final boolean pao = dtDefinition == null || !notebook.resolve(dtDefinition, DtSketch.class).isPersistent();
+			final boolean pao = dtDefinition == null || !notebook.resolve(SketchKey.of(dtDefinition), DtSketch.class).isPersistent();
 			if (pao) {
 				//La tache est liée au package. (PAO)
 				final List<TaskSketch> list = taskDefinitionsMap
@@ -241,7 +242,7 @@ public final class TaskTestGeneratorPlugin implements MdaGeneratorPlugin {
 			final boolean dao = dtSketchName != null;
 			if (dao) {
 				//Dans le cas d'un DTO ou DTC en sortie on considère que la tache est liée au DAO.
-				taskSketchsMap.get(notebook.resolve(dtSketchName, DtSketch.class)).add(taskSketch);
+				taskSketchsMap.get(notebook.resolve(SketchKey.of(dtSketchName), DtSketch.class)).add(taskSketch);
 			}
 		}
 		return taskSketchsMap;

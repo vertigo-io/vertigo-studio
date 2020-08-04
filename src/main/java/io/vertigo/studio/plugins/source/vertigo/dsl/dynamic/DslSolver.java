@@ -26,6 +26,7 @@ import java.util.List;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntityField;
 
 /**
@@ -95,7 +96,7 @@ final class DslSolver {
 			final String fieldName = dslEntityField.getName();
 			for (final String definitionName : dslDefinition.getDefinitionLinkNames(fieldName)) {
 				//reference should be already solved in a previous resources module : then continue
-				if (!notebook.contains(definitionName)) {
+				if (!notebook.contains(SketchKey.of(definitionName))) {
 					//or references should be in currently parsed resources
 					if (!definitionRepository.containsDefinitionName(definitionName)) {
 						final String xdefRootName = xdefRoot.getName().equals(dslDefinition.getName()) ? xdefRoot.getName() : (xdefRoot.getName() + "." + dslDefinition.getName());
@@ -111,11 +112,8 @@ final class DslSolver {
 		}
 
 		//On vérifie que les composites sont résolues.
-		for (final DslDefinition child : dslDefinition.getAllChildDefinitions()) {
-			if (!isSolved(notebook, definitionRepository, orderedList, child, xdefRoot)) {
-				return false;
-			}
-		}
-		return true;
+		return dslDefinition.getAllChildDefinitions()
+				.stream()
+				.allMatch(child -> isSolved(notebook, definitionRepository, orderedList, child, xdefRoot));
 	}
 }

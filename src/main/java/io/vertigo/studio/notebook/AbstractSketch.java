@@ -4,7 +4,7 @@ import io.vertigo.core.lang.Assertion;
 
 public abstract class AbstractSketch implements Sketch {
 	private final String prefix;
-	private final String name;
+	private final SketchKey key;
 
 	protected AbstractSketch(final String name) {
 		final SkecthPrefix sketchPrefix = this.getClass().getAnnotation(SkecthPrefix.class);
@@ -19,25 +19,25 @@ public abstract class AbstractSketch implements Sketch {
 				.isTrue(Character.isUpperCase(name.charAt(prefix.length())), "the name of the sketch {0} must be in UpperCamelCase", name)
 				.isTrue(Sketch.REGEX_SKETCH_NAME.matcher(name).matches(), "name's sketch {0} must match the pattern {1}", name, Sketch.REGEX_SKETCH_NAME);
 		//---
-		this.name = name;
+		this.key = SketchKey.of(name);
 	}
 
 	/** {@inheritDoc} */
 	@Override
-	public final String getName() {
-		return name;
+	public final SketchKey getKey() {
+		return key;
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public final String getLocalName() {
-		return getName().substring(prefix.length());
+		return getKey().getName().substring(prefix.length());
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public final String toString() {
-		return name;
+		return key.toString();
 	}
 
 }

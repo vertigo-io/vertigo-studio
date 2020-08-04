@@ -25,10 +25,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
 import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.domain.DomainSketch;
 import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.notebook.domain.DtSketchField;
@@ -179,9 +181,10 @@ public final class DomainUtil {
 	 * @return collection triée
 	 */
 	public static List<DtSketch> sortSketchCollection(final Collection<DtSketch> sketchCollection) {
-		final List<DtSketch> list = new ArrayList<>(sketchCollection);
-		list.sort(Comparator.comparing(DtSketch::getName));
-		return list;
+		return sketchCollection
+				.stream()
+				.sorted(Comparator.comparing(dt -> dt.getKey().getName()))
+				.collect(Collectors.toList());
 	}
 
 	/**
@@ -200,9 +203,10 @@ public final class DomainUtil {
 	}
 
 	private static <A extends AssociationSketch> Collection<A> sortAssociationsCollection(final Collection<A> associationCollection) {
-		final List<A> list = new ArrayList<>(associationCollection);
-		list.sort(Comparator.comparing(AssociationSketch::getName));
-		return list;
+		return associationCollection
+				.stream()
+				.sorted(Comparator.comparing(dt -> dt.getKey().getName()))
+				.collect(Collectors.toList());
 	}
 
 	public static String getSimpleNameFromCanonicalName(final String canonicalClassName) {
@@ -212,6 +216,6 @@ public final class DomainUtil {
 	}
 
 	public static Function<String, String> createClassNameFromDtFunction(final Notebook notebook) {
-		return dtName -> notebook.resolve(dtName, DtSketch.class).getClassCanonicalName();
+		return dtName -> notebook.resolve(SketchKey.of(dtName), DtSketch.class).getClassCanonicalName();
 	}
 }

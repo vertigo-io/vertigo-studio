@@ -26,7 +26,6 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.notebook.task.TaskSketch;
 import io.vertigo.studio.notebook.task.TaskSketchAttribute;
-import io.vertigo.studio.tools.SketchUtil;
 
 /**
  * Génération des classes/méthodes des taches de type DAO.
@@ -70,7 +69,7 @@ public final class TaskDefinitionModel {
 	 * @return Name of taskDefinition
 	 */
 	public String getName() {
-		return taskSketch.getName();
+		return taskSketch.getKey().getName();
 	}
 
 	/**
@@ -85,8 +84,7 @@ public final class TaskDefinitionModel {
 	 */
 	public String getMethodName() {
 		// Nom de la définition sans prefix (XxxYyyy).
-		final String localName = SketchUtil.getLocalName(taskSketch.getName(), TaskSketch.PREFIX);
-		return StringUtil.first2LowerCase(localName);
+		return StringUtil.first2LowerCase(taskSketch.getLocalName());
 	}
 
 	/**

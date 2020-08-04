@@ -151,8 +151,8 @@ public final class DomainGeneratorPlugin implements MdaGeneratorPlugin {
 
 	private static List<AssociationSketch> getAssociationsByDtDefinition(final Notebook notebook, final DtSketch dtSketch) {
 		return Stream.concat(notebook.getAll(AssociationSimpleSketch.class).stream(), notebook.getAll(AssociationNNSketch.class).stream())
-				.filter(association -> association.getAssociationNodeA().getDtSketch().getName().equals(dtSketch.getName())
-						|| association.getAssociationNodeB().getDtSketch().getName().equals(dtSketch.getName())) // concerns current dt
+				.filter(association -> association.getAssociationNodeA().getDtSketch().getKey().equals(dtSketch.getKey())
+						|| association.getAssociationNodeB().getDtSketch().getKey().equals(dtSketch.getKey())) // concerns current dt
 				.collect(Collectors.toList());
 	}
 

@@ -325,7 +325,7 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 		final DtSketchField sortField;
 		if (mySortFieldName != null) {
 			sortField = findFieldByName(mySortFieldName)
-					.orElseThrow(() -> new IllegalStateException(StringUtil.format("Sort field '{0}' not found on '{1}'", mySortFieldName, dtSketch.getName())));
+					.orElseThrow(() -> new IllegalStateException(StringUtil.format("Sort field '{0}' not found on '{1}'", mySortFieldName, dtSketch)));
 		} else if (myStereotype == StudioStereotype.Fragment) {
 			sortField = myFragment.getSortField().orElse(null);
 		} else {
@@ -335,7 +335,7 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 		final DtSketchField displayField;
 		if (myDisplayFieldName != null) {
 			displayField = findFieldByName(myDisplayFieldName)
-					.orElseThrow(() -> new IllegalStateException(StringUtil.format("Display field '{0}' not found on '{1}'", myDisplayFieldName, dtSketch.getName())));
+					.orElseThrow(() -> new IllegalStateException(StringUtil.format("Display field '{0}' not found on '{1}'", myDisplayFieldName, dtSketch)));
 		} else if (myStereotype == StudioStereotype.Fragment) {
 			displayField = myFragment.getDisplayField().orElse(null);
 		} else {
@@ -345,7 +345,7 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 		final DtSketchField handleField;
 		if (myHandleFieldName != null) {
 			handleField = findFieldByName(myHandleFieldName)
-					.orElseThrow(() -> new IllegalStateException(StringUtil.format("Handle field '{0}' not found on '{1}'", myHandleFieldName, dtSketch.getName())));
+					.orElseThrow(() -> new IllegalStateException(StringUtil.format("Handle field '{0}' not found on '{1}'", myHandleFieldName, dtSketch)));
 		} else if (myStereotype == StudioStereotype.Fragment) {
 			handleField = myFragment.getHandleField().orElse(null);
 		} else {

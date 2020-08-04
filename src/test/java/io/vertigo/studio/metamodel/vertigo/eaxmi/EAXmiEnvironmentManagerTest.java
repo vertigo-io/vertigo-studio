@@ -33,6 +33,7 @@ import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.domain.DomainSketch;
 import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.source.NotebookSource;
@@ -79,13 +80,13 @@ public final class EAXmiEnvironmentManagerTest {
 
 	@Test
 	public void testDomain() {
-		final io.vertigo.studio.notebook.domain.DomainSketch domainSketch = notebook.resolve("DoEmail", DomainSketch.class);
+		final io.vertigo.studio.notebook.domain.DomainSketch domainSketch = notebook.resolve(SketchKey.of("DoEmail"), DomainSketch.class);
 		Assertions.assertEquals(BasicType.String, domainSketch.getDataType());
 	}
 
 	@Test
 	public void testDtDefinition() {
-		final DtSketch dtDefinition = notebook.resolve("DtFamille", DtSketch.class);
+		final DtSketch dtDefinition = notebook.resolve(SketchKey.of("DtFamille"), DtSketch.class);
 		Assertions.assertEquals("io.vertigo.dynamock.domain.famille.Famille", dtDefinition.getClassCanonicalName());
 		Assertions.assertTrue(dtDefinition.isPersistent());
 		Assertions.assertEquals("io.vertigo.dynamock.domain.famille", dtDefinition.getPackageName());

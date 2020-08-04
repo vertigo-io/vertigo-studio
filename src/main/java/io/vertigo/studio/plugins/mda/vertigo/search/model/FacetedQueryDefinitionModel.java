@@ -26,7 +26,6 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.search.FacetedQuerySketch;
 import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants.VertigoDefinitionPrefix;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
-import io.vertigo.studio.tools.SketchUtil;
 
 /**
  * Génération des classes/méthodes des taches de type DAO.
@@ -44,7 +43,7 @@ public final class FacetedQueryDefinitionModel {
 		Assertion.check().isNotNull(facetedQuerySketch);
 		//-----
 		this.facetedQuerySketch = facetedQuerySketch;
-		simpleName = SketchUtil.getLocalName(facetedQuerySketch.getName(), FacetedQuerySketch.PREFIX);
+		simpleName = facetedQuerySketch.getLocalName();
 		criteriaClassCanonicalName = DomainUtil.buildJavaTypeName(facetedQuerySketch.getCriteriaDomain(), classNameFromDt);
 		facetDefinitionModels = facetedQuerySketch.getFacetSketchs().stream().map(FacetDefinitionModel::new).collect(Collectors.toList());
 	}
@@ -60,7 +59,7 @@ public final class FacetedQueryDefinitionModel {
 	 * @return Urn de la facetedQueryDefinition
 	 */
 	public String getUrn() {
-		return facetedQuerySketch.getName();
+		return facetedQuerySketch.getKey().getName();
 	}
 
 	public String getQueryName() {

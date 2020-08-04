@@ -21,6 +21,7 @@ package io.vertigo.studio.plugins.source.vertigo.registries.task;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
 import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.SketchSupplier;
 import io.vertigo.studio.notebook.domain.DomainSketch;
 import io.vertigo.studio.notebook.task.TaskSketch;
@@ -95,7 +96,7 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 
 	private static DomainSketch buildDomainSketch(Notebook notebook, DslDefinition xtaskAttribute) {
 		final String smartTypeName = xtaskAttribute.getDefinitionLinkName("domain");
-		final DomainSketch domainSketch = notebook.resolve(smartTypeName, DomainSketch.class);
+		final DomainSketch domainSketch = notebook.resolve(SketchKey.of(smartTypeName), DomainSketch.class);
 		return domainSketch;
 	}
 

@@ -28,6 +28,7 @@ import java.util.Optional;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.AbstractSketch;
 import io.vertigo.studio.notebook.SkecthPrefix;
+import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.domain.DomainSketch;
 import io.vertigo.studio.notebook.domain.DtSketch;
 
@@ -45,7 +46,7 @@ public final class FacetedQuerySketch extends AbstractSketch {
 	private final DtSketch keyConceptDtSketch;
 
 	/** Liste indexée des facettes.*/
-	private final Map<String, FacetSketch> facetSketchs = new LinkedHashMap<>();
+	private final Map<SketchKey, FacetSketch> facetSketches = new LinkedHashMap<>();
 
 	/** Domain du criteria. */
 	private final DomainSketch criteriaDomain;
@@ -91,7 +92,7 @@ public final class FacetedQuerySketch extends AbstractSketch {
 		//---
 		this.keyConceptDtSketch = keyConceptDtSketch;
 		for (final FacetSketch facetSketch : facetSketchs) {
-			this.facetSketchs.put(facetSketch.getName(), facetSketch);
+			this.facetSketches.put(facetSketch.getKey(), facetSketch);
 		}
 		this.criteriaDomain = criteriaDomain;
 		this.listFilterBuilderClassName = listFilterBuilderClassName;
@@ -108,7 +109,7 @@ public final class FacetedQuerySketch extends AbstractSketch {
 	public FacetSketch getFacetSketch(final String facetName) {
 		Assertion.check().isNotBlank(facetName);
 		//-----
-		final FacetSketch facetSketch = facetSketchs.get(facetName);
+		final FacetSketch facetSketch = facetSketches.get(facetName);
 		//-----
 		Assertion.check().isNotNull(facetSketch, "Aucune Définition de facette trouvée pour {0}", facetName);
 		return facetSketch;
@@ -126,7 +127,7 @@ public final class FacetedQuerySketch extends AbstractSketch {
 	 * @return Liste des facettes portées par l'index.
 	 */
 	public Collection<FacetSketch> getFacetSketchs() {
-		return Collections.unmodifiableCollection(facetSketchs.values());
+		return Collections.unmodifiableCollection(facetSketches.values());
 	}
 
 	/**

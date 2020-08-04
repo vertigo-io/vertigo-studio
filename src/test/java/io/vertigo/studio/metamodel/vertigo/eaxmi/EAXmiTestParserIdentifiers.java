@@ -32,6 +32,7 @@ import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.source.NotebookSource;
 import io.vertigo.studio.source.NotebookSourceManager;
@@ -76,14 +77,14 @@ public final class EAXmiTestParserIdentifiers {
 				.build();
 	}
 
-	private DtSketch getDtDefinition(final String urn) {
+	private DtSketch getDtDefinition(final SketchKey key) {
 		return notebook
-				.resolve(urn, DtSketch.class);
+				.resolve(key, DtSketch.class);
 	}
 
 	@Test
 	public void testIdentifiersVsPrimaryKey() {
-		final DtSketch loginDefinition = getDtDefinition("DtLogin");
+		final DtSketch loginDefinition = getDtDefinition(SketchKey.of("DtLogin"));
 		Assertions.assertTrue(loginDefinition.getIdField().isPresent());
 	}
 }
