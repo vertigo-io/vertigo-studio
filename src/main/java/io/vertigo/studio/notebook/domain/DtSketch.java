@@ -42,7 +42,7 @@ public final class DtSketch extends AbstractSketch {
 	public static final Pattern REGEX_DATA_SPACE = Pattern.compile("[a-z][a-zA-Z0-9]{3,60}");
 	public static final String DEFAULT_DATA_SPACE = "main";
 
-	/** if the definition is a fragment. */
+	/** if the sketch is a fragment. */
 	private final Optional<DtSketch> fragmentOpt;
 
 	/** name of the package. */

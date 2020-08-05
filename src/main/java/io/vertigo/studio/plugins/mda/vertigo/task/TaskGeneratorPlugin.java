@@ -41,7 +41,7 @@ import io.vertigo.studio.notebook.task.TaskSketch;
 import io.vertigo.studio.plugins.mda.vertigo.task.model.DAOModel;
 import io.vertigo.studio.plugins.mda.vertigo.task.model.PAOModel;
 import io.vertigo.studio.plugins.mda.vertigo.task.model.TaskAttributeModel;
-import io.vertigo.studio.plugins.mda.vertigo.task.model.TaskDefinitionModel;
+import io.vertigo.studio.plugins.mda.vertigo.task.model.TaskModel;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
 import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
 
@@ -162,7 +162,7 @@ public final class TaskGeneratorPlugin implements MdaGeneratorPlugin {
 	 * Stratégie pour savoir si une tache est PAO ou DAO.
 	 * Si la DT est non null DAO sinon PAO.
 	 */
-	private static SketchKey getDtDefinition(final TaskDefinitionModel templateTaskDefinition) {
+	private static SketchKey getDtDefinition(final TaskModel templateTaskDefinition) {
 		if (templateTaskDefinition.isOut()) {
 			//si out on regarde si en sortie on a un DTO ou une DTC typé.
 			final DomainSketch outDomain = templateTaskDefinition.getOutAttribute().getDomain();
@@ -191,7 +191,7 @@ public final class TaskGeneratorPlugin implements MdaGeneratorPlugin {
 		final Map<String, List<TaskSketch>> taskSketchsMap = new LinkedHashMap<>();
 		//---
 		for (final TaskSketch taskSketch : taskSketchs) {
-			final TaskDefinitionModel templateTaskDefinition = new TaskDefinitionModel(taskSketch, DomainUtil.createClassNameFromDtFunction(notebook));
+			final TaskModel templateTaskDefinition = new TaskModel(taskSketch, DomainUtil.createClassNameFromDtFunction(notebook));
 			final SketchKey dtSketchKey = getDtDefinition(templateTaskDefinition);
 			// Correction bug : task avec retour DtObject (non persistant) non générée
 			//Les taches sont générées dans les pao
@@ -222,7 +222,7 @@ public final class TaskGeneratorPlugin implements MdaGeneratorPlugin {
 		}
 		//---
 		for (final TaskSketch taskSketch : taskSketchs) {
-			final TaskDefinitionModel templateTaskDefinition = new TaskDefinitionModel(taskSketch, DomainUtil.createClassNameFromDtFunction(notebook));
+			final TaskModel templateTaskDefinition = new TaskModel(taskSketch, DomainUtil.createClassNameFromDtFunction(notebook));
 
 			final SketchKey dtSketchKey = getDtDefinition(templateTaskDefinition);
 			final boolean dao = dtSketchKey != null;

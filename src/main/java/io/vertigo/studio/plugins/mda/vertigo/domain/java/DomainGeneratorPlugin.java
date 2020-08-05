@@ -124,9 +124,9 @@ public final class DomainGeneratorPlugin implements MdaGeneratorPlugin {
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder,
-			final DtSketch dtDefinition,
+			final DtSketch dtSketch,
 			final List<? extends AssociationSketch> associations) {
-		final StudioDtDefinitionModel dtDefinitionModel = new StudioDtDefinitionModel(dtDefinition, associations, DomainUtil.createClassNameFromDtFunction(notebook));
+		final StudioDtDefinitionModel dtDefinitionModel = new StudioDtDefinitionModel(dtSketch, associations, DomainUtil.createClassNameFromDtFunction(notebook));
 
 		final Map<String, Object> model = new MapBuilder<String, Object>()
 				.put("dtDefinition", dtDefinitionModel)

@@ -111,7 +111,7 @@ public final class DomainSketch extends AbstractSketch {
 						.isTrue(dataType != null, "a primitive domain must define a primitive type"))
 				//---
 				.when(scope.isDataObject(), () -> Assertion.check()
-						.isTrue(dtSketchKey != null, "a data-object domain must define a data-object definition"))
+						.isTrue(dtSketchKey != null, "a data-object domain must define a data-object sketch"))
 				//---
 				.when(scope.isValueObject(), () -> Assertion.check()
 						.isTrue(valueObjectClassName != null, "a value-object domain must define a value-object class"))

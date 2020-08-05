@@ -26,7 +26,7 @@ import io.vertigo.studio.notebook.domain.DtSketch;
  *
  * @author pchretien, mlaroche
  */
-public final class SearchDtDefinitionModel {
+public final class SearchDtModel {
 	private final DtSketch dtSketch;
 
 	/**
@@ -34,7 +34,7 @@ public final class SearchDtDefinitionModel {
 	 *
 	 * @param dtSketch DtDefinition de l'objet à générer
 	 */
-	public SearchDtDefinitionModel(final DtSketch dtSketch) {
+	public SearchDtModel(final DtSketch dtSketch) {
 		Assertion.check().isNotNull(dtSketch);
 		//-----
 		this.dtSketch = dtSketch;

@@ -36,7 +36,7 @@ import io.vertigo.studio.mda.MdaResultBuilder;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.webservices.WebServiceSketch;
 import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
-import io.vertigo.studio.plugins.mda.vertigo.webservice.model.WebServiceDefinitionModelTs;
+import io.vertigo.studio.plugins.mda.vertigo.webservice.model.WebServiceModelTs;
 import io.vertigo.studio.plugins.mda.vertigo.webservice.model.WebServiceInitializerModelTs;
 
 /**
@@ -69,26 +69,26 @@ public final class WsTsGeneratorPlugin implements MdaGeneratorPlugin {
 	private static void generateRoute(final Notebook notebook, final String targetSubDir, final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
 		final Collection<WebServiceSketch> webServiceSketchs = getWebServiceSketchs(notebook);
 		if (!webServiceSketchs.isEmpty()) {
-			final Map<String, List<WebServiceDefinitionModelTs>> webServicesPerFacades = new HashMap<>();
+			final Map<String, List<WebServiceModelTs>> webServicesPerFacades = new HashMap<>();
 			for (final WebServiceSketch webServiceSketch : webServiceSketchs) {
 				//final String facadeName = webServiceDefinition.getMethod().getDeclaringClass().getSimpleName().replaceAll("WebServices", "");
 				final String facadeName = webServiceSketch.getGroupNameOpt().orElseGet(() -> webServiceSketch.getModuleName());
-				List<WebServiceDefinitionModelTs> facadeWebServiceDefinitions = webServicesPerFacades.get(facadeName);
+				List<WebServiceModelTs> facadeWebServiceDefinitions = webServicesPerFacades.get(facadeName);
 				if (facadeWebServiceDefinitions == null) {
 					facadeWebServiceDefinitions = new ArrayList<>();
 					webServicesPerFacades.put(facadeName, facadeWebServiceDefinitions);
 				}
-				facadeWebServiceDefinitions.add(new WebServiceDefinitionModelTs(webServiceSketch));
+				facadeWebServiceDefinitions.add(new WebServiceModelTs(webServiceSketch));
 			}
 
 			final Map<String, List<WebServiceInitializerModelTs>> facadeByPackage = new HashMap<>();
-			for (final Map.Entry<String, List<WebServiceDefinitionModelTs>> entry : webServicesPerFacades.entrySet()) {
+			for (final Map.Entry<String, List<WebServiceModelTs>> entry : webServicesPerFacades.entrySet()) {
 				final String packageName = entry.getValue().get(0).getFunctionnalPackageName();
 				final String simpleClassName = entry.getKey();
 				final String jsFileNameWithoutExtension = JsFileNameUtil.convertCamelCaseToJsCase(simpleClassName);
 				final Set<String> importList = new HashSet<>();
-				final List<WebServiceDefinitionModelTs> routeList = entry.getValue();
-				for (final WebServiceDefinitionModelTs route : routeList) {
+				final List<WebServiceModelTs> routeList = entry.getValue();
+				for (final WebServiceModelTs route : routeList) {
 					importList.addAll(route.getImportList());
 				}
 

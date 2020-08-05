@@ -32,14 +32,14 @@ import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
  *
  * @author pchretien, mlaroche
  */
-public final class FacetedQueryDefinitionModel {
+public final class FacetedQueryModel {
 	private final FacetedQuerySketch facetedQuerySketch;
 
 	private final String simpleName;
 	private final String criteriaClassCanonicalName;
-	private final List<FacetDefinitionModel> facetDefinitionModels;
+	private final List<FacetModel> facetDefinitionModels;
 
-	public FacetedQueryDefinitionModel(final FacetedQuerySketch facetedQuerySketch, final Function<String, String> classNameFromDt) {
+	public FacetedQueryModel(final FacetedQuerySketch facetedQuerySketch, final Function<String, String> classNameFromDt) {
 		Assertion.check().isNotNull(facetedQuerySketch);
 		//-----
 		this.facetedQuerySketch = facetedQuerySketch;
@@ -47,7 +47,7 @@ public final class FacetedQueryDefinitionModel {
 		criteriaClassCanonicalName = DomainUtil.buildJavaTypeName(facetedQuerySketch.getCriteriaDomain(), classNameFromDt);
 		facetDefinitionModels = facetedQuerySketch.getFacetSketchs()
 				.stream()
-				.map(FacetDefinitionModel::new)
+				.map(FacetModel::new)
 				.collect(Collectors.toList());
 	}
 
@@ -100,7 +100,7 @@ public final class FacetedQueryDefinitionModel {
 		return criteriaClassCanonicalName;
 	}
 
-	public List<FacetDefinitionModel> getFacetDefinitions() {
+	public List<FacetModel> getFacetDefinitions() {
 		return facetDefinitionModels;
 	}
 

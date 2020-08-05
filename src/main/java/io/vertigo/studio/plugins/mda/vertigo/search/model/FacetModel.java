@@ -7,13 +7,13 @@ import java.util.stream.Collectors;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.search.FacetSketch;
 
-public final class FacetDefinitionModel {
+public final class FacetModel {
 
 	private final FacetSketch facetSketch;
 	private List<FacetValueModel> facetValueModels;
 	private List<FacetParamModel> facetParamModels;
 
-	public FacetDefinitionModel(final FacetSketch facetSketch) {
+	public FacetModel(final FacetSketch facetSketch) {
 		Assertion.check().isNotNull(facetSketch);
 		//---
 		this.facetSketch = facetSketch;

@@ -37,10 +37,10 @@ import io.vertigo.studio.notebook.domain.StudioStereotype;
 import io.vertigo.studio.notebook.search.FacetSketch;
 import io.vertigo.studio.notebook.search.FacetedQuerySketch;
 import io.vertigo.studio.notebook.search.SearchIndexSketch;
-import io.vertigo.studio.plugins.mda.vertigo.search.model.FacetDefinitionModel;
-import io.vertigo.studio.plugins.mda.vertigo.search.model.FacetedQueryDefinitionModel;
-import io.vertigo.studio.plugins.mda.vertigo.search.model.SearchDtDefinitionModel;
-import io.vertigo.studio.plugins.mda.vertigo.search.model.SearchIndexDefinitionModel;
+import io.vertigo.studio.plugins.mda.vertigo.search.model.FacetModel;
+import io.vertigo.studio.plugins.mda.vertigo.search.model.FacetedQueryModel;
+import io.vertigo.studio.plugins.mda.vertigo.search.model.SearchDtModel;
+import io.vertigo.studio.plugins.mda.vertigo.search.model.SearchIndexModel;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
 import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
 
@@ -95,44 +95,44 @@ public final class SearchGeneratorPlugin implements MdaGeneratorPlugin {
 			final DtSketch dtSketch) {
 		Assertion.check().isNotNull(dtSketch);
 
-		final String definitionPackageName = dtSketch.getPackageName();
+		final String dtPackageName = dtSketch.getPackageName();
 		final String packageNamePrefix = mdaConfig.getProjectPackageName();
 		Assertion.check()
-				.isTrue(definitionPackageName.startsWith(packageNamePrefix), "Package name {0}, must begin with normalised prefix: {1}", definitionPackageName, packageNamePrefix)
-				.isTrue(definitionPackageName.substring(packageNamePrefix.length()).contains(".domain"), "Package name {0}, must contains the modifier .domain", definitionPackageName);
+				.isTrue(dtPackageName.startsWith(packageNamePrefix), "Package name {0}, must begin with normalised prefix: {1}", dtPackageName, packageNamePrefix)
+				.isTrue(dtPackageName.substring(packageNamePrefix.length()).contains(".domain"), "Package name {0}, must contains the modifier .domain", dtPackageName);
 		// ---
 		//we need to find the featureName, aka between projectpackageName and .domain
-		final String featureName = definitionPackageName.substring(packageNamePrefix.length(), definitionPackageName.indexOf(".domain"));
+		final String featureName = dtPackageName.substring(packageNamePrefix.length(), dtPackageName.indexOf(".domain"));
 		if (!StringUtil.isBlank(featureName)) {
 			Assertion.check().isTrue(featureName.lastIndexOf('.') == 0, "The feature {0} must not contain any dot", featureName.substring(1));
 		}
 		// the subpackage is what's behind the .domain
-		final String subpackage = definitionPackageName.substring(definitionPackageName.indexOf(".domain") + ".domain".length());
+		final String subpackage = dtPackageName.substring(dtPackageName.indexOf(".domain") + ".domain".length());
 		// breaking change -> need to redefine what's the desired folder structure in javagen...
 
 		//On construit le nom du package à partir du package de la DT et de la feature.
 		final String packageName = mdaConfig.getProjectPackageName() + featureName + ".search" + subpackage;
 
-		final SearchDtDefinitionModel searchDtDefinitionModel = new SearchDtDefinitionModel(dtSketch);
+		final SearchDtModel searchDtModel = new SearchDtModel(dtSketch);
 
 		final Optional<SearchIndexSketch> searchIndexDefinitionOpt = notebook.getAll(SearchIndexSketch.class)
 				.stream()
 				.filter(indexSketch -> indexSketch.getKeyConceptDtSketch().equals(dtSketch))
 				.findFirst();
 
-		final List<FacetedQueryDefinitionModel> facetedQueryDefinitions = new ArrayList<>();
+		final List<FacetedQueryModel> facetedQueryDefinitions = new ArrayList<>();
 		for (final FacetedQuerySketch facetedQuerySketch : notebook.getAll(FacetedQuerySketch.class)) {
 			if (facetedQuerySketch.getKeyConceptDtSketch().equals(dtSketch)) {
-				final FacetedQueryDefinitionModel templateFacetedQueryDefinition = new FacetedQueryDefinitionModel(facetedQuerySketch, DomainUtil.createClassNameFromDtFunction(notebook));
-				facetedQueryDefinitions.add(templateFacetedQueryDefinition);
+				final FacetedQueryModel templateFacetedQueryModel = new FacetedQueryModel(facetedQuerySketch, DomainUtil.createClassNameFromDtFunction(notebook));
+				facetedQueryDefinitions.add(templateFacetedQueryModel);
 			}
 		}
 
-		final List<FacetDefinitionModel> facetDefinitions = new ArrayList<>();
+		final List<FacetModel> facetDefinitions = new ArrayList<>();
 		if (searchIndexDefinitionOpt.isPresent()) {
 			for (final FacetSketch facetSketch : notebook.getAll(FacetSketch.class)) {
 				if (facetSketch.getIndexDtSketch().equals(searchIndexDefinitionOpt.get().getIndexDtSketch())) {
-					final FacetDefinitionModel templateFacetedQueryDefinition = new FacetDefinitionModel(facetSketch);
+					final FacetModel templateFacetedQueryDefinition = new FacetModel(facetSketch);
 					facetDefinitions.add(templateFacetedQueryDefinition);
 				}
 			}
@@ -144,14 +144,14 @@ public final class SearchGeneratorPlugin implements MdaGeneratorPlugin {
 					.put("packageName", packageName)
 					.put("facetedQueryDefinitions", facetedQueryDefinitions)
 					.put("facetDefinitions", facetDefinitions)
-					.put("dtDefinition", searchDtDefinitionModel)
-					.put("indexDtDefinition", new SearchDtDefinitionModel(searchIndexDefinitionOpt.get().getIndexDtSketch()))
-					.put("searchIndexDefinition", new SearchIndexDefinitionModel(searchIndexDefinitionOpt.get()))
+					.put("dtDefinition", searchDtModel)
+					.put("indexDtDefinition", new SearchDtModel(searchIndexDefinitionOpt.get().getIndexDtSketch()))
+					.put("searchIndexDefinition", new SearchIndexModel(searchIndexDefinitionOpt.get()))
 					.build();
 
 			MdaFileGenerator.builder(mdaConfig)
 					.withModel(model)
-					.withFileName(searchDtDefinitionModel.getClassSimpleName() + "SearchClient.java")
+					.withFileName(searchDtModel.getClassSimpleName() + "SearchClient.java")
 					.withGenSubDir(targetSubDir)
 					.withPackageName(packageName)
 					.withTemplateName(SearchGeneratorPlugin.class, "template/search_client.ftl")

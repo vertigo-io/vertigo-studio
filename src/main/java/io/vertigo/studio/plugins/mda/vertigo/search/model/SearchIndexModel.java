@@ -7,12 +7,12 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.search.SearchIndexSketch;
 import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants.VertigoDefinitionPrefix;
 
-public final class SearchIndexDefinitionModel {
+public final class SearchIndexModel {
 
 	private final SearchIndexSketch searchIndexSketch;
 	private final List<IndexCopyToModel> copyToModels;
 
-	public SearchIndexDefinitionModel(final SearchIndexSketch searchIndexSketch) {
+	public SearchIndexModel(final SearchIndexSketch searchIndexSketch) {
 		Assertion.check().isNotNull(searchIndexSketch);
 		//---
 		this.searchIndexSketch = searchIndexSketch;

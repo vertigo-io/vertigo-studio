@@ -36,7 +36,7 @@ import io.vertigo.studio.notebook.task.TaskSketch;
 public final class PAOModel {
 	private final String packageName;
 	private final String className;
-	private final Collection<TaskDefinitionModel> taskDefinitionModels;
+	private final Collection<TaskModel> taskDefinitionModels;
 	private final boolean hasOptions;
 
 	/**
@@ -55,7 +55,7 @@ public final class PAOModel {
 		boolean hasOption = false;
 		taskDefinitionModels = new ArrayList<>();
 		for (final TaskSketch taskSketch : taskSketchs) {
-			final TaskDefinitionModel templateTaskDefinition = new TaskDefinitionModel(taskSketch, classNameFromDt);
+			final TaskModel templateTaskDefinition = new TaskModel(taskSketch, classNameFromDt);
 			taskDefinitionModels.add(templateTaskDefinition);
 			hasOption = hasOption || templateTaskDefinition.hasOptions();
 		}
@@ -72,7 +72,7 @@ public final class PAOModel {
 	/**
 	 * @return Liste des tasks
 	 */
-	public Collection<TaskDefinitionModel> getTaskDefinitions() {
+	public Collection<TaskModel> getTaskDefinitions() {
 		return Collections.unmodifiableCollection(taskDefinitionModels);
 	}
 

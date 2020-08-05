@@ -32,14 +32,14 @@ import io.vertigo.studio.notebook.task.TaskSketchAttribute;
  *
  * @author pchretien, mlaroche
  */
-public final class TaskDefinitionModel {
+public final class TaskModel {
 	private final TaskSketch taskSketch;
 	private final List<TaskAttributeModel> ins = new ArrayList<>();
 
 	private final TaskAttributeModel out;
 	private final boolean optional;
 
-	public TaskDefinitionModel(final TaskSketch taskSketch, final Function<String, String> classNameFromDt) {
+	public TaskModel(final TaskSketch taskSketch, final Function<String, String> classNameFromDt) {
 		Assertion.check()
 				.isNotNull(taskSketch)
 				.isNotNull(classNameFromDt);

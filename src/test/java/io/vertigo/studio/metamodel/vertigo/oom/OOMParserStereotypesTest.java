@@ -104,9 +104,9 @@ public final class OOMParserStereotypesTest {
 	 */
 	@Test
 	public void testStereotypeKeyConcept() {
-		final DtSketch dtDefinitionCommand = getDtSketch(SketchKey.of("DtCommand"));
-		Assertions.assertNotNull(dtDefinitionCommand);
-		Assertions.assertEquals(StudioStereotype.KeyConcept, dtDefinitionCommand.getStereotype());
+		final DtSketch dtSketchCommand = getDtSketch(SketchKey.of("DtCommand"));
+		Assertions.assertNotNull(dtSketchCommand);
+		Assertions.assertEquals(StudioStereotype.KeyConcept, dtSketchCommand.getStereotype());
 
 	}
 

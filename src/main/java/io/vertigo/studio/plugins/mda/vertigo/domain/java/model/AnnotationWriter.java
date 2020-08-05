@@ -68,27 +68,27 @@ class AnnotationWriter {
 	/**
 	 * Ectiture des annotations sur une DT_DEFINITION.
 	 *
-	 * @param dtDefinition DtDefinition
+	 * @param dtSketch DtDefinition
 	 * @return Liste des lignes de code java à ajouter.
 	 */
-	List<String> writeAnnotations(final DtSketch dtDefinition) {
+	List<String> writeAnnotations(final DtSketch dtSketch) {
 		final List<String> lines = new ArrayList<>();
-		if (dtDefinition.getFragment().isPresent()) {
+		if (dtSketch.getFragment().isPresent()) {
 			// Générations des annotations Dynamo
 			final StringBuilder buffer = new StringBuilder()
 					.append('@').append(VertigoClassNames.Fragment.getClassName());
-			if (dtDefinition.getFragment().isPresent()) {
+			if (dtSketch.getFragment().isPresent()) {
 				buffer.append('(')
-						.append("fragmentOf = \"").append(dtDefinition.getFragment().get().getKey().getName()).append('\"')
+						.append("fragmentOf = \"").append(dtSketch.getFragment().get().getKey().getName()).append('\"')
 						.append(')');
 			}
 
 			lines.add(buffer.toString());
 		}
-		if (dtDefinition.isPersistent() && !"main".equals(dtDefinition.getDataSpace())) {
+		if (dtSketch.isPersistent() && !"main".equals(dtSketch.getDataSpace())) {
 			final String dataSpace = new StringBuilder()
 					.append('@').append(VertigoClassNames.AnnotationDataSpace.getClassName())
-					.append("(\"").append(dtDefinition.getDataSpace()).append("\")")
+					.append("(\"").append(dtSketch.getDataSpace()).append("\")")
 					.toString();
 			lines.add(dataSpace);
 		}

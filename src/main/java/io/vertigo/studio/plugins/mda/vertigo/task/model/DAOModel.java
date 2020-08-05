@@ -37,7 +37,7 @@ import io.vertigo.studio.notebook.task.TaskSketch;
 public final class DAOModel {
 	private final DtSketch dtSketch;
 	private final String packageName;
-	private final Collection<TaskDefinitionModel> taskDefinitions = new ArrayList<>();
+	private final Collection<TaskModel> taskDefinitions = new ArrayList<>();
 
 	private final boolean hasOptions;
 
@@ -46,25 +46,25 @@ public final class DAOModel {
 	 *
 	 * @param dtSketch DtDefinition de l'objet à générer
 	 */
-	public DAOModel(final MdaConfig mdaConfig, final DtSketch dtSketch, final Collection<TaskSketch> taskDefinitionCollection, final Function<String, String> classNameFromDt) {
+	public DAOModel(final MdaConfig mdaConfig, final DtSketch dtSketch, final Collection<TaskSketch> taskSketches, final Function<String, String> classNameFromDt) {
 		Assertion.check()
 				.isNotNull(mdaConfig)
 				.isNotNull(dtSketch)
-				.isNotNull(taskDefinitionCollection);
-		final String definitionPackageName = dtSketch.getPackageName();
+				.isNotNull(taskSketches);
+		final String dtPackageName = dtSketch.getPackageName();
 		final String packageNamePrefix = mdaConfig.getProjectPackageName();
 		// ---
 		Assertion.check()
-				.isTrue(definitionPackageName.startsWith(packageNamePrefix), "Package name {0}, must begin with normalised prefix: {1}", definitionPackageName, packageNamePrefix)
-				.isTrue(definitionPackageName.substring(packageNamePrefix.length()).contains(".domain"), "Package name {0}, must contains the modifier .domain", definitionPackageName);
+				.isTrue(dtPackageName.startsWith(packageNamePrefix), "Package name {0}, must begin with normalised prefix: {1}", dtPackageName, packageNamePrefix)
+				.isTrue(dtPackageName.substring(packageNamePrefix.length()).contains(".domain"), "Package name {0}, must contains the modifier .domain", dtPackageName);
 		// ---
 		//we need to find the featureName, aka between projectpackageName and .domain
-		final String featureName = definitionPackageName.substring(packageNamePrefix.length(), definitionPackageName.indexOf(".domain"));
+		final String featureName = dtPackageName.substring(packageNamePrefix.length(), dtPackageName.indexOf(".domain"));
 		if (!StringUtil.isBlank(featureName)) {
 			Assertion.check().isTrue(featureName.lastIndexOf('.') == 0, "The feature {0} must not contain any dot", featureName.substring(1));
 		}
 		// the subpackage is what's behind the .domain
-		final String subpackage = definitionPackageName.substring(definitionPackageName.indexOf(".domain") + ".domain".length());
+		final String subpackage = dtPackageName.substring(dtPackageName.indexOf(".domain") + ".domain".length());
 		// breaking change -> need to redefine what's the desired folder structure in javagen...
 
 		this.dtSketch = dtSketch;
@@ -72,10 +72,10 @@ public final class DAOModel {
 		packageName = mdaConfig.getProjectPackageName() + featureName + ".dao" + subpackage;
 
 		boolean hasOption = false;
-		for (final TaskSketch taskSketch : taskDefinitionCollection) {
-			final TaskDefinitionModel templateTaskDefinition = new TaskDefinitionModel(taskSketch, classNameFromDt);
-			taskDefinitions.add(templateTaskDefinition);
-			hasOption = hasOption || templateTaskDefinition.hasOptions();
+		for (final TaskSketch taskSketch : taskSketches) {
+			final TaskModel taskModel = new TaskModel(taskSketch, classNameFromDt);
+			taskDefinitions.add(taskModel);
+			hasOption = hasOption || taskModel.hasOptions();
 		}
 		hasOptions = hasOption;
 	}
@@ -127,7 +127,7 @@ public final class DAOModel {
 	/**
 	 * @return Liste des tasks
 	 */
-	public Collection<TaskDefinitionModel> getTaskDefinitions() {
+	public Collection<TaskModel> getTaskDefinitions() {
 		return taskDefinitions;
 	}
 

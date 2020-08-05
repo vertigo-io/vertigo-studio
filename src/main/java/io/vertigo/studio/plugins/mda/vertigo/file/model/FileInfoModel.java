@@ -26,10 +26,10 @@ import io.vertigo.studio.notebook.file.FileInfoSketch;
  *
  * @author npiedeloup
  */
-public final class FileInfoDefinitionModel {
+public final class FileInfoModel {
 	private final FileInfoSketch fileInfoSketch;
 
-	public FileInfoDefinitionModel(final FileInfoSketch fileInfoSketch) {
+	public FileInfoModel(final FileInfoSketch fileInfoSketch) {
 		Assertion.check().isNotNull(fileInfoSketch);
 		//-----
 		this.fileInfoSketch = fileInfoSketch;

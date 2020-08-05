@@ -31,11 +31,11 @@ import io.vertigo.studio.notebook.domain.masterdata.MasterDataValue;
  *
  * @author npiedeloup
  */
-public final class TSMasterDataDefinitionModel {
+public final class TSMasterDataModel {
 	private final TSStudioDtDefinitionModel tsDtDefinitionModel;
 	private final List<TSMasterDataValueModel> tsMasterDataValueModels;
 
-	public TSMasterDataDefinitionModel(final DtSketch dtSketch, final Map<String, MasterDataValue> masterDataValuesByDtDefinition) {
+	public TSMasterDataModel(final DtSketch dtSketch, final Map<String, MasterDataValue> masterDataValuesByDtDefinition) {
 		Assertion.check()
 				.isNotNull(dtSketch)
 				.isNotNull(masterDataValuesByDtDefinition);

@@ -35,14 +35,14 @@ public final class MasterDataDefinitionModel {
 	private final DtSketch dtDefinition;
 	private final List<MasterDataValueModel> masterDataValueModels;
 
-	public MasterDataDefinitionModel(final DtSketch dtDefinition, final Map<String, MasterDataValue> masterDataValuesByDtDefinition) {
-		Assertion.check().isNotNull(dtDefinition);
+	public MasterDataDefinitionModel(final DtSketch dtSketch, final Map<String, MasterDataValue> masterDataValuesByDtDefinition) {
+		Assertion.check().isNotNull(dtSketch);
 		//-----
-		this.dtDefinition = dtDefinition;
+		this.dtDefinition = dtSketch;
 		masterDataValueModels = masterDataValuesByDtDefinition
 				.entrySet()
 				.stream()
-				.map(entry -> new MasterDataValueModel(dtDefinition, entry.getKey(), entry.getValue()))
+				.map(entry -> new MasterDataValueModel(dtSketch, entry.getKey(), entry.getValue()))
 				.collect(Collectors.toList());
 	}
 

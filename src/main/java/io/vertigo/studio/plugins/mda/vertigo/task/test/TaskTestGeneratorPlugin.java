@@ -40,7 +40,7 @@ import io.vertigo.studio.notebook.domain.DomainSketch;
 import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.notebook.task.TaskSketch;
 import io.vertigo.studio.plugins.mda.vertigo.task.model.TaskAttributeModel;
-import io.vertigo.studio.plugins.mda.vertigo.task.model.TaskDefinitionModel;
+import io.vertigo.studio.plugins.mda.vertigo.task.model.TaskModel;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
 import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
 
@@ -176,10 +176,10 @@ public final class TaskTestGeneratorPlugin implements MdaGeneratorPlugin {
 	 * Stratégie pour savoir si une tache est PAO ou DAO.
 	 * Si la DT est non null DAO sinon PAO.
 	 */
-	private static SketchKey getDtSketchKey(final TaskDefinitionModel templateTaskDefinition) {
-		if (templateTaskDefinition.isOut()) {
+	private static SketchKey getDtSketchKey(final TaskModel taskModel) {
+		if (taskModel.isOut()) {
 			//si out on regarde si en sortie on a un DTO ou une DTC typé.
-			final DomainSketch outDomain = templateTaskDefinition.getOutAttribute().getDomain();
+			final DomainSketch outDomain = taskModel.getOutAttribute().getDomain();
 			if (outDomain.getScope().isDataObject()) {
 				return outDomain.getDtSketchKey();
 			}
@@ -187,7 +187,7 @@ public final class TaskTestGeneratorPlugin implements MdaGeneratorPlugin {
 		}
 		//there is no OUT param
 		//We are searching igf there is an no-ambiguous IN param defined as a DataObject(DTO or DTC)
-		final List<DomainSketch> candidates = templateTaskDefinition.getInAttributes()
+		final List<DomainSketch> candidates = taskModel.getInAttributes()
 				.stream()
 				.map(TaskAttributeModel::getDomain)
 				.filter(domain -> domain.getScope().isDataObject())
@@ -201,11 +201,11 @@ public final class TaskTestGeneratorPlugin implements MdaGeneratorPlugin {
 	}
 
 	private static Map<String, List<TaskSketch>> buildPackageMap(final Notebook notebook) {
-		final Collection<TaskSketch> taskDefinitions = notebook.getAll(TaskSketch.class);
-		final Map<String, List<TaskSketch>> taskDefinitionsMap = new LinkedHashMap<>();
+		final Collection<TaskSketch> taskSketches = notebook.getAll(TaskSketch.class);
+		final Map<String, List<TaskSketch>> taskSketchesMap = new LinkedHashMap<>();
 		//---
-		for (final TaskSketch taskDefinition : taskDefinitions) {
-			final TaskDefinitionModel templateTaskDefinition = new TaskDefinitionModel(taskDefinition, DomainUtil.createClassNameFromDtFunction(notebook));
+		for (final TaskSketch taskDefinition : taskSketches) {
+			final TaskModel templateTaskDefinition = new TaskModel(taskDefinition, DomainUtil.createClassNameFromDtFunction(notebook));
 			final SketchKey dtSketchKey = getDtSketchKey(templateTaskDefinition);
 			// Correction bug : task avec retour DtObject (non persistant) non générée
 			//Les taches sont générées dans les pao
@@ -214,13 +214,13 @@ public final class TaskTestGeneratorPlugin implements MdaGeneratorPlugin {
 			final boolean pao = dtSketchKey == null || !notebook.resolve(dtSketchKey, DtSketch.class).isPersistent();
 			if (pao) {
 				//La tache est liée au package. (PAO)
-				final List<TaskSketch> list = taskDefinitionsMap
+				final List<TaskSketch> list = taskSketchesMap
 						.computeIfAbsent(taskDefinition.getPackageName(), k -> new ArrayList<>());
 				//on ajoute la tache aux taches du package.
 				list.add(taskDefinition);
 			}
 		}
-		return taskDefinitionsMap;
+		return taskSketchesMap;
 
 	}
 
@@ -236,7 +236,7 @@ public final class TaskTestGeneratorPlugin implements MdaGeneratorPlugin {
 		}
 		//---
 		for (final TaskSketch taskSketch : taskSketchs) {
-			final TaskDefinitionModel templateTaskDefinition = new TaskDefinitionModel(taskSketch, DomainUtil.createClassNameFromDtFunction(notebook));
+			final TaskModel templateTaskDefinition = new TaskModel(taskSketch, DomainUtil.createClassNameFromDtFunction(notebook));
 
 			final SketchKey dtSketchKey = getDtSketchKey(templateTaskDefinition);
 			final boolean dao = dtSketchKey != null;

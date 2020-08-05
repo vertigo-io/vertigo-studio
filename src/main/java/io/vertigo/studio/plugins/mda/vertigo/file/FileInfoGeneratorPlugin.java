@@ -30,7 +30,7 @@ import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.file.FileInfoSketch;
-import io.vertigo.studio.plugins.mda.vertigo.file.model.FileInfoDefinitionModel;
+import io.vertigo.studio.plugins.mda.vertigo.file.model.FileInfoModel;
 import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
 
 /**
@@ -73,17 +73,17 @@ public final class FileInfoGeneratorPlugin implements MdaGeneratorPlugin {
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder,
-			final FileInfoSketch fileInfoDefinition) {
-		final FileInfoDefinitionModel fileInfoDefinitionModel = new FileInfoDefinitionModel(fileInfoDefinition);
+			final FileInfoSketch fileInfoSketch) {
+		final FileInfoModel fileInfoModel = new FileInfoModel(fileInfoSketch);
 
 		final Map<String, Object> model = new MapBuilder<String, Object>()
-				.put("fiDefinition", fileInfoDefinitionModel)
+				.put("fiDefinition", fileInfoModel)
 				.put("packageName", mdaConfig.getProjectPackageName() + ".fileinfo")
 				.build();
 
 		MdaFileGenerator.builder(mdaConfig)
 				.withModel(model)
-				.withFileName(fileInfoDefinitionModel.getClassSimpleName() + ".java")
+				.withFileName(fileInfoModel.getClassSimpleName() + ".java")
 				.withGenSubDir(targetSubDir)
 				.withPackageName(mdaConfig.getProjectPackageName() + ".fileinfo")
 				.withTemplateName(FileInfoGeneratorPlugin.class, "template/fileInfo.ftl")

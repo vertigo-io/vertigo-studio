@@ -38,7 +38,7 @@ import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.notebook.domain.StudioStereotype;
 import io.vertigo.studio.notebook.domain.masterdata.MasterDataValue;
 import io.vertigo.studio.notebook.domain.masterdata.StaticMasterDataSketch;
-import io.vertigo.studio.plugins.mda.vertigo.domain.ts.model.TSMasterDataDefinitionModel;
+import io.vertigo.studio.plugins.mda.vertigo.domain.ts.model.TSMasterDataModel;
 import io.vertigo.studio.plugins.mda.vertigo.domain.ts.model.TSStudioDtDefinitionModel;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
 import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
@@ -103,14 +103,14 @@ public final class TSGeneratorPlugin implements MdaGeneratorPlugin {
 				.stream()
 				.collect(Collectors.toMap(StaticMasterDataSketch::getEntityClassName, StaticMasterDataSketch::getValues));
 
-		final List<TSMasterDataDefinitionModel> tsMasterDataDefinitionModels = notebook.getAll(DtSketch.class)
+		final List<TSMasterDataModel> tsMasterDataModels = notebook.getAll(DtSketch.class)
 				.stream()
 				.filter(dtSketch -> dtSketch.getStereotype() == StudioStereotype.StaticMasterData)
-				.map(dtSketch -> new TSMasterDataDefinitionModel(dtSketch, staticMasterDataValues.getOrDefault(dtSketch.getClassCanonicalName(), Collections.emptyMap())))
+				.map(dtSketch -> new TSMasterDataModel(dtSketch, staticMasterDataValues.getOrDefault(dtSketch.getClassCanonicalName(), Collections.emptyMap())))
 				.collect(Collectors.toList());
 
 		final Map<String, Object> model = new MapBuilder<String, Object>()
-				.put("masterdatas", tsMasterDataDefinitionModels)
+				.put("masterdatas", tsMasterDataModels)
 				.build();
 
 		MdaFileGenerator.builder(mdaConfig)
