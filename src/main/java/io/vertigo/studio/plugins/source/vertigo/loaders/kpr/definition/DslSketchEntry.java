@@ -30,7 +30,7 @@ import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
  *
  * @author pchretien, mlaroche
  */
-public final class DslDefinitionEntry {
+public final class DslSketchEntry {
 	/**
 	 * Obligatoire
 	 */
@@ -44,7 +44,7 @@ public final class DslDefinitionEntry {
 	 * @param definitionNames Liste des clés de définition
 	 * @param fieldName Nom du champ
 	 */
-	public DslDefinitionEntry(final String fieldName, final List<String> definitionNames) {
+	public DslSketchEntry(final String fieldName, final List<String> definitionNames) {
 		Assertion.check()
 				.isNotNull(fieldName)
 				.isNotNull(definitionNames);
@@ -60,7 +60,7 @@ public final class DslDefinitionEntry {
 	 * @param fieldName Nom du champ
 	 * @param definition Définition
 	 */
-	public DslDefinitionEntry(final String fieldName, final DslSketch definition) {
+	public DslSketchEntry(final String fieldName, final DslSketch definition) {
 		Assertion.check()
 				.isNotNull(fieldName)
 				.isNotNull(definition);

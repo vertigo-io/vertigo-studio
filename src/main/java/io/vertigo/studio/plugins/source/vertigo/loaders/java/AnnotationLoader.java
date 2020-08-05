@@ -177,7 +177,7 @@ public final class AnnotationLoader implements Loader {
 		}
 
 		final DslSketch dtDefinition = dtDefinitionBuilder.build();
-		dynamicModelRepository.addDefinition(dtDefinition);
+		dynamicModelRepository.addSketch(dtDefinition);
 	}
 
 	private static String parseDataSpaceAnnotation(final Class<?> clazz) {
@@ -242,9 +242,9 @@ public final class AnnotationLoader implements Loader {
 					.addPropertyValue(FK_FIELD_NAME, association.fkFieldName())
 					.build();
 
-			if (!dynamicModelRepository.containsDefinitionName(associationDefinition.getName())) {
+			if (!dynamicModelRepository.contains(associationDefinition.getName())) {
 				//Les associations peuvent être déclarées sur les deux noeuds de l'association.
-				dynamicModelRepository.addDefinition(associationDefinition);
+				dynamicModelRepository.addSketch(associationDefinition);
 			}
 		} else if (annotation instanceof io.vertigo.datamodel.structure.stereotype.AssociationNN) {
 			final io.vertigo.datamodel.structure.stereotype.AssociationNN association = (io.vertigo.datamodel.structure.stereotype.AssociationNN) annotation;
@@ -271,9 +271,9 @@ public final class AnnotationLoader implements Loader {
 					.addDefinitionLink("dtDefinitionB", association.dtDefinitionB())
 					.build();
 
-			if (!dynamicModelRepository.containsDefinitionName(associationDefinition.getName())) {
+			if (!dynamicModelRepository.contains(associationDefinition.getName())) {
 				//Les associations peuvent être déclarées sur les deux noeuds de l'association.
-				dynamicModelRepository.addDefinition(associationDefinition);
+				dynamicModelRepository.addSketch(associationDefinition);
 			}
 		}
 	}

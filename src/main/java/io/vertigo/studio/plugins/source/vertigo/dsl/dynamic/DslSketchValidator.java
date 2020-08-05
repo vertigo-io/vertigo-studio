@@ -37,28 +37,28 @@ final class DslSketchValidator {
 		//utility Class
 	}
 
-	static void check(final DslSketch definition) {
-		Assertion.check().isNotNull(definition);
+	static void check(final DslSketch dslSketch) {
+		Assertion.check().isNotNull(dslSketch);
 		//-----
-		final DslEntity myEntity = definition.getEntity();
+		final DslEntity myEntity = dslSketch.getEntity();
 		// 1.On vérifie la définition par rapport à la métadéfinition
 		// 1.1 on vérifie les propriétés.
-		final Set<String> propertyNames = definition.getPropertyNames();
+		final Set<String> propertyNames = dslSketch.getPropertyNames();
 		final Set<String> entityPropertyNames = myEntity.getPropertyNames();
 		// 1.1.1 on vérifie que toutes les propriétés sont déclarées sur le
 		// métamodèle
-		checkProperties(definition, propertyNames, entityPropertyNames);
+		checkProperties(dslSketch, propertyNames, entityPropertyNames);
 
 		// 1.1.2 on vérifie les propriétés obligatoires
-		checkMandatoryProperties(definition, myEntity, propertyNames, entityPropertyNames);
+		checkMandatoryProperties(dslSketch, myEntity, propertyNames, entityPropertyNames);
 
 		// 1.1.3 on vérifie les types des propriétés déclarées
 		for (final String propertyName : propertyNames) {
-			myEntity.getPropertyType(propertyName).checkValue(definition.getPropertyValue(propertyName));
+			myEntity.getPropertyType(propertyName).checkValue(dslSketch.getPropertyValue(propertyName));
 		}
 
 		// 1.2 on vérifie les définitions composites (sous définitions).
-		for (final DslSketch child : definition.getAllChildDefinitions()) {
+		for (final DslSketch child : dslSketch.getAllChildDefinitions()) {
 			check(child);
 		}
 

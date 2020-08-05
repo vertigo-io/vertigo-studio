@@ -35,7 +35,7 @@ import io.vertigo.studio.notebook.SketchKey;
  *
  * A domain is a shared object ; by nature it is immutable.
  *
- * A domain is a definition, its prefix is "Do"
+ * A domain is a sketch, its prefix is "Do"
  *
  * Examples :
  *  A mail is not defined by a simple "String", but by a domain called 'Mail'.
@@ -79,7 +79,7 @@ public final class DomainSketch extends AbstractSketch {
 
 	private final String valueObjectClassName;
 	/**
-	 * Name of the DtDefinition (for the DtObject or DtList)
+	 * Key of the DtSketch (for the DtObject or DtList)
 	 */
 	private final SketchKey dtSketchKey;
 
@@ -148,7 +148,7 @@ public final class DomainSketch extends AbstractSketch {
 	/**
 	 * Static method factory for DomainBuilder
 	 * @param name the name of the domain
-	 * @param dtDefinitionName the definition managed by the domain
+	 * @param dtSketchKey the key  of the dtSketch managed by the domain
 	 * @return DomainBuilder
 	 */
 	public static DomainSketch of(final String name, final Properties properties, final SketchKey dtSketchKey) {

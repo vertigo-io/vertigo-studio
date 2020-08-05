@@ -26,15 +26,15 @@ import io.vertigo.core.lang.Assertion;
  * Model of Definition from KSP.
  * @author npiedeloup
  */
-public final class DslDefinitionBody {
-	private final List<DslDefinitionEntry> definitionEntries;
+public final class DslSketchBody {
+	private final List<DslSketchEntry> definitionEntries;
 	private final List<DslPropertyEntry> propertyEntries;
 
 	/**
 	 * @param definitionEntries
 	 * @param propertyEntries
 	 */
-	public DslDefinitionBody(final List<DslDefinitionEntry> definitionEntries, final List<DslPropertyEntry> propertyEntries) {
+	public DslSketchBody(final List<DslSketchEntry> definitionEntries, final List<DslPropertyEntry> propertyEntries) {
 		Assertion.check()
 				.isNotNull(definitionEntries)
 				.isNotNull(propertyEntries);
@@ -53,7 +53,7 @@ public final class DslDefinitionBody {
 	/**
 	 * @return List of Definition
 	 */
-	public List<DslDefinitionEntry> getDefinitionEntries() {
+	public List<DslSketchEntry> getDefinitionEntries() {
 		return definitionEntries;
 	}
 }

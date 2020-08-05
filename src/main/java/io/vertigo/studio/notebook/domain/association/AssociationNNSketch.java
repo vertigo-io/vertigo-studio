@@ -31,7 +31,7 @@ public final class AssociationNNSketch extends AssociationSketch {
 
 	/**
 	 * Constructeur d'une association n-n.
-	 * @param name the name of the definition
+	 * @param name the name of the sketch
 	 * @param tableName Nom de la table
 	 * @param associationNodeA Noeud A
 	 * @param associationNodeB Noeud B

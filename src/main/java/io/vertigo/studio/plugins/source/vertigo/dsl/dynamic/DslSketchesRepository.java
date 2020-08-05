@@ -46,7 +46,7 @@ public final class DslSketchesRepository {
 	 * On retient les définitions dans l'ordre pour
 	 * créer les fichiers toujours de la même façon.
 	 */
-	private final Map<String, DslSketch> dslDefinitions = new LinkedHashMap<>();
+	private final Map<String, DslSketch> dslSketches = new LinkedHashMap<>();
 	private final List<DslSketch> partials = new ArrayList<>();
 
 	private final DynamicRegistry registry;
@@ -72,11 +72,11 @@ public final class DslSketchesRepository {
 
 	/**
 	 * Returns true if a definition to which the specified name is mapped.
-	 * @param definitionName name of the definitionClé de la définition
+	 * @param sketchName name of the definitionClé de la définition
 	 * @return Si la définition a déjà été enregistrée
 	 */
-	public boolean containsDefinitionName(final String definitionName) {
-		return dslDefinitions.containsKey(definitionName);
+	public boolean contains(final String sketchName) {
+		return dslSketches.containsKey(sketchName);
 	}
 
 	/**
@@ -85,15 +85,15 @@ public final class DslSketchesRepository {
 	 *  -Soit la clé existe mais sans aucune définition
 	 *  -Soit la clé raméne une définition.
 	 *
-	 * @param definitionName Name of the definition
+	 * @param sketchName Name of the definition
 	 * @return DynamicDefinition Définition correspondante ou null.
 	 */
-	public DslSketch getDefinition(final String definitionName) {
-		Assertion.check().isTrue(dslDefinitions.containsKey(definitionName), "Aucune clé enregistrée pour :{0} parmi {1}", definitionName, dslDefinitions.keySet());
+	public DslSketch getSketch(final String sketchName) {
+		Assertion.check().isTrue(dslSketches.containsKey(sketchName), "Aucune clé enregistrée pour :{0} parmi {1}", sketchName, dslSketches.keySet());
 		//-----
-		final DslSketch definition = dslDefinitions.get(definitionName);
+		final DslSketch definition = dslSketches.get(sketchName);
 		//-----
-		Assertion.check().isNotNull(definition, "Clé trouvée mais pas de définition enregistrée trouvée pour {0}", definitionName);
+		Assertion.check().isNotNull(definition, "Clé trouvée mais pas de définition enregistrée trouvée pour {0}", sketchName);
 		return definition;
 	}
 
@@ -113,9 +113,9 @@ public final class DslSketchesRepository {
 		//parts of definitions are merged
 		for (final DslSketch partial : partials) {
 			final DslSketch merged = DslSketch.builder(partial.getName(), partial.getEntity())
-					.merge(getDefinition(partial.getName()))
+					.merge(getSketch(partial.getName()))
 					.merge(partial).build();
-			dslDefinitions.put(partial.getName(), merged);
+			dslSketches.put(partial.getName(), merged);
 		}
 	}
 
@@ -127,32 +127,32 @@ public final class DslSketchesRepository {
 				.collect(Collectors.toList());
 	}
 
-	private SketchSupplier createModel(final DslSketch dslDefinition) {
-		DslSketchValidator.check(dslDefinition);
+	private SketchSupplier createModel(final DslSketch dslSketch) {
+		DslSketchValidator.check(dslSketch);
 		//The definition identified as root are not registered.
-		return registry.supplyModel(dslDefinition);
+		return registry.supplyModel(dslSketch);
 	}
 
 	/**
-	 * Add a definition.
-	 * @param dslDefinition DynamicDefinition
+	 * Adds a sketch.
+	 * @param dslSketch sketch
 	 */
-	public void addDefinition(final DslSketch dslDefinition) {
-		Assertion.check().isNotNull(dslDefinition);
+	public void addSketch(final DslSketch dslSketch) {
+		Assertion.check().isNotNull(dslSketch);
 		//---
-		final DslSketch previousDefinition = dslDefinitions.put(dslDefinition.getName(), dslDefinition);
-		Assertion.check().isNull(previousDefinition, "this definition '{0}' has already be registered", dslDefinition.getName());
+		final DslSketch previousSketch = dslSketches.put(dslSketch.getName(), dslSketch);
+		Assertion.check().isNull(previousSketch, "this sketch '{0}' has already be registered", dslSketch.getName());
 		//---
-		registry.onNewDefinition(dslDefinition)
+		registry.onNewSketch(dslSketch)
 				.stream()
-				.forEach(this::addDefinition);
+				.forEach(this::addSketch);
 	}
 
 	/**
-	 * adds a partial definition.
-	 * @param partial the part of a definition
+	 * adds a partial sketch.
+	 * @param partial the part of a sketch
 	 */
-	public void addPartialDefinition(final DslSketch partial) {
+	public void addPartialSketch(final DslSketch partial) {
 		Assertion.check().isNotNull(partial);
 		//---
 		partials.add(partial);
@@ -162,7 +162,7 @@ public final class DslSketchesRepository {
 	 *  @return Liste des clés orphelines.
 	 */
 	Set<String> getOrphanDefinitionKeys() {
-		return dslDefinitions.entrySet()
+		return dslSketches.entrySet()
 				.stream()
 				.filter(entry -> entry.getValue() == null) //select orphans
 				.map(Entry::getKey)
@@ -172,7 +172,7 @@ public final class DslSketchesRepository {
 	/**
 	 * @return Liste des définitions complètes
 	 */
-	Collection<DslSketch> getDefinitions() {
-		return Collections.unmodifiableCollection(dslDefinitions.values());
+	Collection<DslSketch> getSketches() {
+		return Collections.unmodifiableCollection(dslSketches.values());
 	}
 }

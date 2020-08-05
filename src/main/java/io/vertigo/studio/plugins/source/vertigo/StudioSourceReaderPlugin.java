@@ -86,7 +86,7 @@ public final class StudioSourceReaderPlugin implements NotebookSourceReaderPlugi
 
 		//--Enregistrement des types primitifs
 		for (final DslSketch dslDefinition : dynamoDynamicRegistry.getGrammar().getRootDefinitions()) {
-			dslDefinitionRepository.addDefinition(dslDefinition);
+			dslDefinitionRepository.addSketch(dslDefinition);
 		}
 		for (final NotebookSource resource : resources) {
 			final Loader loaderPlugin = loadersByType.get(resource.getType());

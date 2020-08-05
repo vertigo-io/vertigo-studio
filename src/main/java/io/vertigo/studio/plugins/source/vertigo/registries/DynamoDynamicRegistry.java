@@ -81,11 +81,11 @@ public final class DynamoDynamicRegistry implements DynamicRegistry {
 
 	/** {@inheritDoc} */
 	@Override
-	public List<DslSketch> onNewDefinition(final DslSketch dslDefinition) {
+	public List<DslSketch> onNewSketch(final DslSketch dslDefinition) {
 		//Les entités du noyaux ne sont pas à gérer par des managers spécifiques.
 		if (!dslDefinition.getEntity().isProvided()) {
 			return lookUpDynamicRegistry(dslDefinition)
-					.onNewDefinition(dslDefinition);
+					.onNewSketch(dslDefinition);
 		}
 		return Collections.emptyList();
 	}

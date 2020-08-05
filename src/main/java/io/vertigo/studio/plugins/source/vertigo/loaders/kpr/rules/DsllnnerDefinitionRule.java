@@ -27,11 +27,11 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchBuilder;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
-import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslDefinitionBody;
-import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslDefinitionEntry;
+import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslSketchBody;
+import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslSketchEntry;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslPropertyEntry;
 
-final class DslInnerDefinitionRule extends AbstractRule<DslDefinitionEntry, List<Object>> {
+final class DslInnerDefinitionRule extends AbstractRule<DslSketchEntry, List<Object>> {
 	private final String entityName;
 	private final DslEntity entity;
 
@@ -58,24 +58,24 @@ final class DslInnerDefinitionRule extends AbstractRule<DslDefinitionEntry, List
 	}
 
 	@Override
-	protected DslDefinitionEntry handle(final List<Object> parsing) {
+	protected DslSketchEntry handle(final List<Object> parsing) {
 		//Dans le cas des sous définition :: field [PRD_XXX]
 
 		final String definitionName = (String) parsing.get(2);
-		final DslDefinitionBody definitionBody = (DslDefinitionBody) parsing.get(4);
+		final DslSketchBody definitionBody = (DslSketchBody) parsing.get(4);
 
 		final DslSketchBuilder dslDefinitionBuilder = DslSketch.builder(definitionName, entity);
 		populateDefinition(definitionBody, dslDefinitionBuilder);
 
 		//---
-		return new DslDefinitionEntry(entityName, dslDefinitionBuilder.build());
+		return new DslSketchEntry(entityName, dslDefinitionBuilder.build());
 	}
 
 	/**
 	 * Peuple la définition à partir des éléments trouvés.
 	 */
-	private static void populateDefinition(final DslDefinitionBody definitionBody, final DslSketchBuilder dslDefinitionBuilder) {
-		for (final DslDefinitionEntry fieldDefinitionEntry : definitionBody.getDefinitionEntries()) {
+	private static void populateDefinition(final DslSketchBody definitionBody, final DslSketchBuilder dslDefinitionBuilder) {
+		for (final DslSketchEntry fieldDefinitionEntry : definitionBody.getDefinitionEntries()) {
 			//-----
 			// 1.On vérifie que le champ existe pour la metaDefinition
 			// et qu'elle n'est pas déjà enregistrée sur l'objet.

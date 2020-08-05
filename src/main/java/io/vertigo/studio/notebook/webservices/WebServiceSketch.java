@@ -28,7 +28,7 @@ import io.vertigo.studio.notebook.AbstractSketch;
 import io.vertigo.studio.notebook.SkecthPrefix;
 
 /**
- * Web service definition.
+ * Web service Sketch.
  * @author npiedeloup
  */
 @SkecthPrefix(WebServiceSketch.PREFIX)

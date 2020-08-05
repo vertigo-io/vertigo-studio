@@ -33,8 +33,8 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntityField;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntityLink;
-import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslDefinitionBody;
-import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslDefinitionEntry;
+import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslSketchBody;
+import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslSketchEntry;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslPropertyEntry;
 
 /**
@@ -46,7 +46,7 @@ import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslProper
  *
  * @author pchretien, mlaroche
  */
-public final class DslDefinitionBodyRule extends AbstractRule<DslDefinitionBody, List<Object>> {
+public final class DslDefinitionBodyRule extends AbstractRule<DslSketchBody, List<Object>> {
 
 	/**
 	 * Constructor.
@@ -96,10 +96,10 @@ public final class DslDefinitionBodyRule extends AbstractRule<DslDefinitionBody,
 	}
 
 	@Override
-	protected DslDefinitionBody handle(final List<Object> parsing) {
+	protected DslSketchBody handle(final List<Object> parsing) {
 		final List<PegChoice> many = (List<PegChoice>) parsing.get(2);
 
-		final List<DslDefinitionEntry> fieldDefinitionEntries = new ArrayList<>();
+		final List<DslSketchEntry> fieldDefinitionEntries = new ArrayList<>();
 		final List<DslPropertyEntry> fieldPropertyEntries = new ArrayList<>();
 		for (final PegChoice item : many) {
 			switch (item.getChoiceIndex()) {
@@ -109,12 +109,12 @@ public final class DslDefinitionBodyRule extends AbstractRule<DslDefinitionBody,
 					fieldPropertyEntries.add(propertyEntry);
 					break;
 				case 1:
-					final DslDefinitionEntry xDefinitionEntry = (DslDefinitionEntry) item.getValue();
+					final DslSketchEntry xDefinitionEntry = (DslSketchEntry) item.getValue();
 					fieldDefinitionEntries.add(xDefinitionEntry);
 					break;
 				case 2:
 					final PegChoice subTuple = (PegChoice) item.getValue();
-					fieldDefinitionEntries.add((DslDefinitionEntry) subTuple.getValue());
+					fieldDefinitionEntries.add((DslSketchEntry) subTuple.getValue());
 					break;
 				case 3:
 					break;
@@ -122,6 +122,6 @@ public final class DslDefinitionBodyRule extends AbstractRule<DslDefinitionBody,
 					throw new IllegalArgumentException("Type of rule not supported");
 			}
 		}
-		return new DslDefinitionBody(fieldDefinitionEntries, fieldPropertyEntries);
+		return new DslSketchBody(fieldDefinitionEntries, fieldPropertyEntries);
 	}
 }

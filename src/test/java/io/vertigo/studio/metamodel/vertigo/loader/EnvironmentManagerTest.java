@@ -49,7 +49,7 @@ public final class EnvironmentManagerTest {
 				.addPropertyValue(POSTAL_CODE, "75008")
 				.addPropertyValue(CITY, "Paris")
 				.build();
-		dslDefinitionRepository.addDefinition(address1Definition);
+		dslDefinitionRepository.addSketch(address1Definition);
 
 		final DslSketch address2Definition = DslSketch.builder("MockSecondAddress", PersonGrammar.ADDRESS_ENTITY)
 				.withPackageName("io.vertigo.test.model")
@@ -57,7 +57,7 @@ public final class EnvironmentManagerTest {
 				.addPropertyValue(POSTAL_CODE, "75008")
 				.addPropertyValue(CITY, "Paris CEDEX")
 				.build();
-		dslDefinitionRepository.addDefinition(address2Definition);
+		dslDefinitionRepository.addSketch(address2Definition);
 
 		final DslSketch personDefinition = DslSketch.builder("MockMisterBean", PersonGrammar.PERSON_ENTITY)
 				.withPackageName("io.vertigo.test.model")
@@ -69,7 +69,7 @@ public final class EnvironmentManagerTest {
 				.addDefinitionLink(MAIN_ADDRESS, "MockMainAddress")
 				.addDefinitionLink(PersonGrammar.SECOND_ADDRESS, "MockSecondAddress")
 				.build();
-		dslDefinitionRepository.addDefinition(personDefinition);
+		dslDefinitionRepository.addSketch(personDefinition);
 
 		dslDefinitionRepository.solve(notebook);
 		assertNotNull(personDefinition);
@@ -85,7 +85,7 @@ public final class EnvironmentManagerTest {
 							.addPropertyValue(POSTAL_CODE, 75008)
 							.addPropertyValue(CITY, "Paris")
 							.build();
-					dslDefinitionRepository.addDefinition(address1Definition);
+					dslDefinitionRepository.addSketch(address1Definition);
 				});
 
 	}

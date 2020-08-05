@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 
 import io.vertigo.commons.peg.PegNoMatchFoundException;
 import io.vertigo.commons.peg.PegResult;
-import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslDefinitionEntry;
+import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslSketchEntry;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslDefinitionEntryRule;
 
 public final class DslDefinitionEntryRuleTest {
@@ -34,9 +34,9 @@ public final class DslDefinitionEntryRuleTest {
 	@Test
 	public void test0() throws PegNoMatchFoundException {
 		final String text = "myFirstProperty : [BLEU ], non reconnu";
-		final PegResult<DslDefinitionEntry> cursor = MAIN
+		final PegResult<DslSketchEntry> cursor = MAIN
 				.parse(text);
-		final DslDefinitionEntry xDefinitionEntry = cursor.getValue();
+		final DslSketchEntry xDefinitionEntry = cursor.getValue();
 		Assertions.assertEquals("myFirstProperty", xDefinitionEntry.getFieldName());
 		Assertions.assertEquals(1, xDefinitionEntry.getDefinitionNames().size());
 		Assertions.assertTrue(xDefinitionEntry.getDefinitionNames().contains("BLEU"));
@@ -46,9 +46,9 @@ public final class DslDefinitionEntryRuleTest {
 	@Test
 	public void test1() throws PegNoMatchFoundException {
 		final String text = "myFirstProperty : [BLEU, VerT, ROUGE, T_REX ], non reconnu";
-		final PegResult<DslDefinitionEntry> cursor = MAIN
+		final PegResult<DslSketchEntry> cursor = MAIN
 				.parse(text);
-		final DslDefinitionEntry xDefinitionEntry = cursor.getValue();
+		final DslSketchEntry xDefinitionEntry = cursor.getValue();
 		Assertions.assertEquals("myFirstProperty", xDefinitionEntry.getFieldName());
 		Assertions.assertEquals(4, xDefinitionEntry.getDefinitionNames().size());
 		Assertions.assertTrue(xDefinitionEntry.getDefinitionNames().contains("VerT"));
@@ -59,10 +59,10 @@ public final class DslDefinitionEntryRuleTest {
 	@Test
 	public void test2() throws PegNoMatchFoundException {
 		final String text = "myLastProperty : [ ],";
-		final PegResult<DslDefinitionEntry> cursor = MAIN
+		final PegResult<DslSketchEntry> cursor = MAIN
 				.parse(text);
 
-		final DslDefinitionEntry xDefinitionEntry = cursor.getValue();
+		final DslSketchEntry xDefinitionEntry = cursor.getValue();
 		Assertions.assertEquals("myLastProperty", xDefinitionEntry.getFieldName());
 		Assertions.assertEquals(0, xDefinitionEntry.getDefinitionNames().size());
 		Assertions.assertEquals(text.length(), cursor.getIndex());
@@ -71,9 +71,9 @@ public final class DslDefinitionEntryRuleTest {
 	@Test
 	public void test3() throws PegNoMatchFoundException {
 		final String text = "myFirstProperty    :    [BLEU,VerT,    ROUGE    ]";
-		final PegResult<DslDefinitionEntry> cursor = MAIN
+		final PegResult<DslSketchEntry> cursor = MAIN
 				.parse(text);
-		final DslDefinitionEntry xDefinitionEntry = cursor.getValue();
+		final DslSketchEntry xDefinitionEntry = cursor.getValue();
 		Assertions.assertEquals("myFirstProperty", xDefinitionEntry.getFieldName());
 		Assertions.assertEquals(3, xDefinitionEntry.getDefinitionNames().size());
 		Assertions.assertTrue(xDefinitionEntry.getDefinitionNames().contains("VerT"));
@@ -83,9 +83,9 @@ public final class DslDefinitionEntryRuleTest {
 	@Test
 	public void test4() throws PegNoMatchFoundException {
 		final String text = "myFirstProperty : BLEU,";
-		final PegResult<DslDefinitionEntry> cursor = MAIN
+		final PegResult<DslSketchEntry> cursor = MAIN
 				.parse(text);
-		final DslDefinitionEntry xDefinitionEntry = cursor.getValue();
+		final DslSketchEntry xDefinitionEntry = cursor.getValue();
 		Assertions.assertEquals("myFirstProperty", xDefinitionEntry.getFieldName());
 		Assertions.assertEquals(1, xDefinitionEntry.getDefinitionNames().size());
 		Assertions.assertTrue(xDefinitionEntry.getDefinitionNames().contains("BLEU"));
@@ -97,7 +97,7 @@ public final class DslDefinitionEntryRuleTest {
 		Assertions.assertThrows(PegNoMatchFoundException.class, () -> {
 			final String text = "myLastProperty : [BLEU;";
 			//on ne ferme pas l'accolade
-			final PegResult<DslDefinitionEntry> cursor = MAIN
+			final PegResult<DslSketchEntry> cursor = MAIN
 					.parse(text); //<-- an exception is expected here
 			Assertions.assertNotNull(cursor);
 		});

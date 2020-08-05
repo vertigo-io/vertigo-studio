@@ -416,7 +416,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 
 	/** {@inheritDoc} */
 	@Override
-	public List<DslSketch> onNewDefinition(final DslSketch dslDefinition) {
+	public List<DslSketch> onNewSketch(final DslSketch dslDefinition) {
 		if (DomainGrammar.DT_DEFINITION_ENTITY.equals(dslDefinition.getEntity())
 				|| DomainGrammar.FRAGMENT_ENTITY.equals(dslDefinition.getEntity())) {
 			//Dans le cas des DT on ajoute le domain

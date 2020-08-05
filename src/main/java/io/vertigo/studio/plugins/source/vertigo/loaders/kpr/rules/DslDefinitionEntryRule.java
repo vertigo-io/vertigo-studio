@@ -31,13 +31,13 @@ import io.vertigo.commons.peg.PegChoice;
 import io.vertigo.commons.peg.PegRule;
 import io.vertigo.commons.peg.PegRules;
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslDefinitionEntry;
+import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslSketchEntry;
 
 /**
  * Règle de déclaration d'une champ référenéant une listes de clés.
  * @author pchretien, mlaroche
  */
-public final class DslDefinitionEntryRule extends AbstractRule<DslDefinitionEntry, List<Object>> {
+public final class DslDefinitionEntryRule extends AbstractRule<DslSketchEntry, List<Object>> {
 
 	/**
 	 * Constructor.
@@ -66,7 +66,7 @@ public final class DslDefinitionEntryRule extends AbstractRule<DslDefinitionEntr
 	}
 
 	@Override
-	protected DslDefinitionEntry handle(final List<Object> parsing) {
+	protected DslSketchEntry handle(final List<Object> parsing) {
 		final String fieldName = (String) ((PegChoice) parsing.get(0)).getValue();
 		final List<String> definitionKeys;
 
@@ -84,6 +84,6 @@ public final class DslDefinitionEntryRule extends AbstractRule<DslDefinitionEntr
 			default:
 				throw new IllegalStateException();
 		}
-		return new DslDefinitionEntry(fieldName, definitionKeys);
+		return new DslSketchEntry(fieldName, definitionKeys);
 	}
 }

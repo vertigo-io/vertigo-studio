@@ -87,12 +87,12 @@ public final class TaskSketch extends AbstractSketch {
 	}
 
 	/**
-	 * Static method factory for TaskDefinition
-	 * @param taskDefinitionName the name of the taskDefinition (TK_XXX_YYY)
-	 * @return TaskDefinition
+	 * Static method factory for TaskSkecth
+	 * @param taskSketchName the name of the taskSketch (TK_XXX_YYY)
+	 * @return TaskSketchBuilder
 	 */
-	public static TaskSketchBuilder builder(final String taskDefinitionName) {
-		return new TaskSketchBuilder(taskDefinitionName);
+	public static TaskSketchBuilder builder(final String taskSketchName) {
+		return new TaskSketchBuilder(taskSketchName);
 	}
 
 	/**

@@ -125,9 +125,9 @@ public final class DtSketch extends AbstractSketch {
 	}
 
 	/**
-	 * Static method factory for DtDefinitionBuilder
-	 * @param name the name of the dtDefinition
-	 * @return DtDefinitionBuilder
+	 * Static method factory for DtSketchBuilder
+	 * @param name the name of the dtSketch
+	 * @return DtSketchBuilder
 	 */
 	public static DtSketchBuilder builder(final String name) {
 		return new DtSketchBuilder(name);
@@ -200,7 +200,7 @@ public final class DtSketch extends AbstractSketch {
 
 	/**
 	 * @param fieldName FieldName
-	 * @return if this field exists in this DtDefinition
+	 * @return if this field exists in this DtSketch
 	 */
 	public boolean contains(final String fieldName) {
 		Assertion.check().isNotNull(fieldName);

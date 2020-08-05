@@ -91,11 +91,11 @@ public abstract class AbstractXmlLoader implements Loader {
 		//-----
 
 		for (final XmlClass clazz : getClasses()) {
-			dslDefinitionRepository.addDefinition(toDynamicDefinition(clazz));
+			dslDefinitionRepository.addSketch(toDynamicDefinition(clazz));
 		}
 
 		for (final XmlAssociation association : getAssociations()) {
-			dslDefinitionRepository.addDefinition(toDynamicDefinition(association, dslDefinitionRepository));
+			dslDefinitionRepository.addSketch(toDynamicDefinition(association, dslDefinitionRepository));
 		}
 	}
 
@@ -199,8 +199,8 @@ public abstract class AbstractXmlLoader implements Loader {
 		// recherche de code de contrainte destiné à renommer la fk selon convention du vbsript PowerAMC
 		// Cas de la relation 1-n : où le nom de la FK est redéfini.
 		// Exemple : DOS_UTI_LIQUIDATION (relation entre dossier et utilisateur : FK >> UTILISATEUR_ID_LIQUIDATION)
-		final DslSketch dtDefinitionA = dynamicModelrepository.getDefinition(getDtDefinitionName(association.getCodeA()));
-		final DslSketch dtDefinitionB = dynamicModelrepository.getDefinition(getDtDefinitionName(association.getCodeB()));
+		final DslSketch dtDefinitionA = dynamicModelrepository.getSketch(getDtDefinitionName(association.getCodeA()));
+		final DslSketch dtDefinitionB = dynamicModelrepository.getSketch(getDtDefinitionName(association.getCodeB()));
 
 		final DslSketch foreignDefinition = AssociationUtil.isAPrimaryNode(association.getMultiplicityA(), association.getMultiplicityB()) ? dtDefinitionA : dtDefinitionB;
 		final List<DslSketch> primaryKeys = foreignDefinition.getChildDefinitions(DomainGrammar.ID_FIELD);

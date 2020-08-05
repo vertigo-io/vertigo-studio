@@ -50,10 +50,10 @@ public interface DynamicRegistry {
 	 * Utilisé pour créer des définitions Ã  partir d'autres Definitions.
 	 * Exemple : création des domaines à partir d'un DT.
 	 *
-	 * @param dslDefinition dslDefinition
+	 * @param dslSketch dslDefinition
 	 * @return a list of dslDefinitions
 	 */
-	default List<DslSketch> onNewDefinition(final DslSketch dslDefinition) {
+	default List<DslSketch> onNewSketch(final DslSketch dslSketch) {
 		return Collections.emptyList();
 	}
 }

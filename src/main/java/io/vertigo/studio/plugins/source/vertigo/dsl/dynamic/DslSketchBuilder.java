@@ -41,7 +41,7 @@ public final class DslSketchBuilder implements Builder<DslSketch> {
 	/** Name of the package. */
 	private String packageName;
 
-	/**name of this definition.*/
+	/**name of this sketch.*/
 	private final String name;
 
 	/** Map  (fieldName, propertyValue)  */

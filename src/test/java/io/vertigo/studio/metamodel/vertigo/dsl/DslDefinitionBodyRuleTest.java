@@ -27,7 +27,7 @@ import io.vertigo.commons.peg.PegNoMatchFoundException;
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchesRepository;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
-import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslDefinitionBody;
+import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslSketchBody;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslDefinitionBodyRule;
 
 public class DslDefinitionBodyRuleTest {
@@ -46,7 +46,7 @@ public class DslDefinitionBodyRuleTest {
 		final List<DslEntity> entities = dslDefinitionRepository.getGrammar().getEntities();
 		final DslEntity entity = find(entities, "Domain");
 
-		final DslDefinitionBody definitionBody = new DslDefinitionBodyRule(entity)
+		final DslSketchBody definitionBody = new DslDefinitionBodyRule(entity)
 				.parse("{ dataType : String } ")
 				.getValue();
 

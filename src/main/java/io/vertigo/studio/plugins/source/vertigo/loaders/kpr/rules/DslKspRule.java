@@ -102,10 +102,10 @@ public final class DslKspRule extends AbstractRule<Dummy, List<Object>> {
 	}
 
 	private void handleTemplateRule(final DslSketch dslDefinition) {
-		dynamicModelrepository.addPartialDefinition(dslDefinition);
+		dynamicModelrepository.addPartialSketch(dslDefinition);
 	}
 
 	private void handleDefinitionRule(final DslSketch dslDefinition) {
-		dynamicModelrepository.addDefinition(dslDefinition);
+		dynamicModelrepository.addSketch(dslDefinition);
 	}
 }
