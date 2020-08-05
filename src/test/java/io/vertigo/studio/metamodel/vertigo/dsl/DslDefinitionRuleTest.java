@@ -27,7 +27,7 @@ import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchesRepositor
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslDynamicDefinitionRule;
 
 public class DslDefinitionRuleTest {
-	private final DslSketchesRepository dslDefinitionRepository = DslDynamicRegistryMock.createDynamicDefinitionRepository();
+	private final DslSketchesRepository dslDefinitionRepository = DslDynamicRegistryMock.createDslSketchesRepository();
 
 	@Test
 	public void test2() throws PegNoMatchFoundException {

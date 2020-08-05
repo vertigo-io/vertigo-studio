@@ -40,7 +40,7 @@ public final class DslDynamicRegistryMock implements DynamicRegistry {
 	/**
 	 * @return DynamicDefinitionRepository bouchon pour test
 	 */
-	public static DslSketchesRepository createDynamicDefinitionRepository() {
+	public static DslSketchesRepository createDslSketchesRepository() {
 		return new DslSketchesRepository(new DslDynamicRegistryMock());
 	}
 

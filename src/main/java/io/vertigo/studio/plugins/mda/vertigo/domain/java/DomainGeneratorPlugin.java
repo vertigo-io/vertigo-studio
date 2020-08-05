@@ -213,21 +213,21 @@ public final class DomainGeneratorPlugin implements MdaGeneratorPlugin {
 		notebook.getAll(DtSketch.class)
 				.stream()
 				.filter(dtDefinition -> dtDefinition.getStereotype() == StudioStereotype.StaticMasterData)
-				.forEach(dtDefintion -> generateJavaEnum(
+				.forEach(dtSketch -> generateJavaEnum(
 						targetSubDir,
 						mdaConfig,
 						mdaResultBuilder,
-						dtDefintion, staticMasterDataValues.getOrDefault(dtDefintion.getClassCanonicalName(), Collections.emptyMap())));
+						dtSketch, staticMasterDataValues.getOrDefault(dtSketch.getClassCanonicalName(), Collections.emptyMap())));
 	}
 
 	private static void generateJavaEnum(
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder,
-			final DtSketch dtDefinition,
+			final DtSketch dtSketch,
 			final Map<String, MasterDataValue> values) {
 
-		final MasterDataModel masterDataDefinitionModel = new MasterDataModel(dtDefinition, values);
+		final MasterDataModel masterDataDefinitionModel = new MasterDataModel(dtSketch, values);
 
 		final Map<String, Object> model = new MapBuilder<String, Object>()
 				.put("entity", masterDataDefinitionModel)
@@ -237,7 +237,7 @@ public final class DomainGeneratorPlugin implements MdaGeneratorPlugin {
 				.withModel(model)
 				.withFileName(masterDataDefinitionModel.getClassSimpleName() + "Enum.java")
 				.withGenSubDir(targetSubDir)
-				.withPackageName(dtDefinition.getPackageName())
+				.withPackageName(dtSketch.getPackageName())
 				.withTemplateName(DomainGeneratorPlugin.class, "template/masterdata_enum.ftl")
 				.build()
 				.generateFile(mdaResultBuilder);

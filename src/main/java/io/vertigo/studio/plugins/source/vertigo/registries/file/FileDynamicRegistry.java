@@ -38,18 +38,18 @@ public final class FileDynamicRegistry implements DynamicRegistry {
 
 	/** {@inheritDoc} */
 	@Override
-	public SketchSupplier supplyModel(final DslSketch dslDefinition) {
-		final DslEntity dslEntity = dslDefinition.getEntity();
+	public SketchSupplier supplyModel(final DslSketch dslSketch) {
+		final DslEntity dslEntity = dslSketch.getEntity();
 		if (FileGrammar.FILE_INFO_DEFINITION_ENTITY.equals(dslEntity)) {
 			//Seuls les taches sont gérées.
-			return notebook -> createFileSketch(dslDefinition);
+			return notebook -> createFileSketch(dslSketch);
 		}
-		throw new IllegalStateException("The type of definition" + dslDefinition + " is not managed by me");
+		throw new IllegalStateException("The type of definition" + dslSketch + " is not managed by me");
 	}
 
-	private static FileInfoSketch createFileSketch(final DslSketch xFileDefinition) {
-		final String fileDefinitionName = xFileDefinition.getName();
-		final String storeName = (String) xFileDefinition.getPropertyValue(KspProperty.DATA_SPACE);
+	private static FileInfoSketch createFileSketch(final DslSketch dslFileInfoSketch) {
+		final String fileDefinitionName = dslFileInfoSketch.getName();
+		final String storeName = (String) dslFileInfoSketch.getPropertyValue(KspProperty.DATA_SPACE);
 
 		return new FileInfoSketch(fileDefinitionName, storeName);
 	}

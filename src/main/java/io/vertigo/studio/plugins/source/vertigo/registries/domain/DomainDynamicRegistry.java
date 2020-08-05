@@ -71,27 +71,27 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		return (notebook) -> createSketch(notebook, dslDefinition);
 	}
 
-	private Sketch createSketch(final Notebook notebook, final DslSketch dslDefinition) {
+	private Sketch createSketch(final Notebook notebook, final DslSketch dslSketch) {
 
-		final DslEntity dslEntity = dslDefinition.getEntity();
+		final DslEntity dslEntity = dslSketch.getEntity();
 		if (dslEntity.equals(DomainGrammar.DOMAIN_ENTITY)) {
-			return createDomain(notebook, dslDefinition);
+			return createDomain(notebook, dslSketch);
 		} else if (dslEntity.equals(DomainGrammar.DT_DEFINITION_ENTITY)) {
-			return createDtSketch(notebook, dslDefinition);
+			return createDtSketch(notebook, dslSketch);
 		} else if (dslEntity.equals(DomainGrammar.FRAGMENT_ENTITY)) {
-			return createFragmentDtSketch(notebook, dslDefinition);
+			return createFragmentDtSketch(notebook, dslSketch);
 		} else if (dslEntity.equals(DomainGrammar.ASSOCIATION_ENTITY)) {
-			return createAssociationSimpleSketch(notebook, dslDefinition);
+			return createAssociationSimpleSketch(notebook, dslSketch);
 		} else if (dslEntity.equals(DomainGrammar.ASSOCIATION_NN_ENTITY)) {
-			return createAssociationNNSketch(notebook, dslDefinition);
+			return createAssociationNNSketch(notebook, dslSketch);
 		}
-		throw new IllegalStateException("The type of definition" + dslDefinition + " is not managed by me");
+		throw new IllegalStateException("The type of definition" + dslSketch + " is not managed by me");
 	}
 
-	private static DomainSketch createDomain(final Notebook notebook, final DslSketch xdomain) {
-		final String domainName = xdomain.getName();
-		final String type = xdomain.getDefinitionLinkName("dataType");
-		final Properties properties = extractProperties(xdomain);
+	private static DomainSketch createDomain(final Notebook notebook, final DslSketch dslSketchDomain) {
+		final String domainName = dslSketchDomain.getName();
+		final String type = dslSketchDomain.getDefinitionLinkName("dataType");
+		final Properties properties = extractProperties(dslSketchDomain);
 		switch (type) {
 			case "DtObject":
 				return DomainSketch.of(domainName, properties, SketchKey.of(properties.getProperty("TYPE")));
@@ -166,26 +166,26 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 	}
 
 	/**
-	 * @param xdtDefinition Définition de DT
+	 * @param dtDslSketch Définition de DT
 	 */
-	private DtSketch createDtSketch(final Notebook notebook, final DslSketch xdtDefinition) {
+	private DtSketch createDtSketch(final Notebook notebook, final DslSketch dtDslSketch) {
 		//Déclaration de la définition
-		final String sortFieldName = (String) xdtDefinition.getPropertyValue(KspProperty.SORT_FIELD);
-		final String displayFieldName = (String) xdtDefinition.getPropertyValue(KspProperty.DISPLAY_FIELD);
-		final String handleFieldName = (String) xdtDefinition.getPropertyValue(KspProperty.HANDLE_FIELD);
+		final String sortFieldName = (String) dtDslSketch.getPropertyValue(KspProperty.SORT_FIELD);
+		final String displayFieldName = (String) dtDslSketch.getPropertyValue(KspProperty.DISPLAY_FIELD);
+		final String handleFieldName = (String) dtDslSketch.getPropertyValue(KspProperty.HANDLE_FIELD);
 		//-----
-		final String tmpStereotype = (String) xdtDefinition.getPropertyValue(KspProperty.STEREOTYPE);
+		final String tmpStereotype = (String) dtDslSketch.getPropertyValue(KspProperty.STEREOTYPE);
 		//Si Stereotype est non renseigné on suppose que la définition est DtStereotype.Data.
 		final StudioStereotype stereotype = tmpStereotype != null ? StudioStereotype.valueOf(tmpStereotype) : null;
 		//-----
-		final String dataSpace = (String) xdtDefinition.getPropertyValue(KspProperty.DATA_SPACE);
+		final String dataSpace = (String) dtDslSketch.getPropertyValue(KspProperty.DATA_SPACE);
 		//-----
-		final String fragmentOf = (String) xdtDefinition.getPropertyValue(KspProperty.FRAGMENT_OF);
+		final String fragmentOf = (String) dtDslSketch.getPropertyValue(KspProperty.FRAGMENT_OF);
 		//-----
 		//-----
-		final String dtDefinitionName = xdtDefinition.getName();
+		final String dtDefinitionName = dtDslSketch.getName();
 		final DtSketchBuilder dtDefinitionBuilder = DtSketch.builder(dtDefinitionName)
-				.withPackageName(xdtDefinition.getPackageName())
+				.withPackageName(dtDslSketch.getPackageName())
 				.withDataSpace(dataSpace)
 				.withSortField(sortFieldName)
 				.withDisplayField(displayFieldName)
@@ -203,15 +203,15 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		dtDefinitionBuilders.put(SketchKey.of(dtDefinitionName), dtDefinitionBuilder);
 
 		//Déclaration de la clé primaire
-		final List<DslSketch> keys = xdtDefinition.getChildSketches(DomainGrammar.ID_FIELD);
+		final List<DslSketch> keys = dtDslSketch.getChildSketches(DomainGrammar.ID_FIELD);
 		populateIdDtField(notebook, dtDefinitionBuilder, keys);
 
 		//Déclaration des champs du DT
-		final List<DslSketch> fields = xdtDefinition.getChildSketches(DomainGrammar.DATA_FIELD);
+		final List<DslSketch> fields = dtDslSketch.getChildSketches(DomainGrammar.DATA_FIELD);
 		populateDataDtField(notebook, dtDefinitionBuilder, fields);
 
 		//Déclaration des champs calculés
-		final List<DslSketch> computedFields = xdtDefinition.getChildSketches(DomainGrammar.COMPUTED_FIELD);
+		final List<DslSketch> computedFields = dtDslSketch.getChildSketches(DomainGrammar.COMPUTED_FIELD);
 		populateComputedDtField(notebook, dtDefinitionBuilder, computedFields);
 
 		return dtDefinitionBuilder.build();

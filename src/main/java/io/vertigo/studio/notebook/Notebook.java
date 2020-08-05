@@ -39,7 +39,7 @@ public final class Notebook {
 	/**
 	 * Registers a new Sketch.
 	 * The sketch must not be already registered.
-	 * @param sketch the definition
+	 * @param sketch the sketch
 	 */
 	public void register(final Sketch sketch) {
 		Assertion.check()

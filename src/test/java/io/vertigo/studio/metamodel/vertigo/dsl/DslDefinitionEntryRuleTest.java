@@ -36,10 +36,10 @@ public final class DslDefinitionEntryRuleTest {
 		final String text = "myFirstProperty : [BLEU ], non reconnu";
 		final PegResult<DslSketchEntry> cursor = MAIN
 				.parse(text);
-		final DslSketchEntry xDefinitionEntry = cursor.getValue();
-		Assertions.assertEquals("myFirstProperty", xDefinitionEntry.getFieldName());
-		Assertions.assertEquals(1, xDefinitionEntry.getDefinitionNames().size());
-		Assertions.assertTrue(xDefinitionEntry.getDefinitionNames().contains("BLEU"));
+		final DslSketchEntry dslSketchEntry = cursor.getValue();
+		Assertions.assertEquals("myFirstProperty", dslSketchEntry.getFieldName());
+		Assertions.assertEquals(1, dslSketchEntry.getDefinitionNames().size());
+		Assertions.assertTrue(dslSketchEntry.getDefinitionNames().contains("BLEU"));
 		Assertions.assertEquals(text.length() - " non reconnu".length(), cursor.getIndex());
 	}
 
@@ -48,10 +48,10 @@ public final class DslDefinitionEntryRuleTest {
 		final String text = "myFirstProperty : [BLEU, VerT, ROUGE, T_REX ], non reconnu";
 		final PegResult<DslSketchEntry> cursor = MAIN
 				.parse(text);
-		final DslSketchEntry xDefinitionEntry = cursor.getValue();
-		Assertions.assertEquals("myFirstProperty", xDefinitionEntry.getFieldName());
-		Assertions.assertEquals(4, xDefinitionEntry.getDefinitionNames().size());
-		Assertions.assertTrue(xDefinitionEntry.getDefinitionNames().contains("VerT"));
+		final DslSketchEntry dslSketchEntry = cursor.getValue();
+		Assertions.assertEquals("myFirstProperty", dslSketchEntry.getFieldName());
+		Assertions.assertEquals(4, dslSketchEntry.getDefinitionNames().size());
+		Assertions.assertTrue(dslSketchEntry.getDefinitionNames().contains("VerT"));
 		Assertions.assertEquals(text.length() - " non reconnu".length(), cursor.getIndex());
 
 	}
@@ -62,9 +62,9 @@ public final class DslDefinitionEntryRuleTest {
 		final PegResult<DslSketchEntry> cursor = MAIN
 				.parse(text);
 
-		final DslSketchEntry xDefinitionEntry = cursor.getValue();
-		Assertions.assertEquals("myLastProperty", xDefinitionEntry.getFieldName());
-		Assertions.assertEquals(0, xDefinitionEntry.getDefinitionNames().size());
+		final DslSketchEntry dslSketchEntry = cursor.getValue();
+		Assertions.assertEquals("myLastProperty", dslSketchEntry.getFieldName());
+		Assertions.assertEquals(0, dslSketchEntry.getDefinitionNames().size());
 		Assertions.assertEquals(text.length(), cursor.getIndex());
 	}
 

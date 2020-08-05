@@ -115,12 +115,12 @@ public final class OOMParserStereotypesTest {
 	 */
 	@Test
 	public void testStereotypeData() {
-		final DtSketch dtDefinitionAttachment = getDtSketch(SketchKey.of("DtAttachment"));
-		Assertions.assertNotNull(dtDefinitionAttachment);
-		Assertions.assertEquals(StudioStereotype.Entity, dtDefinitionAttachment.getStereotype());
+		final DtSketch dtSketchAttachment = getDtSketch(SketchKey.of("DtAttachment"));
+		Assertions.assertNotNull(dtSketchAttachment);
+		Assertions.assertEquals(StudioStereotype.Entity, dtSketchAttachment.getStereotype());
 
-		final DtSketch dtDefinitionCommandValidation = getDtSketch(SketchKey.of("DtCommandValidation"));
-		Assertions.assertNotNull(dtDefinitionCommandValidation);
-		Assertions.assertEquals(StudioStereotype.Entity, dtDefinitionCommandValidation.getStereotype());
+		final DtSketch dtSketchCommandValidation = getDtSketch(SketchKey.of("DtCommandValidation"));
+		Assertions.assertNotNull(dtSketchCommandValidation);
+		Assertions.assertEquals(StudioStereotype.Entity, dtSketchCommandValidation.getStereotype());
 	}
 }

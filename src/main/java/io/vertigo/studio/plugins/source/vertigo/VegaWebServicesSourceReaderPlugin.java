@@ -45,24 +45,24 @@ public final class VegaWebServicesSourceReaderPlugin implements NotebookSourceRe
 
 	@Override
 	public List<SketchSupplier> parseResources(final List<NotebookSource> resources, final Notebook notebook) {
-		final List<WebServiceSketch> webServiceDefinitions = new ArrayList<>();
+		final List<WebServiceSketch> webServiceSketch = new ArrayList<>();
 		for (final NotebookSource resource : resources) {
 			final String resourcePath = resource.getPath();
 			if (resourcePath.endsWith(".*")) {
-				scanAndAddPackage(resourcePath.substring(0, resourcePath.length() - ".*".length()), webServiceDefinitions);
+				scanAndAddPackage(resourcePath.substring(0, resourcePath.length() - ".*".length()), webServiceSketch);
 			} else {
 				final Class<? extends WebServices> webServicesClass = ClassUtil.classForName(resourcePath, WebServices.class);
-				webServiceDefinitions.addAll(scanWebServices(webServicesClass));
+				webServiceSketch.addAll(scanWebServices(webServicesClass));
 			}
 		}
 
-		return webServiceDefinitions
+		return webServiceSketch
 				.stream()
-				.map(webserviceDefinition -> (SketchSupplier) wB -> webserviceDefinition)
+				.map(webserviceSketch -> (SketchSupplier) wB -> webserviceSketch)
 				.collect(Collectors.toList());
 	}
 
-	private static void scanAndAddPackage(final String packagePath, final List<WebServiceSketch> webServiceDefinitions) {
+	private static void scanAndAddPackage(final String packagePath, final List<WebServiceSketch> webServiceSketch) {
 		final Collection<Class> webServicesClasses = Selector
 				.from(packagePath)
 				.filterClasses(ClassConditions.subTypeOf(WebServices.class))
@@ -70,7 +70,7 @@ public final class VegaWebServicesSourceReaderPlugin implements NotebookSourceRe
 
 		//--Enregistrement des fichiers java annotés
 		for (final Class<? extends WebServices> webServicesClass : webServicesClasses) {
-			webServiceDefinitions.addAll(scanWebServices(webServicesClass));
+			webServiceSketch.addAll(scanWebServices(webServicesClass));
 		}
 	}
 
