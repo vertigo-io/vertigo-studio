@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.search.FacetSketch;
-import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants.VertigoDefinitionPrefix;
 
 public final class FacetDefinitionModel {
 
@@ -49,7 +48,7 @@ public final class FacetDefinitionModel {
 	}
 
 	public String getName() {
-		return VertigoDefinitionPrefix.FacetDefinition.getPrefix() + facetSketch.getLocalName();
+		return facetSketch.getKey().getName();
 	}
 
 	public String getFieldName() {

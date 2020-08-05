@@ -52,7 +52,6 @@ public class VertigoConstants {
 
 		DtDefinition("Dt"),
 		FacetedQueryDefiniton("Qry"),
-		FacetDefinition("Fct"),
 		SearchIndexDefinition("Idx"),
 		Authorization("Atz");
 

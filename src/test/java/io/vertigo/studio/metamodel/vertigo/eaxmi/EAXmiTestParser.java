@@ -89,13 +89,11 @@ public class EAXmiTestParser {
 	 * - Navigabilité notée v
 	 */
 	private AssociationSimpleSketch getAssociationSimpleDefinition(final SketchKey key) {
-		return notebook
-				.resolve(key, AssociationSimpleSketch.class);
+		return notebook.resolve(key, AssociationSimpleSketch.class);
 	}
 
 	private AssociationNNSketch getAssociationNNDefinition(final SketchKey key) {
-		return notebook
-				.resolve(key, AssociationNNSketch.class);
+		return notebook.resolve(key, AssociationNNSketch.class);
 	}
 
 	/**

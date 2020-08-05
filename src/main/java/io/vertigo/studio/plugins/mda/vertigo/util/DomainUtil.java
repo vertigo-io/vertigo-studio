@@ -119,7 +119,7 @@ public final class DomainUtil {
 				className = javaType;
 				break;
 			case DATA_OBJECT:
-				className = classNameFromDt.apply(domainSketch.getDtSketchName());
+				className = classNameFromDt.apply(domainSketch.getDtSketchKey().getName());
 				break;
 			case VALUE_OBJECT:
 				className = domainSketch.getValueObjectClassName();
@@ -145,7 +145,7 @@ public final class DomainUtil {
 				classLabel = domainSketch.getDataType().getJavaClass().getSimpleName();
 				break;
 			case DATA_OBJECT:
-				classLabel = getSimpleNameFromCanonicalName(classNameFromDt.apply(domainSketch.getDtSketchName()));
+				classLabel = getSimpleNameFromCanonicalName(classNameFromDt.apply(domainSketch.getDtSketchKey().getName()));
 				break;
 			case VALUE_OBJECT:
 				classLabel = getSimpleNameFromCanonicalName(domainSketch.getValueObjectClassName());
