@@ -81,7 +81,7 @@ public final class JavaParserStereotypesTest2 {
 				.build();
 	}
 
-	private DtSketch getDtDefinition(final SketchKey key) {
+	private DtSketch getDtSketch(final SketchKey key) {
 		return notebook.resolve(key, DtSketch.class);
 	}
 
@@ -90,13 +90,13 @@ public final class JavaParserStereotypesTest2 {
 	 */
 	@Test
 	public void testStereotypeMasterData() {
-		final DtSketch dtDefinitionCity = getDtDefinition(SketchKey.of("DtCity"));
-		Assertions.assertNotNull(dtDefinitionCity);
-		Assertions.assertEquals(StudioStereotype.MasterData, dtDefinitionCity.getStereotype());
+		final DtSketch dtSketchCity = getDtSketch(SketchKey.of("DtCity"));
+		Assertions.assertNotNull(dtSketchCity);
+		Assertions.assertEquals(StudioStereotype.MasterData, dtSketchCity.getStereotype());
 
-		final DtSketch dtDefinitionCommandType = getDtDefinition(SketchKey.of("DtCommandType"));
-		Assertions.assertNotNull(dtDefinitionCommandType);
-		Assertions.assertEquals(StudioStereotype.StaticMasterData, dtDefinitionCommandType.getStereotype());
+		final DtSketch dtSketchCommandType = getDtSketch(SketchKey.of("DtCommandType"));
+		Assertions.assertNotNull(dtSketchCommandType);
+		Assertions.assertEquals(StudioStereotype.StaticMasterData, dtSketchCommandType.getStereotype());
 	}
 
 	/**
@@ -104,9 +104,9 @@ public final class JavaParserStereotypesTest2 {
 	 */
 	@Test
 	public void testStereotypeKeyConcept() {
-		final DtSketch dtDefinitionCommand = getDtDefinition(SketchKey.of("DtCommand"));
-		Assertions.assertNotNull(dtDefinitionCommand);
-		Assertions.assertEquals(StudioStereotype.KeyConcept, dtDefinitionCommand.getStereotype());
+		final DtSketch dtSketchCommand = getDtSketch(SketchKey.of("DtCommand"));
+		Assertions.assertNotNull(dtSketchCommand);
+		Assertions.assertEquals(StudioStereotype.KeyConcept, dtSketchCommand.getStereotype());
 
 	}
 
@@ -115,18 +115,18 @@ public final class JavaParserStereotypesTest2 {
 	 */
 	@Test
 	public void testStereotypeEntity() {
-		final DtSketch dtDefinitionAttachment = getDtDefinition(SketchKey.of("DtAttachment"));
-		Assertions.assertNotNull(dtDefinitionAttachment);
-		Assertions.assertEquals(StudioStereotype.Entity, dtDefinitionAttachment.getStereotype());
+		final DtSketch dtSketchAttachment = getDtSketch(SketchKey.of("DtAttachment"));
+		Assertions.assertNotNull(dtSketchAttachment);
+		Assertions.assertEquals(StudioStereotype.Entity, dtSketchAttachment.getStereotype());
 
-		final DtSketch dtDefinitionCommandValidation = getDtDefinition(SketchKey.of("DtCommandValidation"));
+		final DtSketch dtDefinitionCommandValidation = getDtSketch(SketchKey.of("DtCommandValidation"));
 		Assertions.assertNotNull(dtDefinitionCommandValidation);
 		Assertions.assertEquals(StudioStereotype.Entity, dtDefinitionCommandValidation.getStereotype());
 	}
 
 	@Test
 	public void testStereotypeData() {
-		final DtSketch dtDefinitionAttachment = getDtDefinition(SketchKey.of("DtCommandCriteria"));
+		final DtSketch dtDefinitionAttachment = getDtSketch(SketchKey.of("DtCommandCriteria"));
 		Assertions.assertNotNull(dtDefinitionAttachment);
 		Assertions.assertEquals(StudioStereotype.ValueObject, dtDefinitionAttachment.getStereotype());
 

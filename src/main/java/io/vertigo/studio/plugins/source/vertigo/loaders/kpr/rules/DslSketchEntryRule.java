@@ -37,13 +37,13 @@ import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslSketch
  * Règle de déclaration d'une champ référenéant une listes de clés.
  * @author pchretien, mlaroche
  */
-public final class DslDefinitionEntryRule extends AbstractRule<DslSketchEntry, List<Object>> {
+public final class DslSketchEntryRule extends AbstractRule<DslSketchEntry, List<Object>> {
 
 	/**
 	 * Constructor.
 	 * @param fieldNames List of field names
 	 */
-	public DslDefinitionEntryRule(final List<String> fieldNames) {
+	public DslSketchEntryRule(final List<String> fieldNames) {
 		super(createMainRule(fieldNames));
 	}
 

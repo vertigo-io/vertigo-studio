@@ -88,11 +88,11 @@ public class OOMParserTest {
 	 * - Cardinalité notée 	1 ou n
 	 * - Navigabilité notée v
 	 */
-	private AssociationSimpleSketch getAssociationSimpleDefinition(final SketchKey key) {
+	private AssociationSimpleSketch getAssociationSimpleSketch(final SketchKey key) {
 		return notebook.resolve(key, AssociationSimpleSketch.class);
 	}
 
-	private AssociationNNSketch getAssociationNNDefinition(final SketchKey key) {
+	private AssociationNNSketch getAssociationNNSketch(final SketchKey key) {
 		return notebook.resolve(key, AssociationNNSketch.class);
 	}
 
@@ -101,7 +101,7 @@ public class OOMParserTest {
 	*/
 	@Test
 	public void testAssoctationA1Bnv() {
-		final AssociationSimpleSketch association = getAssociationSimpleDefinition(SketchKey.of("AChaChi1"));
+		final AssociationSimpleSketch association = getAssociationSimpleSketch(SketchKey.of("AChaChi1"));
 		Assertions.assertNotNull(association);
 		/* "0..1" */
 		Assertions.assertFalse(association.getAssociationNodeA().isMultiple());
@@ -123,7 +123,7 @@ public class OOMParserTest {
 	 */
 	@Test
 	public void testAssoctationA1vBnv() {
-		final AssociationSimpleSketch association = getAssociationSimpleDefinition(SketchKey.of("AChaChi2"));
+		final AssociationSimpleSketch association = getAssociationSimpleSketch(SketchKey.of("AChaChi2"));
 		/* "0..1" */
 		Assertions.assertFalse(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());
@@ -143,7 +143,7 @@ public class OOMParserTest {
 	 */
 	@Test
 	public void testAssoctationA1vBn() {
-		final AssociationSimpleSketch association = getAssociationSimpleDefinition(SketchKey.of("AChaChi3"));
+		final AssociationSimpleSketch association = getAssociationSimpleSketch(SketchKey.of("AChaChi3"));
 		/* "0..1" */
 		Assertions.assertFalse(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());
@@ -163,7 +163,7 @@ public class OOMParserTest {
 	 */
 	@Test
 	public void testAssoctationAnB1v() {
-		final AssociationSimpleSketch association = getAssociationSimpleDefinition(SketchKey.of("AChaChi4"));
+		final AssociationSimpleSketch association = getAssociationSimpleSketch(SketchKey.of("AChaChi4"));
 		/* "0..*" */
 		Assertions.assertTrue(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());
@@ -183,7 +183,7 @@ public class OOMParserTest {
 	 */
 	@Test
 	public void testAssoctationAnvB1() {
-		final AssociationSimpleSketch association = getAssociationSimpleDefinition(SketchKey.of("AChaChi5"));
+		final AssociationSimpleSketch association = getAssociationSimpleSketch(SketchKey.of("AChaChi5"));
 		/* "0..*" */
 		Assertions.assertTrue(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());
@@ -203,7 +203,7 @@ public class OOMParserTest {
 	 */
 	@Test
 	public void testAssoctationAnvB1v() {
-		final AssociationSimpleSketch association = getAssociationSimpleDefinition(SketchKey.of("AChaChi6"));
+		final AssociationSimpleSketch association = getAssociationSimpleSketch(SketchKey.of("AChaChi6"));
 		/* "0..*" */
 		Assertions.assertTrue(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());
@@ -223,7 +223,7 @@ public class OOMParserTest {
 	 */
 	@Test
 	public void testAssoctationAnBnv() {
-		final AssociationNNSketch association = getAssociationNNDefinition(SketchKey.of("AnnChaChi7"));
+		final AssociationNNSketch association = getAssociationNNSketch(SketchKey.of("AnnChaChi7"));
 		/* "0..*" */
 		Assertions.assertTrue(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());
@@ -243,7 +243,7 @@ public class OOMParserTest {
 	 */
 	@Test
 	public void testAssoctationAnvBnv() {
-		final AssociationNNSketch association = getAssociationNNDefinition(SketchKey.of("AnnChaChi8"));
+		final AssociationNNSketch association = getAssociationNNSketch(SketchKey.of("AnnChaChi8"));
 		/* "0..*" */
 		Assertions.assertTrue(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());
@@ -263,7 +263,7 @@ public class OOMParserTest {
 	 */
 	@Test
 	public void testAssoctationAnBn() {
-		final AssociationNNSketch association = getAssociationNNDefinition(SketchKey.of("AnnChaChi9"));
+		final AssociationNNSketch association = getAssociationNNSketch(SketchKey.of("AnnChaChi9"));
 		/* "0..*" */
 		Assertions.assertTrue(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());
@@ -283,7 +283,7 @@ public class OOMParserTest {
 	 */
 	@Test
 	public void testAssoctationAnvBn() {
-		final AssociationNNSketch association = getAssociationNNDefinition(SketchKey.of("AnnChaChi10"));
+		final AssociationNNSketch association = getAssociationNNSketch(SketchKey.of("AnnChaChi10"));
 		/* "0..*" */
 		Assertions.assertTrue(association.getAssociationNodeA().isMultiple());
 		Assertions.assertFalse(association.getAssociationNodeA().isNotNull());

@@ -91,9 +91,9 @@ public final class JavaParserStereotypesTest {
 	 */
 	@Test
 	public void testStereotypeMasterData() {
-		final DtSketch dtDefinitionCity = getDtDefinition(SketchKey.of("DtCity"));
-		Assertions.assertNotNull(dtDefinitionCity);
-		Assertions.assertEquals(StudioStereotype.MasterData, dtDefinitionCity.getStereotype());
+		final DtSketch dtSketchCity = getDtDefinition(SketchKey.of("DtCity"));
+		Assertions.assertNotNull(dtSketchCity);
+		Assertions.assertEquals(StudioStereotype.MasterData, dtSketchCity.getStereotype());
 
 		final DtSketch dtDefinitionCommandType = getDtDefinition(SketchKey.of("DtCommandType"));
 		Assertions.assertNotNull(dtDefinitionCommandType);

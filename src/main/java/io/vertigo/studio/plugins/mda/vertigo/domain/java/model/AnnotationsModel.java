@@ -48,10 +48,10 @@ final class AnnotationsModel implements TemplateSequenceModel {
 	/**
 	 * Annotations pour la dtDefinition.
 	 * @param annotationWriter AnnotationWriter
-	 * @param dtDefinition DtDefinition
+	 * @param dtSketch DtDefinition
 	 */
-	public AnnotationsModel(final AnnotationWriter annotationWriter, final DtSketch dtDefinition) {
-		this(annotationWriter.writeAnnotations(dtDefinition));
+	public AnnotationsModel(final AnnotationWriter annotationWriter, final DtSketch dtSketch) {
+		this(annotationWriter.writeAnnotations(dtSketch));
 	}
 
 	/**

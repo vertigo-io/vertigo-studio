@@ -30,27 +30,27 @@ import io.vertigo.studio.notebook.domain.association.AssociationSketchNode;
  * @author pchretien, mlaroche
  */
 public final class StudioAssociationModel {
-	private final AssociationSketch associationDefinition;
+	private final AssociationSketch associationSketch;
 	private final AssociationSketchNode associationSketchNode;
 
 	/**
 	 * Constructeur.
 	 * @param associationSketchNode Noeud de l'association à générer
 	 */
-	StudioAssociationModel(final AssociationSketch associationDefinition, final AssociationSketchNode associationSketchNode) {
+	StudioAssociationModel(final AssociationSketch associationSketch, final AssociationSketchNode associationSketchNode) {
 		Assertion.check()
-				.isNotNull(associationDefinition)
+				.isNotNull(associationSketch)
 				.isNotNull(associationSketchNode);
 		//-----
-		this.associationDefinition = associationDefinition;
+		this.associationSketch = associationSketch;
 		this.associationSketchNode = associationSketchNode;
 	}
 
 	/**
 	 * @return Definition d'une association.
 	 */
-	public AssociationSketch getDefinition() {
-		return associationDefinition;
+	public AssociationSketch getSketch() {
+		return associationSketch;
 	}
 
 	/**
@@ -78,7 +78,7 @@ public final class StudioAssociationModel {
 	 * @return Type de l'association : Simple ou NN
 	 */
 	public boolean isSimple() {
-		return getDefinition() instanceof AssociationSimpleSketch;
+		return getSketch() instanceof AssociationSimpleSketch;
 	}
 
 	/**
@@ -113,13 +113,13 @@ public final class StudioAssociationModel {
 	 * @return Urn de la définition de l'association
 	 */
 	public String getUrn() {
-		return associationDefinition.getKey().getName();
+		return associationSketch.getKey().getName();
 	}
 
 	/**
 	 * @return Nom du champ fk en camelCase.
 	 */
 	public String getFkFieldName() {
-		return ((AssociationSimpleSketch) associationDefinition).getFKField().getName();
+		return ((AssociationSimpleSketch) associationSketch).getFKField().getName();
 	}
 }

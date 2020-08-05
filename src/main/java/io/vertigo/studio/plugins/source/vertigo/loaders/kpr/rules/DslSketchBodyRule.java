@@ -46,12 +46,12 @@ import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslProper
  *
  * @author pchretien, mlaroche
  */
-public final class DslDefinitionBodyRule extends AbstractRule<DslSketchBody, List<Object>> {
+public final class DslSketchBodyRule extends AbstractRule<DslSketchBody, List<Object>> {
 
 	/**
 	 * Constructor.
 	 */
-	public DslDefinitionBodyRule(final DslEntity entity) {
+	public DslSketchBodyRule(final DslEntity entity) {
 		super(createMainRule(entity), entity.getName() + "Body");
 	}
 
@@ -79,7 +79,7 @@ public final class DslDefinitionBodyRule extends AbstractRule<DslSketchBody, Lis
 		}
 
 		final DslPropertyDeclarationRule propertyDeclarationRule = new DslPropertyDeclarationRule(entity.getPropertyNames());
-		final DslDefinitionEntryRule xDefinitionEntryRule = new DslDefinitionEntryRule(attributeNames);
+		final DslSketchEntryRule xDefinitionEntryRule = new DslSketchEntryRule(attributeNames);
 		final PegRule<PegChoice> firstOfRule = PegRules.choice(
 				propertyDeclarationRule, // 0
 				xDefinitionEntryRule, // 1

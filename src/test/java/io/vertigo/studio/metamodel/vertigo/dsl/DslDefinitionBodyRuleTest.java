@@ -28,7 +28,7 @@ import io.vertigo.core.lang.VSystemException;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchesRepository;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslSketchBody;
-import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslDefinitionBodyRule;
+import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslSketchBodyRule;
 
 public class DslDefinitionBodyRuleTest {
 	private final DslSketchesRepository dslDefinitionRepository = DslDynamicRegistryMock.createDynamicDefinitionRepository();
@@ -46,7 +46,7 @@ public class DslDefinitionBodyRuleTest {
 		final List<DslEntity> entities = dslDefinitionRepository.getGrammar().getEntities();
 		final DslEntity entity = find(entities, "Domain");
 
-		final DslSketchBody definitionBody = new DslDefinitionBodyRule(entity)
+		final DslSketchBody definitionBody = new DslSketchBodyRule(entity)
 				.parse("{ dataType : String } ")
 				.getValue();
 
@@ -59,7 +59,7 @@ public class DslDefinitionBodyRuleTest {
 		final DslEntity entity = find(entities, "Domain");
 		final String testValue = "{ dataType : String,  maxLengh:\"true\"   } ";
 		try {
-			new DslDefinitionBodyRule(entity)
+			new DslSketchBodyRule(entity)
 					.parse(testValue);
 			Assertions.fail();
 		} catch (final PegNoMatchFoundException e) {

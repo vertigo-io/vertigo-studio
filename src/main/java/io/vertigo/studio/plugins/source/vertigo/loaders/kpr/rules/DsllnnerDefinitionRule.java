@@ -46,7 +46,7 @@ final class DslInnerDefinitionRule extends AbstractRule<DslSketchEntry, List<Obj
 				.isNotBlank(entityName)
 				.isNotNull(entity);
 		//-----
-		final DslDefinitionBodyRule definitionBodyRule = new DslDefinitionBodyRule(entity);
+		final DslSketchBodyRule definitionBodyRule = new DslSketchBodyRule(entity);
 		return PegRules.sequence(//"InnerDefinition"
 				PegRules.term(entityName),
 				DslSyntaxRules.SPACES,

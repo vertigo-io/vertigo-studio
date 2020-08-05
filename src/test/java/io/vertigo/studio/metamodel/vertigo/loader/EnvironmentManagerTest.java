@@ -37,7 +37,7 @@ import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchesRepository;
 
 public final class EnvironmentManagerTest {
-	private final DslSketchesRepository dslDefinitionRepository = DslDynamicRegistryMock.createDynamicDefinitionRepository();
+	private final DslSketchesRepository dslDefinitionRepository = DslDynamicRegistryMock.createDslSketchesRepository();
 
 	@Test
 	public void simpleTest() {

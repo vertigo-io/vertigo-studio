@@ -36,9 +36,9 @@ import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
  * @author pchretien, mlaroche
  */
 public final class StudioDtFieldModel {
-	private final DtSketch dtDefinition;
+	private final DtSketch dtSketch;
 	private final DtSketchField dtField;
-	private final List<? extends AssociationSketch> associationDefinitions;
+	private final List<? extends AssociationSketch> associationSketches;
 	private final String javaType;
 	private final String javaTypeLabel;
 
@@ -47,19 +47,19 @@ public final class StudioDtFieldModel {
 	 * @param dtField Champ à générer
 	 */
 	StudioDtFieldModel(
-			final DtSketch dtDefinition,
+			final DtSketch dtSketch,
 			final DtSketchField dtField,
-			final List<? extends AssociationSketch> associationDefinitions,
+			final List<? extends AssociationSketch> associationSketches,
 			final Function<String, String> classNameFromDt) {
 		Assertion.check()
-				.isNotNull(dtDefinition)
+				.isNotNull(dtSketch)
 				.isNotNull(dtField)
-				.isNotNull(associationDefinitions)
+				.isNotNull(associationSketches)
 				.isNotNull(classNameFromDt);
 		//-----
-		this.dtDefinition = dtDefinition;
+		this.dtSketch = dtSketch;
 		this.dtField = dtField;
-		this.associationDefinitions = associationDefinitions;
+		this.associationSketches = associationSketches;
 		//---
 		javaType = DomainUtil.buildJavaType(dtField, classNameFromDt);
 		javaTypeLabel = DomainUtil.buildJavaTypeLabel(dtField, classNameFromDt);
@@ -121,14 +121,14 @@ public final class StudioDtFieldModel {
 	 * @return Label du champ
 	 */
 	public boolean isSortField() {
-		return dtDefinition.getSortField().isPresent() && dtDefinition.getSortField().get().getName().equals(dtField.getName());
+		return dtSketch.getSortField().isPresent() && dtSketch.getSortField().get().getName().equals(dtField.getName());
 	}
 
 	/**
 	 * @return Label du champ
 	 */
 	public boolean isDisplayField() {
-		return dtDefinition.getDisplayField().isPresent() && dtDefinition.getDisplayField().get().getName().equals(dtField.getName());
+		return dtSketch.getDisplayField().isPresent() && dtSketch.getDisplayField().get().getName().equals(dtField.getName());
 	}
 
 	/**
@@ -146,7 +146,7 @@ public final class StudioDtFieldModel {
 	}
 
 	private boolean isChildOfEntity() {
-		return dtDefinition.getFragment().isEmpty();
+		return dtSketch.getFragment().isEmpty();
 	}
 
 	public boolean isForeignKey() {
@@ -156,7 +156,7 @@ public final class StudioDtFieldModel {
 	public StudioAssociationModel getAssociation() {
 		Assertion.check().isTrue(isChildOfEntity(), "an association must be declared on an entity");
 		//---
-		return associationDefinitions
+		return associationSketches
 				.stream()
 				.filter(association -> association instanceof AssociationSimpleSketch)
 				.map(association -> (AssociationSimpleSketch) association)

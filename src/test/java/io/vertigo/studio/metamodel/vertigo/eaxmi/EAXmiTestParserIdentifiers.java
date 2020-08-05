@@ -82,14 +82,14 @@ public final class EAXmiTestParserIdentifiers {
 				.build();
 	}
 
-	private DtSketch getDtDefinition(final SketchKey key) {
+	private DtSketch getDtSketch(final SketchKey key) {
 		return notebook
 				.resolve(key, DtSketch.class);
 	}
 
 	@Test
 	public void testIdentifiersVsPrimaryKey() {
-		final DtSketch loginDefinition = getDtDefinition(SketchKey.of("DtLogin"));
+		final DtSketch loginDefinition = getDtSketch(SketchKey.of("DtLogin"));
 		Assertions.assertTrue(loginDefinition.getIdField().isPresent());
 	}
 }

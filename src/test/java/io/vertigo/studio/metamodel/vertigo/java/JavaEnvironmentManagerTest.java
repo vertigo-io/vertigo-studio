@@ -91,11 +91,11 @@ public final class JavaEnvironmentManagerTest {
 
 	@Test
 	public void testCommand() {
-		final DtSketch dtDefinition = notebook.resolve(SketchKey.of("DtCommand"), DtSketch.class);
-		Assertions.assertTrue(dtDefinition.isPersistent());
-		Assertions.assertEquals("io.vertigo.studio.metamodel.vertigo.java.data.domain.Command", dtDefinition.getClassCanonicalName());
-		Assertions.assertEquals("io.vertigo.studio.metamodel.vertigo.java.data.domain", dtDefinition.getPackageName());
-		Assertions.assertEquals("Command", dtDefinition.getClassSimpleName());
+		final DtSketch dtSketch = notebook.resolve(SketchKey.of("DtCommand"), DtSketch.class);
+		Assertions.assertTrue(dtSketch.isPersistent());
+		Assertions.assertEquals("io.vertigo.studio.metamodel.vertigo.java.data.domain.Command", dtSketch.getClassCanonicalName());
+		Assertions.assertEquals("io.vertigo.studio.metamodel.vertigo.java.data.domain", dtSketch.getPackageName());
+		Assertions.assertEquals("Command", dtSketch.getClassSimpleName());
 	}
 
 	@Test

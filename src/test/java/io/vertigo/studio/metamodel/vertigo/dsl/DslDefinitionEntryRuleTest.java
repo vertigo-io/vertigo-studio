@@ -26,10 +26,10 @@ import org.junit.jupiter.api.Test;
 import io.vertigo.commons.peg.PegNoMatchFoundException;
 import io.vertigo.commons.peg.PegResult;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslSketchEntry;
-import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslDefinitionEntryRule;
+import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslSketchEntryRule;
 
 public final class DslDefinitionEntryRuleTest {
-	private static final DslDefinitionEntryRule MAIN = new DslDefinitionEntryRule(Arrays.asList("myFirstProperty", "myLastProperty"));
+	private static final DslSketchEntryRule MAIN = new DslSketchEntryRule(Arrays.asList("myFirstProperty", "myLastProperty"));
 
 	@Test
 	public void test0() throws PegNoMatchFoundException {

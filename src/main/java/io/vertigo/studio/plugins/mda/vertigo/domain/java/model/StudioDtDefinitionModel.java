@@ -37,7 +37,7 @@ import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants.VertigoClassNames;
  * @author pchretien, mlaroche
  */
 public final class StudioDtDefinitionModel {
-	private final DtSketch dtDefinition;
+	private final DtSketch dtSketch;
 	private final List<StudioDtFieldModel> dtFieldModels = new ArrayList<>();
 	private final List<StudioDtFieldModel> dtAllFieldModels = new ArrayList<>();
 	private final List<StudioDtFieldModel> dtComputedFieldModels = new ArrayList<>();
@@ -46,15 +46,15 @@ public final class StudioDtDefinitionModel {
 	/**
 	 * Constructeur.
 	 *
-	 * @param dtDefinition DtDefinition de l'objet à générer
+	 * @param dtSketch DtDefinition de l'objet à générer
 	 */
-	public StudioDtDefinitionModel(final DtSketch dtDefinition, final List<? extends AssociationSketch> associationDefinitions, final Function<String, String> classNameFromDt) {
-		Assertion.check().isNotNull(dtDefinition);
+	public StudioDtDefinitionModel(final DtSketch dtSketch, final List<? extends AssociationSketch> associationSketches, final Function<String, String> classNameFromDt) {
+		Assertion.check().isNotNull(dtSketch);
 		//-----
-		this.dtDefinition = dtDefinition;
+		this.dtSketch = dtSketch;
 
-		for (final DtSketchField dtField : dtDefinition.getFields()) {
-			final StudioDtFieldModel dtFieldModel = new StudioDtFieldModel(dtDefinition, dtField, associationDefinitions, classNameFromDt);
+		for (final DtSketchField dtField : dtSketch.getFields()) {
+			final StudioDtFieldModel dtFieldModel = new StudioDtFieldModel(dtSketch, dtField, associationSketches, classNameFromDt);
 			dtAllFieldModels.add(dtFieldModel);
 			if (FieldType.COMPUTED == dtField.getType()) {
 				dtComputedFieldModels.add(dtFieldModel);
@@ -63,11 +63,11 @@ public final class StudioDtDefinitionModel {
 			}
 		}
 
-		for (final AssociationSketch associationDefinition : associationDefinitions) {
-			if (associationDefinition.getAssociationNodeA().getDtSketch().getKey().equals(dtDefinition.getKey())) {
+		for (final AssociationSketch associationDefinition : associationSketches) {
+			if (associationDefinition.getAssociationNodeA().getDtSketch().getKey().equals(dtSketch.getKey())) {
 				associationModels.add(new StudioAssociationModel(associationDefinition, associationDefinition.getAssociationNodeB()));
 			}
-			if (associationDefinition.getAssociationNodeB().getDtSketch().getKey().equals(dtDefinition.getKey())) {
+			if (associationDefinition.getAssociationNodeB().getDtSketch().getKey().equals(dtSketch.getKey())) {
 				associationModels.add(new StudioAssociationModel(associationDefinition, associationDefinition.getAssociationNodeA()));
 			}
 		}
@@ -77,22 +77,22 @@ public final class StudioDtDefinitionModel {
 	/**
 	 * @return DT définition
 	 */
-	public DtSketch getDtDefinition() {
-		return dtDefinition;
+	public DtSketch getDtSketch() {
+		return dtSketch;
 	}
 
 	/**
 	 * @return Nom canonique (i.e. avec le package) de la classe d'implémentation du DtObject
 	 */
 	public String getClassCanonicalName() {
-		return dtDefinition.getClassCanonicalName();
+		return dtSketch.getClassCanonicalName();
 	}
 
 	/**
 	 * @return Simple Nom (i.e. sans le package) de la classe d'implémentation du DtObject
 	 */
 	public String getClassSimpleName() {
-		return dtDefinition.getClassSimpleName();
+		return dtSketch.getClassSimpleName();
 	}
 
 	/**
@@ -100,14 +100,14 @@ public final class StudioDtDefinitionModel {
 	 * @return Simple Nom (i.e. sans le package) de la definition du DtObject
 	 */
 	public String getLocalName() {
-		return dtDefinition.getLocalName();
+		return dtSketch.getLocalName();
 	}
 
 	/**
 	 * @return Nom du package
 	 */
 	public String getPackageName() {
-		return dtDefinition.getPackageName();
+		return dtSketch.getPackageName();
 	}
 
 	public String getStereotypeClassCanonicalName() {
@@ -115,33 +115,33 @@ public final class StudioDtDefinitionModel {
 	}
 
 	public boolean isEntity() {
-		return dtDefinition.getStereotype() == StudioStereotype.Entity
-				|| dtDefinition.getStereotype() == StudioStereotype.KeyConcept
-				|| dtDefinition.getStereotype() == StudioStereotype.Fragment
-				|| dtDefinition.getStereotype() == StudioStereotype.MasterData
-				|| dtDefinition.getStereotype() == StudioStereotype.StaticMasterData;
+		return dtSketch.getStereotype() == StudioStereotype.Entity
+				|| dtSketch.getStereotype() == StudioStereotype.KeyConcept
+				|| dtSketch.getStereotype() == StudioStereotype.Fragment
+				|| dtSketch.getStereotype() == StudioStereotype.MasterData
+				|| dtSketch.getStereotype() == StudioStereotype.StaticMasterData;
 	}
 
 	public boolean isFragment() {
-		return dtDefinition.getStereotype() == StudioStereotype.Fragment;
+		return dtSketch.getStereotype() == StudioStereotype.Fragment;
 	}
 
 	public String getEntityClassSimpleName() {
-		return dtDefinition.getFragment().get().getClassSimpleName();
+		return dtSketch.getFragment().get().getClassSimpleName();
 	}
 
 	/**
 	 * @return Nom simple de l'nterface associé au Sterotype de l'objet (DtObject, DtMasterData ou KeyConcept)
 	 */
 	public String getStereotypeInterfaceName() {
-		if (dtDefinition.getStereotype() == StudioStereotype.Fragment) {
+		if (dtSketch.getStereotype() == StudioStereotype.Fragment) {
 			return getStereotypeClass().getSimpleName() + "<" + getEntityClassSimpleName() + ">";
 		}
 		return getStereotypeClass().getSimpleName();
 	}
 
 	private VertigoClassNames getStereotypeClass() {
-		switch (dtDefinition.getStereotype()) {
+		switch (dtSketch.getStereotype()) {
 			case Entity:
 				return VertigoClassNames.Entity;
 			case ValueObject:
@@ -155,7 +155,7 @@ public final class StudioDtDefinitionModel {
 			case Fragment:
 				return VertigoClassNames.Fragment;
 			default:
-				throw new IllegalArgumentException("Stereotype " + dtDefinition.getStereotype().name() + " non géré");
+				throw new IllegalArgumentException("Stereotype " + dtSketch.getStereotype().name() + " non géré");
 		}
 	}
 
@@ -188,25 +188,25 @@ public final class StudioDtDefinitionModel {
 	}
 
 	public boolean containsAccessor() {
-		return dtDefinition.getStereotype() != StudioStereotype.Fragment &&
+		return dtSketch.getStereotype() != StudioStereotype.Fragment &&
 				associationModels
 						.stream()
 						//only simple
 						.filter(StudioAssociationModel::isSimple)
-						.map(associationModel -> (AssociationSimpleSketch) associationModel.getDefinition())
-						.filter(association -> association.getForeignAssociationNode().getDtSketch().getKey().equals(dtDefinition.getKey())) // only when we are on the foreign node with a fk field
+						.map(associationModel -> (AssociationSimpleSketch) associationModel.getSketch())
+						.filter(association -> association.getForeignAssociationNode().getDtSketch().getKey().equals(dtSketch.getKey())) // only when we are on the foreign node with a fk field
 						.anyMatch(association -> association.getPrimaryAssociationNode().getDtSketch().getStereotype() != StudioStereotype.StaticMasterData); // any that IS NOT a static master data
 
 	}
 
 	public boolean containsEnumAccessor() {
-		return dtDefinition.getStereotype() != StudioStereotype.Fragment &&
+		return dtSketch.getStereotype() != StudioStereotype.Fragment &&
 				associationModels
 						.stream()
 						//only simple
 						.filter(StudioAssociationModel::isSimple)
-						.map(associationModel -> (AssociationSimpleSketch) associationModel.getDefinition())
-						.filter(association -> association.getForeignAssociationNode().getDtSketch().getKey().equals(dtDefinition.getKey())) // only when we are on the primary node
+						.map(associationModel -> (AssociationSimpleSketch) associationModel.getSketch())
+						.filter(association -> association.getForeignAssociationNode().getDtSketch().getKey().equals(dtSketch.getKey())) // only when we are on the primary node
 						.anyMatch(association -> association.getPrimaryAssociationNode().getDtSketch().getStereotype() == StudioStereotype.StaticMasterData); // any that IS  a static master data
 
 	}
