@@ -21,8 +21,8 @@ package io.vertigo.studio.metamodel.vertigo.loader;
 import io.vertigo.studio.notebook.AbstractSketch;
 import io.vertigo.studio.notebook.SkecthPrefix;
 import io.vertigo.studio.notebook.SketchSupplier;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinition;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinitionRepository;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchesRepository;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DynamicRegistry;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
 
@@ -39,8 +39,8 @@ public final class DslDynamicRegistryMock implements DynamicRegistry {
 	/**
 	 * @return DynamicDefinitionRepository bouchon pour test
 	 */
-	public static DslDefinitionRepository createDynamicDefinitionRepository() {
-		return new DslDefinitionRepository(new DslDynamicRegistryMock());
+	public static DslSketchesRepository createDynamicDefinitionRepository() {
+		return new DslSketchesRepository(new DslDynamicRegistryMock());
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public final class DslDynamicRegistryMock implements DynamicRegistry {
 	}
 
 	@Override
-	public SketchSupplier supplyModel(final DslDefinition definition) {
+	public SketchSupplier supplyModel(final DslSketch definition) {
 		return (notebook) -> new FakeModel(definition.getName());
 	}
 

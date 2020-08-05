@@ -22,16 +22,16 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import io.vertigo.commons.peg.PegNoMatchFoundException;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinition;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinitionRepository;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchesRepository;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslDynamicDefinitionRule;
 
 public class DslDefinitionRuleTest {
-	private final DslDefinitionRepository dslDefinitionRepository = DslDynamicRegistryMock.createDynamicDefinitionRepository();
+	private final DslSketchesRepository dslDefinitionRepository = DslDynamicRegistryMock.createDynamicDefinitionRepository();
 
 	@Test
 	public void test2() throws PegNoMatchFoundException {
-		final DslDefinition dslDefinition = new DslDynamicDefinitionRule("create", dslDefinitionRepository.getGrammar())
+		final DslSketch dslDefinition = new DslDynamicDefinitionRule("create", dslDefinitionRepository.getGrammar())
 				.parse("create Domain DoCodePostal { dataType : String } ")
 				.getValue();
 		Assertions.assertNotNull(dslDefinition);

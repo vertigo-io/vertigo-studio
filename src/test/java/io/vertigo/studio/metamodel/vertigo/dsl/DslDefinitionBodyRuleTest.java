@@ -25,13 +25,13 @@ import org.junit.jupiter.api.Test;
 
 import io.vertigo.commons.peg.PegNoMatchFoundException;
 import io.vertigo.core.lang.VSystemException;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinitionRepository;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchesRepository;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslDefinitionBody;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslDefinitionBodyRule;
 
 public class DslDefinitionBodyRuleTest {
-	private final DslDefinitionRepository dslDefinitionRepository = DslDynamicRegistryMock.createDynamicDefinitionRepository();
+	private final DslSketchesRepository dslDefinitionRepository = DslDynamicRegistryMock.createDynamicDefinitionRepository();
 
 	private static DslEntity find(final List<DslEntity> entities, final String entityName) {
 		return entities

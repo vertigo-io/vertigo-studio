@@ -32,8 +32,8 @@ import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.source.NotebookSourceReaderPlugin;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.SketchSupplier;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinition;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinitionRepository;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchesRepository;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DynamicRegistry;
 import io.vertigo.studio.plugins.source.vertigo.loaders.Loader;
 import io.vertigo.studio.plugins.source.vertigo.loaders.eaxmi.core.EAXmiLoader;
@@ -82,10 +82,10 @@ public final class StudioSourceReaderPlugin implements NotebookSourceReaderPlugi
 	public List<SketchSupplier> parseResources(final List<NotebookSource> resources, final Notebook notebook) {
 		//Création du repositoy des instances le la grammaire (=> model)
 		final DynamicRegistry dynamoDynamicRegistry = new DynamoDynamicRegistry();
-		final DslDefinitionRepository dslDefinitionRepository = new DslDefinitionRepository(dynamoDynamicRegistry);
+		final DslSketchesRepository dslDefinitionRepository = new DslSketchesRepository(dynamoDynamicRegistry);
 
 		//--Enregistrement des types primitifs
-		for (final DslDefinition dslDefinition : dynamoDynamicRegistry.getGrammar().getRootDefinitions()) {
+		for (final DslSketch dslDefinition : dynamoDynamicRegistry.getGrammar().getRootDefinitions()) {
 			dslDefinitionRepository.addDefinition(dslDefinition);
 		}
 		for (final NotebookSource resource : resources) {

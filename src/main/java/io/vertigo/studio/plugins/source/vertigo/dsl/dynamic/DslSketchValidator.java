@@ -27,17 +27,17 @@ import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntityField;
 
 /**
  *
- * Validate a definition considering its own entity.
+ * Validates a sketch considering its own entity.
  *
  * @author pchretien, mlaroche
  *
  */
-final class DslDefinitionValidator {
-	private DslDefinitionValidator() {
+final class DslSketchValidator {
+	private DslSketchValidator() {
 		//utility Class
 	}
 
-	static void check(final DslDefinition definition) {
+	static void check(final DslSketch definition) {
 		Assertion.check().isNotNull(definition);
 		//-----
 		final DslEntity myEntity = definition.getEntity();
@@ -58,7 +58,7 @@ final class DslDefinitionValidator {
 		}
 
 		// 1.2 on vérifie les définitions composites (sous définitions).
-		for (final DslDefinition child : definition.getAllChildDefinitions()) {
+		for (final DslSketch child : definition.getAllChildDefinitions()) {
 			check(child);
 		}
 
@@ -67,7 +67,7 @@ final class DslDefinitionValidator {
 	}
 
 	private static void checkProperties(
-			final DslDefinition definition,
+			final DslSketch definition,
 			final Set<String> propertyNames,
 			final Set<String> entityPropertyNames) {
 		// Vérification que toutes les propriétés sont déclarées sur le
@@ -85,7 +85,7 @@ final class DslDefinitionValidator {
 	}
 
 	private static void checkMandatoryProperties(
-			final DslDefinition dslDefinition,
+			final DslSketch dslDefinition,
 			final DslEntity dslEntity,
 			final Set<String> propertyNames,
 			final Set<String> entityPropertyNames) {

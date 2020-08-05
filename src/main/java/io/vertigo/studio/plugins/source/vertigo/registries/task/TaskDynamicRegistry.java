@@ -27,7 +27,7 @@ import io.vertigo.studio.notebook.domain.DomainSketch;
 import io.vertigo.studio.notebook.task.TaskSketch;
 import io.vertigo.studio.notebook.task.TaskSketchBuilder;
 import io.vertigo.studio.plugins.source.vertigo.KspProperty;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinition;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DynamicRegistry;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
@@ -44,7 +44,7 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 
 	/** {@inheritDoc} */
 	@Override
-	public SketchSupplier supplyModel(final DslDefinition dslDefinition) {
+	public SketchSupplier supplyModel(final DslSketch dslDefinition) {
 		final DslEntity dslEntity = dslDefinition.getEntity();
 
 		if (TaskGrammar.TASK_DEFINITION_ENTITY.equals(dslEntity)) {
@@ -54,11 +54,11 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 		throw new IllegalStateException("The type of definition" + dslDefinition + " is not managed by me");
 	}
 
-	private static String getTaskEngineClassName(final DslDefinition xtaskDefinition) {
+	private static String getTaskEngineClassName(final DslSketch xtaskDefinition) {
 		return (String) xtaskDefinition.getPropertyValue(KspProperty.CLASS_NAME);
 	}
 
-	private static TaskSketch createTaskSketch(final Notebook notebook, final DslDefinition xtaskDefinition) {
+	private static TaskSketch createTaskSketch(final Notebook notebook, final DslSketch xtaskDefinition) {
 		final String taskDefinitionName = xtaskDefinition.getName();
 		final String request = (String) xtaskDefinition.getPropertyValue(KspProperty.REQUEST);
 		Assertion.check().isNotNull(taskDefinitionName);
@@ -69,7 +69,7 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 				.withDataSpace(dataSpace)
 				.withRequest(request)
 				.withPackageName(xtaskDefinition.getPackageName());
-		for (final DslDefinition xtaskAttribute : xtaskDefinition.getChildDefinitions(TaskGrammar.TASK_ATTRIBUTE_IN)) {
+		for (final DslSketch xtaskAttribute : xtaskDefinition.getChildDefinitions(TaskGrammar.TASK_ATTRIBUTE_IN)) {
 			final String attributeName = xtaskAttribute.getName();
 			Assertion.check().isNotNull(attributeName);
 			//-----
@@ -77,7 +77,7 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 					buildDomainSketch(notebook, xtaskAttribute),
 					buildCardinality(xtaskAttribute));
 		}
-		for (final DslDefinition xtaskAttribute : xtaskDefinition.getChildDefinitions(TaskGrammar.TASK_ATTRIBUTE_OUT)) {
+		for (final DslSketch xtaskAttribute : xtaskDefinition.getChildDefinitions(TaskGrammar.TASK_ATTRIBUTE_OUT)) {
 			final String attributeName = xtaskAttribute.getName();
 			Assertion.check().isNotNull(attributeName);
 			//-----
@@ -88,13 +88,13 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 		return taskSketchBuilder.build();
 	}
 
-	private static Cardinality buildCardinality(DslDefinition xtaskAttribute) {
+	private static Cardinality buildCardinality(DslSketch xtaskAttribute) {
 		final String sCardinality = (String) xtaskAttribute.getPropertyValue(KspProperty.CARDINALITY);
 		final Cardinality cardinality = sCardinality == null ? Cardinality.OPTIONAL_OR_NULLABLE : Cardinality.fromSymbol((sCardinality));
 		return cardinality;
 	}
 
-	private static DomainSketch buildDomainSketch(Notebook notebook, DslDefinition xtaskAttribute) {
+	private static DomainSketch buildDomainSketch(Notebook notebook, DslSketch xtaskAttribute) {
 		final String smartTypeName = xtaskAttribute.getDefinitionLinkName("domain");
 		final DomainSketch domainSketch = notebook.resolve(SketchKey.of(smartTypeName), DomainSketch.class);
 		return domainSketch;

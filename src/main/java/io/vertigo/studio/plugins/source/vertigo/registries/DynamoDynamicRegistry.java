@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.studio.notebook.SketchSupplier;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinition;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DynamicRegistry;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
@@ -64,7 +64,7 @@ public final class DynamoDynamicRegistry implements DynamicRegistry {
 			}
 
 			@Override
-			public List<DslDefinition> getRootDefinitions() {
+			public List<DslSketch> getRootDefinitions() {
 				return dynamicRegistries
 						.stream()
 						.flatMap(dynamicRegistry -> dynamicRegistry.getGrammar().getRootDefinitions().stream())
@@ -81,7 +81,7 @@ public final class DynamoDynamicRegistry implements DynamicRegistry {
 
 	/** {@inheritDoc} */
 	@Override
-	public List<DslDefinition> onNewDefinition(final DslDefinition dslDefinition) {
+	public List<DslSketch> onNewDefinition(final DslSketch dslDefinition) {
 		//Les entités du noyaux ne sont pas à gérer par des managers spécifiques.
 		if (!dslDefinition.getEntity().isProvided()) {
 			return lookUpDynamicRegistry(dslDefinition)
@@ -92,7 +92,7 @@ public final class DynamoDynamicRegistry implements DynamicRegistry {
 
 	/** {@inheritDoc} */
 	@Override
-	public SketchSupplier supplyModel(final DslDefinition dslDefinition) {
+	public SketchSupplier supplyModel(final DslSketch dslDefinition) {
 		try {
 			// perf: ifs ordonnés en gros par fréquence sur les projets
 			return lookUpDynamicRegistry(dslDefinition)
@@ -103,7 +103,7 @@ public final class DynamoDynamicRegistry implements DynamicRegistry {
 		}
 	}
 
-	private DynamicRegistry lookUpDynamicRegistry(final DslDefinition dslDefinition) {
+	private DynamicRegistry lookUpDynamicRegistry(final DslSketch dslDefinition) {
 		//On regarde si la grammaire contient la métaDefinition.
 		return dynamicRegistries
 				.stream()

@@ -21,7 +21,7 @@ package io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinition;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
 
 /**
  * Une entrée de type définition est définie (XOR)
@@ -35,7 +35,7 @@ public final class DslDefinitionEntry {
 	 * Obligatoire
 	 */
 	private final String fieldName;
-	private final DslDefinition definition;
+	private final DslSketch definition;
 	private final List<String> definitionNames;
 
 	/**
@@ -60,7 +60,7 @@ public final class DslDefinitionEntry {
 	 * @param fieldName Nom du champ
 	 * @param definition Définition
 	 */
-	public DslDefinitionEntry(final String fieldName, final DslDefinition definition) {
+	public DslDefinitionEntry(final String fieldName, final DslSketch definition) {
 		Assertion.check()
 				.isNotNull(fieldName)
 				.isNotNull(definition);
@@ -89,7 +89,7 @@ public final class DslDefinitionEntry {
 	/**
 	 * @return Définition
 	 */
-	public DslDefinition getDefinition() {
+	public DslSketch getDefinition() {
 		Assertion.check().isNotNull(definition);
 		//-----
 		return definition;

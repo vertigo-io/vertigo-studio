@@ -40,14 +40,14 @@ import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
  *
  * @author  pchretien
  */
-public final class DslDefinitionRepository {
+public final class DslSketchesRepository {
 
 	/***
 	 * On retient les définitions dans l'ordre pour
 	 * créer les fichiers toujours de la même façon.
 	 */
-	private final Map<String, DslDefinition> dslDefinitions = new LinkedHashMap<>();
-	private final List<DslDefinition> partials = new ArrayList<>();
+	private final Map<String, DslSketch> dslDefinitions = new LinkedHashMap<>();
+	private final List<DslSketch> partials = new ArrayList<>();
 
 	private final DynamicRegistry registry;
 	private final DslGrammar grammar;
@@ -56,7 +56,7 @@ public final class DslDefinitionRepository {
 	 * Constructor.
 	 * @param registry DynamicDefinitionHandler
 	 */
-	public DslDefinitionRepository(final DynamicRegistry registry) {
+	public DslSketchesRepository(final DynamicRegistry registry) {
 		Assertion.check().isNotNull(registry);
 		//-----
 		this.registry = registry;
@@ -88,10 +88,10 @@ public final class DslDefinitionRepository {
 	 * @param definitionName Name of the definition
 	 * @return DynamicDefinition Définition correspondante ou null.
 	 */
-	public DslDefinition getDefinition(final String definitionName) {
+	public DslSketch getDefinition(final String definitionName) {
 		Assertion.check().isTrue(dslDefinitions.containsKey(definitionName), "Aucune clé enregistrée pour :{0} parmi {1}", definitionName, dslDefinitions.keySet());
 		//-----
-		final DslDefinition definition = dslDefinitions.get(definitionName);
+		final DslSketch definition = dslDefinitions.get(definitionName);
 		//-----
 		Assertion.check().isNotNull(definition, "Clé trouvée mais pas de définition enregistrée trouvée pour {0}", definitionName);
 		return definition;
@@ -105,21 +105,21 @@ public final class DslDefinitionRepository {
 	public List<SketchSupplier> solve(final Notebook notebook) {
 		mergePartials();
 
-		final List<DslDefinition> sortedDslDefinitions = DslSolver.solve(notebook, this);
+		final List<DslSketch> sortedDslDefinitions = DslSolver.solve(notebook, this);
 		return createModelStream(sortedDslDefinitions);
 	}
 
 	private void mergePartials() {
 		//parts of definitions are merged
-		for (final DslDefinition partial : partials) {
-			final DslDefinition merged = DslDefinition.builder(partial.getName(), partial.getEntity())
+		for (final DslSketch partial : partials) {
+			final DslSketch merged = DslSketch.builder(partial.getName(), partial.getEntity())
 					.merge(getDefinition(partial.getName()))
 					.merge(partial).build();
 			dslDefinitions.put(partial.getName(), merged);
 		}
 	}
 
-	private List<SketchSupplier> createModelStream(final List<DslDefinition> sortedDynamicDefinitions) {
+	private List<SketchSupplier> createModelStream(final List<DslSketch> sortedDynamicDefinitions) {
 		return sortedDynamicDefinitions
 				.stream()
 				.filter(dslDefinition -> !dslDefinition.getEntity().isProvided()) // provided definitions are excluded
@@ -127,8 +127,8 @@ public final class DslDefinitionRepository {
 				.collect(Collectors.toList());
 	}
 
-	private SketchSupplier createModel(final DslDefinition dslDefinition) {
-		DslDefinitionValidator.check(dslDefinition);
+	private SketchSupplier createModel(final DslSketch dslDefinition) {
+		DslSketchValidator.check(dslDefinition);
 		//The definition identified as root are not registered.
 		return registry.supplyModel(dslDefinition);
 	}
@@ -137,10 +137,10 @@ public final class DslDefinitionRepository {
 	 * Add a definition.
 	 * @param dslDefinition DynamicDefinition
 	 */
-	public void addDefinition(final DslDefinition dslDefinition) {
+	public void addDefinition(final DslSketch dslDefinition) {
 		Assertion.check().isNotNull(dslDefinition);
 		//---
-		final DslDefinition previousDefinition = dslDefinitions.put(dslDefinition.getName(), dslDefinition);
+		final DslSketch previousDefinition = dslDefinitions.put(dslDefinition.getName(), dslDefinition);
 		Assertion.check().isNull(previousDefinition, "this definition '{0}' has already be registered", dslDefinition.getName());
 		//---
 		registry.onNewDefinition(dslDefinition)
@@ -152,7 +152,7 @@ public final class DslDefinitionRepository {
 	 * adds a partial definition.
 	 * @param partial the part of a definition
 	 */
-	public void addPartialDefinition(final DslDefinition partial) {
+	public void addPartialDefinition(final DslSketch partial) {
 		Assertion.check().isNotNull(partial);
 		//---
 		partials.add(partial);
@@ -172,7 +172,7 @@ public final class DslDefinitionRepository {
 	/**
 	 * @return Liste des définitions complètes
 	 */
-	Collection<DslDefinition> getDefinitions() {
+	Collection<DslSketch> getDefinitions() {
 		return Collections.unmodifiableCollection(dslDefinitions.values());
 	}
 }

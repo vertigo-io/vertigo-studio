@@ -42,7 +42,7 @@ import io.vertigo.studio.notebook.search.FacetSketchValue;
 import io.vertigo.studio.notebook.search.FacetedQuerySketch;
 import io.vertigo.studio.notebook.search.SearchIndexSketch;
 import io.vertigo.studio.plugins.source.vertigo.KspProperty;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinition;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DynamicRegistry;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
@@ -59,11 +59,11 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 
 	/** {@inheritDoc} */
 	@Override
-	public SketchSupplier supplyModel(final DslDefinition dslDefinition) {
+	public SketchSupplier supplyModel(final DslSketch dslDefinition) {
 		return notebook -> createModel(notebook, dslDefinition);
 	}
 
-	private static Sketch createModel(final Notebook notebook, final DslDefinition dslDefinition) {
+	private static Sketch createModel(final Notebook notebook, final DslSketch dslDefinition) {
 		final DslEntity dslEntity = dslDefinition.getEntity();
 
 		if (SearchGrammar.INDEX_DEFINITION_ENTITY.equals(dslEntity)) {
@@ -76,7 +76,7 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 		throw new IllegalStateException("The type of definition" + dslDefinition + " is not managed by me");
 	}
 
-	private static SearchIndexSketch createIndexSketch(final Notebook notebook, final DslDefinition xsearchObjet) {
+	private static SearchIndexSketch createIndexSketch(final Notebook notebook, final DslSketch xsearchObjet) {
 		final DtSketch keyConceptDtDefinition = notebook.resolve(SketchKey.of(xsearchObjet.getDefinitionLinkName("keyConcept")), DtSketch.class);
 		final DtSketch indexDtDefinition = notebook.resolve(SketchKey.of(xsearchObjet.getDefinitionLinkName("dtIndex")), DtSketch.class);
 		final String definitionName = xsearchObjet.getName();
@@ -88,10 +88,10 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 		return new SearchIndexSketch(definitionName, keyConceptDtDefinition, indexDtDefinition, copyFields, searchLoaderId);
 	}
 
-	private static Map<DtSketchField, List<DtSketchField>> populateCopyFields(final DslDefinition xsearchObjet, final DtSketch indexDtDefinition) {
+	private static Map<DtSketchField, List<DtSketchField>> populateCopyFields(final DslSketch xsearchObjet, final DtSketch indexDtDefinition) {
 		final Map<DtSketchField, List<DtSketchField>> copyToFields = new HashMap<>(); //(map toField : [fromField, fromField, ...])
-		final List<DslDefinition> copyToFieldNames = xsearchObjet.getChildDefinitions(SearchGrammar.INDEX_COPY_TO_PROPERTY);
-		for (final DslDefinition copyToFieldDefinition : copyToFieldNames) {
+		final List<DslSketch> copyToFieldNames = xsearchObjet.getChildDefinitions(SearchGrammar.INDEX_COPY_TO_PROPERTY);
+		for (final DslSketch copyToFieldDefinition : copyToFieldNames) {
 			final String copyFromFieldNames = (String) copyToFieldDefinition.getPropertyValue(SearchGrammar.INDEX_COPY_FROM_PROPERTY);
 			copyToFields.put(
 					indexDtDefinition.getField(copyToFieldDefinition.getName()),
@@ -100,7 +100,7 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 		return copyToFields;
 	}
 
-	private static FacetSketch createFacetSketch(final Notebook notebook, final DslDefinition xdefinition) {
+	private static FacetSketch createFacetSketch(final Notebook notebook, final DslSketch xdefinition) {
 		final String definitionName = xdefinition.getName();
 		final DtSketch indexDtDefinition = notebook.resolve(SketchKey.of(xdefinition.getDefinitionLinkName("dtDefinition")), DtSketch.class);
 		final String dtFieldName = (String) xdefinition.getPropertyValue(SearchGrammar.FIELD_NAME);
@@ -108,8 +108,8 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 		final String label = (String) xdefinition.getPropertyValue(KspProperty.LABEL);
 
 		//Déclaration des ranges
-		final List<DslDefinition> rangeDefinitions = xdefinition.getChildDefinitions("range");
-		final List<DslDefinition> paramsDefinitions = xdefinition.getChildDefinitions("params");
+		final List<DslSketch> rangeDefinitions = xdefinition.getChildDefinitions("range");
+		final List<DslSketch> paramsDefinitions = xdefinition.getChildDefinitions("params");
 		final MessageText labelMsg = MessageText.of(label);
 		final FacetSketch facetDefinition;
 		if (!rangeDefinitions.isEmpty()) {
@@ -149,7 +149,7 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 		return facetDefinition;
 	}
 
-	private static FacetOrder getFacetOrder(final DslDefinition xdefinition, final FacetOrder defaultOrder) {
+	private static FacetOrder getFacetOrder(final DslSketch xdefinition, final FacetOrder defaultOrder) {
 		final String orderStr = (String) xdefinition.getPropertyValue(SearchGrammar.FACET_ORDER);
 		Assertion.check().isTrue(orderStr == null
 				|| FacetOrder.alpha.name().equals(orderStr)
@@ -158,25 +158,25 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 		return orderStr != null ? FacetOrder.valueOf(orderStr) : defaultOrder;
 	}
 
-	private static boolean isMultiSelectable(final DslDefinition xdefinition, final boolean defaultValue) {
+	private static boolean isMultiSelectable(final DslSketch xdefinition, final boolean defaultValue) {
 		final Boolean multiSelectable = (Boolean) xdefinition.getPropertyValue(SearchGrammar.FACET_MULTISELECTABLE);
 		return multiSelectable != null ? multiSelectable : defaultValue;
 	}
 
-	private static FacetSketchValue createFacetValue(final DslDefinition rangeDefinition) {
+	private static FacetSketchValue createFacetValue(final DslSketch rangeDefinition) {
 		final String listFilterString = (String) rangeDefinition.getPropertyValue(SearchGrammar.RANGE_FILTER_PROPERTY);
 		final String label = (String) rangeDefinition.getPropertyValue(KspProperty.LABEL);
 		final String code = rangeDefinition.getName();
 		return new FacetSketchValue(code, listFilterString, label);
 	}
 
-	private static Tuple<String, String> createFacetParam(final DslDefinition paramDefinition) {
+	private static Tuple<String, String> createFacetParam(final DslSketch paramDefinition) {
 		final String name = paramDefinition.getName();
 		final String value = (String) paramDefinition.getPropertyValue(SearchGrammar.PARAMS_VALUE_PROPERTY);
 		return Tuple.of(name, value);
 	}
 
-	private static FacetedQuerySketch createFacetedQuerySketch(final Notebook notebook, final DslDefinition xdefinition) {
+	private static FacetedQuerySketch createFacetedQuerySketch(final Notebook notebook, final DslSketch xdefinition) {
 		final String definitionName = xdefinition.getName();
 		final DtSketch keyConceptDtDefinition = notebook.resolve(SketchKey.of(xdefinition.getDefinitionLinkName("keyConcept")), DtSketch.class);
 		final List<String> dynamicFacetDefinitionNames = xdefinition.getDefinitionLinkNames("facets");
@@ -200,7 +200,7 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 				Optional.ofNullable(geoSearchQuery));
 	}
 
-	private static String getListFilterBuilderClassName(final DslDefinition xtaskDefinition) {
+	private static String getListFilterBuilderClassName(final DslSketch xtaskDefinition) {
 		return (String) xtaskDefinition.getPropertyValue(SearchGrammar.LIST_FILTER_BUILDER_CLASS);
 	}
 

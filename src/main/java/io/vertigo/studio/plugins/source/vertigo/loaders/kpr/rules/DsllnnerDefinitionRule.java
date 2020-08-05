@@ -24,8 +24,8 @@ import io.vertigo.commons.peg.AbstractRule;
 import io.vertigo.commons.peg.PegRule;
 import io.vertigo.commons.peg.PegRules;
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinition;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinitionBuilder;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchBuilder;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslDefinitionBody;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslDefinitionEntry;
@@ -64,7 +64,7 @@ final class DslInnerDefinitionRule extends AbstractRule<DslDefinitionEntry, List
 		final String definitionName = (String) parsing.get(2);
 		final DslDefinitionBody definitionBody = (DslDefinitionBody) parsing.get(4);
 
-		final DslDefinitionBuilder dslDefinitionBuilder = DslDefinition.builder(definitionName, entity);
+		final DslSketchBuilder dslDefinitionBuilder = DslSketch.builder(definitionName, entity);
 		populateDefinition(definitionBody, dslDefinitionBuilder);
 
 		//---
@@ -74,7 +74,7 @@ final class DslInnerDefinitionRule extends AbstractRule<DslDefinitionEntry, List
 	/**
 	 * Peuple la définition à partir des éléments trouvés.
 	 */
-	private static void populateDefinition(final DslDefinitionBody definitionBody, final DslDefinitionBuilder dslDefinitionBuilder) {
+	private static void populateDefinition(final DslDefinitionBody definitionBody, final DslSketchBuilder dslDefinitionBuilder) {
 		for (final DslDefinitionEntry fieldDefinitionEntry : definitionBody.getDefinitionEntries()) {
 			//-----
 			// 1.On vérifie que le champ existe pour la metaDefinition

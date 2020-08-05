@@ -21,7 +21,7 @@ package io.vertigo.studio.plugins.source.vertigo.registries.file;
 import io.vertigo.studio.notebook.SketchSupplier;
 import io.vertigo.studio.notebook.file.FileInfoSketch;
 import io.vertigo.studio.plugins.source.vertigo.KspProperty;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinition;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DynamicRegistry;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
@@ -38,7 +38,7 @@ public final class FileDynamicRegistry implements DynamicRegistry {
 
 	/** {@inheritDoc} */
 	@Override
-	public SketchSupplier supplyModel(final DslDefinition dslDefinition) {
+	public SketchSupplier supplyModel(final DslSketch dslDefinition) {
 		final DslEntity dslEntity = dslDefinition.getEntity();
 		if (FileGrammar.FILE_INFO_DEFINITION_ENTITY.equals(dslEntity)) {
 			//Seuls les taches sont gérées.
@@ -47,7 +47,7 @@ public final class FileDynamicRegistry implements DynamicRegistry {
 		throw new IllegalStateException("The type of definition" + dslDefinition + " is not managed by me");
 	}
 
-	private static FileInfoSketch createFileSketch(final DslDefinition xFileDefinition) {
+	private static FileInfoSketch createFileSketch(final DslSketch xFileDefinition) {
 		final String fileDefinitionName = xFileDefinition.getName();
 		final String storeName = (String) xFileDefinition.getPropertyValue(KspProperty.DATA_SPACE);
 

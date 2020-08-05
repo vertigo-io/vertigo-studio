@@ -33,7 +33,7 @@ import io.vertigo.core.lang.VSystemException;
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.resource.ResourceManager;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinitionRepository;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchesRepository;
 import io.vertigo.studio.plugins.source.vertigo.loaders.Loader;
 
 /**
@@ -69,7 +69,7 @@ public final class KprLoader implements Loader {
 
 	/** {@inheritDoc} */
 	@Override
-	public void load(final String resourcePath, final DslDefinitionRepository dslDefinitionRepository) {
+	public void load(final String resourcePath, final DslSketchesRepository dslDefinitionRepository) {
 		Assertion.check()
 				.isNotBlank(resourcePath)
 				.isNotNull(dslDefinitionRepository);

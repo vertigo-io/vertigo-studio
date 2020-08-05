@@ -53,7 +53,7 @@ import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.BasicType;
 import io.vertigo.core.util.ListBuilder;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinition;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
 
@@ -195,7 +195,7 @@ public final class DomainGrammar implements DslGrammar {
 	}
 
 	@Override
-	public List<DslDefinition> getRootDefinitions() {
+	public List<DslSketch> getRootDefinitions() {
 		//We are listing all primitives types
 		final List<String> types = new ListBuilder()
 				.addAll(Arrays.stream(BasicType.values())
@@ -207,7 +207,7 @@ public final class DomainGrammar implements DslGrammar {
 
 		return types
 				.stream()
-				.map(type -> DslDefinition.builder(type, DATA_TYPE_ENTITY).build())
+				.map(type -> DslSketch.builder(type, DATA_TYPE_ENTITY).build())
 				.collect(Collectors.toList());
 	}
 }

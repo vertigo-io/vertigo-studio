@@ -46,25 +46,25 @@ final class DslSolver {
 	* Résoltuion des références.
 	* On appelle SyntaxHandler dans le bon Ordre
 	*/
-	static List<DslDefinition> solve(final Notebook notebook, final DslDefinitionRepository definitionRepository) {
+	static List<DslSketch> solve(final Notebook notebook, final DslSketchesRepository definitionRepository) {
 		Assertion.check()
 				.isNotNull(notebook)
 				.isNotNull(definitionRepository);
 		//-----
 		//Liste des clés résolues
-		final List<DslDefinition> sortedList = new ArrayList<>();
+		final List<DslSketch> sortedList = new ArrayList<>();
 
 		final Collection<String> orphans = definitionRepository.getOrphanDefinitionKeys();
 		if (!orphans.isEmpty()) {
 			throw new VSystemException(" Les clés suivantes {0} sont orphelines", orphans);
 		}
 		//-----
-		final Collection<DslDefinition> coll = new ArrayList<>(definitionRepository.getDefinitions());
+		final Collection<DslSketch> coll = new ArrayList<>(definitionRepository.getDefinitions());
 
-		DslDefinition dslDefinition;
+		DslSketch dslDefinition;
 		int size = coll.size();
 		while (size > 0) {
-			for (final Iterator<DslDefinition> it = coll.iterator(); it.hasNext();) {
+			for (final Iterator<DslSketch> it = coll.iterator(); it.hasNext();) {
 				dslDefinition = it.next();
 				//==============================================================
 				//==============================================================
@@ -85,10 +85,10 @@ final class DslSolver {
 
 	private static boolean isSolved(
 			final Notebook notebook,
-			final DslDefinitionRepository definitionRepository,
-			final List<DslDefinition> orderedList,
-			final DslDefinition dslDefinition,
-			final DslDefinition xdefRoot) {
+			final DslSketchesRepository definitionRepository,
+			final List<DslSketch> orderedList,
+			final DslSketch dslDefinition,
+			final DslSketch xdefRoot) {
 		//A definition is solved if all its sub definitions have been solved
 
 		//We check all references were known
@@ -103,7 +103,7 @@ final class DslSolver {
 						throw new VSystemException("Clé {0} de type {1}, référencée par la propriété {2} de {3} non trouvée",
 								definitionName, dslDefinition.getEntity().getField(fieldName).getType(), fieldName, xdefRootName);
 					}
-					final DslDefinition linkedDefinition = definitionRepository.getDefinition(definitionName);
+					final DslSketch linkedDefinition = definitionRepository.getDefinition(definitionName);
 					if (!orderedList.contains(linkedDefinition)) {
 						return false;
 					}

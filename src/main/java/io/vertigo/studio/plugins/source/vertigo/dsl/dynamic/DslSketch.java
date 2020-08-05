@@ -34,7 +34,7 @@ import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntityField;
  *
  * @author  pchretien
  */
-public final class DslDefinition {
+public final class DslSketch {
 	/** Type. */
 	private final DslEntity entity;
 
@@ -57,15 +57,15 @@ public final class DslDefinition {
 	 * Children.
 	 * Map (fieldName, definitions
 	 */
-	private final Map<DslEntityField, List<DslDefinition>> childDefinitionsByFieldName;
+	private final Map<DslEntityField, List<DslSketch>> childDefinitionsByFieldName;
 
-	DslDefinition(
+	DslSketch(
 			final DslEntity entity,
 			final String packageName,
 			final String name,
 			final Map<DslEntityField, Object> propertyValueByFieldName,
 			final Map<DslEntityField, List<String>> definitionLinkNamesByFieldName,
-			final Map<DslEntityField, List<DslDefinition>> childDefinitionsByFieldName) {
+			final Map<DslEntityField, List<DslSketch>> childDefinitionsByFieldName) {
 		Assertion.check()
 				.isNotNull(entity)
 				//packageName can be null
@@ -88,8 +88,8 @@ public final class DslDefinition {
 	 * @param entity entity
 	 * @return the definition builder
 	 */
-	public static DslDefinitionBuilder builder(final String name, final DslEntity entity) {
-		return new DslDefinitionBuilder(name, entity);
+	public static DslSketchBuilder builder(final String name, final DslEntity entity) {
+		return new DslSketchBuilder(name, entity);
 	}
 
 	/**
@@ -180,7 +180,7 @@ public final class DslDefinition {
 	 * @param fieldName String
 	 * @return List
 	 */
-	public List<DslDefinition> getChildDefinitions(final String fieldName) {
+	public List<DslSketch> getChildDefinitions(final String fieldName) {
 		final DslEntityField dslEntityField = entity.getField(fieldName);
 		Assertion.check().isTrue(dslEntityField.getType().isEntity(), "expected an entity on {0}", fieldName);
 		//---
@@ -190,7 +190,7 @@ public final class DslDefinition {
 	/**
 	 * @return Collection des listes de définitions composites.
 	 */
-	public List<DslDefinition> getAllChildDefinitions() {
+	public List<DslSketch> getAllChildDefinitions() {
 		return childDefinitionsByFieldName.values()
 				.stream()
 				.flatMap(List::stream)

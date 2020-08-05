@@ -37,9 +37,9 @@ import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.notebook.domain.association.AssociationUtil;
 import io.vertigo.studio.plugins.source.vertigo.KspProperty;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinition;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinitionBuilder;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslDefinitionRepository;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchBuilder;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchesRepository;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
 import io.vertigo.studio.plugins.source.vertigo.loaders.Loader;
 import io.vertigo.studio.plugins.source.vertigo.registries.domain.DomainGrammar;
@@ -71,7 +71,7 @@ public abstract class AbstractXmlLoader implements Loader {
 
 	/** {@inheritDoc} */
 	@Override
-	public final void load(final String resourcePath, final DslDefinitionRepository dslDefinitionRepository) {
+	public final void load(final String resourcePath, final DslSketchesRepository dslDefinitionRepository) {
 		final URL xmiFileURL = resourceManager.resolve(resourcePath);
 
 		try {
@@ -117,28 +117,28 @@ public abstract class AbstractXmlLoader implements Loader {
 		return constFieldNameInSource;
 	}
 
-	private static DslDefinition toDynamicDefinition(final XmlClass clazz) {
+	private static DslSketch toDynamicDefinition(final XmlClass clazz) {
 		final DslEntity dtDefinitionEntity = DomainGrammar.DT_DEFINITION_ENTITY;
-		final DslDefinitionBuilder dtDefinitionBuilder = DslDefinition.builder(getDtDefinitionName(clazz.getCode()), dtDefinitionEntity)
+		final DslSketchBuilder dtDefinitionBuilder = DslSketch.builder(getDtDefinitionName(clazz.getCode()), dtDefinitionEntity)
 				.withPackageName(clazz.getPackageName())
 				//Par défaut les DT lues depuis le OOM/XMI sont persistantes.
 				.addPropertyValue(KspProperty.STEREOTYPE, clazz.getStereotype());
 
 		for (final XmlAttribute attribute : clazz.getKeyAttributes()) {
-			final DslDefinition dtField = toDynamicDefinition(attribute);
+			final DslSketch dtField = toDynamicDefinition(attribute);
 			dtDefinitionBuilder.addChildDefinition(DomainGrammar.ID_FIELD, dtField);
 		}
 		for (final XmlAttribute tagAttribute : clazz.getFieldAttributes()) {
-			final DslDefinition dtField = toDynamicDefinition(tagAttribute);
+			final DslSketch dtField = toDynamicDefinition(tagAttribute);
 			dtDefinitionBuilder.addChildDefinition(DomainGrammar.DATA_FIELD, dtField);
 		}
 		return dtDefinitionBuilder.build();
 	}
 
-	private static DslDefinition toDynamicDefinition(final XmlAttribute attribute) {
+	private static DslSketch toDynamicDefinition(final XmlAttribute attribute) {
 		final DslEntity dtFieldEntity = DomainGrammar.DT_DATA_FIELD_ENTITY;
 		final Cardinality fieldCardinality = attribute.isNotNull() ? Cardinality.ONE : Cardinality.OPTIONAL_OR_NULLABLE;
-		return DslDefinition.builder(attribute.getCode(), dtFieldEntity)
+		return DslSketch.builder(attribute.getCode(), dtFieldEntity)
 				.addPropertyValue(KspProperty.LABEL, attribute.getLabel())
 				.addPropertyValue(KspProperty.PERSISTENT, attribute.isPersistent())
 				.addPropertyValue(KspProperty.CARDINALITY, fieldCardinality.toSymbol())
@@ -146,7 +146,7 @@ public abstract class AbstractXmlLoader implements Loader {
 				.build();
 	}
 
-	private static DslDefinition toDynamicDefinition(final XmlAssociation association, final DslDefinitionRepository dynamicModelrepository) {
+	private static DslSketch toDynamicDefinition(final XmlAssociation association, final DslSketchesRepository dynamicModelrepository) {
 		final DslEntity associationEntity = DomainGrammar.ASSOCIATION_ENTITY;
 		final DslEntity associationNNEntity = DomainGrammar.ASSOCIATION_NN_ENTITY;
 
@@ -162,7 +162,7 @@ public abstract class AbstractXmlLoader implements Loader {
 		final String associationDefinitionName = (isAssociationNN ? "Ann" : "A") + association.getCode();
 
 		//On crée l'association
-		final DslDefinitionBuilder associationDefinitionBuilder = DslDefinition.builder(associationDefinitionName, dynamicMetaDefinition)
+		final DslSketchBuilder associationDefinitionBuilder = DslSketch.builder(associationDefinitionName, dynamicMetaDefinition)
 				.withPackageName(association.getPackageName())
 				.addPropertyValue(KspProperty.NAVIGABILITY_A, association.isNavigableA())
 				.addPropertyValue(KspProperty.NAVIGABILITY_B, association.isNavigableB())
@@ -194,16 +194,16 @@ public abstract class AbstractXmlLoader implements Loader {
 		return associationDefinitionBuilder.build();
 	}
 
-	private static String buildFkFieldName(final XmlAssociation association, final DslDefinitionRepository dynamicModelrepository) {
+	private static String buildFkFieldName(final XmlAssociation association, final DslSketchesRepository dynamicModelrepository) {
 		// Dans le cas d'une association simple, on recherche le nom de la FK
 		// recherche de code de contrainte destiné à renommer la fk selon convention du vbsript PowerAMC
 		// Cas de la relation 1-n : où le nom de la FK est redéfini.
 		// Exemple : DOS_UTI_LIQUIDATION (relation entre dossier et utilisateur : FK >> UTILISATEUR_ID_LIQUIDATION)
-		final DslDefinition dtDefinitionA = dynamicModelrepository.getDefinition(getDtDefinitionName(association.getCodeA()));
-		final DslDefinition dtDefinitionB = dynamicModelrepository.getDefinition(getDtDefinitionName(association.getCodeB()));
+		final DslSketch dtDefinitionA = dynamicModelrepository.getDefinition(getDtDefinitionName(association.getCodeA()));
+		final DslSketch dtDefinitionB = dynamicModelrepository.getDefinition(getDtDefinitionName(association.getCodeB()));
 
-		final DslDefinition foreignDefinition = AssociationUtil.isAPrimaryNode(association.getMultiplicityA(), association.getMultiplicityB()) ? dtDefinitionA : dtDefinitionB;
-		final List<DslDefinition> primaryKeys = foreignDefinition.getChildDefinitions(DomainGrammar.ID_FIELD);
+		final DslSketch foreignDefinition = AssociationUtil.isAPrimaryNode(association.getMultiplicityA(), association.getMultiplicityB()) ? dtDefinitionA : dtDefinitionB;
+		final List<DslSketch> primaryKeys = foreignDefinition.getChildDefinitions(DomainGrammar.ID_FIELD);
 		if (primaryKeys.isEmpty()) {
 			throw new IllegalArgumentException("Pour l'association '" + association.getCode() + "' aucune clé primaire sur la définition '" + foreignDefinition.getName() + "'");
 		}

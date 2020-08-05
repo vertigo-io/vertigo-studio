@@ -43,7 +43,7 @@ public interface DynamicRegistry {
 	 * @param dslDefinition Definition
 	 * @return An optional definition
 	 */
-	SketchSupplier supplyModel(DslDefinition dslDefinition);
+	SketchSupplier supplyModel(DslSketch dslDefinition);
 
 	/**
 	 * Ajout d'une définition.
@@ -53,7 +53,7 @@ public interface DynamicRegistry {
 	 * @param dslDefinition dslDefinition
 	 * @return a list of dslDefinitions
 	 */
-	default List<DslDefinition> onNewDefinition(final DslDefinition dslDefinition) {
+	default List<DslSketch> onNewDefinition(final DslSketch dslDefinition) {
 		return Collections.emptyList();
 	}
 }

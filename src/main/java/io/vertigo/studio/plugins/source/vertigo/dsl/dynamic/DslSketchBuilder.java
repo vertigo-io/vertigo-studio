@@ -34,7 +34,7 @@ import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntityField;
  * Interface de création des définitions.
  * @author  pchretien
  */
-public final class DslDefinitionBuilder implements Builder<DslDefinition> {
+public final class DslSketchBuilder implements Builder<DslSketch> {
 	/** Type. */
 	private final DslEntity entity;
 
@@ -58,14 +58,14 @@ public final class DslDefinitionBuilder implements Builder<DslDefinition> {
 	 * Children.
 	 * Map (fieldName, definitions
 	 */
-	private final Map<DslEntityField, List<DslDefinition>> childDefinitionsByFieldName = new LinkedHashMap<>();
+	private final Map<DslEntityField, List<DslSketch>> childDefinitionsByFieldName = new LinkedHashMap<>();
 
 	/**
 	 * Constructor.
 	 * @param name the name of the dslDefinition
 	 * @param entity Entité
 	 */
-	DslDefinitionBuilder(final String name, final DslEntity entity) {
+	DslSketchBuilder(final String name, final DslEntity entity) {
 		Assertion.check()
 				.isNotNull(name)
 				.isNotNull(entity);
@@ -90,7 +90,7 @@ public final class DslDefinitionBuilder implements Builder<DslDefinition> {
 	 * @param newPackageName Package name
 	 * @return Builder
 	 */
-	public DslDefinitionBuilder withPackageName(final String newPackageName) {
+	public DslSketchBuilder withPackageName(final String newPackageName) {
 		packageName = newPackageName;
 		return this;
 	}
@@ -99,7 +99,7 @@ public final class DslDefinitionBuilder implements Builder<DslDefinition> {
 	 * @param dslDefinition Definition body
 	 * @return this builder
 	 */
-	public DslDefinitionBuilder merge(final DslDefinition dslDefinition) {
+	public DslSketchBuilder merge(final DslSketch dslDefinition) {
 		if (packageName == null) {
 			withPackageName(dslDefinition.getPackageName());
 		}
@@ -126,7 +126,7 @@ public final class DslDefinitionBuilder implements Builder<DslDefinition> {
 	 * @param value Valeur de la propriété
 	 * @return this builder
 	 */
-	public DslDefinitionBuilder addPropertyValue(final String fieldName, final Object value) {
+	public DslSketchBuilder addPropertyValue(final String fieldName, final Object value) {
 		final DslEntityField dslEntityField = entity.getField(fieldName);
 		Assertion.check().isTrue(dslEntityField.getType().isProperty(), "expected a property on {0}", fieldName);
 		//----
@@ -142,7 +142,7 @@ public final class DslDefinitionBuilder implements Builder<DslDefinition> {
 	 * @param definitionName Name of the definition
 	 * @return this builder
 	 */
-	public DslDefinitionBuilder addDefinitionLink(final String fieldName, final String definitionName) {
+	public DslSketchBuilder addDefinitionLink(final String fieldName, final String definitionName) {
 		return addAllDefinitionLinks(fieldName, Collections.singletonList(definitionName));
 	}
 
@@ -153,7 +153,7 @@ public final class DslDefinitionBuilder implements Builder<DslDefinition> {
 	 * @param definitionNames  list of the names of the dedinitions
 	 * @return this builder
 	 */
-	public DslDefinitionBuilder addAllDefinitionLinks(final String fieldName, final List<String> definitionNames) {
+	public DslSketchBuilder addAllDefinitionLinks(final String fieldName, final List<String> definitionNames) {
 		Assertion.check().isNotNull(definitionNames);
 		final DslEntityField dslEntityField = entity.getField(fieldName);
 		Assertion.check().isTrue(dslEntityField.getType().isEntityLink(), "expected a link on {0}", fieldName);
@@ -163,7 +163,7 @@ public final class DslDefinitionBuilder implements Builder<DslDefinition> {
 		return this;
 	}
 
-	private void addAllChildDefinitions(final String fieldName, final List<DslDefinition> dslDefinitions) {
+	private void addAllChildDefinitions(final String fieldName, final List<DslSketch> dslDefinitions) {
 		Assertion.check().isNotNull(dslDefinitions);
 		final DslEntityField dslEntityField = entity.getField(fieldName);
 		Assertion.check().isTrue(dslEntityField.getType().isEntity(), "expected an entity on {0}", fieldName);
@@ -178,7 +178,7 @@ public final class DslDefinitionBuilder implements Builder<DslDefinition> {
 	 * @param definition Définition
 	 * @return this builder
 	 */
-	public DslDefinitionBuilder addChildDefinition(final String fieldName, final DslDefinition definition) {
+	public DslSketchBuilder addChildDefinition(final String fieldName, final DslSketch definition) {
 		Assertion.check().isNotNull(definition);
 		addAllChildDefinitions(fieldName, Collections.singletonList(definition));
 		return this;
@@ -186,8 +186,8 @@ public final class DslDefinitionBuilder implements Builder<DslDefinition> {
 
 	/** {@inheritDoc} */
 	@Override
-	public DslDefinition build() {
-		return new DslDefinition(entity, packageName, name, propertyValueByFieldName, definitionLinkNamesByFieldName, childDefinitionsByFieldName);
+	public DslSketch build() {
+		return new DslSketch(entity, packageName, name, propertyValueByFieldName, definitionLinkNamesByFieldName, childDefinitionsByFieldName);
 	}
 
 }
