@@ -38,7 +38,6 @@ import io.vertigo.studio.notebook.Sketch;
 import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.SketchSupplier;
 import io.vertigo.studio.notebook.domain.ComputedExpression;
-import io.vertigo.studio.notebook.domain.DomainBuilder;
 import io.vertigo.studio.notebook.domain.DomainSketch;
 import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.notebook.domain.DtSketchBuilder;
@@ -93,18 +92,15 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		final String domainName = xdomain.getName();
 		final String type = xdomain.getDefinitionLinkName("dataType");
 		final Properties properties = extractProperties(xdomain);
-		final DomainBuilder domainBuilder;
-		if ("DtObject".equals(type)) {
-			domainBuilder = DomainSketch.builder(domainName, SketchKey.of(properties.getProperty("TYPE")));
-		} else if ("ValueObject".equals(type)) {
-			domainBuilder = DomainSketch.builder(domainName, ClassUtil.classForName(properties.getProperty("TYPE")));
-		} else {
-			final BasicType dataType = BasicType.valueOf(type);
-			domainBuilder = DomainSketch.builder(domainName, dataType);
+		switch (type) {
+			case "DtObject":
+				return DomainSketch.of(domainName, properties, SketchKey.of(properties.getProperty("TYPE")));
+			case "ValueObject":
+				return DomainSketch.of(domainName, properties, ClassUtil.classForName(properties.getProperty("TYPE")));
+			default:
+				final BasicType dataType = BasicType.valueOf(type);
+				return DomainSketch.of(domainName, properties, dataType);
 		}
-		return domainBuilder
-				.withProperties(properties)
-				.build();
 	}
 
 	private static DtSketch createFragmentDtSketch(final Notebook notebook, final DslDefinition xdtDefinition) {

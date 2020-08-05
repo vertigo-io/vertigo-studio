@@ -97,27 +97,24 @@ public final class DomainSketch extends AbstractSketch {
 	 */
 	DomainSketch(
 			final String name,
+			final Properties properties,
 			final Scope scope,
 			final BasicType dataType,
 			final SketchKey dtSketchKey,
-			final String valueObjectClassName,
-			final Properties properties) {
+			final String valueObjectClassName) {
 		super(name);
 		//---
 		Assertion.check()
 				.isNotNull(scope)
 				//---
 				.when(scope.isPrimitive(), () -> Assertion.check()
-						.isTrue(dataType != null, "a primitive domain must define a primitive type")
-						.isTrue(dtSketchKey == null && valueObjectClassName == null, "a primitive domain can't have nor a data-object-definition nor a value-object class"))
+						.isTrue(dataType != null, "a primitive domain must define a primitive type"))
 				//---
 				.when(scope.isDataObject(), () -> Assertion.check()
-						.isTrue(dtSketchKey != null, "a data-object domain must define a data-object definition")
-						.isTrue(dataType == null && valueObjectClassName == null, "a data-object domain can't have nor a primitive type nor a value-object class"))
+						.isTrue(dtSketchKey != null, "a data-object domain must define a data-object definition"))
 				//---
 				.when(scope.isValueObject(), () -> Assertion.check()
-						.isTrue(valueObjectClassName != null, "a value-object domain must define a value-object class")
-						.isTrue(dataType == null && dtSketchKey == null, "a value-object domain can't have nor a primitive type nor a data-object-definition"))
+						.isTrue(valueObjectClassName != null, "a value-object domain must define a value-object class"))
 				.isNotNull(properties);
 		//-----
 		this.scope = scope;
@@ -137,8 +134,15 @@ public final class DomainSketch extends AbstractSketch {
 	 * @param dataType the dataType managed by the domain
 	 * @return DomainBuilder
 	 */
-	public static DomainBuilder builder(final String name, final BasicType dataType) {
-		return new DomainBuilder(name, dataType);
+	public static DomainSketch of(final String name, final Properties properties, final BasicType dataType) {
+		return new DomainSketch(
+				name,
+				properties,
+				DomainSketch.Scope.PRIMITIVE,
+				dataType,
+				null,
+				null);
+
 	}
 
 	/**
@@ -147,8 +151,14 @@ public final class DomainSketch extends AbstractSketch {
 	 * @param dtDefinitionName the definition managed by the domain
 	 * @return DomainBuilder
 	 */
-	public static DomainBuilder builder(final String name, final SketchKey dtSketchKey) {
-		return new DomainBuilder(name, dtSketchKey);
+	public static DomainSketch of(final String name, final Properties properties, final SketchKey dtSketchKey) {
+		return new DomainSketch(
+				name,
+				properties,
+				Scope.DATA_OBJECT,
+				null,
+				dtSketchKey,
+				null);
 	}
 
 	/**
@@ -157,8 +167,14 @@ public final class DomainSketch extends AbstractSketch {
 	 * @param valueObjectClass the definition managed by the domain
 	 * @return DomainBuilder
 	 */
-	public static DomainBuilder builder(final String name, final Class valueObjectClass) {
-		return new DomainBuilder(name, valueObjectClass);
+	public static DomainSketch of(final String name, final Properties properties, final Class valueObjectClass) {
+		return new DomainSketch(
+				name,
+				properties,
+				DomainSketch.Scope.VALUE_OBJECT,
+				null,
+				null,
+				valueObjectClass.getCanonicalName());
 	}
 
 	/**
