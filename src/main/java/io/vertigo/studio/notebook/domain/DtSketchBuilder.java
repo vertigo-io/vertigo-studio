@@ -160,6 +160,7 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 			final String fieldName,
 			final String label,
 			final DomainSketch domainSketch,
+			final Cardinality cardinality,
 			final ComputedExpression computedExpression) {
 		final boolean persistent = false;
 		final DtSketchField dtField = createField(
@@ -167,7 +168,7 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 				DtSketchField.FieldType.COMPUTED,
 				domainSketch,
 				label,
-				Cardinality.OPTIONAL_OR_NULLABLE,
+				cardinality,
 				persistent,
 				null,
 				computedExpression);
