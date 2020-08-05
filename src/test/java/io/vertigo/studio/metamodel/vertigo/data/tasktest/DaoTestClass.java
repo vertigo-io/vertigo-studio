@@ -27,7 +27,6 @@ import io.vertigo.commons.CommonsFeatures;
 import io.vertigo.commons.transaction.VTransactionManager;
 import io.vertigo.commons.transaction.VTransactionWritable;
 import io.vertigo.core.node.AutoCloseableNode;
-import io.vertigo.core.node.Node;
 import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.LogConfig;
@@ -65,7 +64,7 @@ public class DaoTestClass {
 		node = new AutoCloseableNode(buildNodeConfig());
 		DIInjector.injectMembers(this, node.getComponentSpace());
 		//---
-		execSqlScript("io/vertigo/studio/metamodel/vertigo/data/sql/crebas.sql", Node.getNode());
+		execSqlScript("io/vertigo/studio/metamodel/vertigo/data/sql/crebas.sql");
 		currentTransaction = transactionManager.createCurrentTransaction();
 
 	}
@@ -113,7 +112,7 @@ public class DaoTestClass {
 				.build();
 	}
 
-	private void execSqlScript(final String sqlScript, final Node node) {
+	private void execSqlScript(final String sqlScript) {
 		final SqlConnection connection = sqlDataBaseManager.getConnectionProvider(SqlDataBaseManager.MAIN_CONNECTION_PROVIDER_NAME).obtainConnection();
 		DataBaseScriptUtil.execSqlScript(connection, sqlScript, resourceManager, sqlDataBaseManager);
 	}
