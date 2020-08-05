@@ -36,7 +36,7 @@ import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants.VertigoClassNames;
  *
  * @author pchretien, mlaroche
  */
-public final class StudioDtDefinitionModel {
+public final class StudioDtModel {
 	private final DtSketch dtSketch;
 	private final List<StudioDtFieldModel> dtFieldModels = new ArrayList<>();
 	private final List<StudioDtFieldModel> dtAllFieldModels = new ArrayList<>();
@@ -48,7 +48,7 @@ public final class StudioDtDefinitionModel {
 	 *
 	 * @param dtSketch DtDefinition de l'objet à générer
 	 */
-	public StudioDtDefinitionModel(final DtSketch dtSketch, final List<? extends AssociationSketch> associationSketches, final Function<String, String> classNameFromDt) {
+	public StudioDtModel(final DtSketch dtSketch, final List<? extends AssociationSketch> associationSketches, final Function<String, String> classNameFromDt) {
 		Assertion.check().isNotNull(dtSketch);
 		//-----
 		this.dtSketch = dtSketch;

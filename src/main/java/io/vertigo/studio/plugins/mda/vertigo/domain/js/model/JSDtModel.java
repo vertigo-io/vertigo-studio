@@ -30,7 +30,7 @@ import io.vertigo.studio.notebook.domain.DtSketchField;
  *
  * @author pchretien, mlaroche
  */
-public final class JSDtDefinitionModel {
+public final class JSDtModel {
 	private final DtSketch dtDefinition;
 	private final List<JSStudioDtFieldModel> dtFieldModels;
 
@@ -39,7 +39,7 @@ public final class JSDtDefinitionModel {
 	 *
 	 * @param dtDefinition DtDefinition de l'objet à générer
 	 */
-	public JSDtDefinitionModel(final DtSketch dtDefinition) {
+	public JSDtModel(final DtSketch dtDefinition) {
 		Assertion.check().isNotNull(dtDefinition);
 		//-----
 		this.dtDefinition = dtDefinition;

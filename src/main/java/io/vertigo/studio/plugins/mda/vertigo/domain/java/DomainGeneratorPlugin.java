@@ -42,7 +42,7 @@ import io.vertigo.studio.notebook.domain.association.AssociationSketch;
 import io.vertigo.studio.notebook.domain.masterdata.MasterDataValue;
 import io.vertigo.studio.notebook.domain.masterdata.StaticMasterDataSketch;
 import io.vertigo.studio.plugins.mda.vertigo.domain.java.model.MethodAnnotationsModel;
-import io.vertigo.studio.plugins.mda.vertigo.domain.java.model.StudioDtDefinitionModel;
+import io.vertigo.studio.plugins.mda.vertigo.domain.java.model.StudioDtModel;
 import io.vertigo.studio.plugins.mda.vertigo.domain.java.model.masterdata.MasterDataModel;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
 import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
@@ -126,7 +126,7 @@ public final class DomainGeneratorPlugin implements MdaGeneratorPlugin {
 			final MdaResultBuilder mdaResultBuilder,
 			final DtSketch dtSketch,
 			final List<? extends AssociationSketch> associations) {
-		final StudioDtDefinitionModel dtDefinitionModel = new StudioDtDefinitionModel(dtSketch, associations, DomainUtil.createClassNameFromDtFunction(notebook));
+		final StudioDtModel dtDefinitionModel = new StudioDtModel(dtSketch, associations, DomainUtil.createClassNameFromDtFunction(notebook));
 
 		final Map<String, Object> model = new MapBuilder<String, Object>()
 				.put("dtDefinition", dtDefinitionModel)
@@ -143,10 +143,10 @@ public final class DomainGeneratorPlugin implements MdaGeneratorPlugin {
 				.generateFile(mdaResultBuilder);
 	}
 
-	private static List<StudioDtDefinitionModel> toModels(final Notebook notebook, final Collection<DtSketch> dtDefinitions) {
+	private static List<StudioDtModel> toModels(final Notebook notebook, final Collection<DtSketch> dtDefinitions) {
 		return dtDefinitions
 				.stream()
-				.map(dtDef -> new StudioDtDefinitionModel(dtDef, getAssociationsByDtDefinition(notebook, dtDef), DomainUtil.createClassNameFromDtFunction(notebook)))
+				.map(dtDef -> new StudioDtModel(dtDef, getAssociationsByDtDefinition(notebook, dtDef), DomainUtil.createClassNameFromDtFunction(notebook)))
 				.collect(Collectors.toList());
 	}
 

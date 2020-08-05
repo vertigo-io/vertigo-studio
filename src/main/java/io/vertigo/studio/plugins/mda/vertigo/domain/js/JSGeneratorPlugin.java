@@ -30,7 +30,7 @@ import io.vertigo.studio.impl.mda.MdaGeneratorPlugin;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.plugins.mda.vertigo.domain.js.model.JSDtDefinitionModel;
+import io.vertigo.studio.plugins.mda.vertigo.domain.js.model.JSDtModel;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
 import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
 
@@ -66,10 +66,10 @@ public final class JSGeneratorPlugin implements MdaGeneratorPlugin {
 		}
 	}
 
-	private static List<JSDtDefinitionModel> getJsDtDefinitionModels(final Notebook notebook) {
+	private static List<JSDtModel> getJsDtDefinitionModels(final Notebook notebook) {
 		return DomainUtil.getDtSketchs(notebook)
 				.stream()
-				.map(JSDtDefinitionModel::new)
+				.map(JSDtModel::new)
 				.collect(Collectors.toList());
 	}
 
