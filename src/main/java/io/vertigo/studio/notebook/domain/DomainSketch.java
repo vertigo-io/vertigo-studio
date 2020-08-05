@@ -24,6 +24,7 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.BasicType;
 import io.vertigo.studio.notebook.AbstractSketch;
 import io.vertigo.studio.notebook.SkecthPrefix;
+import io.vertigo.studio.notebook.SketchKey;
 
 /**
  * A domain exists to enrich the primitive datatypes, giving them super powers.
@@ -80,7 +81,7 @@ public final class DomainSketch extends AbstractSketch {
 	/**
 	 * Name of the DtDefinition (for the DtObject or DtList)
 	 */
-	private final String dtSketchName;
+	private final SketchKey dtSketchKey;
 
 	/** List of property-value tuples */
 	private final Properties properties;
@@ -98,7 +99,7 @@ public final class DomainSketch extends AbstractSketch {
 			final String name,
 			final Scope scope,
 			final BasicType dataType,
-			final String dtDefinitionName,
+			final SketchKey dtSketchKey,
 			final String valueObjectClassName,
 			final Properties properties) {
 		super(name);
@@ -108,22 +109,22 @@ public final class DomainSketch extends AbstractSketch {
 				//---
 				.when(scope.isPrimitive(), () -> Assertion.check()
 						.isTrue(dataType != null, "a primitive domain must define a primitive type")
-						.isTrue(dtDefinitionName == null && valueObjectClassName == null, "a primitive domain can't have nor a data-object-definition nor a value-object class"))
+						.isTrue(dtSketchKey == null && valueObjectClassName == null, "a primitive domain can't have nor a data-object-definition nor a value-object class"))
 				//---
 				.when(scope.isDataObject(), () -> Assertion.check()
-						.isTrue(dtDefinitionName != null, "a data-object domain must define a data-object definition")
+						.isTrue(dtSketchKey != null, "a data-object domain must define a data-object definition")
 						.isTrue(dataType == null && valueObjectClassName == null, "a data-object domain can't have nor a primitive type nor a value-object class"))
 				//---
 				.when(scope.isValueObject(), () -> Assertion.check()
 						.isTrue(valueObjectClassName != null, "a value-object domain must define a value-object class")
-						.isTrue(dataType == null && dtDefinitionName == null, "a value-object domain can't have nor a primitive type nor a data-object-definition"))
+						.isTrue(dataType == null && dtSketchKey == null, "a value-object domain can't have nor a primitive type nor a data-object-definition"))
 				.isNotNull(properties);
 		//-----
 		this.scope = scope;
 		//--- Primitive
 		this.dataType = dataType;
 		//---data-object
-		this.dtSketchName = dtDefinitionName;
+		this.dtSketchKey = dtSketchKey;
 		//---
 		this.valueObjectClassName = valueObjectClassName;
 		//---Properties
@@ -146,8 +147,8 @@ public final class DomainSketch extends AbstractSketch {
 	 * @param dtDefinitionName the definition managed by the domain
 	 * @return DomainBuilder
 	 */
-	public static DomainBuilder builder(final String name, final String dtDefinitionName) {
-		return new DomainBuilder(name, dtDefinitionName);
+	public static DomainBuilder builder(final String name, final SketchKey dtSketchKey) {
+		return new DomainBuilder(name, dtSketchKey);
 	}
 
 	/**
@@ -182,10 +183,10 @@ public final class DomainSketch extends AbstractSketch {
 	//for these domains : DtList or DtObject
 	//==========================================================================
 
-	public String getDtSketchName() {
+	public SketchKey getDtSketchKey() {
 		Assertion.check().isTrue(scope.isDataObject(), "can only be used with data-objects");
 		//---
-		return dtSketchName;
+		return dtSketchKey;
 	}
 
 	public String getSmartTypeName() {

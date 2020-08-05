@@ -95,7 +95,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		final Properties properties = extractProperties(xdomain);
 		final DomainBuilder domainBuilder;
 		if ("DtObject".equals(type)) {
-			domainBuilder = DomainSketch.builder(domainName, properties.getProperty("TYPE"));
+			domainBuilder = DomainSketch.builder(domainName, SketchKey.of(properties.getProperty("TYPE")));
 		} else if ("ValueObject".equals(type)) {
 			domainBuilder = DomainSketch.builder(domainName, ClassUtil.classForName(properties.getProperty("TYPE")));
 		} else {

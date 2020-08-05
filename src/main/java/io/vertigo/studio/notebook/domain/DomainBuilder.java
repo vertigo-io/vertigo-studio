@@ -23,6 +23,7 @@ import java.util.Properties;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.BasicType;
 import io.vertigo.core.lang.Builder;
+import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.domain.DomainSketch.Scope;
 
 /**
@@ -34,7 +35,7 @@ public final class DomainBuilder implements Builder<DomainSketch> {
 	private final DomainSketch.Scope myScope;
 
 	private final BasicType myDataType;
-	private final String myDtSketchName;
+	private final SketchKey myDtSketchKey;
 	private final Class myValueObjectClass;
 
 	/** List of property-value tuples */
@@ -54,7 +55,7 @@ public final class DomainBuilder implements Builder<DomainSketch> {
 		myScope = DomainSketch.Scope.PRIMITIVE;
 
 		myDataType = dataType;
-		myDtSketchName = null;
+		myDtSketchKey = null;
 		myValueObjectClass = null;
 	}
 
@@ -63,16 +64,16 @@ public final class DomainBuilder implements Builder<DomainSketch> {
 	 * @param name the name of the domain
 	 * @param dtSketchName the data-object definition of the domain
 	 */
-	DomainBuilder(final String name, final String dtSketchName) {
+	DomainBuilder(final String name, final SketchKey dtSketchKey) {
 		Assertion.check()
 				.isNotBlank(name)
-				.isNotNull(dtSketchName);
+				.isNotNull(dtSketchKey);
 		//---
 		myName = name;
 		myScope = Scope.DATA_OBJECT;
 
 		myDataType = null;
-		myDtSketchName = dtSketchName;
+		myDtSketchKey = dtSketchKey;
 		myValueObjectClass = null;
 	}
 
@@ -90,7 +91,7 @@ public final class DomainBuilder implements Builder<DomainSketch> {
 		myScope = DomainSketch.Scope.VALUE_OBJECT;
 
 		myDataType = null;
-		myDtSketchName = null;
+		myDtSketchKey = null;
 		myValueObjectClass = valueObjectClass;
 	}
 
@@ -111,7 +112,7 @@ public final class DomainBuilder implements Builder<DomainSketch> {
 				myName,
 				myScope,
 				myDataType,
-				myDtSketchName,
+				myDtSketchKey,
 				myValueObjectClass != null ? myValueObjectClass.getCanonicalName() : null,
 				myProperties == null ? new Properties() : myProperties);
 	}
