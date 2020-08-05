@@ -73,12 +73,12 @@ public final class WsTsGeneratorPlugin implements MdaGeneratorPlugin {
 			for (final WebServiceSketch webServiceSketch : webServiceSketchs) {
 				//final String facadeName = webServiceDefinition.getMethod().getDeclaringClass().getSimpleName().replaceAll("WebServices", "");
 				final String facadeName = webServiceSketch.getGroupNameOpt().orElseGet(() -> webServiceSketch.getModuleName());
-				List<WebServiceModelTs> facadeWebServiceDefinitions = webServicesPerFacades.get(facadeName);
-				if (facadeWebServiceDefinitions == null) {
-					facadeWebServiceDefinitions = new ArrayList<>();
-					webServicesPerFacades.put(facadeName, facadeWebServiceDefinitions);
+				List<WebServiceModelTs> webServiceModels = webServicesPerFacades.get(facadeName);
+				if (webServiceModels == null) {
+					webServiceModels = new ArrayList<>();
+					webServicesPerFacades.put(facadeName, webServiceModels);
 				}
-				facadeWebServiceDefinitions.add(new WebServiceModelTs(webServiceSketch));
+				webServiceModels.add(new WebServiceModelTs(webServiceSketch));
 			}
 
 			final Map<String, List<WebServiceInitializerModelTs>> facadeByPackage = new HashMap<>();

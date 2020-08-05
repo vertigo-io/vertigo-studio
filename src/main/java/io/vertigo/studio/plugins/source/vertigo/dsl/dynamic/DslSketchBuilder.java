@@ -114,7 +114,7 @@ public final class DslSketchBuilder implements Builder<DslSketch> {
 				addAllDefinitionLinks(dslEntityField.getName(), dslDefinition.getDefinitionLinkNames(dslEntityField.getName()));
 			} else if (dslEntityField.getType().isEntity()) {
 				// 3. children
-				addAllChildDefinitions(dslEntityField.getName(), dslDefinition.getChildDefinitions(dslEntityField.getName()));
+				addAllChildDefinitions(dslEntityField.getName(), dslDefinition.getChildSketches(dslEntityField.getName()));
 			}
 			// else : nothing for property (already processed)
 		}

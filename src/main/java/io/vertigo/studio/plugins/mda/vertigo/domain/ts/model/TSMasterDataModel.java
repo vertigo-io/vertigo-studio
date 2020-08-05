@@ -32,7 +32,7 @@ import io.vertigo.studio.notebook.domain.masterdata.MasterDataValue;
  * @author npiedeloup
  */
 public final class TSMasterDataModel {
-	private final TSStudioDtDefinitionModel tsDtDefinitionModel;
+	private final TSStudioDtModel tsDtModel;
 	private final List<TSMasterDataValueModel> tsMasterDataValueModels;
 
 	public TSMasterDataModel(final DtSketch dtSketch, final Map<String, MasterDataValue> masterDataValuesByDtDefinition) {
@@ -40,7 +40,7 @@ public final class TSMasterDataModel {
 				.isNotNull(dtSketch)
 				.isNotNull(masterDataValuesByDtDefinition);
 		//-----
-		tsDtDefinitionModel = new TSStudioDtDefinitionModel(dtSketch);
+		tsDtModel = new TSStudioDtModel(dtSketch);
 		tsMasterDataValueModels = masterDataValuesByDtDefinition
 				.entrySet()
 				.stream()
@@ -48,12 +48,12 @@ public final class TSMasterDataModel {
 				.collect(Collectors.toList());
 	}
 
-	public TSStudioDtDefinitionModel getDefinition() {
-		return tsDtDefinitionModel;
+	public TSStudioDtModel getDefinition() {
+		return tsDtModel;
 	}
 
 	public String getIdFieldName() {
-		return tsDtDefinitionModel.getDtDefinition().getIdField().get().getName();
+		return tsDtModel.getDtDefinition().getIdField().get().getName();
 	}
 
 	public List<TSMasterDataValueModel> getValues() {

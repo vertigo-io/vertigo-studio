@@ -39,7 +39,7 @@ import io.vertigo.studio.notebook.domain.StudioStereotype;
 import io.vertigo.studio.notebook.domain.masterdata.MasterDataValue;
 import io.vertigo.studio.notebook.domain.masterdata.StaticMasterDataSketch;
 import io.vertigo.studio.plugins.mda.vertigo.domain.ts.model.TSMasterDataModel;
-import io.vertigo.studio.plugins.mda.vertigo.domain.ts.model.TSStudioDtDefinitionModel;
+import io.vertigo.studio.plugins.mda.vertigo.domain.ts.model.TSStudioDtModel;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
 import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
 
@@ -79,16 +79,16 @@ public final class TSGeneratorPlugin implements MdaGeneratorPlugin {
 		}
 	}
 
-	private static List<TSStudioDtDefinitionModel> getTsDtDefinitionModels(final Notebook notebook) {
+	private static List<TSStudioDtModel> getTsDtDefinitionModels(final Notebook notebook) {
 		return DomainUtil.getDtSketchs(notebook)
 				.stream()
-				.map(TSStudioDtDefinitionModel::new)
+				.map(TSStudioDtModel::new)
 				.collect(Collectors.toList());
 	}
 
 	private static void generateTsDtDefinitions(
 			final Notebook notebook, final String targetSubDir, final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
-		for (final TSStudioDtDefinitionModel dtDefinitionModel : getTsDtDefinitionModels(notebook)) {
+		for (final TSStudioDtModel dtDefinitionModel : getTsDtDefinitionModels(notebook)) {
 			generateTs(dtDefinitionModel, targetSubDir, mdaConfig, mdaResultBuilder);
 		}
 	}
@@ -124,7 +124,7 @@ public final class TSGeneratorPlugin implements MdaGeneratorPlugin {
 
 	}
 
-	private static void generateTs(final TSStudioDtDefinitionModel dtDefinitionModel, final String targetSubDir, final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
+	private static void generateTs(final TSStudioDtModel dtDefinitionModel, final String targetSubDir, final MdaConfig mdaConfig, final MdaResultBuilder mdaResultBuilder) {
 		final Map<String, Object> model = new MapBuilder<String, Object>()
 				.put("classSimpleName", "DtDefinitions")
 				.put("dtDefinition", dtDefinitionModel)
@@ -150,8 +150,8 @@ public final class TSGeneratorPlugin implements MdaGeneratorPlugin {
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 
-		final Map<String, List<TSStudioDtDefinitionModel>> packageMap = new HashMap<>();
-		for (final TSStudioDtDefinitionModel dtDefinitionModel : getTsDtDefinitionModels(notebook)) {
+		final Map<String, List<TSStudioDtModel>> packageMap = new HashMap<>();
+		for (final TSStudioDtModel dtDefinitionModel : getTsDtDefinitionModels(notebook)) {
 			final String packageName = dtDefinitionModel.getFunctionnalPackageName();
 			packageMap.computeIfAbsent(packageName, o -> new ArrayList<>()).add(dtDefinitionModel);
 		}
@@ -159,7 +159,7 @@ public final class TSGeneratorPlugin implements MdaGeneratorPlugin {
 		final String simpleClassName = "DtDefinitions" + "Label";
 		//final String packageName = mdaConfig.getProjectPackageName() + ".domain";
 
-		for (final Entry<String, List<TSStudioDtDefinitionModel>> entry : packageMap.entrySet()) {
+		for (final Entry<String, List<TSStudioDtModel>> entry : packageMap.entrySet()) {
 			final Map<String, Object> model = new MapBuilder<String, Object>()
 					.put("packageName", entry.getKey())
 					.put("simpleClassName", simpleClassName)

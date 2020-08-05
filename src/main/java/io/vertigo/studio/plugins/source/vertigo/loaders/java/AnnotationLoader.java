@@ -140,18 +140,18 @@ public final class AnnotationLoader implements Loader {
 			final String dtDefinitionName,
 			final String packageName,
 			final DslSketchesRepository dynamicModelRepository) {
-		final DslSketchBuilder dtDefinitionBuilder = DslSketch.builder(dtDefinitionName, DomainGrammar.DT_DEFINITION_ENTITY)
+		final DslSketchBuilder dtSketchBuilder = DslSketch.builder(dtDefinitionName, DomainGrammar.DT_DEFINITION_ENTITY)
 				.withPackageName(packageName)
 				.addPropertyValue(STEREOTYPE, stereotype.name());
 
 		// Only Persistent stereotypes have a dataspace => Fragment got it from parent
 		if (stereotype.isPersistent()) {
-			dtDefinitionBuilder.addPropertyValue(DATA_SPACE, parseDataSpaceAnnotation(clazz));
+			dtSketchBuilder.addPropertyValue(DATA_SPACE, parseDataSpaceAnnotation(clazz));
 		}
-		parseDynamicDefinitionBuilder(clazz, dtDefinitionBuilder, dynamicModelRepository);
+		parseDynamicDefinitionBuilder(clazz, dtSketchBuilder, dynamicModelRepository);
 	}
 
-	private static void parseDynamicDefinitionBuilder(final Class<DtObject> clazz, final DslSketchBuilder dtDefinitionBuilder, final DslSketchesRepository dynamicModelRepository) {
+	private static void parseDynamicDefinitionBuilder(final Class<DtObject> clazz, final DslSketchBuilder dtSketchBuilder, final DslSketchesRepository dynamicModelRepository) {
 		final String packageName = clazz.getPackage().getName();
 
 		// Le tri des champs et des méthodes par ordre alphabétique est important car classe.getMethods() retourne
@@ -164,19 +164,19 @@ public final class AnnotationLoader implements Loader {
 
 		for (final Field field : fields) {
 			//On regarde si il s'agit d'un champ
-			parseFieldAnnotations(field, dtDefinitionBuilder);
+			parseFieldAnnotations(field, dtSketchBuilder);
 			parseAssociationDefinition(dynamicModelRepository, field, packageName);
 		}
 
 		final Method[] methods = clazz.getMethods();
 		Arrays.sort(methods, Comparator.comparing(Method::getName));
 		for (final Method method : methods) {
-			parseMethodAnnotations(method, dtDefinitionBuilder);
+			parseMethodAnnotations(method, dtSketchBuilder);
 			//On regarde si il s'agit d'une associations
 			parseAssociationDefinition(dynamicModelRepository, method, packageName);
 		}
 
-		final DslSketch dtDefinition = dtDefinitionBuilder.build();
+		final DslSketch dtDefinition = dtSketchBuilder.build();
 		dynamicModelRepository.addSketch(dtDefinition);
 	}
 

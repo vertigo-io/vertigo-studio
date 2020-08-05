@@ -43,7 +43,7 @@ import io.vertigo.studio.notebook.domain.masterdata.MasterDataValue;
 import io.vertigo.studio.notebook.domain.masterdata.StaticMasterDataSketch;
 import io.vertigo.studio.plugins.mda.vertigo.domain.java.model.MethodAnnotationsModel;
 import io.vertigo.studio.plugins.mda.vertigo.domain.java.model.StudioDtDefinitionModel;
-import io.vertigo.studio.plugins.mda.vertigo.domain.java.model.masterdata.MasterDataDefinitionModel;
+import io.vertigo.studio.plugins.mda.vertigo.domain.java.model.masterdata.MasterDataModel;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
 import io.vertigo.studio.plugins.mda.vertigo.util.MdaUtil;
 
@@ -227,7 +227,7 @@ public final class DomainGeneratorPlugin implements MdaGeneratorPlugin {
 			final DtSketch dtDefinition,
 			final Map<String, MasterDataValue> values) {
 
-		final MasterDataDefinitionModel masterDataDefinitionModel = new MasterDataDefinitionModel(dtDefinition, values);
+		final MasterDataModel masterDataDefinitionModel = new MasterDataModel(dtDefinition, values);
 
 		final Map<String, Object> model = new MapBuilder<String, Object>()
 				.put("entity", masterDataDefinitionModel)

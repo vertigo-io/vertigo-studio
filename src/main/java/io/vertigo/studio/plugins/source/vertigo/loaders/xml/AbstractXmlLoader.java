@@ -71,7 +71,7 @@ public abstract class AbstractXmlLoader implements Loader {
 
 	/** {@inheritDoc} */
 	@Override
-	public final void load(final String resourcePath, final DslSketchesRepository dslDefinitionRepository) {
+	public final void load(final String resourcePath, final DslSketchesRepository dslSketchesRepository) {
 		final URL xmiFileURL = resourceManager.resolve(resourcePath);
 
 		try {
@@ -87,15 +87,15 @@ public abstract class AbstractXmlLoader implements Loader {
 		}
 		Assertion.check()
 				.isNotBlank(resourcePath)
-				.isNotNull(dslDefinitionRepository);
+				.isNotNull(dslSketchesRepository);
 		//-----
 
 		for (final XmlClass clazz : getClasses()) {
-			dslDefinitionRepository.addSketch(toDynamicDefinition(clazz));
+			dslSketchesRepository.addSketch(toDslSketch(clazz));
 		}
 
 		for (final XmlAssociation association : getAssociations()) {
-			dslDefinitionRepository.addSketch(toDynamicDefinition(association, dslDefinitionRepository));
+			dslSketchesRepository.addSketch(toDynamicDefinition(association, dslSketchesRepository));
 		}
 	}
 
@@ -117,7 +117,7 @@ public abstract class AbstractXmlLoader implements Loader {
 		return constFieldNameInSource;
 	}
 
-	private static DslSketch toDynamicDefinition(final XmlClass clazz) {
+	private static DslSketch toDslSketch(final XmlClass clazz) {
 		final DslEntity dtDefinitionEntity = DomainGrammar.DT_DEFINITION_ENTITY;
 		final DslSketchBuilder dtDefinitionBuilder = DslSketch.builder(getDtDefinitionName(clazz.getCode()), dtDefinitionEntity)
 				.withPackageName(clazz.getPackageName())
@@ -162,7 +162,7 @@ public abstract class AbstractXmlLoader implements Loader {
 		final String associationDefinitionName = (isAssociationNN ? "Ann" : "A") + association.getCode();
 
 		//On crée l'association
-		final DslSketchBuilder associationDefinitionBuilder = DslSketch.builder(associationDefinitionName, dynamicMetaDefinition)
+		final DslSketchBuilder associationSketchBuilder = DslSketch.builder(associationDefinitionName, dynamicMetaDefinition)
 				.withPackageName(association.getPackageName())
 				.addPropertyValue(KspProperty.NAVIGABILITY_A, association.isNavigableA())
 				.addPropertyValue(KspProperty.NAVIGABILITY_B, association.isNavigableB())
@@ -179,19 +179,19 @@ public abstract class AbstractXmlLoader implements Loader {
 		if (isAssociationNN) {
 			//Dans le cas d'une association NN il faut établir le nom de la table intermédiaire qui porte les relations
 			final String tableName = association.getCode();
-			associationDefinitionBuilder.addPropertyValue(KspProperty.TABLE_NAME, tableName);
+			associationSketchBuilder.addPropertyValue(KspProperty.TABLE_NAME, tableName);
 			LOGGER.trace("isAssociationNN:Code= {}", association.getCode());
 		} else {
 			LOGGER.trace("!isAssociationNN:Code= {}", association.getCode());
 			//Dans le cas d'une NN ses deux propriétés sont redondantes ;
 			//elles ne font donc pas partie de la définition d'une association de type NN
-			associationDefinitionBuilder
+			associationSketchBuilder
 					.addPropertyValue(KspProperty.MULTIPLICITY_A, association.getMultiplicityA())
 					.addPropertyValue(KspProperty.MULTIPLICITY_B, association.getMultiplicityB())
 					.addPropertyValue(KspProperty.FK_FIELD_NAME, buildFkFieldName(association, dynamicModelrepository));
 
 		}
-		return associationDefinitionBuilder.build();
+		return associationSketchBuilder.build();
 	}
 
 	private static String buildFkFieldName(final XmlAssociation association, final DslSketchesRepository dynamicModelrepository) {
@@ -199,20 +199,20 @@ public abstract class AbstractXmlLoader implements Loader {
 		// recherche de code de contrainte destiné à renommer la fk selon convention du vbsript PowerAMC
 		// Cas de la relation 1-n : où le nom de la FK est redéfini.
 		// Exemple : DOS_UTI_LIQUIDATION (relation entre dossier et utilisateur : FK >> UTILISATEUR_ID_LIQUIDATION)
-		final DslSketch dtDefinitionA = dynamicModelrepository.getSketch(getDtDefinitionName(association.getCodeA()));
-		final DslSketch dtDefinitionB = dynamicModelrepository.getSketch(getDtDefinitionName(association.getCodeB()));
+		final DslSketch dtSketchA = dynamicModelrepository.getSketch(getDtDefinitionName(association.getCodeA()));
+		final DslSketch dtSketchB = dynamicModelrepository.getSketch(getDtDefinitionName(association.getCodeB()));
 
-		final DslSketch foreignDefinition = AssociationUtil.isAPrimaryNode(association.getMultiplicityA(), association.getMultiplicityB()) ? dtDefinitionA : dtDefinitionB;
-		final List<DslSketch> primaryKeys = foreignDefinition.getChildDefinitions(DomainGrammar.ID_FIELD);
+		final DslSketch foreignDslSketch = AssociationUtil.isAPrimaryNode(association.getMultiplicityA(), association.getMultiplicityB()) ? dtSketchA : dtSketchB;
+		final List<DslSketch> primaryKeys = foreignDslSketch.getChildSketches(DomainGrammar.ID_FIELD);
 		if (primaryKeys.isEmpty()) {
-			throw new IllegalArgumentException("Pour l'association '" + association.getCode() + "' aucune clé primaire sur la définition '" + foreignDefinition.getName() + "'");
+			throw new IllegalArgumentException("Pour l'association '" + association.getCode() + "' aucune clé primaire sur la définition '" + foreignDslSketch.getName() + "'");
 		}
 		if (primaryKeys.size() > 1) {
-			throw new IllegalArgumentException("Pour l'association '" + association.getCode() + "' clé multiple non géré sur '" + foreignDefinition.getName() + "'");
+			throw new IllegalArgumentException("Pour l'association '" + association.getCode() + "' clé multiple non géré sur '" + foreignDslSketch.getName() + "'");
 		}
-		if (dtDefinitionA.getName().equals(dtDefinitionB.getName()) && association.getCodeName() == null) {
+		if (dtSketchA.getName().equals(dtSketchB.getName()) && association.getCodeName() == null) {
 			throw new IllegalArgumentException("Pour l'association '" + association.getCode() + "' le nom de la clé est obligatoire (AutoJointure) '"
-					+ foreignDefinition.getName()
+					+ foreignDslSketch.getName()
 					+ "'. Ce nom est déduit du code l'association, le code doit être composé ainsi : {Trigramme Table1}{Trigramme Table2}{Code association}."
 					+ " Par exemple : DosUtiEmmeteur, DosUtiDestinataire, DosDosParent, ...");
 		}

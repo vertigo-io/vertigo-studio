@@ -162,18 +162,18 @@ public final class TaskGeneratorPlugin implements MdaGeneratorPlugin {
 	 * Stratégie pour savoir si une tache est PAO ou DAO.
 	 * Si la DT est non null DAO sinon PAO.
 	 */
-	private static SketchKey getDtDefinition(final TaskModel templateTaskDefinition) {
-		if (templateTaskDefinition.isOut()) {
+	private static SketchKey getDtSketchKey(final TaskModel taskModel) {
+		if (taskModel.isOut()) {
 			//si out on regarde si en sortie on a un DTO ou une DTC typé.
-			final DomainSketch outDomain = templateTaskDefinition.getOutAttribute().getDomain();
-			if (outDomain.getScope().isDataObject()) {
-				return outDomain.getDtSketchKey();
+			final DomainSketch outDomainSketch = taskModel.getOutAttribute().getDomain();
+			if (outDomainSketch.getScope().isDataObject()) {
+				return outDomainSketch.getDtSketchKey();
 			}
 			return null;
 		}
 		//there is no OUT param
 		//We are searching igf there is an no-ambiguous IN param defined as a DataObject(DTO or DTC)
-		final List<DomainSketch> candidates = templateTaskDefinition.getInAttributes()
+		final List<DomainSketch> candidates = taskModel.getInAttributes()
 				.stream()
 				.map(TaskAttributeModel::getDomain)
 				.filter(smartType -> smartType.getScope().isDataObject())
@@ -191,8 +191,8 @@ public final class TaskGeneratorPlugin implements MdaGeneratorPlugin {
 		final Map<String, List<TaskSketch>> taskSketchsMap = new LinkedHashMap<>();
 		//---
 		for (final TaskSketch taskSketch : taskSketchs) {
-			final TaskModel templateTaskDefinition = new TaskModel(taskSketch, DomainUtil.createClassNameFromDtFunction(notebook));
-			final SketchKey dtSketchKey = getDtDefinition(templateTaskDefinition);
+			final TaskModel taskModel = new TaskModel(taskSketch, DomainUtil.createClassNameFromDtFunction(notebook));
+			final SketchKey dtSketchKey = getDtSketchKey(taskModel);
 			// Correction bug : task avec retour DtObject (non persistant) non générée
 			//Les taches sont générées dans les pao
 			// - si il n'esxiste pas de définition associées à la tache
@@ -222,9 +222,9 @@ public final class TaskGeneratorPlugin implements MdaGeneratorPlugin {
 		}
 		//---
 		for (final TaskSketch taskSketch : taskSketchs) {
-			final TaskModel templateTaskDefinition = new TaskModel(taskSketch, DomainUtil.createClassNameFromDtFunction(notebook));
+			final TaskModel taskModel = new TaskModel(taskSketch, DomainUtil.createClassNameFromDtFunction(notebook));
 
-			final SketchKey dtSketchKey = getDtDefinition(templateTaskDefinition);
+			final SketchKey dtSketchKey = getDtSketchKey(taskModel);
 			final boolean dao = dtSketchKey != null;
 			if (dao) {
 				//Dans le cas d'un DTO ou DTC en sortie on considère que la tache est liée au DAO.

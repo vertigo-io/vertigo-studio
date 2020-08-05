@@ -121,7 +121,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 				.withHandleField(handleFieldName);
 
 		//1. adds aliases
-		for (final DslSketch alias : xdtDefinition.getChildDefinitions("alias")) {
+		for (final DslSketch alias : xdtDefinition.getChildSketches("alias")) {
 			final DtSketchField aliasDtField = from.getField(alias.getName());
 
 			//--- REQUIRED
@@ -142,11 +142,11 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 
 		//2. adds data and computed fields
 		//Déclaration des champs du DT
-		final List<DslSketch> fields = xdtDefinition.getChildDefinitions(DomainGrammar.DATA_FIELD);
+		final List<DslSketch> fields = xdtDefinition.getChildSketches(DomainGrammar.DATA_FIELD);
 		populateDataDtField(notebook, dtDefinitionBuilder, fields);
 
 		//Déclaration des champs calculés
-		final List<DslSketch> computedFields = xdtDefinition.getChildDefinitions(DomainGrammar.COMPUTED_FIELD);
+		final List<DslSketch> computedFields = xdtDefinition.getChildSketches(DomainGrammar.COMPUTED_FIELD);
 		populateComputedDtField(notebook, dtDefinitionBuilder, computedFields);
 
 		final DtSketch dtDefinition = dtDefinitionBuilder
@@ -203,15 +203,15 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		dtDefinitionBuilders.put(SketchKey.of(dtDefinitionName), dtDefinitionBuilder);
 
 		//Déclaration de la clé primaire
-		final List<DslSketch> keys = xdtDefinition.getChildDefinitions(DomainGrammar.ID_FIELD);
+		final List<DslSketch> keys = xdtDefinition.getChildSketches(DomainGrammar.ID_FIELD);
 		populateIdDtField(notebook, dtDefinitionBuilder, keys);
 
 		//Déclaration des champs du DT
-		final List<DslSketch> fields = xdtDefinition.getChildDefinitions(DomainGrammar.DATA_FIELD);
+		final List<DslSketch> fields = xdtDefinition.getChildSketches(DomainGrammar.DATA_FIELD);
 		populateDataDtField(notebook, dtDefinitionBuilder, fields);
 
 		//Déclaration des champs calculés
-		final List<DslSketch> computedFields = xdtDefinition.getChildDefinitions(DomainGrammar.COMPUTED_FIELD);
+		final List<DslSketch> computedFields = xdtDefinition.getChildSketches(DomainGrammar.COMPUTED_FIELD);
 		populateComputedDtField(notebook, dtDefinitionBuilder, computedFields);
 
 		return dtDefinitionBuilder.build();

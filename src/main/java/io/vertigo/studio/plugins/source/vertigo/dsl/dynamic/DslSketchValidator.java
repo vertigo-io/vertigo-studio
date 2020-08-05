@@ -58,7 +58,7 @@ final class DslSketchValidator {
 		}
 
 		// 1.2 on vérifie les définitions composites (sous définitions).
-		for (final DslSketch child : dslSketch.getAllChildDefinitions()) {
+		for (final DslSketch child : dslSketch.getAllChildSketches()) {
 			check(child);
 		}
 

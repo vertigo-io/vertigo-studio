@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.plugins.mda.vertigo.domain.java.model.masterdata;
+package io.vertigo.studio.plugins.mda.vertigo.domain.sql.model;
 
 import java.util.List;
 import java.util.Map;
@@ -31,41 +31,34 @@ import io.vertigo.studio.notebook.domain.masterdata.MasterDataValue;
  *
  * @author mlaroche
  */
-public final class MasterDataDefinitionModel {
-	private final DtSketch dtDefinition;
-	private final List<MasterDataValueModel> masterDataValueModels;
+public final class SqlMasterDataModel {
+	private final SqlStudioDtDefinitionModel sqlDtDefinitionModel;
+	private final List<SqlMasterDataValueModel> sqlMasterDataValueModels;
 
-	public MasterDataDefinitionModel(final DtSketch dtSketch, final Map<String, MasterDataValue> masterDataValuesByDtDefinition) {
+	public SqlMasterDataModel(final DtSketch dtSketch, final Map<String, MasterDataValue> masterDataValuesByDtSketch) {
 		Assertion.check().isNotNull(dtSketch);
 		//-----
-		this.dtDefinition = dtSketch;
-		masterDataValueModels = masterDataValuesByDtDefinition
+		sqlDtDefinitionModel = new SqlStudioDtDefinitionModel(dtSketch);
+		sqlMasterDataValueModels = masterDataValuesByDtSketch
 				.entrySet()
 				.stream()
-				.map(entry -> new MasterDataValueModel(dtSketch, entry.getKey(), entry.getValue()))
+				.map(entry -> new SqlMasterDataValueModel(dtSketch, entry.getValue()))
 				.collect(Collectors.toList());
 	}
 
 	/**
-	 * @return Nom de la class en CamelCase
+	 * @return Nom de la table
 	 */
-	public String getClassSimpleName() {
-		return dtDefinition.getClassSimpleName();
+	public String getTableName() {
+		return sqlDtDefinitionModel.getLocalName();
 	}
 
-	/**
-	 * @return Nom de la class en CamelCase
-	 */
-	public String getClassName() {
-		return dtDefinition.getClassCanonicalName();
+	public SqlStudioDtDefinitionModel getDefinition() {
+		return sqlDtDefinitionModel;
 	}
 
-	public String getPackageName() {
-		return dtDefinition.getPackageName();
-	}
-
-	public List<MasterDataValueModel> getEnumValues() {
-		return masterDataValueModels;
+	public List<SqlMasterDataValueModel> getValues() {
+		return sqlMasterDataValueModels;
 	}
 
 }

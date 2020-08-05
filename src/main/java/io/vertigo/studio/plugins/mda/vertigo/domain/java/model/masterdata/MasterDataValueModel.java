@@ -34,14 +34,14 @@ public final class MasterDataValueModel {
 	private final String enumNameValue;
 	private final Map<String, String> allFieldValues;
 
-	public MasterDataValueModel(final DtSketch dtDefinition, final String enumNameValue, final Map<String, String> allFieldValues) {
-		Assertion.check().isNotNull(dtDefinition);
+	public MasterDataValueModel(final DtSketch dtSketch, final String enumNameValue, final Map<String, String> allFieldValues) {
+		Assertion.check().isNotNull(dtSketch);
 		//-----
 		this.enumNameValue = enumNameValue;
 		this.allFieldValues = allFieldValues;
-		final String idFieldName = dtDefinition.getIdField().get().getName();
+		final String idFieldName = dtSketch.getIdField().get().getName();
 		//--
-		Assertion.check().isTrue(allFieldValues.containsKey(idFieldName), "The id value is not present for the masterdata '{0}' of type {1}", allFieldValues, dtDefinition.getLocalName());
+		Assertion.check().isTrue(allFieldValues.containsKey(idFieldName), "The id value is not present for the masterdata '{0}' of type {1}", allFieldValues, dtSketch.getLocalName());
 		//---
 		idValue = allFieldValues.get(idFieldName);
 	}

@@ -64,11 +64,11 @@ final class DslInnerDefinitionRule extends AbstractRule<DslSketchEntry, List<Obj
 		final String definitionName = (String) parsing.get(2);
 		final DslSketchBody definitionBody = (DslSketchBody) parsing.get(4);
 
-		final DslSketchBuilder dslDefinitionBuilder = DslSketch.builder(definitionName, entity);
-		populateDefinition(definitionBody, dslDefinitionBuilder);
+		final DslSketchBuilder dslSketchBuilder = DslSketch.builder(definitionName, entity);
+		populateDefinition(definitionBody, dslSketchBuilder);
 
 		//---
-		return new DslSketchEntry(entityName, dslDefinitionBuilder.build());
+		return new DslSketchEntry(entityName, dslSketchBuilder.build());
 	}
 
 	/**
@@ -80,9 +80,9 @@ final class DslInnerDefinitionRule extends AbstractRule<DslSketchEntry, List<Obj
 			// 1.On vérifie que le champ existe pour la metaDefinition
 			// et qu'elle n'est pas déjà enregistrée sur l'objet.
 			//-----
-			if (fieldDefinitionEntry.containsDefinition()) {
+			if (fieldDefinitionEntry.containsSketch()) {
 				// On ajoute la définition par sa valeur.
-				dslDefinitionBuilder.addChildDefinition(fieldDefinitionEntry.getFieldName(), fieldDefinitionEntry.getDefinition());
+				dslDefinitionBuilder.addChildDefinition(fieldDefinitionEntry.getFieldName(), fieldDefinitionEntry.getSketch());
 			} else {
 				// On ajoute les définitions par leur clé.
 				dslDefinitionBuilder.addAllDefinitionLinks(fieldDefinitionEntry.getFieldName(), fieldDefinitionEntry.getDefinitionNames());

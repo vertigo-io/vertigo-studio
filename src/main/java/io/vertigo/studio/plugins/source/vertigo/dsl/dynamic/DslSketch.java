@@ -84,9 +84,9 @@ public final class DslSketch {
 
 	/**
 	 * Static method builder for defintions.
-	 * @param name the name of the dslDefinition
+	 * @param name the name of the dslSketch
 	 * @param entity entity
-	 * @return the definition builder
+	 * @return the dsl sketch builder
 	 */
 	public static DslSketchBuilder builder(final String name, final DslEntity entity) {
 		return new DslSketchBuilder(name, entity);
@@ -180,7 +180,7 @@ public final class DslSketch {
 	 * @param fieldName String
 	 * @return List
 	 */
-	public List<DslSketch> getChildDefinitions(final String fieldName) {
+	public List<DslSketch> getChildSketches(final String fieldName) {
 		final DslEntityField dslEntityField = entity.getField(fieldName);
 		Assertion.check().isTrue(dslEntityField.getType().isEntity(), "expected an entity on {0}", fieldName);
 		//---
@@ -190,7 +190,7 @@ public final class DslSketch {
 	/**
 	 * @return Collection des listes de définitions composites.
 	 */
-	public List<DslSketch> getAllChildDefinitions() {
+	public List<DslSketch> getAllChildSketches() {
 		return childDefinitionsByFieldName.values()
 				.stream()
 				.flatMap(List::stream)

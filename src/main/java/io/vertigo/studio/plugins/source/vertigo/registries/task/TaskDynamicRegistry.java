@@ -69,7 +69,7 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 				.withDataSpace(dataSpace)
 				.withRequest(request)
 				.withPackageName(xtaskDefinition.getPackageName());
-		for (final DslSketch xtaskAttribute : xtaskDefinition.getChildDefinitions(TaskGrammar.TASK_ATTRIBUTE_IN)) {
+		for (final DslSketch xtaskAttribute : xtaskDefinition.getChildSketches(TaskGrammar.TASK_ATTRIBUTE_IN)) {
 			final String attributeName = xtaskAttribute.getName();
 			Assertion.check().isNotNull(attributeName);
 			//-----
@@ -77,7 +77,7 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 					buildDomainSketch(notebook, xtaskAttribute),
 					buildCardinality(xtaskAttribute));
 		}
-		for (final DslSketch xtaskAttribute : xtaskDefinition.getChildDefinitions(TaskGrammar.TASK_ATTRIBUTE_OUT)) {
+		for (final DslSketch xtaskAttribute : xtaskDefinition.getChildSketches(TaskGrammar.TASK_ATTRIBUTE_OUT)) {
 			final String attributeName = xtaskAttribute.getName();
 			Assertion.check().isNotNull(attributeName);
 			//-----

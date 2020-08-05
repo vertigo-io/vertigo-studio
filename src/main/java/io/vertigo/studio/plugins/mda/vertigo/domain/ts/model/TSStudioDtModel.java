@@ -33,7 +33,7 @@ import io.vertigo.studio.notebook.domain.DtSketchField.FieldType;
  *
  * @author pchretien, mlaroche
  */
-public final class TSStudioDtDefinitionModel {
+public final class TSStudioDtModel {
 	private final DtSketch dtSketch;
 	private final List<TSStudioDtFieldModel> dtFieldModels;
 	private final Set<TSDomainModel> domainModels;
@@ -43,7 +43,7 @@ public final class TSStudioDtDefinitionModel {
 	 *
 	 * @param dtSketch DtDefinition de l'objet à générer
 	 */
-	public TSStudioDtDefinitionModel(final DtSketch dtSketch) {
+	public TSStudioDtModel(final DtSketch dtSketch) {
 		Assertion.check().isNotNull(dtSketch);
 		//-----
 		this.dtSketch = dtSketch;

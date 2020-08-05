@@ -42,7 +42,7 @@ import io.vertigo.studio.notebook.domain.association.AssociationNNSketch;
 import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
 import io.vertigo.studio.notebook.domain.masterdata.MasterDataValue;
 import io.vertigo.studio.notebook.domain.masterdata.StaticMasterDataSketch;
-import io.vertigo.studio.plugins.mda.vertigo.domain.sql.model.SqlMasterDataDefinitionModel;
+import io.vertigo.studio.plugins.mda.vertigo.domain.sql.model.SqlMasterDataModel;
 import io.vertigo.studio.plugins.mda.vertigo.domain.sql.model.SqlMethodModel;
 import io.vertigo.studio.plugins.mda.vertigo.domain.sql.model.SqlStudioAssociationNNModel;
 import io.vertigo.studio.plugins.mda.vertigo.domain.sql.model.SqlStudioAssociationSimpleModel;
@@ -87,22 +87,22 @@ public final class SqlGeneratorPlugin implements MdaGeneratorPlugin {
 				.stream()
 				.collect(Collectors.toMap(StaticMasterDataSketch::getEntityClassName, StaticMasterDataSketch::getValues));
 
-		final List<SqlMasterDataDefinitionModel> sqlMasterDataDefinitionModels = notebook.getAll(DtSketch.class)
+		final List<SqlMasterDataModel> sqlMasterDataModels = notebook.getAll(DtSketch.class)
 				.stream()
 				.filter(dtSketch -> dtSketch.getStereotype() == StudioStereotype.StaticMasterData)
-				.map(dtSketch -> new SqlMasterDataDefinitionModel(dtSketch, staticMasterDataValues.getOrDefault(dtSketch.getClassCanonicalName(), Collections.emptyMap())))
+				.map(dtSketch -> new SqlMasterDataModel(dtSketch, staticMasterDataValues.getOrDefault(dtSketch.getClassCanonicalName(), Collections.emptyMap())))
 				.collect(Collectors.toList());
 
 		final String targetSubDir = mdaConfig.getOrDefaultAsString("vertigo.domain.sql.targetSubDir", DEFAULT_TARGET_SUBDIR);
 
-		for (final SqlMasterDataDefinitionModel sqlMasterDataDefinitionModel : sqlMasterDataDefinitionModels) {
+		for (final SqlMasterDataModel sqlMasterDataModel : sqlMasterDataModels) {
 			final Map<String, Object> model = new MapBuilder<String, Object>()
-					.put("masterdata", sqlMasterDataDefinitionModel)
+					.put("masterdata", sqlMasterDataModel)
 					.build();
 
 			MdaFileGenerator.builder(mdaConfig)
 					.withModel(model)
-					.withFileName("init_masterdata_" + sqlMasterDataDefinitionModel.getDefinition().getLocalName().toLowerCase() + ".sql")
+					.withFileName("init_masterdata_" + sqlMasterDataModel.getDefinition().getLocalName().toLowerCase() + ".sql")
 					.withGenSubDir(targetSubDir)
 					.withPackageName("")
 					.withTemplateName(SqlGeneratorPlugin.class, "template/init_masterdata.ftl")

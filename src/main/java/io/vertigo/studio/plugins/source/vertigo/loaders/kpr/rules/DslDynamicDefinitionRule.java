@@ -70,6 +70,6 @@ public final class DslDynamicDefinitionRule extends AbstractRule<DslSketch, PegC
 	@Override
 	protected DslSketch handle(final PegChoice parsing) {
 		final DslSketchEntry dslDefinitionEntry = (DslSketchEntry) ((List) parsing.getValue()).get(2);
-		return dslDefinitionEntry.getDefinition();
+		return dslDefinitionEntry.getSketch();
 	}
 }

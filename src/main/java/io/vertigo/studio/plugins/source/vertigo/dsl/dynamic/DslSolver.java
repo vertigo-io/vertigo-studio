@@ -112,7 +112,7 @@ final class DslSolver {
 		}
 
 		//On vérifie que les composites sont résolues.
-		return dslDefinition.getAllChildDefinitions()
+		return dslDefinition.getAllChildSketches()
 				.stream()
 				.allMatch(child -> isSolved(notebook, definitionRepository, orderedList, child, xdefRoot));
 	}

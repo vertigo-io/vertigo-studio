@@ -35,7 +35,7 @@ public final class DslSketchEntry {
 	 * Obligatoire
 	 */
 	private final String fieldName;
-	private final DslSketch definition;
+	private final DslSketch dslSketch;
 	private final List<String> definitionNames;
 
 	/**
@@ -50,7 +50,7 @@ public final class DslSketchEntry {
 				.isNotNull(definitionNames);
 		//-----
 		this.fieldName = fieldName;
-		definition = null;
+		dslSketch = null;
 		this.definitionNames = definitionNames;
 	}
 
@@ -66,7 +66,7 @@ public final class DslSketchEntry {
 				.isNotNull(definition);
 		//-----
 		this.fieldName = fieldName;
-		this.definition = definition;
+		this.dslSketch = definition;
 		definitionNames = null;
 	}
 
@@ -82,17 +82,17 @@ public final class DslSketchEntry {
 	 *
 	 * @return boolean
 	 */
-	public boolean containsDefinition() {
-		return definition != null;
+	public boolean containsSketch() {
+		return dslSketch != null;
 	}
 
 	/**
 	 * @return Définition
 	 */
-	public DslSketch getDefinition() {
-		Assertion.check().isNotNull(definition);
+	public DslSketch getSketch() {
+		Assertion.check().isNotNull(dslSketch);
 		//-----
-		return definition;
+		return dslSketch;
 	}
 
 	/**
