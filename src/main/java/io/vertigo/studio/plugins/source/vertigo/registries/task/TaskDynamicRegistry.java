@@ -88,13 +88,11 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 		return taskSketchBuilder.build();
 	}
 
-	private static Cardinality buildCardinality(DslSketch xtaskAttribute) {
-		final String sCardinality = (String) xtaskAttribute.getPropertyValue(KspProperty.CARDINALITY);
-		final Cardinality cardinality = sCardinality == null ? Cardinality.OPTIONAL_OR_NULLABLE : Cardinality.fromSymbol((sCardinality));
-		return cardinality;
+	private static Cardinality buildCardinality(final DslSketch xtaskAttribute) {
+		return Cardinality.fromSymbol((String) xtaskAttribute.getPropertyValue(KspProperty.CARDINALITY));
 	}
 
-	private static DomainSketch buildDomainSketch(Notebook notebook, DslSketch xtaskAttribute) {
+	private static DomainSketch buildDomainSketch(final Notebook notebook, final DslSketch xtaskAttribute) {
 		final String smartTypeName = xtaskAttribute.getDefinitionLinkName("domain");
 		final DomainSketch domainSketch = notebook.resolve(SketchKey.of(smartTypeName), DomainSketch.class);
 		return domainSketch;

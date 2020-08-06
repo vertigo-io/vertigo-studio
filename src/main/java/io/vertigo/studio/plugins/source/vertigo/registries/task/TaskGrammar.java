@@ -43,11 +43,11 @@ final class TaskGrammar implements DslGrammar {
 
 	static {
 		final DslEntity taskAttributeInEntity = DslEntity.builder(TASK_ATTRIBUTE_IN)
-				.addOptionalField(CARDINALITY, String)
+				.addRequiredField(CARDINALITY, String)
 				.addRequiredField("domain", DomainGrammar.DOMAIN_ENTITY.getLink())
 				.build();
 		final DslEntity taskAttributeOutEntity = DslEntity.builder(TASK_ATTRIBUTE_OUT)
-				.addOptionalField(CARDINALITY, String)
+				.addRequiredField(CARDINALITY, String)
 				.addRequiredField("domain", DomainGrammar.DOMAIN_ENTITY.getLink())
 				.build();
 
