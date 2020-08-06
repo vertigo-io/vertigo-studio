@@ -46,7 +46,7 @@ public final class StudioDtModel {
 	/**
 	 * Constructeur.
 	 *
-	 * @param dtSketch DtDefinition de l'objet à générer
+	 * @param dtSketch dtSketch de l'objet à générer
 	 */
 	public StudioDtModel(final DtSketch dtSketch, final List<? extends AssociationSketch> associationSketches, final Function<String, String> classNameFromDt) {
 		Assertion.check().isNotNull(dtSketch);

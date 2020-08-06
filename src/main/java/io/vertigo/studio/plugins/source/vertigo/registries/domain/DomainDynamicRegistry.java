@@ -103,17 +103,17 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		}
 	}
 
-	private static DtSketch createFragmentDtSketch(final Notebook notebook, final DslSketch xdtDefinition) {
-		final DtSketch from = notebook.resolve(SketchKey.of(xdtDefinition.getDefinitionLinkName("from")), DtSketch.class);
+	private static DtSketch createFragmentDtSketch(final Notebook notebook, final DslSketch dslSketch) {
+		final DtSketch from = notebook.resolve(SketchKey.of(dslSketch.getDefinitionLinkName("from")), DtSketch.class);
 
-		final String sortFieldName = (String) xdtDefinition.getPropertyValue(KspProperty.SORT_FIELD);
-		final String displayFieldName = (String) xdtDefinition.getPropertyValue(KspProperty.DISPLAY_FIELD);
-		final String handleFieldName = (String) xdtDefinition.getPropertyValue(KspProperty.HANDLE_FIELD);
+		final String sortFieldName = (String) dslSketch.getPropertyValue(KspProperty.SORT_FIELD);
+		final String displayFieldName = (String) dslSketch.getPropertyValue(KspProperty.DISPLAY_FIELD);
+		final String handleFieldName = (String) dslSketch.getPropertyValue(KspProperty.HANDLE_FIELD);
 
 		//0. clones characteristics
-		final DtSketchBuilder dtDefinitionBuilder = DtSketch.builder(xdtDefinition.getName())
+		final DtSketchBuilder dtDefinitionBuilder = DtSketch.builder(dslSketch.getName())
 				.withFragment(from)
-				.withPackageName(xdtDefinition.getPackageName())
+				.withPackageName(dslSketch.getPackageName())
 				.withDataSpace(from.getDataSpace())
 				.withPackageName(from.getPackageName())
 				.withSortField(sortFieldName)
@@ -121,7 +121,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 				.withHandleField(handleFieldName);
 
 		//1. adds aliases
-		for (final DslSketch alias : xdtDefinition.getChildSketches("alias")) {
+		for (final DslSketch alias : dslSketch.getChildSketches("alias")) {
 			final DtSketchField aliasDtField = from.getField(alias.getName());
 
 			//--- REQUIRED
@@ -142,11 +142,11 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 
 		//2. adds data and computed fields
 		//Déclaration des champs du DT
-		final List<DslSketch> fields = xdtDefinition.getChildSketches(DomainGrammar.DATA_FIELD);
+		final List<DslSketch> fields = dslSketch.getChildSketches(DomainGrammar.DATA_FIELD);
 		populateDataDtField(notebook, dtDefinitionBuilder, fields);
 
 		//Déclaration des champs calculés
-		final List<DslSketch> computedFields = xdtDefinition.getChildSketches(DomainGrammar.COMPUTED_FIELD);
+		final List<DslSketch> computedFields = dslSketch.getChildSketches(DomainGrammar.COMPUTED_FIELD);
 		populateComputedDtField(notebook, dtDefinitionBuilder, computedFields);
 
 		final DtSketch dtDefinition = dtDefinitionBuilder
@@ -296,18 +296,18 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 	private static AssociationNNSketch createAssociationNNSketch(final Notebook notebook, final DslSketch xassociation) {
 		final String tableName = (String) xassociation.getPropertyValue(KspProperty.TABLE_NAME);
 
-		final DtSketch dtDefinitionA = notebook.resolve(SketchKey.of(xassociation.getDefinitionLinkName("dtDefinitionA")), DtSketch.class);
+		final DtSketch dtSketchA = notebook.resolve(SketchKey.of(xassociation.getDefinitionLinkName("dtDefinitionA")), DtSketch.class);
 		final boolean navigabilityA = (Boolean) xassociation.getPropertyValue(KspProperty.NAVIGABILITY_A);
 		final String roleA = (String) xassociation.getPropertyValue(KspProperty.ROLE_A);
 		final String labelA = (String) xassociation.getPropertyValue(KspProperty.LABEL_A);
 
-		final DtSketch dtDefinitionB = notebook.resolve(SketchKey.of(xassociation.getDefinitionLinkName("dtDefinitionB")), DtSketch.class);
+		final DtSketch dtSketchB = notebook.resolve(SketchKey.of(xassociation.getDefinitionLinkName("dtDefinitionB")), DtSketch.class);
 		final boolean navigabilityB = (Boolean) xassociation.getPropertyValue(KspProperty.NAVIGABILITY_B);
 		final String roleB = (String) xassociation.getPropertyValue(KspProperty.ROLE_B);
 		final String labelB = (String) xassociation.getPropertyValue(KspProperty.LABEL_B);
 
-		final AssociationSketchNode associationNodeA = new AssociationSketchNode(dtDefinitionA, navigabilityA, roleA, labelA, true, false);
-		final AssociationSketchNode associationNodeB = new AssociationSketchNode(dtDefinitionB, navigabilityB, roleB, labelB, true, false);
+		final AssociationSketchNode associationNodeA = new AssociationSketchNode(dtSketchA, navigabilityA, roleA, labelA, true, false);
+		final AssociationSketchNode associationNodeB = new AssociationSketchNode(dtSketchB, navigabilityB, roleB, labelB, true, false);
 		return new AssociationNNSketch(xassociation.getName(), tableName, associationNodeA, associationNodeB);
 	}
 

@@ -31,7 +31,7 @@ import io.vertigo.studio.notebook.AbstractSketch;
 import io.vertigo.studio.notebook.SkecthPrefix;
 
 /**
- * The DtDefinition class defines the definition of data.
+ * The DtSketch class defines the sketch of data.
  *
  * @author pchretien, mlaroche
  */
