@@ -15,7 +15,7 @@ public enum ${classSimpleName} implements AuthorizationName {
 	/**
 	 * ${authorization.comment.orElse(authorization.operationName)}.
 	 */
-	${authorization.operationName}<#if authorization_has_next>,<#else>;</#if>
+	Atz${authorization.operationName}<#if authorization_has_next>,<#else>;</#if>
 </#list>
 
 	/**
