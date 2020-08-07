@@ -147,6 +147,8 @@ public final class SearchGeneratorPlugin implements MdaGeneratorPlugin {
 					.put("dtDefinition", searchDtModel)
 					.put("indexDtDefinition", new SearchDtModel(searchIndexDefinitionOpt.get().getIndexDtSketch()))
 					.put("searchIndexDefinition", new SearchIndexModel(searchIndexDefinitionOpt.get()))
+					.put("hasCustomFacet", facetedQueryDefinitions.stream().anyMatch(FacetedQueryModel::hasCustomFacet))
+					.put("hasRangeFacet", facetedQueryDefinitions.stream().anyMatch(FacetedQueryModel::hasRangeFacet))
 					.build();
 
 			MdaFileGenerator.builder(mdaConfig)
