@@ -23,6 +23,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.studio.notebook.search.FacetSketch;
 import io.vertigo.studio.notebook.search.FacetedQuerySketch;
 import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants.VertigoDefinitionPrefix;
 import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
@@ -79,6 +80,14 @@ public final class FacetedQueryModel {
 
 	public boolean hasGeoSearch() {
 		return facetedQuerySketch.hasGeoSearch();
+	}
+
+	public boolean hasCustomFacet() {
+		return hasGeoSearch() || facetedQuerySketch.getFacetSketchs().stream().anyMatch(FacetSketch::isCustomFacet);
+	}
+
+	public boolean hasRangeFacet() {
+		return facetedQuerySketch.getFacetSketchs().stream().anyMatch(FacetSketch::isRangeFacet);
 	}
 
 	public String getGeoSearchQuery() {

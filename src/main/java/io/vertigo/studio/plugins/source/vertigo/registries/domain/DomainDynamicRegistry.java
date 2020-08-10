@@ -255,7 +255,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 			Assertion.check().isTrue(field.getPropertyNames().contains(KspProperty.LABEL), "Label est une propriété obligatoire");
 			final String label = (String) field.getPropertyValue(KspProperty.LABEL);
 			//--
-			String sCardinality = (String) field.getPropertyValue(KspProperty.CARDINALITY);
+			final String sCardinality = (String) field.getPropertyValue(KspProperty.CARDINALITY);
 			final Cardinality cardinality = sCardinality == null ? Cardinality.OPTIONAL_OR_NULLABLE : Cardinality.fromSymbol(sCardinality);
 			//--
 			final Boolean tmpPersistent = (Boolean) field.getPropertyValue(KspProperty.PERSISTENT);
@@ -284,12 +284,15 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 			Assertion.check().isTrue(field.getPropertyNames().contains(KspProperty.LABEL), "Label est une propriété obligatoire");
 			final String label = (String) field.getPropertyValue(KspProperty.LABEL);
 			//--
+			final String sCardinality = (String) field.getPropertyValue(KspProperty.CARDINALITY);
+			final Cardinality cardinality = sCardinality == null ? Cardinality.OPTIONAL_OR_NULLABLE : Cardinality.fromSymbol(sCardinality);
+			//--
 			final String expression = (String) field.getPropertyValue(KspProperty.EXPRESSION);
 			final ComputedExpression computedExpression = new ComputedExpression(expression);
 			//--
 			final String fieldName = field.getName();
 
-			dtDefinitionBuilder.addComputedField(fieldName, label, domainSketch, computedExpression);
+			dtDefinitionBuilder.addComputedField(fieldName, label, domainSketch, cardinality, computedExpression);
 		}
 	}
 
@@ -340,7 +343,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 					navigabilityB = true;
 					break;
 				default:
-					throw new VSystemException("type of asssociation not supported : '{0}', available types are : '{1}'" + associationType, " *>1 , *>? , *>* ");
+					throw new VSystemException("type of asssociation not supported : '{0}', available types are : '{1}'", associationType, " *>1 , *>? , *>* ");
 			}
 		} else {
 			multiplicityA = (String) xassociation.getPropertyValue(KspProperty.MULTIPLICITY_A);

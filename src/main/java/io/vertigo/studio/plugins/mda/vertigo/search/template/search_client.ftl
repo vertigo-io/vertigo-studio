@@ -13,9 +13,13 @@ import io.vertigo.core.node.definition.DefinitionSpace;
 import io.vertigo.core.node.definition.DefinitionSupplier;
 import io.vertigo.core.util.ListBuilder;
 import io.vertigo.datafactory.collections.metamodel.FacetDefinition.FacetOrder;
+<#if hasRangeFacet>
 import io.vertigo.datafactory.collections.metamodel.FacetRangeDefinitionSupplier;
+</#if>
 import io.vertigo.datafactory.collections.metamodel.FacetTermDefinitionSupplier;
+<#if hasCustomFacet>
 import io.vertigo.datafactory.collections.metamodel.FacetCustomDefinitionSupplier;
+</#if>
 import io.vertigo.datafactory.collections.metamodel.FacetedQueryDefinitionSupplier;
 import io.vertigo.datafactory.collections.model.FacetedQueryResult;
 import io.vertigo.datafactory.collections.model.SelectedFacetValues;
@@ -26,7 +30,7 @@ import io.vertigo.datafactory.search.model.SearchQuery;
 import io.vertigo.datafactory.search.model.SearchQueryBuilder;
 import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.datamodel.structure.model.UID;
-<#if indexDtDefinition.classCanonicalName != dtDefinition.classCanonicalName >
+<#if indexDtDefinition.classCanonicalName != dtDefinition.classCanonicalName && indexDtDefinition.packageName != packageName>
 import ${indexDtDefinition.classCanonicalName};
 </#if>
 import ${dtDefinition.classCanonicalName};

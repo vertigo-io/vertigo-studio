@@ -123,6 +123,7 @@ public final class DomainGrammar implements DslGrammar {
 		DT_COMPUTED_FIELD_ENTITY = DslEntity.builder("ComputedField")
 				.addRequiredField(LABEL, String)
 				.addRequiredField("domain", DOMAIN_ENTITY.getLink())
+				.addOptionalField(CARDINALITY, String)
 				.addOptionalField(EXPRESSION, String)
 				.build();
 
