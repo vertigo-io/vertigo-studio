@@ -70,12 +70,12 @@ public final class VertigoStudioMda {
 	private static final Logger STUDIO_LOGGER = LogManager.getLogger(VertigoStudioMda.class);
 
 	private enum StudioTarget {
-		generate, watch;
+		clean, generate, watch, clean_watch;
 	}
 
 	public static void main(final String[] args) {
 		Assertion.check()
-				.isTrue(args.length == 2, "expected the target (watch or generate) and the studio json config");
+				.isTrue(args.length == 2, "expected the target (clean, generate, watch or clean_watch) and the studio json config");
 		//--
 		final StudioTarget studioTarget = StudioTarget.valueOf(args[0]);
 		final String studioProjectConfigJson = args[1];
@@ -86,16 +86,31 @@ public final class VertigoStudioMda {
 		final NotebookConfig notebookConfig = loadStudioProjectConfig(studioProjectConfigJson);
 		//---
 		switch (studioTarget) {
+			case clean:
+				clean(notebookConfig);
+				break;
 			case generate:
 				generate(notebookConfig);
 				break;
 			case watch:
-				watch(notebookConfig);
+				watch(notebookConfig, false);
+				break;
+			case clean_watch:
+				watch(notebookConfig, true);
 				break;
 			default:
 				break;
 		}
 
+	}
+
+	private static void clean(final NotebookConfig notebookConfig) {
+		try (final AutoCloseableNode studioApp = new AutoCloseableNode(buildNodeConfig())) {
+			final MdaManager mdaManager = studioApp.getComponentSpace().resolve(MdaManager.class);
+			//-----
+			final MdaConfig mdaConfig = notebookConfig.getMdaConfig();
+			mdaManager.clean(mdaConfig);
+		}
 	}
 
 	private static void generate(final NotebookConfig notebookConfig) {
@@ -111,7 +126,7 @@ public final class VertigoStudioMda {
 		}
 	}
 
-	private static void watch(final NotebookConfig notebookConfig) {
+	private static void watch(final NotebookConfig notebookConfig, final boolean withClean) {
 		try (final AutoCloseableNode studioApp = new AutoCloseableNode(buildNodeConfig())) {
 			final NotebookSourceManager notebookSourceManager = studioApp.getComponentSpace().resolve(NotebookSourceManager.class);
 			final MdaManager mdaManager = studioApp.getComponentSpace().resolve(MdaManager.class);
@@ -145,13 +160,18 @@ public final class VertigoStudioMda {
 									debouncer.debounce(() -> {
 										STUDIO_LOGGER.info("Regeneration started");
 										try {
-											mdaManager.clean(mdaConfig);
+											if (withClean) {
+												STUDIO_LOGGER.info("Start cleaning");
+												mdaManager.clean(mdaConfig);
+												STUDIO_LOGGER.info("Done cleaning");
+											}
 											final Notebook notebook = notebookSourceManager.read(notebookConfig.getMetamodelResources());
-											mdaManager.generate(notebook, mdaConfig);
+											final MdaResult mdaResult = mdaManager.generate(notebook, mdaConfig);
+											STUDIO_LOGGER.info("Regeneration completed. {} created files, {} updated files, {} identical files and {} issues in {} ms",
+													mdaResult.getCreatedFiles(), mdaResult.getUpdatedFiles(), mdaResult.getIdenticalFiles(), mdaResult.getErrorFiles(), mdaResult.getDurationMillis());
 										} catch (final Exception e) {
 											STUDIO_LOGGER.error("Error regenerating : ", e);
 										}
-										STUDIO_LOGGER.info("Regeneration completed");
 
 									}, 1);
 								}
