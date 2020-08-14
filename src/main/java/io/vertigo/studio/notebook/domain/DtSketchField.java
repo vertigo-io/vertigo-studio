@@ -42,8 +42,6 @@ import io.vertigo.core.util.StringUtil;
 public final class DtSketchField {
 
 	private static final int FIELD_NAME_MAX_LENGTH = 30;
-	/** Field definition Prefix. */
-	public static final String PREFIX = "fld";
 
 	/**
 	 * This enum lists all types that can be used by a field.
@@ -211,7 +209,7 @@ public final class DtSketchField {
 	 */
 	//Todo changer le nom
 	public String getFkDtSketchName() {
-		Assertion.check().isTrue(type.isForeignKey(), "A foreign field is expected");
+		Assertion.check().isTrue(type.isForeignKey(), "A foreign key field is expected");
 		//-----
 		return fkDtSketchName;
 	}

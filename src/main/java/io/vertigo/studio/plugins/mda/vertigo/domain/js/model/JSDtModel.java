@@ -31,20 +31,20 @@ import io.vertigo.studio.notebook.domain.DtSketchField;
  * @author pchretien, mlaroche
  */
 public final class JSDtModel {
-	private final DtSketch dtDefinition;
+	private final DtSketch dtSketch;
 	private final List<JSStudioDtFieldModel> dtFieldModels;
 
 	/**
 	 * Constructeur.
 	 *
-	 * @param dtDefinition DtDefinition de l'objet à générer
+	 * @param dtSketch DtDefinition de l'objet à générer
 	 */
-	public JSDtModel(final DtSketch dtDefinition) {
-		Assertion.check().isNotNull(dtDefinition);
+	public JSDtModel(final DtSketch dtSketch) {
+		Assertion.check().isNotNull(dtSketch);
 		//-----
-		this.dtDefinition = dtDefinition;
+		this.dtSketch = dtSketch;
 
-		dtFieldModels = dtDefinition.getFields()
+		dtFieldModels = dtSketch.getFields()
 				.stream()
 				.filter(dtField -> DtSketchField.FieldType.COMPUTED != dtField.getType())
 				.map(JSStudioDtFieldModel::new)
@@ -55,14 +55,14 @@ public final class JSDtModel {
 	 * @return DT définition
 	 */
 	public DtSketch getDtDefinition() {
-		return dtDefinition;
+		return dtSketch;
 	}
 
 	/**
 	 * @return Simple Nom (i.e. sans le package) de la classe d'implémentation du DtObject
 	 */
 	public String getClassSimpleName() {
-		return dtDefinition.getClassSimpleName();
+		return dtSketch.getClassSimpleName();
 	}
 
 	/**
