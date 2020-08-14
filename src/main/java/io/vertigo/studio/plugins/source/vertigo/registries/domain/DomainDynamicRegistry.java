@@ -89,29 +89,29 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 	}
 
 	private static DomainSketch createDomain(final Notebook notebook, final DslSketch dslSketchDomain) {
-		final String domainName = dslSketchDomain.getName();
-		final String type = dslSketchDomain.getDefinitionLinkName("dataType");
+		final SketchKey domainKey = dslSketchDomain.getKey();
+		final String type = dslSketchDomain.getSketchKeyByFieldName("dataType").getName();
 		final Properties properties = extractProperties(dslSketchDomain);
 		switch (type) {
 			case "DtObject":
-				return DomainSketch.of(domainName, properties, SketchKey.of(properties.getProperty("TYPE")));
+				return DomainSketch.of(domainKey, properties, SketchKey.of(properties.getProperty("TYPE")));
 			case "ValueObject":
-				return DomainSketch.of(domainName, properties, ClassUtil.classForName(properties.getProperty("TYPE")));
+				return DomainSketch.of(domainKey, properties, ClassUtil.classForName(properties.getProperty("TYPE")));
 			default:
 				final BasicType dataType = BasicType.valueOf(type);
-				return DomainSketch.of(domainName, properties, dataType);
+				return DomainSketch.of(domainKey, properties, dataType);
 		}
 	}
 
 	private static DtSketch createFragmentDtSketch(final Notebook notebook, final DslSketch dslSketch) {
-		final DtSketch from = notebook.resolve(SketchKey.of(dslSketch.getDefinitionLinkName("from")), DtSketch.class);
+		final DtSketch from = notebook.resolve(dslSketch.getSketchKeyByFieldName("from"), DtSketch.class);
 
 		final String sortFieldName = (String) dslSketch.getPropertyValue(KspProperty.SORT_FIELD);
 		final String displayFieldName = (String) dslSketch.getPropertyValue(KspProperty.DISPLAY_FIELD);
 		final String handleFieldName = (String) dslSketch.getPropertyValue(KspProperty.HANDLE_FIELD);
 
 		//0. clones characteristics
-		final DtSketchBuilder dtDefinitionBuilder = DtSketch.builder(dslSketch.getName())
+		final DtSketchBuilder dtDefinitionBuilder = DtSketch.builder(dslSketch.getKey())
 				.withFragment(from)
 				.withPackageName(dslSketch.getPackageName())
 				.withDataSpace(from.getDataSpace())
@@ -122,7 +122,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 
 		//1. adds aliases
 		for (final DslSketch alias : dslSketch.getChildSketches("alias")) {
-			final DtSketchField aliasDtField = from.getField(alias.getName());
+			final DtSketchField aliasDtField = from.getField(alias.getKey().getName());
 
 			//--- REQUIRED
 			final Cardinality overiddenCardinality = Cardinality.fromSymbol((String) alias.getPropertyValue(KspProperty.CARDINALITY));
@@ -183,8 +183,8 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		final String fragmentOf = (String) dtDslSketch.getPropertyValue(KspProperty.FRAGMENT_OF);
 		//-----
 		//-----
-		final String dtDefinitionName = dtDslSketch.getName();
-		final DtSketchBuilder dtDefinitionBuilder = DtSketch.builder(dtDefinitionName)
+		final SketchKey dtSketchKey = dtDslSketch.getKey();
+		final DtSketchBuilder dtDefinitionBuilder = DtSketch.builder(dtSketchKey)
 				.withPackageName(dtDslSketch.getPackageName())
 				.withDataSpace(dataSpace)
 				.withSortField(sortFieldName)
@@ -199,8 +199,8 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		}
 
 		//On enregistre les Builder pour pouvoir les mettre à jour sur les associations.
-		Assertion.check().isFalse(dtDefinitionBuilders.containsKey(SketchKey.of(dtDefinitionName)), "Definition '{0}' already registered", dtDefinitionName);
-		dtDefinitionBuilders.put(SketchKey.of(dtDefinitionName), dtDefinitionBuilder);
+		Assertion.check().isFalse(dtDefinitionBuilders.containsKey(dtSketchKey), "Definition '{0}' already registered", dtSketchKey);
+		dtDefinitionBuilders.put(dtSketchKey, dtDefinitionBuilder);
 
 		//Déclaration de la clé primaire
 		final List<DslSketch> keys = dtDslSketch.getChildSketches(DomainGrammar.ID_FIELD);
@@ -228,12 +228,12 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 			final List<DslSketch> fields) {
 
 		for (final DslSketch field : fields) {
-			final DomainSketch domainSketch = notebook.resolve(SketchKey.of(field.getDefinitionLinkName("domain")), DomainSketch.class);
+			final DomainSketch domainSketch = notebook.resolve(field.getSketchKeyByFieldName("domain"), DomainSketch.class);
 			//--
 			Assertion.check().isTrue(field.getPropertyNames().contains(KspProperty.LABEL), "Label est une propriété obligatoire");
 			final String label = (String) field.getPropertyValue(KspProperty.LABEL);
 			//--
-			final String fieldName = field.getName();
+			final String fieldName = field.getKey().getName();
 			//-----
 			dtDefinitionBuilder.addIdField(fieldName, label, domainSketch);
 		}
@@ -250,7 +250,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 			final List<DslSketch> fields) {
 
 		for (final DslSketch field : fields) {
-			final DomainSketch domainSketch = notebook.resolve(SketchKey.of(field.getDefinitionLinkName("domain")), DomainSketch.class);
+			final DomainSketch domainSketch = notebook.resolve(field.getSketchKeyByFieldName("domain"), DomainSketch.class);
 			//--
 			Assertion.check().isTrue(field.getPropertyNames().contains(KspProperty.LABEL), "Label est une propriété obligatoire");
 			final String label = (String) field.getPropertyValue(KspProperty.LABEL);
@@ -262,7 +262,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 			//Si PERSISTENT est non renseigné on suppose que le champ est à priori persistant .
 			final boolean persistent = tmpPersistent == null || tmpPersistent;
 			//--
-			final String fieldName = field.getName();
+			final String fieldName = field.getKey().getName();
 			//-----
 			dtDefinitionBuilder.addDataField(fieldName, label, domainSketch, cardinality, persistent);
 		}
@@ -279,7 +279,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 			final List<DslSketch> fields) {
 
 		for (final DslSketch field : fields) {
-			final DomainSketch domainSketch = notebook.resolve(SketchKey.of(field.getDefinitionLinkName("domain")), DomainSketch.class);
+			final DomainSketch domainSketch = notebook.resolve(field.getSketchKeyByFieldName("domain"), DomainSketch.class);
 			//--
 			Assertion.check().isTrue(field.getPropertyNames().contains(KspProperty.LABEL), "Label est une propriété obligatoire");
 			final String label = (String) field.getPropertyValue(KspProperty.LABEL);
@@ -290,28 +290,28 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 			final String expression = (String) field.getPropertyValue(KspProperty.EXPRESSION);
 			final ComputedExpression computedExpression = new ComputedExpression(expression);
 			//--
-			final String fieldName = field.getName();
+			final SketchKey fieldKey = field.getKey();
 
-			dtDefinitionBuilder.addComputedField(fieldName, label, domainSketch, cardinality, computedExpression);
+			dtDefinitionBuilder.addComputedField(fieldKey.getName(), label, domainSketch, cardinality, computedExpression);
 		}
 	}
 
 	private static AssociationNNSketch createAssociationNNSketch(final Notebook notebook, final DslSketch xassociation) {
 		final String tableName = (String) xassociation.getPropertyValue(KspProperty.TABLE_NAME);
 
-		final DtSketch dtSketchA = notebook.resolve(SketchKey.of(xassociation.getDefinitionLinkName("dtDefinitionA")), DtSketch.class);
+		final DtSketch dtSketchA = notebook.resolve(xassociation.getSketchKeyByFieldName("dtDefinitionA"), DtSketch.class);
 		final boolean navigabilityA = (Boolean) xassociation.getPropertyValue(KspProperty.NAVIGABILITY_A);
 		final String roleA = (String) xassociation.getPropertyValue(KspProperty.ROLE_A);
 		final String labelA = (String) xassociation.getPropertyValue(KspProperty.LABEL_A);
 
-		final DtSketch dtSketchB = notebook.resolve(SketchKey.of(xassociation.getDefinitionLinkName("dtDefinitionB")), DtSketch.class);
+		final DtSketch dtSketchB = notebook.resolve(xassociation.getSketchKeyByFieldName("dtDefinitionB"), DtSketch.class);
 		final boolean navigabilityB = (Boolean) xassociation.getPropertyValue(KspProperty.NAVIGABILITY_B);
 		final String roleB = (String) xassociation.getPropertyValue(KspProperty.ROLE_B);
 		final String labelB = (String) xassociation.getPropertyValue(KspProperty.LABEL_B);
 
 		final AssociationSketchNode associationNodeA = new AssociationSketchNode(dtSketchA, navigabilityA, roleA, labelA, true, false);
 		final AssociationSketchNode associationNodeB = new AssociationSketchNode(dtSketchB, navigabilityB, roleB, labelB, true, false);
-		return new AssociationNNSketch(xassociation.getName(), tableName, associationNodeA, associationNodeB);
+		return new AssociationNNSketch(xassociation.getKey(), tableName, associationNodeA, associationNodeB);
 	}
 
 	private AssociationSimpleSketch createAssociationSimpleSketch(final Notebook notebook, final DslSketch xassociation) {
@@ -369,13 +369,13 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 
 		final String fkFieldName = (String) xassociation.getPropertyValue(KspProperty.FK_FIELD_NAME);
 
-		final DtSketch dtDefinitionA = notebook.resolve(SketchKey.of(xassociation.getDefinitionLinkName("dtDefinitionA")), DtSketch.class);
+		final DtSketch dtDefinitionA = notebook.resolve(xassociation.getSketchKeyByFieldName("dtDefinitionA"), DtSketch.class);
 		final String roleAOpt = (String) xassociation.getPropertyValue(KspProperty.ROLE_A);
 		final String roleA = roleAOpt != null ? roleAOpt : dtDefinitionA.getLocalName();
 		final String labelAOpt = (String) xassociation.getPropertyValue(KspProperty.LABEL_A);
 		final String labelA = labelAOpt != null ? labelAOpt : dtDefinitionA.getLocalName();
 
-		final DtSketch dtDefinitionB = notebook.resolve(SketchKey.of(xassociation.getDefinitionLinkName("dtDefinitionB")), DtSketch.class);
+		final DtSketch dtDefinitionB = notebook.resolve(xassociation.getSketchKeyByFieldName("dtDefinitionB"), DtSketch.class);
 		final String roleBOpt = (String) xassociation.getPropertyValue(KspProperty.ROLE_B);
 		final String roleB = roleBOpt != null ? roleBOpt : dtDefinitionB.getLocalName();
 		final String labelB = (String) xassociation.getPropertyValue(KspProperty.LABEL_B);
@@ -383,14 +383,14 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		final AssociationSketchNode associationNodeA = new AssociationSketchNode(dtDefinitionA, navigabilityA, roleA, labelA, AssociationUtil.isMultiple(multiplicityA), AssociationUtil.isNotNull(multiplicityA));
 		final AssociationSketchNode associationNodeB = new AssociationSketchNode(dtDefinitionB, navigabilityB, roleB, labelB, AssociationUtil.isMultiple(multiplicityB), AssociationUtil.isNotNull(multiplicityB));
 
-		final AssociationSimpleSketch associationSimpleDefinition = new AssociationSimpleSketch(xassociation.getName(), fkFieldName, associationNodeA, associationNodeB);
+		final AssociationSimpleSketch associationSimpleDefinition = new AssociationSimpleSketch(xassociation.getKey(), fkFieldName, associationNodeA, associationNodeB);
 
 		final AssociationSketchNode primaryAssociationNode = associationSimpleDefinition.getPrimaryAssociationNode();
 		final AssociationSketchNode foreignAssociationNode = associationSimpleDefinition.getForeignAssociationNode();
 
 		final DtSketch fkDefinition = primaryAssociationNode.getDtSketch();
 
-		LOGGER.trace("{} : ajout d'une FK [{}] sur la table '{}'", xassociation.getName(), fkFieldName, foreignAssociationNode.getDtSketch());
+		LOGGER.trace("{} : ajout d'une FK [{}] sur la table '{}'", xassociation.getKey(), fkFieldName, foreignAssociationNode.getDtSketch());
 
 		final String label = primaryAssociationNode.getLabel();
 		final Cardinality fieldCardinality = primaryAssociationNode.isNotNull() ? Cardinality.ONE : Cardinality.OPTIONAL_OR_NULLABLE;
@@ -423,7 +423,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		if (DomainGrammar.DT_DEFINITION_ENTITY.equals(dslDefinition.getEntity())
 				|| DomainGrammar.FRAGMENT_ENTITY.equals(dslDefinition.getEntity())) {
 			//Dans le cas des DT on ajoute le domain
-			return Collections.singletonList(createDtDomain(dslDefinition.getName(), dslDefinition.getPackageName()));
+			return Collections.singletonList(createDtDomain(dslDefinition.getKey().getName(), dslDefinition.getPackageName()));
 		}
 		return Collections.emptyList();
 	}

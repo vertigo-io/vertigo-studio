@@ -67,7 +67,7 @@ final class DslSketchValidator {
 	}
 
 	private static void checkProperties(
-			final DslSketch definition,
+			final DslSketch dslSketch,
 			final Set<String> propertyNames,
 			final Set<String> entityPropertyNames) {
 		// Vérification que toutes les propriétés sont déclarées sur le
@@ -80,12 +80,12 @@ final class DslSketchValidator {
 			}
 		}
 		if (!undeclaredPropertyNames.isEmpty()) {
-			throw new IllegalStateException("Sur l'objet '" + definition.getName() + "' Il existe des propriétés non déclarées " + undeclaredPropertyNames);
+			throw new IllegalStateException("Sur l'objet '" + dslSketch.getKey() + "' Il existe des propriétés non déclarées " + undeclaredPropertyNames);
 		}
 	}
 
 	private static void checkMandatoryProperties(
-			final DslSketch dslDefinition,
+			final DslSketch dslSketch,
 			final DslEntity dslEntity,
 			final Set<String> propertyNames,
 			final Set<String> entityPropertyNames) {
@@ -95,7 +95,7 @@ final class DslSketchValidator {
 			final DslEntityField entityField = dslEntity.getField(propertyName);
 
 			if ((entityField.getCardinality().hasOne())
-					&& (!propertyNames.contains(propertyName) || dslDefinition.getPropertyValue(propertyName) == null)) {
+					&& (!propertyNames.contains(propertyName) || dslSketch.getPropertyValue(propertyName) == null)) {
 				// Si la propriété obligatoire n'est pas renseignée alors erreur
 				// Ou si la propriété obligatoire est renseignée mais qu'elle
 				// est nulle alors erreur !
@@ -103,7 +103,7 @@ final class DslSketchValidator {
 			}
 		}
 		if (!unusedMandatoryPropertySet.isEmpty()) {
-			throw new IllegalStateException(dslDefinition.getName() + " Il existe des propriétés obligatoires non renseignées " + unusedMandatoryPropertySet);
+			throw new IllegalStateException(dslSketch.getKey() + " Il existe des propriétés obligatoires non renseignées " + unusedMandatoryPropertySet);
 		}
 	}
 }

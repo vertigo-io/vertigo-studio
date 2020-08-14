@@ -21,6 +21,7 @@ package io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
 
 /**
@@ -36,7 +37,7 @@ public final class DslSketchEntry {
 	 */
 	private final String fieldName;
 	private final DslSketch dslSketch;
-	private final List<String> definitionNames;
+	private final List<SketchKey> sketchKeys;
 
 	/**
 	 * Constructor.
@@ -44,30 +45,30 @@ public final class DslSketchEntry {
 	 * @param definitionNames Liste des clés de définition
 	 * @param fieldName Nom du champ
 	 */
-	public DslSketchEntry(final String fieldName, final List<String> definitionNames) {
+	public DslSketchEntry(final String fieldName, final List<SketchKey> sketchKeys) {
 		Assertion.check()
 				.isNotNull(fieldName)
-				.isNotNull(definitionNames);
+				.isNotNull(sketchKeys);
 		//-----
 		this.fieldName = fieldName;
 		dslSketch = null;
-		this.definitionNames = definitionNames;
+		this.sketchKeys = sketchKeys;
 	}
 
 	/**
 	 * Constructor.
 	 *
 	 * @param fieldName Nom du champ
-	 * @param definition Définition
+	 * @param dslSketch Définition
 	 */
-	public DslSketchEntry(final String fieldName, final DslSketch definition) {
+	public DslSketchEntry(final String fieldName, final DslSketch dslSketch) {
 		Assertion.check()
 				.isNotNull(fieldName)
-				.isNotNull(definition);
+				.isNotNull(dslSketch);
 		//-----
 		this.fieldName = fieldName;
-		this.dslSketch = definition;
-		definitionNames = null;
+		this.dslSketch = dslSketch;
+		sketchKeys = null;
 	}
 
 	/**
@@ -98,7 +99,7 @@ public final class DslSketchEntry {
 	/**
 	 * @return List des clés de définition
 	 */
-	public List<String> getDefinitionNames() {
-		return definitionNames;
+	public List<SketchKey> getSketchKeys() {
+		return sketchKeys;
 	}
 }

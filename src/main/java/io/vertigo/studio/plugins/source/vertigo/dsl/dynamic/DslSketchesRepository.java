@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.SketchSupplier;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
 
@@ -46,7 +47,7 @@ public final class DslSketchesRepository {
 	 * On retient les définitions dans l'ordre pour
 	 * créer les fichiers toujours de la même façon.
 	 */
-	private final Map<String, DslSketch> dslSketches = new LinkedHashMap<>();
+	private final Map<SketchKey, DslSketch> dslSketches = new LinkedHashMap<>();
 	private final List<DslSketch> partials = new ArrayList<>();
 
 	private final DynamicRegistry registry;
@@ -75,8 +76,8 @@ public final class DslSketchesRepository {
 	 * @param sketchName name of the definitionClé de la définition
 	 * @return Si la définition a déjà été enregistrée
 	 */
-	public boolean contains(final String sketchName) {
-		return dslSketches.containsKey(sketchName);
+	public boolean contains(final SketchKey sketchKey) {
+		return dslSketches.containsKey(sketchKey);
 	}
 
 	/**
@@ -88,12 +89,12 @@ public final class DslSketchesRepository {
 	 * @param sketchName Name of the definition
 	 * @return DynamicDefinition Définition correspondante ou null.
 	 */
-	public DslSketch getSketch(final String sketchName) {
-		Assertion.check().isTrue(dslSketches.containsKey(sketchName), "Aucune clé enregistrée pour :{0} parmi {1}", sketchName, dslSketches.keySet());
+	public DslSketch getSketch(final SketchKey key) {
+		Assertion.check().isTrue(dslSketches.containsKey(key), "Aucune clé enregistrée pour :{0} parmi {1}", key, dslSketches.keySet());
 		//-----
-		final DslSketch definition = dslSketches.get(sketchName);
+		final DslSketch definition = dslSketches.get(key);
 		//-----
-		Assertion.check().isNotNull(definition, "Clé trouvée mais pas de définition enregistrée trouvée pour {0}", sketchName);
+		Assertion.check().isNotNull(definition, "Clé trouvée mais pas de définition enregistrée trouvée pour {0}", key);
 		return definition;
 	}
 
@@ -112,10 +113,10 @@ public final class DslSketchesRepository {
 	private void mergePartials() {
 		//parts of definitions are merged
 		for (final DslSketch partial : partials) {
-			final DslSketch merged = DslSketch.builder(partial.getName(), partial.getEntity())
-					.merge(getSketch(partial.getName()))
+			final DslSketch merged = DslSketch.builder(partial.getKey(), partial.getEntity())
+					.merge(getSketch(partial.getKey()))
 					.merge(partial).build();
-			dslSketches.put(partial.getName(), merged);
+			dslSketches.put(partial.getKey(), merged);
 		}
 	}
 
@@ -140,8 +141,8 @@ public final class DslSketchesRepository {
 	public void addSketch(final DslSketch dslSketch) {
 		Assertion.check().isNotNull(dslSketch);
 		//---
-		final DslSketch previousSketch = dslSketches.put(dslSketch.getName(), dslSketch);
-		Assertion.check().isNull(previousSketch, "this sketch '{0}' has already be registered", dslSketch.getName());
+		final DslSketch previousSketch = dslSketches.put(dslSketch.getKey(), dslSketch);
+		Assertion.check().isNull(previousSketch, "this sketch '{0}' has already be registered", dslSketch.getKey());
 		//---
 		registry.onNewSketch(dslSketch)
 				.stream()
@@ -161,7 +162,7 @@ public final class DslSketchesRepository {
 	/**
 	 *  @return Liste des clés orphelines.
 	 */
-	Set<String> getOrphanDefinitionKeys() {
+	Set<SketchKey> getOrphanDefinitionKeys() {
 		return dslSketches.entrySet()
 				.stream()
 				.filter(entry -> entry.getValue() == null) //select orphans

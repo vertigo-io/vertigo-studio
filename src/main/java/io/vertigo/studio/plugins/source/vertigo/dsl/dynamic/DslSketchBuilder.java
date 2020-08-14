@@ -27,6 +27,7 @@ import java.util.Map;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
+import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntityField;
 
@@ -41,8 +42,8 @@ public final class DslSketchBuilder implements Builder<DslSketch> {
 	/** Name of the package. */
 	private String packageName;
 
-	/**name of this sketch.*/
-	private final String name;
+	/**key of this sketch.*/
+	private final SketchKey key;
 
 	/** Map  (fieldName, propertyValue)  */
 	private final Map<DslEntityField, Object> propertyValueByFieldName = new HashMap<>();
@@ -52,7 +53,7 @@ public final class DslSketchBuilder implements Builder<DslSketch> {
 	 * Map (fieldName, definitions identified by its name)
 	 */
 
-	private final Map<DslEntityField, List<String>> definitionLinkNamesByFieldName = new LinkedHashMap<>();
+	private final Map<DslEntityField, List<SketchKey>> sketchKeysByFieldName = new LinkedHashMap<>();
 
 	/**
 	 * Children.
@@ -65,16 +66,16 @@ public final class DslSketchBuilder implements Builder<DslSketch> {
 	 * @param name the name of the dslDefinition
 	 * @param entity Entité
 	 */
-	DslSketchBuilder(final String name, final DslEntity entity) {
+	DslSketchBuilder(final SketchKey key, final DslEntity entity) {
 		Assertion.check()
-				.isNotNull(name)
+				.isNotNull(key)
 				.isNotNull(entity);
 		//-----
-		this.name = name;
+		this.key = key;
 		this.entity = entity;
 		for (final DslEntityField dslEntityField : entity.getFields()) {
 			if (dslEntityField.getType().isEntityLink()) {
-				definitionLinkNamesByFieldName.put(dslEntityField, new ArrayList<>());
+				sketchKeysByFieldName.put(dslEntityField, new ArrayList<>());
 			} else if (dslEntityField.getType().isEntity()) {
 				childDefinitionsByFieldName.put(dslEntityField, new ArrayList<>());
 			}
@@ -111,7 +112,7 @@ public final class DslSketchBuilder implements Builder<DslSketch> {
 		for (final DslEntityField dslEntityField : entity.getFields()) {
 			if (dslEntityField.getType().isEntityLink()) {
 				// 2. link
-				addAllDefinitionLinks(dslEntityField.getName(), dslDefinition.getDefinitionLinkNames(dslEntityField.getName()));
+				addAllDefinitionLinks(dslEntityField.getName(), dslDefinition.getSketchKeysByFieldName(dslEntityField.getName()));
 			} else if (dslEntityField.getType().isEntity()) {
 				// 3. children
 				addAllChildDefinitions(dslEntityField.getName(), dslDefinition.getChildSketches(dslEntityField.getName()));
@@ -142,8 +143,12 @@ public final class DslSketchBuilder implements Builder<DslSketch> {
 	 * @param definitionName Name of the definition
 	 * @return this builder
 	 */
-	public DslSketchBuilder addDefinitionLink(final String fieldName, final String definitionName) {
-		return addAllDefinitionLinks(fieldName, Collections.singletonList(definitionName));
+	public DslSketchBuilder addDefinitionLink(final String fieldName, final String sketchName) {
+		return addDefinitionLink(fieldName, SketchKey.of(sketchName));
+	}
+
+	public DslSketchBuilder addDefinitionLink(final String fieldName, final SketchKey sketchKey) {
+		return addAllDefinitionLinks(fieldName, Collections.singletonList(sketchKey));
 	}
 
 	/**
@@ -153,13 +158,13 @@ public final class DslSketchBuilder implements Builder<DslSketch> {
 	 * @param definitionNames  list of the names of the dedinitions
 	 * @return this builder
 	 */
-	public DslSketchBuilder addAllDefinitionLinks(final String fieldName, final List<String> definitionNames) {
-		Assertion.check().isNotNull(definitionNames);
+	public DslSketchBuilder addAllDefinitionLinks(final String fieldName, final List<SketchKey> sketchKeys) {
+		Assertion.check().isNotNull(sketchKeys);
 		final DslEntityField dslEntityField = entity.getField(fieldName);
 		Assertion.check().isTrue(dslEntityField.getType().isEntityLink(), "expected a link on {0}", fieldName);
 		//---
-		definitionLinkNamesByFieldName.get(dslEntityField)
-				.addAll(definitionNames);
+		sketchKeysByFieldName.get(dslEntityField)
+				.addAll(sketchKeys);
 		return this;
 	}
 
@@ -187,7 +192,7 @@ public final class DslSketchBuilder implements Builder<DslSketch> {
 	/** {@inheritDoc} */
 	@Override
 	public DslSketch build() {
-		return new DslSketch(entity, packageName, name, propertyValueByFieldName, definitionLinkNamesByFieldName, childDefinitionsByFieldName);
+		return new DslSketch(entity, packageName, key, propertyValueByFieldName, sketchKeysByFieldName, childDefinitionsByFieldName);
 	}
 
 }

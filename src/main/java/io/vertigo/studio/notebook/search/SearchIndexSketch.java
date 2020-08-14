@@ -26,6 +26,7 @@ import java.util.Set;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.AbstractSketch;
 import io.vertigo.studio.notebook.SkecthPrefix;
+import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.notebook.domain.DtSketchField;
 import io.vertigo.studio.notebook.domain.StudioStereotype;
@@ -69,12 +70,12 @@ public final class SearchIndexSketch extends AbstractSketch {
 	 * @param searchLoaderId Loader de chargement des éléments indéxés et résultat
 	 */
 	public SearchIndexSketch(
-			final String name,
+			final SketchKey key,
 			final DtSketch keyConceptDtSketch,
 			final DtSketch indexDtSketch,
 			final Map<DtSketchField, List<DtSketchField>> indexCopyToFieldsMap,
 			final String searchLoaderId) {
-		super(name);
+		super(key);
 		//---
 		Assertion.check()
 				.isNotNull(keyConceptDtSketch)

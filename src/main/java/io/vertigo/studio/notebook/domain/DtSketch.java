@@ -29,6 +29,7 @@ import java.util.regex.Pattern;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.AbstractSketch;
 import io.vertigo.studio.notebook.SkecthPrefix;
+import io.vertigo.studio.notebook.SketchKey;
 
 /**
  * The DtSketch class defines the sketch of data.
@@ -69,7 +70,7 @@ public final class DtSketch extends AbstractSketch {
 	 * Constructor.
 	 */
 	DtSketch(
-			final String name,
+			final SketchKey key,
 			final Optional<DtSketch> fragmentOpt,
 			final String packageName,
 			final StudioStereotype stereotype,
@@ -78,7 +79,7 @@ public final class DtSketch extends AbstractSketch {
 			final Optional<DtSketchField> sortFieldOpt,
 			final Optional<DtSketchField> displayFieldOpt,
 			final Optional<DtSketchField> handleFieldOpt) {
-		super(name);
+		super(key);
 		//---
 		Assertion.check()
 				.isNotNull(fragmentOpt)
@@ -104,9 +105,9 @@ public final class DtSketch extends AbstractSketch {
 			Assertion.check()
 					.when(stereotype.isPersistent() && dtField.isPersistent(), () -> Assertion.check()
 							.isFalse(dtField.getCardinality().hasMany(),
-									"Only non multiple are allowed in entity '{0}'", name));
+									"Only non multiple are allowed in entity '{0}'", key));
 			if (dtField.getType().isId()) {
-				Assertion.check().isNull(id, "Only one ID Field is allowed : {0}", name);
+				Assertion.check().isNull(id, "Only one ID Field is allowed : {0}", key);
 				id = dtField;
 			}
 			doRegisterDtField(dtField);
@@ -116,12 +117,12 @@ public final class DtSketch extends AbstractSketch {
 		//---
 		Assertion.check()
 				.when(fragmentOpt.isPresent(), () -> Assertion.check()
-						.isTrue(StudioStereotype.Fragment == stereotype, "Error on {0} with sterotype {1}, If an object is a fragment then it must have this stereotype", name, stereotype))
+						.isTrue(StudioStereotype.Fragment == stereotype, "Error on {0} with sterotype {1}, If an object is a fragment then it must have this stereotype", key, stereotype))
 				//Persistent => ID
 				.when(stereotype.isPersistent(), () -> Assertion.check()
-						.isTrue(idFieldOpt.isPresent(), "Error on {0}, If an object is persistent then it must have an ID", name))
+						.isTrue(idFieldOpt.isPresent(), "Error on {0}, If an object is persistent then it must have an ID", key))
 				.when(!stereotype.isPersistent(), () -> Assertion.check()
-						.isTrue(idFieldOpt.isEmpty(), "Error on {0}, If an object is not persistent then it must have no ID", name));
+						.isTrue(idFieldOpt.isEmpty(), "Error on {0}, If an object is not persistent then it must have no ID", key));
 	}
 
 	/**
@@ -129,8 +130,8 @@ public final class DtSketch extends AbstractSketch {
 	 * @param name the name of the dtSketch
 	 * @return DtSketchBuilder
 	 */
-	public static DtSketchBuilder builder(final String name) {
-		return new DtSketchBuilder(name);
+	public static DtSketchBuilder builder(final SketchKey key) {
+		return new DtSketchBuilder(key);
 	}
 
 	//TODO A fermer

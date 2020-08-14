@@ -35,6 +35,7 @@ import io.vertigo.core.lang.Cardinality;
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.core.util.StringUtil;
+import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.domain.association.AssociationUtil;
 import io.vertigo.studio.plugins.source.vertigo.KspProperty;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
@@ -119,7 +120,7 @@ public abstract class AbstractXmlLoader implements Loader {
 
 	private static DslSketch toDslSketch(final XmlClass clazz) {
 		final DslEntity dtDefinitionEntity = DomainGrammar.DT_DEFINITION_ENTITY;
-		final DslSketchBuilder dtDefinitionBuilder = DslSketch.builder(getDtDefinitionName(clazz.getCode()), dtDefinitionEntity)
+		final DslSketchBuilder dtDefinitionBuilder = DslSketch.builder(getDtSketchKey(clazz.getCode()), dtDefinitionEntity)
 				.withPackageName(clazz.getPackageName())
 				//Par défaut les DT lues depuis le OOM/XMI sont persistantes.
 				.addPropertyValue(KspProperty.STEREOTYPE, clazz.getStereotype());
@@ -173,8 +174,8 @@ public abstract class AbstractXmlLoader implements Loader {
 				.addPropertyValue(KspProperty.LABEL_B, association.getRoleLabelB())
 				.addPropertyValue(KspProperty.ROLE_B, XmlUtil.french2Java(association.getRoleLabelB()))
 				//---
-				.addDefinitionLink("dtDefinitionA", getDtDefinitionName(association.getCodeA()))
-				.addDefinitionLink("dtDefinitionB", getDtDefinitionName(association.getCodeB()));
+				.addDefinitionLink("dtDefinitionA", getDtSketchKey(association.getCodeA()))
+				.addDefinitionLink("dtDefinitionB", getDtSketchKey(association.getCodeB()));
 
 		if (isAssociationNN) {
 			//Dans le cas d'une association NN il faut établir le nom de la table intermédiaire qui porte les relations
@@ -199,29 +200,29 @@ public abstract class AbstractXmlLoader implements Loader {
 		// recherche de code de contrainte destiné à renommer la fk selon convention du vbsript PowerAMC
 		// Cas de la relation 1-n : où le nom de la FK est redéfini.
 		// Exemple : DOS_UTI_LIQUIDATION (relation entre dossier et utilisateur : FK >> UTILISATEUR_ID_LIQUIDATION)
-		final DslSketch dtSketchA = dynamicModelrepository.getSketch(getDtDefinitionName(association.getCodeA()));
-		final DslSketch dtSketchB = dynamicModelrepository.getSketch(getDtDefinitionName(association.getCodeB()));
+		final DslSketch dtSketchA = dynamicModelrepository.getSketch(getDtSketchKey(association.getCodeA()));
+		final DslSketch dtSketchB = dynamicModelrepository.getSketch(getDtSketchKey(association.getCodeB()));
 
 		final DslSketch foreignDslSketch = AssociationUtil.isAPrimaryNode(association.getMultiplicityA(), association.getMultiplicityB()) ? dtSketchA : dtSketchB;
 		final List<DslSketch> primaryKeys = foreignDslSketch.getChildSketches(DomainGrammar.ID_FIELD);
 		if (primaryKeys.isEmpty()) {
-			throw new IllegalArgumentException("Pour l'association '" + association.getCode() + "' aucune clé primaire sur la définition '" + foreignDslSketch.getName() + "'");
+			throw new IllegalArgumentException("Pour l'association '" + association.getCode() + "' aucune clé primaire sur la définition '" + foreignDslSketch.getKey() + "'");
 		}
 		if (primaryKeys.size() > 1) {
-			throw new IllegalArgumentException("Pour l'association '" + association.getCode() + "' clé multiple non géré sur '" + foreignDslSketch.getName() + "'");
+			throw new IllegalArgumentException("Pour l'association '" + association.getCode() + "' clé multiple non géré sur '" + foreignDslSketch.getKey() + "'");
 		}
-		if (dtSketchA.getName().equals(dtSketchB.getName()) && association.getCodeName() == null) {
+		if (dtSketchA.getKey().equals(dtSketchB.getKey()) && association.getCodeName() == null) {
 			throw new IllegalArgumentException("Pour l'association '" + association.getCode() + "' le nom de la clé est obligatoire (AutoJointure) '"
-					+ foreignDslSketch.getName()
+					+ foreignDslSketch.getKey()
 					+ "'. Ce nom est déduit du code l'association, le code doit être composé ainsi : {Trigramme Table1}{Trigramme Table2}{Code association}."
 					+ " Par exemple : DosUtiEmmeteur, DosUtiDestinataire, DosDosParent, ...");
 		}
 
 		//On récupère le nom de LA clé primaire .
-		final String pkFieldName = primaryKeys.get(0).getName();
+		final SketchKey pkField = primaryKeys.get(0).getKey();
 
 		//Par défaut le nom de la clé étrangère est constituée de la clé primaire référencée.
-		String fkFieldName = pkFieldName;
+		String fkFieldName = pkField.getName();
 
 		//Si l'association possède une nom défini par l'utilisateur, alors on l'ajoute à la FK avec un séparateur.
 		if (association.getCodeName() != null) {
@@ -243,8 +244,8 @@ public abstract class AbstractXmlLoader implements Loader {
 		return fkFieldName;
 	}
 
-	private static String getDtDefinitionName(final String code) {
-		return DT_DEFINITION_PREFIX + code;
+	private static SketchKey getDtSketchKey(final String code) {
+		return SketchKey.of(DT_DEFINITION_PREFIX + code);
 	}
 
 }

@@ -18,6 +18,7 @@
  */
 package io.vertigo.studio.plugins.source.vertigo.registries.file;
 
+import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.SketchSupplier;
 import io.vertigo.studio.notebook.file.FileInfoSketch;
 import io.vertigo.studio.plugins.source.vertigo.KspProperty;
@@ -48,10 +49,10 @@ public final class FileDynamicRegistry implements DynamicRegistry {
 	}
 
 	private static FileInfoSketch createFileSketch(final DslSketch dslFileInfoSketch) {
-		final String fileDefinitionName = dslFileInfoSketch.getName();
+		final SketchKey fileDefinitionKey = dslFileInfoSketch.getKey();
 		final String storeName = (String) dslFileInfoSketch.getPropertyValue(KspProperty.DATA_SPACE);
 
-		return new FileInfoSketch(fileDefinitionName, storeName);
+		return new FileInfoSketch(fileDefinitionKey, storeName);
 	}
 
 }

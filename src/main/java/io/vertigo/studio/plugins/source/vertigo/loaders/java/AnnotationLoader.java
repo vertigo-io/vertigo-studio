@@ -242,7 +242,7 @@ public final class AnnotationLoader implements Loader {
 					.addPropertyValue(FK_FIELD_NAME, association.fkFieldName())
 					.build();
 
-			if (!dynamicModelRepository.contains(associationDefinition.getName())) {
+			if (!dynamicModelRepository.contains(associationDefinition.getKey())) {
 				//Les associations peuvent être déclarées sur les deux noeuds de l'association.
 				dynamicModelRepository.addSketch(associationDefinition);
 			}
@@ -271,7 +271,7 @@ public final class AnnotationLoader implements Loader {
 					.addDefinitionLink("dtDefinitionB", association.dtDefinitionB())
 					.build();
 
-			if (!dynamicModelRepository.contains(associationDefinition.getName())) {
+			if (!dynamicModelRepository.contains(associationDefinition.getKey())) {
 				//Les associations peuvent être déclarées sur les deux noeuds de l'association.
 				dynamicModelRepository.addSketch(associationDefinition);
 			}

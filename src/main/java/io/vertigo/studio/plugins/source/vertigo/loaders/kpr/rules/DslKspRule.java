@@ -85,7 +85,7 @@ public final class DslKspRule extends AbstractRule<Dummy, List<Object>> {
 				case 0:
 					//On positionne le Package
 					final DslSketch oldDynamicDefinition = (DslSketch) declarationChoice.getValue();
-					final DslSketch newDynamicDefinition = DslSketch.builder(oldDynamicDefinition.getName(), oldDynamicDefinition.getEntity())
+					final DslSketch newDynamicDefinition = DslSketch.builder(oldDynamicDefinition.getKey(), oldDynamicDefinition.getEntity())
 							.withPackageName(packageName)
 							.merge(oldDynamicDefinition)
 							.build();

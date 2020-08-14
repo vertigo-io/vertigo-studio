@@ -20,6 +20,7 @@ package io.vertigo.studio.notebook.domain.association;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.AbstractSketch;
+import io.vertigo.studio.notebook.SketchKey;
 
 /**
  * Décrit une association entre deux objets (A et B)
@@ -56,8 +57,8 @@ public abstract class AssociationSketch extends AbstractSketch {
 	 * @param associationNodeA Noeud A
 	 * @param associationNodeB Noeud B
 	 */
-	AssociationSketch(final String name, final AssociationSketchNode associationNodeA, final AssociationSketchNode associationNodeB) {
-		super(name);
+	AssociationSketch(final SketchKey key, final AssociationSketchNode associationNodeA, final AssociationSketchNode associationNodeB) {
+		super(key);
 		//---
 		Assertion.check()
 				.isNotNull(associationNodeA)
@@ -67,14 +68,14 @@ public abstract class AssociationSketch extends AbstractSketch {
 		this.associationNodeB = associationNodeB;
 		//-----
 		// we check that navigable nodes are entities because you cannot navigate toward an object that is not identified by a key
-		checkNavigability(associationNodeA, name);
-		checkNavigability(associationNodeB, name);
+		checkNavigability(associationNodeA, key);
+		checkNavigability(associationNodeB, key);
 	}
 
-	private static void checkNavigability(final AssociationSketchNode associationSketchNode, final String associationName) {
+	private static void checkNavigability(final AssociationSketchNode associationSketchNode, final SketchKey associationKey) {
 		Assertion.check()
 				.when(associationSketchNode.isNavigable(), () -> Assertion.check()
-						.isTrue(associationSketchNode.getDtSketch().getStereotype().isPersistent(), "assocation : {0}. you cannot navigate towards an object that is not an entity ", associationName));
+						.isTrue(associationSketchNode.getDtSketch().getStereotype().isPersistent(), "assocation : {0}. you cannot navigate towards an object that is not an entity ", associationKey));
 	}
 
 	/**

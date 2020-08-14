@@ -26,6 +26,7 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.locale.MessageText;
 import io.vertigo.studio.notebook.AbstractSketch;
 import io.vertigo.studio.notebook.SkecthPrefix;
+import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.notebook.domain.DtSketchField;
 
@@ -88,7 +89,7 @@ public final class FacetSketch extends AbstractSketch {
 	 * @param order Facet Order
 	 */
 	private FacetSketch(
-			final String name,
+			final SketchKey key,
 			final DtSketch indexDtSketch,
 			final DtSketchField dtField,
 			final MessageText label,
@@ -98,7 +99,7 @@ public final class FacetSketch extends AbstractSketch {
 			final boolean customFacet,
 			final boolean multiSelectable,
 			final FacetOrder order) {
-		super(name);
+		super(key);
 		//---
 		Assertion.check()
 				.isNotNull(indexDtSketch)
@@ -143,14 +144,14 @@ public final class FacetSketch extends AbstractSketch {
 	 * @return new facetSketch of type 'range'
 	 */
 	public static FacetSketch createFacetSketchByRange(
-			final String name,
+			final SketchKey key,
 			final DtSketch indexDtSketch,
 			final DtSketchField dtField,
 			final MessageText label,
 			final List<FacetSketchValue> facetValues,
 			final boolean multiSelectable,
 			final FacetOrder order) {
-		return new FacetSketch(name, indexDtSketch, dtField, label, facetValues, Collections.emptyMap(), true, false, multiSelectable, order);
+		return new FacetSketch(key, indexDtSketch, dtField, label, facetValues, Collections.emptyMap(), true, false, multiSelectable, order);
 	}
 
 	/**
@@ -165,13 +166,13 @@ public final class FacetSketch extends AbstractSketch {
 	 * @return new facetSketch of type 'term'
 	 */
 	public static FacetSketch createFacetSketchByTerm(
-			final String name,
+			final SketchKey key,
 			final DtSketch indexDtSketch,
 			final DtSketchField dtField,
 			final MessageText label,
 			final boolean multiSelectable,
 			final FacetOrder order) {
-		return new FacetSketch(name, indexDtSketch, dtField, label, Collections.emptyList(), Collections.emptyMap(), false, false, multiSelectable, order);
+		return new FacetSketch(key, indexDtSketch, dtField, label, Collections.emptyList(), Collections.emptyMap(), false, false, multiSelectable, order);
 	}
 
 	/**
@@ -186,14 +187,14 @@ public final class FacetSketch extends AbstractSketch {
 	 * @return new facetSketch of type 'term'
 	 */
 	public static FacetSketch createCustomFacetSketch(
-			final String name,
+			final SketchKey key,
 			final DtSketch indexDtSketch,
 			final DtSketchField dtField,
 			final MessageText label,
 			final Map<String, String> facetParams,
 			final boolean multiSelectable,
 			final FacetOrder order) {
-		return new FacetSketch(name, indexDtSketch, dtField, label, Collections.emptyList(), facetParams, false, true, multiSelectable, order);
+		return new FacetSketch(key, indexDtSketch, dtField, label, Collections.emptyList(), facetParams, false, true, multiSelectable, order);
 	}
 
 	/**

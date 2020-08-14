@@ -111,11 +111,6 @@ public final class TaskSketchBuilder implements Builder<TaskSketch> {
 	 * @return this builder
 	 */
 	public TaskSketchBuilder addInAttribute(final String attributeName, final DomainSketch domainSketch, final Cardinality cardinality) {
-		Assertion.check()
-				.isNotNull(attributeName)
-				.isNotNull(domainSketch)
-				.isNotNull(cardinality);
-		//-----
 		final TaskSketchAttribute taskAttribute = new TaskSketchAttribute(attributeName, domainSketch, cardinality);
 		myInTaskAttributes.add(taskAttribute);
 		return this;

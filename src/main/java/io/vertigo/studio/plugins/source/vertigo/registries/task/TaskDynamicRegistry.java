@@ -59,28 +59,24 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 	}
 
 	private static TaskSketch createTaskSketch(final Notebook notebook, final DslSketch xtaskDefinition) {
-		final String taskDefinitionName = xtaskDefinition.getName();
+		final SketchKey taskKey = xtaskDefinition.getKey();
 		final String request = (String) xtaskDefinition.getPropertyValue(KspProperty.REQUEST);
-		Assertion.check().isNotNull(taskDefinitionName);
+		Assertion.check().isNotNull(taskKey);
 		final String taskEngineClassName = getTaskEngineClassName(xtaskDefinition);
 		final String dataSpace = (String) xtaskDefinition.getPropertyValue(KspProperty.DATA_SPACE);
-		final TaskSketchBuilder taskSketchBuilder = TaskSketch.builder(taskDefinitionName)
+		final TaskSketchBuilder taskSketchBuilder = TaskSketch.builder(taskKey)
 				.withEngine(taskEngineClassName)
 				.withDataSpace(dataSpace)
 				.withRequest(request)
 				.withPackageName(xtaskDefinition.getPackageName());
 		for (final DslSketch xtaskAttribute : xtaskDefinition.getChildSketches(TaskGrammar.TASK_ATTRIBUTE_IN)) {
-			final String attributeName = xtaskAttribute.getName();
-			Assertion.check().isNotNull(attributeName);
-			//-----
+			final String attributeName = xtaskAttribute.getKey().getName();
 			taskSketchBuilder.addInAttribute(attributeName,
 					buildDomainSketch(notebook, xtaskAttribute),
 					buildCardinality(xtaskAttribute));
 		}
 		for (final DslSketch xtaskAttribute : xtaskDefinition.getChildSketches(TaskGrammar.TASK_ATTRIBUTE_OUT)) {
-			final String attributeName = xtaskAttribute.getName();
-			Assertion.check().isNotNull(attributeName);
-			//-----
+			final String attributeName = xtaskAttribute.getKey().getName();
 			taskSketchBuilder.withOutAttribute(attributeName,
 					buildDomainSketch(notebook, xtaskAttribute),
 					buildCardinality(xtaskAttribute));
@@ -93,8 +89,8 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 	}
 
 	private static DomainSketch buildDomainSketch(final Notebook notebook, final DslSketch xtaskAttribute) {
-		final String smartTypeName = xtaskAttribute.getDefinitionLinkName("domain");
-		final DomainSketch domainSketch = notebook.resolve(SketchKey.of(smartTypeName), DomainSketch.class);
+		final SketchKey smartTypeKey = xtaskAttribute.getSketchKeyByFieldName("domain");
+		final DomainSketch domainSketch = notebook.resolve(smartTypeKey, DomainSketch.class);
 		return domainSketch;
 	}
 

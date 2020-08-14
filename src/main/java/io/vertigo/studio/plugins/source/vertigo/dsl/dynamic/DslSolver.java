@@ -54,7 +54,7 @@ final class DslSolver {
 		//Liste des clés résolues
 		final List<DslSketch> sortedList = new ArrayList<>();
 
-		final Collection<String> orphans = dslSketchesRepository.getOrphanDefinitionKeys();
+		final Collection<SketchKey> orphans = dslSketchesRepository.getOrphanDefinitionKeys();
 		if (!orphans.isEmpty()) {
 			throw new VSystemException(" Les clés suivantes {0} sont orphelines", orphans);
 		}
@@ -94,16 +94,17 @@ final class DslSolver {
 		//We check all references were known
 		for (final DslEntityField dslEntityField : dslDefinition.getAllDefinitionLinkFields()) {
 			final String fieldName = dslEntityField.getName();
-			for (final String definitionName : dslDefinition.getDefinitionLinkNames(fieldName)) {
+			for (final SketchKey sketchKey : dslDefinition.getSketchKeysByFieldName(fieldName)) {
 				//reference should be already solved in a previous resources module : then continue
-				if (!notebook.contains(SketchKey.of(definitionName))) {
+				if (!notebook.contains(sketchKey)) {
 					//or references should be in currently parsed resources
-					if (!definitionRepository.contains(definitionName)) {
-						final String xdefRootName = xdefRoot.getName().equals(dslDefinition.getName()) ? xdefRoot.getName() : (xdefRoot.getName() + "." + dslDefinition.getName());
+					if (!definitionRepository.contains(sketchKey)) {
+						final SketchKey xdefRootKey = xdefRoot.getKey().equals(dslDefinition.getKey()) ? xdefRoot.getKey()
+								: SketchKey.of((xdefRoot.getKey().getName() + "." + dslDefinition.getKey().getName()));
 						throw new VSystemException("Clé {0} de type {1}, référencée par la propriété {2} de {3} non trouvée",
-								definitionName, dslDefinition.getEntity().getField(fieldName).getType(), fieldName, xdefRootName);
+								sketchKey, dslDefinition.getEntity().getField(fieldName).getType(), fieldName, xdefRootKey);
 					}
-					final DslSketch linkedDefinition = definitionRepository.getSketch(definitionName);
+					final DslSketch linkedDefinition = definitionRepository.getSketch(sketchKey);
 					if (!orderedList.contains(linkedDefinition)) {
 						return false;
 					}

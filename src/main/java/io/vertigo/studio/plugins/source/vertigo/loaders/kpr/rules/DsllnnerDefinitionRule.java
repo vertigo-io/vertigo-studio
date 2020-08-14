@@ -27,9 +27,9 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchBuilder;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
+import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslPropertyEntry;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslSketchBody;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslSketchEntry;
-import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslPropertyEntry;
 
 final class DslInnerDefinitionRule extends AbstractRule<DslSketchEntry, List<Object>> {
 	private final String entityName;
@@ -85,7 +85,7 @@ final class DslInnerDefinitionRule extends AbstractRule<DslSketchEntry, List<Obj
 				dslDefinitionBuilder.addChildDefinition(fieldDefinitionEntry.getFieldName(), fieldDefinitionEntry.getSketch());
 			} else {
 				// On ajoute les définitions par leur clé.
-				dslDefinitionBuilder.addAllDefinitionLinks(fieldDefinitionEntry.getFieldName(), fieldDefinitionEntry.getDefinitionNames());
+				dslDefinitionBuilder.addAllDefinitionLinks(fieldDefinitionEntry.getFieldName(), fieldDefinitionEntry.getSketchKeys());
 			}
 		}
 		for (final DslPropertyEntry dslPropertyEntry : definitionBody.getPropertyEntries()) {

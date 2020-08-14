@@ -24,6 +24,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntityField;
 
@@ -41,8 +42,8 @@ public final class DslSketch {
 	/** Name of the package. */
 	private final String packageName;
 
-	/**name of this definition.*/
-	private final String name;
+	/**key of this sketch.*/
+	private final SketchKey key;
 
 	/** Map  (fieldName, propertyValue)  */
 	private final Map<DslEntityField, Object> propertyValueByFieldName;
@@ -51,7 +52,7 @@ public final class DslSketch {
 	 * Links.
 	 * Map (fieldName, definitions identified by its name)
 	 */
-	private final Map<DslEntityField, List<String>> definitionLinkNamesByFieldName;
+	private final Map<DslEntityField, List<SketchKey>> sketchKeysByFieldName;
 
 	/**
 	 * Children.
@@ -62,23 +63,23 @@ public final class DslSketch {
 	DslSketch(
 			final DslEntity entity,
 			final String packageName,
-			final String name,
+			final SketchKey key,
 			final Map<DslEntityField, Object> propertyValueByFieldName,
-			final Map<DslEntityField, List<String>> definitionLinkNamesByFieldName,
+			final Map<DslEntityField, List<SketchKey>> sketchKeysByFieldName,
 			final Map<DslEntityField, List<DslSketch>> childDefinitionsByFieldName) {
 		Assertion.check()
 				.isNotNull(entity)
 				//packageName can be null
-				.isNotBlank(name)
+				.isNotNull(key)
 				.isNotNull(propertyValueByFieldName)
-				.isNotNull(definitionLinkNamesByFieldName)
+				.isNotNull(sketchKeysByFieldName)
 				.isNotNull(childDefinitionsByFieldName);
 		//---
 		this.entity = entity;
 		this.packageName = packageName;
-		this.name = name;
+		this.key = key;
 		this.propertyValueByFieldName = propertyValueByFieldName;
-		this.definitionLinkNamesByFieldName = definitionLinkNamesByFieldName;
+		this.sketchKeysByFieldName = sketchKeysByFieldName;
 		this.childDefinitionsByFieldName = childDefinitionsByFieldName;
 	}
 
@@ -88,8 +89,12 @@ public final class DslSketch {
 	 * @param entity entity
 	 * @return the dsl sketch builder
 	 */
-	public static DslSketchBuilder builder(final String name, final DslEntity entity) {
-		return new DslSketchBuilder(name, entity);
+	public static DslSketchBuilder builder(final SketchKey key, final DslEntity entity) {
+		return new DslSketchBuilder(key, entity);
+	}
+
+	public static DslSketchBuilder builder(final String sketchName, final DslEntity entity) {
+		return new DslSketchBuilder(SketchKey.of(sketchName), entity);
 	}
 
 	/**
@@ -109,8 +114,8 @@ public final class DslSketch {
 	/**
 	 * @return Nom de la Définition
 	 */
-	public String getName() {
-		return name;
+	public SketchKey getKey() {
+		return key;
 	}
 
 	/**
@@ -146,11 +151,11 @@ public final class DslSketch {
 	 * @param fieldName Nom du champ.
 	 * @return List
 	 */
-	public List<String> getDefinitionLinkNames(final String fieldName) {
+	public List<SketchKey> getSketchKeysByFieldName(final String fieldName) {
 		final DslEntityField dslEntityField = entity.getField(fieldName);
 		Assertion.check().isTrue(dslEntityField.getType().isEntityLink(), "expected a link on {0}", fieldName);
 		//---
-		return definitionLinkNamesByFieldName.get(dslEntityField);
+		return sketchKeysByFieldName.get(dslEntityField);
 	}
 
 	/**
@@ -158,13 +163,13 @@ public final class DslSketch {
 	 * @param fieldName Nom du champ.
 	 * @return Clé de la définition
 	 */
-	public String getDefinitionLinkName(final String fieldName) {
-		final List<String> list = getDefinitionLinkNames(fieldName);
-		final String definitionName = list.get(0);
+	public SketchKey getSketchKeyByFieldName(final String fieldName) {
+		final List<SketchKey> list = getSketchKeysByFieldName(fieldName);
+		final SketchKey sketchKey = list.get(0);
 		//-----
 		// On vérifie qu'il y a une définition pour le champ demandé
-		Assertion.check().isNotNull(definitionName);
-		return definitionName;
+		Assertion.check().isNotNull(sketchKey);
+		return sketchKey;
 	}
 
 	/**
@@ -172,7 +177,7 @@ public final class DslSketch {
 	 * @return Collection de tous les champs utilisant des définitions référencées.
 	 */
 	public Set<DslEntityField> getAllDefinitionLinkFields() {
-		return definitionLinkNamesByFieldName.keySet();
+		return sketchKeysByFieldName.keySet();
 	}
 
 	/**

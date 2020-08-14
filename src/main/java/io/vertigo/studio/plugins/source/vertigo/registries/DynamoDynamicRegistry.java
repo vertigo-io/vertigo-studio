@@ -92,24 +92,24 @@ public final class DynamoDynamicRegistry implements DynamicRegistry {
 
 	/** {@inheritDoc} */
 	@Override
-	public SketchSupplier supplyModel(final DslSketch dslDefinition) {
+	public SketchSupplier supplyModel(final DslSketch dslSketch) {
 		try {
 			// perf: ifs ordonnés en gros par fréquence sur les projets
-			return lookUpDynamicRegistry(dslDefinition)
-					.supplyModel(dslDefinition);
+			return lookUpDynamicRegistry(dslSketch)
+					.supplyModel(dslSketch);
 		} catch (final Exception e) {
 			//on catch tout (notament les assertions) car c'est ici qu'on indique l'URI de la définition posant problème
-			throw WrappedException.wrap(e, "An error occurred during the creation of the following definition : {0}", dslDefinition.getName());
+			throw WrappedException.wrap(e, "An error occurred during the creation of the following definition : {0}", dslSketch.getKey());
 		}
 	}
 
-	private DynamicRegistry lookUpDynamicRegistry(final DslSketch dslDefinition) {
+	private DynamicRegistry lookUpDynamicRegistry(final DslSketch dslSketch) {
 		//On regarde si la grammaire contient la métaDefinition.
 		return dynamicRegistries
 				.stream()
-				.filter(dynamicRegistry -> dynamicRegistry.getGrammar().getEntities().contains(dslDefinition.getEntity()))
+				.filter(dynamicRegistry -> dynamicRegistry.getGrammar().getEntities().contains(dslSketch.getEntity()))
 				.findFirst()
 				//Si on n'a pas trouvé de définition c'est qu'il manque la registry.
-				.orElseThrow(() -> new IllegalArgumentException(dslDefinition.getEntity().getName() + " " + dslDefinition.getName() + " non traitée. Il manque une DynamicRegistry ad hoc."));
+				.orElseThrow(() -> new IllegalArgumentException(dslSketch.getEntity().getName() + " " + dslSketch.getKey() + " non traitée. Il manque une DynamicRegistry ad hoc."));
 	}
 }

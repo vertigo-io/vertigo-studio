@@ -27,6 +27,7 @@ import java.util.Optional;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.AbstractSketch;
 import io.vertigo.studio.notebook.SkecthPrefix;
+import io.vertigo.studio.notebook.SketchKey;
 
 /**
  * This class defines a task and its attributes.
@@ -91,8 +92,8 @@ public final class TaskSketch extends AbstractSketch {
 	 * @param taskSketchName the name of the taskSketch (TK_XXX_YYY)
 	 * @return TaskSketchBuilder
 	 */
-	public static TaskSketchBuilder builder(final String taskSketchName) {
-		return new TaskSketchBuilder(taskSketchName);
+	public static TaskSketchBuilder builder(final SketchKey taskKey) {
+		return new TaskSketchBuilder(taskKey.getName());
 	}
 
 	/**
