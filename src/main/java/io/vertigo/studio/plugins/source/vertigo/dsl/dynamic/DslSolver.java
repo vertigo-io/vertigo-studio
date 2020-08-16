@@ -26,7 +26,6 @@ import java.util.List;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntityField;
 
 /**
@@ -54,7 +53,7 @@ final class DslSolver {
 		//Liste des clés résolues
 		final List<DslSketch> sortedList = new ArrayList<>();
 
-		final Collection<SketchKey> orphans = dslSketchesRepository.getOrphanDefinitionKeys();
+		final Collection<DslSketchKey> orphans = dslSketchesRepository.getOrphanDefinitionKeys();
 		if (!orphans.isEmpty()) {
 			throw new VSystemException(" Les clés suivantes {0} sont orphelines", orphans);
 		}
@@ -94,13 +93,13 @@ final class DslSolver {
 		//We check all references were known
 		for (final DslEntityField dslEntityField : dslDefinition.getAllDefinitionLinkFields()) {
 			final String fieldName = dslEntityField.getName();
-			for (final SketchKey sketchKey : dslDefinition.getSketchKeysByFieldName(fieldName)) {
+			for (final DslSketchKey sketchKey : dslDefinition.getSketchKeysByFieldName(fieldName)) {
 				//reference should be already solved in a previous resources module : then continue
 				if (!notebook.contains(sketchKey.getName())) {
 					//or references should be in currently parsed resources
 					if (!definitionRepository.contains(sketchKey)) {
-						final SketchKey xdefRootKey = xdefRoot.getKey().equals(dslDefinition.getKey()) ? xdefRoot.getKey()
-								: SketchKey.of((xdefRoot.getKey().getName() + "." + dslDefinition.getKey().getName()));
+						final DslSketchKey xdefRootKey = xdefRoot.getKey().equals(dslDefinition.getKey()) ? xdefRoot.getKey()
+								: DslSketchKey.of((xdefRoot.getKey().getName() + "." + dslDefinition.getKey().getName()));
 						throw new VSystemException("Clé {0} de type {1}, référencée par la propriété {2} de {3} non trouvée",
 								sketchKey, dslDefinition.getEntity().getField(fieldName).getType(), fieldName, xdefRootKey);
 					}

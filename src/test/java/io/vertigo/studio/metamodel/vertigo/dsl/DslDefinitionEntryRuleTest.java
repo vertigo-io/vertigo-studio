@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 
 import io.vertigo.commons.peg.PegNoMatchFoundException;
 import io.vertigo.commons.peg.PegResult;
-import io.vertigo.studio.notebook.SketchKey;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchKey;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslSketchEntry;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslSketchEntryRule;
 
@@ -40,7 +40,7 @@ public final class DslDefinitionEntryRuleTest {
 		final DslSketchEntry dslSketchEntry = cursor.getValue();
 		Assertions.assertEquals("myFirstProperty", dslSketchEntry.getFieldName());
 		Assertions.assertEquals(1, dslSketchEntry.getSketchKeys().size());
-		Assertions.assertTrue(dslSketchEntry.getSketchKeys().contains(SketchKey.of("BLEU")));
+		Assertions.assertTrue(dslSketchEntry.getSketchKeys().contains(DslSketchKey.of("BLEU")));
 		Assertions.assertEquals(text.length() - " non reconnu".length(), cursor.getIndex());
 	}
 
@@ -52,7 +52,7 @@ public final class DslDefinitionEntryRuleTest {
 		final DslSketchEntry dslSketchEntry = cursor.getValue();
 		Assertions.assertEquals("myFirstProperty", dslSketchEntry.getFieldName());
 		Assertions.assertEquals(4, dslSketchEntry.getSketchKeys().size());
-		Assertions.assertTrue(dslSketchEntry.getSketchKeys().contains(SketchKey.of("VerT")));
+		Assertions.assertTrue(dslSketchEntry.getSketchKeys().contains(DslSketchKey.of("VerT")));
 		Assertions.assertEquals(text.length() - " non reconnu".length(), cursor.getIndex());
 
 	}
@@ -77,7 +77,7 @@ public final class DslDefinitionEntryRuleTest {
 		final DslSketchEntry xDefinitionEntry = cursor.getValue();
 		Assertions.assertEquals("myFirstProperty", xDefinitionEntry.getFieldName());
 		Assertions.assertEquals(3, xDefinitionEntry.getSketchKeys().size());
-		Assertions.assertTrue(xDefinitionEntry.getSketchKeys().contains(SketchKey.of("VerT")));
+		Assertions.assertTrue(xDefinitionEntry.getSketchKeys().contains(DslSketchKey.of("VerT")));
 		Assertions.assertEquals(text.length(), cursor.getIndex());
 	}
 
@@ -89,7 +89,7 @@ public final class DslDefinitionEntryRuleTest {
 		final DslSketchEntry xDefinitionEntry = cursor.getValue();
 		Assertions.assertEquals("myFirstProperty", xDefinitionEntry.getFieldName());
 		Assertions.assertEquals(1, xDefinitionEntry.getSketchKeys().size());
-		Assertions.assertTrue(xDefinitionEntry.getSketchKeys().contains(SketchKey.of("BLEU")));
+		Assertions.assertTrue(xDefinitionEntry.getSketchKeys().contains(DslSketchKey.of("BLEU")));
 		Assertions.assertEquals(text.length(), cursor.getIndex());
 	}
 

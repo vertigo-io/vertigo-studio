@@ -21,8 +21,8 @@ package io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchKey;
 
 /**
  * Une entrée de type définition est définie (XOR)
@@ -37,7 +37,7 @@ public final class DslSketchEntry {
 	 */
 	private final String fieldName;
 	private final DslSketch dslSketch;
-	private final List<SketchKey> sketchKeys;
+	private final List<DslSketchKey> sketchKeys;
 
 	/**
 	 * Constructor.
@@ -45,7 +45,7 @@ public final class DslSketchEntry {
 	 * @param definitionNames Liste des clés de définition
 	 * @param fieldName Nom du champ
 	 */
-	public DslSketchEntry(final String fieldName, final List<SketchKey> sketchKeys) {
+	public DslSketchEntry(final String fieldName, final List<DslSketchKey> sketchKeys) {
 		Assertion.check()
 				.isNotNull(fieldName)
 				.isNotNull(sketchKeys);
@@ -99,7 +99,7 @@ public final class DslSketchEntry {
 	/**
 	 * @return List des clés de définition
 	 */
-	public List<SketchKey> getSketchKeys() {
+	public List<DslSketchKey> getSketchKeys() {
 		return sketchKeys;
 	}
 }

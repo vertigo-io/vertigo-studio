@@ -21,13 +21,13 @@ package io.vertigo.studio.plugins.source.vertigo.registries.task;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.SketchSupplier;
 import io.vertigo.studio.notebook.domain.DomainSketch;
 import io.vertigo.studio.notebook.task.TaskSketch;
 import io.vertigo.studio.notebook.task.TaskSketchBuilder;
 import io.vertigo.studio.plugins.source.vertigo.KspProperty;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchKey;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DynamicRegistry;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
@@ -59,7 +59,7 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 	}
 
 	private static TaskSketch createTaskSketch(final Notebook notebook, final DslSketch xtaskDefinition) {
-		final SketchKey taskKey = xtaskDefinition.getKey();
+		final DslSketchKey taskKey = xtaskDefinition.getKey();
 		final String request = (String) xtaskDefinition.getPropertyValue(KspProperty.REQUEST);
 		Assertion.check().isNotNull(taskKey);
 		final String taskEngineClassName = getTaskEngineClassName(xtaskDefinition);
@@ -89,7 +89,7 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 	}
 
 	private static DomainSketch buildDomainSketch(final Notebook notebook, final DslSketch xtaskAttribute) {
-		final SketchKey smartTypeKey = xtaskAttribute.getSketchKeyByFieldName("domain");
+		final DslSketchKey smartTypeKey = xtaskAttribute.getSketchKeyByFieldName("domain");
 		final DomainSketch domainSketch = notebook.resolve(smartTypeKey.getName(), DomainSketch.class);
 		return domainSketch;
 	}

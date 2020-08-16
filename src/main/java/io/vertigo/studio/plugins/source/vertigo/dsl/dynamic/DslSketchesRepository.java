@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.SketchSupplier;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
 
@@ -47,7 +46,7 @@ public final class DslSketchesRepository {
 	 * On retient les définitions dans l'ordre pour
 	 * créer les fichiers toujours de la même façon.
 	 */
-	private final Map<SketchKey, DslSketch> dslSketches = new LinkedHashMap<>();
+	private final Map<DslSketchKey, DslSketch> dslSketches = new LinkedHashMap<>();
 	private final List<DslSketch> partials = new ArrayList<>();
 
 	private final DynamicRegistry registry;
@@ -76,7 +75,7 @@ public final class DslSketchesRepository {
 	 * @param sketchName name of the definitionClé de la définition
 	 * @return Si la définition a déjà été enregistrée
 	 */
-	public boolean contains(final SketchKey sketchKey) {
+	public boolean contains(final DslSketchKey sketchKey) {
 		return dslSketches.containsKey(sketchKey);
 	}
 
@@ -89,7 +88,7 @@ public final class DslSketchesRepository {
 	 * @param sketchName Name of the definition
 	 * @return DynamicDefinition Définition correspondante ou null.
 	 */
-	public DslSketch getSketch(final SketchKey key) {
+	public DslSketch getSketch(final DslSketchKey key) {
 		Assertion.check().isTrue(dslSketches.containsKey(key), "Aucune clé enregistrée pour :{0} parmi {1}", key, dslSketches.keySet());
 		//-----
 		final DslSketch definition = dslSketches.get(key);
@@ -162,7 +161,7 @@ public final class DslSketchesRepository {
 	/**
 	 *  @return Liste des clés orphelines.
 	 */
-	Set<SketchKey> getOrphanDefinitionKeys() {
+	Set<DslSketchKey> getOrphanDefinitionKeys() {
 		return dslSketches.entrySet()
 				.stream()
 				.filter(entry -> entry.getValue() == null) //select orphans

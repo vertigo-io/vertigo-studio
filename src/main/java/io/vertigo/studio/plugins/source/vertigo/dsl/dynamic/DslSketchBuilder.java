@@ -27,7 +27,6 @@ import java.util.Map;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
-import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntityField;
 
@@ -43,7 +42,7 @@ public final class DslSketchBuilder implements Builder<DslSketch> {
 	private String packageName;
 
 	/**key of this sketch.*/
-	private final SketchKey key;
+	private final DslSketchKey key;
 
 	/** Map  (fieldName, propertyValue)  */
 	private final Map<DslEntityField, Object> propertyValueByFieldName = new HashMap<>();
@@ -53,7 +52,7 @@ public final class DslSketchBuilder implements Builder<DslSketch> {
 	 * Map (fieldName, definitions identified by its name)
 	 */
 
-	private final Map<DslEntityField, List<SketchKey>> sketchKeysByFieldName = new LinkedHashMap<>();
+	private final Map<DslEntityField, List<DslSketchKey>> sketchKeysByFieldName = new LinkedHashMap<>();
 
 	/**
 	 * Children.
@@ -66,7 +65,7 @@ public final class DslSketchBuilder implements Builder<DslSketch> {
 	 * @param name the name of the dslDefinition
 	 * @param entity Entité
 	 */
-	DslSketchBuilder(final SketchKey key, final DslEntity entity) {
+	DslSketchBuilder(final DslSketchKey key, final DslEntity entity) {
 		Assertion.check()
 				.isNotNull(key)
 				.isNotNull(entity);
@@ -144,10 +143,10 @@ public final class DslSketchBuilder implements Builder<DslSketch> {
 	 * @return this builder
 	 */
 	public DslSketchBuilder addDefinitionLink(final String fieldName, final String sketchName) {
-		return addDefinitionLink(fieldName, SketchKey.of(sketchName));
+		return addDefinitionLink(fieldName, DslSketchKey.of(sketchName));
 	}
 
-	public DslSketchBuilder addDefinitionLink(final String fieldName, final SketchKey sketchKey) {
+	public DslSketchBuilder addDefinitionLink(final String fieldName, final DslSketchKey sketchKey) {
 		return addAllDefinitionLinks(fieldName, Collections.singletonList(sketchKey));
 	}
 
@@ -158,7 +157,7 @@ public final class DslSketchBuilder implements Builder<DslSketch> {
 	 * @param definitionNames  list of the names of the dedinitions
 	 * @return this builder
 	 */
-	public DslSketchBuilder addAllDefinitionLinks(final String fieldName, final List<SketchKey> sketchKeys) {
+	public DslSketchBuilder addAllDefinitionLinks(final String fieldName, final List<DslSketchKey> sketchKeys) {
 		Assertion.check().isNotNull(sketchKeys);
 		final DslEntityField dslEntityField = entity.getField(fieldName);
 		Assertion.check().isTrue(dslEntityField.getType().isEntityLink(), "expected a link on {0}", fieldName);

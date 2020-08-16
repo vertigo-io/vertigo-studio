@@ -35,11 +35,11 @@ import io.vertigo.core.lang.Cardinality;
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.domain.association.AssociationUtil;
 import io.vertigo.studio.plugins.source.vertigo.KspProperty;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchBuilder;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchKey;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchesRepository;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
 import io.vertigo.studio.plugins.source.vertigo.loaders.Loader;
@@ -219,7 +219,7 @@ public abstract class AbstractXmlLoader implements Loader {
 		}
 
 		//On récupère le nom de LA clé primaire .
-		final SketchKey pkField = primaryKeys.get(0).getKey();
+		final DslSketchKey pkField = primaryKeys.get(0).getKey();
 
 		//Par défaut le nom de la clé étrangère est constituée de la clé primaire référencée.
 		String fkFieldName = pkField.getName();
@@ -244,8 +244,8 @@ public abstract class AbstractXmlLoader implements Loader {
 		return fkFieldName;
 	}
 
-	private static SketchKey getDtSketchKey(final String code) {
-		return SketchKey.of(DT_DEFINITION_PREFIX + code);
+	private static DslSketchKey getDtSketchKey(final String code) {
+		return DslSketchKey.of(DT_DEFINITION_PREFIX + code);
 	}
 
 }

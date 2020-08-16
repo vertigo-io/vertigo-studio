@@ -31,7 +31,7 @@ import io.vertigo.commons.peg.PegChoice;
 import io.vertigo.commons.peg.PegRule;
 import io.vertigo.commons.peg.PegRules;
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.notebook.SketchKey;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchKey;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslSketchEntry;
 
 /**
@@ -69,7 +69,7 @@ public final class DslSketchEntryRule extends AbstractRule<DslSketchEntry, List<
 	@Override
 	protected DslSketchEntry handle(final List<Object> parsing) {
 		final String fieldName = (String) ((PegChoice) parsing.get(0)).getValue();
-		final List<SketchKey> keys;
+		final List<DslSketchKey> keys;
 
 		final PegChoice definitionChoice = (PegChoice) parsing.get(4);
 		switch (definitionChoice.getChoiceIndex()) {
@@ -77,13 +77,13 @@ public final class DslSketchEntryRule extends AbstractRule<DslSketchEntry, List<
 				//Déclaration d'une liste de définitions identifiée par leurs clés
 				keys = ((List<String>) definitionChoice.getValue())
 						.stream()
-						.map(s -> SketchKey.of(s))
+						.map(s -> DslSketchKey.of(s))
 						.collect(Collectors.toList());
 				break;
 			case 0:
 				//Déclaration d'une définition identifiée par sa clé
 				final String value = (String) definitionChoice.getValue();
-				keys = java.util.Collections.singletonList(SketchKey.of(value));
+				keys = java.util.Collections.singletonList(DslSketchKey.of(value));
 				break;
 			default:
 				throw new IllegalStateException();

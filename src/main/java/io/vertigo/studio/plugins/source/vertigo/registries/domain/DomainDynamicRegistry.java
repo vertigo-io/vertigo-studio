@@ -49,6 +49,7 @@ import io.vertigo.studio.notebook.domain.association.AssociationSketchNode;
 import io.vertigo.studio.notebook.domain.association.AssociationUtil;
 import io.vertigo.studio.plugins.source.vertigo.KspProperty;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
+import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchKey;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DynamicRegistry;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
@@ -89,7 +90,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 	}
 
 	private static DomainSketch createDomain(final Notebook notebook, final DslSketch dslSketchDomain) {
-		final SketchKey domainKey = dslSketchDomain.getKey();
+		final DslSketchKey domainKey = dslSketchDomain.getKey();
 		final String type = dslSketchDomain.getSketchKeyByFieldName("dataType").getName();
 		final Properties properties = extractProperties(dslSketchDomain);
 		switch (type) {
@@ -183,7 +184,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		final String fragmentOf = (String) dtDslSketch.getPropertyValue(KspProperty.FRAGMENT_OF);
 		//-----
 		//-----
-		final SketchKey dtSketchKey = dtDslSketch.getKey();
+		final DslSketchKey dtSketchKey = dtDslSketch.getKey();
 		final DtSketchBuilder dtDefinitionBuilder = DtSketch.builder(dtSketchKey.getName())
 				.withPackageName(dtDslSketch.getPackageName())
 				.withDataSpace(dataSpace)
@@ -200,7 +201,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 
 		//On enregistre les Builder pour pouvoir les mettre à jour sur les associations.
 		Assertion.check().isFalse(dtDefinitionBuilders.containsKey(dtSketchKey), "Definition '{0}' already registered", dtSketchKey);
-		dtDefinitionBuilders.put(dtSketchKey, dtDefinitionBuilder);
+		dtDefinitionBuilders.put(SketchKey.of(dtSketchKey.getName()), dtDefinitionBuilder);
 
 		//Déclaration de la clé primaire
 		final List<DslSketch> keys = dtDslSketch.getChildSketches(DomainGrammar.ID_FIELD);
@@ -290,7 +291,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 			final String expression = (String) field.getPropertyValue(KspProperty.EXPRESSION);
 			final ComputedExpression computedExpression = new ComputedExpression(expression);
 			//--
-			final SketchKey fieldKey = field.getKey();
+			final DslSketchKey fieldKey = field.getKey();
 
 			dtDefinitionBuilder.addComputedField(fieldKey.getName(), label, domainSketch, cardinality, computedExpression);
 		}
