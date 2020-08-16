@@ -41,7 +41,7 @@ public final class SqlStudioDtDefinitionModel {
 	/**
 	 * Constructeur.
 	 *
-	 * @param dtSketch DtDefinition de l'objet à générer
+	 * @param dtSketch DtSketch de l'objet à générer
 	 */
 	public SqlStudioDtDefinitionModel(final DtSketch dtSketch) {
 		Assertion.check().isNotNull(dtSketch);

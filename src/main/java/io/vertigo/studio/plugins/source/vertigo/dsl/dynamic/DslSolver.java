@@ -86,22 +86,22 @@ final class DslSolver {
 			final Notebook notebook,
 			final DslSketchesRepository definitionRepository,
 			final List<DslSketch> orderedList,
-			final DslSketch dslDefinition,
+			final DslSketch dslSketch,
 			final DslSketch xdefRoot) {
 		//A definition is solved if all its sub definitions have been solved
 
 		//We check all references were known
-		for (final DslEntityField dslEntityField : dslDefinition.getAllDefinitionLinkFields()) {
+		for (final DslEntityField dslEntityField : dslSketch.getAllDefinitionLinkFields()) {
 			final String fieldName = dslEntityField.getName();
-			for (final DslSketchKey sketchKey : dslDefinition.getSketchKeysByFieldName(fieldName)) {
+			for (final DslSketchKey sketchKey : dslSketch.getSketchKeysByFieldName(fieldName)) {
 				//reference should be already solved in a previous resources module : then continue
 				if (!notebook.contains(sketchKey.getName())) {
 					//or references should be in currently parsed resources
 					if (!definitionRepository.contains(sketchKey)) {
-						final DslSketchKey xdefRootKey = xdefRoot.getKey().equals(dslDefinition.getKey()) ? xdefRoot.getKey()
-								: DslSketchKey.of((xdefRoot.getKey().getName() + "." + dslDefinition.getKey().getName()));
+						final DslSketchKey xdefRootKey = xdefRoot.getKey().equals(dslSketch.getKey()) ? xdefRoot.getKey()
+								: DslSketchKey.of((xdefRoot.getKey().getName() + "." + dslSketch.getKey().getName()));
 						throw new VSystemException("Clé {0} de type {1}, référencée par la propriété {2} de {3} non trouvée",
-								sketchKey, dslDefinition.getEntity().getField(fieldName).getType(), fieldName, xdefRootKey);
+								sketchKey, dslSketch.getEntity().getField(fieldName).getType(), fieldName, xdefRootKey);
 					}
 					final DslSketch linkedDefinition = definitionRepository.getSketch(sketchKey);
 					if (!orderedList.contains(linkedDefinition)) {
@@ -112,7 +112,7 @@ final class DslSolver {
 		}
 
 		//On vérifie que les composites sont résolues.
-		return dslDefinition.getAllChildSketches()
+		return dslSketch.getAllChildSketches()
 				.stream()
 				.allMatch(child -> isSolved(notebook, definitionRepository, orderedList, child, xdefRoot));
 	}

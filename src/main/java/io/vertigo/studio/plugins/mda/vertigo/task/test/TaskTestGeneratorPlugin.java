@@ -117,10 +117,10 @@ public final class TaskTestGeneratorPlugin implements MdaGeneratorPlugin {
 	private static void generateAo(
 			final Notebook notebook,
 			final String aoTargetSubDir, final MdaConfig mdaConfig,
-			final MdaResultBuilder mdaResultBuilder, final Collection<TaskSketch> taskDefinitionCollection,
+			final MdaResultBuilder mdaResultBuilder, final Collection<TaskSketch> tasSketches,
 			final String packageName, final String classSimpleName) {
-		for (final TaskSketch taskDefinition : taskDefinitionCollection) {
-			final TemplateAoTaskTest paoModel = new TemplateAoTaskTest(mdaConfig, taskDefinition, packageName, classSimpleName, mdaConfig.getAsString("vertigo.taskTest.baseTestClass"), DomainUtil.createClassNameFromDtFunction(notebook));
+		for (final TaskSketch taskSketch : tasSketches) {
+			final TemplateAoTaskTest paoModel = new TemplateAoTaskTest(mdaConfig, taskSketch, packageName, classSimpleName, mdaConfig.getAsString("vertigo.taskTest.baseTestClass"), DomainUtil.createClassNameFromDtFunction(notebook));
 			generatePaoTaskTest(aoTargetSubDir, mdaConfig, mdaResultBuilder, paoModel);
 		}
 	}

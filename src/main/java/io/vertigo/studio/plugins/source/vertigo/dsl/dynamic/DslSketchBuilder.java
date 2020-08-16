@@ -96,25 +96,25 @@ public final class DslSketchBuilder implements Builder<DslSketch> {
 	}
 
 	/**
-	 * @param dslDefinition Definition body
+	 * @param dslSketch Definition body
 	 * @return this builder
 	 */
-	public DslSketchBuilder merge(final DslSketch dslDefinition) {
+	public DslSketchBuilder merge(final DslSketch dslSketch) {
 		if (packageName == null) {
-			withPackageName(dslDefinition.getPackageName());
+			withPackageName(dslSketch.getPackageName());
 		}
 		// 1. maj des EntityProperty
-		for (final String propertyName : dslDefinition.getPropertyNames()) {
-			addPropertyValue(propertyName, dslDefinition.getPropertyValue(propertyName));
+		for (final String propertyName : dslSketch.getPropertyNames()) {
+			addPropertyValue(propertyName, dslSketch.getPropertyValue(propertyName));
 		}
 
 		for (final DslEntityField dslEntityField : entity.getFields()) {
 			if (dslEntityField.getType().isEntityLink()) {
 				// 2. link
-				addAllDefinitionLinks(dslEntityField.getName(), dslDefinition.getSketchKeysByFieldName(dslEntityField.getName()));
+				addAllDefinitionLinks(dslEntityField.getName(), dslSketch.getSketchKeysByFieldName(dslEntityField.getName()));
 			} else if (dslEntityField.getType().isEntity()) {
 				// 3. children
-				addAllChildDefinitions(dslEntityField.getName(), dslDefinition.getChildSketches(dslEntityField.getName()));
+				addAllChildDefinitions(dslEntityField.getName(), dslSketch.getChildSketches(dslEntityField.getName()));
 			}
 			// else : nothing for property (already processed)
 		}
@@ -167,24 +167,24 @@ public final class DslSketchBuilder implements Builder<DslSketch> {
 		return this;
 	}
 
-	private void addAllChildDefinitions(final String fieldName, final List<DslSketch> dslDefinitions) {
-		Assertion.check().isNotNull(dslDefinitions);
+	private void addAllChildDefinitions(final String fieldName, final List<DslSketch> dslSketches) {
+		Assertion.check().isNotNull(dslSketches);
 		final DslEntityField dslEntityField = entity.getField(fieldName);
 		Assertion.check().isTrue(dslEntityField.getType().isEntity(), "expected an entity on {0}", fieldName);
 		//---
 		childDefinitionsByFieldName.get(dslEntityField)
-				.addAll(dslDefinitions);
+				.addAll(dslSketches);
 	}
 
 	/**
 	 * Ajoute une définition au champ défini par fieldName.
 	 * @param fieldName Name of the field
-	 * @param definition Définition
+	 * @param dslSketch Définition
 	 * @return this builder
 	 */
-	public DslSketchBuilder addChildDefinition(final String fieldName, final DslSketch definition) {
-		Assertion.check().isNotNull(definition);
-		addAllChildDefinitions(fieldName, Collections.singletonList(definition));
+	public DslSketchBuilder addChildDefinition(final String fieldName, final DslSketch dslSketch) {
+		Assertion.check().isNotNull(dslSketch);
+		addAllChildDefinitions(fieldName, Collections.singletonList(dslSketch));
 		return this;
 	}
 

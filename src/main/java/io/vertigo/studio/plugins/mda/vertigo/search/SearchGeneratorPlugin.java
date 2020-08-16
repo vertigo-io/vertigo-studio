@@ -115,7 +115,7 @@ public final class SearchGeneratorPlugin implements MdaGeneratorPlugin {
 
 		final SearchDtModel searchDtModel = new SearchDtModel(dtSketch);
 
-		final Optional<SearchIndexSketch> searchIndexDefinitionOpt = notebook.getAll(SearchIndexSketch.class)
+		final Optional<SearchIndexSketch> searchIndexSketchOpt = notebook.getAll(SearchIndexSketch.class)
 				.stream()
 				.filter(indexSketch -> indexSketch.getKeyConceptDtSketch().equals(dtSketch))
 				.findFirst();
@@ -129,24 +129,24 @@ public final class SearchGeneratorPlugin implements MdaGeneratorPlugin {
 		}
 
 		final List<FacetModel> facetDefinitions = new ArrayList<>();
-		if (searchIndexDefinitionOpt.isPresent()) {
+		if (searchIndexSketchOpt.isPresent()) {
 			for (final FacetSketch facetSketch : notebook.getAll(FacetSketch.class)) {
-				if (facetSketch.getIndexDtSketch().equals(searchIndexDefinitionOpt.get().getIndexDtSketch())) {
+				if (facetSketch.getIndexDtSketch().equals(searchIndexSketchOpt.get().getIndexDtSketch())) {
 					final FacetModel templateFacetedQueryDefinition = new FacetModel(facetSketch);
 					facetDefinitions.add(templateFacetedQueryDefinition);
 				}
 			}
 		}
 
-		if (searchIndexDefinitionOpt.isPresent()) {
+		if (searchIndexSketchOpt.isPresent()) {
 
 			final Map<String, Object> model = new MapBuilder<String, Object>()
 					.put("packageName", packageName)
 					.put("facetedQueryDefinitions", facetedQueryDefinitions)
 					.put("facetDefinitions", facetDefinitions)
 					.put("dtDefinition", searchDtModel)
-					.put("indexDtDefinition", new SearchDtModel(searchIndexDefinitionOpt.get().getIndexDtSketch()))
-					.put("searchIndexDefinition", new SearchIndexModel(searchIndexDefinitionOpt.get()))
+					.put("indexDtDefinition", new SearchDtModel(searchIndexSketchOpt.get().getIndexDtSketch()))
+					.put("searchIndexDefinition", new SearchIndexModel(searchIndexSketchOpt.get()))
 					.put("hasCustomFacet", facetedQueryDefinitions.stream().anyMatch(FacetedQueryModel::hasCustomFacet))
 					.put("hasRangeFacet", facetedQueryDefinitions.stream().anyMatch(FacetedQueryModel::hasRangeFacet))
 					.build();

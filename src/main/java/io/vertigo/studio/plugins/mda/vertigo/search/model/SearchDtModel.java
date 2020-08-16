@@ -32,7 +32,7 @@ public final class SearchDtModel {
 	/**
 	 * Constructeur.
 	 *
-	 * @param dtSketch DtDefinition de l'objet à générer
+	 * @param dtSketch DtSketch de l'objet à générer
 	 */
 	public SearchDtModel(final DtSketch dtSketch) {
 		Assertion.check().isNotNull(dtSketch);

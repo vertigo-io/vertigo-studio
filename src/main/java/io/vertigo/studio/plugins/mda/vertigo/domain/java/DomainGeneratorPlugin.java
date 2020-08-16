@@ -114,8 +114,8 @@ public final class DomainGeneratorPlugin implements MdaGeneratorPlugin {
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
-		for (final DtSketch dtDefinition : DomainUtil.getDtSketchs(notebook)) {
-			generateDtObject(notebook, targetSubDir, mdaConfig, mdaResultBuilder, dtDefinition, getAssociationsByDtDefinition(notebook, dtDefinition));
+		for (final DtSketch dtSketch : DomainUtil.getDtSketchs(notebook)) {
+			generateDtObject(notebook, targetSubDir, mdaConfig, mdaResultBuilder, dtSketch, getAssociationsByDtDefinition(notebook, dtSketch));
 		}
 	}
 

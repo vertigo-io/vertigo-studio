@@ -176,8 +176,8 @@ public final class AnnotationLoader implements Loader {
 			parseAssociationDefinition(dynamicModelRepository, method, packageName);
 		}
 
-		final DslSketch dtDefinition = dtSketchBuilder.build();
-		dynamicModelRepository.addSketch(dtDefinition);
+		final DslSketch dtSketch = dtSketchBuilder.build();
+		dynamicModelRepository.addSketch(dtSketch);
 	}
 
 	private static String parseDataSpaceAnnotation(final Class<?> clazz) {

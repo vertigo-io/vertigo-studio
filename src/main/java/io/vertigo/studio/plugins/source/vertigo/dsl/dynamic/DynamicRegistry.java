@@ -40,10 +40,10 @@ public interface DynamicRegistry {
 
 	/**
 	 * Create a definition from a dynamic definition in a context defined by definitionSpace (preexisting definitions).
-	 * @param dslDefinition Definition
+	 * @param dslSketch Definition
 	 * @return An optional definition
 	 */
-	SketchSupplier supplyModel(DslSketch dslDefinition);
+	SketchSupplier supplyModel(DslSketch dslSketch);
 
 	/**
 	 * Ajout d'une définition.

@@ -98,10 +98,10 @@ public final class TaskGeneratorPlugin implements MdaGeneratorPlugin {
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder) {
 		for (final Entry<DtSketch, List<TaskSketch>> entry : builDtSketchsMap(notebook).entrySet()) {
-			final DtSketch dtDefinition = entry.getKey();
-			if (dtDefinition.isPersistent()) {
+			final DtSketch dtSketch = entry.getKey();
+			if (dtSketch.isPersistent()) {
 				//Si DAO est persitant on génère son CRUD.
-				generateDao(notebook, targetSubDir, mdaConfig, mdaResultBuilder, dtDefinition, entry.getValue());
+				generateDao(notebook, targetSubDir, mdaConfig, mdaResultBuilder, dtSketch, entry.getValue());
 			}
 		}
 	}
@@ -140,9 +140,9 @@ public final class TaskGeneratorPlugin implements MdaGeneratorPlugin {
 			final String targetSubDir,
 			final MdaConfig mdaConfig,
 			final MdaResultBuilder mdaResultBuilder,
-			final Collection<TaskSketch> taskDefinitionCollection,
+			final Collection<TaskSketch> taskSketches,
 			final String packageName) {
-		final PAOModel paoModel = new PAOModel(mdaConfig, taskDefinitionCollection, packageName, DomainUtil.createClassNameFromDtFunction(notebook));
+		final PAOModel paoModel = new PAOModel(mdaConfig, taskSketches, packageName, DomainUtil.createClassNameFromDtFunction(notebook));
 
 		final Map<String, Object> model = new MapBuilder<String, Object>()
 				.put("pao", paoModel)
