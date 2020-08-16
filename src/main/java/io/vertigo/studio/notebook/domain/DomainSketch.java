@@ -96,13 +96,13 @@ public final class DomainSketch extends AbstractSketch {
 	 * @param properties List of property-value tuples
 	 */
 	DomainSketch(
-			final SketchKey key,
+			final String name,
 			final Properties properties,
 			final Scope scope,
 			final BasicType dataType,
 			final SketchKey dtSketchKey,
 			final String valueObjectClassName) {
-		super(key);
+		super(name);
 		//---
 		Assertion.check()
 				.isNotNull(scope)
@@ -134,9 +134,9 @@ public final class DomainSketch extends AbstractSketch {
 	 * @param dataType the dataType managed by the domain
 	 * @return DomainBuilder
 	 */
-	public static DomainSketch of(final SketchKey key, final Properties properties, final BasicType dataType) {
+	public static DomainSketch of(final String name, final Properties properties, final BasicType dataType) {
 		return new DomainSketch(
-				key,
+				name,
 				properties,
 				DomainSketch.Scope.PRIMITIVE,
 				dataType,
@@ -151,9 +151,9 @@ public final class DomainSketch extends AbstractSketch {
 	 * @param dtSketchKey the key  of the dtSketch managed by the domain
 	 * @return DomainBuilder
 	 */
-	public static DomainSketch of(final SketchKey key, final Properties properties, final SketchKey dtSketchKey) {
+	public static DomainSketch of(final String name, final Properties properties, final SketchKey dtSketchKey) {
 		return new DomainSketch(
-				key,
+				name,
 				properties,
 				Scope.DATA_OBJECT,
 				null,
@@ -167,9 +167,9 @@ public final class DomainSketch extends AbstractSketch {
 	 * @param valueObjectClass the definition managed by the domain
 	 * @return DomainBuilder
 	 */
-	public static DomainSketch of(final SketchKey key, final Properties properties, final Class valueObjectClass) {
+	public static DomainSketch of(final String name, final Properties properties, final Class valueObjectClass) {
 		return new DomainSketch(
-				key,
+				name,
 				properties,
 				DomainSketch.Scope.VALUE_OBJECT,
 				null,

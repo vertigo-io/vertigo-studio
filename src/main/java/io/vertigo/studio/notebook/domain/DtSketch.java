@@ -70,7 +70,7 @@ public final class DtSketch extends AbstractSketch {
 	 * Constructor.
 	 */
 	DtSketch(
-			final SketchKey key,
+			final String name,
 			final Optional<DtSketch> fragmentOpt,
 			final String packageName,
 			final StudioStereotype stereotype,
@@ -79,7 +79,7 @@ public final class DtSketch extends AbstractSketch {
 			final Optional<DtSketchField> sortFieldOpt,
 			final Optional<DtSketchField> displayFieldOpt,
 			final Optional<DtSketchField> handleFieldOpt) {
-		super(key);
+		super(name);
 		//---
 		Assertion.check()
 				.isNotNull(fragmentOpt)
@@ -105,9 +105,9 @@ public final class DtSketch extends AbstractSketch {
 			Assertion.check()
 					.when(stereotype.isPersistent() && dtField.isPersistent(), () -> Assertion.check()
 							.isFalse(dtField.getCardinality().hasMany(),
-									"Only non multiple are allowed in entity '{0}'", key));
+									"Only non multiple are allowed in entity '{0}'", name));
 			if (dtField.getType().isId()) {
-				Assertion.check().isNull(id, "Only one ID Field is allowed : {0}", key);
+				Assertion.check().isNull(id, "Only one ID Field is allowed : {0}", name);
 				id = dtField;
 			}
 			doRegisterDtField(dtField);
@@ -117,12 +117,12 @@ public final class DtSketch extends AbstractSketch {
 		//---
 		Assertion.check()
 				.when(fragmentOpt.isPresent(), () -> Assertion.check()
-						.isTrue(StudioStereotype.Fragment == stereotype, "Error on {0} with sterotype {1}, If an object is a fragment then it must have this stereotype", key, stereotype))
+						.isTrue(StudioStereotype.Fragment == stereotype, "Error on {0} with sterotype {1}, If an object is a fragment then it must have this stereotype", name, stereotype))
 				//Persistent => ID
 				.when(stereotype.isPersistent(), () -> Assertion.check()
-						.isTrue(idFieldOpt.isPresent(), "Error on {0}, If an object is persistent then it must have an ID", key))
+						.isTrue(idFieldOpt.isPresent(), "Error on {0}, If an object is persistent then it must have an ID", name))
 				.when(!stereotype.isPersistent(), () -> Assertion.check()
-						.isTrue(idFieldOpt.isEmpty(), "Error on {0}, If an object is not persistent then it must have no ID", key));
+						.isTrue(idFieldOpt.isEmpty(), "Error on {0}, If an object is not persistent then it must have no ID", name));
 	}
 
 	/**

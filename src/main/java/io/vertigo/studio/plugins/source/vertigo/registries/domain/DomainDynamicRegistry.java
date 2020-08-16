@@ -94,12 +94,12 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		final Properties properties = extractProperties(dslSketchDomain);
 		switch (type) {
 			case "DtObject":
-				return DomainSketch.of(domainKey, properties, SketchKey.of(properties.getProperty("TYPE")));
+				return DomainSketch.of(domainKey.getName(), properties, SketchKey.of(properties.getProperty("TYPE")));
 			case "ValueObject":
-				return DomainSketch.of(domainKey, properties, ClassUtil.classForName(properties.getProperty("TYPE")));
+				return DomainSketch.of(domainKey.getName(), properties, ClassUtil.classForName(properties.getProperty("TYPE")));
 			default:
 				final BasicType dataType = BasicType.valueOf(type);
-				return DomainSketch.of(domainKey, properties, dataType);
+				return DomainSketch.of(domainKey.getName(), properties, dataType);
 		}
 	}
 
@@ -311,7 +311,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 
 		final AssociationSketchNode associationNodeA = new AssociationSketchNode(dtSketchA, navigabilityA, roleA, labelA, true, false);
 		final AssociationSketchNode associationNodeB = new AssociationSketchNode(dtSketchB, navigabilityB, roleB, labelB, true, false);
-		return new AssociationNNSketch(xassociation.getKey(), tableName, associationNodeA, associationNodeB);
+		return new AssociationNNSketch(xassociation.getKey().getName(), tableName, associationNodeA, associationNodeB);
 	}
 
 	private AssociationSimpleSketch createAssociationSimpleSketch(final Notebook notebook, final DslSketch xassociation) {
@@ -383,7 +383,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		final AssociationSketchNode associationNodeA = new AssociationSketchNode(dtDefinitionA, navigabilityA, roleA, labelA, AssociationUtil.isMultiple(multiplicityA), AssociationUtil.isNotNull(multiplicityA));
 		final AssociationSketchNode associationNodeB = new AssociationSketchNode(dtDefinitionB, navigabilityB, roleB, labelB, AssociationUtil.isMultiple(multiplicityB), AssociationUtil.isNotNull(multiplicityB));
 
-		final AssociationSimpleSketch associationSimpleDefinition = new AssociationSimpleSketch(xassociation.getKey(), fkFieldName, associationNodeA, associationNodeB);
+		final AssociationSimpleSketch associationSimpleDefinition = new AssociationSimpleSketch(xassociation.getKey().getName(), fkFieldName, associationNodeA, associationNodeB);
 
 		final AssociationSketchNode primaryAssociationNode = associationSimpleDefinition.getPrimaryAssociationNode();
 		final AssociationSketchNode foreignAssociationNode = associationSimpleDefinition.getForeignAssociationNode();

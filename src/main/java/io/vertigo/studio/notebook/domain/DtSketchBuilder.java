@@ -355,7 +355,7 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 		}
 
 		dtSketch = new DtSketch(
-				myKey,
+				myKey.getName(),
 				Optional.ofNullable(myFragment),
 				myPackageName,
 				myStereotype,

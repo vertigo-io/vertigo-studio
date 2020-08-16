@@ -71,14 +71,14 @@ public final class FacetedQuerySketch extends AbstractSketch {
 	 * @param listFilterBuilderQuery listFilterBuilderQuery to use
 	 */
 	public FacetedQuerySketch(
-			final SketchKey key,
+			final String name,
 			final DtSketch keyConceptDtSketch,
 			final List<FacetSketch> facetSketchs,
 			final DomainSketch criteriaDomain,
 			final String listFilterBuilderClassName,
 			final String listFilterBuilderQuery,
 			final Optional<String> geoSearchQuery) {
-		super(key);
+		super(name);
 		//---
 		Assertion
 				.check()

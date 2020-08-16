@@ -21,7 +21,6 @@ package io.vertigo.studio.notebook.domain.association;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.notebook.SkecthPrefix;
-import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.domain.DtSketchField;
 
 /**
@@ -45,15 +44,15 @@ public final class AssociationSimpleSketch extends AssociationSketch {
 	 * @param associationNodeB the B node for this assocation
 	 */
 	public AssociationSimpleSketch(
-			final SketchKey key,
+			final String name,
 			final String fkFieldName,
 			final AssociationSketchNode associationNodeA,
 			final AssociationSketchNode associationNodeB) {
-		super(key, associationNodeA, associationNodeB);
+		super(name, associationNodeA, associationNodeB);
 		Assertion.check()
 				.isNotNull(fkFieldName)
 				//We check that this assocation is not multiple
-				.isFalse(associationNodeA.isMultiple() && associationNodeB.isMultiple(), "assocation : {0}. n-n assocation is prohibited in a simple assocation", key)
+				.isFalse(associationNodeA.isMultiple() && associationNodeB.isMultiple(), "assocation : {0}. n-n assocation is prohibited in a simple assocation", name)
 				.isNotNull(fkFieldName)
 				.isTrue(StringUtil.isLowerCamelCase(fkFieldName), "the name of the field {0} must be in lowerCamelCase", fkFieldName);
 		//-----
@@ -72,7 +71,7 @@ public final class AssociationSimpleSketch extends AssociationSketch {
 		this.fkFieldName = fkFieldName;
 		//-----
 		// no one can make an association with you if you're not identified by a key (for now, before refac, isPersistent is the way to make the test isPersistent() <=> isEntity() )
-		Assertion.check().isTrue(primaryAssociationNode.getDtSketch().getStereotype().isPersistent(), "assocation : {0}. The primary associationNode must be an entity ", key);
+		Assertion.check().isTrue(primaryAssociationNode.getDtSketch().getStereotype().isPersistent(), "assocation : {0}. The primary associationNode must be an entity ", name);
 	}
 
 	/**

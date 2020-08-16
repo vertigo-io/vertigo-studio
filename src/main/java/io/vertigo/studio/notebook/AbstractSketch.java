@@ -6,10 +6,6 @@ public abstract class AbstractSketch implements Sketch {
 	private final String prefix;
 	private final SketchKey key;
 
-	protected AbstractSketch(final SketchKey key) {
-		this(key.getName());
-	}
-
 	protected AbstractSketch(final String name) {
 		final SkecthPrefix sketchPrefix = this.getClass().getAnnotation(SkecthPrefix.class);
 		prefix = sketchPrefix == null ? null : sketchPrefix.value();

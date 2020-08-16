@@ -57,8 +57,8 @@ public abstract class AssociationSketch extends AbstractSketch {
 	 * @param associationNodeA Noeud A
 	 * @param associationNodeB Noeud B
 	 */
-	AssociationSketch(final SketchKey key, final AssociationSketchNode associationNodeA, final AssociationSketchNode associationNodeB) {
-		super(key);
+	AssociationSketch(final String name, final AssociationSketchNode associationNodeA, final AssociationSketchNode associationNodeB) {
+		super(name);
 		//---
 		Assertion.check()
 				.isNotNull(associationNodeA)
@@ -68,8 +68,8 @@ public abstract class AssociationSketch extends AbstractSketch {
 		this.associationNodeB = associationNodeB;
 		//-----
 		// we check that navigable nodes are entities because you cannot navigate toward an object that is not identified by a key
-		checkNavigability(associationNodeA, key);
-		checkNavigability(associationNodeB, key);
+		checkNavigability(associationNodeA, getKey());
+		checkNavigability(associationNodeB, getKey());
 	}
 
 	private static void checkNavigability(final AssociationSketchNode associationSketchNode, final SketchKey associationKey) {

@@ -20,7 +20,6 @@ package io.vertigo.studio.notebook.domain.association;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.SkecthPrefix;
-import io.vertigo.studio.notebook.SketchKey;
 
 /**
  * Définition d'une association NN.
@@ -38,11 +37,11 @@ public final class AssociationNNSketch extends AssociationSketch {
 	 * @param associationNodeB Noeud B
 	 */
 	public AssociationNNSketch(
-			final SketchKey key,
+			final String name,
 			final String tableName,
 			final AssociationSketchNode associationNodeA,
 			final AssociationSketchNode associationNodeB) {
-		super(key, associationNodeA, associationNodeB);
+		super(name, associationNodeA, associationNodeB);
 		//-----
 		Assertion.check().isNotNull(tableName);
 		this.tableName = tableName;

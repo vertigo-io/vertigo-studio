@@ -52,7 +52,7 @@ public final class FileDynamicRegistry implements DynamicRegistry {
 		final SketchKey fileDefinitionKey = dslFileInfoSketch.getKey();
 		final String storeName = (String) dslFileInfoSketch.getPropertyValue(KspProperty.DATA_SPACE);
 
-		return new FileInfoSketch(fileDefinitionKey, storeName);
+		return new FileInfoSketch(fileDefinitionKey.getName(), storeName);
 	}
 
 }

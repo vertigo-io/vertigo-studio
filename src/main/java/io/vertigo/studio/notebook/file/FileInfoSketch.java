@@ -21,7 +21,6 @@ package io.vertigo.studio.notebook.file;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.AbstractSketch;
 import io.vertigo.studio.notebook.SkecthPrefix;
-import io.vertigo.studio.notebook.SketchKey;
 
 /**
  * Définition d'un FileInfo.
@@ -45,8 +44,8 @@ public final class FileInfoSketch extends AbstractSketch {
 	 * @param name Nom de la définition
 	 * @param storeName Nom du store de ces fichiers
 	 */
-	public FileInfoSketch(final SketchKey key, final String storeName) {
-		super(key);
+	public FileInfoSketch(final String name, final String storeName) {
+		super(name);
 		//---
 		Assertion.check().isNotBlank(storeName);
 		//-----

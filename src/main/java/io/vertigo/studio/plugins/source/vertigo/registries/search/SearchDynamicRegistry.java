@@ -85,7 +85,7 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 		final Map<DtSketchField, List<DtSketchField>> copyFields = populateCopyFields(xsearchObjet, indexDtDefinition);
 
 		final String searchLoaderId = (String) xsearchObjet.getPropertyValue(SearchGrammar.SEARCH_LOADER_PROPERTY);
-		return new SearchIndexSketch(definitionkey, keyConceptDtDefinition, indexDtDefinition, copyFields, searchLoaderId);
+		return new SearchIndexSketch(definitionkey.getName(), keyConceptDtDefinition, indexDtDefinition, copyFields, searchLoaderId);
 	}
 
 	private static Map<DtSketchField, List<DtSketchField>> populateCopyFields(final DslSketch xsearchObjet, final DtSketch indexDtDefinition) {
@@ -117,7 +117,7 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 					.map(SearchDynamicRegistry::createFacetValue)
 					.collect(Collectors.toList());
 			facetDefinition = FacetSketch.createFacetSketchByRange(
-					dslSketch.getKey(),
+					dslSketch.getKey().getName(),
 					indexDtSketch,
 					dtField,
 					labelMsg,
@@ -129,7 +129,7 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 					.map(SearchDynamicRegistry::createFacetParam)
 					.collect(Collectors.toMap(Tuple::getVal1, Tuple::getVal2));
 			facetDefinition = FacetSketch.createCustomFacetSketch(
-					dslSketch.getKey(),
+					dslSketch.getKey().getName(),
 					indexDtSketch,
 					dtField,
 					labelMsg,
@@ -138,7 +138,7 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 					getFacetOrder(dslSketch, FacetOrder.definition));
 		} else {
 			facetDefinition = FacetSketch.createFacetSketchByTerm(
-					dslSketch.getKey(),
+					dslSketch.getKey().getName(),
 					indexDtSketch,
 					dtField,
 					labelMsg,
@@ -189,7 +189,7 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 		final DomainSketch criteriaDomain = notebook.resolve(criteriaDomainKey, DomainSketch.class);
 
 		return new FacetedQuerySketch(
-				dslSketch.getKey(),
+				dslSketch.getKey().getName(),
 				keyConceptDtDefinition,
 				facetSketches,
 				criteriaDomain,
