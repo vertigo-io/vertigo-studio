@@ -29,7 +29,6 @@ import java.util.regex.Pattern;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.AbstractSketch;
 import io.vertigo.studio.notebook.SkecthPrefix;
-import io.vertigo.studio.notebook.SketchKey;
 
 /**
  * The DtSketch class defines the sketch of data.
@@ -130,8 +129,8 @@ public final class DtSketch extends AbstractSketch {
 	 * @param name the name of the dtSketch
 	 * @return DtSketchBuilder
 	 */
-	public static DtSketchBuilder builder(final SketchKey key) {
-		return new DtSketchBuilder(key);
+	public static DtSketchBuilder builder(final String name) {
+		return new DtSketchBuilder(name);
 	}
 
 	//TODO A fermer

@@ -33,7 +33,6 @@ import io.vertigo.studio.impl.mda.MdaGeneratorPlugin;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaResultBuilder;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.authorization.SecuredFeatureSketch;
 import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.plugins.mda.vertigo.authorization.model.GlobalAuthorizationModel;
@@ -82,8 +81,8 @@ public final class AuthorizationGeneratorPlugin implements MdaGeneratorPlugin {
 				.collect(Collectors.groupingBy(securedFeature -> securedFeature.getLinkedResourceOpt().get(), Collectors.toList()))
 				.entrySet()
 				.stream()
-				.filter(entry -> notebook.contains(SketchKey.of(DtDefinition.PREFIX + entry.getKey())))// we have the studioDtDefinition
-				.map(entry -> new SecuredEntityModel(entry.getValue(), notebook.resolve(SketchKey.of(DtDefinition.PREFIX + entry.getKey()), DtSketch.class)))
+				.filter(entry -> notebook.contains(DtDefinition.PREFIX + entry.getKey()))// we have the studioDtDefinition
+				.map(entry -> new SecuredEntityModel(entry.getValue(), notebook.resolve(DtDefinition.PREFIX + entry.getKey(), DtSketch.class)))
 				.collect(Collectors.toList());
 	}
 

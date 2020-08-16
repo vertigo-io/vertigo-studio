@@ -83,7 +83,7 @@ public final class JavaParserStereotypesTest {
 	}
 
 	private DtSketch getDtSketch(final SketchKey key) {
-		return notebook.resolve(key, DtSketch.class);
+		return notebook.resolve(key.getName(), DtSketch.class);
 	}
 
 	/**

@@ -77,8 +77,8 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 	}
 
 	private static SearchIndexSketch createIndexSketch(final Notebook notebook, final DslSketch xsearchObjet) {
-		final DtSketch keyConceptDtDefinition = notebook.resolve(xsearchObjet.getSketchKeyByFieldName("keyConcept"), DtSketch.class);
-		final DtSketch indexDtDefinition = notebook.resolve(xsearchObjet.getSketchKeyByFieldName("dtIndex"), DtSketch.class);
+		final DtSketch keyConceptDtDefinition = notebook.resolve(xsearchObjet.getSketchKeyByFieldName("keyConcept").getName(), DtSketch.class);
+		final DtSketch indexDtDefinition = notebook.resolve(xsearchObjet.getSketchKeyByFieldName("dtIndex").getName(), DtSketch.class);
 		final SketchKey definitionkey = xsearchObjet.getKey();
 
 		//Déclaration des copyField
@@ -101,7 +101,7 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 	}
 
 	private static FacetSketch createFacetSketch(final Notebook notebook, final DslSketch dslSketch) {
-		final DtSketch indexDtSketch = notebook.resolve(dslSketch.getSketchKeyByFieldName("dtDefinition"), DtSketch.class);
+		final DtSketch indexDtSketch = notebook.resolve(dslSketch.getSketchKeyByFieldName("dtDefinition").getName(), DtSketch.class);
 		final String dtFieldName = (String) dslSketch.getPropertyValue(SearchGrammar.FIELD_NAME);
 		final DtSketchField dtField = indexDtSketch.getField(dtFieldName);
 		final String label = (String) dslSketch.getPropertyValue(KspProperty.LABEL);
@@ -176,17 +176,17 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 	}
 
 	private static FacetedQuerySketch createFacetedQuerySketch(final Notebook notebook, final DslSketch dslSketch) {
-		final DtSketch keyConceptDtDefinition = notebook.resolve(dslSketch.getSketchKeyByFieldName("keyConcept"), DtSketch.class);
+		final DtSketch keyConceptDtDefinition = notebook.resolve(dslSketch.getSketchKeyByFieldName("keyConcept").getName(), DtSketch.class);
 		final List<SketchKey> facetSketchKeys = dslSketch.getSketchKeysByFieldName("facets");
 		final List<FacetSketch> facetSketches = facetSketchKeys
 				.stream()
-				.map(key -> notebook.resolve(key, FacetSketch.class))
+				.map(key -> notebook.resolve(key.getName(), FacetSketch.class))
 				.collect(Collectors.toList());
 		final String listFilterBuilderQuery = (String) dslSketch.getPropertyValue(SearchGrammar.LIST_FILTER_BUILDER_QUERY);
 		final String geoSearchQuery = (String) dslSketch.getPropertyValue(SearchGrammar.GEO_SEARCH_QUERY);
 		final String listFilterBuilderClassName = getListFilterBuilderClassName(dslSketch);
 		final SketchKey criteriaDomainKey = dslSketch.getSketchKeyByFieldName("domainCriteria");
-		final DomainSketch criteriaDomain = notebook.resolve(criteriaDomainKey, DomainSketch.class);
+		final DomainSketch criteriaDomain = notebook.resolve(criteriaDomainKey.getName(), DomainSketch.class);
 
 		return new FacetedQuerySketch(
 				dslSketch.getKey().getName(),

@@ -96,7 +96,7 @@ final class DslSolver {
 			final String fieldName = dslEntityField.getName();
 			for (final SketchKey sketchKey : dslDefinition.getSketchKeysByFieldName(fieldName)) {
 				//reference should be already solved in a previous resources module : then continue
-				if (!notebook.contains(sketchKey)) {
+				if (!notebook.contains(sketchKey.getName())) {
 					//or references should be in currently parsed resources
 					if (!definitionRepository.contains(sketchKey)) {
 						final SketchKey xdefRootKey = xdefRoot.getKey().equals(dslDefinition.getKey()) ? xdefRoot.getKey()

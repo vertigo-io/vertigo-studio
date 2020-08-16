@@ -35,7 +35,6 @@ import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugi
 import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.metamodel.vertigo.multi.data.DtDefinitions;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.domain.DomainSketch;
 import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.source.NotebookSource;
@@ -80,7 +79,7 @@ public final class MultiResourcesEnvironmentManagerTest {
 	public void testFirst() {
 		final Notebook notebook = notebookSourceManager
 				.read(List.of(NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr")));
-		final DomainSketch doString = notebook.resolve(SketchKey.of("DoString"), DomainSketch.class);
+		final DomainSketch doString = notebook.resolve("DoString", DomainSketch.class);
 		Assertions.assertNotNull(doString);
 	}
 
@@ -91,9 +90,9 @@ public final class MultiResourcesEnvironmentManagerTest {
 						NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr"),
 						NotebookSource.of("classes", DtDefinitions.class.getCanonicalName())));
 
-		final DomainSketch doString = notebook.resolve(SketchKey.of("DoString"), DomainSketch.class);
+		final DomainSketch doString = notebook.resolve("DoString", DomainSketch.class);
 		Assertions.assertNotNull(doString);
-		final DtSketch dtItem = notebook.resolve(SketchKey.of("DtItem"), DtSketch.class);
+		final DtSketch dtItem = notebook.resolve("DtItem", DtSketch.class);
 		Assertions.assertNotNull(dtItem);
 	}
 

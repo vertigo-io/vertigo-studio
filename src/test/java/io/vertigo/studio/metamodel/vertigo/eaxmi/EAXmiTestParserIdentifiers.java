@@ -84,7 +84,7 @@ public final class EAXmiTestParserIdentifiers {
 
 	private DtSketch getDtSketch(final SketchKey key) {
 		return notebook
-				.resolve(key, DtSketch.class);
+				.resolve(key.getName(), DtSketch.class);
 	}
 
 	@Test

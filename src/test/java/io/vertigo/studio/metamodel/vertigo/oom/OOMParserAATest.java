@@ -88,11 +88,11 @@ public final class OOMParserAATest {
 	 * - Navigabilité notée v
 	 */
 	private AssociationSimpleSketch getAssociationSimpleSketch(final SketchKey key) {
-		return notebook.resolve(key, AssociationSimpleSketch.class);
+		return notebook.resolve(key.getName(), AssociationSimpleSketch.class);
 	}
 
 	private AssociationNNSketch getAssociationNNSketch(final SketchKey key) {
-		return notebook.resolve(key, AssociationNNSketch.class);
+		return notebook.resolve(key.getName(), AssociationNNSketch.class);
 	}
 
 	/**

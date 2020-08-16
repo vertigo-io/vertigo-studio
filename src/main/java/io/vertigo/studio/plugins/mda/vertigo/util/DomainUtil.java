@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.domain.DomainSketch;
 import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.notebook.domain.DtSketchField;
@@ -216,6 +215,6 @@ public final class DomainUtil {
 	}
 
 	public static Function<String, String> createClassNameFromDtFunction(final Notebook notebook) {
-		return dtName -> notebook.resolve(SketchKey.of(dtName), DtSketch.class).getClassCanonicalName();
+		return dtName -> notebook.resolve(dtName, DtSketch.class).getClassCanonicalName();
 	}
 }

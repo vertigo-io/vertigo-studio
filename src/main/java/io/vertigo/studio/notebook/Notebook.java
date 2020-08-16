@@ -34,7 +34,7 @@ import io.vertigo.core.lang.Assertion;
  * @author mlaroche, pchretien
  */
 public final class Notebook {
-	private final Map<SketchKey, Sketch> sketches = new LinkedHashMap<>();
+	private final Map<String, Sketch> sketches = new LinkedHashMap<>();
 
 	/**
 	 * Registers a new Sketch.
@@ -44,26 +44,24 @@ public final class Notebook {
 	public void register(final Sketch sketch) {
 		Assertion.check()
 				.isNotNull(sketch)
-				.isFalse(contains(sketch.getKey()), "this sketch '{0}' is already registered", sketch);
+				.isFalse(contains(sketch.getKey().getName()), "this sketch '{0}' is already registered", sketch);
 		//---
-		sketches.put(sketch.getKey(), sketch);
+		sketches.put(sketch.getKey().getName(), sketch);
 	}
 
-	/** {@inheritDoc} */
-	public boolean contains(final SketchKey key) {
-		Assertion.check().isNotNull(key);
+	public boolean contains(final String name) {
+		Assertion.check().isNotBlank(name);
 		//---
-		return sketches.containsKey(key);
+		return sketches.containsKey(name);
 	}
 
-	/** {@inheritDoc} */
-	public <D extends Sketch> D resolve(final SketchKey key, final Class<D> clazz) {
+	public <D extends Sketch> D resolve(final String name, final Class<D> clazz) {
 		Assertion.check()
-				.isNotNull(key)
+				.isNotBlank(name)
 				.isNotNull(clazz)
-				.isTrue(contains(key), "no sketch found with key {0} in {1}", key, sketches.keySet());
+				.isTrue(contains(name), "no sketch found with key {0} in {1}", name, sketches.keySet());
 		//---
-		return clazz.cast(sketches.get(key));
+		return clazz.cast(sketches.get(name));
 	}
 
 	/** {@inheritDoc} */

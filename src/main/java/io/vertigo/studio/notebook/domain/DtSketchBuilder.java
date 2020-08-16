@@ -28,7 +28,6 @@ import io.vertigo.core.lang.Cardinality;
 import io.vertigo.core.locale.MessageKey;
 import io.vertigo.core.locale.MessageText;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.tools.SketchUtil;
 
 /**
@@ -57,7 +56,7 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 	}
 
 	private DtSketch dtSketch;
-	private final SketchKey myKey;
+	private final String myName;
 	private DtSketch myFragment;
 	private String myPackageName;
 	private StudioStereotype myStereotype;
@@ -72,10 +71,10 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 	 * Constructor.
 	 * @param name the name of the dtSketch
 	 */
-	DtSketchBuilder(final SketchKey key) {
-		Assertion.check().isNotNull(key);
+	DtSketchBuilder(final String name) {
+		Assertion.check().isNotBlank(name);
 		//-----
-		myKey = key;
+		myName = name;
 	}
 
 	/**
@@ -251,7 +250,7 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 			final String fkDtSketchName,
 			final ComputedExpression computedExpression) {
 
-		final String shortName = SketchUtil.getLocalName(myKey.getName(), DtSketch.PREFIX);
+		final String shortName = SketchUtil.getLocalName(myName, DtSketch.PREFIX);
 		//-----
 		// Le DtField vérifie ses propres règles et gère ses propres optimisations
 		final String id = "fld" + shortName + '$' + fieldName;
@@ -355,7 +354,7 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 		}
 
 		dtSketch = new DtSketch(
-				myKey.getName(),
+				myName,
 				Optional.ofNullable(myFragment),
 				myPackageName,
 				myStereotype,

@@ -64,7 +64,7 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 		Assertion.check().isNotNull(taskKey);
 		final String taskEngineClassName = getTaskEngineClassName(xtaskDefinition);
 		final String dataSpace = (String) xtaskDefinition.getPropertyValue(KspProperty.DATA_SPACE);
-		final TaskSketchBuilder taskSketchBuilder = TaskSketch.builder(taskKey)
+		final TaskSketchBuilder taskSketchBuilder = TaskSketch.builder(taskKey.getName())
 				.withEngine(taskEngineClassName)
 				.withDataSpace(dataSpace)
 				.withRequest(request)
@@ -90,7 +90,7 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 
 	private static DomainSketch buildDomainSketch(final Notebook notebook, final DslSketch xtaskAttribute) {
 		final SketchKey smartTypeKey = xtaskAttribute.getSketchKeyByFieldName("domain");
-		final DomainSketch domainSketch = notebook.resolve(smartTypeKey, DomainSketch.class);
+		final DomainSketch domainSketch = notebook.resolve(smartTypeKey.getName(), DomainSketch.class);
 		return domainSketch;
 	}
 

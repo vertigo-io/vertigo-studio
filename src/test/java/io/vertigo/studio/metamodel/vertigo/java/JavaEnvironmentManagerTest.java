@@ -36,7 +36,6 @@ import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugi
 import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.metamodel.vertigo.java.data.DtDefinitions;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.domain.DomainSketch;
 import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.source.NotebookSource;
@@ -85,13 +84,13 @@ public final class JavaEnvironmentManagerTest {
 
 	@Test
 	public void testDomain() {
-		final io.vertigo.studio.notebook.domain.DomainSketch domainSketch = notebook.resolve(SketchKey.of("DoId"), DomainSketch.class);
+		final io.vertigo.studio.notebook.domain.DomainSketch domainSketch = notebook.resolve("DoId", DomainSketch.class);
 		Assertions.assertEquals(BasicType.Long, domainSketch.getDataType());
 	}
 
 	@Test
 	public void testCommand() {
-		final DtSketch dtSketch = notebook.resolve(SketchKey.of("DtCommand"), DtSketch.class);
+		final DtSketch dtSketch = notebook.resolve("DtCommand", DtSketch.class);
 		Assertions.assertTrue(dtSketch.isPersistent());
 		Assertions.assertEquals("io.vertigo.studio.metamodel.vertigo.java.data.domain.Command", dtSketch.getClassCanonicalName());
 		Assertions.assertEquals("io.vertigo.studio.metamodel.vertigo.java.data.domain", dtSketch.getPackageName());
@@ -100,7 +99,7 @@ public final class JavaEnvironmentManagerTest {
 
 	@Test
 	public void testCityFragment() {
-		final DtSketch dtDefinition = notebook.resolve(SketchKey.of("DtCityFragment"), DtSketch.class);
+		final DtSketch dtDefinition = notebook.resolve("DtCityFragment", DtSketch.class);
 		Assertions.assertFalse(dtDefinition.isPersistent());
 		Assertions.assertTrue(dtDefinition.getFragment().isPresent());
 		Assertions.assertTrue("City".equals(dtDefinition.getFragment().get().getClassSimpleName()));
