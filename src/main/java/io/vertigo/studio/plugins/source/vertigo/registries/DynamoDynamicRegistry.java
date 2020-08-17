@@ -92,11 +92,11 @@ public final class DynamoDynamicRegistry implements DynamicRegistry {
 
 	/** {@inheritDoc} */
 	@Override
-	public SketchSupplier supplyModel(final DslSketch dslSketch) {
+	public List<SketchSupplier> supplyModels(final DslSketch dslSketch) {
 		try {
 			// perf: ifs ordonnés en gros par fréquence sur les projets
 			return lookUpDynamicRegistry(dslSketch)
-					.supplyModel(dslSketch);
+					.supplyModels(dslSketch);
 		} catch (final Exception e) {
 			//on catch tout (notament les assertions) car c'est ici qu'on indique l'URI de la définition posant problème
 			throw WrappedException.wrap(e, "An error occurred during the creation of the following definition : {0}", dslSketch.getKey());

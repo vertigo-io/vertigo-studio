@@ -18,9 +18,11 @@
  */
 package io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules;
 
+import static io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslSyntaxRules.BACK_QUOTATION_MARK;
 import static io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslSyntaxRules.PAIR_SEPARATOR;
 import static io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslSyntaxRules.PROPERTY_VALUE;
 import static io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslSyntaxRules.QUOTATION_MARK;
+import static io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslSyntaxRules.RAW_PROPERTY_VALUE;
 import static io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslSyntaxRules.SPACES;
 
 import java.util.ArrayList;
@@ -76,9 +78,13 @@ public final class DslPropertyDeclarationRule extends AbstractRule<DslPropertyEn
 				SPACES,
 				PAIR_SEPARATOR,
 				SPACES,
-				QUOTATION_MARK,
-				PROPERTY_VALUE, //5
-				QUOTATION_MARK,
+				PegRules.choice(// choice is 4
+						PegRules.sequence(QUOTATION_MARK,
+								PROPERTY_VALUE, // inner 1
+								QUOTATION_MARK),
+						PegRules.sequence(BACK_QUOTATION_MARK,
+								RAW_PROPERTY_VALUE, // inner 1
+								BACK_QUOTATION_MARK)),
 				SPACES,
 				PegRules.optional(DslSyntaxRules.OBJECT_SEPARATOR));
 	}
@@ -86,7 +92,8 @@ public final class DslPropertyDeclarationRule extends AbstractRule<DslPropertyEn
 	@Override
 	protected DslPropertyEntry handle(final List<Object> parsing) {
 		final String propertyName = (String) ((PegChoice) parsing.get(0)).getValue();
-		final String propertyValue = (String) parsing.get(5);
+		final PegChoice propertyChoice = (PegChoice) parsing.get(4);
+		final String propertyValue = (String) ((List<?>) propertyChoice.getValue()).get(1);
 		return new DslPropertyEntry(entityProperties.get(propertyName), propertyValue);
 	}
 }

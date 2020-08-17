@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.Notebook;
@@ -123,14 +124,14 @@ public final class DslSketchesRepository {
 		return sortedDynamicDefinitions
 				.stream()
 				.filter(dslDefinition -> !dslDefinition.getEntity().isProvided()) // provided definitions are excluded
-				.map(this::createModel)
+				.flatMap(this::createModels)
 				.collect(Collectors.toList());
 	}
 
-	private SketchSupplier createModel(final DslSketch dslSketch) {
+	private Stream<SketchSupplier> createModels(final DslSketch dslSketch) {
 		DslSketchValidator.check(dslSketch);
 		//The definition identified as root are not registered.
-		return registry.supplyModel(dslSketch);
+		return registry.supplyModels(dslSketch).stream();
 	}
 
 	/**

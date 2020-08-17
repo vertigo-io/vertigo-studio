@@ -43,7 +43,7 @@ public interface DynamicRegistry {
 	 * @param dslSketch Definition
 	 * @return An optional definition
 	 */
-	SketchSupplier supplyModel(DslSketch dslSketch);
+	List<SketchSupplier> supplyModels(DslSketch dslSketch);
 
 	/**
 	 * Ajout d'une définition.

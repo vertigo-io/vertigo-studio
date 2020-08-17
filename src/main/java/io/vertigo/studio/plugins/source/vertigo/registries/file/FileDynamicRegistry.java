@@ -18,6 +18,9 @@
  */
 package io.vertigo.studio.plugins.source.vertigo.registries.file;
 
+import java.util.Collections;
+import java.util.List;
+
 import io.vertigo.studio.notebook.SketchSupplier;
 import io.vertigo.studio.notebook.file.FileInfoSketch;
 import io.vertigo.studio.plugins.source.vertigo.KspProperty;
@@ -39,11 +42,11 @@ public final class FileDynamicRegistry implements DynamicRegistry {
 
 	/** {@inheritDoc} */
 	@Override
-	public SketchSupplier supplyModel(final DslSketch dslSketch) {
+	public List<SketchSupplier> supplyModels(final DslSketch dslSketch) {
 		final DslEntity dslEntity = dslSketch.getEntity();
 		if (FileGrammar.FILE_INFO_DEFINITION_ENTITY.equals(dslEntity)) {
 			//Seuls les taches sont gérées.
-			return notebook -> createFileSketch(dslSketch);
+			return Collections.singletonList(notebook -> createFileSketch(dslSketch));
 		}
 		throw new IllegalStateException("The type of definition" + dslSketch + " is not managed by me");
 	}

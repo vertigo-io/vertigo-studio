@@ -19,6 +19,7 @@
 package io.vertigo.studio.plugins.source.vertigo.registries.search;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,6 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Tuple;
 import io.vertigo.core.locale.MessageText;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.Sketch;
 import io.vertigo.studio.notebook.SketchSupplier;
 import io.vertigo.studio.notebook.domain.DomainSketch;
 import io.vertigo.studio.notebook.domain.DtSketch;
@@ -59,21 +59,17 @@ public final class SearchDynamicRegistry implements DynamicRegistry {
 
 	/** {@inheritDoc} */
 	@Override
-	public SketchSupplier supplyModel(final DslSketch dslDefinition) {
-		return notebook -> createModel(notebook, dslDefinition);
-	}
-
-	private static Sketch createModel(final Notebook notebook, final DslSketch dslDefinition) {
-		final DslEntity dslEntity = dslDefinition.getEntity();
+	public List<SketchSupplier> supplyModels(final DslSketch dslSketch) {
+		final DslEntity dslEntity = dslSketch.getEntity();
 
 		if (SearchGrammar.INDEX_DEFINITION_ENTITY.equals(dslEntity)) {
-			return createIndexSketch(notebook, dslDefinition);
+			return Collections.singletonList(notebook -> createIndexSketch(notebook, dslSketch));
 		} else if (SearchGrammar.FACET_DEFINITION_ENTITY.equals(dslEntity)) {
-			return createFacetSketch(notebook, dslDefinition);
+			return Collections.singletonList(notebook -> createFacetSketch(notebook, dslSketch));
 		} else if (SearchGrammar.FACETED_QUERY_DEFINITION_ENTITY.equals(dslEntity)) {
-			return createFacetedQuerySketch(notebook, dslDefinition);
+			return Collections.singletonList(notebook -> createFacetedQuerySketch(notebook, dslSketch));
 		}
-		throw new IllegalStateException("The type of definition" + dslDefinition + " is not managed by me");
+		throw new IllegalStateException("The type of definition" + dslSketch + " is not managed by me");
 	}
 
 	private static SearchIndexSketch createIndexSketch(final Notebook notebook, final DslSketch xsearchObjet) {

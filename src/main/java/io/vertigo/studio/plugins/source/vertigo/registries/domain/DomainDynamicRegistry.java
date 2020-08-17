@@ -27,6 +27,9 @@ import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.BasicType;
 import io.vertigo.core.lang.Cardinality;
@@ -34,7 +37,6 @@ import io.vertigo.core.lang.VSystemException;
 import io.vertigo.core.util.ClassUtil;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.Sketch;
 import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.SketchSupplier;
 import io.vertigo.studio.notebook.domain.ComputedExpression;
@@ -47,17 +49,21 @@ import io.vertigo.studio.notebook.domain.association.AssociationNNSketch;
 import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
 import io.vertigo.studio.notebook.domain.association.AssociationSketchNode;
 import io.vertigo.studio.notebook.domain.association.AssociationUtil;
+import io.vertigo.studio.notebook.domain.masterdata.MasterDataValue;
+import io.vertigo.studio.notebook.domain.masterdata.StaticMasterDataSketch;
 import io.vertigo.studio.plugins.source.vertigo.KspProperty;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchKey;
 import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DynamicRegistry;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
+import io.vertigo.studio.tools.SketchUtil;
 
 /**
  * @author pchretien, mlaroche
  */
 public final class DomainDynamicRegistry implements DynamicRegistry {
+	private static final Gson GSON = new Gson();
 	private static final Logger LOGGER = LogManager.getLogger(DomainDynamicRegistry.class);
 	private final Map<SketchKey, DtSketchBuilder> dtDefinitionBuilders = new HashMap<>();
 
@@ -68,25 +74,41 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 
 	/** {@inheritDoc} */
 	@Override
-	public SketchSupplier supplyModel(final DslSketch dslDefinition) {
-		return (notebook) -> createSketch(notebook, dslDefinition);
-	}
-
-	private Sketch createSketch(final Notebook notebook, final DslSketch dslSketch) {
+	public List<SketchSupplier> supplyModels(final DslSketch dslSketch) {
 
 		final DslEntity dslEntity = dslSketch.getEntity();
 		if (dslEntity.equals(DomainGrammar.DOMAIN_ENTITY)) {
-			return createDomain(notebook, dslSketch);
+			return Collections.singletonList((notebook) -> createDomain(notebook, dslSketch));
 		} else if (dslEntity.equals(DomainGrammar.DT_DEFINITION_ENTITY)) {
-			return createDtSketch(notebook, dslSketch);
+			return handleDtSketch(dslSketch);
 		} else if (dslEntity.equals(DomainGrammar.FRAGMENT_ENTITY)) {
-			return createFragmentDtSketch(notebook, dslSketch);
+			return Collections.singletonList((notebook) -> createFragmentDtSketch(notebook, dslSketch));
 		} else if (dslEntity.equals(DomainGrammar.ASSOCIATION_ENTITY)) {
-			return createAssociationSimpleSketch(notebook, dslSketch);
+			return Collections.singletonList((notebook) -> createAssociationSimpleSketch(notebook, dslSketch));
 		} else if (dslEntity.equals(DomainGrammar.ASSOCIATION_NN_ENTITY)) {
-			return createAssociationNNSketch(notebook, dslSketch);
+			return Collections.singletonList((notebook) -> createAssociationNNSketch(notebook, dslSketch));
 		}
 		throw new IllegalStateException("The type of definition" + dslSketch + " is not managed by me");
+	}
+
+	private List<SketchSupplier> handleDtSketch(final DslSketch dslSketch) {
+		final String valuesAsJson = (String) dslSketch.getPropertyValue("values");
+		if (valuesAsJson != null) {
+			return List.of(
+					(notebook) -> createDtSketch(notebook, dslSketch),
+					(notebook) -> createMasterDataSketch(
+							dslSketch.getPackageName() + '.' + SketchUtil.getLocalName(dslSketch.getKey().getName(), DtSketch.PREFIX),
+							valuesAsJson));
+		}
+		return Collections.singletonList((notebook) -> createDtSketch(notebook, dslSketch));
+
+	}
+
+	private static StaticMasterDataSketch createMasterDataSketch(final String className, final String valuesAsJson) {
+		final Map<String, MasterDataValue> values = GSON.fromJson(valuesAsJson, new TypeToken<Map<String, MasterDataValue>>() {
+			//nothing
+		}.getType());
+		return new StaticMasterDataSketch(className, values);
 	}
 
 	private static DomainSketch createDomain(final Notebook notebook, final DslSketch dslSketchDomain) {

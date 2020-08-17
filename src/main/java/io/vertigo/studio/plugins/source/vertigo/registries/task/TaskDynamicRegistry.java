@@ -18,6 +18,9 @@
  */
 package io.vertigo.studio.plugins.source.vertigo.registries.task;
 
+import java.util.Collections;
+import java.util.List;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
 import io.vertigo.studio.notebook.Notebook;
@@ -44,12 +47,12 @@ public final class TaskDynamicRegistry implements DynamicRegistry {
 
 	/** {@inheritDoc} */
 	@Override
-	public SketchSupplier supplyModel(final DslSketch dslDefinition) {
+	public List<SketchSupplier> supplyModels(final DslSketch dslDefinition) {
 		final DslEntity dslEntity = dslDefinition.getEntity();
 
 		if (TaskGrammar.TASK_DEFINITION_ENTITY.equals(dslEntity)) {
 			//Only taskDefinitions are concerned
-			return notebook -> createTaskSketch(notebook, dslDefinition);
+			return Collections.singletonList(notebook -> createTaskSketch(notebook, dslDefinition));
 		}
 		throw new IllegalStateException("The type of definition" + dslDefinition + " is not managed by me");
 	}
