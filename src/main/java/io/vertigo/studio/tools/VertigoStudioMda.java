@@ -240,7 +240,7 @@ public final class VertigoStudioMda {
 
 	private static NotebookConfig loadStudioProjectConfig(final String configFileUrl) {
 		try {
-			return StudioConfigJsonParser.parseJson(new URL(configFileUrl));
+			return StudioConfigYamlParser.parseYaml(new URL(configFileUrl));
 		} catch (IOException | URISyntaxException e) {
 			throw WrappedException.wrap(e);
 		}
