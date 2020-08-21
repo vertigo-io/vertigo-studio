@@ -60,9 +60,11 @@ public final class DslKspRule extends AbstractRule<Dummy, List<Object>> {
 		//-----
 		final PegRule<DslSketch> definitionRule = new DslDynamicDefinitionRule("create", grammar);
 		final PegRule<DslSketch> templateRule = new DslDynamicDefinitionRule("alter", grammar);
+		final PegRule<String> declareRule = new DslDeclareDefinitionRule(grammar);
 		final PegRule<PegChoice> declarationChoiceRule = PegRules.choice(//"definition or template")
 				definitionRule, //0
-				templateRule //1
+				templateRule, //1
+				declareRule //2
 		);
 		final PegRule<List<PegChoice>> declarationChoicesRule = PegRules.zeroOrMore(declarationChoiceRule, true);
 		return PegRules.sequence(
@@ -93,6 +95,11 @@ public final class DslKspRule extends AbstractRule<Dummy, List<Object>> {
 					break;
 				case 1:
 					handleTemplateRule((DslSketch) declarationChoice.getValue());
+					break;
+				case 2:
+					//declare
+					// do nothing we just want to declare in ksp that some sketch are defined in other resources but can be referenced in ksp files with no error
+					// this is particularely useful for the Xtext plugin, that only parses ksp files
 					break;
 				default:
 					throw new IllegalArgumentException("case " + declarationChoice.getChoiceIndex() + " not implemented");
