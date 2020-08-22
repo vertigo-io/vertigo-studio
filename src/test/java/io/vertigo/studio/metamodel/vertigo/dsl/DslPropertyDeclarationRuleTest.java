@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 
 import io.vertigo.commons.peg.PegNoMatchFoundException;
 import io.vertigo.commons.peg.PegResult;
-import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslPropertyEntry;
+import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw.DslPropertyEntry;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslPropertyDeclarationRule;
 
 public final class DslPropertyDeclarationRuleTest {

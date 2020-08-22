@@ -33,11 +33,11 @@ import io.vertigo.studio.plugins.source.vertigo.registries.domain.DomainGrammar;
  */
 final class SearchGrammar implements DslGrammar {
 	/** Index definition. */
-	public static final DslEntity INDEX_DEFINITION_ENTITY;
+	public static final DslEntity INDEX_ENTITY;
 	/** Facet definition. */
-	public static final DslEntity FACET_DEFINITION_ENTITY;
+	public static final DslEntity FACET_ENTITY;
 	/** Faceted query definition. */
-	public static final DslEntity FACETED_QUERY_DEFINITION_ENTITY;
+	public static final DslEntity FACETED_QUERY_ENTITY;
 
 	/** Search loader id. */
 	public static final String SEARCH_LOADER_PROPERTY = "LOADER_ID";
@@ -97,9 +97,9 @@ final class SearchGrammar implements DslGrammar {
 				.addRequiredField(INDEX_COPY_FROM_PROPERTY, String)
 				.build();
 
-		INDEX_DEFINITION_ENTITY = DslEntity.builder("IndexDefinition")
-				.addRequiredField("keyConcept", DomainGrammar.DT_DEFINITION_ENTITY.getLink())
-				.addRequiredField("dtIndex", DomainGrammar.DT_DEFINITION_ENTITY.getLink())
+		INDEX_ENTITY = DslEntity.builder("IndexDefinition")
+				.addRequiredField("keyConcept", DomainGrammar.DT_ENTITY.getLink())
+				.addRequiredField("dtIndex", DomainGrammar.DT_ENTITY.getLink())
 				.addManyFields(INDEX_COPY_TO_PROPERTY, indexCopyEntity)
 				.addRequiredField(SEARCH_LOADER_PROPERTY, String)
 				.build();
@@ -115,8 +115,8 @@ final class SearchGrammar implements DslGrammar {
 				.addRequiredField(PARAMS_VALUE_PROPERTY, String)
 				.build();
 
-		FACET_DEFINITION_ENTITY = DslEntity.builder("FacetDefinition")
-				.addRequiredField("dtDefinition", DomainGrammar.DT_DEFINITION_ENTITY.getLink())
+		FACET_ENTITY = DslEntity.builder("FacetDefinition")
+				.addRequiredField("dtDefinition", DomainGrammar.DT_ENTITY.getLink())
 				.addRequiredField(FIELD_NAME, String)
 				.addRequiredField(KspProperty.LABEL, String)
 				.addOptionalField(FACET_MULTISELECTABLE, Boolean) //facultative, default to false
@@ -125,21 +125,21 @@ final class SearchGrammar implements DslGrammar {
 				.addManyFields("params", facetParamsEntity)
 				.build();
 
-		FACETED_QUERY_DEFINITION_ENTITY = DslEntity.builder("FacetedQueryDefinition")
-				.addRequiredField("keyConcept", DomainGrammar.DT_DEFINITION_ENTITY.getLink())
+		FACETED_QUERY_ENTITY = DslEntity.builder("FacetedQueryDefinition")
+				.addRequiredField("keyConcept", DomainGrammar.DT_ENTITY.getLink())
 				.addRequiredField("domainCriteria", DomainGrammar.DOMAIN_ENTITY.getLink())
 				.addRequiredField(LIST_FILTER_BUILDER_CLASS, String)
 				.addRequiredField(LIST_FILTER_BUILDER_QUERY, String)
 				.addOptionalField(GEO_SEARCH_QUERY, String)
-				.addManyFields("facets", FACET_DEFINITION_ENTITY.getLink())
+				.addManyFields("facets", FACET_ENTITY.getLink())
 				.build();
 	}
 
 	@Override
 	public List<DslEntity> getEntities() {
 		return List.of(
-				INDEX_DEFINITION_ENTITY,
-				FACET_DEFINITION_ENTITY,
-				FACETED_QUERY_DEFINITION_ENTITY);
+				INDEX_ENTITY,
+				FACET_ENTITY,
+				FACETED_QUERY_ENTITY);
 	}
 }

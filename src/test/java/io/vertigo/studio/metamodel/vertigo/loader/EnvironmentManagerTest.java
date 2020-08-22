@@ -33,45 +33,45 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchesRepository;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawRepository;
 
 public final class EnvironmentManagerTest {
-	private final DslSketchesRepository dslDefinitionRepository = DslDynamicRegistryMock.createDslSketchesRepository();
+	private final DslRawRepository rawRepository = DslSketchFactoryMock.createDRawRepository();
 
 	@Test
 	public void simpleTest() {
 		final Notebook notebook = new Notebook();
 
-		final DslSketch address1Definition = DslSketch.builder("MockMainAddress", PersonGrammar.ADDRESS_ENTITY)
+		final DslRaw address1Definition = DslRaw.builder("MockMainAddress", PersonGrammar.ADDRESS_ENTITY)
 				.withPackageName("io.vertigo.test.model")
 				.addPropertyValue(STREET, "1, rue du louvre")
 				.addPropertyValue(POSTAL_CODE, "75008")
 				.addPropertyValue(CITY, "Paris")
 				.build();
-		dslDefinitionRepository.addSketch(address1Definition);
+		rawRepository.addRaw(address1Definition);
 
-		final DslSketch address2Definition = DslSketch.builder("MockSecondAddress", PersonGrammar.ADDRESS_ENTITY)
+		final DslRaw address2Definition = DslRaw.builder("MockSecondAddress", PersonGrammar.ADDRESS_ENTITY)
 				.withPackageName("io.vertigo.test.model")
 				.addPropertyValue(STREET, "105, rue martin")
 				.addPropertyValue(POSTAL_CODE, "75008")
 				.addPropertyValue(CITY, "Paris CEDEX")
 				.build();
-		dslDefinitionRepository.addSketch(address2Definition);
+		rawRepository.addRaw(address2Definition);
 
-		final DslSketch personDefinition = DslSketch.builder("MockMisterBean", PersonGrammar.PERSON_ENTITY)
+		final DslRaw personDefinition = DslRaw.builder("MockMisterBean", PersonGrammar.PERSON_ENTITY)
 				.withPackageName("io.vertigo.test.model")
 				.addPropertyValue(NAME, "105, rue martin")
 				.addPropertyValue(FIRST_NAME, "75008")
 				.addPropertyValue(AGE, 42)
 				.addPropertyValue(HEIGHT, 175.0d)
 				.addPropertyValue(MALE, Boolean.TRUE)
-				.addDefinitionLink(MAIN_ADDRESS, "MockMainAddress")
-				.addDefinitionLink(PersonGrammar.SECOND_ADDRESS, "MockSecondAddress")
+				.addRawLink(MAIN_ADDRESS, "MockMainAddress")
+				.addRawLink(PersonGrammar.SECOND_ADDRESS, "MockSecondAddress")
 				.build();
-		dslDefinitionRepository.addSketch(personDefinition);
+		rawRepository.addRaw(personDefinition);
 
-		dslDefinitionRepository.solve(notebook);
+		rawRepository.solve(notebook);
 		assertNotNull(personDefinition);
 	}
 
@@ -79,13 +79,13 @@ public final class EnvironmentManagerTest {
 	public void badTypeTest() {
 		Assertions.assertThrows(ClassCastException.class,
 				() -> {
-					final DslSketch address1Definition = DslSketch.builder("MockMainAddress", PersonGrammar.ADDRESS_ENTITY)
+					final DslRaw address1Definition = DslRaw.builder("MockMainAddress", PersonGrammar.ADDRESS_ENTITY)
 							.withPackageName("io.vertigo.test.model")
 							.addPropertyValue(STREET, "1, rue du louvre")
 							.addPropertyValue(POSTAL_CODE, 75008)
 							.addPropertyValue(CITY, "Paris")
 							.build();
-					dslDefinitionRepository.addSketch(address1Definition);
+					rawRepository.addRaw(address1Definition);
 				});
 
 	}

@@ -43,9 +43,9 @@ import io.vertigo.datamodel.structure.model.KeyConcept;
 import io.vertigo.datamodel.structure.stereotype.DataSpace;
 import io.vertigo.studio.notebook.domain.StudioStereotype;
 import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchBuilder;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchesRepository;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawBuilder;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawRepository;
 import io.vertigo.studio.plugins.source.vertigo.loaders.Loader;
 import io.vertigo.studio.plugins.source.vertigo.registries.domain.DomainGrammar;
 
@@ -86,19 +86,19 @@ public final class AnnotationLoader implements Loader {
 
 	/** {@inheritDoc} */
 	@Override
-	public void load(final String resourcePath, final DslSketchesRepository dslDefinitionRepository) {
+	public void load(final String resourcePath, final DslRawRepository rawRepository) {
 		Assertion.check()
 				.isNotBlank(resourcePath)
-				.isNotNull(dslDefinitionRepository);
+				.isNotNull(rawRepository);
 		//-----
 		//--Enregistrement des fichiers java annotés
 		for (final Class<DtObject> javaClass : selectClasses(resourcePath, DtObject.class)) {
-			load(javaClass, dslDefinitionRepository);
+			load(javaClass, rawRepository);
 		}
 	}
 
-	private static void load(final Class<DtObject> clazz, final DslSketchesRepository dslDefinitionRepository) {
-		Assertion.check().isNotNull(dslDefinitionRepository);
+	private static void load(final Class<DtObject> clazz, final DslRawRepository rawRepository) {
+		Assertion.check().isNotNull(rawRepository);
 		//-----
 		final String simpleName = clazz.getSimpleName();
 		final String packageName = clazz.getPackage().getName();
@@ -113,10 +113,10 @@ public final class AnnotationLoader implements Loader {
 					break;
 				}
 			}
-			parseFragment(clazz, fragmentOf, dtDefinitionName, packageName, dslDefinitionRepository);
+			parseFragment(clazz, fragmentOf, dtDefinitionName, packageName, rawRepository);
 		} else {
 			final StudioStereotype stereotype = parseStereotype(clazz);
-			parseDtDefinition(clazz, stereotype, dtDefinitionName, packageName, dslDefinitionRepository);
+			parseDtDefinition(clazz, stereotype, dtDefinitionName, packageName, rawRepository);
 		}
 
 	}
@@ -124,14 +124,14 @@ public final class AnnotationLoader implements Loader {
 	private static void parseFragment(
 			final Class<DtObject> clazz,
 			final String fragmentOf,
-			final String dtDefinitionName,
+			final String dtName,
 			final String packageName,
-			final DslSketchesRepository dynamicModelRepository) {
-		final DslSketchBuilder dtDefinitionBuilder = DslSketch.builder(dtDefinitionName, DomainGrammar.FRAGMENT_ENTITY)
+			final DslRawRepository rawRepository) {
+		final DslRawBuilder dtRawBuilder = DslRaw.builder(dtName, DomainGrammar.FRAGMENT_ENTITY)
 				.withPackageName(packageName)
-				.addDefinitionLink("from", fragmentOf);
+				.addRawLink("from", fragmentOf);
 
-		parseDynamicDefinitionBuilder(clazz, dtDefinitionBuilder, dynamicModelRepository);
+		parseRawBuilder(clazz, dtRawBuilder, rawRepository);
 	}
 
 	private static void parseDtDefinition(
@@ -139,8 +139,8 @@ public final class AnnotationLoader implements Loader {
 			final StudioStereotype stereotype,
 			final String dtDefinitionName,
 			final String packageName,
-			final DslSketchesRepository dynamicModelRepository) {
-		final DslSketchBuilder dtSketchBuilder = DslSketch.builder(dtDefinitionName, DomainGrammar.DT_DEFINITION_ENTITY)
+			final DslRawRepository rawRepository) {
+		final DslRawBuilder dtSketchBuilder = DslRaw.builder(dtDefinitionName, DomainGrammar.DT_ENTITY)
 				.withPackageName(packageName)
 				.addPropertyValue(STEREOTYPE, stereotype.name());
 
@@ -148,10 +148,10 @@ public final class AnnotationLoader implements Loader {
 		if (stereotype.isPersistent()) {
 			dtSketchBuilder.addPropertyValue(DATA_SPACE, parseDataSpaceAnnotation(clazz));
 		}
-		parseDynamicDefinitionBuilder(clazz, dtSketchBuilder, dynamicModelRepository);
+		parseRawBuilder(clazz, dtSketchBuilder, rawRepository);
 	}
 
-	private static void parseDynamicDefinitionBuilder(final Class<DtObject> clazz, final DslSketchBuilder dtSketchBuilder, final DslSketchesRepository dynamicModelRepository) {
+	private static void parseRawBuilder(final Class<DtObject> clazz, final DslRawBuilder dtRawBuilder, final DslRawRepository rawRepository) {
 		final String packageName = clazz.getPackage().getName();
 
 		// Le tri des champs et des méthodes par ordre alphabétique est important car classe.getMethods() retourne
@@ -164,20 +164,20 @@ public final class AnnotationLoader implements Loader {
 
 		for (final Field field : fields) {
 			//On regarde si il s'agit d'un champ
-			parseFieldAnnotations(field, dtSketchBuilder);
-			parseAssociationDefinition(dynamicModelRepository, field, packageName);
+			parseFieldAnnotations(field, dtRawBuilder);
+			parseAssociationDefinition(rawRepository, field, packageName);
 		}
 
 		final Method[] methods = clazz.getMethods();
 		Arrays.sort(methods, Comparator.comparing(Method::getName));
 		for (final Method method : methods) {
-			parseMethodAnnotations(method, dtSketchBuilder);
+			parseMethodAnnotations(method, dtRawBuilder);
 			//On regarde si il s'agit d'une associations
-			parseAssociationDefinition(dynamicModelRepository, method, packageName);
+			parseAssociationDefinition(rawRepository, method, packageName);
 		}
 
-		final DslSketch dtSketch = dtSketchBuilder.build();
-		dynamicModelRepository.addSketch(dtSketch);
+		final DslRaw raw = dtRawBuilder.build();
+		rawRepository.addRaw(raw);
 	}
 
 	private static String parseDataSpaceAnnotation(final Class<?> clazz) {
@@ -203,25 +203,25 @@ public final class AnnotationLoader implements Loader {
 		return StudioStereotype.ValueObject;
 	}
 
-	private static void parseAssociationDefinition(final DslSketchesRepository dynamicModelRepository, final Field field, final String packageName) {
+	private static void parseAssociationDefinition(final DslRawRepository rawRepository, final Field field, final String packageName) {
 		for (final Annotation annotation : field.getAnnotations()) {
-			parseAssociationDefinition(dynamicModelRepository, annotation, packageName);
+			parseAssociationDefinition(rawRepository, annotation, packageName);
 		}
 	}
 
-	private static void parseAssociationDefinition(final DslSketchesRepository dynamicModelRepository, final Method method, final String packageName) {
+	private static void parseAssociationDefinition(final DslRawRepository rawRepository, final Method method, final String packageName) {
 		for (final Annotation annotation : method.getAnnotations()) {
-			parseAssociationDefinition(dynamicModelRepository, annotation, packageName);
+			parseAssociationDefinition(rawRepository, annotation, packageName);
 		}
 	}
 
-	private static void parseAssociationDefinition(final DslSketchesRepository dynamicModelRepository, final Annotation annotation, final String packageName) {
+	private static void parseAssociationDefinition(final DslRawRepository rawRepository, final Annotation annotation, final String packageName) {
 		if (annotation instanceof io.vertigo.datamodel.structure.stereotype.Association) {
 			final io.vertigo.datamodel.structure.stereotype.Association association = (io.vertigo.datamodel.structure.stereotype.Association) annotation;
 			//============================================================
 			//Attention pamc inverse dans oom les déclarations des objets !!
 
-			final DslSketch associationDefinition = DslSketch.builder(association.name(), DomainGrammar.ASSOCIATION_ENTITY)
+			final DslRaw associationDefinition = DslRaw.builder(association.name(), DomainGrammar.ASSOCIATION_ENTITY)
 					.withPackageName(packageName)
 					// associationDefinition.
 					//On recherche les attributs (>DtField) de cet classe(>Dt_DEFINITION)
@@ -236,22 +236,22 @@ public final class AnnotationLoader implements Loader {
 					.addPropertyValue(ROLE_B, association.foreignRole())
 					.addPropertyValue(LABEL_B, association.foreignRole())
 					//---
-					.addDefinitionLink("dtDefinitionA", association.primaryDtDefinitionName())
-					.addDefinitionLink("dtDefinitionB", association.foreignDtDefinitionName())
+					.addRawLink("dtDefinitionA", association.primaryDtDefinitionName())
+					.addRawLink("dtDefinitionB", association.foreignDtDefinitionName())
 					//---
 					.addPropertyValue(FK_FIELD_NAME, association.fkFieldName())
 					.build();
 
-			if (!dynamicModelRepository.contains(associationDefinition.getKey())) {
+			if (!rawRepository.contains(associationDefinition.getKey())) {
 				//Les associations peuvent être déclarées sur les deux noeuds de l'association.
-				dynamicModelRepository.addSketch(associationDefinition);
+				rawRepository.addRaw(associationDefinition);
 			}
 		} else if (annotation instanceof io.vertigo.datamodel.structure.stereotype.AssociationNN) {
 			final io.vertigo.datamodel.structure.stereotype.AssociationNN association = (io.vertigo.datamodel.structure.stereotype.AssociationNN) annotation;
 			//============================================================
 
 			//Attention pamc inverse dans oom les déclarations des objets !!
-			final DslSketch associationDefinition = DslSketch.builder(association.name(), DomainGrammar.ASSOCIATION_NN_ENTITY)
+			final DslRaw associationDefinition = DslRaw.builder(association.name(), DomainGrammar.ASSOCIATION_NN_ENTITY)
 					.withPackageName(packageName)
 					.addPropertyValue(TABLE_NAME, association.tableName())
 
@@ -267,18 +267,18 @@ public final class AnnotationLoader implements Loader {
 					.addPropertyValue(ROLE_B, association.roleB())
 					.addPropertyValue(LABEL_B, association.labelB())
 
-					.addDefinitionLink("dtDefinitionA", association.dtDefinitionA())
-					.addDefinitionLink("dtDefinitionB", association.dtDefinitionB())
+					.addRawLink("dtDefinitionA", association.dtDefinitionA())
+					.addRawLink("dtDefinitionB", association.dtDefinitionB())
 					.build();
 
-			if (!dynamicModelRepository.contains(associationDefinition.getKey())) {
+			if (!rawRepository.contains(associationDefinition.getKey())) {
 				//Les associations peuvent être déclarées sur les deux noeuds de l'association.
-				dynamicModelRepository.addSketch(associationDefinition);
+				rawRepository.addRaw(associationDefinition);
 			}
 		}
 	}
 
-	private static void parseFieldAnnotations(final Field field, final DslSketchBuilder dtDefinition) {
+	private static void parseFieldAnnotations(final Field field, final DslRawBuilder dtDefinition) {
 		for (final Annotation annotation : field.getAnnotations()) {
 			if (annotation instanceof io.vertigo.datamodel.structure.stereotype.Field) {
 				//Le nom est automatiquement déduit du nom du champ
@@ -288,7 +288,7 @@ public final class AnnotationLoader implements Loader {
 		}
 	}
 
-	private static void parseMethodAnnotations(final Method method, final DslSketchBuilder dtDefinition) {
+	private static void parseMethodAnnotations(final Method method, final DslRawBuilder dtDefinition) {
 		for (final Annotation annotation : method.getAnnotations()) {
 			if (annotation instanceof io.vertigo.datamodel.structure.stereotype.Field) {
 				//Le nom est automatiquement déduit du nom de la méthode
@@ -301,36 +301,36 @@ public final class AnnotationLoader implements Loader {
 	/*
 	 * Centralisation du parsing des annotations liées à un champ.
 	 */
-	private static void parseAnnotation(final String fieldName, final DslSketchBuilder dtDefinition, final io.vertigo.datamodel.structure.stereotype.Field field) {
+	private static void parseAnnotation(final String fieldName, final DslRawBuilder dtRawBuilder, final io.vertigo.datamodel.structure.stereotype.Field field) {
 		//Si on trouve un domaine on est dans un objet dynamo.
 		final FieldType type = FieldType.valueOf(field.type());
 
 		switch (type) {
 			case ID:
-				final DslSketch idField = DslSketch.builder(fieldName, DomainGrammar.DT_ID_FIELD_ENTITY)
-						.addDefinitionLink("domain", field.smartType())
+				final DslRaw idField = DslRaw.builder(fieldName, DomainGrammar.DT_ID_FIELD_ENTITY)
+						.addRawLink("domain", field.smartType())
 						.addPropertyValue(LABEL, field.label())
 						.build();
-				dtDefinition.addChildDefinition(DomainGrammar.ID_FIELD, idField);
+				dtRawBuilder.addSubRaw(DomainGrammar.ID_FIELD, idField);
 				break;
 			case DATA:
-				final DslSketch dataField = DslSketch.builder(fieldName, DomainGrammar.DT_DATA_FIELD_ENTITY)
-						.addDefinitionLink("domain", field.smartType())
+				final DslRaw dataField = DslRaw.builder(fieldName, DomainGrammar.DT_DATA_FIELD_ENTITY)
+						.addRawLink("domain", field.smartType())
 						.addPropertyValue(LABEL, field.label())
 						.addPropertyValue(CARDINALITY, field.cardinality().toSymbol())
 						.addPropertyValue(PERSISTENT, field.persistent())
 						.build();
-				dtDefinition.addChildDefinition(DomainGrammar.DATA_FIELD, dataField);
+				dtRawBuilder.addSubRaw(DomainGrammar.DATA_FIELD, dataField);
 				break;
 			case COMPUTED:
-				final DslSketch computedField = DslSketch.builder(fieldName, DomainGrammar.DT_COMPUTED_FIELD_ENTITY)
-						.addDefinitionLink("domain", field.smartType())
+				final DslRaw computedField = DslRaw.builder(fieldName, DomainGrammar.DT_COMPUTED_FIELD_ENTITY)
+						.addRawLink("domain", field.smartType())
 						.addPropertyValue(LABEL, field.label())
 						.addPropertyValue(CARDINALITY, field.cardinality().toSymbol())
 						//.addPropertyValue(EXPRESSION, null) no expression on annotation
 						.build();
 				//Valeurs renseignées automatiquement parce que l'on est dans le cas d'un champ calculé
-				dtDefinition.addChildDefinition(DomainGrammar.COMPUTED_FIELD, computedField);
+				dtRawBuilder.addSubRaw(DomainGrammar.COMPUTED_FIELD, computedField);
 				break;
 			case FOREIGN_KEY:
 				//on ne fait rien puisque le champ est défini par une association.

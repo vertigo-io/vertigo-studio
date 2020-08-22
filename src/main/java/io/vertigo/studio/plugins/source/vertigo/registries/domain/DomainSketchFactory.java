@@ -36,7 +36,6 @@ import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
 import io.vertigo.studio.notebook.SketchKey;
-import io.vertigo.studio.notebook.SketchSupplier;
 import io.vertigo.studio.notebook.domain.ComputedExpression;
 import io.vertigo.studio.notebook.domain.DomainSketch;
 import io.vertigo.studio.notebook.domain.DtSketch;
@@ -48,17 +47,17 @@ import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
 import io.vertigo.studio.notebook.domain.association.AssociationSketchNode;
 import io.vertigo.studio.notebook.domain.association.AssociationUtil;
 import io.vertigo.studio.plugins.source.vertigo.KspProperty;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchKey;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DynamicRegistry;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawKey;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslSketchFactory;
 
 /**
  * @author pchretien, mlaroche
  */
-public final class DomainDynamicRegistry implements DynamicRegistry {
-	private static final Logger LOGGER = LogManager.getLogger(DomainDynamicRegistry.class);
+public final class DomainSketchFactory implements DslSketchFactory {
+	private static final Logger LOGGER = LogManager.getLogger(DomainSketchFactory.class);
 	private final Map<SketchKey, DtSketchBuilder> dtDefinitionBuilders = new HashMap<>();
 
 	@Override
@@ -68,44 +67,39 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 
 	/** {@inheritDoc} */
 	@Override
-	public SketchSupplier supplyModel(final DslSketch dslDefinition) {
-		return (notebook) -> createSketch(notebook, dslDefinition);
-	}
-
-	private Sketch createSketch(final Notebook notebook, final DslSketch dslSketch) {
-
-		final DslEntity dslEntity = dslSketch.getEntity();
-		if (dslEntity.equals(DomainGrammar.DOMAIN_ENTITY)) {
-			return createDomain(notebook, dslSketch);
-		} else if (dslEntity.equals(DomainGrammar.DT_DEFINITION_ENTITY)) {
-			return createDtSketch(notebook, dslSketch);
-		} else if (dslEntity.equals(DomainGrammar.FRAGMENT_ENTITY)) {
-			return createFragmentDtSketch(notebook, dslSketch);
-		} else if (dslEntity.equals(DomainGrammar.ASSOCIATION_ENTITY)) {
-			return createAssociationSimpleSketch(notebook, dslSketch);
-		} else if (dslEntity.equals(DomainGrammar.ASSOCIATION_NN_ENTITY)) {
-			return createAssociationNNSketch(notebook, dslSketch);
+	public Sketch create(final Notebook notebook, final DslRaw raw) {
+		final DslEntity entity = raw.getEntity();
+		if (entity.equals(DomainGrammar.DOMAIN_ENTITY)) {
+			return createDomain(notebook, raw);
+		} else if (entity.equals(DomainGrammar.DT_ENTITY)) {
+			return createDtSketch(notebook, raw);
+		} else if (entity.equals(DomainGrammar.FRAGMENT_ENTITY)) {
+			return createFragmentDtSketch(notebook, raw);
+		} else if (entity.equals(DomainGrammar.ASSOCIATION_ENTITY)) {
+			return createAssociationSimpleSketch(notebook, raw);
+		} else if (entity.equals(DomainGrammar.ASSOCIATION_NN_ENTITY)) {
+			return createAssociationNNSketch(notebook, raw);
 		}
-		throw new IllegalStateException("The type of definition" + dslSketch + " is not managed by me");
+		throw new IllegalStateException("his kind of raw " + entity + " is not managed by me");
 	}
 
-	private static DomainSketch createDomain(final Notebook notebook, final DslSketch dslSketchDomain) {
-		final DslSketchKey domainKey = dslSketchDomain.getKey();
-		final String type = dslSketchDomain.getSketchKeyByFieldName("dataType").getName();
-		final Properties properties = extractProperties(dslSketchDomain);
+	private static DomainSketch createDomain(final Notebook notebook, final DslRaw domainRaw) {
+		final DslRawKey domainRawKey = domainRaw.getKey();
+		final String type = domainRaw.getRawKeyByFieldName("dataType").getName();
+		final Properties properties = extractProperties(domainRaw);
 		switch (type) {
 			case "DtObject":
-				return DomainSketch.of(domainKey.getName(), properties, SketchKey.of(properties.getProperty("TYPE")));
+				return DomainSketch.of(domainRawKey.getName(), properties, SketchKey.of(properties.getProperty("TYPE")));
 			case "ValueObject":
-				return DomainSketch.of(domainKey.getName(), properties, ClassUtil.classForName(properties.getProperty("TYPE")));
+				return DomainSketch.of(domainRawKey.getName(), properties, ClassUtil.classForName(properties.getProperty("TYPE")));
 			default:
 				final BasicType dataType = BasicType.valueOf(type);
-				return DomainSketch.of(domainKey.getName(), properties, dataType);
+				return DomainSketch.of(domainRawKey.getName(), properties, dataType);
 		}
 	}
 
-	private static DtSketch createFragmentDtSketch(final Notebook notebook, final DslSketch dslSketch) {
-		final DtSketch from = notebook.resolve(dslSketch.getSketchKeyByFieldName("from").getName(), DtSketch.class);
+	private static DtSketch createFragmentDtSketch(final Notebook notebook, final DslRaw dslSketch) {
+		final DtSketch from = notebook.resolve(dslSketch.getRawKeyByFieldName("from").getName(), DtSketch.class);
 
 		final String sortFieldName = (String) dslSketch.getPropertyValue(KspProperty.SORT_FIELD);
 		final String displayFieldName = (String) dslSketch.getPropertyValue(KspProperty.DISPLAY_FIELD);
@@ -122,7 +116,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 				.withHandleField(handleFieldName);
 
 		//1. adds aliases
-		for (final DslSketch alias : dslSketch.getChildSketches("alias")) {
+		for (final DslRaw alias : dslSketch.getSubRaws("alias")) {
 			final DtSketchField aliasDtField = from.getField(alias.getKey().getName());
 
 			//--- REQUIRED
@@ -143,11 +137,11 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 
 		//2. adds data and computed fields
 		//Déclaration des champs du DT
-		final List<DslSketch> fields = dslSketch.getChildSketches(DomainGrammar.DATA_FIELD);
+		final List<DslRaw> fields = dslSketch.getSubRaws(DomainGrammar.DATA_FIELD);
 		populateDataDtField(notebook, dtDefinitionBuilder, fields);
 
 		//Déclaration des champs calculés
-		final List<DslSketch> computedFields = dslSketch.getChildSketches(DomainGrammar.COMPUTED_FIELD);
+		final List<DslRaw> computedFields = dslSketch.getSubRaws(DomainGrammar.COMPUTED_FIELD);
 		populateComputedDtField(notebook, dtDefinitionBuilder, computedFields);
 
 		final DtSketch dtDefinition = dtDefinitionBuilder
@@ -169,7 +163,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 	/**
 	 * @param dtDslSketch Définition de DT
 	 */
-	private DtSketch createDtSketch(final Notebook notebook, final DslSketch dtDslSketch) {
+	private DtSketch createDtSketch(final Notebook notebook, final DslRaw dtDslSketch) {
 		//Déclaration de la définition
 		final String sortFieldName = (String) dtDslSketch.getPropertyValue(KspProperty.SORT_FIELD);
 		final String displayFieldName = (String) dtDslSketch.getPropertyValue(KspProperty.DISPLAY_FIELD);
@@ -184,7 +178,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		final String fragmentOf = (String) dtDslSketch.getPropertyValue(KspProperty.FRAGMENT_OF);
 		//-----
 		//-----
-		final DslSketchKey dtSketchKey = dtDslSketch.getKey();
+		final DslRawKey dtSketchKey = dtDslSketch.getKey();
 		final DtSketchBuilder dtDefinitionBuilder = DtSketch.builder(dtSketchKey.getName())
 				.withPackageName(dtDslSketch.getPackageName())
 				.withDataSpace(dataSpace)
@@ -204,15 +198,15 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		dtDefinitionBuilders.put(SketchKey.of(dtSketchKey.getName()), dtDefinitionBuilder);
 
 		//Déclaration de la clé primaire
-		final List<DslSketch> keys = dtDslSketch.getChildSketches(DomainGrammar.ID_FIELD);
+		final List<DslRaw> keys = dtDslSketch.getSubRaws(DomainGrammar.ID_FIELD);
 		populateIdDtField(notebook, dtDefinitionBuilder, keys);
 
 		//Déclaration des champs du DT
-		final List<DslSketch> fields = dtDslSketch.getChildSketches(DomainGrammar.DATA_FIELD);
+		final List<DslRaw> fields = dtDslSketch.getSubRaws(DomainGrammar.DATA_FIELD);
 		populateDataDtField(notebook, dtDefinitionBuilder, fields);
 
 		//Déclaration des champs calculés
-		final List<DslSketch> computedFields = dtDslSketch.getChildSketches(DomainGrammar.COMPUTED_FIELD);
+		final List<DslRaw> computedFields = dtDslSketch.getSubRaws(DomainGrammar.COMPUTED_FIELD);
 		populateComputedDtField(notebook, dtDefinitionBuilder, computedFields);
 
 		return dtDefinitionBuilder.build();
@@ -226,10 +220,10 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 	private static void populateIdDtField(
 			final Notebook notebook,
 			final DtSketchBuilder dtDefinitionBuilder,
-			final List<DslSketch> fields) {
+			final List<DslRaw> fields) {
 
-		for (final DslSketch field : fields) {
-			final DomainSketch domainSketch = notebook.resolve(field.getSketchKeyByFieldName("domain").getName(), DomainSketch.class);
+		for (final DslRaw field : fields) {
+			final DomainSketch domainSketch = notebook.resolve(field.getRawKeyByFieldName("domain").getName(), DomainSketch.class);
 			//--
 			Assertion.check().isTrue(field.getPropertyNames().contains(KspProperty.LABEL), "Label est une propriété obligatoire");
 			final String label = (String) field.getPropertyValue(KspProperty.LABEL);
@@ -248,10 +242,10 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 	private static void populateDataDtField(
 			final Notebook notebook,
 			final DtSketchBuilder dtDefinitionBuilder,
-			final List<DslSketch> fields) {
+			final List<DslRaw> fields) {
 
-		for (final DslSketch field : fields) {
-			final DomainSketch domainSketch = notebook.resolve(field.getSketchKeyByFieldName("domain").getName(), DomainSketch.class);
+		for (final DslRaw field : fields) {
+			final DomainSketch domainSketch = notebook.resolve(field.getRawKeyByFieldName("domain").getName(), DomainSketch.class);
 			//--
 			Assertion.check().isTrue(field.getPropertyNames().contains(KspProperty.LABEL), "Label est une propriété obligatoire");
 			final String label = (String) field.getPropertyValue(KspProperty.LABEL);
@@ -277,10 +271,10 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 	private static void populateComputedDtField(
 			final Notebook notebook,
 			final DtSketchBuilder dtDefinitionBuilder,
-			final List<DslSketch> fields) {
+			final List<DslRaw> fields) {
 
-		for (final DslSketch field : fields) {
-			final DomainSketch domainSketch = notebook.resolve(field.getSketchKeyByFieldName("domain").getName(), DomainSketch.class);
+		for (final DslRaw field : fields) {
+			final DomainSketch domainSketch = notebook.resolve(field.getRawKeyByFieldName("domain").getName(), DomainSketch.class);
 			//--
 			Assertion.check().isTrue(field.getPropertyNames().contains(KspProperty.LABEL), "Label est une propriété obligatoire");
 			final String label = (String) field.getPropertyValue(KspProperty.LABEL);
@@ -291,21 +285,21 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 			final String expression = (String) field.getPropertyValue(KspProperty.EXPRESSION);
 			final ComputedExpression computedExpression = new ComputedExpression(expression);
 			//--
-			final DslSketchKey fieldKey = field.getKey();
+			final DslRawKey fieldKey = field.getKey();
 
 			dtDefinitionBuilder.addComputedField(fieldKey.getName(), label, domainSketch, cardinality, computedExpression);
 		}
 	}
 
-	private static AssociationNNSketch createAssociationNNSketch(final Notebook notebook, final DslSketch xassociation) {
+	private static AssociationNNSketch createAssociationNNSketch(final Notebook notebook, final DslRaw xassociation) {
 		final String tableName = (String) xassociation.getPropertyValue(KspProperty.TABLE_NAME);
 
-		final DtSketch dtSketchA = notebook.resolve(xassociation.getSketchKeyByFieldName("dtDefinitionA").getName(), DtSketch.class);
+		final DtSketch dtSketchA = notebook.resolve(xassociation.getRawKeyByFieldName("dtDefinitionA").getName(), DtSketch.class);
 		final boolean navigabilityA = (Boolean) xassociation.getPropertyValue(KspProperty.NAVIGABILITY_A);
 		final String roleA = (String) xassociation.getPropertyValue(KspProperty.ROLE_A);
 		final String labelA = (String) xassociation.getPropertyValue(KspProperty.LABEL_A);
 
-		final DtSketch dtSketchB = notebook.resolve(xassociation.getSketchKeyByFieldName("dtDefinitionB").getName(), DtSketch.class);
+		final DtSketch dtSketchB = notebook.resolve(xassociation.getRawKeyByFieldName("dtDefinitionB").getName(), DtSketch.class);
 		final boolean navigabilityB = (Boolean) xassociation.getPropertyValue(KspProperty.NAVIGABILITY_B);
 		final String roleB = (String) xassociation.getPropertyValue(KspProperty.ROLE_B);
 		final String labelB = (String) xassociation.getPropertyValue(KspProperty.LABEL_B);
@@ -315,7 +309,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 		return new AssociationNNSketch(xassociation.getKey().getName(), tableName, associationNodeA, associationNodeB);
 	}
 
-	private AssociationSimpleSketch createAssociationSimpleSketch(final Notebook notebook, final DslSketch xassociation) {
+	private AssociationSimpleSketch createAssociationSimpleSketch(final Notebook notebook, final DslRaw xassociation) {
 
 		final String associationType = (String) xassociation.getPropertyValue("type");
 
@@ -370,13 +364,13 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 
 		final String fkFieldName = (String) xassociation.getPropertyValue(KspProperty.FK_FIELD_NAME);
 
-		final DtSketch dtDefinitionA = notebook.resolve(xassociation.getSketchKeyByFieldName("dtDefinitionA").getName(), DtSketch.class);
+		final DtSketch dtDefinitionA = notebook.resolve(xassociation.getRawKeyByFieldName("dtDefinitionA").getName(), DtSketch.class);
 		final String roleAOpt = (String) xassociation.getPropertyValue(KspProperty.ROLE_A);
 		final String roleA = roleAOpt != null ? roleAOpt : dtDefinitionA.getLocalName();
 		final String labelAOpt = (String) xassociation.getPropertyValue(KspProperty.LABEL_A);
 		final String labelA = labelAOpt != null ? labelAOpt : dtDefinitionA.getLocalName();
 
-		final DtSketch dtDefinitionB = notebook.resolve(xassociation.getSketchKeyByFieldName("dtDefinitionB").getName(), DtSketch.class);
+		final DtSketch dtDefinitionB = notebook.resolve(xassociation.getRawKeyByFieldName("dtDefinitionB").getName(), DtSketch.class);
 		final String roleBOpt = (String) xassociation.getPropertyValue(KspProperty.ROLE_B);
 		final String roleB = roleBOpt != null ? roleBOpt : dtDefinitionB.getLocalName();
 		final String labelB = (String) xassociation.getPropertyValue(KspProperty.LABEL_B);
@@ -408,7 +402,7 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 	 * @param dslDefinition Definition
 	 * @return Container des propriétés
 	 */
-	private static Properties extractProperties(final DslSketch dslDefinition) {
+	private static Properties extractProperties(final DslRaw dslDefinition) {
 		final Properties properties = new Properties();
 
 		//On associe les propriétés Dt et Ksp par leur nom.
@@ -420,8 +414,8 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 
 	/** {@inheritDoc} */
 	@Override
-	public List<DslSketch> onNewSketch(final DslSketch dslDefinition) {
-		if (DomainGrammar.DT_DEFINITION_ENTITY.equals(dslDefinition.getEntity())
+	public List<DslRaw> onNewRaw(final DslRaw dslDefinition) {
+		if (DomainGrammar.DT_ENTITY.equals(dslDefinition.getEntity())
 				|| DomainGrammar.FRAGMENT_ENTITY.equals(dslDefinition.getEntity())) {
 			//Dans le cas des DT on ajoute le domain
 			return Collections.singletonList(createDtDomain(dslDefinition.getKey().getName(), dslDefinition.getPackageName()));
@@ -432,15 +426,15 @@ public final class DomainDynamicRegistry implements DynamicRegistry {
 	/*
 	 * Construction du domaine relatif à un DT : DoDtXxxXX
 	 */
-	private static DslSketch createDtDomain(final String definitionName, final String packageName) {
+	private static DslRaw createDtDomain(final String definitionName, final String packageName) {
 		//C'est le constructeur de DtDomainStandard qui vérifie la cohérence des données passées.
 		//Notamment la validité de la liste des contraintes et la nullité du formatter
 
 		final DslEntity metaDefinitionDomain = DomainGrammar.DOMAIN_ENTITY;
 
-		return DslSketch.builder(DomainSketch.PREFIX + definitionName, metaDefinitionDomain)
+		return DslRaw.builder(DomainSketch.PREFIX + definitionName, metaDefinitionDomain)
 				.withPackageName(packageName)
-				.addDefinitionLink("dataType", "DtObject")
+				.addRawLink("dataType", "DtObject")
 				//On dit que le domaine possède une prop définissant le type comme étant le nom du DT
 				.addPropertyValue(KspProperty.TYPE, definitionName)
 				.build();

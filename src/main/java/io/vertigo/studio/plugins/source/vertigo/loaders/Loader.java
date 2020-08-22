@@ -18,7 +18,7 @@
  */
 package io.vertigo.studio.plugins.source.vertigo.loaders;
 
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchesRepository;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawRepository;
 
 /**
  * Chargeur de l'environnement.
@@ -37,8 +37,8 @@ public interface Loader {
 	 * défini par une url (sur système de fichier ou classpath)
 	 * et selon la grammaire en argument.
 	 * @param resourcePath resourcePath
-	 * @param dslDefinitionRepository dslDefinitionRepository
+	 * @param rawRepository dslDefinitionRepository
 	 */
-	void load(String resourcePath, DslSketchesRepository dslDefinitionRepository);
+	void load(String resourcePath, DslRawRepository rawRepository);
 
 }

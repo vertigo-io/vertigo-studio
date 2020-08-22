@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.plugins.source.vertigo.dsl.dynamic;
+package io.vertigo.studio.plugins.source.vertigo.dsl.raw;
 
 import java.util.List;
 import java.util.Map;
@@ -34,7 +34,7 @@ import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntityField;
  *
  * @author  pchretien
  */
-public final class DslSketch {
+public final class DslRaw {
 	/** Type. */
 	private final DslEntity entity;
 
@@ -42,44 +42,44 @@ public final class DslSketch {
 	private final String packageName;
 
 	/**key of this sketch.*/
-	private final DslSketchKey key;
+	private final DslRawKey rawKey;
 
 	/** Map  (fieldName, propertyValue)  */
-	private final Map<DslEntityField, Object> propertyValueByFieldName;
+	private final Map<DslEntityField, Object> propertyValueByEntityField;
 
 	/**
 	 * Links.
 	 * Map (fieldName, definitions identified by its name)
 	 */
-	private final Map<DslEntityField, List<DslSketchKey>> sketchKeysByFieldName;
+	private final Map<DslEntityField, List<DslRawKey>> rawKeysByEntityField;
 
 	/**
 	 * Children.
 	 * Map (fieldName, definitions
 	 */
-	private final Map<DslEntityField, List<DslSketch>> childDefinitionsByFieldName;
+	private final Map<DslEntityField, List<DslRaw>> subRawsByEntityField;
 
-	DslSketch(
+	DslRaw(
 			final DslEntity entity,
 			final String packageName,
-			final DslSketchKey key,
-			final Map<DslEntityField, Object> propertyValueByFieldName,
-			final Map<DslEntityField, List<DslSketchKey>> sketchKeysByFieldName,
-			final Map<DslEntityField, List<DslSketch>> childDefinitionsByFieldName) {
+			final DslRawKey rawKey,
+			final Map<DslEntityField, Object> propertyValueByEntityField,
+			final Map<DslEntityField, List<DslRawKey>> rawKeysByEntityField,
+			final Map<DslEntityField, List<DslRaw>> subRawsByEntityField) {
 		Assertion.check()
 				.isNotNull(entity)
 				//packageName can be null
-				.isNotNull(key)
-				.isNotNull(propertyValueByFieldName)
-				.isNotNull(sketchKeysByFieldName)
-				.isNotNull(childDefinitionsByFieldName);
+				.isNotNull(rawKey)
+				.isNotNull(propertyValueByEntityField)
+				.isNotNull(rawKeysByEntityField)
+				.isNotNull(subRawsByEntityField);
 		//---
 		this.entity = entity;
 		this.packageName = packageName;
-		this.key = key;
-		this.propertyValueByFieldName = propertyValueByFieldName;
-		this.sketchKeysByFieldName = sketchKeysByFieldName;
-		this.childDefinitionsByFieldName = childDefinitionsByFieldName;
+		this.rawKey = rawKey;
+		this.propertyValueByEntityField = propertyValueByEntityField;
+		this.rawKeysByEntityField = rawKeysByEntityField;
+		this.subRawsByEntityField = subRawsByEntityField;
 	}
 
 	/**
@@ -88,12 +88,12 @@ public final class DslSketch {
 	 * @param entity entity
 	 * @return the dsl sketch builder
 	 */
-	public static DslSketchBuilder builder(final DslSketchKey key, final DslEntity entity) {
-		return new DslSketchBuilder(key, entity);
+	public static DslRawBuilder builder(final DslRawKey rawKey, final DslEntity entity) {
+		return new DslRawBuilder(rawKey, entity);
 	}
 
-	public static DslSketchBuilder builder(final String sketchName, final DslEntity entity) {
-		return new DslSketchBuilder(DslSketchKey.of(sketchName), entity);
+	public static DslRawBuilder builder(final String rawName, final DslEntity entity) {
+		return new DslRawBuilder(DslRawKey.of(rawName), entity);
 	}
 
 	/**
@@ -113,8 +113,8 @@ public final class DslSketch {
 	/**
 	 * @return Nom de la Définition
 	 */
-	public DslSketchKey getKey() {
-		return key;
+	public DslRawKey getKey() {
+		return rawKey;
 	}
 
 	/**
@@ -124,13 +124,13 @@ public final class DslSketch {
 	 * @return valeur de la propriété
 	 */
 	public Object getPropertyValue(final String fieldName) {
-		final DslEntityField dslEntityField = entity.getField(fieldName);
-		Assertion.check().isTrue(dslEntityField.getType().isProperty(), "expected a property on {0}", fieldName);
+		final DslEntityField entityField = entity.getField(fieldName);
+		Assertion.check().isTrue(entityField.getType().isProperty(), "expected a property on {0}", fieldName);
 		// On ne vérifie rien sur le type retourné par le getter.
 		// le type a été validé lors du put.
 		//-----
 		// Conformémément au contrat, on retourne null si pas de propriété trouvée
-		return propertyValueByFieldName.get(dslEntityField);
+		return propertyValueByEntityField.get(entityField);
 	}
 
 	/**
@@ -138,7 +138,7 @@ public final class DslSketch {
 	 * @return Collection
 	 */
 	public Set<String> getPropertyNames() {
-		return propertyValueByFieldName.keySet()
+		return propertyValueByEntityField.keySet()
 				.stream()
 				.map(DslEntityField::getName)
 				.collect(Collectors.toSet());
@@ -150,11 +150,11 @@ public final class DslSketch {
 	 * @param fieldName Nom du champ.
 	 * @return List
 	 */
-	public List<DslSketchKey> getSketchKeysByFieldName(final String fieldName) {
-		final DslEntityField dslEntityField = entity.getField(fieldName);
-		Assertion.check().isTrue(dslEntityField.getType().isEntityLink(), "expected a link on {0}", fieldName);
+	public List<DslRawKey> getRawKeysByFieldName(final String fieldName) {
+		final DslEntityField entityField = entity.getField(fieldName);
+		Assertion.check().isTrue(entityField.getType().isEntityLink(), "expected a link on {0}", fieldName);
 		//---
-		return sketchKeysByFieldName.get(dslEntityField);
+		return rawKeysByEntityField.get(entityField);
 	}
 
 	/**
@@ -162,21 +162,21 @@ public final class DslSketch {
 	 * @param fieldName Nom du champ.
 	 * @return Clé de la définition
 	 */
-	public DslSketchKey getSketchKeyByFieldName(final String fieldName) {
-		final List<DslSketchKey> list = getSketchKeysByFieldName(fieldName);
-		final DslSketchKey sketchKey = list.get(0);
+	public DslRawKey getRawKeyByFieldName(final String fieldName) {
+		final List<DslRawKey> rawKeys = getRawKeysByFieldName(fieldName);
+		final DslRawKey rawKey = rawKeys.get(0);
 		//-----
 		// On vérifie qu'il y a une définition pour le champ demandé
-		Assertion.check().isNotNull(sketchKey);
-		return sketchKey;
+		Assertion.check().isNotNull(rawKey);
+		return rawKey;
 	}
 
 	/**
 	 * Permet de récupérer la collection de tous les champs qui pointent vers des définitions utilisées par référence.
 	 * @return Collection de tous les champs utilisant des définitions référencées.
 	 */
-	public Set<DslEntityField> getAllDefinitionLinkFields() {
-		return sketchKeysByFieldName.keySet();
+	public Set<DslEntityField> getAllRawLinkFields() {
+		return rawKeysByEntityField.keySet();
 	}
 
 	/**
@@ -184,18 +184,18 @@ public final class DslSketch {
 	 * @param fieldName String
 	 * @return List
 	 */
-	public List<DslSketch> getChildSketches(final String fieldName) {
-		final DslEntityField dslEntityField = entity.getField(fieldName);
-		Assertion.check().isTrue(dslEntityField.getType().isEntity(), "expected an entity on {0}", fieldName);
+	public List<DslRaw> getSubRaws(final String fieldName) {
+		final DslEntityField entityField = entity.getField(fieldName);
+		Assertion.check().isTrue(entityField.getType().isEntity(), "expected an entity on {0}", fieldName);
 		//---
-		return childDefinitionsByFieldName.get(dslEntityField);
+		return subRawsByEntityField.get(entityField);
 	}
 
 	/**
 	 * @return Collection des listes de définitions composites.
 	 */
-	public List<DslSketch> getAllChildSketches() {
-		return childDefinitionsByFieldName.values()
+	public List<DslRaw> getAllSubRaws() {
+		return subRawsByEntityField.values()
 				.stream()
 				.flatMap(List::stream)
 				.collect(Collectors.toList());

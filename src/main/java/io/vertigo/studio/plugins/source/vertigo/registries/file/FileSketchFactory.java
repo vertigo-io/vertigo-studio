@@ -18,19 +18,19 @@
  */
 package io.vertigo.studio.plugins.source.vertigo.registries.file;
 
-import io.vertigo.studio.notebook.SketchSupplier;
+import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.file.FileInfoSketch;
 import io.vertigo.studio.plugins.source.vertigo.KspProperty;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchKey;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DynamicRegistry;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawKey;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslSketchFactory;
 
 /**
  * @author pchretien, mlaroche
  */
-public final class FileDynamicRegistry implements DynamicRegistry {
+public final class FileSketchFactory implements DslSketchFactory {
 
 	@Override
 	public DslGrammar getGrammar() {
@@ -39,20 +39,20 @@ public final class FileDynamicRegistry implements DynamicRegistry {
 
 	/** {@inheritDoc} */
 	@Override
-	public SketchSupplier supplyModel(final DslSketch dslSketch) {
-		final DslEntity dslEntity = dslSketch.getEntity();
-		if (FileGrammar.FILE_INFO_DEFINITION_ENTITY.equals(dslEntity)) {
+	public FileInfoSketch create(final Notebook notebook, final DslRaw raw) {
+		final DslEntity entity = raw.getEntity();
+		if (FileGrammar.FILE_INFO_ENTITY.equals(entity)) {
 			//Seuls les taches sont gérées.
-			return notebook -> createFileSketch(dslSketch);
+			return createFileInfoSketch(raw);
 		}
-		throw new IllegalStateException("The type of definition" + dslSketch + " is not managed by me");
+		throw new IllegalStateException("his kind of raw " + entity + " is not managed by me");
 	}
 
-	private static FileInfoSketch createFileSketch(final DslSketch dslFileInfoSketch) {
-		final DslSketchKey fileDefinitionKey = dslFileInfoSketch.getKey();
-		final String storeName = (String) dslFileInfoSketch.getPropertyValue(KspProperty.DATA_SPACE);
+	private static FileInfoSketch createFileInfoSketch(final DslRaw fileInfoRaw) {
+		final DslRawKey fileInfoRawKey = fileInfoRaw.getKey();
+		final String storeName = (String) fileInfoRaw.getPropertyValue(KspProperty.DATA_SPACE);
 
-		return new FileInfoSketch(fileDefinitionKey.getName(), storeName);
+		return new FileInfoSketch(fileInfoRawKey.getName(), storeName);
 	}
 
 }

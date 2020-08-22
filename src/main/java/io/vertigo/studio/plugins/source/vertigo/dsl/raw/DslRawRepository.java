@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.plugins.source.vertigo.dsl.dynamic;
+package io.vertigo.studio.plugins.source.vertigo.dsl.raw;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,10 +27,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.SketchSupplier;
+import io.vertigo.studio.notebook.Sketch;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
 
 /**
@@ -40,27 +41,27 @@ import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
  *
  * @author  pchretien
  */
-public final class DslSketchesRepository {
+public final class DslRawRepository {
 
 	/***
 	 * On retient les définitions dans l'ordre pour
 	 * créer les fichiers toujours de la même façon.
 	 */
-	private final Map<DslSketchKey, DslSketch> dslSketches = new LinkedHashMap<>();
-	private final List<DslSketch> partials = new ArrayList<>();
+	private final Map<DslRawKey, DslRaw> rawsByRawKeys = new LinkedHashMap<>();
+	private final List<DslRaw> partialRaws = new ArrayList<>();
 
-	private final DynamicRegistry registry;
+	private final DslSketchFactory sketchFactory;
 	private final DslGrammar grammar;
 
 	/**
 	 * Constructor.
-	 * @param registry DynamicDefinitionHandler
+	 * @param sketchFactory DynamicDefinitionHandler
 	 */
-	public DslSketchesRepository(final DynamicRegistry registry) {
-		Assertion.check().isNotNull(registry);
+	public DslRawRepository(final DslSketchFactory sketchFactory) {
+		Assertion.check().isNotNull(sketchFactory);
 		//-----
-		this.registry = registry;
-		grammar = registry.getGrammar();
+		this.sketchFactory = sketchFactory;
+		grammar = sketchFactory.getGrammar();
 	}
 
 	/**
@@ -75,8 +76,8 @@ public final class DslSketchesRepository {
 	 * @param sketchName name of the definitionClé de la définition
 	 * @return Si la définition a déjà été enregistrée
 	 */
-	public boolean contains(final DslSketchKey sketchKey) {
-		return dslSketches.containsKey(sketchKey);
+	public boolean contains(final DslRawKey rawKey) {
+		return rawsByRawKeys.containsKey(rawKey);
 	}
 
 	/**
@@ -88,13 +89,13 @@ public final class DslSketchesRepository {
 	 * @param sketchName Name of the definition
 	 * @return DynamicDefinition Définition correspondante ou null.
 	 */
-	public DslSketch getSketch(final DslSketchKey key) {
-		Assertion.check().isTrue(dslSketches.containsKey(key), "Aucune clé enregistrée pour :{0} parmi {1}", key, dslSketches.keySet());
+	public DslRaw getRaw(final DslRawKey rawKey) {
+		Assertion.check().isTrue(rawsByRawKeys.containsKey(rawKey), "Aucune clé enregistrée pour :{0} parmi {1}", rawKey, rawsByRawKeys.keySet());
 		//-----
-		final DslSketch definition = dslSketches.get(key);
+		final DslRaw raw = rawsByRawKeys.get(rawKey);
 		//-----
-		Assertion.check().isNotNull(definition, "Clé trouvée mais pas de définition enregistrée trouvée pour {0}", key);
-		return definition;
+		Assertion.check().isNotNull(raw, "Clé trouvée mais pas de définition enregistrée trouvée pour {0}", rawKey);
+		return raw;
 	}
 
 	/**
@@ -102,67 +103,65 @@ public final class DslSketchesRepository {
 	 * @param notebook Space where all the models are stored
 	 * @return a list of DefinitionSuppliers
 	 */
-	public List<SketchSupplier> solve(final Notebook notebook) {
+	public Stream<Sketch> solve(final Notebook notebook) {
 		mergePartials();
 
-		final List<DslSketch> sortedDslDefinitions = DslSolver.solve(notebook, this);
-		return createModelStream(sortedDslDefinitions);
+		final List<DslRaw> sortedDslSketches = DslRawSolver.solve(notebook, this);
+		return createModelStream(notebook, sortedDslSketches);
 	}
 
 	private void mergePartials() {
 		//parts of definitions are merged
-		for (final DslSketch partial : partials) {
-			final DslSketch merged = DslSketch.builder(partial.getKey(), partial.getEntity())
-					.merge(getSketch(partial.getKey()))
+		for (final DslRaw partial : partialRaws) {
+			final DslRaw merged = DslRaw.builder(partial.getKey(), partial.getEntity())
+					.merge(getRaw(partial.getKey()))
 					.merge(partial).build();
-			dslSketches.put(partial.getKey(), merged);
+			rawsByRawKeys.put(partial.getKey(), merged);
 		}
 	}
 
-	private List<SketchSupplier> createModelStream(final List<DslSketch> sortedDynamicDefinitions) {
-		return sortedDynamicDefinitions
+	private Stream<Sketch> createModelStream(final Notebook notebook, final List<DslRaw> sortedRaws) {
+		return sortedRaws
 				.stream()
-				.filter(dslDefinition -> !dslDefinition.getEntity().isProvided()) // provided definitions are excluded
-				.map(this::createModel)
-				.collect(Collectors.toList());
+				.filter(dslSketch -> !dslSketch.getEntity().isProvided()) // provided definitions are excluded
+				.map(dslSketch -> createSketch(notebook, dslSketch));
 	}
 
-	private SketchSupplier createModel(final DslSketch dslSketch) {
-		DslSketchValidator.check(dslSketch);
+	private Sketch createSketch(final Notebook notebook, final DslRaw raw) {
+		DslRawValidator.check(raw);
 		//The definition identified as root are not registered.
-		return registry.supplyModel(dslSketch);
+		return sketchFactory.create(notebook, raw);
 	}
 
 	/**
 	 * Adds a sketch.
-	 * @param dslSketch sketch
+	 * @param raw sketch
 	 */
-	public void addSketch(final DslSketch dslSketch) {
-		Assertion.check().isNotNull(dslSketch);
+	public void addRaw(final DslRaw raw) {
+		Assertion.check().isNotNull(raw);
 		//---
-		final DslSketch previousSketch = dslSketches.put(dslSketch.getKey(), dslSketch);
-		Assertion.check().isNull(previousSketch, "this sketch '{0}' has already be registered", dslSketch.getKey());
+		final DslRaw previousRaw = rawsByRawKeys.put(raw.getKey(), raw);
+		Assertion.check().isNull(previousRaw, "this sketch '{0}' has already be registered", raw.getKey());
 		//---
-		registry.onNewSketch(dslSketch)
-				.stream()
-				.forEach(this::addSketch);
+		sketchFactory.onNewRaw(raw)
+				.forEach(this::addRaw);
 	}
 
 	/**
 	 * adds a partial sketch.
 	 * @param partial the part of a sketch
 	 */
-	public void addPartialSketch(final DslSketch partial) {
+	public void addPartialSketch(final DslRaw partial) {
 		Assertion.check().isNotNull(partial);
 		//---
-		partials.add(partial);
+		partialRaws.add(partial);
 	}
 
 	/**
 	 *  @return Liste des clés orphelines.
 	 */
-	Set<DslSketchKey> getOrphanDefinitionKeys() {
-		return dslSketches.entrySet()
+	Set<DslRawKey> getOrphanDefinitionKeys() {
+		return rawsByRawKeys.entrySet()
 				.stream()
 				.filter(entry -> entry.getValue() == null) //select orphans
 				.map(Entry::getKey)
@@ -172,7 +171,7 @@ public final class DslSketchesRepository {
 	/**
 	 * @return Liste des définitions complètes
 	 */
-	Collection<DslSketch> getSketches() {
-		return Collections.unmodifiableCollection(dslSketches.values());
+	Collection<DslRaw> getRaws() {
+		return Collections.unmodifiableCollection(rawsByRawKeys.values());
 	}
 }

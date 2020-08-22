@@ -32,16 +32,16 @@ import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslPropertyType;
 final class FileGrammar implements DslGrammar {
 
 	/**Définition de tache.*/
-	public static final DslEntity FILE_INFO_DEFINITION_ENTITY;
+	public static final DslEntity FILE_INFO_ENTITY;
 
 	static {
-		FILE_INFO_DEFINITION_ENTITY = DslEntity.builder("FileInfo")
+		FILE_INFO_ENTITY = DslEntity.builder("FileInfo")
 				.addRequiredField(KspProperty.DATA_SPACE, DslPropertyType.String)
 				.build();
 	}
 
 	@Override
 	public List<DslEntity> getEntities() {
-		return Collections.singletonList(FILE_INFO_DEFINITION_ENTITY);
+		return Collections.singletonList(FILE_INFO_ENTITY);
 	}
 }

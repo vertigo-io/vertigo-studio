@@ -33,9 +33,9 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntityField;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntityLink;
-import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslSketchBody;
-import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslSketchEntry;
-import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslPropertyEntry;
+import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw.DslPropertyEntry;
+import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw.DslRawBody;
+import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw.DslRawEntry;
 
 /**
  * Règle définissant le corps d'une définition dynamo.
@@ -46,12 +46,12 @@ import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslProper
  *
  * @author pchretien, mlaroche
  */
-public final class DslSketchBodyRule extends AbstractRule<DslSketchBody, List<Object>> {
+public final class DslRawBodyRule extends AbstractRule<DslRawBody, List<Object>> {
 
 	/**
 	 * Constructor.
 	 */
-	public DslSketchBodyRule(final DslEntity entity) {
+	public DslRawBodyRule(final DslEntity entity) {
 		super(createMainRule(entity), entity.getName() + "Body");
 	}
 
@@ -74,12 +74,12 @@ public final class DslSketchBodyRule extends AbstractRule<DslSketchBody, List<Ob
 				dslEntity = null;
 			}
 			if (dslEntity != null) {
-				innerDefinitionRules.add(new DslInnerDefinitionRule(dslEntityField.getName(), dslEntity));
+				innerDefinitionRules.add(new DslInnerRawRule(dslEntityField.getName(), dslEntity));
 			}
 		}
 
 		final DslPropertyDeclarationRule propertyDeclarationRule = new DslPropertyDeclarationRule(entity.getPropertyNames());
-		final DslSketchEntryRule xDefinitionEntryRule = new DslSketchEntryRule(attributeNames);
+		final DslRawEntryRule xDefinitionEntryRule = new DslRawEntryRule(attributeNames);
 		final PegRule<PegChoice> firstOfRule = PegRules.choice(
 				propertyDeclarationRule, // 0
 				xDefinitionEntryRule, // 1
@@ -96,10 +96,10 @@ public final class DslSketchBodyRule extends AbstractRule<DslSketchBody, List<Ob
 	}
 
 	@Override
-	protected DslSketchBody handle(final List<Object> parsing) {
+	protected DslRawBody handle(final List<Object> parsing) {
 		final List<PegChoice> many = (List<PegChoice>) parsing.get(2);
 
-		final List<DslSketchEntry> fieldDefinitionEntries = new ArrayList<>();
+		final List<DslRawEntry> fieldDefinitionEntries = new ArrayList<>();
 		final List<DslPropertyEntry> fieldPropertyEntries = new ArrayList<>();
 		for (final PegChoice item : many) {
 			switch (item.getChoiceIndex()) {
@@ -109,12 +109,12 @@ public final class DslSketchBodyRule extends AbstractRule<DslSketchBody, List<Ob
 					fieldPropertyEntries.add(propertyEntry);
 					break;
 				case 1:
-					final DslSketchEntry xDefinitionEntry = (DslSketchEntry) item.getValue();
+					final DslRawEntry xDefinitionEntry = (DslRawEntry) item.getValue();
 					fieldDefinitionEntries.add(xDefinitionEntry);
 					break;
 				case 2:
 					final PegChoice subTuple = (PegChoice) item.getValue();
-					fieldDefinitionEntries.add((DslSketchEntry) subTuple.getValue());
+					fieldDefinitionEntries.add((DslRawEntry) subTuple.getValue());
 					break;
 				case 3:
 					break;
@@ -122,6 +122,6 @@ public final class DslSketchBodyRule extends AbstractRule<DslSketchBody, List<Ob
 					throw new IllegalArgumentException("Type of rule not supported");
 			}
 		}
-		return new DslSketchBody(fieldDefinitionEntries, fieldPropertyEntries);
+		return new DslRawBody(fieldDefinitionEntries, fieldPropertyEntries);
 	}
 }

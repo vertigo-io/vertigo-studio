@@ -16,44 +16,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition;
-
-import java.util.List;
+package io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw;
 
 import io.vertigo.core.lang.Assertion;
 
 /**
- * Model of Definition from KSP.
- * @author npiedeloup
+ * This entry defines a property and its value.
+ *
+ * @author pchretien, mlaroche
  */
-public final class DslSketchBody {
-	private final List<DslSketchEntry> definitionEntries;
-	private final List<DslPropertyEntry> propertyEntries;
+public final class DslPropertyEntry {
+	private final String propertyValue;
+	private final String propertyName;
 
 	/**
-	 * @param definitionEntries
-	 * @param propertyEntries
+	 * Constructor.
+	 * @param propertyName Name of the property
+	 * @param propertyValue Value of the property
 	 */
-	public DslSketchBody(final List<DslSketchEntry> definitionEntries, final List<DslPropertyEntry> propertyEntries) {
-		Assertion.check()
-				.isNotNull(definitionEntries)
-				.isNotNull(propertyEntries);
+	public DslPropertyEntry(final String propertyName, final String propertyValue) {
+		Assertion.check().isNotNull(propertyName);
 		//-----
-		this.definitionEntries = definitionEntries;
-		this.propertyEntries = propertyEntries;
+		this.propertyName = propertyName;
+		this.propertyValue = propertyValue;
 	}
 
 	/**
-	 * @return List of properties
+	 * @return Value of the property
 	 */
-	public List<DslPropertyEntry> getPropertyEntries() {
-		return propertyEntries;
+	public String getPropertyValueAsString() {
+		return propertyValue;
 	}
 
 	/**
-	 * @return List of Definition
+	 * @return Name of the property
 	 */
-	public List<DslSketchEntry> getDefinitionEntries() {
-		return definitionEntries;
+	public String getPropertyName() {
+		return propertyName;
 	}
 }

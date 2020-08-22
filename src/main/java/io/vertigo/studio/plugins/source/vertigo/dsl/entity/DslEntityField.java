@@ -29,22 +29,22 @@ import io.vertigo.core.lang.Cardinality;
 public final class DslEntityField {
 	private final String name;
 	private final Cardinality cardinality;
-	private final DslEntityFieldType type;
+	private final DslEntityFieldType entityFieldType;
 
 	/**
 	 * Constructor.
 	 * @param name Name
-	 * @param type Type of the entity
+	 * @param entityFieldType Type of the entity
 	 */
-	DslEntityField(final String name, final DslEntityFieldType type, final Cardinality cardinality) {
+	DslEntityField(final String name, final DslEntityFieldType entityFieldType, final Cardinality cardinality) {
 		Assertion.check()
 				.isNotBlank(name)
-				.isNotNull(type)
+				.isNotNull(entityFieldType)
 				.isNotNull(cardinality);
 		//-----
 		this.name = name;
 		this.cardinality = cardinality;
-		this.type = type;
+		this.entityFieldType = entityFieldType;
 	}
 
 	/**
@@ -65,6 +65,6 @@ public final class DslEntityField {
 	 * @return the type of the entity
 	 */
 	public DslEntityFieldType getType() {
-		return type;
+		return entityFieldType;
 	}
 }

@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.plugins.source.vertigo.dsl.dynamic;
+package io.vertigo.studio.plugins.source.vertigo.dsl.raw;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -32,42 +32,41 @@ import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntityField;
  * @author pchretien, mlaroche
  *
  */
-final class DslSketchValidator {
-	private DslSketchValidator() {
+final class DslRawValidator {
+	private DslRawValidator() {
 		//utility Class
 	}
 
-	static void check(final DslSketch dslSketch) {
-		Assertion.check().isNotNull(dslSketch);
+	static void check(final DslRaw raw) {
+		Assertion.check().isNotNull(raw);
 		//-----
-		final DslEntity myEntity = dslSketch.getEntity();
+		final DslEntity entity = raw.getEntity();
 		// 1.On vérifie la définition par rapport à la métadéfinition
 		// 1.1 on vérifie les propriétés.
-		final Set<String> propertyNames = dslSketch.getPropertyNames();
-		final Set<String> entityPropertyNames = myEntity.getPropertyNames();
+		final Set<String> propertyNames = raw.getPropertyNames();
+		final Set<String> entityPropertyNames = entity.getPropertyNames();
 		// 1.1.1 on vérifie que toutes les propriétés sont déclarées sur le
 		// métamodèle
-		checkProperties(dslSketch, propertyNames, entityPropertyNames);
+		checkProperties(raw, propertyNames, entityPropertyNames);
 
 		// 1.1.2 on vérifie les propriétés obligatoires
-		checkMandatoryProperties(dslSketch, myEntity, propertyNames, entityPropertyNames);
+		checkMandatoryProperties(raw, entity, propertyNames, entityPropertyNames);
 
 		// 1.1.3 on vérifie les types des propriétés déclarées
 		for (final String propertyName : propertyNames) {
-			myEntity.getPropertyType(propertyName).checkValue(dslSketch.getPropertyValue(propertyName));
+			entity.getPropertyType(propertyName).checkValue(raw.getPropertyValue(propertyName));
 		}
 
 		// 1.2 on vérifie les définitions composites (sous définitions).
-		for (final DslSketch child : dslSketch.getAllChildSketches()) {
-			check(child);
-		}
+		raw.getAllSubRaws()
+				.forEach(DslRawValidator::check);
 
 		// 1.3 on vérifie les définitions références.
 		// TODO vérifier les définitions références
 	}
 
 	private static void checkProperties(
-			final DslSketch dslSketch,
+			final DslRaw raw,
 			final Set<String> propertyNames,
 			final Set<String> entityPropertyNames) {
 		// Vérification que toutes les propriétés sont déclarées sur le
@@ -80,22 +79,22 @@ final class DslSketchValidator {
 			}
 		}
 		if (!undeclaredPropertyNames.isEmpty()) {
-			throw new IllegalStateException("Sur l'objet '" + dslSketch.getKey() + "' Il existe des propriétés non déclarées " + undeclaredPropertyNames);
+			throw new IllegalStateException("Sur l'objet '" + raw.getKey() + "' Il existe des propriétés non déclarées " + undeclaredPropertyNames);
 		}
 	}
 
 	private static void checkMandatoryProperties(
-			final DslSketch dslSketch,
-			final DslEntity dslEntity,
+			final DslRaw raw,
+			final DslEntity entity,
 			final Set<String> propertyNames,
 			final Set<String> entityPropertyNames) {
 		// Vérification des propriétés obligatoires
 		final Set<String> unusedMandatoryPropertySet = new HashSet<>();
 		for (final String propertyName : entityPropertyNames) {
-			final DslEntityField entityField = dslEntity.getField(propertyName);
+			final DslEntityField entityField = entity.getField(propertyName);
 
 			if ((entityField.getCardinality().hasOne())
-					&& (!propertyNames.contains(propertyName) || dslSketch.getPropertyValue(propertyName) == null)) {
+					&& (!propertyNames.contains(propertyName) || raw.getPropertyValue(propertyName) == null)) {
 				// Si la propriété obligatoire n'est pas renseignée alors erreur
 				// Ou si la propriété obligatoire est renseignée mais qu'elle
 				// est nulle alors erreur !
@@ -103,7 +102,7 @@ final class DslSketchValidator {
 			}
 		}
 		if (!unusedMandatoryPropertySet.isEmpty()) {
-			throw new IllegalStateException(dslSketch.getKey() + " Il existe des propriétés obligatoires non renseignées " + unusedMandatoryPropertySet);
+			throw new IllegalStateException(raw.getKey() + " Il existe des propriétés obligatoires non renseignées " + unusedMandatoryPropertySet);
 		}
 	}
 }

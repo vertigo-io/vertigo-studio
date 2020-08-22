@@ -33,7 +33,7 @@ import io.vertigo.core.lang.VSystemException;
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.resource.ResourceManager;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchesRepository;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawRepository;
 import io.vertigo.studio.plugins.source.vertigo.loaders.Loader;
 
 /**
@@ -69,15 +69,15 @@ public final class KprLoader implements Loader {
 
 	/** {@inheritDoc} */
 	@Override
-	public void load(final String resourcePath, final DslSketchesRepository dslDefinitionRepository) {
+	public void load(final String resourcePath, final DslRawRepository rawRepository) {
 		Assertion.check()
 				.isNotBlank(resourcePath)
-				.isNotNull(dslDefinitionRepository);
+				.isNotNull(rawRepository);
 		//-----
 		final URL kprURL = resourceManager.resolve(resourcePath);
 		for (final URL url : getKspFiles(kprURL, charset, resourceManager)) {
 			final KspLoader loader = new KspLoader(url, charset);
-			loader.load(dslDefinitionRepository);
+			loader.load(rawRepository);
 		}
 	}
 

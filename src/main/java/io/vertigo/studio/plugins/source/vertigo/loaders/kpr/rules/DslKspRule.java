@@ -28,9 +28,9 @@ import io.vertigo.commons.peg.PegRule;
 import io.vertigo.commons.peg.PegRule.Dummy;
 import io.vertigo.commons.peg.PegRules;
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchesRepository;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawRepository;
 
 /**
  * règle de composition d'un fichier KSP.
@@ -44,22 +44,22 @@ import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
  * @author pchretien, mlaroche
  */
 public final class DslKspRule extends AbstractRule<Dummy, List<Object>> {
-	private final DslSketchesRepository dynamicModelrepository;
+	private final DslRawRepository rawRepository;
 
 	/**
 	 * Constructor.
-	 * @param dynamicModelrepository Grammaire
+	 * @param rawRepository Grammaire
 	 */
-	public DslKspRule(final DslSketchesRepository dynamicModelrepository) {
-		super(createMainRule(dynamicModelrepository.getGrammar()), "Ksp");
-		this.dynamicModelrepository = dynamicModelrepository;
+	public DslKspRule(final DslRawRepository rawRepository) {
+		super(createMainRule(rawRepository.getGrammar()), "Ksp");
+		this.rawRepository = rawRepository;
 	}
 
 	private static PegRule<List<Object>> createMainRule(final DslGrammar grammar) {
 		Assertion.check().isNotNull(grammar);
 		//-----
-		final PegRule<DslSketch> definitionRule = new DslDynamicDefinitionRule("create", grammar);
-		final PegRule<DslSketch> templateRule = new DslDynamicDefinitionRule("alter", grammar);
+		final PegRule<DslRaw> definitionRule = new DslRawRule("create", grammar);
+		final PegRule<DslRaw> templateRule = new DslRawRule("alter", grammar);
 		final PegRule<PegChoice> declarationChoiceRule = PegRules.choice(//"definition or template")
 				definitionRule, //0
 				templateRule //1
@@ -84,15 +84,15 @@ public final class DslKspRule extends AbstractRule<Dummy, List<Object>> {
 			switch (declarationChoice.getChoiceIndex()) {
 				case 0:
 					//On positionne le Package
-					final DslSketch oldDynamicDefinition = (DslSketch) declarationChoice.getValue();
-					final DslSketch newDynamicDefinition = DslSketch.builder(oldDynamicDefinition.getKey(), oldDynamicDefinition.getEntity())
+					final DslRaw oldDynamicDefinition = (DslRaw) declarationChoice.getValue();
+					final DslRaw newDynamicDefinition = DslRaw.builder(oldDynamicDefinition.getKey(), oldDynamicDefinition.getEntity())
 							.withPackageName(packageName)
 							.merge(oldDynamicDefinition)
 							.build();
 					handleDefinitionRule(newDynamicDefinition);
 					break;
 				case 1:
-					handleTemplateRule((DslSketch) declarationChoice.getValue());
+					handleTemplateRule((DslRaw) declarationChoice.getValue());
 					break;
 				default:
 					throw new IllegalArgumentException("case " + declarationChoice.getChoiceIndex() + " not implemented");
@@ -101,11 +101,11 @@ public final class DslKspRule extends AbstractRule<Dummy, List<Object>> {
 		return Dummy.INSTANCE;
 	}
 
-	private void handleTemplateRule(final DslSketch dslDefinition) {
-		dynamicModelrepository.addPartialSketch(dslDefinition);
+	private void handleTemplateRule(final DslRaw dslDefinition) {
+		rawRepository.addPartialSketch(dslDefinition);
 	}
 
-	private void handleDefinitionRule(final DslSketch dslDefinition) {
-		dynamicModelrepository.addSketch(dslDefinition);
+	private void handleDefinitionRule(final DslRaw dslDefinition) {
+		rawRepository.addRaw(dslDefinition);
 	}
 }

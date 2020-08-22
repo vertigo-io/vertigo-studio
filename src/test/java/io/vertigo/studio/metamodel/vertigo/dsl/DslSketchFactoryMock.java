@@ -16,49 +16,52 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.metamodel.vertigo.loader;
+package io.vertigo.studio.metamodel.vertigo.dsl;
 
-import io.vertigo.studio.notebook.AbstractSketch;
-import io.vertigo.studio.notebook.SkecthPrefix;
-import io.vertigo.studio.notebook.SketchSupplier;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchesRepository;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DynamicRegistry;
+import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.Sketch;
+import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawRepository;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslSketchFactory;
+import io.vertigo.studio.plugins.source.vertigo.registries.domain.DomainGrammar;
 
 /**
  * Mock pour les tests de regles sur les Definitions.
  * @author npiedeloup
  */
-public final class DslDynamicRegistryMock implements DynamicRegistry {
+public final class DslSketchFactoryMock implements DslSketchFactory {
 
-	private DslDynamicRegistryMock() {
+	private DslSketchFactoryMock() {
 		//constructeur private
 	}
 
 	/**
 	 * @return DynamicDefinitionRepository bouchon pour test
 	 */
-	public static DslSketchesRepository createDslSketchesRepository() {
-		return new DslSketchesRepository(new DslDynamicRegistryMock());
+	public static DslRawRepository createDslSketchesRepository() {
+		return new DslRawRepository(new DslSketchFactoryMock());
 	}
 
 	@Override
 	public DslGrammar getGrammar() {
-		return new PersonGrammar();
+		return new DomainGrammar();
 	}
 
 	@Override
-	public SketchSupplier supplyModel(final DslSketch definition) {
-		return (notebook) -> new FakeModel(definition.getKey().getName());
+	public Sketch create(final Notebook notebook, final DslRaw raw) {
+		return new Sketch() {
+			@Override
+			public SketchKey getKey() {
+				return SketchKey.of("FAKE");
+			}
+
+			@Override
+			public String getLocalName() {
+				return "FAKE";
+			}
+		};
 	}
 
-	@SkecthPrefix(FakeModel.PREFIX)
-	public final static class FakeModel extends AbstractSketch {
-		public static final String PREFIX = "Mock";
-
-		FakeModel(final String name) {
-			super(name);
-		}
-	}
 }

@@ -31,20 +31,20 @@ import io.vertigo.commons.peg.PegChoice;
 import io.vertigo.commons.peg.PegRule;
 import io.vertigo.commons.peg.PegRules;
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchKey;
-import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslSketchEntry;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawKey;
+import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw.DslRawEntry;
 
 /**
  * Règle de déclaration d'une champ référenéant une listes de clés.
  * @author pchretien, mlaroche
  */
-public final class DslSketchEntryRule extends AbstractRule<DslSketchEntry, List<Object>> {
+public final class DslRawEntryRule extends AbstractRule<DslRawEntry, List<Object>> {
 
 	/**
 	 * Constructor.
 	 * @param fieldNames List of field names
 	 */
-	public DslSketchEntryRule(final List<String> fieldNames) {
+	public DslRawEntryRule(final List<String> fieldNames) {
 		super(createMainRule(fieldNames));
 	}
 
@@ -67,9 +67,9 @@ public final class DslSketchEntryRule extends AbstractRule<DslSketchEntry, List<
 	}
 
 	@Override
-	protected DslSketchEntry handle(final List<Object> parsing) {
+	protected DslRawEntry handle(final List<Object> parsing) {
 		final String fieldName = (String) ((PegChoice) parsing.get(0)).getValue();
-		final List<DslSketchKey> keys;
+		final List<DslRawKey> keys;
 
 		final PegChoice definitionChoice = (PegChoice) parsing.get(4);
 		switch (definitionChoice.getChoiceIndex()) {
@@ -77,17 +77,17 @@ public final class DslSketchEntryRule extends AbstractRule<DslSketchEntry, List<
 				//Déclaration d'une liste de définitions identifiée par leurs clés
 				keys = ((List<String>) definitionChoice.getValue())
 						.stream()
-						.map(s -> DslSketchKey.of(s))
+						.map(s -> DslRawKey.of(s))
 						.collect(Collectors.toList());
 				break;
 			case 0:
 				//Déclaration d'une définition identifiée par sa clé
 				final String value = (String) definitionChoice.getValue();
-				keys = java.util.Collections.singletonList(DslSketchKey.of(value));
+				keys = java.util.Collections.singletonList(DslRawKey.of(value));
 				break;
 			default:
 				throw new IllegalStateException();
 		}
-		return new DslSketchEntry(fieldName, keys);
+		return new DslRawEntry(fieldName, keys);
 	}
 }

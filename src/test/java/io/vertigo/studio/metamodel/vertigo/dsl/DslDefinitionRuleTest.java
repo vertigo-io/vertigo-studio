@@ -22,16 +22,16 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import io.vertigo.commons.peg.PegNoMatchFoundException;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchesRepository;
-import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslDynamicDefinitionRule;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawRepository;
+import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslRawRule;
 
 public class DslDefinitionRuleTest {
-	private final DslSketchesRepository dslDefinitionRepository = DslDynamicRegistryMock.createDslSketchesRepository();
+	private final DslRawRepository rawRepository = DslSketchFactoryMock.createDslSketchesRepository();
 
 	@Test
 	public void test2() throws PegNoMatchFoundException {
-		final DslSketch dslDefinition = new DslDynamicDefinitionRule("create", dslDefinitionRepository.getGrammar())
+		final DslRaw dslDefinition = new DslRawRule("create", rawRepository.getGrammar())
 				.parse("create Domain DoCodePostal { dataType : String } ")
 				.getValue();
 		Assertions.assertNotNull(dslDefinition);
@@ -39,7 +39,7 @@ public class DslDefinitionRuleTest {
 
 	@Test
 	public void testTemplate() throws PegNoMatchFoundException {
-		new DslDynamicDefinitionRule("alter", dslDefinitionRepository.getGrammar())
+		new DslRawRule("alter", rawRepository.getGrammar())
 				.parse("alter DtDefinition DtTag {\r\n" +
 						"	sortField : \"label\"\r\n" +
 						" 	displayField : \"label\"\r\n" +

@@ -16,13 +16,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition;
+package io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw;
 
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchKey;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawKey;
 
 /**
  * Une entrée de type définition est définie (XOR)
@@ -31,13 +31,13 @@ import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchKey;
  *
  * @author pchretien, mlaroche
  */
-public final class DslSketchEntry {
+public final class DslRawEntry {
 	/**
 	 * Obligatoire
 	 */
 	private final String fieldName;
-	private final DslSketch dslSketch;
-	private final List<DslSketchKey> sketchKeys;
+	private final DslRaw raw;
+	private final List<DslRawKey> rawKeys;
 
 	/**
 	 * Constructor.
@@ -45,14 +45,14 @@ public final class DslSketchEntry {
 	 * @param definitionNames Liste des clés de définition
 	 * @param fieldName Nom du champ
 	 */
-	public DslSketchEntry(final String fieldName, final List<DslSketchKey> sketchKeys) {
+	public DslRawEntry(final String fieldName, final List<DslRawKey> sketchKeys) {
 		Assertion.check()
 				.isNotNull(fieldName)
 				.isNotNull(sketchKeys);
 		//-----
 		this.fieldName = fieldName;
-		dslSketch = null;
-		this.sketchKeys = sketchKeys;
+		raw = null;
+		this.rawKeys = sketchKeys;
 	}
 
 	/**
@@ -61,14 +61,14 @@ public final class DslSketchEntry {
 	 * @param fieldName Nom du champ
 	 * @param dslSketch Définition
 	 */
-	public DslSketchEntry(final String fieldName, final DslSketch dslSketch) {
+	public DslRawEntry(final String fieldName, final DslRaw raw) {
 		Assertion.check()
 				.isNotNull(fieldName)
-				.isNotNull(dslSketch);
+				.isNotNull(raw);
 		//-----
 		this.fieldName = fieldName;
-		this.dslSketch = dslSketch;
-		sketchKeys = null;
+		this.raw = raw;
+		rawKeys = null;
 	}
 
 	/**
@@ -83,23 +83,23 @@ public final class DslSketchEntry {
 	 *
 	 * @return boolean
 	 */
-	public boolean containsSketch() {
-		return dslSketch != null;
+	public boolean containsRaw() {
+		return raw != null;
 	}
 
 	/**
 	 * @return Définition
 	 */
-	public DslSketch getSketch() {
-		Assertion.check().isNotNull(dslSketch);
+	public DslRaw getRaw() {
+		Assertion.check().isNotNull(raw);
 		//-----
-		return dslSketch;
+		return raw;
 	}
 
 	/**
 	 * @return List des clés de définition
 	 */
-	public List<DslSketchKey> getSketchKeys() {
-		return sketchKeys;
+	public List<DslRawKey> getRawKeys() {
+		return rawKeys;
 	}
 }

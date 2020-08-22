@@ -25,13 +25,13 @@ import org.junit.jupiter.api.Test;
 
 import io.vertigo.commons.peg.PegNoMatchFoundException;
 import io.vertigo.core.lang.VSystemException;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchesRepository;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
-import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslSketchBody;
-import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslSketchBodyRule;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawRepository;
+import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw.DslRawBody;
+import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslRawBodyRule;
 
 public class DslDefinitionBodyRuleTest {
-	private final DslSketchesRepository dslSketchesRepository = DslDynamicRegistryMock.createDslSketchesRepository();
+	private final DslRawRepository rawRepository = DslSketchFactoryMock.createDslSketchesRepository();
 
 	private static DslEntity find(final List<DslEntity> entities, final String entityName) {
 		return entities
@@ -43,10 +43,10 @@ public class DslDefinitionBodyRuleTest {
 
 	@Test
 	public void test2() throws PegNoMatchFoundException {
-		final List<DslEntity> entities = dslSketchesRepository.getGrammar().getEntities();
+		final List<DslEntity> entities = rawRepository.getGrammar().getEntities();
 		final DslEntity entity = find(entities, "Domain");
 
-		final DslSketchBody dslSketchBody = new DslSketchBodyRule(entity)
+		final DslRawBody dslSketchBody = new DslRawBodyRule(entity)
 				.parse("{ dataType : String } ")
 				.getValue();
 
@@ -55,11 +55,11 @@ public class DslDefinitionBodyRuleTest {
 
 	@Test
 	public void testError() {
-		final List<DslEntity> entities = dslSketchesRepository.getGrammar().getEntities();
+		final List<DslEntity> entities = rawRepository.getGrammar().getEntities();
 		final DslEntity entity = find(entities, "Domain");
 		final String testValue = "{ dataType : String,  maxLengh:\"true\"   } ";
 		try {
-			new DslSketchBodyRule(entity)
+			new DslRawBodyRule(entity)
 					.parse(testValue);
 			Assertions.fail();
 		} catch (final PegNoMatchFoundException e) {

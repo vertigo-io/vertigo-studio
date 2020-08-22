@@ -28,20 +28,20 @@ import io.vertigo.commons.peg.PegChoice;
 import io.vertigo.commons.peg.PegRule;
 import io.vertigo.commons.peg.PegRules;
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
-import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslSketchEntry;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
+import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw.DslRawEntry;
 
 /*
  * @author pchretien, mlaroche
  */
-public final class DslDynamicDefinitionRule extends AbstractRule<DslSketch, PegChoice> {
+public final class DslRawRule extends AbstractRule<DslRaw, PegChoice> {
 
 	/**
 	 * Constructor.
 	 * @param grammar the grammar
 	 */
-	public DslDynamicDefinitionRule(final String operation, final DslGrammar grammar) {
+	public DslRawRule(final String operation, final DslGrammar grammar) {
 		super(createMainRule(operation, grammar), operation + "Definitions");
 	}
 
@@ -52,13 +52,13 @@ public final class DslDynamicDefinitionRule extends AbstractRule<DslSketch, PegC
 		//-----
 		final List<PegRule<?>> rules = grammar.getEntities()
 				.stream()
-				.map(entity -> new DslInnerDefinitionRule(entity.getName(), entity))
+				.map(entity -> new DslInnerRawRule(entity.getName(), entity))
 				.map(innerDefinitionRule -> createRule(operation, innerDefinitionRule))
 				.collect(Collectors.toList());
 		return PegRules.choice(rules);
 	}
 
-	private static PegRule<List<Object>> createRule(final String operation, final DslInnerDefinitionRule definitionRule) {
+	private static PegRule<List<Object>> createRule(final String operation, final DslInnerRawRule definitionRule) {
 		// Création de la règle de déclaration d'une nouvelle definition.
 		return PegRules.sequence(//Definition
 				PegRules.term(operation), // alter ou create
@@ -68,8 +68,8 @@ public final class DslDynamicDefinitionRule extends AbstractRule<DslSketch, PegC
 	}
 
 	@Override
-	protected DslSketch handle(final PegChoice parsing) {
-		final DslSketchEntry dslDefinitionEntry = (DslSketchEntry) ((List) parsing.getValue()).get(2);
-		return dslDefinitionEntry.getSketch();
+	protected DslRaw handle(final PegChoice parsing) {
+		final DslRawEntry dslDefinitionEntry = (DslRawEntry) ((List) parsing.getValue()).get(2);
+		return dslDefinitionEntry.getRaw();
 	}
 }

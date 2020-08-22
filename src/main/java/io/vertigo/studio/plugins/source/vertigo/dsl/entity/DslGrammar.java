@@ -18,10 +18,9 @@
  */
 package io.vertigo.studio.plugins.source.vertigo.dsl.entity;
 
-import java.util.Collections;
 import java.util.List;
 
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
 
 /**
  * Une grammaire est composée d'entités et de propriétés.
@@ -43,7 +42,7 @@ public interface DslGrammar {
 	 * Examples : a grammar is defined from atoms (string...)
 	 * @return the list of primitives/ root definitions
 	 */
-	default List<DslSketch> getRootDefinitions() {
-		return Collections.emptyList();
+	default List<DslRaw> getRootRaws() {
+		return List.of();
 	}
 }

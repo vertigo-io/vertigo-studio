@@ -11,6 +11,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
@@ -20,7 +21,6 @@ import io.vertigo.core.util.Selector.ClassConditions;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.impl.source.NotebookSourceReaderPlugin;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.SketchSupplier;
 import io.vertigo.studio.notebook.webservices.WebServiceSketch;
 import io.vertigo.studio.notebook.webservices.WebServiceSketchParam;
 import io.vertigo.studio.notebook.webservices.WebServiceSketchParam.WebServiceParamLocation;
@@ -44,7 +44,7 @@ public final class VegaWebServicesSourceReaderPlugin implements NotebookSourceRe
 	private static final int NAME_MAX_SIZE = 40;
 
 	@Override
-	public List<SketchSupplier> parseResources(final List<NotebookSource> resources, final Notebook notebook) {
+	public Stream<WebServiceSketch> parseResources(final List<NotebookSource> resources, final Notebook notebook) {
 		final List<WebServiceSketch> webServiceSketch = new ArrayList<>();
 		for (final NotebookSource resource : resources) {
 			final String resourcePath = resource.getPath();
@@ -56,10 +56,7 @@ public final class VegaWebServicesSourceReaderPlugin implements NotebookSourceRe
 			}
 		}
 
-		return webServiceSketch
-				.stream()
-				.map(webserviceSketch -> (SketchSupplier) wB -> webserviceSketch)
-				.collect(Collectors.toList());
+		return webServiceSketch.stream();
 	}
 
 	private static void scanAndAddPackage(final String packagePath, final List<WebServiceSketch> webServiceSketch) {

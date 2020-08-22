@@ -46,7 +46,7 @@ public final class DslEntity implements DslEntityFieldType {
 	/**
 	 * Map : Field by names
 	 */
-	private final Map<String, DslEntityField> fields;
+	private final Map<String, DslEntityField> entityFields;
 
 	private final boolean provided;
 
@@ -63,12 +63,12 @@ public final class DslEntity implements DslEntityFieldType {
 		//-----
 		this.name = name;
 		this.provided = provided;
-		this.fields = new HashMap<>();
+		this.entityFields = new HashMap<>();
 		for (final DslEntityField field : fields) {
-			Assertion.check().isFalse(this.fields.containsKey(field.getName()), "field {0} is already registered for {1}", field, this);
+			Assertion.check().isFalse(this.entityFields.containsKey(field.getName()), "field {0} is already registered for {1}", field, this);
 			//Une propriété est unique pour une définition donnée.
 			//Il n'y a jamais de multiplicité
-			this.fields.put(field.getName(), field);
+			this.entityFields.put(field.getName(), field);
 		}
 	}
 
@@ -92,7 +92,7 @@ public final class DslEntity implements DslEntityFieldType {
 	 * @return Ensemble de toutes les propriétés gérées (obligatoires ou non).
 	 */
 	public Set<String> getPropertyNames() {
-		return fields.values()
+		return entityFields.values()
 				.stream()
 				.filter(field -> field.getType().isProperty())
 				.map(DslEntityField::getName)
@@ -118,16 +118,16 @@ public final class DslEntity implements DslEntityFieldType {
 	public DslEntityField getField(final String fieldName) {
 		Assertion.check()
 				.isNotNull(fieldName)
-				.isTrue(fields.containsKey(fieldName), "Field  '{0}' is not declared on entity '{1}'", fieldName, this);
+				.isTrue(entityFields.containsKey(fieldName), "Field  '{0}' is not declared on entity '{1}'", fieldName, this);
 		//-----
-		return fields.get(fieldName);
+		return entityFields.get(fieldName);
 	}
 
 	/**
 	 * @return List of the entity's fields
 	 */
 	public Collection<DslEntityField> getFields() {
-		return fields.values();
+		return entityFields.values();
 	}
 
 	public DslEntityLink getLink() {

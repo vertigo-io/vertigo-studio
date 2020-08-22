@@ -23,32 +23,33 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.WrappedException;
-import io.vertigo.studio.notebook.SketchSupplier;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DynamicRegistry;
+import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.Sketch;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
-import io.vertigo.studio.plugins.source.vertigo.registries.domain.DomainDynamicRegistry;
-import io.vertigo.studio.plugins.source.vertigo.registries.file.FileDynamicRegistry;
-import io.vertigo.studio.plugins.source.vertigo.registries.search.SearchDynamicRegistry;
-import io.vertigo.studio.plugins.source.vertigo.registries.task.TaskDynamicRegistry;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslSketchFactory;
+import io.vertigo.studio.plugins.source.vertigo.registries.domain.DomainSketchFactory;
+import io.vertigo.studio.plugins.source.vertigo.registries.file.FileSketchFactory;
+import io.vertigo.studio.plugins.source.vertigo.registries.search.SearchSketchFactory;
+import io.vertigo.studio.plugins.source.vertigo.registries.task.TaskSketchFactory;
 
 /**
  * @author pchretien, mlaroche
  */
-public final class DynamoDynamicRegistry implements DynamicRegistry {
-	private final List<DynamicRegistry> dynamicRegistries;
+public final class DynamoSketchFactory implements DslSketchFactory {
+	private final List<DslSketchFactory> sketchFactories;
 	private final DslGrammar dslGrammar;
 
 	/**
 	 * Constructor.
 	 */
-	public DynamoDynamicRegistry() {
-		dynamicRegistries = List.of(
-				new DomainDynamicRegistry(),
-				new TaskDynamicRegistry(),
-				new SearchDynamicRegistry(),
-				new FileDynamicRegistry());
+	public DynamoSketchFactory() {
+		sketchFactories = List.of(
+				new DomainSketchFactory(),
+				new TaskSketchFactory(),
+				new SearchSketchFactory(),
+				new FileSketchFactory());
 		dslGrammar = createGrammar();
 	}
 
@@ -57,17 +58,17 @@ public final class DynamoDynamicRegistry implements DynamicRegistry {
 
 			@Override
 			public List<DslEntity> getEntities() {
-				return dynamicRegistries
+				return sketchFactories
 						.stream()
-						.flatMap(dynamicRegistry -> dynamicRegistry.getGrammar().getEntities().stream())
+						.flatMap(sketchFactory -> sketchFactory.getGrammar().getEntities().stream())
 						.collect(Collectors.toList());
 			}
 
 			@Override
-			public List<DslSketch> getRootDefinitions() {
-				return dynamicRegistries
+			public List<DslRaw> getRootRaws() {
+				return sketchFactories
 						.stream()
-						.flatMap(dynamicRegistry -> dynamicRegistry.getGrammar().getRootDefinitions().stream())
+						.flatMap(sketchFactory -> sketchFactory.getGrammar().getRootRaws().stream())
 						.collect(Collectors.toList());
 			}
 		};
@@ -81,35 +82,35 @@ public final class DynamoDynamicRegistry implements DynamicRegistry {
 
 	/** {@inheritDoc} */
 	@Override
-	public List<DslSketch> onNewSketch(final DslSketch dslDefinition) {
+	public List<DslRaw> onNewRaw(final DslRaw dslDefinition) {
 		//Les entités du noyaux ne sont pas à gérer par des managers spécifiques.
 		if (!dslDefinition.getEntity().isProvided()) {
-			return lookUpDynamicRegistry(dslDefinition)
-					.onNewSketch(dslDefinition);
+			return lookUpSketchFactory(dslDefinition)
+					.onNewRaw(dslDefinition);
 		}
 		return Collections.emptyList();
 	}
 
 	/** {@inheritDoc} */
 	@Override
-	public SketchSupplier supplyModel(final DslSketch dslSketch) {
+	public Sketch create(final Notebook notebook, final DslRaw raw) {
 		try {
 			// perf: ifs ordonnés en gros par fréquence sur les projets
-			return lookUpDynamicRegistry(dslSketch)
-					.supplyModel(dslSketch);
+			return lookUpSketchFactory(raw)
+					.create(notebook, raw);
 		} catch (final Exception e) {
 			//on catch tout (notament les assertions) car c'est ici qu'on indique l'URI de la définition posant problème
-			throw WrappedException.wrap(e, "An error occurred during the creation of the following definition : {0}", dslSketch.getKey());
+			throw WrappedException.wrap(e, "An error occurred during the creation of the following definition : {0}", raw.getKey());
 		}
 	}
 
-	private DynamicRegistry lookUpDynamicRegistry(final DslSketch dslSketch) {
+	private DslSketchFactory lookUpSketchFactory(final DslRaw raw) {
 		//On regarde si la grammaire contient la métaDefinition.
-		return dynamicRegistries
+		return sketchFactories
 				.stream()
-				.filter(dynamicRegistry -> dynamicRegistry.getGrammar().getEntities().contains(dslSketch.getEntity()))
+				.filter(sketchFactory -> sketchFactory.getGrammar().getEntities().contains(raw.getEntity()))
 				.findFirst()
 				//Si on n'a pas trouvé de définition c'est qu'il manque la registry.
-				.orElseThrow(() -> new IllegalArgumentException(dslSketch.getEntity().getName() + " " + dslSketch.getKey() + " non traitée. Il manque une DynamicRegistry ad hoc."));
+				.orElseThrow(() -> new IllegalArgumentException(raw.getEntity().getName() + " " + raw.getKey() + " non traitée. Il manque une DynamicRegistry ad hoc."));
 	}
 }

@@ -24,18 +24,18 @@ import io.vertigo.commons.peg.AbstractRule;
 import io.vertigo.commons.peg.PegRule;
 import io.vertigo.commons.peg.PegRules;
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchBuilder;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
-import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslPropertyEntry;
-import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslSketchBody;
-import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition.DslSketchEntry;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawBuilder;
+import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw.DslPropertyEntry;
+import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw.DslRawBody;
+import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw.DslRawEntry;
 
-final class DslInnerDefinitionRule extends AbstractRule<DslSketchEntry, List<Object>> {
+final class DslInnerRawRule extends AbstractRule<DslRawEntry, List<Object>> {
 	private final String entityName;
 	private final DslEntity entity;
 
-	DslInnerDefinitionRule(final String entityName, final DslEntity entity) {
+	DslInnerRawRule(final String entityName, final DslEntity entity) {
 		super(createMainRule(entityName, entity), entityName);
 		this.entityName = entityName;
 		this.entity = entity;
@@ -46,7 +46,7 @@ final class DslInnerDefinitionRule extends AbstractRule<DslSketchEntry, List<Obj
 				.isNotBlank(entityName)
 				.isNotNull(entity);
 		//-----
-		final DslSketchBodyRule definitionBodyRule = new DslSketchBodyRule(entity);
+		final DslRawBodyRule definitionBodyRule = new DslRawBodyRule(entity);
 		return PegRules.sequence(//"InnerDefinition"
 				PegRules.term(entityName),
 				DslSyntaxRules.SPACES,
@@ -58,34 +58,34 @@ final class DslInnerDefinitionRule extends AbstractRule<DslSketchEntry, List<Obj
 	}
 
 	@Override
-	protected DslSketchEntry handle(final List<Object> parsing) {
+	protected DslRawEntry handle(final List<Object> parsing) {
 		//Dans le cas des sous définition :: field [PRD_XXX]
 
 		final String definitionName = (String) parsing.get(2);
-		final DslSketchBody definitionBody = (DslSketchBody) parsing.get(4);
+		final DslRawBody definitionBody = (DslRawBody) parsing.get(4);
 
-		final DslSketchBuilder dslSketchBuilder = DslSketch.builder(definitionName, entity);
+		final DslRawBuilder dslSketchBuilder = DslRaw.builder(definitionName, entity);
 		populateDefinition(definitionBody, dslSketchBuilder);
 
 		//---
-		return new DslSketchEntry(entityName, dslSketchBuilder.build());
+		return new DslRawEntry(entityName, dslSketchBuilder.build());
 	}
 
 	/**
 	 * Peuple la définition à partir des éléments trouvés.
 	 */
-	private static void populateDefinition(final DslSketchBody definitionBody, final DslSketchBuilder dslDefinitionBuilder) {
-		for (final DslSketchEntry fieldDefinitionEntry : definitionBody.getDefinitionEntries()) {
+	private static void populateDefinition(final DslRawBody definitionBody, final DslRawBuilder dslDefinitionBuilder) {
+		for (final DslRawEntry fieldDefinitionEntry : definitionBody.getRawEntries()) {
 			//-----
 			// 1.On vérifie que le champ existe pour la metaDefinition
 			// et qu'elle n'est pas déjà enregistrée sur l'objet.
 			//-----
-			if (fieldDefinitionEntry.containsSketch()) {
+			if (fieldDefinitionEntry.containsRaw()) {
 				// On ajoute la définition par sa valeur.
-				dslDefinitionBuilder.addChildDefinition(fieldDefinitionEntry.getFieldName(), fieldDefinitionEntry.getSketch());
+				dslDefinitionBuilder.addSubRaw(fieldDefinitionEntry.getFieldName(), fieldDefinitionEntry.getRaw());
 			} else {
 				// On ajoute les définitions par leur clé.
-				dslDefinitionBuilder.addAllDefinitionLinks(fieldDefinitionEntry.getFieldName(), fieldDefinitionEntry.getSketchKeys());
+				dslDefinitionBuilder.addAllRawLinks(fieldDefinitionEntry.getFieldName(), fieldDefinitionEntry.getRawKeys());
 			}
 		}
 		for (final DslPropertyEntry dslPropertyEntry : definitionBody.getPropertyEntries()) {

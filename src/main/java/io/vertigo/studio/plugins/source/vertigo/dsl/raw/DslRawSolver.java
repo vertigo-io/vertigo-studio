@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.plugins.source.vertigo.dsl.dynamic;
+package io.vertigo.studio.plugins.source.vertigo.dsl.raw;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,8 +36,8 @@ import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntityField;
  *
  * @author  pchretien
  */
-final class DslSolver {
-	private DslSolver() {
+final class DslRawSolver {
+	private DslRawSolver() {
 		//private constructor
 	}
 
@@ -45,66 +45,66 @@ final class DslSolver {
 	* Résoltuion des références.
 	* On appelle SyntaxHandler dans le bon Ordre
 	*/
-	static List<DslSketch> solve(final Notebook notebook, final DslSketchesRepository dslSketchesRepository) {
+	static List<DslRaw> solve(final Notebook notebook, final DslRawRepository rawRepository) {
 		Assertion.check()
 				.isNotNull(notebook)
-				.isNotNull(dslSketchesRepository);
+				.isNotNull(rawRepository);
 		//-----
 		//Liste des clés résolues
-		final List<DslSketch> sortedList = new ArrayList<>();
+		final List<DslRaw> sortedList = new ArrayList<>();
 
-		final Collection<DslSketchKey> orphans = dslSketchesRepository.getOrphanDefinitionKeys();
+		final Collection<DslRawKey> orphans = rawRepository.getOrphanDefinitionKeys();
 		if (!orphans.isEmpty()) {
 			throw new VSystemException(" Les clés suivantes {0} sont orphelines", orphans);
 		}
 		//-----
-		final Collection<DslSketch> coll = new ArrayList<>(dslSketchesRepository.getSketches());
+		final Collection<DslRaw> raws = new ArrayList<>(rawRepository.getRaws());
 
-		DslSketch dslDefinition;
-		int size = coll.size();
+		DslRaw raw;
+		int size = raws.size();
 		while (size > 0) {
-			for (final Iterator<DslSketch> it = coll.iterator(); it.hasNext();) {
-				dslDefinition = it.next();
+			for (final Iterator<DslRaw> it = raws.iterator(); it.hasNext();) {
+				raw = it.next();
 				//==============================================================
 				//==============================================================
 				//On vérifie que les sous éléments sont résolues
-				if (isSolved(notebook, dslSketchesRepository, sortedList, dslDefinition, dslDefinition)) {
-					sortedList.add(dslDefinition);
+				if (isSolved(notebook, rawRepository, sortedList, raw, raw)) {
+					sortedList.add(raw);
 					it.remove();
 				}
 			}
 			//Si la liste n'a pas diminuée c'est que l'on a fini de résoudre ce qui peut l'être.
-			if (size == coll.size()) {
-				throw new VSystemException(" Les références {0} ne peuvent être résolues", coll);
+			if (size == raws.size()) {
+				throw new VSystemException(" Les références {0} ne peuvent être résolues", raws);
 			}
-			size = coll.size();
+			size = raws.size();
 		}
 		return sortedList;
 	}
 
 	private static boolean isSolved(
 			final Notebook notebook,
-			final DslSketchesRepository definitionRepository,
-			final List<DslSketch> orderedList,
-			final DslSketch dslSketch,
-			final DslSketch xdefRoot) {
+			final DslRawRepository rawRepository,
+			final List<DslRaw> orderedRaws,
+			final DslRaw raw,
+			final DslRaw xdefRoot) {
 		//A definition is solved if all its sub definitions have been solved
 
 		//We check all references were known
-		for (final DslEntityField dslEntityField : dslSketch.getAllDefinitionLinkFields()) {
-			final String fieldName = dslEntityField.getName();
-			for (final DslSketchKey sketchKey : dslSketch.getSketchKeysByFieldName(fieldName)) {
+		for (final DslEntityField entityField : raw.getAllRawLinkFields()) {
+			final String fieldName = entityField.getName();
+			for (final DslRawKey rawKey : raw.getRawKeysByFieldName(fieldName)) {
 				//reference should be already solved in a previous resources module : then continue
-				if (!notebook.contains(sketchKey.getName())) {
+				if (!notebook.contains(rawKey.getName())) {
 					//or references should be in currently parsed resources
-					if (!definitionRepository.contains(sketchKey)) {
-						final DslSketchKey xdefRootKey = xdefRoot.getKey().equals(dslSketch.getKey()) ? xdefRoot.getKey()
-								: DslSketchKey.of((xdefRoot.getKey().getName() + "." + dslSketch.getKey().getName()));
+					if (!rawRepository.contains(rawKey)) {
+						final DslRawKey xdefRootKey = xdefRoot.getKey().equals(raw.getKey()) ? xdefRoot.getKey()
+								: DslRawKey.of((xdefRoot.getKey().getName() + "." + raw.getKey().getName()));
 						throw new VSystemException("Clé {0} de type {1}, référencée par la propriété {2} de {3} non trouvée",
-								sketchKey, dslSketch.getEntity().getField(fieldName).getType(), fieldName, xdefRootKey);
+								rawKey, raw.getEntity().getField(fieldName).getType(), fieldName, xdefRootKey);
 					}
-					final DslSketch linkedDefinition = definitionRepository.getSketch(sketchKey);
-					if (!orderedList.contains(linkedDefinition)) {
+					final DslRaw linkedRaw = rawRepository.getRaw(rawKey);
+					if (!orderedRaws.contains(linkedRaw)) {
 						return false;
 					}
 				}
@@ -112,8 +112,8 @@ final class DslSolver {
 		}
 
 		//On vérifie que les composites sont résolues.
-		return dslSketch.getAllChildSketches()
+		return raw.getAllSubRaws()
 				.stream()
-				.allMatch(child -> isSolved(notebook, definitionRepository, orderedList, child, xdefRoot));
+				.allMatch(child -> isSolved(notebook, rawRepository, orderedRaws, child, xdefRoot));
 	}
 }

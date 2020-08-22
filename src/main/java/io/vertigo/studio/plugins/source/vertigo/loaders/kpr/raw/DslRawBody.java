@@ -16,42 +16,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.plugins.source.vertigo.loaders.kpr.definition;
+package io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw;
+
+import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 
 /**
- * This entry defines a property and its value.
- *
- * @author pchretien, mlaroche
+ * Model of Definition from KSP.
+ * @author npiedeloup
  */
-public final class DslPropertyEntry {
-	private final String propertyValue;
-	private final String propertyName;
+public final class DslRawBody {
+	private final List<DslRawEntry> rawEntries;
+	private final List<DslPropertyEntry> propertyEntries;
 
 	/**
-	 * Constructor.
-	 * @param propertyName Name of the property
-	 * @param propertyValue Value of the property
+	 * @param rawEntries
+	 * @param propertyEntries
 	 */
-	public DslPropertyEntry(final String propertyName, final String propertyValue) {
-		Assertion.check().isNotNull(propertyName);
+	public DslRawBody(final List<DslRawEntry> rawEntries, final List<DslPropertyEntry> propertyEntries) {
+		Assertion.check()
+				.isNotNull(rawEntries)
+				.isNotNull(propertyEntries);
 		//-----
-		this.propertyName = propertyName;
-		this.propertyValue = propertyValue;
+		this.rawEntries = rawEntries;
+		this.propertyEntries = propertyEntries;
 	}
 
 	/**
-	 * @return Value of the property
+	 * @return List of properties
 	 */
-	public String getPropertyValueAsString() {
-		return propertyValue;
+	public List<DslPropertyEntry> getPropertyEntries() {
+		return propertyEntries;
 	}
 
 	/**
-	 * @return Name of the property
+	 * @return List of Definition
 	 */
-	public String getPropertyName() {
-		return propertyName;
+	public List<DslRawEntry> getRawEntries() {
+		return rawEntries;
 	}
 }

@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.inject.Inject;
 
@@ -38,7 +38,7 @@ import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.studio.impl.source.NotebookSourceReaderPlugin;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.SketchSupplier;
+import io.vertigo.studio.notebook.Sketch;
 import io.vertigo.studio.notebook.domain.masterdata.MasterDataValue;
 import io.vertigo.studio.notebook.domain.masterdata.StaticMasterDataSketch;
 import io.vertigo.studio.source.NotebookSource;
@@ -87,7 +87,7 @@ public final class JsonStaticMasterDataSourceReaderPlugin implements NotebookSou
 	}
 
 	@Override
-	public List<SketchSupplier> parseResources(final List<NotebookSource> resources, final Notebook notebook) {
+	public Stream<Sketch> parseResources(final List<NotebookSource> resources, final Notebook notebook) {
 
 		final JsonMasterDataValues result = new JsonMasterDataValues();
 		for (final NotebookSource resource : resources) {
@@ -111,9 +111,9 @@ public final class JsonStaticMasterDataSourceReaderPlugin implements NotebookSou
 					});
 
 		}
-		return result.entrySet().stream()
-				.map(entry -> (SketchSupplier) dS -> new StaticMasterDataSketch(entry.getKey(), entry.getValue()))
-				.collect(Collectors.toList());
+		return result.entrySet()
+				.stream()
+				.map(entry -> new StaticMasterDataSketch(entry.getKey(), entry.getValue()));
 	}
 
 	public static class JsonMasterDataValues extends HashMap<String, Map<String, MasterDataValue>> {

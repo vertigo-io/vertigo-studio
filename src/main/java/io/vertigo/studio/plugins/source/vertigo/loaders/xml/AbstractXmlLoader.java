@@ -37,11 +37,11 @@ import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.notebook.domain.association.AssociationUtil;
 import io.vertigo.studio.plugins.source.vertigo.KspProperty;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchBuilder;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchKey;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchesRepository;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawBuilder;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawKey;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawRepository;
 import io.vertigo.studio.plugins.source.vertigo.loaders.Loader;
 import io.vertigo.studio.plugins.source.vertigo.registries.domain.DomainGrammar;
 
@@ -72,7 +72,7 @@ public abstract class AbstractXmlLoader implements Loader {
 
 	/** {@inheritDoc} */
 	@Override
-	public final void load(final String resourcePath, final DslSketchesRepository dslSketchesRepository) {
+	public final void load(final String resourcePath, final DslRawRepository rawRepository) {
 		final URL xmiFileURL = resourceManager.resolve(resourcePath);
 
 		try {
@@ -88,15 +88,15 @@ public abstract class AbstractXmlLoader implements Loader {
 		}
 		Assertion.check()
 				.isNotBlank(resourcePath)
-				.isNotNull(dslSketchesRepository);
+				.isNotNull(rawRepository);
 		//-----
 
 		for (final XmlClass clazz : getClasses()) {
-			dslSketchesRepository.addSketch(toDslSketch(clazz));
+			rawRepository.addRaw(toRaw(clazz));
 		}
 
 		for (final XmlAssociation association : getAssociations()) {
-			dslSketchesRepository.addSketch(toDynamicDefinition(association, dslSketchesRepository));
+			rawRepository.addRaw(toRaw(association, rawRepository));
 		}
 	}
 
@@ -118,52 +118,52 @@ public abstract class AbstractXmlLoader implements Loader {
 		return constFieldNameInSource;
 	}
 
-	private static DslSketch toDslSketch(final XmlClass clazz) {
-		final DslEntity dtDefinitionEntity = DomainGrammar.DT_DEFINITION_ENTITY;
-		final DslSketchBuilder dtDefinitionBuilder = DslSketch.builder(getDtSketchKey(clazz.getCode()), dtDefinitionEntity)
+	private static DslRaw toRaw(final XmlClass clazz) {
+		final DslEntity dtEntity = DomainGrammar.DT_ENTITY;
+		final DslRawBuilder dtRawBuilder = DslRaw.builder(getDtSketchKey(clazz.getCode()), dtEntity)
 				.withPackageName(clazz.getPackageName())
 				//Par défaut les DT lues depuis le OOM/XMI sont persistantes.
 				.addPropertyValue(KspProperty.STEREOTYPE, clazz.getStereotype());
 
 		for (final XmlAttribute attribute : clazz.getKeyAttributes()) {
-			final DslSketch dtField = toDynamicDefinition(attribute);
-			dtDefinitionBuilder.addChildDefinition(DomainGrammar.ID_FIELD, dtField);
+			final DslRaw dtField = toDynamicDefinition(attribute);
+			dtRawBuilder.addSubRaw(DomainGrammar.ID_FIELD, dtField);
 		}
 		for (final XmlAttribute tagAttribute : clazz.getFieldAttributes()) {
-			final DslSketch dtField = toDynamicDefinition(tagAttribute);
-			dtDefinitionBuilder.addChildDefinition(DomainGrammar.DATA_FIELD, dtField);
+			final DslRaw dtField = toDynamicDefinition(tagAttribute);
+			dtRawBuilder.addSubRaw(DomainGrammar.DATA_FIELD, dtField);
 		}
-		return dtDefinitionBuilder.build();
+		return dtRawBuilder.build();
 	}
 
-	private static DslSketch toDynamicDefinition(final XmlAttribute attribute) {
+	private static DslRaw toDynamicDefinition(final XmlAttribute attribute) {
 		final DslEntity dtFieldEntity = DomainGrammar.DT_DATA_FIELD_ENTITY;
-		final Cardinality fieldCardinality = attribute.isNotNull() ? Cardinality.ONE : Cardinality.OPTIONAL_OR_NULLABLE;
-		return DslSketch.builder(attribute.getCode(), dtFieldEntity)
+		final Cardinality cardinality = attribute.isNotNull() ? Cardinality.ONE : Cardinality.OPTIONAL_OR_NULLABLE;
+		return DslRaw.builder(attribute.getCode(), dtFieldEntity)
 				.addPropertyValue(KspProperty.LABEL, attribute.getLabel())
 				.addPropertyValue(KspProperty.PERSISTENT, attribute.isPersistent())
-				.addPropertyValue(KspProperty.CARDINALITY, fieldCardinality.toSymbol())
-				.addDefinitionLink("domain", attribute.getDomain())
+				.addPropertyValue(KspProperty.CARDINALITY, cardinality.toSymbol())
+				.addRawLink("domain", attribute.getDomain())
 				.build();
 	}
 
-	private static DslSketch toDynamicDefinition(final XmlAssociation association, final DslSketchesRepository dynamicModelrepository) {
+	private static DslRaw toRaw(final XmlAssociation association, final DslRawRepository rawRepository) {
 		final DslEntity associationEntity = DomainGrammar.ASSOCIATION_ENTITY;
 		final DslEntity associationNNEntity = DomainGrammar.ASSOCIATION_NN_ENTITY;
 
 		//On regarde si on est dans le cas d'une association simple ou multiple
 		final boolean isAssociationNN = AssociationUtil.isMultiple(association.getMultiplicityA()) && AssociationUtil.isMultiple(association.getMultiplicityB());
-		final DslEntity dynamicMetaDefinition;
+		final DslEntity entity;
 		if (isAssociationNN) {
-			dynamicMetaDefinition = associationNNEntity;
+			entity = associationNNEntity;
 		} else {
-			dynamicMetaDefinition = associationEntity;
+			entity = associationEntity;
 		}
 
 		final String associationDefinitionName = (isAssociationNN ? "Ann" : "A") + association.getCode();
 
 		//On crée l'association
-		final DslSketchBuilder associationSketchBuilder = DslSketch.builder(associationDefinitionName, dynamicMetaDefinition)
+		final DslRawBuilder associationRawBuilder = DslRaw.builder(associationDefinitionName, entity)
 				.withPackageName(association.getPackageName())
 				.addPropertyValue(KspProperty.NAVIGABILITY_A, association.isNavigableA())
 				.addPropertyValue(KspProperty.NAVIGABILITY_B, association.isNavigableB())
@@ -174,52 +174,52 @@ public abstract class AbstractXmlLoader implements Loader {
 				.addPropertyValue(KspProperty.LABEL_B, association.getRoleLabelB())
 				.addPropertyValue(KspProperty.ROLE_B, XmlUtil.french2Java(association.getRoleLabelB()))
 				//---
-				.addDefinitionLink("dtDefinitionA", getDtSketchKey(association.getCodeA()))
-				.addDefinitionLink("dtDefinitionB", getDtSketchKey(association.getCodeB()));
+				.addRawLink("dtDefinitionA", getDtSketchKey(association.getCodeA()))
+				.addRawLink("dtDefinitionB", getDtSketchKey(association.getCodeB()));
 
 		if (isAssociationNN) {
 			//Dans le cas d'une association NN il faut établir le nom de la table intermédiaire qui porte les relations
 			final String tableName = association.getCode();
-			associationSketchBuilder.addPropertyValue(KspProperty.TABLE_NAME, tableName);
+			associationRawBuilder.addPropertyValue(KspProperty.TABLE_NAME, tableName);
 			LOGGER.trace("isAssociationNN:Code= {}", association.getCode());
 		} else {
 			LOGGER.trace("!isAssociationNN:Code= {}", association.getCode());
 			//Dans le cas d'une NN ses deux propriétés sont redondantes ;
 			//elles ne font donc pas partie de la définition d'une association de type NN
-			associationSketchBuilder
+			associationRawBuilder
 					.addPropertyValue(KspProperty.MULTIPLICITY_A, association.getMultiplicityA())
 					.addPropertyValue(KspProperty.MULTIPLICITY_B, association.getMultiplicityB())
-					.addPropertyValue(KspProperty.FK_FIELD_NAME, buildFkFieldName(association, dynamicModelrepository));
+					.addPropertyValue(KspProperty.FK_FIELD_NAME, buildFkFieldName(association, rawRepository));
 
 		}
-		return associationSketchBuilder.build();
+		return associationRawBuilder.build();
 	}
 
-	private static String buildFkFieldName(final XmlAssociation association, final DslSketchesRepository dynamicModelrepository) {
+	private static String buildFkFieldName(final XmlAssociation association, final DslRawRepository rawRepository) {
 		// Dans le cas d'une association simple, on recherche le nom de la FK
 		// recherche de code de contrainte destiné à renommer la fk selon convention du vbsript PowerAMC
 		// Cas de la relation 1-n : où le nom de la FK est redéfini.
 		// Exemple : DOS_UTI_LIQUIDATION (relation entre dossier et utilisateur : FK >> UTILISATEUR_ID_LIQUIDATION)
-		final DslSketch dtSketchA = dynamicModelrepository.getSketch(getDtSketchKey(association.getCodeA()));
-		final DslSketch dtSketchB = dynamicModelrepository.getSketch(getDtSketchKey(association.getCodeB()));
+		final DslRaw dtSketchA = rawRepository.getRaw(getDtSketchKey(association.getCodeA()));
+		final DslRaw dtSketchB = rawRepository.getRaw(getDtSketchKey(association.getCodeB()));
 
-		final DslSketch foreignDslSketch = AssociationUtil.isAPrimaryNode(association.getMultiplicityA(), association.getMultiplicityB()) ? dtSketchA : dtSketchB;
-		final List<DslSketch> primaryKeys = foreignDslSketch.getChildSketches(DomainGrammar.ID_FIELD);
+		final DslRaw foreignKeyRaw = AssociationUtil.isAPrimaryNode(association.getMultiplicityA(), association.getMultiplicityB()) ? dtSketchA : dtSketchB;
+		final List<DslRaw> primaryKeys = foreignKeyRaw.getSubRaws(DomainGrammar.ID_FIELD);
 		if (primaryKeys.isEmpty()) {
-			throw new IllegalArgumentException("Pour l'association '" + association.getCode() + "' aucune clé primaire sur la définition '" + foreignDslSketch.getKey() + "'");
+			throw new IllegalArgumentException("Pour l'association '" + association.getCode() + "' aucune clé primaire sur la définition '" + foreignKeyRaw.getKey() + "'");
 		}
 		if (primaryKeys.size() > 1) {
-			throw new IllegalArgumentException("Pour l'association '" + association.getCode() + "' clé multiple non géré sur '" + foreignDslSketch.getKey() + "'");
+			throw new IllegalArgumentException("Pour l'association '" + association.getCode() + "' clé multiple non géré sur '" + foreignKeyRaw.getKey() + "'");
 		}
 		if (dtSketchA.getKey().equals(dtSketchB.getKey()) && association.getCodeName() == null) {
 			throw new IllegalArgumentException("Pour l'association '" + association.getCode() + "' le nom de la clé est obligatoire (AutoJointure) '"
-					+ foreignDslSketch.getKey()
+					+ foreignKeyRaw.getKey()
 					+ "'. Ce nom est déduit du code l'association, le code doit être composé ainsi : {Trigramme Table1}{Trigramme Table2}{Code association}."
 					+ " Par exemple : DosUtiEmmeteur, DosUtiDestinataire, DosDosParent, ...");
 		}
 
 		//On récupère le nom de LA clé primaire .
-		final DslSketchKey pkField = primaryKeys.get(0).getKey();
+		final DslRawKey pkField = primaryKeys.get(0).getKey();
 
 		//Par défaut le nom de la clé étrangère est constituée de la clé primaire référencée.
 		String fkFieldName = pkField.getName();
@@ -244,8 +244,8 @@ public abstract class AbstractXmlLoader implements Loader {
 		return fkFieldName;
 	}
 
-	private static DslSketchKey getDtSketchKey(final String code) {
-		return DslSketchKey.of(DT_DEFINITION_PREFIX + code);
+	private static DslRawKey getDtSketchKey(final String code) {
+		return DslRawKey.of(DT_DEFINITION_PREFIX + code);
 	}
 
 }

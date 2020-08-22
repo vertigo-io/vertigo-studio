@@ -39,7 +39,7 @@ public final class DslEntityBuilder implements Builder<DslEntity> {
 	/**
 	 * Fields of the entity.
 	 */
-	private final Set<DslEntityField> fields;
+	private final Set<DslEntityField> entityFields;
 
 	private boolean myProvided;
 
@@ -51,7 +51,7 @@ public final class DslEntityBuilder implements Builder<DslEntity> {
 		Assertion.check().isNotNull(name);
 		//-----
 		this.name = name;
-		fields = new HashSet<>();
+		entityFields = new HashSet<>();
 
 	}
 
@@ -114,15 +114,15 @@ public final class DslEntityBuilder implements Builder<DslEntity> {
 	 * @return this builder
 	 */
 	private DslEntityBuilder addField(final String fieldName, final DslEntityFieldType type, final Cardinality cardinality) {
-		final DslEntityField field = new DslEntityField(fieldName, type, cardinality);
+		final DslEntityField entityField = new DslEntityField(fieldName, type, cardinality);
 		//-----
-		fields.add(field);
+		entityFields.add(entityField);
 		return this;
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public DslEntity build() {
-		return new DslEntity(name, fields, myProvided);
+		return new DslEntity(name, entityFields, myProvided);
 	}
 }

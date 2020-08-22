@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.plugins.source.vertigo.dsl.dynamic;
+package io.vertigo.studio.plugins.source.vertigo.dsl.raw;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,49 +34,49 @@ import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntityField;
  * Interface de création des définitions.
  * @author  pchretien
  */
-public final class DslSketchBuilder implements Builder<DslSketch> {
+public final class DslRawBuilder implements Builder<DslRaw> {
 	/** Type. */
 	private final DslEntity entity;
 
 	/** Name of the package. */
-	private String packageName;
+	private String myPackageName;
 
 	/**key of this sketch.*/
-	private final DslSketchKey key;
+	private final DslRawKey rawKey;
 
 	/** Map  (fieldName, propertyValue)  */
-	private final Map<DslEntityField, Object> propertyValueByFieldName = new HashMap<>();
+	private final Map<DslEntityField, Object> propertyValueByEntityField = new HashMap<>();
 
 	/**
 	 * Links.
 	 * Map (fieldName, definitions identified by its name)
 	 */
 
-	private final Map<DslEntityField, List<DslSketchKey>> sketchKeysByFieldName = new LinkedHashMap<>();
+	private final Map<DslEntityField, List<DslRawKey>> rawKeysByEntityField = new LinkedHashMap<>();
 
 	/**
 	 * Children.
 	 * Map (fieldName, definitions
 	 */
-	private final Map<DslEntityField, List<DslSketch>> childDefinitionsByFieldName = new LinkedHashMap<>();
+	private final Map<DslEntityField, List<DslRaw>> subRawsByEntityField = new LinkedHashMap<>();
 
 	/**
 	 * Constructor.
 	 * @param name the name of the dslDefinition
 	 * @param entity Entité
 	 */
-	DslSketchBuilder(final DslSketchKey key, final DslEntity entity) {
+	DslRawBuilder(final DslRawKey rawKey, final DslEntity entity) {
 		Assertion.check()
-				.isNotNull(key)
+				.isNotNull(rawKey)
 				.isNotNull(entity);
 		//-----
-		this.key = key;
+		this.rawKey = rawKey;
 		this.entity = entity;
 		for (final DslEntityField dslEntityField : entity.getFields()) {
 			if (dslEntityField.getType().isEntityLink()) {
-				sketchKeysByFieldName.put(dslEntityField, new ArrayList<>());
+				rawKeysByEntityField.put(dslEntityField, new ArrayList<>());
 			} else if (dslEntityField.getType().isEntity()) {
-				childDefinitionsByFieldName.put(dslEntityField, new ArrayList<>());
+				subRawsByEntityField.put(dslEntityField, new ArrayList<>());
 			}
 			// else : nothing for property
 		}
@@ -90,31 +90,31 @@ public final class DslSketchBuilder implements Builder<DslSketch> {
 	 * @param newPackageName Package name
 	 * @return Builder
 	 */
-	public DslSketchBuilder withPackageName(final String newPackageName) {
-		packageName = newPackageName;
+	public DslRawBuilder withPackageName(final String packageName) {
+		myPackageName = packageName;
 		return this;
 	}
 
 	/**
-	 * @param dslSketch Definition body
+	 * @param raw Definition body
 	 * @return this builder
 	 */
-	public DslSketchBuilder merge(final DslSketch dslSketch) {
-		if (packageName == null) {
-			withPackageName(dslSketch.getPackageName());
+	public DslRawBuilder merge(final DslRaw raw) {
+		if (myPackageName == null) {
+			withPackageName(raw.getPackageName());
 		}
 		// 1. maj des EntityProperty
-		for (final String propertyName : dslSketch.getPropertyNames()) {
-			addPropertyValue(propertyName, dslSketch.getPropertyValue(propertyName));
+		for (final String propertyName : raw.getPropertyNames()) {
+			addPropertyValue(propertyName, raw.getPropertyValue(propertyName));
 		}
 
 		for (final DslEntityField dslEntityField : entity.getFields()) {
 			if (dslEntityField.getType().isEntityLink()) {
 				// 2. link
-				addAllDefinitionLinks(dslEntityField.getName(), dslSketch.getSketchKeysByFieldName(dslEntityField.getName()));
+				addAllRawLinks(dslEntityField.getName(), raw.getRawKeysByFieldName(dslEntityField.getName()));
 			} else if (dslEntityField.getType().isEntity()) {
 				// 3. children
-				addAllChildDefinitions(dslEntityField.getName(), dslSketch.getChildSketches(dslEntityField.getName()));
+				addAllSubRaws(dslEntityField.getName(), raw.getSubRaws(dslEntityField.getName()));
 			}
 			// else : nothing for property (already processed)
 		}
@@ -126,12 +126,12 @@ public final class DslSketchBuilder implements Builder<DslSketch> {
 	 * @param value Valeur de la propriété
 	 * @return this builder
 	 */
-	public DslSketchBuilder addPropertyValue(final String fieldName, final Object value) {
+	public DslRawBuilder addPropertyValue(final String fieldName, final Object value) {
 		final DslEntityField dslEntityField = entity.getField(fieldName);
 		Assertion.check().isTrue(dslEntityField.getType().isProperty(), "expected a property on {0}", fieldName);
 		//----
 		entity.getPropertyType(fieldName).checkValue(value);
-		propertyValueByFieldName.put(dslEntityField, value);
+		propertyValueByEntityField.put(dslEntityField, value);
 		return this;
 	}
 
@@ -142,12 +142,12 @@ public final class DslSketchBuilder implements Builder<DslSketch> {
 	 * @param definitionName Name of the definition
 	 * @return this builder
 	 */
-	public DslSketchBuilder addDefinitionLink(final String fieldName, final String sketchName) {
-		return addDefinitionLink(fieldName, DslSketchKey.of(sketchName));
+	public DslRawBuilder addRawLink(final String fieldName, final String rawName) {
+		return addRawLink(fieldName, DslRawKey.of(rawName));
 	}
 
-	public DslSketchBuilder addDefinitionLink(final String fieldName, final DslSketchKey sketchKey) {
-		return addAllDefinitionLinks(fieldName, Collections.singletonList(sketchKey));
+	public DslRawBuilder addRawLink(final String fieldName, final DslRawKey rawKey) {
+		return addAllRawLinks(fieldName, List.of(rawKey));
 	}
 
 	/**
@@ -157,41 +157,41 @@ public final class DslSketchBuilder implements Builder<DslSketch> {
 	 * @param definitionNames  list of the names of the dedinitions
 	 * @return this builder
 	 */
-	public DslSketchBuilder addAllDefinitionLinks(final String fieldName, final List<DslSketchKey> sketchKeys) {
-		Assertion.check().isNotNull(sketchKeys);
+	public DslRawBuilder addAllRawLinks(final String fieldName, final List<DslRawKey> rawKeys) {
+		Assertion.check().isNotNull(rawKeys);
 		final DslEntityField dslEntityField = entity.getField(fieldName);
 		Assertion.check().isTrue(dslEntityField.getType().isEntityLink(), "expected a link on {0}", fieldName);
 		//---
-		sketchKeysByFieldName.get(dslEntityField)
-				.addAll(sketchKeys);
+		rawKeysByEntityField.get(dslEntityField)
+				.addAll(rawKeys);
 		return this;
 	}
 
-	private void addAllChildDefinitions(final String fieldName, final List<DslSketch> dslSketches) {
-		Assertion.check().isNotNull(dslSketches);
+	private void addAllSubRaws(final String fieldName, final List<DslRaw> raws) {
+		Assertion.check().isNotNull(raws);
 		final DslEntityField dslEntityField = entity.getField(fieldName);
 		Assertion.check().isTrue(dslEntityField.getType().isEntity(), "expected an entity on {0}", fieldName);
 		//---
-		childDefinitionsByFieldName.get(dslEntityField)
-				.addAll(dslSketches);
+		subRawsByEntityField.get(dslEntityField)
+				.addAll(raws);
 	}
 
 	/**
 	 * Ajoute une définition au champ défini par fieldName.
 	 * @param fieldName Name of the field
-	 * @param dslSketch Définition
+	 * @param subRaw Définition
 	 * @return this builder
 	 */
-	public DslSketchBuilder addChildDefinition(final String fieldName, final DslSketch dslSketch) {
-		Assertion.check().isNotNull(dslSketch);
-		addAllChildDefinitions(fieldName, Collections.singletonList(dslSketch));
+	public DslRawBuilder addSubRaw(final String fieldName, final DslRaw subRaw) {
+		Assertion.check().isNotNull(subRaw);
+		addAllSubRaws(fieldName, Collections.singletonList(subRaw));
 		return this;
 	}
 
 	/** {@inheritDoc} */
 	@Override
-	public DslSketch build() {
-		return new DslSketch(entity, packageName, key, propertyValueByFieldName, sketchKeysByFieldName, childDefinitionsByFieldName);
+	public DslRaw build() {
+		return new DslRaw(entity, myPackageName, rawKey, propertyValueByEntityField, rawKeysByEntityField, subRawsByEntityField);
 	}
 
 }

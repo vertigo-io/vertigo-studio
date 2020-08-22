@@ -16,12 +16,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.plugins.source.vertigo.dsl.dynamic;
+package io.vertigo.studio.plugins.source.vertigo.dsl.raw;
 
-import java.util.Collections;
 import java.util.List;
 
-import io.vertigo.studio.notebook.SketchSupplier;
+import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.Sketch;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
 
 /**
@@ -32,7 +32,7 @@ import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
  * example : Each time a DtDefinition, two others definitions (domains)  are created (a domain for one object, a domain for a list).
  * @author pchretien, mlaroche
  */
-public interface DynamicRegistry {
+public interface DslSketchFactory {
 	/**
 	 * @return Grammar
 	 */
@@ -40,20 +40,20 @@ public interface DynamicRegistry {
 
 	/**
 	 * Create a definition from a dynamic definition in a context defined by definitionSpace (preexisting definitions).
-	 * @param dslSketch Definition
+	 * @param raw Definition
 	 * @return An optional definition
 	 */
-	SketchSupplier supplyModel(DslSketch dslSketch);
+	Sketch create(Notebook notebook, DslRaw raw);
 
 	/**
 	 * Ajout d'une définition.
 	 * Utilisé pour créer des définitions Ã  partir d'autres Definitions.
 	 * Exemple : création des domaines à partir d'un DT.
 	 *
-	 * @param dslSketch dslDefinition
+	 * @param raw dslDefinition
 	 * @return a list of dslDefinitions
 	 */
-	default List<DslSketch> onNewSketch(final DslSketch dslSketch) {
-		return Collections.emptyList();
+	default List<DslRaw> onNewRaw(final DslRaw raw) {
+		return List.of();
 	}
 }

@@ -39,8 +39,7 @@ public class NotebookSourceManagerImpl implements NotebookSourceManager {
 		final Notebook notebook = new Notebook();
 		resourcesByPlugin.entrySet()
 				.stream()
-				.flatMap(entry -> entry.getKey().parseResources(entry.getValue(), notebook).stream())
-				.map(sketchSupplier -> sketchSupplier.get(notebook))
+				.flatMap(entry -> entry.getKey().parseResources(entry.getValue(), notebook))
 				.forEach(notebook::register);
 		return notebook;
 	}

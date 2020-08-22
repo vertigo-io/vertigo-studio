@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.inject.Inject;
 
@@ -21,7 +21,6 @@ import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.studio.impl.source.NotebookSourceReaderPlugin;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.SketchSupplier;
 import io.vertigo.studio.notebook.authorization.SecuredFeatureSketch;
 import io.vertigo.studio.source.NotebookSource;
 
@@ -40,12 +39,10 @@ public final class AccountJsonSecuritySourceReaderPlugin implements NotebookSour
 	}
 
 	@Override
-	public List<SketchSupplier> parseResources(final List<NotebookSource> resources, final Notebook notebook) {
+	public Stream<SecuredFeatureSketch> parseResources(final List<NotebookSource> resources, final Notebook notebook) {
 		return resources
 				.stream()
-				.flatMap(metamodelResource -> parseJson(resourceManager.resolve(metamodelResource.getPath())).stream())
-				.map(securedFeature -> (SketchSupplier) dS -> securedFeature)
-				.collect(Collectors.toList());
+				.flatMap(metamodelResource -> parseJson(resourceManager.resolve(metamodelResource.getPath())).stream());
 	}
 
 	@Override

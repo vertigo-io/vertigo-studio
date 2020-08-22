@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.inject.Inject;
 
@@ -31,16 +32,16 @@ import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.source.NotebookSourceReaderPlugin;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.SketchSupplier;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketch;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DslSketchesRepository;
-import io.vertigo.studio.plugins.source.vertigo.dsl.dynamic.DynamicRegistry;
+import io.vertigo.studio.notebook.Sketch;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawRepository;
+import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslSketchFactory;
 import io.vertigo.studio.plugins.source.vertigo.loaders.Loader;
 import io.vertigo.studio.plugins.source.vertigo.loaders.eaxmi.core.EAXmiLoader;
 import io.vertigo.studio.plugins.source.vertigo.loaders.java.AnnotationLoader;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.KprLoader;
 import io.vertigo.studio.plugins.source.vertigo.loaders.poweramc.core.OOMLoader;
-import io.vertigo.studio.plugins.source.vertigo.registries.DynamoDynamicRegistry;
+import io.vertigo.studio.plugins.source.vertigo.registries.DynamoSketchFactory;
 import io.vertigo.studio.source.NotebookSource;
 
 /**
@@ -79,22 +80,22 @@ public final class StudioSourceReaderPlugin implements NotebookSourceReaderPlugi
 	}
 
 	@Override
-	public List<SketchSupplier> parseResources(final List<NotebookSource> resources, final Notebook notebook) {
+	public Stream<Sketch> parseResources(final List<NotebookSource> resources, final Notebook notebook) {
 		//Création du repositoy des instances le la grammaire (=> model)
-		final DynamicRegistry dynamoDynamicRegistry = new DynamoDynamicRegistry();
-		final DslSketchesRepository dslDefinitionRepository = new DslSketchesRepository(dynamoDynamicRegistry);
+		final DslSketchFactory sketchFactory = new DynamoSketchFactory();
+		final DslRawRepository rawRepository = new DslRawRepository(sketchFactory);
 
 		//--Enregistrement des types primitifs
-		for (final DslSketch dslSketch : dynamoDynamicRegistry.getGrammar().getRootDefinitions()) {
-			dslDefinitionRepository.addSketch(dslSketch);
+		for (final DslRaw raw : sketchFactory.getGrammar().getRootRaws()) {
+			rawRepository.addRaw(raw);
 		}
 		for (final NotebookSource resource : resources) {
 			final Loader loaderPlugin = loadersByType.get(resource.getType());
 			Assertion.check().isNotNull(loaderPlugin, "This resource {0} can not be parse by these loaders : {1}", resource, loadersByType.keySet());
-			loaderPlugin.load(resource.getPath(), dslDefinitionRepository);
+			loaderPlugin.load(resource.getPath(), rawRepository);
 		}
 
-		return dslDefinitionRepository.solve(notebook);
+		return rawRepository.solve(notebook);
 	}
 
 	@Override
