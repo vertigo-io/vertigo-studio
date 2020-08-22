@@ -43,7 +43,7 @@ public interface DslSketchFactory {
 	 * @param raw Definition
 	 * @return An optional definition
 	 */
-	Sketch create(Notebook notebook, DslRaw raw);
+	List<Sketch> createSketches(Notebook notebook, DslRaw raw);
 
 	/**
 	 * Ajout d'une définition.

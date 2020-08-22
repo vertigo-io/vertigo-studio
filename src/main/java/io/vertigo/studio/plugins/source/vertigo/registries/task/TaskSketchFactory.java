@@ -18,6 +18,8 @@
  */
 package io.vertigo.studio.plugins.source.vertigo.registries.task;
 
+import java.util.List;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
 import io.vertigo.studio.notebook.Notebook;
@@ -44,12 +46,12 @@ public final class TaskSketchFactory implements DslSketchFactory {
 
 	/** {@inheritDoc} */
 	@Override
-	public Sketch create(final Notebook notebook, final DslRaw raw) {
+	public List<Sketch> createSketches(final Notebook notebook, final DslRaw raw) {
 		final DslEntity entity = raw.getEntity();
 
 		if (TaskGrammar.TASK_ENTITY.equals(entity)) {
 			//Only taskDefinitions are concerned
-			return createTaskSketch(notebook, raw);
+			return List.of(createTaskSketch(notebook, raw));
 		}
 		throw new IllegalStateException("his kind of raw " + entity + " is not managed by me");
 	}

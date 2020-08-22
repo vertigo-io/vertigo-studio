@@ -18,6 +18,8 @@
  */
 package io.vertigo.studio.metamodel.vertigo.dsl;
 
+import java.util.List;
+
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
 import io.vertigo.studio.notebook.SketchKey;
@@ -50,8 +52,8 @@ public final class DslSketchFactoryMock implements DslSketchFactory {
 	}
 
 	@Override
-	public Sketch create(final Notebook notebook, final DslRaw raw) {
-		return new Sketch() {
+	public List<Sketch> createSketches(final Notebook notebook, final DslRaw raw) {
+		return List.of(new Sketch() {
 			@Override
 			public SketchKey getKey() {
 				return SketchKey.of("FAKE");
@@ -61,7 +63,7 @@ public final class DslSketchFactoryMock implements DslSketchFactory {
 			public String getLocalName() {
 				return "FAKE";
 			}
-		};
+		});
 	}
 
 }

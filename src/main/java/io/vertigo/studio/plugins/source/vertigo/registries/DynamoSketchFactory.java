@@ -93,11 +93,11 @@ public final class DynamoSketchFactory implements DslSketchFactory {
 
 	/** {@inheritDoc} */
 	@Override
-	public Sketch create(final Notebook notebook, final DslRaw raw) {
+	public List<Sketch> createSketches(final Notebook notebook, final DslRaw raw) {
 		try {
 			// perf: ifs ordonnés en gros par fréquence sur les projets
 			return lookUpSketchFactory(raw)
-					.create(notebook, raw);
+					.createSketches(notebook, raw);
 		} catch (final Exception e) {
 			//on catch tout (notament les assertions) car c'est ici qu'on indique l'URI de la définition posant problème
 			throw WrappedException.wrap(e, "An error occurred during the creation of the following definition : {0}", raw.getKey());

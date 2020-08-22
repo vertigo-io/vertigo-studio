@@ -18,7 +18,10 @@
  */
 package io.vertigo.studio.plugins.source.vertigo.registries.file;
 
+import java.util.List;
+
 import io.vertigo.studio.notebook.Notebook;
+import io.vertigo.studio.notebook.Sketch;
 import io.vertigo.studio.notebook.file.FileInfoSketch;
 import io.vertigo.studio.plugins.source.vertigo.KspProperty;
 import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
@@ -39,11 +42,11 @@ public final class FileSketchFactory implements DslSketchFactory {
 
 	/** {@inheritDoc} */
 	@Override
-	public FileInfoSketch create(final Notebook notebook, final DslRaw raw) {
+	public List<Sketch> createSketches(final Notebook notebook, final DslRaw raw) {
 		final DslEntity entity = raw.getEntity();
 		if (FileGrammar.FILE_INFO_ENTITY.equals(entity)) {
 			//Seuls les taches sont gérées.
-			return createFileInfoSketch(raw);
+			return List.of(createFileInfoSketch(raw));
 		}
 		throw new IllegalStateException("his kind of raw " + entity + " is not managed by me");
 	}

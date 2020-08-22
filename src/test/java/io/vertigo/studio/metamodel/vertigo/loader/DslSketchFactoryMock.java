@@ -18,6 +18,8 @@
  */
 package io.vertigo.studio.metamodel.vertigo.loader;
 
+import java.util.List;
+
 import io.vertigo.studio.notebook.AbstractSketch;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.SkecthPrefix;
@@ -50,8 +52,8 @@ public final class DslSketchFactoryMock implements DslSketchFactory {
 	}
 
 	@Override
-	public Sketch create(final Notebook notebook, final DslRaw raw) {
-		return new FakeSketch(raw.getKey().getName());
+	public List<Sketch> createSketches(final Notebook notebook, final DslRaw raw) {
+		return List.of(new FakeSketch(raw.getKey().getName()));
 	}
 
 	@SkecthPrefix(FakeSketch.PREFIX)

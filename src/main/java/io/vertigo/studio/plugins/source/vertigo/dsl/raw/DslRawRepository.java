@@ -123,14 +123,14 @@ public final class DslRawRepository {
 	private Stream<Sketch> createSketchStream(final Notebook notebook, final List<DslRaw> sortedRaws) {
 		return sortedRaws
 				.stream()
-				.filter(dslSketch -> !dslSketch.getEntity().isProvided()) // provided definitions are excluded
-				.map(dslSketch -> createSketch(notebook, dslSketch));
+				.filter(raw -> !raw.getEntity().isProvided()) // provided definitions are excluded
+				.flatMap(raw -> createSketches(notebook, raw).stream());
 	}
 
-	private Sketch createSketch(final Notebook notebook, final DslRaw raw) {
+	private List<Sketch> createSketches(final Notebook notebook, final DslRaw raw) {
 		DslRawValidator.check(raw);
 		//The definition identified as root are not registered.
-		return sketchFactory.create(notebook, raw);
+		return sketchFactory.createSketches(notebook, raw);
 	}
 
 	/**

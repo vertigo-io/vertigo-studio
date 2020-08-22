@@ -58,17 +58,19 @@ public final class SearchSketchFactory implements DslSketchFactory {
 
 	/** {@inheritDoc} */
 	@Override
-	public Sketch create(final Notebook notebook, final DslRaw raw) {
+	public List<Sketch> createSketches(final Notebook notebook, final DslRaw raw) {
 		final DslEntity entity = raw.getEntity();
-
+		final Sketch sketch;
 		if (SearchGrammar.INDEX_ENTITY.equals(entity)) {
-			return createIndexSketch(notebook, raw);
+			sketch = createIndexSketch(notebook, raw);
 		} else if (SearchGrammar.FACET_ENTITY.equals(entity)) {
-			return createFacetSketch(notebook, raw);
+			sketch = createFacetSketch(notebook, raw);
 		} else if (SearchGrammar.FACETED_QUERY_ENTITY.equals(entity)) {
-			return createFacetedQuerySketch(notebook, raw);
+			sketch = createFacetedQuerySketch(notebook, raw);
+		} else {
+			throw new IllegalStateException("his kind of raw " + entity + " is not managed by me");
 		}
-		throw new IllegalStateException("his kind of raw " + entity + " is not managed by me");
+		return List.of(sketch);
 	}
 
 	private static SearchIndexSketch createIndexSketch(final Notebook notebook, final DslRaw xsearchObjet) {

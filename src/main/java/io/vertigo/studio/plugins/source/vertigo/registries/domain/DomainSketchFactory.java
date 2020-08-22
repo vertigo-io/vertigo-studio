@@ -68,20 +68,23 @@ public final class DomainSketchFactory implements DslSketchFactory {
 
 	/** {@inheritDoc} */
 	@Override
-	public Sketch create(final Notebook notebook, final DslRaw raw) {
+	public List<Sketch> createSketches(final Notebook notebook, final DslRaw raw) {
 		final DslEntity entity = raw.getEntity();
+		final Sketch sketch;
 		if (entity.equals(DomainGrammar.DOMAIN_ENTITY)) {
-			return createDomain(notebook, raw);
+			sketch = createDomain(notebook, raw);
 		} else if (entity.equals(DomainGrammar.DT_ENTITY)) {
-			return createDtSketch(notebook, raw);
+			sketch = createDtSketch(notebook, raw);
 		} else if (entity.equals(DomainGrammar.FRAGMENT_ENTITY)) {
-			return createFragmentDtSketch(notebook, raw);
+			sketch = createFragmentDtSketch(notebook, raw);
 		} else if (entity.equals(DomainGrammar.ASSOCIATION_ENTITY)) {
-			return createAssociationSimpleSketch(notebook, raw);
+			sketch = createAssociationSimpleSketch(notebook, raw);
 		} else if (entity.equals(DomainGrammar.ASSOCIATION_NN_ENTITY)) {
-			return createAssociationNNSketch(notebook, raw);
+			sketch = createAssociationNNSketch(notebook, raw);
+		} else {
+			throw new IllegalStateException("his kind of raw " + entity + " is not managed by me");
 		}
-		throw new IllegalStateException("his kind of raw " + entity + " is not managed by me");
+		return List.of(sketch);
 	}
 
 	/*	private List<SketchSupplier> handleDtSketch(final DslSketch dslSketch) {
