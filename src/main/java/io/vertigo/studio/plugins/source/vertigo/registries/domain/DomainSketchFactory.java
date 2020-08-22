@@ -58,6 +58,7 @@ import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslSketchFactory;
  */
 public final class DomainSketchFactory implements DslSketchFactory {
 	private static final Logger LOGGER = LogManager.getLogger(DomainSketchFactory.class);
+	//	private static final Gson GSON = new Gson();
 	private final Map<SketchKey, DtSketchBuilder> dtDefinitionBuilders = new HashMap<>();
 
 	@Override
@@ -83,6 +84,26 @@ public final class DomainSketchFactory implements DslSketchFactory {
 		throw new IllegalStateException("his kind of raw " + entity + " is not managed by me");
 	}
 
+	/*	private List<SketchSupplier> handleDtSketch(final DslSketch dslSketch) {
+			final String valuesAsJson = (String) dslSketch.getPropertyValue("values");
+			if (valuesAsJson != null) {
+				return List.of(
+						notebook -> createDtSketch(notebook, dslSketch),
+						notebook -> createMasterDataSketch(
+								dslSketch.getPackageName() + '.' + SketchUtil.getLocalName(dslSketch.getKey().getName(), DtSketch.PREFIX),
+								valuesAsJson));
+			}
+			return Collections.singletonList(notebook -> createDtSketch(notebook, dslSketch));
+	
+		}
+	
+	private static StaticMasterDataSketch createMasterDataSketch(final String className, final String valuesAsJson) {
+		final Map<String, MasterDataValue> values = GSON.fromJson(valuesAsJson, new TypeToken<Map<String, MasterDataValue>>() {
+			//nothing
+		}.getType());
+		return new StaticMasterDataSketch(className, values);
+	}
+	*/
 	private static DomainSketch createDomain(final Notebook notebook, final DslRaw domainRaw) {
 		final DslRawKey domainRawKey = domainRaw.getKey();
 		final String type = domainRaw.getRawKeyByFieldName("dataType").getName();

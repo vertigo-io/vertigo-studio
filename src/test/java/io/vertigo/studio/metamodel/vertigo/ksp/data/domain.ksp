@@ -17,6 +17,7 @@ create DtDefinition DtTestEntity {
 
 create DtDefinition DtTestVobject {
 	field label   	{domain : DoString, 	label :"label", cardinality:"?" }
+	values : `{ "code1" : {"label" : "titi"}}`
 }
 
 create Association AVobEnt {

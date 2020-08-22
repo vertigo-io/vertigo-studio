@@ -107,7 +107,7 @@ public final class DslRawRepository {
 		mergePartials();
 
 		final List<DslRaw> sortedDslSketches = DslRawSolver.solve(notebook, this);
-		return createModelStream(notebook, sortedDslSketches);
+		return createSketchStream(notebook, sortedDslSketches);
 	}
 
 	private void mergePartials() {
@@ -120,7 +120,7 @@ public final class DslRawRepository {
 		}
 	}
 
-	private Stream<Sketch> createModelStream(final Notebook notebook, final List<DslRaw> sortedRaws) {
+	private Stream<Sketch> createSketchStream(final Notebook notebook, final List<DslRaw> sortedRaws) {
 		return sortedRaws
 				.stream()
 				.filter(dslSketch -> !dslSketch.getEntity().isProvided()) // provided definitions are excluded

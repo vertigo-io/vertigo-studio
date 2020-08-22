@@ -78,6 +78,10 @@ public final class DomainGrammar implements DslGrammar {
 	 * Clé des FIELD_DEFINITION de type COMPUTED utilisés dans les DT_DEFINITION.
 	 */
 	public static final String COMPUTED_FIELD = "computed";
+	/**
+	 * Key for setting possible values of an entity
+	 */
+	public static final String STATIC_VALUES = "values";
 
 	/**Définition d'un domain.*/
 	public static final DslEntity DOMAIN_ENTITY;
@@ -142,6 +146,7 @@ public final class DomainGrammar implements DslGrammar {
 				.addOptionalField(FRAGMENT_OF, String)
 				.addOptionalField(STEREOTYPE, String)
 				.addOptionalField(DATA_SPACE, String)
+				.addOptionalField(STATIC_VALUES, String)
 				.build();
 
 		final DslEntity fieldAliasEntity = DslEntity.builder("fieldAlias")
