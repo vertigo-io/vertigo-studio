@@ -75,17 +75,17 @@ final class DslInnerRawRule extends AbstractRule<DslRawEntry, List<Object>> {
 	 * Peuple la définition à partir des éléments trouvés.
 	 */
 	private static void populateRaw(final DslRawBody rawBody, final DslRawBuilder rawBuilder) {
-		for (final DslRawEntry fieldDefinitionEntry : rawBody.getRawEntries()) {
+		for (final DslRawEntry rawEntry : rawBody.getRawEntries()) {
 			//-----
 			// 1.On vérifie que le champ existe pour la metaDefinition
 			// et qu'elle n'est pas déjà enregistrée sur l'objet.
 			//-----
-			if (fieldDefinitionEntry.containsRaw()) {
+			if (rawEntry.containsRaw()) {
 				// On ajoute la définition par sa valeur.
-				rawBuilder.addSubRaw(fieldDefinitionEntry.getFieldName(), fieldDefinitionEntry.getRaw());
+				rawBuilder.addSubRaw(rawEntry.getFieldName(), rawEntry.getRaw());
 			} else {
 				// On ajoute les définitions par leur clé.
-				rawBuilder.addAllRawLinks(fieldDefinitionEntry.getFieldName(), fieldDefinitionEntry.getRawKeys());
+				rawBuilder.addAllRawLinks(rawEntry.getFieldName(), rawEntry.getRawKeys());
 			}
 		}
 		for (final DslPropertyEntry dslPropertyEntry : rawBody.getPropertyEntries()) {

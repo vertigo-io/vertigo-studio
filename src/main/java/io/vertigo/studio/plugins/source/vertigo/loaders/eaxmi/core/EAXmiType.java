@@ -94,11 +94,11 @@ public enum EAXmiType {
 				|| Connector.getCode().equals(code);
 	}
 
-	static boolean isObjet(final String type, final String tagName) {
-		return Attribute.getCode().equals(type) && OwnedAttribute.getCode().equals(tagName)
-				|| Class.getCode().equals(type)
-				|| Package.getCode().equals(type)
-				|| Association.getCode().equals(type);
+	static boolean isObjet(final String code, final String tagName) {
+		return Attribute.getCode().equals(code) && OwnedAttribute.getCode().equals(tagName)
+				|| Class.getCode().equals(code)
+				|| Package.getCode().equals(code)
+				|| Association.getCode().equals(code);
 	}
 
 	boolean isAttribute() {

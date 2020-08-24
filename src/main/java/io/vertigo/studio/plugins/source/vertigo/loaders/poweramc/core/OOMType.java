@@ -67,17 +67,17 @@ enum OOMType {
 		return code;
 	}
 
-	static Optional<OOMType> getType(final String name) {
+	static Optional<OOMType> getType(final String code) {
 		return Stream.of(OOMType.values())
-				.filter(type -> type.getCode().equals(name))
+				.filter(type -> type.getCode().equals(code))
 				.findFirst();
 	}
 
-	static boolean isNodeByRef(final String name) {
-		return Domain.getCode().equals(name)
-				|| Attribute.getCode().equals(name)
-				|| Class.getCode().equals(name)
-				|| Shortcut.getCode().equals(name)
-				|| Identifier.getCode().equals(name);
+	static boolean isNodeByRef(final String code) {
+		return Domain.getCode().equals(code)
+				|| Attribute.getCode().equals(code)
+				|| Class.getCode().equals(code)
+				|| Shortcut.getCode().equals(code)
+				|| Identifier.getCode().equals(code);
 	}
 }

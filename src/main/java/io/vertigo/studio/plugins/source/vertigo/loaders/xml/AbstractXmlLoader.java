@@ -120,7 +120,7 @@ public abstract class AbstractXmlLoader implements Loader {
 
 	private static DslRaw toRaw(final XmlClass clazz) {
 		final DslEntity dtEntity = DomainGrammar.DT_ENTITY;
-		final DslRawBuilder dtRawBuilder = DslRaw.builder(getDtSketchKey(clazz.getCode()), dtEntity)
+		final DslRawBuilder dtRawBuilder = DslRaw.builder(getDtRawKey(clazz.getCode()), dtEntity)
 				.withPackageName(clazz.getPackageName())
 				//Par défaut les DT lues depuis le OOM/XMI sont persistantes.
 				.addPropertyValue(KspProperty.STEREOTYPE, clazz.getStereotype());
@@ -174,8 +174,8 @@ public abstract class AbstractXmlLoader implements Loader {
 				.addPropertyValue(KspProperty.LABEL_B, association.getRoleLabelB())
 				.addPropertyValue(KspProperty.ROLE_B, XmlUtil.french2Java(association.getRoleLabelB()))
 				//---
-				.addRawLink("dtDefinitionA", getDtSketchKey(association.getCodeA()))
-				.addRawLink("dtDefinitionB", getDtSketchKey(association.getCodeB()));
+				.addRawLink("dtDefinitionA", getDtRawKey(association.getCodeA()))
+				.addRawLink("dtDefinitionB", getDtRawKey(association.getCodeB()));
 
 		if (isAssociationNN) {
 			//Dans le cas d'une association NN il faut établir le nom de la table intermédiaire qui porte les relations
@@ -200,18 +200,18 @@ public abstract class AbstractXmlLoader implements Loader {
 		// recherche de code de contrainte destiné à renommer la fk selon convention du vbsript PowerAMC
 		// Cas de la relation 1-n : où le nom de la FK est redéfini.
 		// Exemple : DOS_UTI_LIQUIDATION (relation entre dossier et utilisateur : FK >> UTILISATEUR_ID_LIQUIDATION)
-		final DslRaw dtSketchA = rawRepository.getRaw(getDtSketchKey(association.getCodeA()));
-		final DslRaw dtSketchB = rawRepository.getRaw(getDtSketchKey(association.getCodeB()));
+		final DslRaw dtRawA = rawRepository.getRaw(getDtRawKey(association.getCodeA()));
+		final DslRaw dtRawB = rawRepository.getRaw(getDtRawKey(association.getCodeB()));
 
-		final DslRaw foreignKeyRaw = AssociationUtil.isAPrimaryNode(association.getMultiplicityA(), association.getMultiplicityB()) ? dtSketchA : dtSketchB;
-		final List<DslRaw> primaryKeys = foreignKeyRaw.getSubRaws(DomainGrammar.ID_FIELD);
-		if (primaryKeys.isEmpty()) {
+		final DslRaw foreignKeyRaw = AssociationUtil.isAPrimaryNode(association.getMultiplicityA(), association.getMultiplicityB()) ? dtRawA : dtRawB;
+		final List<DslRaw> primaryRawKeys = foreignKeyRaw.getSubRaws(DomainGrammar.ID_FIELD);
+		if (primaryRawKeys.isEmpty()) {
 			throw new IllegalArgumentException("Pour l'association '" + association.getCode() + "' aucune clé primaire sur la définition '" + foreignKeyRaw.getKey() + "'");
 		}
-		if (primaryKeys.size() > 1) {
+		if (primaryRawKeys.size() > 1) {
 			throw new IllegalArgumentException("Pour l'association '" + association.getCode() + "' clé multiple non géré sur '" + foreignKeyRaw.getKey() + "'");
 		}
-		if (dtSketchA.getKey().equals(dtSketchB.getKey()) && association.getCodeName() == null) {
+		if (dtRawA.getKey().equals(dtRawB.getKey()) && association.getCodeName() == null) {
 			throw new IllegalArgumentException("Pour l'association '" + association.getCode() + "' le nom de la clé est obligatoire (AutoJointure) '"
 					+ foreignKeyRaw.getKey()
 					+ "'. Ce nom est déduit du code l'association, le code doit être composé ainsi : {Trigramme Table1}{Trigramme Table2}{Code association}."
@@ -219,7 +219,7 @@ public abstract class AbstractXmlLoader implements Loader {
 		}
 
 		//On récupère le nom de LA clé primaire .
-		final DslRawKey pkField = primaryKeys.get(0).getKey();
+		final DslRawKey pkField = primaryRawKeys.get(0).getKey();
 
 		//Par défaut le nom de la clé étrangère est constituée de la clé primaire référencée.
 		String fkFieldName = pkField.getName();
@@ -244,7 +244,7 @@ public abstract class AbstractXmlLoader implements Loader {
 		return fkFieldName;
 	}
 
-	private static DslRawKey getDtSketchKey(final String code) {
+	private static DslRawKey getDtRawKey(final String code) {
 		return DslRawKey.of(DT_DEFINITION_PREFIX + code);
 	}
 
