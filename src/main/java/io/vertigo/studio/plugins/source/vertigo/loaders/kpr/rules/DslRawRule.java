@@ -53,23 +53,23 @@ public final class DslRawRule extends AbstractRule<DslRaw, PegChoice> {
 		final List<PegRule<?>> rules = grammar.getEntities()
 				.stream()
 				.map(entity -> new DslInnerRawRule(entity.getName(), entity))
-				.map(innerDefinitionRule -> createRule(operation, innerDefinitionRule))
+				.map(innerRawRule -> createRule(operation, innerRawRule))
 				.collect(Collectors.toList());
 		return PegRules.choice(rules);
 	}
 
-	private static PegRule<List<Object>> createRule(final String operation, final DslInnerRawRule definitionRule) {
+	private static PegRule<List<Object>> createRule(final String operation, final DslInnerRawRule innerRawRule) {
 		// Création de la règle de déclaration d'une nouvelle definition.
 		return PegRules.sequence(//Definition
 				PegRules.term(operation), // alter ou create
 				SPACES,
-				definitionRule, //2
+				innerRawRule, //2
 				SPACES);
 	}
 
 	@Override
 	protected DslRaw handle(final PegChoice parsing) {
-		final DslRawEntry dslDefinitionEntry = (DslRawEntry) ((List) parsing.getValue()).get(2);
-		return dslDefinitionEntry.getRaw();
+		final DslRawEntry rawEntry = (DslRawEntry) ((List) parsing.getValue()).get(2);
+		return rawEntry.getRaw();
 	}
 }

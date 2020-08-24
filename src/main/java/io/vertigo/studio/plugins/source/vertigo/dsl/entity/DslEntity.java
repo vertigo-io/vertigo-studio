@@ -56,19 +56,19 @@ public final class DslEntity implements DslEntityFieldType {
 	 * (Exemple : Classe Service).
 	 * @param name Classe représentant l'instance métaDéfinition
 	 */
-	DslEntity(final String name, final Set<DslEntityField> fields, final boolean provided) {
+	DslEntity(final String name, final Set<DslEntityField> entityFields, final boolean provided) {
 		Assertion.check()
 				.isNotNull(name)
-				.isNotNull(fields);
+				.isNotNull(entityFields);
 		//-----
 		this.name = name;
 		this.provided = provided;
 		this.entityFields = new HashMap<>();
-		for (final DslEntityField field : fields) {
-			Assertion.check().isFalse(this.entityFields.containsKey(field.getName()), "field {0} is already registered for {1}", field, this);
+		for (final DslEntityField entityField : entityFields) {
+			Assertion.check().isFalse(this.entityFields.containsKey(entityField.getName()), "field {0} is already registered for {1}", entityField, this);
 			//Une propriété est unique pour une définition donnée.
 			//Il n'y a jamais de multiplicité
-			this.entityFields.put(field.getName(), field);
+			this.entityFields.put(entityField.getName(), entityField);
 		}
 	}
 

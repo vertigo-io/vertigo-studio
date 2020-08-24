@@ -30,7 +30,7 @@ import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawRepository;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw.DslRawBody;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslRawBodyRule;
 
-public class DslDefinitionBodyRuleTest {
+public class DslRawBodyRuleTest {
 	private final DslRawRepository rawRepository = DslSketchFactoryMock.createDslSketchesRepository();
 
 	private static DslEntity find(final List<DslEntity> entities, final String entityName) {

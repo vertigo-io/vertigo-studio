@@ -66,18 +66,18 @@ public enum EAXmiType {
 		return code;
 	}
 
-	static EAXmiType getType(final String name) {
+	static EAXmiType getType(final String code) {
 		final EAXmiType type;
-		if (Package.getCode().equals(name)) {
+		if (Package.getCode().equals(code)) {
 			type = Package;
-		} else if (Class.getCode().equals(name)) {
+		} else if (Class.getCode().equals(code)) {
 			type = Class;
-		} else if (Attribute.getCode().equals(name)) {
+		} else if (Attribute.getCode().equals(code)) {
 			type = Attribute;
-		} else if (Association.getCode().equals(name)
-				|| Connector.getCode().equals(name)) {
+		} else if (Association.getCode().equals(code)
+				|| Connector.getCode().equals(code)) {
 			type = Association;
-		} else if (ClassAttribute.getCode().equals(name)) {
+		} else if (ClassAttribute.getCode().equals(code)) {
 			type = ClassAttribute;
 		} else {
 			//rien trouvé
@@ -86,12 +86,12 @@ public enum EAXmiType {
 		return type;
 	}
 
-	static boolean isNodeByRef(final String name) {
-		return Attribute.getCode().equals(name)
-				|| Class.getCode().equals(name)
-				|| ClassAttribute.getCode().equals(name)
-				|| Package.getCode().equals(name)
-				|| Connector.getCode().equals(name);
+	static boolean isNodeByRef(final String code) {
+		return Attribute.getCode().equals(code)
+				|| Class.getCode().equals(code)
+				|| ClassAttribute.getCode().equals(code)
+				|| Package.getCode().equals(code)
+				|| Connector.getCode().equals(code);
 	}
 
 	static boolean isObjet(final String type, final String tagName) {

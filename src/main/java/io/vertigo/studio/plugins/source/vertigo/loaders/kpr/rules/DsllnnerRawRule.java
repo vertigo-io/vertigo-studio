@@ -65,7 +65,7 @@ final class DslInnerRawRule extends AbstractRule<DslRawEntry, List<Object>> {
 		final DslRawBody definitionBody = (DslRawBody) parsing.get(4);
 
 		final DslRawBuilder dslSketchBuilder = DslRaw.builder(definitionName, entity);
-		populateDefinition(definitionBody, dslSketchBuilder);
+		populateRaw(definitionBody, dslSketchBuilder);
 
 		//---
 		return new DslRawEntry(entityName, dslSketchBuilder.build());
@@ -74,27 +74,27 @@ final class DslInnerRawRule extends AbstractRule<DslRawEntry, List<Object>> {
 	/**
 	 * Peuple la définition à partir des éléments trouvés.
 	 */
-	private static void populateDefinition(final DslRawBody definitionBody, final DslRawBuilder dslDefinitionBuilder) {
-		for (final DslRawEntry fieldDefinitionEntry : definitionBody.getRawEntries()) {
+	private static void populateRaw(final DslRawBody rawBody, final DslRawBuilder rawBuilder) {
+		for (final DslRawEntry fieldDefinitionEntry : rawBody.getRawEntries()) {
 			//-----
 			// 1.On vérifie que le champ existe pour la metaDefinition
 			// et qu'elle n'est pas déjà enregistrée sur l'objet.
 			//-----
 			if (fieldDefinitionEntry.containsRaw()) {
 				// On ajoute la définition par sa valeur.
-				dslDefinitionBuilder.addSubRaw(fieldDefinitionEntry.getFieldName(), fieldDefinitionEntry.getRaw());
+				rawBuilder.addSubRaw(fieldDefinitionEntry.getFieldName(), fieldDefinitionEntry.getRaw());
 			} else {
 				// On ajoute les définitions par leur clé.
-				dslDefinitionBuilder.addAllRawLinks(fieldDefinitionEntry.getFieldName(), fieldDefinitionEntry.getRawKeys());
+				rawBuilder.addAllRawLinks(fieldDefinitionEntry.getFieldName(), fieldDefinitionEntry.getRawKeys());
 			}
 		}
-		for (final DslPropertyEntry dslPropertyEntry : definitionBody.getPropertyEntries()) {
+		for (final DslPropertyEntry dslPropertyEntry : rawBody.getPropertyEntries()) {
 			//			// On vérifie que la propriété est enregistrée sur la metaDefinition
 			//			Assertion.precondition(definition.getEntity().getPropertySet().contains(fieldPropertyEntry.getProperty()), "Propriété {0} non enregistré sur {1}",
 			//					fieldPropertyEntry.getProperty(), definition.getEntity().getName());
 			//-----
-			final Object value = readProperty(dslDefinitionBuilder.getEntity(), dslPropertyEntry);
-			dslDefinitionBuilder.addPropertyValue(dslPropertyEntry.getPropertyName(), value);
+			final Object value = readProperty(rawBuilder.getEntity(), dslPropertyEntry);
+			rawBuilder.addPropertyValue(dslPropertyEntry.getPropertyName(), value);
 		}
 	}
 

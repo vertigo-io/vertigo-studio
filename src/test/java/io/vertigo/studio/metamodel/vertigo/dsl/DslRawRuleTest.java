@@ -26,15 +26,15 @@ import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
 import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawRepository;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslRawRule;
 
-public class DslDefinitionRuleTest {
+public class DslRawRuleTest {
 	private final DslRawRepository rawRepository = DslSketchFactoryMock.createDslSketchesRepository();
 
 	@Test
 	public void test2() throws PegNoMatchFoundException {
-		final DslRaw dslDefinition = new DslRawRule("create", rawRepository.getGrammar())
+		final DslRaw raw = new DslRawRule("create", rawRepository.getGrammar())
 				.parse("create Domain DoCodePostal { dataType : String } ")
 				.getValue();
-		Assertions.assertNotNull(dslDefinition);
+		Assertions.assertNotNull(raw);
 	}
 
 	@Test

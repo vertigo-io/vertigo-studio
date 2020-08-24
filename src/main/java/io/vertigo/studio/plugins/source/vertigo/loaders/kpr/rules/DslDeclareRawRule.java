@@ -35,13 +35,13 @@ import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
 /*
  * @author mlaroche
  */
-public final class DslDeclareDefinitionRule extends AbstractRule<String, PegChoice> {
+public final class DslDeclareRawRule extends AbstractRule<String, PegChoice> {
 
 	/**
 	 * Constructor.
 	 * @param grammar the grammar
 	 */
-	public DslDeclareDefinitionRule(final DslGrammar grammar) {
+	public DslDeclareRawRule(final DslGrammar grammar) {
 		super(createDeclareRule(grammar), "DeclareDefinitions");
 	}
 

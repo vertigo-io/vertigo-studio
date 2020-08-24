@@ -28,6 +28,7 @@ package io.vertigo.studio.plugins.source.vertigo.dsl.entity;
  *
  */
 public interface DslEntityFieldType {
+
 	/**
 	 * @return If the field is a property
 	 */

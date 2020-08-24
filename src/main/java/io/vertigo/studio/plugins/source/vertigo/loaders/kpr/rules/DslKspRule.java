@@ -60,7 +60,7 @@ public final class DslKspRule extends AbstractRule<Dummy, List<Object>> {
 		//-----
 		final PegRule<DslRaw> definitionRule = new DslRawRule("create", grammar);
 		final PegRule<DslRaw> templateRule = new DslRawRule("alter", grammar);
-		final PegRule<String> declareRule = new DslDeclareDefinitionRule(grammar);
+		final PegRule<String> declareRule = new DslDeclareRawRule(grammar);
 		
 		final PegRule<PegChoice> declarationChoiceRule = PegRules.choice(//"definition or template")
 				definitionRule, //0

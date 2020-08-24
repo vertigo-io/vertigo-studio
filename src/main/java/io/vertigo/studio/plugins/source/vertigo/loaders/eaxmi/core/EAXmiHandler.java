@@ -97,19 +97,23 @@ public final class EAXmiHandler extends DefaultHandler {
 	private void parseXmiObject(final Attributes attributes, final String typeElement) {
 		LOG.debug("On est dans l'objet ");
 		final String id = attributes.getValue(ATTR_ID);
-		final String leNom = attributes.getValue(ATTR_NAME);
+		final String name = attributes.getValue(ATTR_NAME);
 		final EAXmiType type = EAXmiType.getType(typeElement);
 		final String association = attributes.getValue(ATTR_ASSOCIATION);
 		// On a un type, un id et on n'est pas dans un attribut ajouté à cause d'une association.
-		if (type != null && id != null && !(type.isAttribute() && association != null)) {
+		if (type != null
+				&& id != null
+				&& !(type.isAttribute() && association != null)) {
 			//Il existe un nouvel objet géré associé à ce Tag
 			final XmlId eaxmiid = new XmlId(id);
 			final EAXmiObject obj;
 			// Nouvelle classe ou association, on revient au package pour créer l'objet.
-			if (currentObject.getType() != null && currentObject.getType().isClass() && type.isClass()) {
-				obj = currentObject.getParent().createEAXmiObject(eaxmiid, type, leNom);
+			if (currentObject.getType() != null
+					&& currentObject.getType().isClass()
+					&& type.isClass()) {
+				obj = currentObject.getParent().createEAXmiObject(eaxmiid, type, name);
 			} else {
-				obj = currentObject.createEAXmiObject(eaxmiid, type, leNom);
+				obj = currentObject.createEAXmiObject(eaxmiid, type, name);
 			}
 			map.put(eaxmiid, obj);
 			currentObject = obj;
@@ -121,7 +125,9 @@ public final class EAXmiHandler extends DefaultHandler {
 	@Override
 	public void endElement(final String unusedUri, final String unusedLocalName, final String name) {
 		// Si c'est un attribut l'objet courant, on revient à la classe qui le contient.
-		if (!phase2 && currentObject.getType() != null && currentObject.getType().isAttribute()) {
+		if (!phase2
+				&& currentObject.getType() != null
+				&& currentObject.getType().isAttribute()) {
 			currentObject = currentObject.getParent();
 		}
 	}

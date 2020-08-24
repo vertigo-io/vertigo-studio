@@ -29,7 +29,7 @@ import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawKey;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw.DslRawEntry;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslRawEntryRule;
 
-public final class DslDefinitionEntryRuleTest {
+public final class DslRawEntryRuleTest {
 	private static final DslRawEntryRule MAIN = new DslRawEntryRule(Arrays.asList("myFirstProperty", "myLastProperty"));
 
 	@Test

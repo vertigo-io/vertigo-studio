@@ -51,7 +51,7 @@ final class DslRawSolver {
 				.isNotNull(rawRepository);
 		//-----
 		//Liste des clés résolues
-		final List<DslRaw> sortedList = new ArrayList<>();
+		final List<DslRaw> sortedRaws = new ArrayList<>();
 
 		final Collection<DslRawKey> orphans = rawRepository.getOrphanDefinitionKeys();
 		if (!orphans.isEmpty()) {
@@ -68,8 +68,8 @@ final class DslRawSolver {
 				//==============================================================
 				//==============================================================
 				//On vérifie que les sous éléments sont résolues
-				if (isSolved(notebook, rawRepository, sortedList, raw, raw)) {
-					sortedList.add(raw);
+				if (isSolved(notebook, rawRepository, sortedRaws, raw, raw)) {
+					sortedRaws.add(raw);
 					it.remove();
 				}
 			}
@@ -79,13 +79,13 @@ final class DslRawSolver {
 			}
 			size = raws.size();
 		}
-		return sortedList;
+		return sortedRaws;
 	}
 
 	private static boolean isSolved(
 			final Notebook notebook,
 			final DslRawRepository rawRepository,
-			final List<DslRaw> orderedRaws,
+			final List<DslRaw> sortedRaws,
 			final DslRaw raw,
 			final DslRaw xdefRoot) {
 		//A definition is solved if all its sub definitions have been solved
@@ -104,7 +104,7 @@ final class DslRawSolver {
 								rawKey, raw.getEntity().getField(fieldName).getType(), fieldName, xdefRootKey);
 					}
 					final DslRaw linkedRaw = rawRepository.getRaw(rawKey);
-					if (!orderedRaws.contains(linkedRaw)) {
+					if (!sortedRaws.contains(linkedRaw)) {
 						return false;
 					}
 				}
@@ -114,6 +114,6 @@ final class DslRawSolver {
 		//On vérifie que les composites sont résolues.
 		return raw.getAllSubRaws()
 				.stream()
-				.allMatch(child -> isSolved(notebook, rawRepository, orderedRaws, child, xdefRoot));
+				.allMatch(child -> isSolved(notebook, rawRepository, sortedRaws, child, xdefRoot));
 	}
 }
