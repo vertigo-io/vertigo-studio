@@ -100,6 +100,8 @@ public final class DslRawEntry {
 	 * @return List des clés de définition
 	 */
 	public List<DslRawKey> getRawKeys() {
+		Assertion.check().isNull(raw);
+		//---
 		return rawKeys;
 	}
 }

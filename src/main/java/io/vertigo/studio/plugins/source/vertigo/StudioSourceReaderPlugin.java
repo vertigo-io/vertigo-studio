@@ -33,7 +33,6 @@ import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.source.NotebookSourceReaderPlugin;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
 import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawRepository;
 import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslSketchFactory;
 import io.vertigo.studio.plugins.source.vertigo.loaders.Loader;
@@ -80,19 +79,20 @@ public final class StudioSourceReaderPlugin implements NotebookSourceReaderPlugi
 	}
 
 	@Override
-	public Stream<Sketch> parseResources(final List<NotebookSource> resources, final Notebook notebook) {
+	public Stream<Sketch> parseResources(final List<NotebookSource> notebookSources, final Notebook notebook) {
 		//Création du repositoy des instances le la grammaire (=> model)
 		final DslSketchFactory sketchFactory = new DynamoSketchFactory();
 		final DslRawRepository rawRepository = new DslRawRepository(sketchFactory);
 
 		//--Enregistrement des types primitifs
-		for (final DslRaw raw : sketchFactory.getGrammar().getRootRaws()) {
-			rawRepository.addRaw(raw);
-		}
-		for (final NotebookSource resource : resources) {
-			final Loader loaderPlugin = loadersByType.get(resource.getType());
-			Assertion.check().isNotNull(loaderPlugin, "This resource {0} can not be parse by these loaders : {1}", resource, loadersByType.keySet());
-			loaderPlugin.load(resource.getPath(), rawRepository);
+		sketchFactory.getGrammar()
+				.getRootRaws()
+				.forEach(rawRepository::addRaw);
+
+		for (final NotebookSource notebookSource : notebookSources) {
+			final Loader loaderPlugin = loadersByType.get(notebookSource.getType());
+			Assertion.check().isNotNull(loaderPlugin, "This resource {0} can not be parse by these loaders : {1}", notebookSource, loadersByType.keySet());
+			loaderPlugin.load(notebookSource.getPath(), rawRepository);
 		}
 
 		return rawRepository.solve(notebook);

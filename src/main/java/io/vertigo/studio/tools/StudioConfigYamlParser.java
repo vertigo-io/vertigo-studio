@@ -1,6 +1,5 @@
 package io.vertigo.studio.tools;
 
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
@@ -22,7 +21,7 @@ import io.vertigo.studio.tools.YamlStudioConfig.YamlResourceConfig;
 
 final class StudioConfigYamlParser {
 
-	static final NotebookConfig parseYaml(final URL configUrl) throws IOException, URISyntaxException {
+	static final NotebookConfig parseYaml(final URL configUrl) throws URISyntaxException {
 		final YamlStudioConfig yamlStudioConfig = new Yaml(new Constructor(YamlStudioConfig.class)).loadAs(FileUtil.read(configUrl), YamlStudioConfig.class);
 		final String rootPath = Path.of(configUrl.toURI()).getParent().toString() + "/";
 

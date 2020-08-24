@@ -18,11 +18,6 @@
  */
 package io.vertigo.studio.plugins.source.vertigo;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,8 +29,8 @@ import javax.inject.Inject;
 import com.google.gson.Gson;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.resource.ResourceManager;
+import io.vertigo.core.util.FileUtil;
 import io.vertigo.studio.impl.source.NotebookSourceReaderPlugin;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
@@ -65,22 +60,6 @@ public final class JsonStaticMasterDataSourceReaderPlugin implements NotebookSou
 		this.resourceManager = resourceManager;
 	}
 
-	private static String parseFile(final URL url) {
-		try (final BufferedReader reader = new BufferedReader(
-				new InputStreamReader(url.openStream(), StandardCharsets.UTF_8))) {
-			final StringBuilder buff = new StringBuilder();
-			String line = reader.readLine();
-			while (line != null) {
-				buff.append(line);
-				line = reader.readLine();
-				buff.append("\r\n");
-			}
-			return buff.toString();
-		} catch (final IOException e) {
-			throw WrappedException.wrap(e, "Error reading json file : '{0}'", url);
-		}
-	}
-
 	@Override
 	public Set<String> getHandledSourceTypes() {
 		return Set.of("staticMasterData");
@@ -91,7 +70,7 @@ public final class JsonStaticMasterDataSourceReaderPlugin implements NotebookSou
 
 		final JsonMasterDataValues result = new JsonMasterDataValues();
 		for (final NotebookSource resource : resources) {
-			final String jsonFileAsString = parseFile(resourceManager.resolve(resource.getPath()));
+			final String jsonFileAsString = FileUtil.read(resourceManager.resolve(resource.getPath()));
 			final JsonMasterDataValues masterDataValues = gson.fromJson(jsonFileAsString, JsonMasterDataValues.class);
 
 			// we aggregate the results of all files
