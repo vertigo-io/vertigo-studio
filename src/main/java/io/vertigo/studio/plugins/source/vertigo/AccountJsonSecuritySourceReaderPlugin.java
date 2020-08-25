@@ -19,12 +19,12 @@ import com.google.gson.JsonObject;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.resource.ResourceManager;
-import io.vertigo.studio.impl.source.NotebookSourceReaderPlugin;
+import io.vertigo.studio.impl.source.SourceReaderPlugin;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.authorization.SecuredFeatureSketch;
-import io.vertigo.studio.source.NotebookSource;
+import io.vertigo.studio.source.Source;
 
-public final class AccountJsonSecuritySourceReaderPlugin implements NotebookSourceReaderPlugin {
+public final class AccountJsonSecuritySourceReaderPlugin implements SourceReaderPlugin {
 
 	private static final Gson gson = new Gson();
 
@@ -38,12 +38,12 @@ public final class AccountJsonSecuritySourceReaderPlugin implements NotebookSour
 	}
 
 	@Override
-	public Stream<SecuredFeatureSketch> parseResources(final List<NotebookSource> notebookSources, final Notebook notebook) {
+	public Stream<SecuredFeatureSketch> parseResources(final List<Source> sources, final Notebook notebook) {
 		Assertion.check()
-				.isNotNull(notebookSources)
+				.isNotNull(sources)
 				.isNotNull(notebook);
 		//---	
-		return notebookSources
+		return sources
 				.stream()
 				.flatMap(notebookSource -> parseJson(resourceManager.resolve(notebookSource.getPath())).stream());
 	}

@@ -37,8 +37,8 @@ import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.notebook.domain.StudioStereotype;
-import io.vertigo.studio.source.NotebookSource;
-import io.vertigo.studio.source.NotebookSourceManager;
+import io.vertigo.studio.source.Source;
+import io.vertigo.studio.source.SourceManager;
 
 /**
  * Test de lecture d'un OOM.
@@ -49,17 +49,17 @@ public final class OOMParserStereotypesTest {
 	private Notebook notebook;
 	private AutoCloseableNode node;
 	@Inject
-	private NotebookSourceManager notebookSourceManager;
+	private SourceManager sourceManager;
 
 	@BeforeEach
 	public final void setUp() {
 		node = new AutoCloseableNode(buildNodeConfig());
 		DIInjector.injectMembers(this, node.getComponentSpace());
 		//---
-		final List<NotebookSource> resources = List.of(
-				NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/oom/data/domain.kpr"),
-				NotebookSource.of("oom", "io/vertigo/studio/metamodel/vertigo/oom/data/Stereotypes.oom"));
-		notebook = notebookSourceManager.read(resources);
+		final List<Source> resources = List.of(
+				Source.of("kpr", "io/vertigo/studio/metamodel/vertigo/oom/data/domain.kpr"),
+				Source.of("oom", "io/vertigo/studio/metamodel/vertigo/oom/data/Stereotypes.oom"));
+		notebook = sourceManager.read(resources);
 	}
 
 	@AfterEach

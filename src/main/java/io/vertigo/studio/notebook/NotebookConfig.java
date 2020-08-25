@@ -4,23 +4,23 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.mda.MdaConfig;
-import io.vertigo.studio.source.NotebookSource;
+import io.vertigo.studio.source.Source;
 
 public final class NotebookConfig {
-	private final List<NotebookSource> notebookSources;
+	private final List<Source> sources;
 	private final MdaConfig mdaConfig;
 
-	public NotebookConfig(final List<NotebookSource> notebookSources, final MdaConfig mdaConfig) {
+	public NotebookConfig(final List<Source> sources, final MdaConfig mdaConfig) {
 		Assertion.check()
-				.isNotNull(notebookSources)
+				.isNotNull(sources)
 				.isNotNull(mdaConfig);
 		//---
-		this.notebookSources = notebookSources;
+		this.sources = sources;
 		this.mdaConfig = mdaConfig;
 	}
 
-	public List<NotebookSource> getMetamodelResources() {
-		return notebookSources;
+	public List<Source> getMetamodelResources() {
+		return sources;
 	}
 
 	public MdaConfig getMdaConfig() {

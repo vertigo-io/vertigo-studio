@@ -37,8 +37,8 @@ import io.vertigo.studio.metamodel.vertigo.multi.data.DtDefinitions;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.domain.DomainSketch;
 import io.vertigo.studio.notebook.domain.DtSketch;
-import io.vertigo.studio.source.NotebookSource;
-import io.vertigo.studio.source.NotebookSourceManager;
+import io.vertigo.studio.source.Source;
+import io.vertigo.studio.source.SourceManager;
 
 /**
  * Test de l'implémentation standard.
@@ -48,7 +48,7 @@ import io.vertigo.studio.source.NotebookSourceManager;
 public final class MultiResourcesEnvironmentManagerTest {
 	private AutoCloseableNode node;
 	@Inject
-	private NotebookSourceManager notebookSourceManager;
+	private SourceManager sourceManager;
 
 	@BeforeEach
 	public final void setUp() {
@@ -77,18 +77,18 @@ public final class MultiResourcesEnvironmentManagerTest {
 
 	@Test
 	public void testFirst() {
-		final Notebook notebook = notebookSourceManager
-				.read(List.of(NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr")));
+		final Notebook notebook = sourceManager
+				.read(List.of(Source.of("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr")));
 		final DomainSketch doString = notebook.resolve("DoString", DomainSketch.class);
 		Assertions.assertNotNull(doString);
 	}
 
 	@Test
 	public void testMergedResources() {
-		final Notebook notebook = notebookSourceManager
+		final Notebook notebook = sourceManager
 				.read(List.of(
-						NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr"),
-						NotebookSource.of("classes", DtDefinitions.class.getCanonicalName())));
+						Source.of("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr"),
+						Source.of("classes", DtDefinitions.class.getCanonicalName())));
 
 		final DomainSketch doString = notebook.resolve("DoString", DomainSketch.class);
 		Assertions.assertNotNull(doString);

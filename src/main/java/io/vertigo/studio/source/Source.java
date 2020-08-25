@@ -29,15 +29,15 @@ import io.vertigo.core.lang.Assertion;
  *
  * @author pchretien, mlaroche
  */
-public final class NotebookSource {
+public final class Source {
 	private final String type;
 	private final String path;
 
-	public static NotebookSource of(final String type, final String path) {
-		return new NotebookSource(type, path);
+	public static Source of(final String type, final String path) {
+		return new Source(type, path);
 	}
 
-	private NotebookSource(final String type, final String path) {
+	private Source(final String type, final String path) {
 		Assertion.check()
 				.isNotBlank(type)
 				.isNotBlank(path);

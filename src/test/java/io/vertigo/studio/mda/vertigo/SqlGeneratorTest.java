@@ -30,8 +30,8 @@ import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaManager;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.source.NotebookSource;
-import io.vertigo.studio.source.NotebookSourceManager;
+import io.vertigo.studio.source.Source;
+import io.vertigo.studio.source.SourceManager;
 
 /**
  * Test la génération à partir des oom et ksp.
@@ -60,10 +60,10 @@ public class SqlGeneratorTest {
 	@Test
 	public void testGenerate() {
 		try (AutoCloseableNode studioApp = new AutoCloseableNode(buildNodeConfig())) {
-			final List<NotebookSource> resources = List.of(
-					NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
-					NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"));
-			final NotebookSourceManager notebookSourceManager = studioApp.getComponentSpace().resolve(NotebookSourceManager.class);
+			final List<Source> resources = List.of(
+					Source.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
+					Source.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"));
+			final SourceManager sourceManager = studioApp.getComponentSpace().resolve(SourceManager.class);
 			final MdaManager mdaManager = studioApp.getComponentSpace().resolve(MdaManager.class);
 
 			final MdaConfig mdaConfig = MdaConfig.builder("io.vertigo.studio")
@@ -75,7 +75,7 @@ public class SqlGeneratorTest {
 					.addProperty("vertigo.domain.sql.generateMasterData", "false")
 					.build();
 
-			final Notebook notebook = notebookSourceManager.read(resources);
+			final Notebook notebook = sourceManager.read(resources);
 			mdaManager.generate(notebook, mdaConfig);
 		}
 

@@ -30,7 +30,7 @@ import java.util.Collections;
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.node.Node;
 import io.vertigo.core.resource.ResourceManager;
-import io.vertigo.database.sql.SqlDataBaseManager;
+import io.vertigo.database.sql.SqlManager;
 import io.vertigo.database.sql.connection.SqlConnection;
 import io.vertigo.database.sql.statement.SqlStatement;
 
@@ -44,7 +44,7 @@ public final class DataBaseScriptUtil {
 		//util
 	}
 
-	public static void execSqlScript(final SqlConnection connection, final String scriptPath, final ResourceManager resourceManager, final SqlDataBaseManager sqlDataBaseManager) {
+	public static void execSqlScript(final SqlConnection connection, final String scriptPath, final ResourceManager resourceManager, final SqlManager sqlManager) {
 		try (final BufferedReader in = new BufferedReader(new InputStreamReader(resourceManager.resolve(scriptPath).openStream()))) {
 			final StringBuilder crebaseSql = new StringBuilder();
 			String inputLine;
@@ -54,7 +54,7 @@ public final class DataBaseScriptUtil {
 					crebaseSql.append(adaptedInputLine).append('\n');
 				}
 				if (inputLine.trim().endsWith(";")) {
-					execPreparedStatement(connection, sqlDataBaseManager, crebaseSql.toString());
+					execPreparedStatement(connection, sqlManager, crebaseSql.toString());
 					crebaseSql.setLength(0);
 				}
 			}
@@ -63,15 +63,15 @@ public final class DataBaseScriptUtil {
 		}
 	}
 
-	private static void execPreparedStatement(final SqlConnection connection, final SqlDataBaseManager sqlDataBaseManager, final String sql) throws SQLException {
-		sqlDataBaseManager.executeUpdate(SqlStatement.builder(sql).build(), Collections.emptyMap(), connection);
+	private static void execPreparedStatement(final SqlConnection connection, final SqlManager sqlManager, final String sql) throws SQLException {
+		sqlManager.executeUpdate(SqlStatement.builder(sql).build(), Collections.emptyMap(), connection);
 	}
 
 	public static void execSqlScript(final String sqlScript, final Node node) {
 		final ResourceManager resourceManager = node.getComponentSpace().resolve(ResourceManager.class);
-		final SqlDataBaseManager sqlDataBaseManager = node.getComponentSpace().resolve(SqlDataBaseManager.class);
+		final SqlManager sqlManager = node.getComponentSpace().resolve(SqlManager.class);
 
-		final SqlConnection connection = sqlDataBaseManager.getConnectionProvider(SqlDataBaseManager.MAIN_CONNECTION_PROVIDER_NAME).obtainConnection();
-		DataBaseScriptUtil.execSqlScript(connection, sqlScript, resourceManager, sqlDataBaseManager);
+		final SqlConnection connection = sqlManager.getConnectionProvider(SqlManager.MAIN_CONNECTION_PROVIDER_NAME).obtainConnection();
+		DataBaseScriptUtil.execSqlScript(connection, sqlScript, resourceManager, sqlManager);
 	}
 }

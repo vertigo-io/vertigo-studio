@@ -23,7 +23,7 @@ import io.vertigo.core.node.config.Features;
 import io.vertigo.core.param.Param;
 import io.vertigo.studio.impl.mda.MdaManagerImpl;
 import io.vertigo.studio.impl.notebook.NotebookManagerImpl;
-import io.vertigo.studio.impl.source.NotebookSourceManagerImpl;
+import io.vertigo.studio.impl.source.SourceManagerImpl;
 import io.vertigo.studio.mda.MdaManager;
 import io.vertigo.studio.notebook.NotebookManager;
 import io.vertigo.studio.plugins.mda.vertigo.authorization.AuthorizationGeneratorPlugin;
@@ -40,7 +40,7 @@ import io.vertigo.studio.plugins.source.vertigo.AccountJsonSecuritySourceReaderP
 import io.vertigo.studio.plugins.source.vertigo.JsonStaticMasterDataSourceReaderPlugin;
 import io.vertigo.studio.plugins.source.vertigo.StudioSourceReaderPlugin;
 import io.vertigo.studio.plugins.source.vertigo.VegaWebServicesSourceReaderPlugin;
-import io.vertigo.studio.source.NotebookSourceManager;
+import io.vertigo.studio.source.SourceManager;
 
 public final class StudioFeatures extends Features<StudioFeatures> {
 
@@ -51,7 +51,7 @@ public final class StudioFeatures extends Features<StudioFeatures> {
 	@Feature("source")
 	public StudioFeatures withSource() {
 		getModuleConfigBuilder()
-				.addComponent(NotebookSourceManager.class, NotebookSourceManagerImpl.class);
+				.addComponent(SourceManager.class, SourceManagerImpl.class);
 		return this;
 	}
 

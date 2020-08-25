@@ -19,13 +19,13 @@ import io.vertigo.core.util.ClassUtil;
 import io.vertigo.core.util.Selector;
 import io.vertigo.core.util.Selector.ClassConditions;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.studio.impl.source.NotebookSourceReaderPlugin;
+import io.vertigo.studio.impl.source.SourceReaderPlugin;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.webservices.WebServiceSketch;
 import io.vertigo.studio.notebook.webservices.WebServiceSketchParam;
 import io.vertigo.studio.notebook.webservices.WebServiceSketchParam.WebServiceParamLocation;
 import io.vertigo.studio.notebook.webservices.WebServiceSketchResponseContent;
-import io.vertigo.studio.source.NotebookSource;
+import io.vertigo.studio.source.Source;
 import io.vertigo.vega.webservice.WebServices;
 import io.vertigo.vega.webservice.stereotype.DELETE;
 import io.vertigo.vega.webservice.stereotype.Doc;
@@ -39,19 +39,19 @@ import io.vertigo.vega.webservice.stereotype.PathParam;
 import io.vertigo.vega.webservice.stereotype.PathPrefix;
 import io.vertigo.vega.webservice.stereotype.QueryParam;
 
-public final class VegaWebServicesSourceReaderPlugin implements NotebookSourceReaderPlugin {
+public final class VegaWebServicesSourceReaderPlugin implements SourceReaderPlugin {
 
 	private static final int NAME_MAX_SIZE = 40;
 
 	@Override
-	public Stream<WebServiceSketch> parseResources(final List<NotebookSource> notebookSources, final Notebook notebook) {
+	public Stream<WebServiceSketch> parseResources(final List<Source> sources, final Notebook notebook) {
 		Assertion.check()
-				.isNotNull(notebookSources)
+				.isNotNull(sources)
 				.isNotNull(notebook);
 		//---	
 		final List<WebServiceSketch> webServiceSketch = new ArrayList<>();
-		for (final NotebookSource notebookSource : notebookSources) {
-			final String resourcePath = notebookSource.getPath();
+		for (final Source source : sources) {
+			final String resourcePath = source.getPath();
 			if (resourcePath.endsWith(".*")) {
 				scanAndAddPackage(resourcePath.substring(0, resourcePath.length() - ".*".length()), webServiceSketch);
 			} else {

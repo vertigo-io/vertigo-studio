@@ -58,7 +58,7 @@ import io.vertigo.studio.mda.MdaManager;
 import io.vertigo.studio.mda.MdaResult;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.NotebookConfig;
-import io.vertigo.studio.source.NotebookSourceManager;
+import io.vertigo.studio.source.SourceManager;
 
 /**
  * Génération des fichiers Java et SQL à patrir de fichiers template freemarker.
@@ -115,12 +115,12 @@ public final class VertigoStudioMda {
 
 	private static void generate(final NotebookConfig notebookConfig) {
 		try (final AutoCloseableNode studioApp = new AutoCloseableNode(buildNodeConfig())) {
-			final NotebookSourceManager notebookSourceManager = studioApp.getComponentSpace().resolve(NotebookSourceManager.class);
+			final SourceManager sourceManager = studioApp.getComponentSpace().resolve(SourceManager.class);
 			final MdaManager mdaManager = studioApp.getComponentSpace().resolve(MdaManager.class);
 			//-----
 			final MdaConfig mdaConfig = notebookConfig.getMdaConfig();
 			mdaManager.clean(mdaConfig);
-			final Notebook notebook = notebookSourceManager.read(notebookConfig.getMetamodelResources());
+			final Notebook notebook = sourceManager.read(notebookConfig.getMetamodelResources());
 			final MdaResult mdaResult = mdaManager.generate(notebook, mdaConfig);
 			mdaResult.displayResultMessage(System.out);
 		}
@@ -128,7 +128,7 @@ public final class VertigoStudioMda {
 
 	private static void watch(final NotebookConfig notebookConfig, final boolean withClean) {
 		try (final AutoCloseableNode studioApp = new AutoCloseableNode(buildNodeConfig())) {
-			final NotebookSourceManager notebookSourceManager = studioApp.getComponentSpace().resolve(NotebookSourceManager.class);
+			final SourceManager sourceManager = studioApp.getComponentSpace().resolve(SourceManager.class);
 			final MdaManager mdaManager = studioApp.getComponentSpace().resolve(MdaManager.class);
 			final ResourceManager resourceManager = studioApp.getComponentSpace().resolve(ResourceManager.class);
 			//-----
@@ -165,7 +165,7 @@ public final class VertigoStudioMda {
 												mdaManager.clean(mdaConfig);
 												STUDIO_LOGGER.info("Done cleaning");
 											}
-											final Notebook notebook = notebookSourceManager.read(notebookConfig.getMetamodelResources());
+											final Notebook notebook = sourceManager.read(notebookConfig.getMetamodelResources());
 											final MdaResult mdaResult = mdaManager.generate(notebook, mdaConfig);
 											STUDIO_LOGGER.info("Regeneration completed. {} created files, {} updated files, {} identical files and {} issues in {} ms",
 													mdaResult.getCreatedFiles(), mdaResult.getUpdatedFiles(), mdaResult.getIdenticalFiles(), mdaResult.getErrorFiles(), mdaResult.getDurationMillis());

@@ -31,19 +31,19 @@ import com.google.gson.Gson;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.core.util.FileUtil;
-import io.vertigo.studio.impl.source.NotebookSourceReaderPlugin;
+import io.vertigo.studio.impl.source.SourceReaderPlugin;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
 import io.vertigo.studio.notebook.domain.masterdata.MasterDataValue;
 import io.vertigo.studio.notebook.domain.masterdata.StaticMasterDataSketch;
-import io.vertigo.studio.source.NotebookSource;
+import io.vertigo.studio.source.Source;
 
 /**
  * Plugin for retrieving masterdata values from a json file.
  * @author mlaroche
  *
  */
-public final class JsonStaticMasterDataSourceReaderPlugin implements NotebookSourceReaderPlugin {
+public final class JsonStaticMasterDataSourceReaderPlugin implements SourceReaderPlugin {
 
 	private final ResourceManager resourceManager;
 
@@ -67,14 +67,14 @@ public final class JsonStaticMasterDataSourceReaderPlugin implements NotebookSou
 	}
 
 	@Override
-	public Stream<Sketch> parseResources(final List<NotebookSource> notebookSources, final Notebook notebook) {
+	public Stream<Sketch> parseResources(final List<Source> sources, final Notebook notebook) {
 		Assertion.check()
-				.isNotNull(notebookSources)
+				.isNotNull(sources)
 				.isNotNull(notebook);
 		//---
 		final JsonMasterDataValues result = new JsonMasterDataValues();
-		for (final NotebookSource notebookSource : notebookSources) {
-			final String jsonFileAsString = FileUtil.read(resourceManager.resolve(notebookSource.getPath()));
+		for (final Source source : sources) {
+			final String jsonFileAsString = FileUtil.read(resourceManager.resolve(source.getPath()));
 			final JsonMasterDataValues masterDataValues = gson.fromJson(jsonFileAsString, JsonMasterDataValues.class);
 
 			// we aggregate the results of all files

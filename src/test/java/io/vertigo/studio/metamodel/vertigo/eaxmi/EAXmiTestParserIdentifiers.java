@@ -36,8 +36,8 @@ import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.SketchKey;
 import io.vertigo.studio.notebook.domain.DtSketch;
-import io.vertigo.studio.source.NotebookSource;
-import io.vertigo.studio.source.NotebookSourceManager;
+import io.vertigo.studio.source.Source;
+import io.vertigo.studio.source.SourceManager;
 
 /**
  * Test de lecture d'un OOM.
@@ -50,17 +50,17 @@ public final class EAXmiTestParserIdentifiers {
 	private AutoCloseableNode node;
 
 	@Inject
-	private NotebookSourceManager notebookSourceManager;
+	private SourceManager sourceManager;
 
 	@BeforeEach
 	public final void setUp() {
 		node = new AutoCloseableNode(buildNodeConfig());
 		DIInjector.injectMembers(this, node.getComponentSpace());
 		//---
-		final List<NotebookSource> resources = List.of(
-				NotebookSource.of("xmi", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/demo.xml"),
-				NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/domain.kpr"));
-		notebook = notebookSourceManager.read(resources);
+		final List<Source> resources = List.of(
+				Source.of("xmi", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/demo.xml"),
+				Source.of("kpr", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/domain.kpr"));
+		notebook = sourceManager.read(resources);
 	}
 
 	@AfterEach

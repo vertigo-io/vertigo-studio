@@ -15,7 +15,7 @@ import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaConfigBuilder;
 import io.vertigo.studio.notebook.NotebookConfig;
-import io.vertigo.studio.source.NotebookSource;
+import io.vertigo.studio.source.Source;
 import io.vertigo.studio.tools.YamlStudioConfig.YamlMdaConfig;
 import io.vertigo.studio.tools.YamlStudioConfig.YamlResourceConfig;
 
@@ -26,17 +26,17 @@ final class StudioConfigYamlParser {
 		final String rootPath = Path.of(configUrl.toURI()).getParent().toString() + "/";
 
 		//metamodelresources
-		final List<NotebookSource> notebookSources = parseResources(yamlStudioConfig.resources, rootPath);
+		final List<Source> sources = parseResources(yamlStudioConfig.resources, rootPath);
 		//mdaCondig
 		final MdaConfig mdaConfig = parseMdaConfig(yamlStudioConfig.mdaConfig, rootPath);
 		//---
-		return new NotebookConfig(notebookSources, mdaConfig);
+		return new NotebookConfig(sources, mdaConfig);
 	}
 
-	private static final List<NotebookSource> parseResources(final List<YamlResourceConfig> resources, final String rootPath) {
+	private static final List<Source> parseResources(final List<YamlResourceConfig> resources, final String rootPath) {
 		//metamodelresources
 		return resources.stream()
-				.map(resource -> NotebookSource.of(resource.type, rootPath + resource.path))
+				.map(resource -> Source.of(resource.type, rootPath + resource.path))
 				.collect(Collectors.toList());
 	}
 

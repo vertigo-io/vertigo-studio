@@ -30,7 +30,7 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.core.util.MapBuilder;
-import io.vertigo.studio.impl.source.NotebookSourceReaderPlugin;
+import io.vertigo.studio.impl.source.SourceReaderPlugin;
 import io.vertigo.studio.impl.source.dsl.raw.DslRawRepository;
 import io.vertigo.studio.impl.source.dsl.raw.DslSketchFactory;
 import io.vertigo.studio.notebook.Notebook;
@@ -41,7 +41,7 @@ import io.vertigo.studio.plugins.source.vertigo.loaders.eaxmi.core.EAXmiLoader;
 import io.vertigo.studio.plugins.source.vertigo.loaders.java.AnnotationLoader;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.KprLoader;
 import io.vertigo.studio.plugins.source.vertigo.loaders.poweramc.core.OOMLoader;
-import io.vertigo.studio.source.NotebookSource;
+import io.vertigo.studio.source.Source;
 
 /**
 
@@ -55,7 +55,7 @@ import io.vertigo.studio.source.NotebookSource;
  *
  * @author pchretien, mlaroche
  */
-public final class StudioSourceReaderPlugin implements NotebookSourceReaderPlugin {
+public final class StudioSourceReaderPlugin implements SourceReaderPlugin {
 	private final Map<String, Loader> loadersByType;
 
 	/**
@@ -78,9 +78,9 @@ public final class StudioSourceReaderPlugin implements NotebookSourceReaderPlugi
 	}
 
 	@Override
-	public Stream<Sketch> parseResources(final List<NotebookSource> notebookSources, final Notebook notebook) {
+	public Stream<Sketch> parseResources(final List<Source> sources, final Notebook notebook) {
 		Assertion.check()
-				.isNotNull(notebookSources)
+				.isNotNull(sources)
 				.isNotNull(notebook);
 		//---	
 		//Création du repositoy des instances le la grammaire (=> model)
@@ -92,10 +92,10 @@ public final class StudioSourceReaderPlugin implements NotebookSourceReaderPlugi
 				.getRootRaws()
 				.forEach(rawRepository::addRaw);
 
-		for (final NotebookSource notebookSource : notebookSources) {
-			final Loader loader = loadersByType.get(notebookSource.getType());
-			Assertion.check().isNotNull(loader, "This resource {0} can not be parse by these loaders : {1}", notebookSource, loadersByType.keySet());
-			loader.load(notebookSource.getPath(), rawRepository);
+		for (final Source source : sources) {
+			final Loader loader = loadersByType.get(source.getType());
+			Assertion.check().isNotNull(loader, "This resource {0} can not be parse by these loaders : {1}", source, loadersByType.keySet());
+			loader.load(source.getPath(), rawRepository);
 		}
 
 		return rawRepository.solve(notebook);

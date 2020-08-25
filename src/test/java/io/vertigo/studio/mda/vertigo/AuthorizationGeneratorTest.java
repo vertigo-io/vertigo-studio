@@ -36,8 +36,8 @@ import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.mda.MdaConfig;
 import io.vertigo.studio.mda.MdaManager;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.source.NotebookSource;
-import io.vertigo.studio.source.NotebookSourceManager;
+import io.vertigo.studio.source.Source;
+import io.vertigo.studio.source.SourceManager;
 
 /**
  * Test la génération à partir des oom et ksp.
@@ -47,7 +47,7 @@ public class AuthorizationGeneratorTest {
 	private AutoCloseableNode node;
 
 	@Inject
-	private NotebookSourceManager notebookSourceManager;
+	private SourceManager sourceManager;
 	@Inject
 	private MdaManager mdaManager;
 
@@ -85,17 +85,17 @@ public class AuthorizationGeneratorTest {
 	 */
 	@Test
 	public void testGenerate() {
-		final List<NotebookSource> resources = List.of(
-				NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
-				NotebookSource.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"),
-				NotebookSource.of("security", "io/vertigo/studio/metamodel/vertigo/data/security/advanced-auth-config-v2.json"));
+		final List<Source> resources = List.of(
+				Source.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
+				Source.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"),
+				Source.of("security", "io/vertigo/studio/metamodel/vertigo/data/security/advanced-auth-config-v2.json"));
 
 		final MdaConfig mdaConfig = MdaConfig.builder("io.vertigo.studio")
 				.withTargetGenDir("target/")
 				.addProperty("vertigo.authorization", "true")
 				.build();
 
-		final Notebook notebook = notebookSourceManager.read(resources);
+		final Notebook notebook = sourceManager.read(resources);
 		mdaManager.generate(notebook, mdaConfig);
 	}
 

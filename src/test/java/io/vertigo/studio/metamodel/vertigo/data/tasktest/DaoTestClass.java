@@ -37,7 +37,7 @@ import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugi
 import io.vertigo.core.plugins.resource.local.LocalResourceResolverPlugin;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.database.DatabaseFeatures;
-import io.vertigo.database.sql.SqlDataBaseManager;
+import io.vertigo.database.sql.SqlManager;
 import io.vertigo.database.sql.connection.SqlConnection;
 import io.vertigo.datamodel.DataModelFeatures;
 import io.vertigo.datastore.DataStoreFeatures;
@@ -54,7 +54,7 @@ public class DaoTestClass {
 	@Inject
 	private ResourceManager resourceManager;
 	@Inject
-	private SqlDataBaseManager sqlDataBaseManager;
+	private SqlManager sqlManager;
 
 	private VTransactionWritable currentTransaction;
 	private AutoCloseableNode node;
@@ -113,8 +113,8 @@ public class DaoTestClass {
 	}
 
 	private void execSqlScript(final String sqlScript) {
-		final SqlConnection connection = sqlDataBaseManager.getConnectionProvider(SqlDataBaseManager.MAIN_CONNECTION_PROVIDER_NAME).obtainConnection();
-		DataBaseScriptUtil.execSqlScript(connection, sqlScript, resourceManager, sqlDataBaseManager);
+		final SqlConnection connection = sqlManager.getConnectionProvider(SqlManager.MAIN_CONNECTION_PROVIDER_NAME).obtainConnection();
+		DataBaseScriptUtil.execSqlScript(connection, sqlScript, resourceManager, sqlManager);
 	}
 
 	private final TaskTestDummyGenerator dum = new TaskTestDummyGeneratorBasic();
