@@ -146,8 +146,8 @@ public final class DslRawBuilder implements Builder<DslRaw> {
 		return addRawLink(fieldName, DslRawKey.of(rawName));
 	}
 
-	public DslRawBuilder addRawLink(final String fieldName, final DslRawKey rawKey) {
-		return addAllRawLinks(fieldName, List.of(rawKey));
+	public DslRawBuilder addRawLink(final String fieldName, final DslRawKey fieldRawKey) {
+		return addAllRawLinks(fieldName, List.of(fieldRawKey));
 	}
 
 	/**

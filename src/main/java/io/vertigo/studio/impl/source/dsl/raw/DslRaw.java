@@ -163,12 +163,12 @@ public final class DslRaw {
 	 * @return Clé de la définition
 	 */
 	public DslRawKey getRawKeyByFieldName(final String fieldName) {
-		final List<DslRawKey> rawKeys = getRawKeysByFieldName(fieldName);
-		final DslRawKey rawKey = rawKeys.get(0);
+		final List<DslRawKey> fieldRawKeys = getRawKeysByFieldName(fieldName);
+		final DslRawKey fieldRawKey = fieldRawKeys.get(0);
 		//-----
 		// On vérifie qu'il y a une définition pour le champ demandé
-		Assertion.check().isNotNull(rawKey);
-		return rawKey;
+		Assertion.check().isNotNull(fieldRawKey);
+		return fieldRawKey;
 	}
 
 	/**
