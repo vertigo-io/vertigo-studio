@@ -31,18 +31,21 @@ public final class AccountJsonSecuritySourceReaderPlugin implements NotebookSour
 	private final ResourceManager resourceManager;
 
 	@Inject
-	public AccountJsonSecuritySourceReaderPlugin(
-			final ResourceManager resourceManager) {
+	public AccountJsonSecuritySourceReaderPlugin(final ResourceManager resourceManager) {
 		Assertion.check().isNotNull(resourceManager);
 		//---
 		this.resourceManager = resourceManager;
 	}
 
 	@Override
-	public Stream<SecuredFeatureSketch> parseResources(final List<NotebookSource> resources, final Notebook notebook) {
-		return resources
+	public Stream<SecuredFeatureSketch> parseResources(final List<NotebookSource> notebookSources, final Notebook notebook) {
+		Assertion.check()
+				.isNotNull(notebookSources)
+				.isNotNull(notebook);
+		//---	
+		return notebookSources
 				.stream()
-				.flatMap(metamodelResource -> parseJson(resourceManager.resolve(metamodelResource.getPath())).stream());
+				.flatMap(notebookSource -> parseJson(resourceManager.resolve(notebookSource.getPath())).stream());
 	}
 
 	@Override

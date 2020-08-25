@@ -55,8 +55,9 @@ public final class JsonStaticMasterDataSourceReaderPlugin implements NotebookSou
 	 * @param fileName the json file where masterdata values are stored
 	 */
 	@Inject
-	public JsonStaticMasterDataSourceReaderPlugin(
-			final ResourceManager resourceManager) {
+	public JsonStaticMasterDataSourceReaderPlugin(final ResourceManager resourceManager) {
+		Assertion.check().isNotNull(resourceManager);
+		//---
 		this.resourceManager = resourceManager;
 	}
 
@@ -66,11 +67,14 @@ public final class JsonStaticMasterDataSourceReaderPlugin implements NotebookSou
 	}
 
 	@Override
-	public Stream<Sketch> parseResources(final List<NotebookSource> resources, final Notebook notebook) {
-
+	public Stream<Sketch> parseResources(final List<NotebookSource> notebookSources, final Notebook notebook) {
+		Assertion.check()
+				.isNotNull(notebookSources)
+				.isNotNull(notebook);
+		//---
 		final JsonMasterDataValues result = new JsonMasterDataValues();
-		for (final NotebookSource resource : resources) {
-			final String jsonFileAsString = FileUtil.read(resourceManager.resolve(resource.getPath()));
+		for (final NotebookSource notebookSource : notebookSources) {
+			final String jsonFileAsString = FileUtil.read(resourceManager.resolve(notebookSource.getPath()));
 			final JsonMasterDataValues masterDataValues = gson.fromJson(jsonFileAsString, JsonMasterDataValues.class);
 
 			// we aggregate the results of all files

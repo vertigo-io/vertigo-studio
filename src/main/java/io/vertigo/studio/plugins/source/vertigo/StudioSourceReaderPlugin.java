@@ -56,7 +56,6 @@ import io.vertigo.studio.source.NotebookSource;
  * @author pchretien, mlaroche
  */
 public final class StudioSourceReaderPlugin implements NotebookSourceReaderPlugin {
-
 	private final Map<String, Loader> loadersByType;
 
 	/**
@@ -80,6 +79,10 @@ public final class StudioSourceReaderPlugin implements NotebookSourceReaderPlugi
 
 	@Override
 	public Stream<Sketch> parseResources(final List<NotebookSource> notebookSources, final Notebook notebook) {
+		Assertion.check()
+				.isNotNull(notebookSources)
+				.isNotNull(notebook);
+		//---	
 		//Création du repositoy des instances le la grammaire (=> model)
 		final DslSketchFactory sketchFactory = new DynamoSketchFactory();
 		final DslRawRepository rawRepository = new DslRawRepository(sketchFactory);
@@ -90,9 +93,9 @@ public final class StudioSourceReaderPlugin implements NotebookSourceReaderPlugi
 				.forEach(rawRepository::addRaw);
 
 		for (final NotebookSource notebookSource : notebookSources) {
-			final Loader loaderPlugin = loadersByType.get(notebookSource.getType());
-			Assertion.check().isNotNull(loaderPlugin, "This resource {0} can not be parse by these loaders : {1}", notebookSource, loadersByType.keySet());
-			loaderPlugin.load(notebookSource.getPath(), rawRepository);
+			final Loader loader = loadersByType.get(notebookSource.getType());
+			Assertion.check().isNotNull(loader, "This resource {0} can not be parse by these loaders : {1}", notebookSource, loadersByType.keySet());
+			loader.load(notebookSource.getPath(), rawRepository);
 		}
 
 		return rawRepository.solve(notebook);

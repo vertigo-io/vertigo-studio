@@ -44,10 +44,14 @@ public final class VegaWebServicesSourceReaderPlugin implements NotebookSourceRe
 	private static final int NAME_MAX_SIZE = 40;
 
 	@Override
-	public Stream<WebServiceSketch> parseResources(final List<NotebookSource> resources, final Notebook notebook) {
+	public Stream<WebServiceSketch> parseResources(final List<NotebookSource> notebookSources, final Notebook notebook) {
+		Assertion.check()
+				.isNotNull(notebookSources)
+				.isNotNull(notebook);
+		//---	
 		final List<WebServiceSketch> webServiceSketch = new ArrayList<>();
-		for (final NotebookSource resource : resources) {
-			final String resourcePath = resource.getPath();
+		for (final NotebookSource notebookSource : notebookSources) {
+			final String resourcePath = notebookSource.getPath();
 			if (resourcePath.endsWith(".*")) {
 				scanAndAddPackage(resourcePath.substring(0, resourcePath.length() - ".*".length()), webServiceSketch);
 			} else {
@@ -76,8 +80,8 @@ public final class VegaWebServicesSourceReaderPlugin implements NotebookSourceRe
 		//-----
 		return Arrays.stream(webServicesClass.getMethods())
 				.map(VegaWebServicesSourceReaderPlugin::buildWebServiceSketch)
-				.filter(webServiceSketchOptional -> webServiceSketchOptional.isPresent())
-				.map(webServiceSketchOptional -> webServiceSketchOptional.get())
+				.filter(Optional::isPresent)
+				.map(Optional::get)
 				.collect(Collectors.toList());
 	}
 
