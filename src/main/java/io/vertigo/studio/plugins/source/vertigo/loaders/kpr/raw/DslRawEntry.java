@@ -21,8 +21,8 @@ package io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawKey;
+import io.vertigo.studio.impl.source.dsl.raw.DslRaw;
+import io.vertigo.studio.impl.source.dsl.raw.DslRawKey;
 
 /**
  * Une entrée de type définition est définie (XOR)

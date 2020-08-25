@@ -32,9 +32,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import io.vertigo.studio.impl.source.dsl.raw.DslRaw;
+import io.vertigo.studio.impl.source.dsl.raw.DslRawRepository;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawRepository;
 
 public final class EnvironmentManagerTest {
 	private final DslRawRepository rawRepository = DslSketchFactoryMock.createDRawRepository();

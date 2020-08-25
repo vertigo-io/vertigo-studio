@@ -31,16 +31,16 @@ import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.source.NotebookSourceReaderPlugin;
+import io.vertigo.studio.impl.source.dsl.raw.DslRawRepository;
+import io.vertigo.studio.impl.source.dsl.raw.DslSketchFactory;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawRepository;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslSketchFactory;
+import io.vertigo.studio.plugins.source.vertigo.factories.DynamoSketchFactory;
 import io.vertigo.studio.plugins.source.vertigo.loaders.Loader;
 import io.vertigo.studio.plugins.source.vertigo.loaders.eaxmi.core.EAXmiLoader;
 import io.vertigo.studio.plugins.source.vertigo.loaders.java.AnnotationLoader;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.KprLoader;
 import io.vertigo.studio.plugins.source.vertigo.loaders.poweramc.core.OOMLoader;
-import io.vertigo.studio.plugins.source.vertigo.registries.DynamoSketchFactory;
 import io.vertigo.studio.source.NotebookSource;
 
 /**

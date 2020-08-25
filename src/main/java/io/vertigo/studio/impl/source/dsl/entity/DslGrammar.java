@@ -16,41 +16,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.plugins.source.vertigo.dsl.entity;
+package io.vertigo.studio.impl.source.dsl.entity;
 
-import io.vertigo.core.lang.Assertion;
+import java.util.List;
+
+import io.vertigo.studio.impl.source.dsl.raw.DslRaw;
 
 /**
- * Defines a link to an entity.
+ * Une grammaire est composée d'entités et de propriétés.
+ * Les entités sont une composition d'entités et de propriétés.
+ *
+ * Il est possible de composer une grammaire à partir de grammaires.
+ *
  * @author pchretien, mlaroche
  */
-public final class DslEntityLink implements DslEntityFieldType {
-	private final DslEntity entity;
+@FunctionalInterface
+public interface DslGrammar {
+	/**
+	 * Returns the list of entities
+	 * @return List of entities.
+	 */
+	List<DslEntity> getEntities();
 
 	/**
-	 * Constructor
-	 * @param entity the entity that is linked
+	 * Examples : a grammar is defined from atoms (string...)
+	 * @return the list of primitives/ root definitions
 	 */
-	DslEntityLink(final DslEntity entity) {
-		Assertion.check().isNotNull(entity);
-		//-----
-		this.entity = entity;
-	}
-
-	/**
-	 * @return the linked entity
-	 */
-	public DslEntity getEntity() {
-		return entity;
-	}
-
-	@Override
-	public String toString() {
-		return "Link<" + entity.getName() + ">";
-	}
-
-	@Override
-	public boolean isEntityLink() {
-		return true;
+	default List<DslRaw> getRootRaws() {
+		return List.of();
 	}
 }

@@ -18,7 +18,7 @@
  */
 package io.vertigo.studio.plugins.source.vertigo.loaders;
 
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawRepository;
+import io.vertigo.studio.impl.source.dsl.raw.DslRawRepository;
 
 /**
  * Chargeur de l'environnement.

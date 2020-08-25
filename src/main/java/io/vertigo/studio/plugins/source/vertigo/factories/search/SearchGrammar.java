@@ -16,17 +16,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.plugins.source.vertigo.registries.search;
+package io.vertigo.studio.plugins.source.vertigo.factories.search;
 
-import static io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslPropertyType.Boolean;
-import static io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslPropertyType.String;
+import static io.vertigo.studio.impl.source.dsl.entity.DslPropertyType.Boolean;
+import static io.vertigo.studio.impl.source.dsl.entity.DslPropertyType.String;
 
 import java.util.List;
 
+import io.vertigo.studio.impl.source.dsl.entity.DslEntity;
+import io.vertigo.studio.impl.source.dsl.entity.DslGrammar;
 import io.vertigo.studio.plugins.source.vertigo.KspProperty;
-import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
-import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
-import io.vertigo.studio.plugins.source.vertigo.registries.domain.DomainGrammar;
+import io.vertigo.studio.plugins.source.vertigo.factories.domain.DomainGrammar;
 
 /**
  * @author pchretien, mlaroche

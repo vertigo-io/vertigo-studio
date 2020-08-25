@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.plugins.source.vertigo.dsl.raw;
+package io.vertigo.studio.impl.source.dsl.raw;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,8 +27,8 @@ import java.util.Map;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
-import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
-import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntityField;
+import io.vertigo.studio.impl.source.dsl.entity.DslEntity;
+import io.vertigo.studio.impl.source.dsl.entity.DslEntityField;
 
 /**
  * Interface de création des définitions.

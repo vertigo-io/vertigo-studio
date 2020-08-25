@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.plugins.source.vertigo.registries.domain;
+package io.vertigo.studio.plugins.source.vertigo.factories.domain;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -33,6 +33,11 @@ import io.vertigo.core.lang.Cardinality;
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.core.util.ClassUtil;
 import io.vertigo.core.util.StringUtil;
+import io.vertigo.studio.impl.source.dsl.entity.DslEntity;
+import io.vertigo.studio.impl.source.dsl.entity.DslGrammar;
+import io.vertigo.studio.impl.source.dsl.raw.DslRaw;
+import io.vertigo.studio.impl.source.dsl.raw.DslRawKey;
+import io.vertigo.studio.impl.source.dsl.raw.DslSketchFactory;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
 import io.vertigo.studio.notebook.SketchKey;
@@ -47,11 +52,6 @@ import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
 import io.vertigo.studio.notebook.domain.association.AssociationSketchNode;
 import io.vertigo.studio.notebook.domain.association.AssociationUtil;
 import io.vertigo.studio.plugins.source.vertigo.KspProperty;
-import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
-import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawKey;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslSketchFactory;
 
 /**
  * @author pchretien, mlaroche

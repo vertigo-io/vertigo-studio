@@ -41,13 +41,13 @@ import io.vertigo.datamodel.structure.model.Entity;
 import io.vertigo.datamodel.structure.model.Fragment;
 import io.vertigo.datamodel.structure.model.KeyConcept;
 import io.vertigo.datamodel.structure.stereotype.DataSpace;
+import io.vertigo.studio.impl.source.dsl.raw.DslRaw;
+import io.vertigo.studio.impl.source.dsl.raw.DslRawBuilder;
+import io.vertigo.studio.impl.source.dsl.raw.DslRawRepository;
 import io.vertigo.studio.notebook.domain.StudioStereotype;
 import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawBuilder;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawRepository;
+import io.vertigo.studio.plugins.source.vertigo.factories.domain.DomainGrammar;
 import io.vertigo.studio.plugins.source.vertigo.loaders.Loader;
-import io.vertigo.studio.plugins.source.vertigo.registries.domain.DomainGrammar;
 
 /**
  * Lecture des annotations présentes sur les objets métier.

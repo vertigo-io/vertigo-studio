@@ -28,9 +28,9 @@ import io.vertigo.commons.peg.PegRule;
 import io.vertigo.commons.peg.PegRule.Dummy;
 import io.vertigo.commons.peg.PegRules;
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawRepository;
+import io.vertigo.studio.impl.source.dsl.entity.DslGrammar;
+import io.vertigo.studio.impl.source.dsl.raw.DslRaw;
+import io.vertigo.studio.impl.source.dsl.raw.DslRawRepository;
 
 /**
  * règle de composition d'un fichier KSP.

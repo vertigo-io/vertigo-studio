@@ -33,7 +33,7 @@ import io.vertigo.core.lang.VSystemException;
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.resource.ResourceManager;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawRepository;
+import io.vertigo.studio.impl.source.dsl.raw.DslRawRepository;
 import io.vertigo.studio.plugins.source.vertigo.loaders.Loader;
 
 /**

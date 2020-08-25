@@ -20,14 +20,14 @@ package io.vertigo.studio.metamodel.vertigo.dsl;
 
 import java.util.List;
 
+import io.vertigo.studio.impl.source.dsl.entity.DslGrammar;
+import io.vertigo.studio.impl.source.dsl.raw.DslRaw;
+import io.vertigo.studio.impl.source.dsl.raw.DslRawRepository;
+import io.vertigo.studio.impl.source.dsl.raw.DslSketchFactory;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
 import io.vertigo.studio.notebook.SketchKey;
-import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawRepository;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslSketchFactory;
-import io.vertigo.studio.plugins.source.vertigo.registries.domain.DomainGrammar;
+import io.vertigo.studio.plugins.source.vertigo.factories.domain.DomainGrammar;
 
 /**
  * Mock pour les tests de regles sur les Definitions.

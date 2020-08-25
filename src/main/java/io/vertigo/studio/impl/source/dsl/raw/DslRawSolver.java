@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.plugins.source.vertigo.dsl.raw;
+package io.vertigo.studio.impl.source.dsl.raw;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,8 +25,8 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.VSystemException;
+import io.vertigo.studio.impl.source.dsl.entity.DslEntityField;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntityField;
 
 /**
  * Solver permet de résoudre les références.

@@ -25,8 +25,8 @@ import org.junit.jupiter.api.Test;
 
 import io.vertigo.commons.peg.PegNoMatchFoundException;
 import io.vertigo.core.lang.VSystemException;
-import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawRepository;
+import io.vertigo.studio.impl.source.dsl.entity.DslEntity;
+import io.vertigo.studio.impl.source.dsl.raw.DslRawRepository;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw.DslRawBody;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslRawBodyRule;
 

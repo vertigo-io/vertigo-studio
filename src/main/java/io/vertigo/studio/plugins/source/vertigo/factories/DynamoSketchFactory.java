@@ -16,23 +16,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.plugins.source.vertigo.registries;
+package io.vertigo.studio.plugins.source.vertigo.factories;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.WrappedException;
+import io.vertigo.studio.impl.source.dsl.entity.DslEntity;
+import io.vertigo.studio.impl.source.dsl.entity.DslGrammar;
+import io.vertigo.studio.impl.source.dsl.raw.DslRaw;
+import io.vertigo.studio.impl.source.dsl.raw.DslSketchFactory;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
-import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
-import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslSketchFactory;
-import io.vertigo.studio.plugins.source.vertigo.registries.domain.DomainSketchFactory;
-import io.vertigo.studio.plugins.source.vertigo.registries.file.FileSketchFactory;
-import io.vertigo.studio.plugins.source.vertigo.registries.search.SearchSketchFactory;
-import io.vertigo.studio.plugins.source.vertigo.registries.task.TaskSketchFactory;
+import io.vertigo.studio.plugins.source.vertigo.factories.domain.DomainSketchFactory;
+import io.vertigo.studio.plugins.source.vertigo.factories.file.FileSketchFactory;
+import io.vertigo.studio.plugins.source.vertigo.factories.search.SearchSketchFactory;
+import io.vertigo.studio.plugins.source.vertigo.factories.task.TaskSketchFactory;
 
 /**
  * @author pchretien, mlaroche

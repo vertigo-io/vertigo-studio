@@ -28,7 +28,7 @@ import io.vertigo.commons.peg.PegNoMatchFoundException;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawRepository;
+import io.vertigo.studio.impl.source.dsl.raw.DslRawRepository;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslKspRule;
 
 /**

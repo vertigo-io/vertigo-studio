@@ -16,13 +16,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.plugins.source.vertigo.dsl.raw;
+package io.vertigo.studio.impl.source.dsl.raw;
 
 import java.util.List;
 
+import io.vertigo.studio.impl.source.dsl.entity.DslGrammar;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
-import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
 
 /**
  * This handler creates

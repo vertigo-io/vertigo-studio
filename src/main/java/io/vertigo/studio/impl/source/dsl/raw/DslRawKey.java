@@ -1,4 +1,4 @@
-package io.vertigo.studio.plugins.source.vertigo.dsl.raw;
+package io.vertigo.studio.impl.source.dsl.raw;
 
 import io.vertigo.core.lang.Assertion;
 

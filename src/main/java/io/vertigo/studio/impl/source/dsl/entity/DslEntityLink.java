@@ -16,37 +16,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.plugins.source.vertigo.dsl.entity;
+package io.vertigo.studio.impl.source.dsl.entity;
+
+import io.vertigo.core.lang.Assertion;
 
 /**
- * There are 3 types of field :
- * - property
- * - entity
- * - entity Link
- *
+ * Defines a link to an entity.
  * @author pchretien, mlaroche
- *
  */
-public interface DslEntityFieldType {
+public final class DslEntityLink implements DslEntityFieldType {
+	private final DslEntity entity;
 
 	/**
-	 * @return If the field is a property
+	 * Constructor
+	 * @param entity the entity that is linked
 	 */
-	default boolean isProperty() {
-		return false;
+	DslEntityLink(final DslEntity entity) {
+		Assertion.check().isNotNull(entity);
+		//-----
+		this.entity = entity;
 	}
 
 	/**
-	 * @return If the field is a link towards an entity
+	 * @return the linked entity
 	 */
-	default boolean isEntityLink() {
-		return false;
+	public DslEntity getEntity() {
+		return entity;
 	}
 
-	/**
-	 * @return If the field is a child entity
-	 */
-	default boolean isEntity() {
-		return false;
+	@Override
+	public String toString() {
+		return "Link<" + entity.getName() + ">";
+	}
+
+	@Override
+	public boolean isEntityLink() {
+		return true;
 	}
 }

@@ -16,19 +16,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.plugins.source.vertigo.registries.file;
+package io.vertigo.studio.plugins.source.vertigo.factories.file;
 
 import java.util.List;
 
+import io.vertigo.studio.impl.source.dsl.entity.DslEntity;
+import io.vertigo.studio.impl.source.dsl.entity.DslGrammar;
+import io.vertigo.studio.impl.source.dsl.raw.DslRaw;
+import io.vertigo.studio.impl.source.dsl.raw.DslRawKey;
+import io.vertigo.studio.impl.source.dsl.raw.DslSketchFactory;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
 import io.vertigo.studio.notebook.file.FileInfoSketch;
 import io.vertigo.studio.plugins.source.vertigo.KspProperty;
-import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
-import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawKey;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslSketchFactory;
 
 /**
  * @author pchretien, mlaroche

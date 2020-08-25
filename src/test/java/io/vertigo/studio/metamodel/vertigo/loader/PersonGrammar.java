@@ -18,15 +18,15 @@
  */
 package io.vertigo.studio.metamodel.vertigo.loader;
 
-import static io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslPropertyType.Boolean;
-import static io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslPropertyType.Double;
-import static io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslPropertyType.Integer;
-import static io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslPropertyType.String;
+import static io.vertigo.studio.impl.source.dsl.entity.DslPropertyType.Boolean;
+import static io.vertigo.studio.impl.source.dsl.entity.DslPropertyType.Double;
+import static io.vertigo.studio.impl.source.dsl.entity.DslPropertyType.Integer;
+import static io.vertigo.studio.impl.source.dsl.entity.DslPropertyType.String;
 
 import java.util.List;
 
-import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
-import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
+import io.vertigo.studio.impl.source.dsl.entity.DslEntity;
+import io.vertigo.studio.impl.source.dsl.entity.DslGrammar;
 
 /**
  * @author npiedeloup

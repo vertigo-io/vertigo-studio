@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.plugins.source.vertigo.dsl.entity;
+package io.vertigo.studio.impl.source.dsl.entity;
 
 import java.util.HashSet;
 import java.util.Set;

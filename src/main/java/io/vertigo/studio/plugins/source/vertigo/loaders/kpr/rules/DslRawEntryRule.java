@@ -31,7 +31,7 @@ import io.vertigo.commons.peg.PegChoice;
 import io.vertigo.commons.peg.PegRule;
 import io.vertigo.commons.peg.PegRules;
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRawKey;
+import io.vertigo.studio.impl.source.dsl.raw.DslRawKey;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw.DslRawEntry;
 
 /**

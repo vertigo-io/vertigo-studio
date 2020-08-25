@@ -16,8 +16,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.plugins.source.vertigo.registries.domain;
+package io.vertigo.studio.plugins.source.vertigo.factories.domain;
 
+import static io.vertigo.studio.impl.source.dsl.entity.DslPropertyType.Boolean;
+import static io.vertigo.studio.impl.source.dsl.entity.DslPropertyType.Integer;
+import static io.vertigo.studio.impl.source.dsl.entity.DslPropertyType.String;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.CARDINALITY;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.DATA_SPACE;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.DISPLAY_FIELD;
@@ -43,9 +46,6 @@ import static io.vertigo.studio.plugins.source.vertigo.KspProperty.STORE_TYPE;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.TABLE_NAME;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.TYPE;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.UNIT;
-import static io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslPropertyType.Boolean;
-import static io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslPropertyType.Integer;
-import static io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslPropertyType.String;
 
 import java.util.Arrays;
 import java.util.List;
@@ -53,9 +53,9 @@ import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.BasicType;
 import io.vertigo.core.util.ListBuilder;
-import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
-import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
+import io.vertigo.studio.impl.source.dsl.entity.DslEntity;
+import io.vertigo.studio.impl.source.dsl.entity.DslGrammar;
+import io.vertigo.studio.impl.source.dsl.raw.DslRaw;
 
 /**
  * @author pchretien, mlaroche

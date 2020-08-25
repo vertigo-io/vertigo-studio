@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.plugins.source.vertigo.dsl.raw;
+package io.vertigo.studio.impl.source.dsl.raw;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,9 +30,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.studio.impl.source.dsl.entity.DslGrammar;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
-import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
 
 /**
  * Espace de nommage.

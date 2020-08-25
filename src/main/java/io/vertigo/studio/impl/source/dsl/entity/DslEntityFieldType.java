@@ -16,32 +16,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.plugins.source.vertigo.registries.file;
-
-import java.util.Collections;
-import java.util.List;
-
-import io.vertigo.studio.plugins.source.vertigo.KspProperty;
-import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslEntity;
-import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslGrammar;
-import io.vertigo.studio.plugins.source.vertigo.dsl.entity.DslPropertyType;
+package io.vertigo.studio.impl.source.dsl.entity;
 
 /**
- * @author npiedeloup
+ * There are 3 types of field :
+ * - property
+ * - entity
+ * - entity Link
+ *
+ * @author pchretien, mlaroche
+ *
  */
-final class FileGrammar implements DslGrammar {
+public interface DslEntityFieldType {
 
-	/**Définition de tache.*/
-	public static final DslEntity FILE_INFO_ENTITY;
-
-	static {
-		FILE_INFO_ENTITY = DslEntity.builder("FileInfo")
-				.addRequiredField(KspProperty.DATA_SPACE, DslPropertyType.String)
-				.build();
+	/**
+	 * @return If the field is a property
+	 */
+	default boolean isProperty() {
+		return false;
 	}
 
-	@Override
-	public List<DslEntity> getEntities() {
-		return Collections.singletonList(FILE_INFO_ENTITY);
+	/**
+	 * @return If the field is a link towards an entity
+	 */
+	default boolean isEntityLink() {
+		return false;
+	}
+
+	/**
+	 * @return If the field is a child entity
+	 */
+	default boolean isEntity() {
+		return false;
 	}
 }

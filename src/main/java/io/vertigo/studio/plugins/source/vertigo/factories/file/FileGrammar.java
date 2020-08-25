@@ -16,33 +16,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.plugins.source.vertigo.dsl.entity;
+package io.vertigo.studio.plugins.source.vertigo.factories.file;
 
+import java.util.Collections;
 import java.util.List;
 
-import io.vertigo.studio.plugins.source.vertigo.dsl.raw.DslRaw;
+import io.vertigo.studio.impl.source.dsl.entity.DslEntity;
+import io.vertigo.studio.impl.source.dsl.entity.DslGrammar;
+import io.vertigo.studio.impl.source.dsl.entity.DslPropertyType;
+import io.vertigo.studio.plugins.source.vertigo.KspProperty;
 
 /**
- * Une grammaire est composée d'entités et de propriétés.
- * Les entités sont une composition d'entités et de propriétés.
- *
- * Il est possible de composer une grammaire à partir de grammaires.
- *
- * @author pchretien, mlaroche
+ * @author npiedeloup
  */
-@FunctionalInterface
-public interface DslGrammar {
-	/**
-	 * Returns the list of entities
-	 * @return List of entities.
-	 */
-	List<DslEntity> getEntities();
+final class FileGrammar implements DslGrammar {
 
-	/**
-	 * Examples : a grammar is defined from atoms (string...)
-	 * @return the list of primitives/ root definitions
-	 */
-	default List<DslRaw> getRootRaws() {
-		return List.of();
+	/**Définition de tache.*/
+	public static final DslEntity FILE_INFO_ENTITY;
+
+	static {
+		FILE_INFO_ENTITY = DslEntity.builder("FileInfo")
+				.addRequiredField(KspProperty.DATA_SPACE, DslPropertyType.String)
+				.build();
+	}
+
+	@Override
+	public List<DslEntity> getEntities() {
+		return Collections.singletonList(FILE_INFO_ENTITY);
 	}
 }
