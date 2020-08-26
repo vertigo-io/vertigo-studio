@@ -11,4 +11,11 @@ public interface NotebookManager extends Manager {
 	 */
 	String toJson(Notebook notebook);
 
+	/**
+	 * Loads a notebook from json.
+	 * @param json the notebook as json
+	 * @return notebook
+	 */
+	Notebook fromJson(String json);
+
 }
