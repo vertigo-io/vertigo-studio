@@ -45,7 +45,7 @@ import io.vertigo.studio.impl.source.dsl.raw.DslRaw;
 import io.vertigo.studio.impl.source.dsl.raw.DslRawBuilder;
 import io.vertigo.studio.impl.source.dsl.raw.DslRawRepository;
 import io.vertigo.studio.notebook.domain.StudioStereotype;
-import io.vertigo.studio.plugins.mda.vertigo.VertigoConstants;
+import io.vertigo.studio.plugins.generator.vertigo.VertigoConstants;
 import io.vertigo.studio.plugins.source.vertigo.factories.domain.DomainGrammar;
 import io.vertigo.studio.plugins.source.vertigo.loaders.Loader;
 

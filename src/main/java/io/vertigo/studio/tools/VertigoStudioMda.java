@@ -53,9 +53,9 @@ import io.vertigo.core.plugins.resource.local.LocalResourceResolverPlugin;
 import io.vertigo.core.plugins.resource.url.URLResourceResolverPlugin;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.studio.StudioFeatures;
-import io.vertigo.studio.mda.MdaConfig;
-import io.vertigo.studio.mda.MdaManager;
-import io.vertigo.studio.mda.MdaResult;
+import io.vertigo.studio.generator.GeneratorConfig;
+import io.vertigo.studio.generator.GeneratorManager;
+import io.vertigo.studio.generator.GeneratorResult;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.NotebookConfig;
 import io.vertigo.studio.source.SourceManager;
@@ -106,33 +106,33 @@ public final class VertigoStudioMda {
 
 	private static void clean(final NotebookConfig notebookConfig) {
 		try (final AutoCloseableNode studioApp = new AutoCloseableNode(buildNodeConfig())) {
-			final MdaManager mdaManager = studioApp.getComponentSpace().resolve(MdaManager.class);
+			final GeneratorManager generatorManager = studioApp.getComponentSpace().resolve(GeneratorManager.class);
 			//-----
-			final MdaConfig mdaConfig = notebookConfig.getMdaConfig();
-			mdaManager.clean(mdaConfig);
+			final GeneratorConfig generatorConfig = notebookConfig.getMdaConfig();
+			generatorManager.clean(generatorConfig);
 		}
 	}
 
 	private static void generate(final NotebookConfig notebookConfig) {
 		try (final AutoCloseableNode studioApp = new AutoCloseableNode(buildNodeConfig())) {
 			final SourceManager sourceManager = studioApp.getComponentSpace().resolve(SourceManager.class);
-			final MdaManager mdaManager = studioApp.getComponentSpace().resolve(MdaManager.class);
+			final GeneratorManager generatorManager = studioApp.getComponentSpace().resolve(GeneratorManager.class);
 			//-----
-			final MdaConfig mdaConfig = notebookConfig.getMdaConfig();
-			mdaManager.clean(mdaConfig);
+			final GeneratorConfig generatorConfig = notebookConfig.getMdaConfig();
+			generatorManager.clean(generatorConfig);
 			final Notebook notebook = sourceManager.read(notebookConfig.getMetamodelResources());
-			final MdaResult mdaResult = mdaManager.generate(notebook, mdaConfig);
-			mdaResult.displayResultMessage(System.out);
+			final GeneratorResult generatorResult = generatorManager.generate(notebook, generatorConfig);
+			generatorResult.displayResultMessage(System.out);
 		}
 	}
 
 	private static void watch(final NotebookConfig notebookConfig, final boolean withClean) {
 		try (final AutoCloseableNode studioApp = new AutoCloseableNode(buildNodeConfig())) {
 			final SourceManager sourceManager = studioApp.getComponentSpace().resolve(SourceManager.class);
-			final MdaManager mdaManager = studioApp.getComponentSpace().resolve(MdaManager.class);
+			final GeneratorManager generatorManager = studioApp.getComponentSpace().resolve(GeneratorManager.class);
 			final ResourceManager resourceManager = studioApp.getComponentSpace().resolve(ResourceManager.class);
 			//-----
-			final MdaConfig mdaConfig = notebookConfig.getMdaConfig();
+			final GeneratorConfig generatorConfig = notebookConfig.getMdaConfig();
 			final List<Path> pathsToWatch = listPathToWatch(notebookConfig, resourceManager);
 			STUDIO_LOGGER.info("Monitored file for generation are {}", pathsToWatch);
 
@@ -162,13 +162,13 @@ public final class VertigoStudioMda {
 										try {
 											if (withClean) {
 												STUDIO_LOGGER.info("Start cleaning");
-												mdaManager.clean(mdaConfig);
+												generatorManager.clean(generatorConfig);
 												STUDIO_LOGGER.info("Done cleaning");
 											}
 											final Notebook notebook = sourceManager.read(notebookConfig.getMetamodelResources());
-											final MdaResult mdaResult = mdaManager.generate(notebook, mdaConfig);
+											final GeneratorResult generatorResult = generatorManager.generate(notebook, generatorConfig);
 											STUDIO_LOGGER.info("Regeneration completed. {} created files, {} updated files, {} identical files and {} issues in {} ms",
-													mdaResult.getCreatedFiles(), mdaResult.getUpdatedFiles(), mdaResult.getIdenticalFiles(), mdaResult.getErrorFiles(), mdaResult.getDurationMillis());
+													generatorResult.getCreatedFiles(), generatorResult.getUpdatedFiles(), generatorResult.getIdenticalFiles(), generatorResult.getErrorFiles(), generatorResult.getDurationMillis());
 										} catch (final Exception e) {
 											STUDIO_LOGGER.error("Error regenerating : ", e);
 										}
@@ -231,7 +231,7 @@ public final class VertigoStudioMda {
 				.addModule(new StudioFeatures()
 						.withSource()
 						.withVertigoSource()
-						.withMda()
+						.withGenerator()
 						.withVertigoMda()
 						.build())
 				.build();

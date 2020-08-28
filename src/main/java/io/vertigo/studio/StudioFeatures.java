@@ -21,21 +21,21 @@ package io.vertigo.studio;
 import io.vertigo.core.node.config.Feature;
 import io.vertigo.core.node.config.Features;
 import io.vertigo.core.param.Param;
-import io.vertigo.studio.impl.mda.MdaManagerImpl;
+import io.vertigo.studio.generator.GeneratorManager;
+import io.vertigo.studio.impl.generator.GeneratorManagerImpl;
 import io.vertigo.studio.impl.notebook.NotebookManagerImpl;
 import io.vertigo.studio.impl.source.SourceManagerImpl;
-import io.vertigo.studio.mda.MdaManager;
 import io.vertigo.studio.notebook.NotebookManager;
-import io.vertigo.studio.plugins.mda.vertigo.authorization.AuthorizationGeneratorPlugin;
-import io.vertigo.studio.plugins.mda.vertigo.domain.java.DomainGeneratorPlugin;
-import io.vertigo.studio.plugins.mda.vertigo.domain.js.JSGeneratorPlugin;
-import io.vertigo.studio.plugins.mda.vertigo.domain.sql.SqlGeneratorPlugin;
-import io.vertigo.studio.plugins.mda.vertigo.domain.ts.TSGeneratorPlugin;
-import io.vertigo.studio.plugins.mda.vertigo.file.FileInfoGeneratorPlugin;
-import io.vertigo.studio.plugins.mda.vertigo.search.SearchGeneratorPlugin;
-import io.vertigo.studio.plugins.mda.vertigo.task.TaskGeneratorPlugin;
-import io.vertigo.studio.plugins.mda.vertigo.task.test.TaskTestGeneratorPlugin;
-import io.vertigo.studio.plugins.mda.vertigo.webservice.WsTsGeneratorPlugin;
+import io.vertigo.studio.plugins.generator.vertigo.authorization.AuthorizationGeneratorPlugin;
+import io.vertigo.studio.plugins.generator.vertigo.domain.java.DomainGeneratorPlugin;
+import io.vertigo.studio.plugins.generator.vertigo.domain.js.JSGeneratorPlugin;
+import io.vertigo.studio.plugins.generator.vertigo.domain.sql.SqlGeneratorPlugin;
+import io.vertigo.studio.plugins.generator.vertigo.domain.ts.TSGeneratorPlugin;
+import io.vertigo.studio.plugins.generator.vertigo.file.FileInfoGeneratorPlugin;
+import io.vertigo.studio.plugins.generator.vertigo.search.SearchGeneratorPlugin;
+import io.vertigo.studio.plugins.generator.vertigo.task.TaskGeneratorPlugin;
+import io.vertigo.studio.plugins.generator.vertigo.task.test.TaskTestGeneratorPlugin;
+import io.vertigo.studio.plugins.generator.vertigo.webservice.WsTsGeneratorPlugin;
 import io.vertigo.studio.plugins.source.vertigo.AccountJsonSecuritySourceReaderPlugin;
 import io.vertigo.studio.plugins.source.vertigo.JsonStaticMasterDataSourceReaderPlugin;
 import io.vertigo.studio.plugins.source.vertigo.StudioSourceReaderPlugin;
@@ -65,14 +65,14 @@ public final class StudioFeatures extends Features<StudioFeatures> {
 		return this;
 	}
 
-	@Feature("mda")
-	public StudioFeatures withMda() {
+	@Feature("generator")
+	public StudioFeatures withGenerator() {
 		getModuleConfigBuilder()
-				.addComponent(MdaManager.class, MdaManagerImpl.class);
+				.addComponent(GeneratorManager.class, GeneratorManagerImpl.class);
 		return this;
 	}
 
-	@Feature("mda.vertigo")
+	@Feature("generator.vertigo")
 	public StudioFeatures withVertigoMda() {
 		getModuleConfigBuilder()
 				.addPlugin(DomainGeneratorPlugin.class)

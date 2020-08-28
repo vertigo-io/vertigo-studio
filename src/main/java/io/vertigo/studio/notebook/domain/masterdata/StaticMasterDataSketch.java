@@ -23,7 +23,7 @@ import java.util.Map;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.AbstractSketch;
 import io.vertigo.studio.notebook.SkecthPrefix;
-import io.vertigo.studio.plugins.mda.vertigo.util.DomainUtil;
+import io.vertigo.studio.plugins.generator.vertigo.util.DomainUtil;
 
 /**
  * A raw masterdata values is just a map of key/value pairs :

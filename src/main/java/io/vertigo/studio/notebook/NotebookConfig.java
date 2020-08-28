@@ -3,27 +3,27 @@ package io.vertigo.studio.notebook;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.mda.MdaConfig;
+import io.vertigo.studio.generator.GeneratorConfig;
 import io.vertigo.studio.source.Source;
 
 public final class NotebookConfig {
 	private final List<Source> sources;
-	private final MdaConfig mdaConfig;
+	private final GeneratorConfig generatorConfig;
 
-	public NotebookConfig(final List<Source> sources, final MdaConfig mdaConfig) {
+	public NotebookConfig(final List<Source> sources, final GeneratorConfig generatorConfig) {
 		Assertion.check()
 				.isNotNull(sources)
-				.isNotNull(mdaConfig);
+				.isNotNull(generatorConfig);
 		//---
 		this.sources = sources;
-		this.mdaConfig = mdaConfig;
+		this.generatorConfig = generatorConfig;
 	}
 
 	public List<Source> getMetamodelResources() {
 		return sources;
 	}
 
-	public MdaConfig getMdaConfig() {
-		return mdaConfig;
+	public GeneratorConfig getMdaConfig() {
+		return generatorConfig;
 	}
 }

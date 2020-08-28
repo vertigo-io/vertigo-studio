@@ -12,8 +12,8 @@ import org.yaml.snakeyaml.constructor.Constructor;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.util.FileUtil;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.studio.mda.MdaConfig;
-import io.vertigo.studio.mda.MdaConfigBuilder;
+import io.vertigo.studio.generator.GeneratorConfig;
+import io.vertigo.studio.generator.GeneratorConfigBuilder;
 import io.vertigo.studio.notebook.NotebookConfig;
 import io.vertigo.studio.source.Source;
 import io.vertigo.studio.tools.YamlStudioConfig.YamlMdaConfig;
@@ -28,9 +28,9 @@ final class StudioConfigYamlParser {
 		//metamodelresources
 		final List<Source> sources = parseResources(yamlStudioConfig.resources, rootPath);
 		//mdaCondig
-		final MdaConfig mdaConfig = parseMdaConfig(yamlStudioConfig.mdaConfig, rootPath);
+		final GeneratorConfig generatorConfig = parseMdaConfig(yamlStudioConfig.mdaConfig, rootPath);
 		//---
-		return new NotebookConfig(sources, mdaConfig);
+		return new NotebookConfig(sources, generatorConfig);
 	}
 
 	private static final List<Source> parseResources(final List<YamlResourceConfig> resources, final String rootPath) {
@@ -40,19 +40,19 @@ final class StudioConfigYamlParser {
 				.collect(Collectors.toList());
 	}
 
-	private static final MdaConfig parseMdaConfig(final YamlMdaConfig yamlMdaConfig, final String rootPath) {
+	private static final GeneratorConfig parseMdaConfig(final YamlMdaConfig yamlMdaConfig, final String rootPath) {
 		//mdaCondig
 		Assertion.check().isNotNull(yamlMdaConfig.projectPackageName, "A 'projectPackageName' is required in mdaConfig");
-		final MdaConfigBuilder mdaConfigBuilder = MdaConfig.builder(yamlMdaConfig.projectPackageName);
+		final GeneratorConfigBuilder generatorConfigBuilder = GeneratorConfig.builder(yamlMdaConfig.projectPackageName);
 		if (!StringUtil.isBlank(yamlMdaConfig.encoding)) {
-			mdaConfigBuilder.withEncoding(yamlMdaConfig.encoding);
+			generatorConfigBuilder.withEncoding(yamlMdaConfig.encoding);
 		}
 		if (!StringUtil.isBlank(yamlMdaConfig.targetGenDir)) {
-			mdaConfigBuilder.withTargetGenDir(rootPath + yamlMdaConfig.targetGenDir);
+			generatorConfigBuilder.withTargetGenDir(rootPath + yamlMdaConfig.targetGenDir);
 		}
-		yamlMdaConfig.properties.entrySet().forEach(entry -> mdaConfigBuilder.addProperty(entry.getKey(), entry.getValue()));
+		yamlMdaConfig.properties.entrySet().forEach(entry -> generatorConfigBuilder.addProperty(entry.getKey(), entry.getValue()));
 
-		return mdaConfigBuilder.build();
+		return generatorConfigBuilder.build();
 	}
 
 }
