@@ -27,6 +27,9 @@ import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.BasicType;
 import io.vertigo.core.lang.Cardinality;
@@ -51,14 +54,17 @@ import io.vertigo.studio.notebook.domain.association.AssociationNNSketch;
 import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
 import io.vertigo.studio.notebook.domain.association.AssociationSketchNode;
 import io.vertigo.studio.notebook.domain.association.AssociationUtil;
+import io.vertigo.studio.notebook.domain.masterdata.MasterDataValue;
+import io.vertigo.studio.notebook.domain.masterdata.StaticMasterDataSketch;
 import io.vertigo.studio.plugins.source.vertigo.KspProperty;
+import io.vertigo.studio.tools.SketchUtil;
 
 /**
  * @author pchretien, mlaroche
  */
 public final class DomainSketchFactory implements DslSketchFactory {
 	private static final Logger LOGGER = LogManager.getLogger(DomainSketchFactory.class);
-	//	private static final Gson GSON = new Gson();
+	private static final Gson GSON = new Gson();
 	private final Map<SketchKey, DtSketchBuilder> dtDefinitionBuilders = new HashMap<>();
 
 	@Override
@@ -70,35 +76,33 @@ public final class DomainSketchFactory implements DslSketchFactory {
 	@Override
 	public List<Sketch> createSketches(final Notebook notebook, final DslRaw raw) {
 		final DslEntity entity = raw.getEntity();
-		final Sketch sketch;
 		if (entity.equals(DomainGrammar.DOMAIN_ENTITY)) {
-			sketch = createDomain(notebook, raw);
+			return List.of(createDomain(notebook, raw));
 		} else if (entity.equals(DomainGrammar.DT_ENTITY)) {
-			sketch = createDtSketch(notebook, raw);
+			return handleDtSketch(notebook, raw);
 		} else if (entity.equals(DomainGrammar.FRAGMENT_ENTITY)) {
-			sketch = createFragmentDtSketch(notebook, raw);
+			return List.of(createFragmentDtSketch(notebook, raw));
 		} else if (entity.equals(DomainGrammar.ASSOCIATION_ENTITY)) {
-			sketch = createAssociationSimpleSketch(notebook, raw);
+			return List.of(createAssociationSimpleSketch(notebook, raw));
 		} else if (entity.equals(DomainGrammar.ASSOCIATION_NN_ENTITY)) {
-			sketch = createAssociationNNSketch(notebook, raw);
+			return List.of(createAssociationNNSketch(notebook, raw));
 		} else {
 			throw new IllegalStateException("his kind of raw " + entity + " is not managed by me");
 		}
-		return List.of(sketch);
 	}
 
-	/*	private List<SketchSupplier> handleDtSketch(final DslSketch dslSketch) {
-			final String valuesAsJson = (String) dslSketch.getPropertyValue("values");
-			if (valuesAsJson != null) {
-				return List.of(
-						notebook -> createDtSketch(notebook, dslSketch),
-						notebook -> createMasterDataSketch(
-								dslSketch.getPackageName() + '.' + SketchUtil.getLocalName(dslSketch.getKey().getName(), DtSketch.PREFIX),
-								valuesAsJson));
-			}
-			return Collections.singletonList(notebook -> createDtSketch(notebook, dslSketch));
-
+	private List<Sketch> handleDtSketch(final Notebook notebook, final DslRaw dslRaw) {
+		final String valuesAsJson = (String) dslRaw.getPropertyValue("values");
+		if (valuesAsJson != null) {
+			return List.of(
+					createDtSketch(notebook, dslRaw),
+					createMasterDataSketch(
+							dslRaw.getPackageName() + '.' + SketchUtil.getLocalName(dslRaw.getKey().getName(), DtSketch.PREFIX),
+							valuesAsJson));
 		}
+		return Collections.singletonList(createDtSketch(notebook, dslRaw));
+
+	}
 
 	private static StaticMasterDataSketch createMasterDataSketch(final String className, final String valuesAsJson) {
 		final Map<String, MasterDataValue> values = GSON.fromJson(valuesAsJson, new TypeToken<Map<String, MasterDataValue>>() {
@@ -106,7 +110,7 @@ public final class DomainSketchFactory implements DslSketchFactory {
 		}.getType());
 		return new StaticMasterDataSketch(className, values);
 	}
-	*/
+
 	private static DomainSketch createDomain(final Notebook notebook, final DslRaw domainRaw) {
 		final DslRawKey domainRawKey = domainRaw.getKey();
 		final String type = domainRaw.getRawKeyByFieldName("dataType").getName();
