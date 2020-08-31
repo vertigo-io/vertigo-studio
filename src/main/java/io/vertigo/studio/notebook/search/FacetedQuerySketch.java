@@ -91,7 +91,7 @@ public final class FacetedQuerySketch extends AbstractSketch {
 		//---
 		this.keyConceptDtSketch = keyConceptDtSketch;
 		for (final FacetSketch facetSketch : facetSketchs) {
-			this.facetSketches.put(facetSketch.getKey(), facetSketch);
+			facetSketches.put(facetSketch.getKey(), facetSketch);
 		}
 		this.criteriaDomain = criteriaDomain;
 		this.listFilterBuilderClassName = listFilterBuilderClassName;
@@ -108,7 +108,7 @@ public final class FacetedQuerySketch extends AbstractSketch {
 	public FacetSketch getFacetSketch(final String facetName) {
 		Assertion.check().isNotBlank(facetName);
 		//-----
-		final FacetSketch facetSketch = facetSketches.get(facetName);
+		final FacetSketch facetSketch = facetSketches.get(SketchKey.of(facetName));
 		//-----
 		Assertion.check().isNotNull(facetSketch, "Aucune Définition de facette trouvée pour {0}", facetName);
 		return facetSketch;

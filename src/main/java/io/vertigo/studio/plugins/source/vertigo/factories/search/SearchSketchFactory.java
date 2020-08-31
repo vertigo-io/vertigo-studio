@@ -92,7 +92,7 @@ public final class SearchSketchFactory implements DslSketchFactory {
 			final String copyFromFieldNames = (String) copyToFieldDefinition.getPropertyValue(SearchGrammar.INDEX_COPY_FROM_PROPERTY);
 			copyToFields.put(
 					indexDtDefinition.getField(copyToFieldDefinition.getKey().getName()),
-					Stream.of(copyFromFieldNames.split(",")).map(fieldName -> indexDtDefinition.getField(fieldName)).collect(Collectors.toList()));
+					Stream.of(copyFromFieldNames.split(",")).map(indexDtDefinition::getField).collect(Collectors.toList()));
 		}
 		return copyToFields;
 	}

@@ -67,7 +67,7 @@ import io.vertigo.studio.source.SourceManager;
  */
 public final class VertigoStudioMda {
 
-	private static final Logger STUDIO_LOGGER = LogManager.getLogger(VertigoStudioMda.class);
+	private static final Logger LOGGER_STUDIO = LogManager.getLogger(VertigoStudioMda.class);
 
 	private enum StudioTarget {
 		clean, generate, watch, clean_watch
@@ -122,7 +122,7 @@ public final class VertigoStudioMda {
 			generatorManager.clean(generatorConfig);
 			final Notebook notebook = sourceManager.read(notebookConfig.getMetamodelResources());
 			final GeneratorResult generatorResult = generatorManager.generate(notebook, generatorConfig);
-			generatorResult.displayResultMessage(System.out);
+			LOGGER_STUDIO.info(generatorResult.getResultMessage());
 		}
 	}
 
@@ -134,7 +134,7 @@ public final class VertigoStudioMda {
 			//-----
 			final GeneratorConfig generatorConfig = notebookConfig.getMdaConfig();
 			final List<Path> pathsToWatch = listPathToWatch(notebookConfig, resourceManager);
-			STUDIO_LOGGER.info("Monitored file for generation are {}", pathsToWatch);
+			LOGGER_STUDIO.info("Monitored file for generation are {}", pathsToWatch);
 
 			final Set<Path> directoriesToWatch = pathsToWatch
 					.stream()
@@ -158,19 +158,19 @@ public final class VertigoStudioMda {
 							for (final WatchEvent<?> event : key.pollEvents()) {
 								if (pathsToWatch.contains(Path.of(key.watchable().toString(), event.context().toString()))) {
 									debouncer.debounce(() -> {
-										STUDIO_LOGGER.info("Regeneration started");
+										LOGGER_STUDIO.info("Regeneration started");
 										try {
 											if (withClean) {
-												STUDIO_LOGGER.info("Start cleaning");
+												LOGGER_STUDIO.info("Start cleaning");
 												generatorManager.clean(generatorConfig);
-												STUDIO_LOGGER.info("Done cleaning");
+												LOGGER_STUDIO.info("Done cleaning");
 											}
 											final Notebook notebook = sourceManager.read(notebookConfig.getMetamodelResources());
 											final GeneratorResult generatorResult = generatorManager.generate(notebook, generatorConfig);
-											STUDIO_LOGGER.info("Regeneration completed. {} created files, {} updated files, {} identical files and {} issues in {} ms",
+											LOGGER_STUDIO.info("Regeneration completed. {} created files, {} updated files, {} identical files and {} issues in {} ms",
 													generatorResult.getCreatedFiles(), generatorResult.getUpdatedFiles(), generatorResult.getIdenticalFiles(), generatorResult.getErrorFiles(), generatorResult.getDurationMillis());
 										} catch (final Exception e) {
-											STUDIO_LOGGER.error("Error regenerating : ", e);
+											LOGGER_STUDIO.error("Error regenerating : ", e);
 										}
 
 									}, 1);
@@ -191,7 +191,7 @@ public final class VertigoStudioMda {
 	}
 
 	private static List<Path> listPathToWatch(final NotebookConfig notebookConfig, final ResourceManager resourceManager) {
-		final List<Path> pathsToWatch = notebookConfig.getMetamodelResources()
+		return notebookConfig.getMetamodelResources()
 				.stream()
 				.map(source -> resourceManager.resolve(source.getPath()))
 				.filter(url -> {
@@ -215,7 +215,6 @@ public final class VertigoStudioMda {
 					return Stream.of(sourcePath);
 				})
 				.collect(Collectors.toList());
-		return pathsToWatch;
 	}
 
 	private static NodeConfig buildNodeConfig() {
@@ -254,7 +253,7 @@ public final class VertigoStudioMda {
 		}
 	}
 
-	private static List<Path> doGetKspFiles(final Path krpUrl) throws Exception {
+	private static List<Path> doGetKspFiles(final Path krpUrl) throws IOException {
 		return Files.readAllLines(krpUrl)
 				.stream()
 				.flatMap(fileName -> {

@@ -97,9 +97,9 @@ public final class DomainSketchFactory implements DslSketchFactory {
 								valuesAsJson));
 			}
 			return Collections.singletonList(notebook -> createDtSketch(notebook, dslSketch));
-	
+
 		}
-	
+
 	private static StaticMasterDataSketch createMasterDataSketch(final String className, final String valuesAsJson) {
 		final Map<String, MasterDataValue> values = GSON.fromJson(valuesAsJson, new TypeToken<Map<String, MasterDataValue>>() {
 			//nothing
@@ -218,7 +218,7 @@ public final class DomainSketchFactory implements DslSketchFactory {
 		}
 
 		//On enregistre les Builder pour pouvoir les mettre à jour sur les associations.
-		Assertion.check().isFalse(dtDefinitionBuilders.containsKey(dtSketchKey), "Definition '{0}' already registered", dtSketchKey);
+		Assertion.check().isFalse(dtDefinitionBuilders.containsKey(SketchKey.of(dtSketchKey.getName())), "Definition '{0}' already registered", dtSketchKey);
 		dtDefinitionBuilders.put(SketchKey.of(dtSketchKey.getName()), dtDefinitionBuilder);
 
 		//Déclaration de la clé primaire

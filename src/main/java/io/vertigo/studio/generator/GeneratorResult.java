@@ -61,8 +61,15 @@ public final class GeneratorResult {
 	 * Affichage du résultat de la génération dans la console.
 	 */
 	public void displayResultMessage(final PrintStream out) {
-		out.append(StringUtil.format("\nCréation de {0} fichiers, Mise à jour de {1} fichiers, {2} fichiers identiques et {3} problemes en {4} ms",
-				createdFiles, updatedFiles, identicalFiles, errorFiles, durationMillis));
+		out.append(getResultMessage());
+	}
+
+	/**
+	 * Affichage du résultat de la génération dans la console.
+	 */
+	public String getResultMessage() {
+		return StringUtil.format("\nCréation de {0} fichiers, Mise à jour de {1} fichiers, {2} fichiers identiques et {3} problemes en {4} ms",
+				createdFiles, updatedFiles, identicalFiles, errorFiles, durationMillis);
 	}
 
 	/** Nombre de fichiers écrits . */

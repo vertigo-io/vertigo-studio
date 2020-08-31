@@ -72,7 +72,7 @@ public final class WsTsGeneratorPlugin implements GeneratorPlugin {
 			final Map<String, List<WebServiceModelTs>> webServicesPerFacades = new HashMap<>();
 			for (final WebServiceSketch webServiceSketch : webServiceSketchs) {
 				//final String facadeName = webServiceDefinition.getMethod().getDeclaringClass().getSimpleName().replaceAll("WebServices", "");
-				final String facadeName = webServiceSketch.getGroupNameOpt().orElseGet(() -> webServiceSketch.getModuleName());
+				final String facadeName = webServiceSketch.getGroupNameOpt().orElseGet(webServiceSketch::getModuleName);
 				List<WebServiceModelTs> webServiceModels = webServicesPerFacades.get(facadeName);
 				if (webServiceModels == null) {
 					webServiceModels = new ArrayList<>();

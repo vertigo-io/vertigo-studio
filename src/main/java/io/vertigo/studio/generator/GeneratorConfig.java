@@ -115,11 +115,11 @@ public final class GeneratorConfig {
 	public boolean getAsBoolean(final String key) {
 		final String value = properties.getProperty(key);
 		Assertion.check().isNotNull(value);
-		return Boolean.valueOf(value);
+		return Boolean.parseBoolean(value);
 	}
 
 	public boolean getOrDefaultAsBoolean(final String key, final boolean defaultValue) {
-		return properties.containsKey(key) ? Boolean.valueOf(properties.getProperty(key)) : defaultValue;
+		return properties.containsKey(key) ? Boolean.parseBoolean(properties.getProperty(key)) : defaultValue;
 	}
 
 }
