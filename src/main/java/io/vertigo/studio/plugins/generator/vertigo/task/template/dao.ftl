@@ -9,7 +9,7 @@ import java.util.Optional;
 import io.vertigo.core.lang.Generated;
 <#if !dao.taskDefinitions.empty >
 import io.vertigo.core.node.Node;
-import io.vertigo.datamodel.task.metamodel.TaskDefinition;
+import io.vertigo.datamodel.task.definitions.TaskDefinition;
 import io.vertigo.datamodel.task.model.Task;
 import io.vertigo.datamodel.task.model.TaskBuilder;
 </#if>

@@ -1,10 +1,10 @@
 package ${packageName};
 
 <#if securedentities?size != 0 >
-import io.vertigo.account.authorization.metamodel.Authorization;
+import io.vertigo.account.authorization.definitions.Authorization;
 </#if>
-import io.vertigo.account.authorization.metamodel.AuthorizationName;
-import io.vertigo.account.authorization.metamodel.OperationName;
+import io.vertigo.account.authorization.definitions.AuthorizationName;
+import io.vertigo.account.authorization.definitions.OperationName;
 <#if securedentities?size != 0 >
 import io.vertigo.core.node.Node;
 </#if>
