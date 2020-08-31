@@ -33,7 +33,7 @@ import io.vertigo.core.util.ClassUtil;
 import io.vertigo.core.util.Selector;
 import io.vertigo.core.util.Selector.ClassConditions;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.datamodel.structure.metamodel.DtField.FieldType;
+import io.vertigo.datamodel.structure.definitions.DtField.FieldType;
 import io.vertigo.datamodel.structure.model.DtMasterData;
 import io.vertigo.datamodel.structure.model.DtObject;
 import io.vertigo.datamodel.structure.model.DtStaticMasterData;
