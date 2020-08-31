@@ -78,7 +78,7 @@ public final class MultiResourcesEnvironmentManagerTest {
 	@Test
 	public void testFirst() {
 		final Notebook notebook = sourceManager
-				.read(List.of(Source.of("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr")));
+				.read(List.of(Source.of("kpr", "io/vertigo/studio/source/vertigo/multi/data/execution.kpr")));
 		final DomainSketch doString = notebook.resolve("DoString", DomainSketch.class);
 		Assertions.assertNotNull(doString);
 	}
@@ -87,7 +87,7 @@ public final class MultiResourcesEnvironmentManagerTest {
 	public void testMergedResources() {
 		final Notebook notebook = sourceManager
 				.read(List.of(
-						Source.of("kpr", "io/vertigo/studio/metamodel/vertigo/multi/data/execution.kpr"),
+						Source.of("kpr", "io/vertigo/studio/source/vertigo/multi/data/execution.kpr"),
 						Source.of("classes", DtDefinitions.class.getCanonicalName())));
 
 		final DomainSketch doString = notebook.resolve("DoString", DomainSketch.class);

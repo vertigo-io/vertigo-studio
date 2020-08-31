@@ -27,12 +27,12 @@ public final class CarDAO extends DAO<Car, java.lang.Long> implements StoreServi
 	 * Contructeur.
 	 * @param entityStoreManager Manager de persistance
 	 * @param taskManager Manager de Task
+	 * @param smartTypeManager SmartTypeManager
 	 */
 	@Inject
 	public CarDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager, final SmartTypeManager smartTypeManager) {
 		super(Car.class, entityStoreManager, taskManager, smartTypeManager);
 	}
-
 
 	/**
 	 * Creates a taskBuilder.
@@ -45,13 +45,13 @@ public final class CarDAO extends DAO<Car, java.lang.Long> implements StoreServi
 	}
 
 	/**
-	 * Execute la tache StTkGetFirstCar.
+	 * Execute la tache TkGetFirstCar.
 	 * @return Option de Car dtoCar
 	*/
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkGetFirstCar",
-			request = "select * from car" + 
- "				limit 1",
+			request = "select * from car" +
+					"				limit 1",
 			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtCar")
 	public Optional<io.vertigo.studio.domain.car.Car> getFirstCar() {
@@ -63,26 +63,7 @@ public final class CarDAO extends DAO<Car, java.lang.Long> implements StoreServi
 	}
 
 	/**
-	 * Execute la tache StTkListCars.
-	 * @param dtoCarIn Car
-	 * @return Car dtoCarOut
-	*/
-	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
-			name = "TkListCars",
-			request = "hello",
-			taskEngineClass = io.vertigo.studio.source.vertigo.data.domain.CarEngine.class)
-	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtCar")
-	public io.vertigo.studio.domain.car.Car listCars(@io.vertigo.datamodel.task.proxy.TaskInput(name = "dtoCarIn", smartType = "STyDtCar") final io.vertigo.studio.domain.car.Car dtoCarIn) {
-		final Task task = createTaskBuilder("TkListCars")
-				.addValue("dtoCarIn", dtoCarIn)
-				.build();
-		return getTaskManager()
-				.execute(task)
-				.getResult();
-	}
-
-	/**
-	 * Execute la tache StTkSelectCarByIds.
+	 * Execute la tache TkSelectCarByIds.
 	 * @param input DtList de Car
 	 * @return DtList de Car dtoCar
 	*/

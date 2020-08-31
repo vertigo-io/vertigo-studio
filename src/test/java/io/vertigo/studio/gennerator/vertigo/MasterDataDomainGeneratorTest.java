@@ -86,10 +86,10 @@ public class MasterDataDomainGeneratorTest {
 	@Test
 	public void testGenerate() {
 		final List<Source> resources = List.of(
-				Source.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
-				Source.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"),
-				Source.of("staticMasterData", "io/vertigo/studio/metamodel/vertigo/data/masterdata/testJsonMasterDataValues.json"),
-				Source.of("staticMasterData", "io/vertigo/studio/metamodel/vertigo/data/masterdata/testJsonMasterDataValues2.json"));
+				Source.of("kpr", "io/vertigo/studio/source/vertigo/data/model.kpr"),
+				Source.of("kpr", "io/vertigo/studio/source/vertigo/data/tasks.kpr"),
+				Source.of("staticMasterData", "io/vertigo/studio/source/vertigo/data/masterdata/testJsonMasterDataValues.json"),
+				Source.of("staticMasterData", "io/vertigo/studio/source/vertigo/data/masterdata/testJsonMasterDataValues2.json"));
 
 		final GeneratorConfig generatorConfig = GeneratorConfig.builder("io.vertigo.studio")
 				.withTargetGenDir("target/")

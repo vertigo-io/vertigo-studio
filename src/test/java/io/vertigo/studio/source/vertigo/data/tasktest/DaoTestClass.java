@@ -29,6 +29,7 @@ import io.vertigo.commons.transaction.VTransactionWritable;
 import io.vertigo.core.node.AutoCloseableNode;
 import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.BootConfig;
+import io.vertigo.core.node.config.DefinitionProviderConfig;
 import io.vertigo.core.node.config.LogConfig;
 import io.vertigo.core.node.config.ModuleConfig;
 import io.vertigo.core.node.config.NodeConfig;
@@ -40,8 +41,10 @@ import io.vertigo.database.DatabaseFeatures;
 import io.vertigo.database.sql.SqlManager;
 import io.vertigo.database.sql.connection.SqlConnection;
 import io.vertigo.datamodel.DataModelFeatures;
+import io.vertigo.datamodel.impl.smarttype.ModelDefinitionProvider;
 import io.vertigo.datastore.DataStoreFeatures;
 import io.vertigo.studio.dao.DaoPAO;
+import io.vertigo.studio.dao.car.CarDAO;
 import io.vertigo.studio.gennerator.vertigo.DataBaseScriptUtil;
 import io.vertigo.studio.plugins.generator.vertigo.task.test.TaskTestDaoChecker;
 import io.vertigo.studio.plugins.generator.vertigo.task.test.TaskTestDummyGenerator;
@@ -64,7 +67,7 @@ public class DaoTestClass {
 		node = new AutoCloseableNode(buildNodeConfig());
 		DIInjector.injectMembers(this, node.getComponentSpace());
 		//---
-		execSqlScript("io/vertigo/studio/metamodel/vertigo/data/sql/crebas.sql");
+		execSqlScript("io/vertigo/studio/source/vertigo/data/sql/crebas.sql");
 		currentTransaction = transactionManager.createCurrentTransaction();
 
 	}
@@ -106,7 +109,11 @@ public class DaoTestClass {
 						.build())
 				.addModule(ModuleConfig.builder("dao")
 						// to use this class for actual test target/javagen must contains those two dao classes and target/javagen must be included as a source folder
-						// .addComponent(CarDAO.class)
+						.addDefinitionProvider(DefinitionProviderConfig.builder(ModelDefinitionProvider.class)
+								.addDefinitionResource("smarttypes", DaoTestSmartTypes.class.getCanonicalName())
+								.addDefinitionResource("dtobjects", io.vertigo.studio.domain.DtDefinitions.class.getCanonicalName())
+								.build())
+						.addComponent(CarDAO.class)
 						.addComponent(DaoPAO.class)
 						.build())
 				.build();

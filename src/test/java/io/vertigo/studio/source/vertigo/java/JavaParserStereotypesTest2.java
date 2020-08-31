@@ -57,7 +57,7 @@ public final class JavaParserStereotypesTest2 {
 		DIInjector.injectMembers(this, node.getComponentSpace());
 		//---
 		final List<Source> resources = List.of(
-				Source.of("kpr", "io/vertigo/studio/metamodel/vertigo/java/data/execution.kpr"),
+				Source.of("kpr", "io/vertigo/studio/source/vertigo/java/data/execution.kpr"),
 				Source.of("classes", "io.vertigo.studio.source.vertigo.java.data.domain.*"));
 		notebook = sourceManager.read(resources);
 	}

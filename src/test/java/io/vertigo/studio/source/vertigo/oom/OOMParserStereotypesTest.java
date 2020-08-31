@@ -57,8 +57,8 @@ public final class OOMParserStereotypesTest {
 		DIInjector.injectMembers(this, node.getComponentSpace());
 		//---
 		final List<Source> resources = List.of(
-				Source.of("kpr", "io/vertigo/studio/metamodel/vertigo/oom/data/domain.kpr"),
-				Source.of("oom", "io/vertigo/studio/metamodel/vertigo/oom/data/Stereotypes.oom"));
+				Source.of("kpr", "io/vertigo/studio/source/vertigo/oom/data/domain.kpr"),
+				Source.of("oom", "io/vertigo/studio/source/vertigo/oom/data/Stereotypes.oom"));
 		notebook = sourceManager.read(resources);
 	}
 

@@ -63,10 +63,10 @@ public class MasterDataSqlGeneratorTest {
 	public void testGenerate() {
 		try (AutoCloseableNode studioApp = new AutoCloseableNode(buildNodeConfig())) {
 			final List<Source> resources = List.of(
-					Source.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
-					Source.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"),
-					Source.of("staticMasterData", "io/vertigo/studio/metamodel/vertigo/data/masterdata/testJsonMasterDataValues.json"),
-					Source.of("staticMasterData", "io/vertigo/studio/metamodel/vertigo/data/masterdata/testJsonMasterDataValues2.json"));
+					Source.of("kpr", "io/vertigo/studio/source/vertigo/data/model.kpr"),
+					Source.of("kpr", "io/vertigo/studio/source/vertigo/data/tasks.kpr"),
+					Source.of("staticMasterData", "io/vertigo/studio/source/vertigo/data/masterdata/testJsonMasterDataValues.json"),
+					Source.of("staticMasterData", "io/vertigo/studio/source/vertigo/data/masterdata/testJsonMasterDataValues2.json"));
 			final SourceManager sourceManager = studioApp.getComponentSpace().resolve(SourceManager.class);
 			final GeneratorManager generatorManager = studioApp.getComponentSpace().resolve(GeneratorManager.class);
 

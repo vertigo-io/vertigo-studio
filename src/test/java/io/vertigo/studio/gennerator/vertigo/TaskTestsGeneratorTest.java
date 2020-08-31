@@ -87,15 +87,15 @@ public class TaskTestsGeneratorTest {
 	@Test
 	public void testGenerate() {
 		final List<Source> resources = List.of(
-				Source.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
-				Source.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"),
+				Source.of("kpr", "io/vertigo/studio/source/vertigo/data/model.kpr"),
+				Source.of("kpr", "io/vertigo/studio/source/vertigo/data/tasks.kpr"),
 				Source.of("classes", DtDefinitions.class.getName()));
 
 		final GeneratorConfig generatorConfig = GeneratorConfig.builder("io.vertigo.studio")
 				.withTargetGenDir("target/")
 				.addProperty("vertigo.taskTest", "true")
 				.addProperty("vertigo.taskTest.targetSubDir", "javagen")
-				.addProperty("vertigo.taskTest.baseTestClass", "io.vertigo.studio.data.tasktest.DaoTestClass")
+				.addProperty("vertigo.taskTest.baseTestClass", io.vertigo.studio.source.vertigo.data.tasktest.DaoTestClass.class.getCanonicalName())
 				.build();
 
 		final Notebook notebook = sourceManager.read(resources);
