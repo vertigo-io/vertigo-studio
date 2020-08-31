@@ -55,9 +55,9 @@ public final class TaskModel {
 
 		if (taskSketch.getOutAttributeOpt().isPresent()) {
 			final TaskSketchAttribute attribute = taskSketch.getOutAttributeOpt().get();
-			final TaskAttributeModel templateTaskAttribute = new TaskAttributeModel(attribute, classNameFromDt);
+			final TaskAttributeModel taskAttributeModel = new TaskAttributeModel(attribute, classNameFromDt);
 			//On est dans le cas des paramètres OUT
-			out = templateTaskAttribute;
+			out = taskAttributeModel;
 			hasOption = hasOption || attribute.getCardinality().isOptionalOrNullable();
 		} else {
 			out = null;

@@ -10,8 +10,8 @@ import io.vertigo.studio.notebook.search.FacetSketch;
 public final class FacetModel {
 
 	private final FacetSketch facetSketch;
-	private List<FacetValueModel> facetValueModels;
-	private List<FacetParamModel> facetParamModels;
+	private final List<FacetValueModel> facetValueModels;
+	private final List<FacetParamModel> facetParamModels;
 
 	public FacetModel(final FacetSketch facetSketch) {
 		Assertion.check().isNotNull(facetSketch);

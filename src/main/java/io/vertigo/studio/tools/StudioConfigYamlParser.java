@@ -33,14 +33,14 @@ final class StudioConfigYamlParser {
 		return new NotebookConfig(sources, generatorConfig);
 	}
 
-	private static final List<Source> parseResources(final List<YamlResourceConfig> resources, final String rootPath) {
+	private static List<Source> parseResources(final List<YamlResourceConfig> resources, final String rootPath) {
 		//metamodelresources
 		return resources.stream()
 				.map(resource -> Source.of(resource.type, rootPath + resource.path))
 				.collect(Collectors.toList());
 	}
 
-	private static final GeneratorConfig parseMdaConfig(final YamlMdaConfig yamlMdaConfig, final String rootPath) {
+	private static GeneratorConfig parseMdaConfig(final YamlMdaConfig yamlMdaConfig, final String rootPath) {
 		//mdaCondig
 		Assertion.check().isNotNull(yamlMdaConfig.projectPackageName, "A 'projectPackageName' is required in mdaConfig");
 		final GeneratorConfigBuilder generatorConfigBuilder = GeneratorConfig.builder(yamlMdaConfig.projectPackageName);

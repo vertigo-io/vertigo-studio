@@ -47,7 +47,7 @@ public final class WebServiceSketchParam {
 		Path,
 		Header,
 		Body,
-		InnerBody;
+		InnerBody
 	}
 
 	private final WebServiceParamLocation paramLocation;

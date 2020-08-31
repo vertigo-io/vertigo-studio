@@ -32,7 +32,7 @@ public final class TypeModelTs {
 
 	private boolean isObject = false;
 	private boolean isList = false;
-	private String jsGenericType;
+	private final String jsGenericType;
 	private String jsImportPath = null;
 
 	/**

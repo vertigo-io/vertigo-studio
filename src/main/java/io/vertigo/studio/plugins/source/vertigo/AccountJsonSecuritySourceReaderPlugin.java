@@ -81,7 +81,7 @@ public final class AccountJsonSecuritySourceReaderPlugin implements SourceReader
 
 	}
 
-	private static final Optional<String> extractComment(final JsonObject jsonObject) {
+	private static Optional<String> extractComment(final JsonObject jsonObject) {
 		if (jsonObject.has("__comment")) {
 			return Optional.of(jsonObject.get("__comment").getAsString());
 		}

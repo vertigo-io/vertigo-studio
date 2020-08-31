@@ -217,7 +217,7 @@ public final class StudioDtModel {
 				//only multiples
 				.filter(StudioAssociationModel::isMultiple)
 				//simple navigable ou nn
-				.anyMatch(associationModel -> (associationModel.isSimple() && associationModel.isNavigable()) || !associationModel.isSimple());
+				.anyMatch(associationModel -> !associationModel.isSimple() || associationModel.isNavigable());
 
 	}
 }

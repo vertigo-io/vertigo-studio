@@ -26,7 +26,7 @@ public final class SketchKey {
 
 	@Override
 	public boolean equals(Object obj) {
-		return (obj instanceof SketchKey) ? name.equals(((SketchKey) obj).name) : false;
+		return obj instanceof SketchKey && name.equals(((SketchKey) obj).name);
 	}
 
 	@Override

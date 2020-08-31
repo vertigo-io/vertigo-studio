@@ -70,7 +70,7 @@ public final class VertigoStudioMda {
 	private static final Logger STUDIO_LOGGER = LogManager.getLogger(VertigoStudioMda.class);
 
 	private enum StudioTarget {
-		clean, generate, watch, clean_watch;
+		clean, generate, watch, clean_watch
 	}
 
 	public static void main(final String[] args) {

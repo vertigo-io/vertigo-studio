@@ -92,8 +92,7 @@ public final class TaskSketchFactory implements DslSketchFactory {
 
 	private static DomainSketch buildDomainSketch(final Notebook notebook, final DslRaw taskAttributeRaw) {
 		final DslRawKey smartTypeKey = taskAttributeRaw.getRawKeyByFieldName("domain");
-		final DomainSketch domainSketch = notebook.resolve(smartTypeKey.getName(), DomainSketch.class);
-		return domainSketch;
+		return notebook.resolve(smartTypeKey.getName(), DomainSketch.class);
 	}
 
 }
