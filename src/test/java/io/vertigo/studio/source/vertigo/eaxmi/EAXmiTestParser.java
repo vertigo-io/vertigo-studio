@@ -58,8 +58,8 @@ public class EAXmiTestParser {
 		DIInjector.injectMembers(this, node.getComponentSpace());
 		//---
 		final List<Source> resources = List.of(
-				Source.of("xmi", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/associations.xml"),
-				Source.of("kpr", "io/vertigo/studio/metamodel/vertigo/eaxmi/data/domain.kpr"));
+				Source.of("xmi", "io/vertigo/studio/source/vertigo/eaxmi/data/associations.xml"),
+				Source.of("kpr", "io/vertigo/studio/source/vertigo/eaxmi/data/domain.kpr"));
 		notebook = sourceManager.read(resources);
 	}
 

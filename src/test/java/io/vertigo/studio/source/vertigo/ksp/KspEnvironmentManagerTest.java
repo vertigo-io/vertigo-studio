@@ -74,20 +74,20 @@ public final class KspEnvironmentManagerTest {
 
 	@Test
 	public void testDomain() {
-		sourceManager.read(List.of(Source.of("kpr", "io/vertigo/studio/metamodel/vertigo/ksp/data/execution.kpr")));
+		sourceManager.read(List.of(Source.of("kpr", "io/vertigo/studio/source/vertigo/ksp/data/execution.kpr")));
 	}
 
 	@Test
 	public void testWrongNavigability() {
 		Assertions.assertThrows(IllegalStateException.class, () -> {
-			sourceManager.read(List.of(Source.of("kpr", "io/vertigo/studio/metamodel/vertigo/ksp/data/execution-forbidden.kpr")));
+			sourceManager.read(List.of(Source.of("kpr", "io/vertigo/studio/source/vertigo/ksp/data/execution-forbidden.kpr")));
 		});
 	}
 
 	@Test
 	public void testNonPossibleAssociation() {
 		Assertions.assertThrows(IllegalStateException.class, () -> {
-			sourceManager.read(List.of(Source.of("kpr", "io/vertigo/studio/metamodel/vertigo/ksp/data/execution-forbidden2.kpr")));
+			sourceManager.read(List.of(Source.of("kpr", "io/vertigo/studio/source/vertigo/ksp/data/execution-forbidden2.kpr")));
 		});
 	}
 

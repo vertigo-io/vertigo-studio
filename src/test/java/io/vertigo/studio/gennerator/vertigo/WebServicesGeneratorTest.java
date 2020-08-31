@@ -86,8 +86,8 @@ public class WebServicesGeneratorTest {
 	@Test
 	public void testGenerate() {
 		final List<Source> resources = List.of(
-				Source.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/model.kpr"),
-				Source.of("kpr", "io/vertigo/studio/metamodel/vertigo/data/tasks.kpr"),
+				Source.of("kpr", "io/vertigo/studio/source/vertigo/data/model.kpr"),
+				Source.of("kpr", "io/vertigo/studio/source/vertigo/data/tasks.kpr"),
 				Source.of("webservice", "io.vertigo.vega.impl.webservice.catalog.SwaggerWebServices"),
 				Source.of("webservice", "io.vertigo.studio.data.webservices.*"));
 

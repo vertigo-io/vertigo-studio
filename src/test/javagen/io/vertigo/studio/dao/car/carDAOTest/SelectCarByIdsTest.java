@@ -1,9 +1,7 @@
 package io.vertigo.studio.dao.car.carDAOTest;
 
 import javax.inject.Inject;
-
 import org.junit.jupiter.api.Test;
-
 import io.vertigo.studio.source.vertigo.data.tasktest.DaoTestClass;
 
 public class SelectCarByIdsTest extends DaoTestClass {

@@ -1,19 +1,18 @@
 package io.vertigo.studio.dao.car;
 
-import java.util.Optional;
-
 import javax.inject.Inject;
 
+import java.util.Optional;
 import io.vertigo.core.lang.Generated;
 import io.vertigo.core.node.Node;
-import io.vertigo.datamodel.smarttype.SmartTypeManager;
-import io.vertigo.datamodel.task.TaskManager;
 import io.vertigo.datamodel.task.metamodel.TaskDefinition;
 import io.vertigo.datamodel.task.model.Task;
 import io.vertigo.datamodel.task.model.TaskBuilder;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.datastore.impl.dao.DAO;
 import io.vertigo.datastore.impl.dao.StoreServices;
+import io.vertigo.datamodel.smarttype.SmartTypeManager;
+import io.vertigo.datamodel.task.TaskManager;
 import io.vertigo.studio.domain.car.Car;
 
 /**
@@ -27,6 +26,7 @@ public final class CarDAO extends DAO<Car, java.lang.Long> implements StoreServi
 	 * Contructeur.
 	 * @param entityStoreManager Manager de persistance
 	 * @param taskManager Manager de Task
+	 * @param smartTypeManager SmartTypeManager
 	 */
 	@Inject
 	public CarDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager, final SmartTypeManager smartTypeManager) {
@@ -45,7 +45,7 @@ public final class CarDAO extends DAO<Car, java.lang.Long> implements StoreServi
 	}
 
 	/**
-	 * Execute la tache StTkGetFirstCar.
+	 * Execute la tache TkGetFirstCar.
 	 * @return Option de Car dtoCar
 	*/
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
@@ -63,26 +63,7 @@ public final class CarDAO extends DAO<Car, java.lang.Long> implements StoreServi
 	}
 
 	/**
-	 * Execute la tache StTkListCars.
-	 * @param dtoCarIn Car
-	 * @return Car dtoCarOut
-	*/
-	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
-			name = "TkListCars",
-			request = "hello",
-			taskEngineClass = io.vertigo.studio.source.vertigo.data.domain.CarEngine.class)
-	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtCar")
-	public io.vertigo.studio.domain.car.Car listCars(@io.vertigo.datamodel.task.proxy.TaskInput(name = "dtoCarIn", smartType = "STyDtCar") final io.vertigo.studio.domain.car.Car dtoCarIn) {
-		final Task task = createTaskBuilder("TkListCars")
-				.addValue("dtoCarIn", dtoCarIn)
-				.build();
-		return getTaskManager()
-				.execute(task)
-				.getResult();
-	}
-
-	/**
-	 * Execute la tache StTkSelectCarByIds.
+	 * Execute la tache TkSelectCarByIds.
 	 * @param input DtList de Car
 	 * @return DtList de Car dtoCar
 	*/

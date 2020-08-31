@@ -35,9 +35,3 @@ create Association AMtyCar {
 	roleB : "MotorType"
 },
 
-create Task TkListCars {
-	className : "io.vertigo.studio.data.domain.CarEngine"
-	request : "hello"
-    in 	dtoCarIn 	{domain:DoDtCar, cardinality:"1" }
-    out dtoCarOut 	{domain:DoDtCar, cardinality:"1" }
-}

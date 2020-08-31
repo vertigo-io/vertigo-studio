@@ -1,9 +1,7 @@
 package io.vertigo.studio.dao.daoPAOTest;
 
 import javax.inject.Inject;
-
 import org.junit.jupiter.api.Test;
-
 import io.vertigo.studio.source.vertigo.data.tasktest.DaoTestClass;
 
 public class OneParamSelectTest extends DaoTestClass {
@@ -13,6 +11,6 @@ public class OneParamSelectTest extends DaoTestClass {
 
 	@Test
 	public void check_oneParamSelect_Ok(){		
-		this.check().semantics(() -> daoPAO.oneParamSelect(dum().dum(java.lang.Integer.class)));
+		this.check().semantics(() -> daoPAO.oneParamSelect(dum().dum(Integer.class)));
 	}
 }
