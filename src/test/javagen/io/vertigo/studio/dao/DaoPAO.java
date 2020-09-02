@@ -49,7 +49,7 @@ public final class DaoPAO implements StoreServices {
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkOneListParamSelect",
 			request = "select 1 where 1 in  (#input.rownum#)",
-			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyInteger")
 	public Integer oneListParamSelect(@io.vertigo.datamodel.task.proxy.TaskInput(name = "input", smartType = "STyInteger") final java.util.List<Integer> input) {
 		final Task task = createTaskBuilder("TkOneListParamSelect")
@@ -68,7 +68,7 @@ public final class DaoPAO implements StoreServices {
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkOneParamSelect",
 			request = "select 1 where 1 = #input#",
-			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyInteger")
 	public Integer oneParamSelect(@io.vertigo.datamodel.task.proxy.TaskInput(name = "input", smartType = "STyInteger") final Integer input) {
 		final Task task = createTaskBuilder("TkOneParamSelect")
@@ -86,7 +86,7 @@ public final class DaoPAO implements StoreServices {
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkPing",
 			request = "select 1",
-			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyInteger")
 	public Optional<Integer> ping() {
 		final Task task = createTaskBuilder("TkPing")

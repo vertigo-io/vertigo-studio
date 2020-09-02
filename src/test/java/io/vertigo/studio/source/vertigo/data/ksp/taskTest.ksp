@@ -1,7 +1,7 @@
 package io.vertigo.studio.dao
 
 create Task TkGetFirstCar {
-    className : "io.vertigo.dynamox.task.TaskEngineSelect"
+    className : "io.vertigo.basics.task.TaskEngineSelect"
     request : "
 				select * from car
 				limit 1
@@ -12,7 +12,7 @@ create Task TkGetFirstCar {
 
 /*To test PAO*/
 create Task TkPing {
-    className : "io.vertigo.dynamox.task.TaskEngineSelect"
+    className : "io.vertigo.basics.task.TaskEngineSelect"
     request : "
 				select 1
 			"
@@ -21,7 +21,7 @@ create Task TkPing {
 
 
 create Task TkOneParamSelect {
-    className : "io.vertigo.dynamox.task.TaskEngineSelect"
+    className : "io.vertigo.basics.task.TaskEngineSelect"
     request : "
 				select 1 where 1 = #input#
 	
@@ -31,7 +31,7 @@ create Task TkOneParamSelect {
 }
 
 create Task TkOneListParamSelect {
-    className : "io.vertigo.dynamox.task.TaskEngineSelect"
+    className : "io.vertigo.basics.task.TaskEngineSelect"
     request : "
 				select 1 where 1 in  (#input.rownum#)
 	
@@ -42,7 +42,7 @@ create Task TkOneListParamSelect {
 
 
 create Task TkSelectCarByIds {
-    className : "io.vertigo.dynamox.task.TaskEngineSelect"
+    className : "io.vertigo.basics.task.TaskEngineSelect"
     request : "
 				select * from car where id in (#input.rownum.id#)
 			"

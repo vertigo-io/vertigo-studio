@@ -33,6 +33,9 @@
 	<#list taskDefinition.inAttributes as taskAttribute>
 				.addValue("${taskAttribute.name}", ${taskAttribute.variableName}<#if taskAttribute.optionalOrNullable>.orElse(null)</#if>)
 	</#list>
+	<#if taskDefinition.hasSpecificDataSpace()>
+				.addContextProperty("connectionName", io.vertigo.datastore.impl.dao.StoreUtil.getConnectionName("${taskDefinition.dataSpace}"))
+	</#if>
 				.build();
 	<#if taskDefinition.out>
 		<#if taskDefinition.outAttribute.optionalOrNullable>

@@ -52,7 +52,7 @@ public final class CarDAO extends DAO<Car, java.lang.Long> implements StoreServi
 			name = "TkGetFirstCar",
 			request = "select * from car" +
 					"				limit 1",
-			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtCar")
 	public Optional<io.vertigo.studio.domain.car.Car> getFirstCar() {
 		final Task task = createTaskBuilder("TkGetFirstCar")
@@ -70,7 +70,7 @@ public final class CarDAO extends DAO<Car, java.lang.Long> implements StoreServi
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkSelectCarByIds",
 			request = "select * from car where id in (#input.rownum.id#)",
-			taskEngineClass = io.vertigo.dynamox.task.TaskEngineSelect.class)
+			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtCar")
 	public io.vertigo.datamodel.structure.model.DtList<io.vertigo.studio.domain.car.Car> selectCarByIds(@io.vertigo.datamodel.task.proxy.TaskInput(name = "input", smartType = "STyDtCar") final io.vertigo.datamodel.structure.model.DtList<io.vertigo.studio.domain.car.Car> input) {
 		final Task task = createTaskBuilder("TkSelectCarByIds")

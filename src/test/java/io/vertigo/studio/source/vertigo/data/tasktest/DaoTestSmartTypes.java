@@ -4,66 +4,67 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
 
+import io.vertigo.basics.formatter.FormatterDefault;
 import io.vertigo.core.lang.DataStream;
-import io.vertigo.datamodel.smarttype.annotations.FormatterDefault;
+import io.vertigo.datamodel.smarttype.annotations.Formatter;
 import io.vertigo.datamodel.smarttype.annotations.SmartTypeDefinition;
 import io.vertigo.datamodel.smarttype.annotations.SmartTypeProperty;
 
 public enum DaoTestSmartTypes {
 
 	@SmartTypeDefinition(Long.class)
-	@FormatterDefault
+	@Formatter(clazz = FormatterDefault.class)
 	Id,
 
 	@SmartTypeDefinition(String.class)
-	@FormatterDefault
+	@Formatter(clazz = FormatterDefault.class)
 	String,
 
 	@SmartTypeDefinition(Long.class)
-	@FormatterDefault
+	@Formatter(clazz = FormatterDefault.class)
 	Long,
 
 	@SmartTypeDefinition(Double.class)
-	@FormatterDefault
+	@Formatter(clazz = FormatterDefault.class)
 	Double,
 
 	@SmartTypeDefinition(Integer.class)
 	@SmartTypeProperty(property = "indexType", value = "standard:integer")
-	@FormatterDefault
+	@Formatter(clazz = FormatterDefault.class)
 	Integer,
 
 	@SmartTypeDefinition(LocalDate.class)
-	@FormatterDefault
+	@Formatter(clazz = FormatterDefault.class)
 	Date,
 
 	@SmartTypeDefinition(Instant.class)
-	@FormatterDefault
+	@Formatter(clazz = FormatterDefault.class)
 	Instant,
 
 	@SmartTypeDefinition(Boolean.class)
-	@FormatterDefault
+	@Formatter(clazz = FormatterDefault.class)
 	Boolean,
 
 	@SmartTypeDefinition(String.class)
-	@FormatterDefault
+	@Formatter(clazz = FormatterDefault.class)
 	LibelleLong,
 
 	@SmartTypeDefinition(DataStream.class)
-	@FormatterDefault
+	@Formatter(clazz = FormatterDefault.class)
 	Stream,
 
 	@SmartTypeDefinition(String.class)
 	@SmartTypeProperty(property = "indexType", value = "text_fr")
-	@FormatterDefault
+	@Formatter(clazz = FormatterDefault.class)
 	FullText,
 
 	@SmartTypeDefinition(String.class)
 	@SmartTypeProperty(property = "indexType", value = "code")
-	@FormatterDefault
+	@Formatter(clazz = FormatterDefault.class)
 	Keyword,
 
 	@SmartTypeDefinition(BigDecimal.class)
-	@FormatterDefault
+	@Formatter(clazz = FormatterDefault.class)
 	Conso;
 
 }
