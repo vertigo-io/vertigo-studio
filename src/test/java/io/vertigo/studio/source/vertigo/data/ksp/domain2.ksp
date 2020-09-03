@@ -1,0 +1,20 @@
+package io.vertigo.studio.search
+
+create Domain DoFullText {
+    dataType : String
+    indexType: "text_fr"
+}
+
+create Domain DoKeyword {
+    dataType : String
+    indexType: "code"
+}
+
+create Domain DoConso {
+	dataType :BigDecimal
+}
+
+alter Domain DoInteger {
+    indexType: "standard:integer"
+}
+

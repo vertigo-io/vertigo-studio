@@ -1,0 +1,94 @@
+package io.vertigo.dynamo.environment.data
+
+/**** Domaines utilisés dans le modèle objet ****/
+
+/** On teste la séparation alter ou  create*/
+alter Domain DoActif {
+    dataType : Boolean
+}
+
+create Domain DoActif {
+}
+
+
+create Domain DoOuiNon {
+    dataType : Boolean
+}
+
+create Domain DoCode {
+    dataType : String
+}
+
+create Domain DoCodePostal {
+    dataType : String
+}
+
+create Domain DoDate {
+    dataType : LocalDate
+}
+
+
+create Domain DoDuree {
+    dataType : String
+}
+
+create Domain DoEmail {
+    dataType : String
+}
+
+
+create Domain DoIdentifiant {
+    dataType : Long
+}
+
+
+create Domain DoLibelleCourt {
+    dataType : String
+}
+
+create Domain DoLibelle {
+    dataType : String
+}
+
+create Domain DoLibelleLong {
+    dataType : String
+}
+
+create Domain DoLogin {
+    dataType : String
+}
+
+create Domain DoMontant {
+    dataType : BigDecimal
+    unit : "€"
+}
+
+create Domain DoQuantite {
+    dataType : Long
+}
+
+create Domain DoPoids  {
+    dataType : BigDecimal
+}
+
+create Domain DoOrdre {
+    dataType : Long
+}
+
+create Domain DoTaux  {
+    dataType : BigDecimal
+}
+
+create Domain DoTexte {
+    dataType : String
+}
+
+create Domain DoTelephone {
+    dataType : String
+}
+
+create Domain DoPassword {
+    dataType : String
+}
+
+

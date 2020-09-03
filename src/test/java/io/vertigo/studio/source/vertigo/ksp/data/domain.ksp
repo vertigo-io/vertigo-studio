@@ -1,0 +1,33 @@
+package io.vertigo.dynamock.domain
+
+
+
+create Domain DoId{
+	dataType : Long
+}
+
+create Domain DoString {
+	dataType : String
+}
+
+create DtDefinition DtTestEntity {
+	id 		id			{domain : DoId			label :"Id"}
+	field 	label   	{domain : DoString	 	label :"label"	cardinality:"?" }
+}
+
+create DtDefinition DtTestVobject {
+	field label   	{domain : DoString, 	label :"label", cardinality:"?" }
+	values : `{ "code1" : {"label" : "titi"}}`
+}
+
+create Association AVobEnt {
+ 	fkFieldName : "id"
+    
+ 	dtDefinitionA : DtTestVobject
+	type : "*>1" 	
+	dtDefinitionB : DtTestEntity
+	
+	labelA : "ValueObject"
+	labelB : "Entity"
+			
+}

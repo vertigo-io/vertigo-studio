@@ -1,0 +1,23 @@
+package io.vertigo.dynamock.domain
+
+
+create Domain DoIdentifiant{
+	dataType : Long
+}
+
+create Domain DoString {
+	dataType : String
+}
+
+create Domain DoKeyword{
+	dataType : String
+}
+
+create Domain DoFullText{
+	dataType : String
+}
+
+create Domain DoLong {
+	dataType : Long
+}
+
