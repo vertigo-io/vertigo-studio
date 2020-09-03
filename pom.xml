@@ -13,6 +13,7 @@
 	<artifactId>vertigo-studio</artifactId>
 	<packaging>jar</packaging>
 	<name>vertigo-studio</name>
+	<version>3.0.0-SNAPSHOT</version>
 
 	<dependencies>
 		<dependency>
