@@ -163,17 +163,17 @@ public final class DomainSketch extends AbstractSketch {
 	/**
 	 * Static method factory for DomainBuilder
 	 * @param name the name of the domain
-	 * @param valueObjectClass the definition managed by the domain
+	 * @param valueObjectClassName the class of the valueObject
 	 * @return DomainBuilder
 	 */
-	public static DomainSketch of(final String name, final Properties properties, final Class valueObjectClass) {
+	public static DomainSketch of(final String name, final Properties properties, final String valueObjectClassName) {
 		return new DomainSketch(
 				name,
 				properties,
 				DomainSketch.Scope.VALUE_OBJECT,
 				null,
 				null,
-				valueObjectClass.getCanonicalName());
+				valueObjectClassName);
 	}
 
 	/**
