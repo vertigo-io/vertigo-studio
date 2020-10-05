@@ -40,7 +40,7 @@ public final class ${dtDefinition.classSimpleName} implements ${dtDefinition.ste
 	private final StoreVAccessor<${dtField.association.returnType}> ${dtField.name?uncap_first}Accessor = new StoreVAccessor<>(${dtField.association.returnType}.class, "${dtField.association.role}");
 			</#if>
 		<#else>
-	private ${dtField.javaType} ${dtField.name};
+	private ${dtField.javaType} ${dtField.name}<#if dtField.multiple> = <#if dtField.dataObject > new io.vertigo.datamodel.structure.model.DtList<>(${dtField.dataObjectClassName}.class)<#else>new java.util.ArrayList<>()</#if></#if>;
 		</#if>
 	</#list>
 	<#list dtDefinition.associations as association>
@@ -125,6 +125,10 @@ public final class ${dtDefinition.classSimpleName} implements ${dtDefinition.ste
 	 * @param ${dtField.name} ${dtField.javaTypeLabel}<#if dtField.required> <b>Obligatoire</b></#if>
 	 */
 	public void set${dtField.name?cap_first}(final ${dtField.javaType} ${dtField.name}) {
+		<#if dtField.multiple>
+		io.vertigo.core.lang.Assertion.check().isNotNull(${dtField.name});
+		//---
+		</#if>
 		this.${dtField.name} = ${dtField.name};
 	}
 	</#if>

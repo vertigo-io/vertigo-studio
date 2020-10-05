@@ -19,6 +19,7 @@ package io.vertigo.studio.plugins.generator.vertigo.domain.java.model;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.function.Function;
 
 import io.vertigo.core.lang.Assertion;
@@ -40,6 +41,7 @@ public final class StudioDtFieldModel {
 	private final List<? extends AssociationSketch> associationSketches;
 	private final String javaType;
 	private final String javaTypeLabel;
+	private final Optional<String> dataObjectClassNameOpt;
 
 	/***
 	 * Constructeur.
@@ -59,6 +61,11 @@ public final class StudioDtFieldModel {
 		this.dtSketch = dtSketch;
 		this.dtField = dtField;
 		this.associationSketches = associationSketches;
+		if (dtField.getDomain().getScope().isDataObject()) {
+			dataObjectClassNameOpt = Optional.of(classNameFromDt.apply(dtField.getDomain().getDtSketchKey().getName()));
+		} else {
+			dataObjectClassNameOpt = Optional.empty();
+		}
 		//---
 		javaType = DomainUtil.buildJavaType(dtField, classNameFromDt);
 		javaTypeLabel = DomainUtil.buildJavaTypeLabel(dtField, classNameFromDt);
@@ -135,6 +142,27 @@ public final class StudioDtFieldModel {
 	 */
 	public boolean isRequired() {
 		return dtField.getCardinality().hasOne();
+	}
+
+	/**
+	 * @return Si la propriété est multiple
+	 */
+	public boolean isMultiple() {
+		return dtField.getCardinality().hasMany();
+	}
+
+	/**
+	 * @return Si la propriété vise un autre type de dt
+	 */
+	public boolean isDataObject() {
+		return dtField.getDomain().getScope().isDataObject();
+	}
+
+	/**
+	 * @return Le nom de la classe du dt visé
+	 */
+	public String getDataObjectClassName() {
+		return dataObjectClassNameOpt.get();
 	}
 
 	/**
