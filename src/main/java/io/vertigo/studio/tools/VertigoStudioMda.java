@@ -231,6 +231,7 @@ public final class VertigoStudioMda {
 						.withVertigoSource()
 						.withGenerator()
 						.withVertigoMda()
+						.withMermaidGenerator()
 						.build())
 				.build();
 
