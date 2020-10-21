@@ -33,7 +33,6 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.BasicType;
 import io.vertigo.core.lang.Cardinality;
 import io.vertigo.core.lang.VSystemException;
-import io.vertigo.core.util.ClassUtil;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.impl.source.dsl.entity.DslEntity;
 import io.vertigo.studio.impl.source.dsl.entity.DslGrammar;
