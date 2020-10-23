@@ -18,6 +18,7 @@
 package io.vertigo.studio.plugins.generator.mermaid;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -74,8 +75,15 @@ public final class MermaidGeneratorPlugin implements GeneratorPlugin {
 				.stream()
 				.collect(Collectors.groupingBy(mermaidDtModel -> extractFeatureFromPackageName(generatorConfig.getProjectPackageName(), mermaidDtModel.getDtSketch().getPackageName())));
 
+		final Map<String, List<MermaidDtModel>> mermaidDtModelsByPackage = mermaidDtModelsByFeature.getOrDefault(UNNAMED_MODULE, Collections.emptyList())
+				.stream()
+				.collect(Collectors.groupingBy(mermaidDtModel -> mermaidDtModel.getDtSketch().getPackageName()));
+
+		mermaidDtModelsByFeature.remove(UNNAMED_MODULE);
+
 		final Map<String, Object> model = new MapBuilder<String, Object>()
 				.put("dtSketchsByFeature", mermaidDtModelsByFeature)
+				.put("dtSketchsByPackage", mermaidDtModelsByPackage)
 				.build();
 
 		FileGenerator.builder(generatorConfig)
@@ -105,6 +113,18 @@ public final class MermaidGeneratorPlugin implements GeneratorPlugin {
 			return featureName.substring(1);
 		}
 		return UNNAMED_MODULE;
+	}
+
+	private static String extractFirstPackageFromPackageName(final String projectPackageName, final String dtPackageName) {
+		//we need to find the first package name after .domain
+		final String packageSuffix = dtPackageName.substring(dtPackageName.indexOf(".domain") + ".domain".length());
+		if (!StringUtil.isBlank(packageSuffix)) {
+			if (packageSuffix.indexOf('.', 1) >= 0) {// there are subpackages
+				return packageSuffix.substring(1, packageSuffix.indexOf('.', 1)); // strip the first dot
+			}
+			return packageSuffix.substring(1);
+		}
+		return projectPackageName;
 	}
 
 	@Override
