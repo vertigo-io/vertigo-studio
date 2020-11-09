@@ -63,6 +63,7 @@ public final class MermaidGeneratorPlugin implements GeneratorPlugin {
 		//-----
 
 		final String targetSubDir = generatorConfig.getOrDefaultAsString("mermaid.targetSubDir", DEFAULT_TARGET_SUBDIR);
+		final String mermaidDestFileName = generatorConfig.getOrDefaultAsString("mermaid.destFileName", "mermaid-" + generatorConfig.getProjectPackageName().replace('.', '-'));
 
 		final List<MermaidDtModel> mermaidDtModels = notebook.getAll(DtSketch.class)
 				.stream()
@@ -88,7 +89,7 @@ public final class MermaidGeneratorPlugin implements GeneratorPlugin {
 
 		FileGenerator.builder(generatorConfig)
 				.withModel(model)
-				.withFileName("mermaid.html")
+				.withFileName(mermaidDestFileName + ".html")
 				.withGenSubDir(targetSubDir)
 				.withPackageName("")
 				.withTemplateName(MermaidGeneratorPlugin.class, "template/mermaid.ftl")

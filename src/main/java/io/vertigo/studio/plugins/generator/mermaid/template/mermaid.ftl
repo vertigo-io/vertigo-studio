@@ -333,7 +333,7 @@
 </html>
 
 <#macro generateDtSketchClass dtSketch>
-class ${dtSketch.localName} {
+class ${dtSketch.localName}:::${dtSketch.stereotypeInterfaceName?uncap_first} {
 	<#list dtSketch.fields as dtField >
 		+${dtField.mermaidType} ${dtField.name}
 	</#list>
