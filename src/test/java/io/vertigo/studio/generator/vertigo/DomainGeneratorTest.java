@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.gennerator.vertigo;
+package io.vertigo.studio.generator.vertigo;
 
 import java.util.List;
 
@@ -42,7 +42,7 @@ import io.vertigo.studio.source.SourceManager;
  * Test la génération à partir des oom et ksp.
  * @author dchallas
  */
-public class AuthorizationGeneratorTest {
+public class DomainGeneratorTest {
 	private AutoCloseableNode node;
 
 	@Inject
@@ -86,12 +86,15 @@ public class AuthorizationGeneratorTest {
 	public void testGenerate() {
 		final List<Source> resources = List.of(
 				Source.of("kpr", "io/vertigo/studio/source/vertigo/data/model.kpr"),
-				Source.of("kpr", "io/vertigo/studio/source/vertigo/data/tasks.kpr"),
-				Source.of("security", "io/vertigo/studio/source/vertigo/data/security/advanced-auth-config-v2.json"));
+				Source.of("kpr", "io/vertigo/studio/source/vertigo/data/tasks.kpr"));
 
 		final GeneratorConfig generatorConfig = GeneratorConfig.builder("io.vertigo.studio")
 				.withTargetGenDir("target/")
-				.addProperty("vertigo.authorization", "true")
+				.addProperty("vertigo.domain.java", "true")
+				.addProperty("vertigo.domain.js", "true")
+				.addProperty("vertigo.domain.ts", "true")
+				.addProperty("vertigo.task", "true")
+				.addProperty("vertigo.search", "true")
 				.build();
 
 		final Notebook notebook = sourceManager.read(resources);

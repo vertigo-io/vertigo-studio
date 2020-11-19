@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.gennerator.mermaid;
+package io.vertigo.studio.generator.vertigo;
 
 import java.util.List;
 
@@ -42,7 +42,7 @@ import io.vertigo.studio.source.SourceManager;
  * Test la génération à partir des oom et ksp.
  * @author dchallas
  */
-public class MermaidGeneratorTest {
+public class FileGeneratorTest {
 	private AutoCloseableNode node;
 
 	@Inject
@@ -74,7 +74,7 @@ public class MermaidGeneratorTest {
 						.withSource()
 						.withVertigoSource()
 						.withGenerator()
-						.withMermaidGenerator()
+						.withVertigoMda()
 						.build())
 				.build();
 	}
@@ -85,11 +85,12 @@ public class MermaidGeneratorTest {
 	@Test
 	public void testGenerate() {
 		final List<Source> resources = List.of(
-				Source.of("kpr", "io/vertigo/studio/source/vertigo/data/model.kpr"));
+				Source.of("kpr", "io/vertigo/studio/source/vertigo/data/model.kpr"),
+				Source.of("kpr", "io/vertigo/studio/source/vertigo/data/tasks.kpr"));
 
 		final GeneratorConfig generatorConfig = GeneratorConfig.builder("io.vertigo.studio")
 				.withTargetGenDir("target/")
-				.addProperty("mermaid", "true")
+				.addProperty("vertigo.file", "true")
 				.build();
 
 		final Notebook notebook = sourceManager.read(resources);

@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.gennerator.vertigo;
+package io.vertigo.studio.generator.vertigo;
 
 import java.util.List;
 
@@ -42,7 +42,7 @@ import io.vertigo.studio.source.SourceManager;
  * Test la génération à partir des oom et ksp.
  * @author dchallas
  */
-public class DomainGeneratorTest {
+public class WebServicesGeneratorTest {
 	private AutoCloseableNode node;
 
 	@Inject
@@ -86,15 +86,13 @@ public class DomainGeneratorTest {
 	public void testGenerate() {
 		final List<Source> resources = List.of(
 				Source.of("kpr", "io/vertigo/studio/source/vertigo/data/model.kpr"),
-				Source.of("kpr", "io/vertigo/studio/source/vertigo/data/tasks.kpr"));
+				Source.of("kpr", "io/vertigo/studio/source/vertigo/data/tasks.kpr"),
+				Source.of("webservice", "io.vertigo.vega.impl.webservice.catalog.SwaggerWebServices"),
+				Source.of("webservice", "io.vertigo.studio.data.webservices.*"));
 
 		final GeneratorConfig generatorConfig = GeneratorConfig.builder("io.vertigo.studio")
 				.withTargetGenDir("target/")
-				.addProperty("vertigo.domain.java", "true")
-				.addProperty("vertigo.domain.js", "true")
-				.addProperty("vertigo.domain.ts", "true")
-				.addProperty("vertigo.task", "true")
-				.addProperty("vertigo.search", "true")
+				.addProperty("vertigo.tsws", "true")
 				.build();
 
 		final Notebook notebook = sourceManager.read(resources);

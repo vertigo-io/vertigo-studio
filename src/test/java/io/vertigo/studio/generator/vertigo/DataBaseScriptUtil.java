@@ -18,7 +18,7 @@
 /**
  *
  */
-package io.vertigo.studio.gennerator.vertigo;
+package io.vertigo.studio.generator.vertigo;
 
 import java.io.BufferedReader;
 import java.io.IOException;

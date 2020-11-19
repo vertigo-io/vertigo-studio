@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.gennerator.vertigo;
+package io.vertigo.studio.generator.vertigo;
 
 import java.util.List;
 
@@ -42,7 +42,7 @@ import io.vertigo.studio.source.SourceManager;
  * Test la génération à partir des oom et ksp.
  * @author dchallas
  */
-public class FileGeneratorTest {
+public class SqlServerGeneratorTest {
 	private AutoCloseableNode node;
 
 	@Inject
@@ -90,7 +90,13 @@ public class FileGeneratorTest {
 
 		final GeneratorConfig generatorConfig = GeneratorConfig.builder("io.vertigo.studio")
 				.withTargetGenDir("target/")
-				.addProperty("vertigo.file", "true")
+				.addProperty("vertigo.domain.sql", "true")
+				.addProperty("vertigo.domain.sql.targetSubDir", "databasegenh2")
+				.addProperty("vertigo.domain.sql.baseCible", "PostgreSql")
+				.addProperty("vertigo.domain.sql.generateDrop", "false")
+				.addProperty("vertigo.domain.sql.generateMasterData", "false")
+				.addProperty("vertigo.domain.sql.tableSpaceData", "TBL_DATA")
+				.addProperty("vertigo.domain.sql.tableSpaceIndex", "TBL_INDEX")
 				.build();
 
 		final Notebook notebook = sourceManager.read(resources);

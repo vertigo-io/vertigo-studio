@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.gennerator.vertigo;
+package io.vertigo.studio.generator.mermaid;
 
 import java.util.List;
 
@@ -37,13 +37,12 @@ import io.vertigo.studio.generator.GeneratorManager;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.source.Source;
 import io.vertigo.studio.source.SourceManager;
-import io.vertigo.studio.source.vertigo.data.DtDefinitions;
 
 /**
  * Test la génération à partir des oom et ksp.
  * @author dchallas
  */
-public class TaskTestsGeneratorTest {
+public class MermaidGeneratorTest {
 	private AutoCloseableNode node;
 
 	@Inject
@@ -75,7 +74,7 @@ public class TaskTestsGeneratorTest {
 						.withSource()
 						.withVertigoSource()
 						.withGenerator()
-						.withVertigoMda()
+						.withMermaidGenerator()
 						.build())
 				.build();
 	}
@@ -86,15 +85,11 @@ public class TaskTestsGeneratorTest {
 	@Test
 	public void testGenerate() {
 		final List<Source> resources = List.of(
-				Source.of("kpr", "io/vertigo/studio/source/vertigo/data/model.kpr"),
-				Source.of("kpr", "io/vertigo/studio/source/vertigo/data/tasks.kpr"),
-				Source.of("classes", DtDefinitions.class.getName()));
+				Source.of("kpr", "io/vertigo/studio/source/vertigo/data/model.kpr"));
 
 		final GeneratorConfig generatorConfig = GeneratorConfig.builder("io.vertigo.studio")
 				.withTargetGenDir("target/")
-				.addProperty("vertigo.taskTest", "true")
-				.addProperty("vertigo.taskTest.targetSubDir", "javagen")
-				.addProperty("vertigo.taskTest.baseTestClass", io.vertigo.studio.source.vertigo.data.tasktest.DaoTestClass.class.getCanonicalName())
+				.addProperty("mermaid", "true")
 				.build();
 
 		final Notebook notebook = sourceManager.read(resources);
