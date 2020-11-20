@@ -25,6 +25,7 @@ import io.vertigo.studio.impl.generator.GeneratorManagerImpl;
 import io.vertigo.studio.impl.notebook.NotebookManagerImpl;
 import io.vertigo.studio.impl.source.SourceManagerImpl;
 import io.vertigo.studio.notebook.NotebookManager;
+import io.vertigo.studio.plugins.generator.mermaid.MermaidGeneratorPlugin;
 import io.vertigo.studio.plugins.generator.vertigo.authorization.AuthorizationGeneratorPlugin;
 import io.vertigo.studio.plugins.generator.vertigo.domain.java.DomainGeneratorPlugin;
 import io.vertigo.studio.plugins.generator.vertigo.domain.js.JSGeneratorPlugin;
@@ -84,6 +85,13 @@ public final class StudioFeatures extends Features<StudioFeatures> {
 				.addPlugin(SearchGeneratorPlugin.class)
 				.addPlugin(TaskTestGeneratorPlugin.class)
 				.addPlugin(WsTsGeneratorPlugin.class);
+		return this;
+	}
+
+	@Feature("generator.mermaid")
+	public StudioFeatures withMermaidGenerator() {
+		getModuleConfigBuilder()
+				.addPlugin(MermaidGeneratorPlugin.class);
 		return this;
 	}
 

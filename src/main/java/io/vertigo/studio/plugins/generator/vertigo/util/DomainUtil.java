@@ -91,7 +91,7 @@ public final class DomainUtil {
 		return buildJavaTypeLabel(taskAttribute.getDomain(), classNameFromDt, taskAttribute.getCardinality(), getManyTargetJavaClass(taskAttribute.getDomain()));
 	}
 
-	private static String getManyTargetJavaClass(final DomainSketch domainSketch) {
+	public static String getManyTargetJavaClass(final DomainSketch domainSketch) {
 		switch (domainSketch.getScope()) {
 			case DATA_OBJECT:
 				return "io.vertigo.datamodel.structure.model.DtList";

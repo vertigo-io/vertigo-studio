@@ -44,7 +44,7 @@ import io.vertigo.datamodel.impl.smarttype.ModelDefinitionProvider;
 import io.vertigo.datastore.DataStoreFeatures;
 import io.vertigo.studio.dao.DaoPAO;
 import io.vertigo.studio.dao.car.CarDAO;
-import io.vertigo.studio.gennerator.vertigo.DataBaseScriptUtil;
+import io.vertigo.studio.generator.vertigo.DataBaseScriptUtil;
 import io.vertigo.studio.plugins.generator.vertigo.task.test.TaskTestDaoChecker;
 import io.vertigo.studio.plugins.generator.vertigo.task.test.TaskTestDummyGenerator;
 import io.vertigo.studio.plugins.generator.vertigo.task.test.TaskTestDummyGeneratorBasic;

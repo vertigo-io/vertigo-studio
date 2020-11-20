@@ -33,7 +33,6 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.BasicType;
 import io.vertigo.core.lang.Cardinality;
 import io.vertigo.core.lang.VSystemException;
-import io.vertigo.core.util.ClassUtil;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.impl.source.dsl.entity.DslEntity;
 import io.vertigo.studio.impl.source.dsl.entity.DslGrammar;
@@ -118,7 +117,7 @@ public final class DomainSketchFactory implements DslSketchFactory {
 			case "DtObject":
 				return DomainSketch.of(domainRawKey.getName(), properties, SketchKey.of(properties.getProperty("TYPE")));
 			case "ValueObject":
-				return DomainSketch.of(domainRawKey.getName(), properties, ClassUtil.classForName(properties.getProperty("TYPE")));
+				return DomainSketch.of(domainRawKey.getName(), properties, properties.getProperty("TYPE"));
 			default:
 				final BasicType dataType = BasicType.valueOf(type);
 				return DomainSketch.of(domainRawKey.getName(), properties, dataType);

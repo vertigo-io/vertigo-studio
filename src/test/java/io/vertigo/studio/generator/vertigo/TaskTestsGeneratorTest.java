@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.gennerator.vertigo;
+package io.vertigo.studio.generator.vertigo;
 
 import java.util.List;
 
@@ -37,12 +37,13 @@ import io.vertigo.studio.generator.GeneratorManager;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.source.Source;
 import io.vertigo.studio.source.SourceManager;
+import io.vertigo.studio.source.vertigo.data.DtDefinitions;
 
 /**
  * Test la génération à partir des oom et ksp.
  * @author dchallas
  */
-public class DtDefinitionsGeneratorTest {
+public class TaskTestsGeneratorTest {
 	private AutoCloseableNode node;
 
 	@Inject
@@ -86,12 +87,14 @@ public class DtDefinitionsGeneratorTest {
 	public void testGenerate() {
 		final List<Source> resources = List.of(
 				Source.of("kpr", "io/vertigo/studio/source/vertigo/data/model.kpr"),
-				Source.of("kpr", "io/vertigo/studio/source/vertigo/data/tasks.kpr"));
+				Source.of("kpr", "io/vertigo/studio/source/vertigo/data/tasks.kpr"),
+				Source.of("classes", DtDefinitions.class.getName()));
 
 		final GeneratorConfig generatorConfig = GeneratorConfig.builder("io.vertigo.studio")
 				.withTargetGenDir("target/")
-				.addProperty("vertigo.domain.java", "true")
-				.addProperty("vertigo.domain.java.dictionaryClassName", "MyDtDefinitions")
+				.addProperty("vertigo.taskTest", "true")
+				.addProperty("vertigo.taskTest.targetSubDir", "javagen")
+				.addProperty("vertigo.taskTest.baseTestClass", io.vertigo.studio.source.vertigo.data.tasktest.DaoTestClass.class.getCanonicalName())
 				.build();
 
 		final Notebook notebook = sourceManager.read(resources);
