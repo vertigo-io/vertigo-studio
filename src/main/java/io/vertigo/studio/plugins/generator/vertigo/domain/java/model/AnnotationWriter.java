@@ -104,12 +104,19 @@ class AnnotationWriter {
 		// Générations des annotations Dynamo
 		// if we are a foreign key
 		if (dtField.getType() == DtSketchField.FieldType.FOREIGN_KEY) {
-			return Collections.singletonList(new StringBuilder("@").append(VertigoClassNames.AnnotationForeignKey.getClassName()).append("(")
+			final StringBuilder buffer = new StringBuilder("@").append(VertigoClassNames.AnnotationForeignKey.getClassName()).append("(")
 					.append("smartType = \"").append(dtField.getDomain().getSmartTypeName()).append("\", ")
 					.append("label = \"").append(dtField.getLabel().getDisplay()).append("\", ")
-					.append("fkDefinition = \"").append("Dt").append(SketchUtil.getLocalName(dtField.getFkDtSketchName(), DtSketch.PREFIX)).append("\" ")
-					.append(")")
-					.toString());
+					.append("fkDefinition = \"").append("Dt").append(SketchUtil.getLocalName(dtField.getFkDtSketchName(), DtSketch.PREFIX)).append("\"");
+			// The cardinality is always here but OptionalOrNullable is the default in annotation so we skip it to limit verbosity
+			if (Cardinality.OPTIONAL_OR_NULLABLE != dtField.getCardinality()) {
+				buffer.append(", cardinality = ")
+						.append(Cardinality.class.getCanonicalName())
+						.append('.')
+						.append(dtField.getCardinality().name());
+			}
+			buffer.append(" )");
+			return Collections.singletonList(buffer.toString());
 		}
 
 		final List<String> lines = new ArrayList<>();
