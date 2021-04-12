@@ -299,8 +299,14 @@
 				})
 				var zoom = d3.zoom()
 				.on("zoom", function(event) {
-					let svg = d3.select(this).select("svg")
+					let maxX = parseInt(svg.style("width"), 10)-20; //-20 from margin svg to g
+					let maxY = parseInt(svg.style("height"), 10)-20;
+					let zoomTransform = d3.zoomTransform(svg.node())
+					var mousePos = d3.pointer(event);
+					var newTx = ((maxX-mousePos[0])/zoomTransform.k-(maxX-mousePos[0])/event.transform.k);
+					var newTy = ((maxY-mousePos[1])/zoomTransform.k-(maxY-mousePos[1])/event.transform.k);
 					d3.zoom().scaleTo(svg, event.transform.k)
+					d3.zoom().translateBy(svg, newTx, newTy)					
 					svg.attr("transform", d3.zoomTransform(svg.node()).toString());
 				});
 				div.call(drag);
