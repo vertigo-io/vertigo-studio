@@ -116,7 +116,7 @@ public final class MermaidGeneratorPlugin implements GeneratorPlugin {
 		return UNNAMED_MODULE;
 	}
 
-	private static String extractFirstPackageFromPackageName(final String projectPackageName, final String dtPackageName) {
+	/*private static String extractFirstPackageFromPackageName(final String projectPackageName, final String dtPackageName) {
 		//we need to find the first package name after .domain
 		final String packageSuffix = dtPackageName.substring(dtPackageName.indexOf(".domain") + ".domain".length());
 		if (!StringUtil.isBlank(packageSuffix)) {
@@ -126,7 +126,7 @@ public final class MermaidGeneratorPlugin implements GeneratorPlugin {
 			return packageSuffix.substring(1);
 		}
 		return projectPackageName;
-	}
+	}*/
 
 	@Override
 	public void clean(final GeneratorConfig generatorConfig, final GeneratorResultBuilder generatorResultBuilder) {
