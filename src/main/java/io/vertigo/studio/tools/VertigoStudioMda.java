@@ -178,6 +178,7 @@ public final class VertigoStudioMda {
 							key.reset();
 						}
 					} catch (final InterruptedException e) {
+						Thread.currentThread().interrupt();
 						throw WrappedException.wrap(e);
 					}
 

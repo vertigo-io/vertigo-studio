@@ -54,7 +54,7 @@ public final class SecuredFeatureSketch extends AbstractSketch {
 			final String label,
 			final Optional<String> commentOpt,
 			final Optional<String> linkedResourceOpt) {
-		super(PREFIX + linkedResourceOpt.map(v -> v + "$" + StringUtil.first2LowerCase(code)).orElse(StringUtil.first2UpperCase(code)));
+		super(PREFIX + linkedResourceOpt.map(v -> v + "$" + StringUtil.first2LowerCase(code)).orElseGet(() -> StringUtil.first2UpperCase(code)));
 		//---
 		Assertion.check()
 				.isNotBlank(code)
