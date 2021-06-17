@@ -63,6 +63,14 @@ public final class SearchDtModel {
 	}
 
 	/**
+	 * Name of the DtObjet
+	 * @return name of the DtObjet
+	 */
+	public String getDtName() {
+		return "Dt" + dtSketch.getLocalName();
+	}
+
+	/**
 	 * @return Nom du package
 	 */
 	public String getPackageName() {

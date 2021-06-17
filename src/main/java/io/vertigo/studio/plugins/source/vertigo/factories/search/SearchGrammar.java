@@ -69,21 +69,21 @@ final class SearchGrammar implements DslGrammar {
 	    dtIndex : DT_TEST,
 	    indexCopyTo FIELD_TO_1 : { from: "FIELD_FROM_1,FIELD_FROM_2" }, //use field formatters
 	    indexCopyTo FIELD_TO_2 : { from: "FIELD_FROM_3" }, //use field formatters
-	
+
 	    searchLoader : com.project.domain.search.dao.SearchLoaderPeople
 	}
-	
+
 	create FacetDefinition FCT_MOVIE_GENRE {
 		dtDefinition : DT_TEST, fieldName : "GENRE", label : "Par genre"
 	}
-	
+
 	create FacetDefinition FCT_MOVIE_ANNEE {
 		dtDefinition : DT_TEST, fieldName : "YEAR", label : "Par année",
 	 	range R1 { filter : "YEAR:[* TO 2000]", label : "avant 2000"}, //TODO : fieldName in filter too ?
 	 	range R2 { filter : "YEAR:[2000 TO 2005]", label : "2000-2005"},
 	 	range R3 { filter : "YEAR:[2005 TO *]", label : "après 2005"}
 	}
-	
+
 	create FacetedQueryDefinition QRY_MOVIE {
 		facet FCT_MOVIE_GENRE,
 		facet FCT_MOVIE_ANNEE,
@@ -125,7 +125,7 @@ final class SearchGrammar implements DslGrammar {
 				.build();
 
 		FACETED_QUERY_ENTITY = DslEntity.builder("FacetedQueryDefinition")
-				.addRequiredField("keyConcept", DomainGrammar.DT_ENTITY.getLink())
+				.addRequiredField("dtIndex", DomainGrammar.DT_ENTITY.getLink())
 				.addRequiredField("domainCriteria", DomainGrammar.DOMAIN_ENTITY.getLink())
 				.addRequiredField(LIST_FILTER_BUILDER_CLASS, String)
 				.addRequiredField(LIST_FILTER_BUILDER_QUERY, String)

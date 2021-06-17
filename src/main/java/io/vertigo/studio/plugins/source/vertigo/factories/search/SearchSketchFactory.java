@@ -172,7 +172,7 @@ public final class SearchSketchFactory implements DslSketchFactory {
 	}
 
 	private static FacetedQuerySketch createFacetedQuerySketch(final Notebook notebook, final DslRaw dslSketch) {
-		final DtSketch keyConceptDtSketch = notebook.resolve(dslSketch.getRawKeyByFieldName("keyConcept").getName(), DtSketch.class);
+		final DtSketch keyConceptDtSketch = notebook.resolve(dslSketch.getRawKeyByFieldName("dtIndex").getName(), DtSketch.class);
 		final List<DslRawKey> facetSketchRawKeys = dslSketch.getRawKeysByFieldName("facets");
 		final List<FacetSketch> facetSketches = facetSketchRawKeys
 				.stream()

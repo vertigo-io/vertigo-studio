@@ -70,6 +70,19 @@ public final class ${dtDefinition.classSimpleName}SearchClient implements Compon
 	}
 	</#list>
 
+	<#list searchIndexDefinitions as searchIndexDefinition>
+	/**
+	 * Récupération du résultat issu d'une requête.
+	 * @param searchQuery critères initiaux
+	 * @param listState Etat de la liste (tri et pagination)
+	 * @return Résultat correspondant à la requête (de type ${indexDtDefinition.classSimpleName})
+	 */
+	public FacetedQueryResult<${indexDtDefinition.classSimpleName}, SearchQuery> loadList${searchIndexDefinition.name}(final SearchQuery searchQuery, final DtListState listState) {
+		final SearchIndexDefinition indexDefinition = io.vertigo.core.node.Node.getNode().getDefinitionSpace().resolve("${searchIndexDefinition.name}",SearchIndexDefinition.class);
+		return searchManager.loadList(indexDefinition, searchQuery, listState);
+	}
+	</#list>
+		
 	/**
 	 * Récupération du résultat issu d'une requête.
 	 * @param searchQuery critères initiaux
@@ -77,8 +90,11 @@ public final class ${dtDefinition.classSimpleName}SearchClient implements Compon
 	 * @return Résultat correspondant à la requête (de type ${indexDtDefinition.classSimpleName})
 	 */
 	public FacetedQueryResult<${indexDtDefinition.classSimpleName}, SearchQuery> loadList(final SearchQuery searchQuery, final DtListState listState) {
-		final SearchIndexDefinition indexDefinition = searchManager.findFirstIndexDefinitionByKeyConcept(${dtDefinition.classSimpleName}.class);
-		return searchManager.loadList(indexDefinition, searchQuery, listState);
+		final List<SearchIndexDefinition> indexDefinitions = List.of( 
+				<#list searchIndexDefinitions as searchIndexDefinition>
+				io.vertigo.core.node.Node.getNode().getDefinitionSpace().resolve("${searchIndexDefinition.name}",SearchIndexDefinition.class)<sep>,
+<sep></#list>);
+		return searchManager.loadList(indexDefinitions, searchQuery, listState);
 	}
 
 	/**
@@ -87,7 +103,7 @@ public final class ${dtDefinition.classSimpleName}SearchClient implements Compon
 	 *
 	 * @param entityUID Key concept's UID
 	 */
-	public void markAsDirty(final UID<${dtDefinition.classSimpleName}> entityUID) {
+	public void markAsDirty(final UID entityUID) {
 		transactionManager.getCurrentTransaction().addAfterCompletion((final boolean txCommitted) -> {
 			if (txCommitted) {// reindex only is tx successful
 				searchManager.markAsDirty(Arrays.asList(entityUID));
@@ -95,15 +111,18 @@ public final class ${dtDefinition.classSimpleName}SearchClient implements Compon
 		});
 	}
 
+	<#list searchIndexDefinitions as searchIndexDefinition>
 	/**
 	 * Mark an entity as dirty. Index of these elements will be reindexed if Tx commited.
 	 * Reindexation isn't synchrone, strategy is dependant of plugin's parameters.
 	 *
 	 * @param entity Key concept
 	 */
-	public void markAsDirty(final ${dtDefinition.classSimpleName} entity) {
+	public void markAsDirty(final ${searchIndexDefinition.keyConceptClassCanonicalName} entity) {
 		markAsDirty(UID.of(entity));
 	}
+	</#list>
+	
 
 	/** {@inheritDoc} */
 	@Override
@@ -112,6 +131,7 @@ public final class ${dtDefinition.classSimpleName}SearchClient implements Compon
 				//---
 				// SearchIndexDefinition
 				//-----
+				<#list searchIndexDefinitions as searchIndexDefinition>
 				.add(new SearchIndexDefinitionSupplier("${searchIndexDefinition.name}")
 						.withIndexDtDefinition("${searchIndexDefinition.indexDtDefinition}")
 						.withKeyConcept("${searchIndexDefinition.keyConceptDtDefinition}")
@@ -119,13 +139,14 @@ public final class ${dtDefinition.classSimpleName}SearchClient implements Compon
 						.withCopyToFields("${copyTo.to}", <#list copyTo.from as from>"${from}"<#sep>, </#list>)
 						</#list>
 						.withLoaderId("${searchIndexDefinition.loaderId}"))
-
+				</#list>
+				
 				//---
 				// FacetTermDefinition
 				//-----
 				<#list facetDefinitions as facetDefinition>
 				.add(new Facet<#if facetDefinition.isRange()>Range<#elseif facetDefinition.isCustom()>Custom<#else>Term</#if>DefinitionSupplier("${facetDefinition.name}")
-						.withDtDefinition("${searchIndexDefinition.indexDtDefinition}")
+						.withDtDefinition("${dtDefinition.dtName}")
 						.withFieldName("${facetDefinition.fieldName}")
 						.withLabel("${facetDefinition.label}")
 						<#if facetDefinition.isMultiSelectable()>
