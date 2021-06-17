@@ -55,6 +55,10 @@ public final class SearchIndexModel {
 		return "Dt" + searchIndexSketch.getKeyConceptDtSketch().getLocalName();
 	}
 
+	public String getKeyConceptClassCanonicalName() {
+		return searchIndexSketch.getKeyConceptDtSketch().getClassCanonicalName();
+	}
+
 	public List<IndexCopyToModel> getCopyToModels() {
 		return copyToModels;
 	}

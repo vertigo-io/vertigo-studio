@@ -42,7 +42,7 @@ import io.vertigo.studio.notebook.domain.DtSketch;
 public final class FacetedQuerySketch extends AbstractSketch {
 	public static final String PREFIX = "Qry";
 
-	private final DtSketch keyConceptDtSketch;
+	private final DtSketch indexDtSketch;
 
 	/** Liste indexée des facettes.*/
 	private final Map<SketchKey, FacetSketch> facetSketches = new LinkedHashMap<>();
@@ -63,7 +63,7 @@ public final class FacetedQuerySketch extends AbstractSketch {
 	/**
 	 * Constructor.
 	 * @param name Nom de la definition
-	 * @param keyConceptDtSketch Sketch du keyConcept sur lequel s'applique cette recherche
+	 * @param indexDtSketch Sketch du DtIndex sur lequel s'applique cette recherche
 	 * @param facetSketchs Liste des facettes
 	 * @param criteriaDomain Criteria's domain
 	 * @param listFilterBuilderClassName listFilterBuilderClass to use
@@ -71,7 +71,7 @@ public final class FacetedQuerySketch extends AbstractSketch {
 	 */
 	public FacetedQuerySketch(
 			final String name,
-			final DtSketch keyConceptDtSketch,
+			final DtSketch indexDtSketch,
 			final List<FacetSketch> facetSketchs,
 			final DomainSketch criteriaDomain,
 			final String listFilterBuilderClassName,
@@ -81,14 +81,14 @@ public final class FacetedQuerySketch extends AbstractSketch {
 		//---
 		Assertion
 				.check()
-				.isNotNull(keyConceptDtSketch)
+				.isNotNull(indexDtSketch)
 				.isNotNull(facetSketchs)
 				.isNotNull(criteriaDomain)
 				.isNotBlank(listFilterBuilderClassName)
 				.isNotNull(listFilterBuilderQuery)
 				.isNotNull(geoSearchQuery);
 		//---
-		this.keyConceptDtSketch = keyConceptDtSketch;
+		this.indexDtSketch = indexDtSketch;
 		for (final FacetSketch facetSketch : facetSketchs) {
 			facetSketches.put(facetSketch.getKey(), facetSketch);
 		}
@@ -114,11 +114,11 @@ public final class FacetedQuerySketch extends AbstractSketch {
 	}
 
 	/**
-	 * Définition du keyConcept de cette recherche.
+	 * Définition du dtIndex de cette recherche.
 	 * @return Définition du keyConcept.
 	 */
-	public DtSketch getKeyConceptDtSketch() {
-		return keyConceptDtSketch;
+	public DtSketch getIndexDtSketch() {
+		return indexDtSketch;
 	}
 
 	/**

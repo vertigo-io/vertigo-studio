@@ -13,6 +13,7 @@
 	<name>vertigo-studio</name>
 	<version>4.0.0-SNAPSHOT</version>
 
+
 	<dependencies>
 		<dependency>
 			<groupId>io.vertigo</groupId>
