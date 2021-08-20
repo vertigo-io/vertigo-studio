@@ -143,6 +143,12 @@ public final class ${dtDefinition.classSimpleName} implements ${dtDefinition.ste
 		<#list annotations(dtField) as annotation>
 	${annotation}
 		</#list>
+	<#if dtField.isSortField()>
+	@io.vertigo.datamodel.structure.stereotype.SortField
+	</#if>
+	<#if dtField.isDisplayField()>
+	@io.vertigo.datamodel.structure.stereotype.DisplayField
+	</#if>
 	public ${dtField.javaType} get${dtField.name?cap_first}() {
 		${dtField.javaCode}
 	}
