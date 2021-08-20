@@ -29,6 +29,7 @@ import io.vertigo.studio.plugins.generator.mermaid.MermaidGeneratorPlugin;
 import io.vertigo.studio.plugins.generator.vertigo.authorization.AuthorizationGeneratorPlugin;
 import io.vertigo.studio.plugins.generator.vertigo.domain.java.DomainGeneratorPlugin;
 import io.vertigo.studio.plugins.generator.vertigo.domain.js.JSGeneratorPlugin;
+import io.vertigo.studio.plugins.generator.vertigo.domain.ksp.KspGeneratorPlugin;
 import io.vertigo.studio.plugins.generator.vertigo.domain.sql.SqlGeneratorPlugin;
 import io.vertigo.studio.plugins.generator.vertigo.domain.ts.TSGeneratorPlugin;
 import io.vertigo.studio.plugins.generator.vertigo.file.FileInfoGeneratorPlugin;
@@ -76,6 +77,7 @@ public final class StudioFeatures extends Features<StudioFeatures> {
 	public StudioFeatures withVertigoMda() {
 		getModuleConfigBuilder()
 				.addPlugin(DomainGeneratorPlugin.class)
+				.addPlugin(KspGeneratorPlugin.class)
 				.addPlugin(JSGeneratorPlugin.class)
 				.addPlugin(TSGeneratorPlugin.class)
 				.addPlugin(SqlGeneratorPlugin.class)
