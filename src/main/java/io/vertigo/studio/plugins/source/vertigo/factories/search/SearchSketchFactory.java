@@ -123,7 +123,7 @@ public final class SearchSketchFactory implements DslSketchFactory {
 		} else if (!paramsDefinitions.isEmpty()) {
 			final Map<String, String> facetParams = paramsDefinitions.stream()
 					.map(SearchSketchFactory::createFacetParam)
-					.collect(Collectors.toMap(Tuple::getVal1, Tuple::getVal2));
+					.collect(Collectors.toMap(Tuple::val1, Tuple::val2));
 			facetDefinition = FacetSketch.createCustomFacetSketch(
 					dslSketch.getKey().getName(),
 					indexDtSketch,
