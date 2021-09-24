@@ -26,9 +26,9 @@ import java.util.stream.Stream;
 import javax.inject.Inject;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.MapBuilder;
 import io.vertigo.core.param.ParamValue;
 import io.vertigo.core.resource.ResourceManager;
-import io.vertigo.core.util.MapBuilder;
 import io.vertigo.studio.impl.source.SourceReaderPlugin;
 import io.vertigo.studio.impl.source.dsl.raw.DslRawRepository;
 import io.vertigo.studio.impl.source.dsl.raw.DslSketchFactory;

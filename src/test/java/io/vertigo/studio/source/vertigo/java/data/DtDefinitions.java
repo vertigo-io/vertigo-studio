@@ -19,7 +19,7 @@ package io.vertigo.studio.source.vertigo.java.data;
 
 import java.util.Iterator;
 
-import io.vertigo.core.util.ListBuilder;
+import io.vertigo.core.lang.ListBuilder;
 import io.vertigo.studio.source.vertigo.java.data.domain.Attachment;
 import io.vertigo.studio.source.vertigo.java.data.domain.City;
 import io.vertigo.studio.source.vertigo.java.data.domain.CityFragment;

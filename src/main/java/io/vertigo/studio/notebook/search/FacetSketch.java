@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.locale.MessageText;
+import io.vertigo.core.locale.LocaleMessageText;
 import io.vertigo.studio.notebook.AbstractSketch;
 import io.vertigo.studio.notebook.SkecthPrefix;
 import io.vertigo.studio.notebook.domain.DtSketch;
@@ -55,7 +55,7 @@ public final class FacetSketch extends AbstractSketch {
 	public static final String PREFIX = "Fct";
 	private final DtSketch indexDtSketch;
 	private final DtSketchField dtField;
-	private final MessageText label;
+	private final LocaleMessageText label;
 	private final List<FacetSketchValue> facetValues;
 	private final Map<String, String> facetParams;
 	private final boolean rangeFacet;
@@ -90,7 +90,7 @@ public final class FacetSketch extends AbstractSketch {
 			final String name,
 			final DtSketch indexDtSketch,
 			final DtSketchField dtField,
-			final MessageText label,
+			final LocaleMessageText label,
 			final List<FacetSketchValue> facetValues,
 			final Map<String, String> facetParams,
 			final boolean rangeFacet,
@@ -145,7 +145,7 @@ public final class FacetSketch extends AbstractSketch {
 			final String name,
 			final DtSketch indexDtSketch,
 			final DtSketchField dtField,
-			final MessageText label,
+			final LocaleMessageText label,
 			final List<FacetSketchValue> facetValues,
 			final boolean multiSelectable,
 			final FacetOrder order) {
@@ -167,7 +167,7 @@ public final class FacetSketch extends AbstractSketch {
 			final String name,
 			final DtSketch indexDtSketch,
 			final DtSketchField dtField,
-			final MessageText label,
+			final LocaleMessageText label,
 			final boolean multiSelectable,
 			final FacetOrder order) {
 		return new FacetSketch(name, indexDtSketch, dtField, label, Collections.emptyList(), Collections.emptyMap(), false, false, multiSelectable, order);
@@ -188,7 +188,7 @@ public final class FacetSketch extends AbstractSketch {
 			final String name,
 			final DtSketch indexDtSketch,
 			final DtSketchField dtField,
-			final MessageText label,
+			final LocaleMessageText label,
 			final Map<String, String> facetParams,
 			final boolean multiSelectable,
 			final FacetOrder order) {
@@ -198,7 +198,7 @@ public final class FacetSketch extends AbstractSketch {
 	/**
 	 * @return the label of the facet
 	 */
-	public MessageText getLabel() {
+	public LocaleMessageText getLabel() {
 		return label;
 	}
 

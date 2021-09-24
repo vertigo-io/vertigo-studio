@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.util.MapBuilder;
+import io.vertigo.core.lang.MapBuilder;
 import io.vertigo.datamodel.structure.definitions.DtDefinition;
 import io.vertigo.studio.generator.GeneratorConfig;
 import io.vertigo.studio.generator.GeneratorResultBuilder;

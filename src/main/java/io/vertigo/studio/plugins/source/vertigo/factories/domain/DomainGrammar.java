@@ -51,7 +51,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.BasicType;
-import io.vertigo.core.util.ListBuilder;
+import io.vertigo.core.lang.ListBuilder;
 import io.vertigo.studio.impl.source.dsl.entity.DslEntity;
 import io.vertigo.studio.impl.source.dsl.entity.DslGrammar;
 import io.vertigo.studio.impl.source.dsl.raw.DslRaw;

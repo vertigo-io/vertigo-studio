@@ -19,7 +19,7 @@ package io.vertigo.studio.notebook.domain;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
-import io.vertigo.core.locale.MessageText;
+import io.vertigo.core.locale.LocaleMessageText;
 import io.vertigo.core.util.StringUtil;
 
 /**
@@ -87,7 +87,7 @@ public final class DtSketchField {
 	private final FieldType type;
 	private final Cardinality cardinality;
 	private final DomainSketch domainSketch;
-	private final MessageText label;
+	private final LocaleMessageText label;
 	private final boolean persistent;
 
 	/** Cas des FK ; référence à une FK. */
@@ -117,7 +117,7 @@ public final class DtSketchField {
 			final String fieldName,
 			final FieldType type,
 			final DomainSketch domainSketch,
-			final MessageText label,
+			final LocaleMessageText label,
 			final Cardinality cardinality,
 			final boolean persistent,
 			final String fkDtSketchName,
@@ -191,7 +191,7 @@ public final class DtSketchField {
 	/**
 	 * @return the label of the field
 	 */
-	public MessageText getLabel() {
+	public LocaleMessageText getLabel() {
 		return label;
 	}
 
