@@ -31,15 +31,15 @@ public final class FacetValueModel {
 	}
 
 	public String getCode() {
-		return facetValue.getCode();
+		return facetValue.code();
 	}
 
 	public String getLabel() {
-		return facetValue.getLabel();
+		return facetValue.label();
 	}
 
 	public String getListFilter() {
-		return facetValue.getListFilter();
+		return facetValue.listFilter();
 	}
 
 }
