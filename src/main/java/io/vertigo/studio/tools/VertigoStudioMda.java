@@ -167,7 +167,7 @@ public final class VertigoStudioMda {
 											final Notebook notebook = sourceManager.read(notebookConfig.getMetamodelResources());
 											final GeneratorResult generatorResult = generatorManager.generate(notebook, generatorConfig);
 											LOGGER_STUDIO.info("Regeneration completed. {} created files, {} updated files, {} identical files and {} issues in {} ms",
-													generatorResult.getCreatedFiles(), generatorResult.getUpdatedFiles(), generatorResult.getIdenticalFiles(), generatorResult.getErrorFiles(), generatorResult.getDurationMillis());
+													generatorResult.createdFiles(), generatorResult.updatedFiles(), generatorResult.identicalFiles(), generatorResult.errorFiles(), generatorResult.durationMillis());
 										} catch (final Exception e) {
 											LOGGER_STUDIO.error("Error regenerating : ", e);
 										}

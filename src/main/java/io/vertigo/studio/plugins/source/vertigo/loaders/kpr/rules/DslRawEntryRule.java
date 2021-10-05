@@ -67,26 +67,22 @@ public final class DslRawEntryRule extends AbstractRule<DslRawEntry, List<Object
 
 	@Override
 	protected DslRawEntry handle(final List<Object> parsing) {
-		final String fieldName = (String) ((PegChoice) parsing.get(0)).getValue();
+		final String fieldName = (String) ((PegChoice) parsing.get(0)).value();
 		final List<DslRawKey> keys;
 
 		final PegChoice definitionChoice = (PegChoice) parsing.get(4);
-		switch (definitionChoice.getChoiceIndex()) {
-			case 1:
-				//Déclaration d'une liste de définitions identifiée par leurs clés
-				keys = ((List<String>) definitionChoice.getValue())
-						.stream()
-						.map(s -> DslRawKey.of(s))
-						.collect(Collectors.toList());
-				break;
-			case 0:
+		keys = switch (definitionChoice.choiceIndex()) {
+			case 1 -> ((List<String>) definitionChoice.value())
+					.stream()
+					.map(DslRawKey::of)
+					.collect(Collectors.toList());
+			case 0 -> {
 				//Déclaration d'une définition identifiée par sa clé
-				final String value = (String) definitionChoice.getValue();
-				keys = java.util.Collections.singletonList(DslRawKey.of(value));
-				break;
-			default:
-				throw new IllegalStateException();
-		}
+				final String value = (String) definitionChoice.value();
+				yield java.util.Collections.singletonList(DslRawKey.of(value));
+			}
+			default -> throw new IllegalStateException();
+		};
 		return new DslRawEntry(fieldName, keys);
 	}
 }

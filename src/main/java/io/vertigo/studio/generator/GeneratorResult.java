@@ -26,27 +26,13 @@ import io.vertigo.core.util.StringUtil;
  *
  * @author pchretien, mlaroche
  */
-public final class GeneratorResult {
-	/** Nombre de fichiers écrits . */
-	private final int createdFiles;
-	private final int updatedFiles;
-	/** Nombre de fichiers en erreurs. */
-	private final int errorFiles;
-	/** Nombre de fichiers détruits. */
-	private final int deletedFiles;
-	/** Nombre de fichiers identiques. */
-	private final int identicalFiles;
-
-	private final long durationMillis;
-
-	GeneratorResult(final int createdFiles, final int updatedFiles, final int errorFiles, final int identicalFiles, final int deletedFiles, final long durationMillis) {
-		this.createdFiles = createdFiles;
-		this.updatedFiles = updatedFiles;
-		this.errorFiles = errorFiles;
-		this.deletedFiles = deletedFiles;
-		this.identicalFiles = identicalFiles;
-		this.durationMillis = durationMillis;
-	}
+public record GeneratorResult(
+		int createdFiles,
+		int updatedFiles,
+		int errorFiles,
+		int identicalFiles,
+		int deletedFiles,
+		long durationMillis) {
 
 	/**
 	 * Static method factory for GeneratorResultBuilder
@@ -70,32 +56,4 @@ public final class GeneratorResult {
 		return StringUtil.format("\nCréation de {0} fichiers, Mise à jour de {1} fichiers, {2} fichiers identiques et {3} problemes en {4} ms",
 				createdFiles, updatedFiles, identicalFiles, errorFiles, durationMillis);
 	}
-
-	/** Nombre de fichiers écrits . */
-	public int getCreatedFiles() {
-		return createdFiles;
-	}
-
-	public int getUpdatedFiles() {
-		return updatedFiles;
-	}
-
-	/** Nombre de fichiers en erreurs. */
-	public int getErrorFiles() {
-		return errorFiles;
-	}
-
-	/** Nombre de fichiers identiques. */
-	public int getIdenticalFiles() {
-		return identicalFiles;
-	}
-
-	public int getDeletedFiles() {
-		return deletedFiles;
-	}
-
-	public long getDurationMillis() {
-		return durationMillis;
-	}
-
 }
