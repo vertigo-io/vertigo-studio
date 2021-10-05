@@ -28,33 +28,17 @@ import io.vertigo.core.lang.Assertion;
  *
  * @author pchretien, mlaroche
  */
-public final class Source {
-	private final String type;
-	private final String path;
+public record Source(
+		String type,
+		String path) {
 
 	public static Source of(final String type, final String path) {
 		return new Source(type, path);
 	}
 
-	private Source(final String type, final String path) {
+	public Source {
 		Assertion.check()
 				.isNotBlank(type)
 				.isNotBlank(path);
-		//-----
-		this.type = type;
-		this.path = path;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public String getPath() {
-		return path;
-	}
-
-	@Override
-	public String toString() {
-		return "{ type: " + type + ", path: " + path + " }";
 	}
 }

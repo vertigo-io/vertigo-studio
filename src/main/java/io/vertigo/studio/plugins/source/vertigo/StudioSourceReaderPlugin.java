@@ -81,7 +81,7 @@ public final class StudioSourceReaderPlugin implements SourceReaderPlugin {
 		Assertion.check()
 				.isNotNull(sources)
 				.isNotNull(notebook);
-		//---	
+		//---
 		//Création du repositoy des instances le la grammaire (=> model)
 		final DslSketchFactory sketchFactory = new DynamoSketchFactory();
 		final DslRawRepository rawRepository = new DslRawRepository(sketchFactory);
@@ -92,9 +92,9 @@ public final class StudioSourceReaderPlugin implements SourceReaderPlugin {
 				.forEach(rawRepository::addRaw);
 
 		for (final Source source : sources) {
-			final Loader loader = loadersByType.get(source.getType());
+			final Loader loader = loadersByType.get(source.type());
 			Assertion.check().isNotNull(loader, "This resource {0} can not be parse by these loaders : {1}", source, loadersByType.keySet());
-			loader.load(source.getPath(), rawRepository);
+			loader.load(source.path(), rawRepository);
 		}
 
 		return rawRepository.solve(notebook);

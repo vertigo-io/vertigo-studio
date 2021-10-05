@@ -51,7 +51,7 @@ public class SourceManagerImpl implements SourceManager {
 	public Notebook read(final List<Source> resources) {
 		final Map<SourceReaderPlugin, List<Source>> resourcesByPlugin = resources
 				.stream()
-				.collect(Collectors.groupingBy(resource -> metamodelResourceParserPluginsByType.get(resource.getType())));
+				.collect(Collectors.groupingBy(resource -> metamodelResourceParserPluginsByType.get(resource.type())));
 
 		final Notebook notebook = new Notebook();
 		resourcesByPlugin.entrySet()

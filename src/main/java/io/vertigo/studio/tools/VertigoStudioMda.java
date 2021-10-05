@@ -193,7 +193,7 @@ public final class VertigoStudioMda {
 	private static List<Path> listPathToWatch(final NotebookConfig notebookConfig, final ResourceManager resourceManager) {
 		return notebookConfig.metaModelResources()
 				.stream()
-				.map(source -> resourceManager.resolve(source.getPath()))
+				.map(source -> resourceManager.resolve(source.path()))
 				.filter(url -> {
 					try {
 						return "file".equals(url.toURI().getScheme());

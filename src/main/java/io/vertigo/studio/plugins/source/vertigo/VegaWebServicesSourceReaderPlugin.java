@@ -65,10 +65,10 @@ public final class VegaWebServicesSourceReaderPlugin implements SourceReaderPlug
 		Assertion.check()
 				.isNotNull(sources)
 				.isNotNull(notebook);
-		//---	
+		//---
 		final List<WebServiceSketch> webServiceSketch = new ArrayList<>();
 		for (final Source source : sources) {
-			final String resourcePath = source.getPath();
+			final String resourcePath = source.path();
 			if (resourcePath.endsWith(".*")) {
 				scanAndAddPackage(resourcePath.substring(0, resourcePath.length() - ".*".length()), webServiceSketch);
 			} else {
