@@ -127,15 +127,11 @@ public final class MermaidSimpleAssociationModel {
 	}
 
 	private static String cardinalityToMermaid(final Cardinality cardinality) {
-		switch (cardinality) {
-			case ONE:
-				return "1";
-			case OPTIONAL_OR_NULLABLE:
-				return "0..1";
-			case MANY:
-				return "*";
-			default:
-				throw new VSystemException("Unsuppported cardinality '{0}'", cardinality);
-		}
+		return switch (cardinality) {
+			case ONE -> "1";
+			case OPTIONAL_OR_NULLABLE -> "0..1";
+			case MANY -> "*";
+			default -> throw new VSystemException("Unsuppported cardinality '{0}'", cardinality);
+		};
 	}
 }
