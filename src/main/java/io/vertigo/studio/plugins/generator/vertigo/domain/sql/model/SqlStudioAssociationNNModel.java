@@ -51,7 +51,7 @@ public final class SqlStudioAssociationNNModel {
 	 * @return Association NN table
 	 */
 	public String getTableName() {
-		return associationSketch.getTableName();
+		return StringUtil.camelToConstCase(associationSketch.getTableName());
 	}
 
 	/**
