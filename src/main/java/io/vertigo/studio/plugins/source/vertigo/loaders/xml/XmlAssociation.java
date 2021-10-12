@@ -33,6 +33,7 @@ import io.vertigo.core.util.StringUtil;
  * @author pchretien, mlaroche, pforhan
  */
 public final class XmlAssociation {
+	private static final int LAST_SEPARATOR = 6;
 	private static final int SECOND_SEPARATOR = 3;
 	private static final int FIRST_SEPARATOR = 0;
 	private final String code;
@@ -115,9 +116,10 @@ public final class XmlAssociation {
 	 * @return Nom de l'association défini par l'utilisateur. (Peut être null)
 	 */
 	public String getCodeName() {
-		if (code.length() > 6
+		if (code.length() > 7 //we need at least 2 chars after the 2 trigrams
 				&& StringUtil.isUpperCamelCase(code.substring(FIRST_SEPARATOR, FIRST_SEPARATOR + 2))
-				&& StringUtil.isUpperCamelCase(code.substring(SECOND_SEPARATOR, SECOND_SEPARATOR + 2))) {
+				&& StringUtil.isUpperCamelCase(code.substring(SECOND_SEPARATOR, SECOND_SEPARATOR + 2))
+				&& StringUtil.isUpperCamelCase(code.substring(LAST_SEPARATOR, LAST_SEPARATOR + 2))) {
 			return code.substring(6);
 		}
 		return null;
@@ -174,7 +176,7 @@ public final class XmlAssociation {
 
 	/**
 	 * @return Code de l'entité A participant à l'association
-	
+
 	 */
 	public String getCodeA() {
 		return codeA;
