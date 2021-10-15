@@ -55,12 +55,12 @@ public final class GeneratorConfig {
 				.isNotBlank(targetGenDir, "Le repertoire des fichiers generes [targetGenDir] doit etre renseigné !")
 				.isNotBlank(projectPackageName, "le package racine du projet doit être renseigne ! ")
 				.isNotBlank(encoding, "l'encoding des fichiers gérénés [encoding] doit etre renseigné !")
-				.isNotNull(properties);
+				.isNotNull(properties)
+				.isTrue(targetGenDir.endsWith("/"), "Le chemin {0} doit finir par '/'.", targetGenDir);
 		//-----
 		this.targetGenDir = targetGenDir;
 		this.projectPackageName = projectPackageName;
 		this.encoding = encoding;
-		Assertion.check().isTrue(targetGenDir.endsWith("/"), "Le chemin {0} doit finir par '/'.", targetGenDir);
 		this.properties = properties;
 	}
 
