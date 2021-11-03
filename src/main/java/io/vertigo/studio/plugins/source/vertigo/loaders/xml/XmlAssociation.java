@@ -116,10 +116,11 @@ public final class XmlAssociation {
 	 * @return Nom de l'association défini par l'utilisateur. (Peut être null)
 	 */
 	public String getCodeName() {
-		if (code.length() > 7 //we need at least 2 chars after the 2 trigrams
+		if (code.length() > 6 //we need at least 2 chars after the 2 trigrams
 				&& StringUtil.isUpperCamelCase(code.substring(FIRST_SEPARATOR, FIRST_SEPARATOR + 2))
 				&& StringUtil.isUpperCamelCase(code.substring(SECOND_SEPARATOR, SECOND_SEPARATOR + 2))
-				&& StringUtil.isUpperCamelCase(code.substring(LAST_SEPARATOR, LAST_SEPARATOR + 2))) {
+				&& (code.length() > 7 && StringUtil.isUpperCamelCase(code.substring(LAST_SEPARATOR, LAST_SEPARATOR + 2))
+						|| Character.isDigit(code.charAt(LAST_SEPARATOR)))) {
 			return code.substring(6);
 		}
 		return null;
@@ -176,7 +177,7 @@ public final class XmlAssociation {
 
 	/**
 	 * @return Code de l'entité A participant à l'association
-
+	
 	 */
 	public String getCodeA() {
 		return codeA;
