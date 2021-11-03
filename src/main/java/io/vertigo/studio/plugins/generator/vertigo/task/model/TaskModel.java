@@ -115,7 +115,7 @@ public final class TaskModel {
 	public String getRequest() {
 		return taskSketch.getRequest()
 				.replaceAll("\"", "\\\\\"")
-				.replaceAll("\\n", "\" + \n \"");
+				.replaceAll("\\n", "\\\\n\" + \n \" ");
 	}
 
 	/**
