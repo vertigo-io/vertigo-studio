@@ -178,7 +178,7 @@ public abstract class AbstractXmlLoader implements Loader {
 
 		if (isAssociationNN) {
 			//Dans le cas d'une association NN il faut établir le nom de la table intermédiaire qui porte les relations
-			final String tableName = association.getCode();
+			final String tableName = StringUtil.camelToConstCase(association.getCode()); // Need a constCase for tableName
 			associationRawBuilder.addPropertyValue(KspProperty.TABLE_NAME, tableName);
 			LOGGER.trace("isAssociationNN:Code= {}", association.getCode());
 		} else {
