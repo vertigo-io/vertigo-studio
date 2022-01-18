@@ -96,7 +96,7 @@ public class DaoTestClass {
 						.withC3p0(
 								Param.of("dataBaseClass", "io.vertigo.database.impl.sql.vendor.h2.H2DataBase"),
 								Param.of("jdbcDriver", "org.h2.Driver"),
-								Param.of("jdbcUrl", "jdbc:h2:mem:database"))
+								Param.of("jdbcUrl", "jdbc:h2:mem:database;NON_KEYWORDS=YEAR"))
 						.build())
 				.addModule(new DataModelFeatures().build())
 				.addModule(new DataStoreFeatures()
