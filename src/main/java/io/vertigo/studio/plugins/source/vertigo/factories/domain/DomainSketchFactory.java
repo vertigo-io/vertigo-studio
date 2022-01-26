@@ -194,6 +194,7 @@ public final class DomainSketchFactory implements DslSketchFactory {
 		final String sortFieldName = (String) dtDslSketch.getPropertyValue(KspProperty.SORT_FIELD);
 		final String displayFieldName = (String) dtDslSketch.getPropertyValue(KspProperty.DISPLAY_FIELD);
 		final String handleFieldName = (String) dtDslSketch.getPropertyValue(KspProperty.HANDLE_FIELD);
+		final String keyFieldName = (String) dtDslSketch.getPropertyValue(KspProperty.KEY_FIELD);
 		//-----
 		final String tmpStereotype = (String) dtDslSketch.getPropertyValue(KspProperty.STEREOTYPE);
 		//Si Stereotype est non renseigné on suppose que la définition est DtStereotype.Data.
@@ -210,7 +211,8 @@ public final class DomainSketchFactory implements DslSketchFactory {
 				.withDataSpace(dataSpace)
 				.withSortField(sortFieldName)
 				.withDisplayField(displayFieldName)
-				.withHandleField(handleFieldName);
+				.withHandleField(handleFieldName)
+				.withKeyField(keyFieldName);
 
 		if (stereotype != null) {
 			dtDefinitionBuilder.withStereoType(stereotype);

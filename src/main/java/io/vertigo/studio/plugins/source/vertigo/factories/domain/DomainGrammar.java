@@ -28,6 +28,7 @@ import static io.vertigo.studio.plugins.source.vertigo.KspProperty.FK_FIELD_NAME
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.FRAGMENT_OF;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.HANDLE_FIELD;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.INDEX_TYPE;
+import static io.vertigo.studio.plugins.source.vertigo.KspProperty.KEY_FIELD;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.LABEL;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.LABEL_A;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.LABEL_B;
@@ -139,6 +140,7 @@ public final class DomainGrammar implements DslGrammar {
 				.addOptionalField(DISPLAY_FIELD, String)
 				.addOptionalField(SORT_FIELD, String)
 				.addOptionalField(HANDLE_FIELD, String)
+				.addOptionalField(KEY_FIELD, String)
 				.addManyFields(DATA_FIELD, DT_DATA_FIELD_ENTITY)
 				.addManyFields(COMPUTED_FIELD, DT_COMPUTED_FIELD_ENTITY)
 				.addOptionalField(ID_FIELD, DT_ID_FIELD_ENTITY)

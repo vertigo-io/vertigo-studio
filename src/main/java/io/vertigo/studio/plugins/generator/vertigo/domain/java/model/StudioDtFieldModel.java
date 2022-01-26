@@ -138,6 +138,13 @@ public final class StudioDtFieldModel {
 	}
 
 	/**
+	 * @return Label du champ
+	 */
+	public boolean isKeyField() {
+		return dtSketch.getKeyField().isPresent() && dtSketch.getKeyField().get().getName().equals(dtField.getName());
+	}
+
+	/**
 	 * @return Si la propriété est requise
 	 */
 	public boolean isRequired() {

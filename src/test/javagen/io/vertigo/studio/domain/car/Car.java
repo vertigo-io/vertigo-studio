@@ -19,12 +19,12 @@ package io.vertigo.studio.domain.car;
 
 import io.vertigo.core.lang.Generated;
 import io.vertigo.datamodel.structure.model.Entity;
-import io.vertigo.datamodel.structure.model.UID;
-import io.vertigo.datamodel.structure.stereotype.Field;
-import io.vertigo.datamodel.structure.util.DtObjectUtil;
 import io.vertigo.datastore.impl.entitystore.EnumStoreVAccessor;
 import io.vertigo.datastore.impl.entitystore.StoreListVAccessor;
+import io.vertigo.datamodel.structure.model.UID;
 import io.vertigo.datastore.impl.entitystore.StoreVAccessor;
+import io.vertigo.datamodel.structure.stereotype.Field;
+import io.vertigo.datamodel.structure.util.DtObjectUtil;
 
 /**
  * This class is automatically generated.
@@ -91,7 +91,7 @@ public final class Car implements Entity {
 	public UID<Car> getUID() {
 		return UID.of(this);
 	}
-
+	
 	/**
 	 * Champ : ID.
 	 * Récupère la valeur de la propriété 'identifiant de la voiture'.
@@ -110,7 +110,7 @@ public final class Car implements Entity {
 	public void setId(final Long id) {
 		this.id = id;
 	}
-
+	
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Constructeur'.
@@ -129,7 +129,7 @@ public final class Car implements Entity {
 	public void setManufacturer(final String manufacturer) {
 		this.manufacturer = manufacturer;
 	}
-
+	
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Modèle'.
@@ -148,7 +148,7 @@ public final class Car implements Entity {
 	public void setModel(final String model) {
 		this.model = model;
 	}
-
+	
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Descriptif'.
@@ -167,7 +167,7 @@ public final class Car implements Entity {
 	public void setDescription(final String description) {
 		this.description = description;
 	}
-
+	
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Année'.
@@ -186,7 +186,7 @@ public final class Car implements Entity {
 	public void setYear(final Integer year) {
 		this.year = year;
 	}
-
+	
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Kilométrage'.
@@ -205,7 +205,7 @@ public final class Car implements Entity {
 	public void setKilo(final Integer kilo) {
 		this.kilo = kilo;
 	}
-
+	
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Prix'.
@@ -224,7 +224,7 @@ public final class Car implements Entity {
 	public void setPrice(final Integer price) {
 		this.price = price;
 	}
-
+	
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Consommation'.
@@ -243,13 +243,13 @@ public final class Car implements Entity {
 	public void setConsommation(final java.math.BigDecimal consommation) {
 		this.consommation = consommation;
 	}
-
+	
 	/**
 	 * Champ : FOREIGN_KEY.
 	 * Récupère la valeur de la propriété 'Motor type'.
 	 * @return String mtyCd
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyString", label = "Motor type", fkDefinition = "DtMotorType")
+	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyString", label = "Motor type", fkDefinition = "DtMotorType" )
 	public String getMtyCd() {
 		return (String) mtyCdAccessor.getId();
 	}
@@ -262,13 +262,13 @@ public final class Car implements Entity {
 	public void setMtyCd(final String mtyCd) {
 		mtyCdAccessor.setId(mtyCd);
 	}
-
+	
 	/**
 	 * Champ : FOREIGN_KEY.
 	 * Récupère la valeur de la propriété 'Famille'.
 	 * @return Long famId <b>Obligatoire</b>
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Famille", fkDefinition = "DtFamille")
+	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Famille", fkDefinition = "DtFamille", cardinality = io.vertigo.core.lang.Cardinality.ONE )
 	public Long getFamId() {
 		return (Long) famIdAccessor.getId();
 	}
@@ -282,7 +282,7 @@ public final class Car implements Entity {
 		famIdAccessor.setId(famId);
 	}
 
-	/**
+ 	/**
 	 * Association : Famille.
 	 * @return l'accesseur vers la propriété 'Famille'
 	 */
@@ -290,14 +290,14 @@ public final class Car implements Entity {
 		return famIdAccessor;
 	}
 
-	/**
+ 	/**
 	 * Association : Motor type.
 	 * @return l'accesseur vers la propriété 'Motor type'
 	 */
 	public EnumStoreVAccessor<io.vertigo.studio.domain.car.MotorType, io.vertigo.studio.domain.car.MotorTypeEnum> motorType() {
 		return mtyCdAccessor;
 	}
-
+	
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {

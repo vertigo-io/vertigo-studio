@@ -40,6 +40,8 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		Car(io.vertigo.studio.domain.car.Car.class),
 		/** Objet de données City. */
 		City(io.vertigo.studio.domain.stereotype.City.class),
+		/** Objet de données CityDisplay. */
+		CityDisplay(io.vertigo.studio.domain.stereotype.CityDisplay.class),
 		/** Objet de données Command. */
 		Command(io.vertigo.studio.domain.stereotype.Command.class),
 		/** Objet de données CommandType. */
@@ -116,6 +118,15 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		label,
 		/** Propriété 'Postal code'. */
 		postalCode	}
+
+	/**
+	 * Enumération des champs de CityDisplay.
+	 */
+	public enum CityDisplayFields implements DtFieldName<io.vertigo.studio.domain.stereotype.CityDisplay> {
+		/** Propriété 'id'. */
+		citId,
+		/** Propriété 'Label'. */
+		label	}
 
 	/**
 	 * Enumération des champs de Command.

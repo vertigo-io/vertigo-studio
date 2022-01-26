@@ -77,6 +77,11 @@ public final class KspProperty {
 	public static final String HANDLE_FIELD = "HANDLE_FIELD";
 
 	/**
+	 * Champ qui sert pour la clé. (Un au plus par DT)
+	 */
+	public static final String KEY_FIELD = "KEY_FIELD";
+
+	/**
 	 * Le Stereotype appliqué au DT : Data (defaut), MasterData ou KeyConcept
 	 */
 	public static final String STEREOTYPE = "STEREOTYPE";
