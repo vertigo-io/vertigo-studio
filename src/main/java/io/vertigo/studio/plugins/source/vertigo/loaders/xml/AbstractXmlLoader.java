@@ -21,7 +21,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
 
-import javax.xml.XMLConstants;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -34,6 +33,7 @@ import io.vertigo.core.lang.Cardinality;
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.core.util.StringUtil;
+import io.vertigo.core.util.XmlUtil;
 import io.vertigo.studio.impl.source.dsl.entity.DslEntity;
 import io.vertigo.studio.impl.source.dsl.raw.DslRaw;
 import io.vertigo.studio.impl.source.dsl.raw.DslRawBuilder;
@@ -50,6 +50,7 @@ import io.vertigo.studio.plugins.source.vertigo.loaders.Loader;
  * @author pchretien, mlaroche
  */
 public abstract class AbstractXmlLoader implements Loader {
+
 	private static final int MAX_COLUMN_LENGTH = 30;
 	private static final Logger LOGGER = LogManager.getLogger(AbstractXmlLoader.class);
 
@@ -76,7 +77,7 @@ public abstract class AbstractXmlLoader implements Loader {
 
 		try {
 			final SAXParserFactory factory = SAXParserFactory.newInstance();
-			factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+			XmlUtil.secureXmlXXEByOwasp(factory);
 
 			final SAXParser saxParser = factory.newSAXParser();
 			try (final InputStream is = xmiFileURL.openStream()) {
