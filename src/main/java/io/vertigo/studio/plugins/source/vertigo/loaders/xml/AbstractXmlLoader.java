@@ -33,7 +33,6 @@ import io.vertigo.core.lang.Cardinality;
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.core.util.XmlUtil;
 import io.vertigo.studio.impl.source.dsl.entity.DslEntity;
 import io.vertigo.studio.impl.source.dsl.raw.DslRaw;
 import io.vertigo.studio.impl.source.dsl.raw.DslRawBuilder;
@@ -77,7 +76,7 @@ public abstract class AbstractXmlLoader implements Loader {
 
 		try {
 			final SAXParserFactory factory = SAXParserFactory.newInstance();
-			XmlUtil.secureXmlXXEByOwasp(factory);
+			io.vertigo.core.util.XmlUtil.secureXmlXXEByOwasp(factory);
 
 			final SAXParser saxParser = factory.newSAXParser();
 			try (final InputStream is = xmiFileURL.openStream()) {
