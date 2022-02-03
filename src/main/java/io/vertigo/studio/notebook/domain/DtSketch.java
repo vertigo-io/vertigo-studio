@@ -1,7 +1,7 @@
 /**
  * vertigo - application development platform
  *
- * Copyright (C) 2013-2021, Vertigo.io, team@vertigo.io
+ * Copyright (C) 2013-2022, Vertigo.io, team@vertigo.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,6 +61,7 @@ public final class DtSketch extends AbstractSketch {
 	private final Optional<DtSketchField> sortFieldOpt;
 	private final Optional<DtSketchField> displayFieldOpt;
 	private final Optional<DtSketchField> handleFieldOpt;
+	private final Optional<DtSketchField> keyFieldOpt;
 
 	private final String dataSpace;
 
@@ -76,7 +77,8 @@ public final class DtSketch extends AbstractSketch {
 			final String dataSpace,
 			final Optional<DtSketchField> sortFieldOpt,
 			final Optional<DtSketchField> displayFieldOpt,
-			final Optional<DtSketchField> handleFieldOpt) {
+			final Optional<DtSketchField> handleFieldOpt,
+			final Optional<DtSketchField> keyFieldOpt) {
 		super(name);
 		//---
 		Assertion.check()
@@ -98,6 +100,7 @@ public final class DtSketch extends AbstractSketch {
 		this.sortFieldOpt = sortFieldOpt;
 		this.displayFieldOpt = displayFieldOpt;
 		this.handleFieldOpt = handleFieldOpt;
+		this.keyFieldOpt = keyFieldOpt;
 
 		for (final DtSketchField dtField : dtFields) {
 			Assertion.check()
@@ -118,7 +121,8 @@ public final class DtSketch extends AbstractSketch {
 						.isTrue(StudioStereotype.Fragment == stereotype, "Error on {0} with sterotype {1}, If an object is a fragment then it must have this stereotype", name, stereotype))
 				//Persistent => ID
 				.when(stereotype.isPersistent(), () -> Assertion.check()
-						.isTrue(idFieldOpt.isPresent(), "Error on {0}, If an object is persistent then it must have an ID", name))
+						.isTrue(idFieldOpt.isPresent(), "Error on {0}, If an object is persistent then it must have an ID", name)
+						.isTrue(keyFieldOpt.isEmpty(), "Error on {0}, If an object is persistent then it must not have a keyField", name))
 				.when(!stereotype.isPersistent(), () -> Assertion.check()
 						.isTrue(idFieldOpt.isEmpty(), "Error on {0}, If an object is not persistent then it must have no ID", name));
 	}
@@ -248,6 +252,13 @@ public final class DtSketch extends AbstractSketch {
 	 */
 	public Optional<DtSketchField> getHandleField() {
 		return handleFieldOpt;
+	}
+
+	/**
+	 * @return Champ représentant la clé
+	 */
+	public Optional<DtSketchField> getKeyField() {
+		return keyFieldOpt;
 	}
 
 	/**

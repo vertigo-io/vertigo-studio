@@ -1,7 +1,7 @@
 /**
  * vertigo - application development platform
  *
- * Copyright (C) 2013-2021, Vertigo.io, team@vertigo.io
+ * Copyright (C) 2013-2022, Vertigo.io, team@vertigo.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,20 +17,19 @@
  */
 package io.vertigo.studio.dao.car;
 
-import java.util.Optional;
-
 import javax.inject.Inject;
 
+import java.util.Optional;
 import io.vertigo.core.lang.Generated;
 import io.vertigo.core.node.Node;
-import io.vertigo.datamodel.smarttype.SmartTypeManager;
-import io.vertigo.datamodel.task.TaskManager;
 import io.vertigo.datamodel.task.definitions.TaskDefinition;
 import io.vertigo.datamodel.task.model.Task;
 import io.vertigo.datamodel.task.model.TaskBuilder;
 import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.datastore.impl.dao.DAO;
 import io.vertigo.datastore.impl.dao.StoreServices;
+import io.vertigo.datamodel.smarttype.SmartTypeManager;
+import io.vertigo.datamodel.task.TaskManager;
 import io.vertigo.studio.domain.car.Car;
 
 /**
@@ -51,6 +50,7 @@ public final class CarDAO extends DAO<Car, java.lang.Long> implements StoreServi
 		super(Car.class, entityStoreManager, taskManager, smartTypeManager);
 	}
 
+
 	/**
 	 * Creates a taskBuilder.
 	 * @param name  the name of the task
@@ -67,8 +67,8 @@ public final class CarDAO extends DAO<Car, java.lang.Long> implements StoreServi
 	*/
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkGetFirstCar",
-			request = "select * from car" +
-					"				limit 1",
+			request = "select * from car\n" + 
+ " 				limit 1",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtCar")
 	public Optional<io.vertigo.studio.domain.car.Car> getFirstCar() {

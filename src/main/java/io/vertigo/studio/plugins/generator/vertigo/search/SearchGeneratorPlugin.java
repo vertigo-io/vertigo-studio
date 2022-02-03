@@ -1,7 +1,7 @@
 /**
  * vertigo - application development platform
  *
- * Copyright (C) 2013-2021, Vertigo.io, team@vertigo.io
+ * Copyright (C) 2013-2022, Vertigo.io, team@vertigo.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.util.MapBuilder;
@@ -32,7 +32,6 @@ import io.vertigo.studio.impl.generator.FileGenerator;
 import io.vertigo.studio.impl.generator.GeneratorPlugin;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.domain.DtSketch;
-import io.vertigo.studio.notebook.domain.StudioStereotype;
 import io.vertigo.studio.notebook.search.FacetSketch;
 import io.vertigo.studio.notebook.search.FacetedQuerySketch;
 import io.vertigo.studio.notebook.search.SearchIndexSketch;
@@ -76,10 +75,12 @@ public final class SearchGeneratorPlugin implements GeneratorPlugin {
 			final GeneratorConfig generatorConfig,
 			final GeneratorResultBuilder generatorResultBuilder) {
 
-		notebook.getAll(DtSketch.class)
+		notebook.getAll(SearchIndexSketch.class)
 				.stream()
-				.filter(dtSketch -> dtSketch.getStereotype() == StudioStereotype.KeyConcept)
-				.forEach(dtSketch -> generateSearchAo(notebook, targetSubDir, generatorConfig, generatorResultBuilder, dtSketch));
+				.map(SearchIndexSketch::getIndexDtSketch)
+				.map(DtSketch::getKey)
+				.distinct()
+				.forEach(dtSketchKey -> generateSearchAo(notebook, targetSubDir, generatorConfig, generatorResultBuilder, notebook.resolve(dtSketchKey.getName(), DtSketch.class)));
 
 	}
 
@@ -91,10 +92,10 @@ public final class SearchGeneratorPlugin implements GeneratorPlugin {
 			final String targetSubDir,
 			final GeneratorConfig generatorConfig,
 			final GeneratorResultBuilder generatorResultBuilder,
-			final DtSketch dtSketch) {
-		Assertion.check().isNotNull(dtSketch);
+			final DtSketch dtIndexSketch) {
+		Assertion.check().isNotNull(dtIndexSketch);
 
-		final String dtPackageName = dtSketch.getPackageName();
+		final String dtPackageName = dtIndexSketch.getPackageName();
 		final String packageNamePrefix = generatorConfig.getProjectPackageName();
 		Assertion.check()
 				.isTrue(dtPackageName.startsWith(packageNamePrefix), "Package name {0}, must begin with normalised prefix: {1}", dtPackageName, packageNamePrefix)
@@ -112,53 +113,48 @@ public final class SearchGeneratorPlugin implements GeneratorPlugin {
 		//On construit le nom du package à partir du package de la DT et de la feature.
 		final String packageName = generatorConfig.getProjectPackageName() + featureName + ".search" + subpackage;
 
-		final SearchDtModel searchDtModel = new SearchDtModel(dtSketch);
+		final SearchDtModel searchDtModel = new SearchDtModel(dtIndexSketch);
 
-		final Optional<SearchIndexSketch> searchIndexSketchOpt = notebook.getAll(SearchIndexSketch.class)
+		final List<SearchIndexSketch> searchIndexSketches = notebook.getAll(SearchIndexSketch.class)
 				.stream()
-				.filter(indexSketch -> indexSketch.getKeyConceptDtSketch().equals(dtSketch))
-				.findFirst();
+				.filter(indexSketch -> indexSketch.getIndexDtSketch().equals(dtIndexSketch))
+				.collect(Collectors.toList());
 
 		final List<FacetedQueryModel> facetedQueryDefinitions = new ArrayList<>();
 		for (final FacetedQuerySketch facetedQuerySketch : notebook.getAll(FacetedQuerySketch.class)) {
-			if (facetedQuerySketch.getKeyConceptDtSketch().equals(dtSketch)) {
+			if (facetedQuerySketch.getIndexDtSketch().equals(dtIndexSketch)) {
 				final FacetedQueryModel templateFacetedQueryModel = new FacetedQueryModel(facetedQuerySketch, DomainUtil.createClassNameFromDtFunction(notebook));
 				facetedQueryDefinitions.add(templateFacetedQueryModel);
 			}
 		}
 
 		final List<FacetModel> facetDefinitions = new ArrayList<>();
-		if (searchIndexSketchOpt.isPresent()) {
-			for (final FacetSketch facetSketch : notebook.getAll(FacetSketch.class)) {
-				if (facetSketch.getIndexDtSketch().equals(searchIndexSketchOpt.get().getIndexDtSketch())) {
-					final FacetModel templateFacetedQueryDefinition = new FacetModel(facetSketch);
-					facetDefinitions.add(templateFacetedQueryDefinition);
-				}
+		for (final FacetSketch facetSketch : notebook.getAll(FacetSketch.class)) {
+			if (facetSketch.getIndexDtSketch().equals(dtIndexSketch)) {
+				final FacetModel templateFacetedQueryDefinition = new FacetModel(facetSketch);
+				facetDefinitions.add(templateFacetedQueryDefinition);
 			}
 		}
 
-		if (searchIndexSketchOpt.isPresent()) {
+		final Map<String, Object> model = new MapBuilder<String, Object>()
+				.put("packageName", packageName)
+				.put("facetedQueryDefinitions", facetedQueryDefinitions)
+				.put("facetDefinitions", facetDefinitions)
+				.put("dtDefinition", searchDtModel)
+				.put("indexDtDefinition", new SearchDtModel(dtIndexSketch))
+				.put("searchIndexDefinitions", searchIndexSketches.stream().map(SearchIndexModel::new).collect(Collectors.toList()))
+				.put("hasCustomFacet", facetDefinitions.stream().anyMatch(FacetModel::isCustom))
+				.put("hasRangeFacet", facetDefinitions.stream().anyMatch(FacetModel::isRange))
+				.build();
 
-			final Map<String, Object> model = new MapBuilder<String, Object>()
-					.put("packageName", packageName)
-					.put("facetedQueryDefinitions", facetedQueryDefinitions)
-					.put("facetDefinitions", facetDefinitions)
-					.put("dtDefinition", searchDtModel)
-					.put("indexDtDefinition", new SearchDtModel(searchIndexSketchOpt.get().getIndexDtSketch()))
-					.put("searchIndexDefinition", new SearchIndexModel(searchIndexSketchOpt.get()))
-					.put("hasCustomFacet", facetedQueryDefinitions.stream().anyMatch(FacetedQueryModel::hasCustomFacet))
-					.put("hasRangeFacet", facetedQueryDefinitions.stream().anyMatch(FacetedQueryModel::hasRangeFacet))
-					.build();
-
-			FileGenerator.builder(generatorConfig)
-					.withModel(model)
-					.withFileName(searchDtModel.getClassSimpleName() + "SearchClient.java")
-					.withGenSubDir(targetSubDir)
-					.withPackageName(packageName)
-					.withTemplateName(SearchGeneratorPlugin.class, "template/search_client.ftl")
-					.build()
-					.generateFile(generatorResultBuilder);
-		}
+		FileGenerator.builder(generatorConfig)
+				.withModel(model)
+				.withFileName(searchDtModel.getClassSimpleName() + "SearchClient.java")
+				.withGenSubDir(targetSubDir)
+				.withPackageName(packageName)
+				.withTemplateName(SearchGeneratorPlugin.class, "template/search_client.ftl")
+				.build()
+				.generateFile(generatorResultBuilder);
 	}
 
 	@Override

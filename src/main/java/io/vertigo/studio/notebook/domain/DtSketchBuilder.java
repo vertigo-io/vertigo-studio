@@ -1,7 +1,7 @@
 /**
  * vertigo - application development platform
  *
- * Copyright (C) 2013-2021, Vertigo.io, team@vertigo.io
+ * Copyright (C) 2013-2022, Vertigo.io, team@vertigo.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -65,6 +65,7 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 	private String mySortFieldName;
 	private String myDisplayFieldName;
 	private String myHandleFieldName;
+	private String myKeyFieldName;
 
 	/**
 	 * Constructor.
@@ -313,6 +314,16 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 		return this;
 	}
 
+	/**
+	 * Specifies which field to be used for key to distinguish elements in a collection
+	 * @param keyFieldName fieldName to use
+	 * @return this builder
+	 */
+	public DtSketchBuilder withKeyField(final String keyFieldName) {
+		myKeyFieldName = keyFieldName;
+		return this;
+	}
+
 	/** {@inheritDoc} */
 	@Override
 	public DtSketch build() {
@@ -352,6 +363,14 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 			handleField = null;
 		}
 
+		final DtSketchField keyField;
+		if (myKeyFieldName != null) {
+			keyField = findFieldByName(myKeyFieldName)
+					.orElseThrow(() -> new IllegalStateException(StringUtil.format("Key field '{0}' not found on '{1}'", myKeyFieldName, dtSketch)));
+		} else {
+			keyField = null;
+		}
+
 		dtSketch = new DtSketch(
 				myName,
 				Optional.ofNullable(myFragment),
@@ -361,7 +380,8 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 				myDataSpace == null ? "main" : myDataSpace,
 				Optional.ofNullable(sortField),
 				Optional.ofNullable(displayField),
-				Optional.ofNullable(handleField));
+				Optional.ofNullable(handleField),
+				Optional.ofNullable(keyField));
 		return dtSketch;
 	}
 

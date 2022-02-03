@@ -1,7 +1,7 @@
 /**
  * vertigo - application development platform
  *
- * Copyright (C) 2013-2021, Vertigo.io, team@vertigo.io
+ * Copyright (C) 2013-2022, Vertigo.io, team@vertigo.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@ import io.vertigo.core.util.StringUtil;
  * @author pchretien, mlaroche, pforhan
  */
 public final class XmlAssociation {
+	private static final int LAST_SEPARATOR = 6;
 	private static final int SECOND_SEPARATOR = 3;
 	private static final int FIRST_SEPARATOR = 0;
 	private final String code;
@@ -115,9 +116,11 @@ public final class XmlAssociation {
 	 * @return Nom de l'association défini par l'utilisateur. (Peut être null)
 	 */
 	public String getCodeName() {
-		if (code.length() > 6
+		if (code.length() > 6 //we need at least 2 chars after the 2 trigrams
 				&& StringUtil.isUpperCamelCase(code.substring(FIRST_SEPARATOR, FIRST_SEPARATOR + 2))
-				&& StringUtil.isUpperCamelCase(code.substring(SECOND_SEPARATOR, SECOND_SEPARATOR + 2))) {
+				&& StringUtil.isUpperCamelCase(code.substring(SECOND_SEPARATOR, SECOND_SEPARATOR + 2))
+				&& (code.length() > 7 && StringUtil.isUpperCamelCase(code.substring(LAST_SEPARATOR, LAST_SEPARATOR + 2))
+						|| Character.isDigit(code.charAt(LAST_SEPARATOR)))) {
 			return code.substring(6);
 		}
 		return null;

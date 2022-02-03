@@ -1,7 +1,7 @@
 /**
  * vertigo - application development platform
  *
- * Copyright (C) 2013-2021, Vertigo.io, team@vertigo.io
+ * Copyright (C) 2013-2022, Vertigo.io, team@vertigo.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.notebook.search.FacetSketch;
 import io.vertigo.studio.notebook.search.FacetedQuerySketch;
 import io.vertigo.studio.plugins.generator.vertigo.VertigoConstants.VertigoDefinitionPrefix;
 import io.vertigo.studio.plugins.generator.vertigo.util.DomainUtil;
@@ -81,20 +80,12 @@ public final class FacetedQueryModel {
 		return facetedQuerySketch.hasGeoSearch();
 	}
 
-	public boolean hasCustomFacet() {
-		return hasGeoSearch() || facetedQuerySketch.getFacetSketchs().stream().anyMatch(FacetSketch::isCustomFacet);
-	}
-
-	public boolean hasRangeFacet() {
-		return facetedQuerySketch.getFacetSketchs().stream().anyMatch(FacetSketch::isRangeFacet);
-	}
-
 	public String getGeoSearchQuery() {
 		return facetedQuerySketch.getGeoSearchQuery();
 	}
 
 	public String getKeyConceptDtDefinition() {
-		return VertigoDefinitionPrefix.DtDefinition.getPrefix() + facetedQuerySketch.getKeyConceptDtSketch().getLocalName();
+		return VertigoDefinitionPrefix.DtDefinition.getPrefix() + facetedQuerySketch.getIndexDtSketch().getLocalName();
 	}
 
 	public String getListFilterClassName() {

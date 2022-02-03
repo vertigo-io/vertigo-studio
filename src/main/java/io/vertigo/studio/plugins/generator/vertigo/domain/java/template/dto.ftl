@@ -115,6 +115,9 @@ public final class ${dtDefinition.classSimpleName} implements ${dtDefinition.ste
 	<#if dtField.isDisplayField()>
 	@io.vertigo.datamodel.structure.stereotype.DisplayField
 	</#if>
+	<#if dtField.isKeyField()>
+	@io.vertigo.datamodel.structure.stereotype.KeyField
+	</#if>
 	public ${dtField.javaType} get${dtField.name?cap_first}() {
 		return ${dtField.name};
 	}
@@ -143,6 +146,15 @@ public final class ${dtDefinition.classSimpleName} implements ${dtDefinition.ste
 		<#list annotations(dtField) as annotation>
 	${annotation}
 		</#list>
+	<#if dtField.isSortField()>
+	@io.vertigo.datamodel.structure.stereotype.SortField
+	</#if>
+	<#if dtField.isDisplayField()>
+	@io.vertigo.datamodel.structure.stereotype.DisplayField
+	</#if>
+	<#if dtField.isKeyField()>
+	@io.vertigo.datamodel.structure.stereotype.KeyField
+	</#if>
 	public ${dtField.javaType} get${dtField.name?cap_first}() {
 		${dtField.javaCode}
 	}

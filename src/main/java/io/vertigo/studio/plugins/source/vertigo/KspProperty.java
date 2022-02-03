@@ -1,7 +1,7 @@
 /**
  * vertigo - application development platform
  *
- * Copyright (C) 2013-2021, Vertigo.io, team@vertigo.io
+ * Copyright (C) 2013-2022, Vertigo.io, team@vertigo.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -75,6 +75,11 @@ public final class KspProperty {
 	 * Champ qui sert pour le handle. (Un au plus par DT)
 	 */
 	public static final String HANDLE_FIELD = "HANDLE_FIELD";
+
+	/**
+	 * Champ qui sert pour la clé. (Un au plus par DT)
+	 */
+	public static final String KEY_FIELD = "KEY_FIELD";
 
 	/**
 	 * Le Stereotype appliqué au DT : Data (defaut), MasterData ou KeyConcept
