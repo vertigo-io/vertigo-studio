@@ -17,6 +17,12 @@ create DtDefinition DtCity {
 		field postalCode	{ domain: DoKeyword, 		label:"Postal code",cardinality:"1"}			
 }
 
+create DtDefinition DtCityDisplay {
+		field citId 		{ domain: DoId,	label:"id"}
+		field label  		{ domain: DoFullText, 		label:"Label",		cardinality:"1"}	
+		keyField : "citId"
+}
+
 alter  DtDefinition DtCity {
 	stereotype : "MasterData",
 }

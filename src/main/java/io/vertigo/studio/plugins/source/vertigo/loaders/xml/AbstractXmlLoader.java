@@ -1,7 +1,7 @@
 /**
  * vertigo - application development platform
  *
- * Copyright (C) 2013-2021, Vertigo.io, team@vertigo.io
+ * Copyright (C) 2013-2022, Vertigo.io, team@vertigo.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
 
-import javax.xml.XMLConstants;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -50,6 +49,7 @@ import io.vertigo.studio.plugins.source.vertigo.loaders.Loader;
  * @author pchretien, mlaroche
  */
 public abstract class AbstractXmlLoader implements Loader {
+
 	private static final int MAX_COLUMN_LENGTH = 30;
 	private static final Logger LOGGER = LogManager.getLogger(AbstractXmlLoader.class);
 
@@ -76,7 +76,7 @@ public abstract class AbstractXmlLoader implements Loader {
 
 		try {
 			final SAXParserFactory factory = SAXParserFactory.newInstance();
-			factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+			io.vertigo.core.util.XmlUtil.secureXmlXXEByOwasp(factory);
 
 			final SAXParser saxParser = factory.newSAXParser();
 			try (final InputStream is = xmiFileURL.openStream()) {
@@ -178,7 +178,7 @@ public abstract class AbstractXmlLoader implements Loader {
 
 		if (isAssociationNN) {
 			//Dans le cas d'une association NN il faut établir le nom de la table intermédiaire qui porte les relations
-			final String tableName = association.getCode();
+			final String tableName = StringUtil.camelToConstCase(association.getCode()); // Need a constCase for tableName
 			associationRawBuilder.addPropertyValue(KspProperty.TABLE_NAME, tableName);
 			LOGGER.trace("isAssociationNN:Code= {}", association.getCode());
 		} else {
