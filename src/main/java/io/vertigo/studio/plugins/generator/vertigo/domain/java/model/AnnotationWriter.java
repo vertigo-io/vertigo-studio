@@ -75,7 +75,7 @@ class AnnotationWriter {
 		if (dtSketch.getFragment().isPresent()) {
 			// Générations des annotations Dynamo
 			final StringBuilder buffer = new StringBuilder()
-					.append('@').append(VertigoClassNames.Fragment.getClassName());
+					.append('@').append(VertigoClassNames.FragmentAnnotation.getClassName());
 			if (dtSketch.getFragment().isPresent()) {
 				buffer.append('(')
 						.append("fragmentOf = \"").append(dtSketch.getFragment().get().getKey().getName()).append('\"')
