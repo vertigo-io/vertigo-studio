@@ -152,7 +152,7 @@ public final class DomainGrammar implements DslGrammar {
 
 		final DslEntity fieldAliasEntity = DslEntity.builder("fieldAlias")
 				.addOptionalField(LABEL, String)
-				.addOptionalField(CARDINALITY, Boolean)
+				.addOptionalField(CARDINALITY, String)
 				.build();
 
 		FRAGMENT_ENTITY = DslEntity.builder("Fragment")
