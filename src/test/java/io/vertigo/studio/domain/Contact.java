@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.studio.source.vertigo.data.domain;
+package io.vertigo.studio.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
