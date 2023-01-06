@@ -109,7 +109,7 @@ public class TaskTestDummyGeneratorBasic implements TaskTestDummyGenerator {
 		/* Parcourt les champs */
 		def.getFields()
 				.stream()
-				.filter(dtField -> dtField.getType() == FieldType.COMPUTED)// we don't treat computed field (no setter)
+				.filter(dtField -> dtField.getType() != FieldType.COMPUTED)// we don't treat computed field (no setter)
 				.forEach(dtField -> {
 					final Class javaClass = dtField.getSmartTypeDefinition().getJavaClass();
 					final Object value;

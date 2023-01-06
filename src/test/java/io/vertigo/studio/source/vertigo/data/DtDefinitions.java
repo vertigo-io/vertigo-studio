@@ -20,7 +20,7 @@ package io.vertigo.studio.source.vertigo.data;
 import java.util.Arrays;
 import java.util.Iterator;
 
-import io.vertigo.studio.source.vertigo.data.domain.Contact;
+import io.vertigo.studio.domain.Contact;
 
 public final class DtDefinitions implements Iterable<Class<?>> {
 	@Override

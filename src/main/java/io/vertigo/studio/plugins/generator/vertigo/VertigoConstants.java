@@ -32,6 +32,7 @@ public class VertigoConstants {
 		DtStaticMasterData("io.vertigo.datamodel.structure.model.DtStaticMasterData"),
 		KeyConcept("io.vertigo.datamodel.structure.model.KeyConcept"),
 		Fragment("io.vertigo.datamodel.structure.model.Fragment"),
+		FragmentAnnotation("io.vertigo.datamodel.structure.stereotype.Fragment"),
 		AnnotationDataSpace("io.vertigo.datamodel.structure.stereotype.DataSpace"),
 		AnnotationForeignKey("io.vertigo.datamodel.structure.stereotype.ForeignKey"),
 		AnnotationAssociation("io.vertigo.datamodel.structure.stereotype.Association"),

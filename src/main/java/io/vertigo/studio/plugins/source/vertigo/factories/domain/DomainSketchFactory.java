@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
 
 import org.apache.logging.log4j.LogManager;
@@ -146,8 +147,8 @@ public final class DomainSketchFactory implements DslSketchFactory {
 			final DtSketchField aliasDtField = from.getField(alias.getKey().getName());
 
 			//--- REQUIRED
-			final Cardinality overiddenCardinality = Cardinality.fromSymbol((String) alias.getPropertyValue(KspProperty.CARDINALITY));
-			final Cardinality cardinality = overiddenCardinality != null ? overiddenCardinality : aliasDtField.getCardinality();
+			final Optional<Cardinality> overiddenCardinality = Optional.ofNullable((String) alias.getPropertyValue(KspProperty.CARDINALITY)).map(Cardinality::fromSymbol);
+			final Cardinality cardinality = overiddenCardinality.orElseGet(aliasDtField::getCardinality);
 
 			//--- LABEL
 			final String overiddenLabel = (String) alias.getPropertyValue(KspProperty.LABEL);
