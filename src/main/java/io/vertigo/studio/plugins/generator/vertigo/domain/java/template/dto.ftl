@@ -54,7 +54,7 @@ public final class ${dtDefinition.classSimpleName} implements ${dtDefinition.ste
 			</#if>
 		</#if>
 	</#list>
-	<#if dtDefinition.entity>
+	<#if dtDefinition.entity && !dtDefinition.fragment>
 
 	/** {@inheritDoc} */
 		<#list annotations("UID") as annotation>

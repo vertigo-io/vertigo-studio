@@ -1,7 +1,7 @@
 /**
  * vertigo - application development platform
  *
- * Copyright (C) 2013-2022, Vertigo.io, team@vertigo.io
+ * Copyright (C) 2013-2023, Vertigo.io, team@vertigo.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -190,7 +190,7 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 					.generateFile(generatorResultBuilder);
 
 			FileGenerator.builder(generatorConfig)
-					.withEncoding("ISO-8859-1")//pour les .properties on force l'ISO-8859-1 comme la norme l'impose
+					.withEncoding("UTF-8")//for .properties we force  UTF-8 which is the new standard for Java 9+
 					.withModel(model)
 					.withFileName(simpleClassName + ".properties")
 					.withGenSubDir(targetSubDir)

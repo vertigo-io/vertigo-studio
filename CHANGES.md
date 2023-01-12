@@ -6,6 +6,105 @@ Running 0.9.5-SNAPSHOT
 
 more to come :)
 
+Release 3.4.0 - 2022/10/12
+----------------------
+[Migration help](https://github.com/vertigo-io/vertigo/wiki/Vertigo-Migration-Guide#from-330-to-340)
+* Fix tableName for SQL generation
+* [TaskTests] fix taskTests generator : package name and set field value
+* [mermaid] better direction BT : parents dependencies are on top
+* [generator] properties in UTF-8 since java 9
+* [model] fix generation of fragments
+* fix optional cardinality on alias
+* taskoutput attribute has a name
+* update dependencies
+  - h2: 2.1.210 -> 2.1.214
+
+Release 3.3.0 - 2022/02/03
+----------------------
+[Migration help](https://github.com/vertigo-io/vertigo/wiki/Vertigo-Migration-Guide#from-320-to-330)
+* Centralize XML security in XmlUtil
+* SearchClient is now DtIndex oriented (result structure) +Link FacetedQuery To DtIndex
+* add a generator to create ksp from other sources (like oom or xmi)
+* fixed a bug when the sortField or the displayField is a computed
+* add keyField on dtSketch
+* Fix tableName of NN : const case
+* Fix tableName in constCase
+* Change detection of Association code : must have CamelCase AFTER 2 trigrams
+* Fix association code name with number (accept XxxYyy123)
+* [Task] Keep \n in request into SQL request
+* update dependencies
+  - h2: 2.0.206 -> 2.1.210
+  - slf4j 1.7.30 -> 1.7.33
+
+Release 3.2.0 - 2021/06/21
+----------------------
+[Migration help](https://github.com/vertigo-io/vertigo/wiki/Vertigo-Migration-Guide#from-311-to-320)
+* [Mermaid] zoom at pointer position
+* [Authorization] Fix uniqueness of operation sketch
+
+Release 3.1.1 - 2021/02/22
+----------------------
+[Migration help](https://github.com/vertigo-io/vertigo/wiki/Vertigo-Migration-Guide#from-310-to-311)
+__no changes in studio__
+
+Release 3.1.0 - 2021/02/05
+----------------------
+[Migration help](https://github.com/vertigo-io/vertigo/wiki/Vertigo-Migration-Guide#from-300-to-310)
+* [Studio] Fix missing cardinality on ForeignKey
+
+Release 3.0.0 - 2020/11/20
+----------------------
+__no changes in studio__
+
+Release 2.1.0 - 2019/11/12
+----------------------
+* [Studio] unused attribute
+* [studio] fix generated javadoc for xAO
+
+Release 2.0.0 - 2019/03/22
+----------------------
+* [Studio] unused attribute
+* [studio] multiple files for sql init of staticmasterdatas
+* [studio] dt objects can be splitted by feature
+* [studio] fix dao import when dt_index = keyconcept
+* [studio] created a SearchClient component dedicated to search access
+* [studio] Drop if exists
+* [studio] Removed sequences for non numeric PK
+
+Release 1.1.3 - 2019/03/21
+----------------------
+* [Studio] unused attribute
+
+Release 1.1.2 - 2018/06/28
+----------------------
+__no changes in studio__
+
+Release 1.1.1 - 2018/04/27
+----------------------
+* [studio] fix security generator
+* [Studio] Fixed TS mda
+* [Studio] Fixed computed fields for properties and enum
+
+Release 1.1.0 - 2017/12/07
+----------------------
+* [studio] static masterdata are accessed by an enum (via a dedicated accessor)
+* [studio] added sql generation for masterdata 
+* [studio] Updated Typescript generation for Focus4 (Node, Entity and masterData)
+* [studio] Task with one input of Data-Object are DAO instead of PAO
+* [studio] Changed sequence generator name in JPA annotation to be unique 
+
+Release 1.0.0 - 2017/07/07
+----------------------
+* [studio] move in vertigo repo
+*	[studio] refactored freemarker
+*	[studio] refactored all models (models, source objects and templates are completely independants)
+*	[studio] Fixed JPA annotations for Hibernate and its "special" sequences
+*	[studio] Added TS generator
+
+Release 0.9.4a - 2017/03/15
+----------------------
+* [Studio] Fix Studio issue 
+
 Release 0.9.4 - 2017/03/13
 ----------------------
 [Migration help](https://github.com/KleeGroup/vertigo/wiki/Vertigo-Migration-Guide#from-093-to-094)

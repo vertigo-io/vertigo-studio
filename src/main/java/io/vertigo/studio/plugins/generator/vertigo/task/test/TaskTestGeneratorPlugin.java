@@ -1,7 +1,7 @@
 /**
  * vertigo - application development platform
  *
- * Copyright (C) 2013-2022, Vertigo.io, team@vertigo.io
+ * Copyright (C) 2013-2023, Vertigo.io, team@vertigo.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -99,13 +99,27 @@ public final class TaskTestGeneratorPlugin implements GeneratorPlugin {
 			final GeneratorResultBuilder generatorResultBuilder) {
 
 		for (final Entry<DtSketch, List<TaskSketch>> entry : builDtSketchMap(notebook).entrySet()) {
-			final DtSketch dtDefinition = entry.getKey();
-			if (dtDefinition.isPersistent()) {
-				final String definitionPackageName = dtDefinition.getPackageName();
-				final String packageNamePrefix = generatorConfig.getProjectPackageName() + ".domain";
-				final String packageName = generatorConfig.getProjectPackageName() + ".dao" + definitionPackageName.substring(packageNamePrefix.length());
+			final DtSketch dtSketch = entry.getKey();
+			if (dtSketch.isPersistent()) {
+				final String dtPackageName = dtSketch.getPackageName();
+				final String packageNamePrefix = generatorConfig.getProjectPackageName();
+				// ---
+				Assertion.check()
+						.isTrue(dtPackageName.startsWith(packageNamePrefix), "Package name {0}, must begin with normalised prefix: {1}", dtPackageName, packageNamePrefix)
+						.isTrue(dtPackageName.substring(packageNamePrefix.length()).contains(".domain"), "Package name {0}, must contains the modifier .domain", dtPackageName);
+				// ---
+				//we need to find the featureName, aka between projectpackageName and .domain
+				final String featureName = dtPackageName.substring(packageNamePrefix.length(), dtPackageName.indexOf(".domain"));
+				if (!StringUtil.isBlank(featureName)) {
+					Assertion.check().isTrue(featureName.lastIndexOf('.') == 0, "The feature {0} must not contain any dot", featureName.substring(1));
+				}
+				// the subpackage is what's behind the .domain
+				final String subpackage = dtPackageName.substring(dtPackageName.indexOf(".domain") + ".domain".length());
+				// breaking change -> need to redefine what's the desired folder structure in javagen...
 
-				final String classSimpleName = dtDefinition.getClassSimpleName() + "DAO";
+				//On construit le nom du package à partir du package de la DT et de la feature.
+				final String packageName = generatorConfig.getProjectPackageName() + featureName + ".dao" + subpackage;
+				final String classSimpleName = dtSketch.getClassSimpleName() + "DAO";
 
 				generateAo(notebook, daosTargetSubDir, generatorConfig, generatorResultBuilder, entry.getValue(), packageName,
 						classSimpleName);

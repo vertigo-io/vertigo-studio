@@ -1,7 +1,7 @@
 /**
  * vertigo - application development platform
  *
- * Copyright (C) 2013-2022, Vertigo.io, team@vertigo.io
+ * Copyright (C) 2013-2023, Vertigo.io, team@vertigo.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,6 +32,7 @@ public class VertigoConstants {
 		DtStaticMasterData("io.vertigo.datamodel.structure.model.DtStaticMasterData"),
 		KeyConcept("io.vertigo.datamodel.structure.model.KeyConcept"),
 		Fragment("io.vertigo.datamodel.structure.model.Fragment"),
+		FragmentAnnotation("io.vertigo.datamodel.structure.stereotype.Fragment"),
 		AnnotationDataSpace("io.vertigo.datamodel.structure.stereotype.DataSpace"),
 		AnnotationForeignKey("io.vertigo.datamodel.structure.stereotype.ForeignKey"),
 		AnnotationAssociation("io.vertigo.datamodel.structure.stereotype.Association"),

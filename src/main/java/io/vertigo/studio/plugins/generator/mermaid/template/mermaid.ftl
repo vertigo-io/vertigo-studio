@@ -265,6 +265,7 @@
 								<h1 v-cloak >Module ${featureEntry.getKey()}</h1>
 								<div class="mermaid">
 								classDiagram
+								direction BT
 								<#list featureEntry.getValue() as dtSketch>
 									<@generateDtSketchClass dtSketch />
 								</#list>
