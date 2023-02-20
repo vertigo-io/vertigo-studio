@@ -122,7 +122,6 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 	 * @param fkDtSketchName the name of the linked definition
 	 * @param label the label of the field
 	 * @param domainSketch the domain of the field
-	 * @param required if the field is required
 	 * @return this builder
 	 */
 	public DtSketchBuilder addForeignKey(
@@ -182,7 +181,6 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 	 * @param fieldName the name of the field
 	 * @param domainSketch the domain of the field
 	 * @param label the label of the field
-	 * @param required if the field is required
 	 * @param persistent if the fiels is persistent
 	 * @return this builder
 	 */
