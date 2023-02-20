@@ -1,7 +1,7 @@
 /**
  * vertigo - application development platform
  *
- * Copyright (C) 2013-2022, Vertigo.io, team@vertigo.io
+ * Copyright (C) 2013-2023, Vertigo.io, team@vertigo.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ package io.vertigo.studio.source.vertigo.data;
 import java.util.Arrays;
 import java.util.Iterator;
 
-import io.vertigo.studio.source.vertigo.data.domain.Contact;
+import io.vertigo.studio.domain.Contact;
 
 public final class DtDefinitions implements Iterable<Class<?>> {
 	@Override

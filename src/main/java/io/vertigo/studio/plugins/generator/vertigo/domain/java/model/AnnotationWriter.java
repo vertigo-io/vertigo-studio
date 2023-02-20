@@ -1,7 +1,7 @@
 /**
  * vertigo - application development platform
  *
- * Copyright (C) 2013-2022, Vertigo.io, team@vertigo.io
+ * Copyright (C) 2013-2023, Vertigo.io, team@vertigo.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -75,7 +75,7 @@ class AnnotationWriter {
 		if (dtSketch.getFragment().isPresent()) {
 			// Générations des annotations Dynamo
 			final StringBuilder buffer = new StringBuilder()
-					.append('@').append(VertigoClassNames.Fragment.getClassName());
+					.append('@').append(VertigoClassNames.FragmentAnnotation.getClassName());
 			if (dtSketch.getFragment().isPresent()) {
 				buffer.append('(')
 						.append("fragmentOf = \"").append(dtSketch.getFragment().get().getKey().getName()).append('\"')

@@ -15,6 +15,11 @@ create DtDefinition DtTestEntity {
 	field 	label   	{domain : DoString	 	label :"label"	cardinality:"?" }
 }
 
+create Fragment DtTestFragment {
+	from:  DtTestEntity
+	alias label {}
+}
+
 create DtDefinition DtTestVobject {
 	field label   	{domain : DoString, 	label :"label", cardinality:"?" }
 	values : `{ "code1" : {"label" : "titi"}}`
