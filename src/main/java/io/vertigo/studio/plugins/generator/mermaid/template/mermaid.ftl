@@ -220,9 +220,12 @@
 		</style>
 	</head>
 	<body>
-		<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+		<script type="module">
+		  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+		  mermaid.initialize({startOnLoad:false, flowchart:{useMaxWidth:false}});
+		  window.mermaid = mermaid;
+		</script>
 		<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-		<script>mermaid.initialize({startOnLoad:true, flowchart:{useMaxWidth:false}});</script>
 		<div id="app">
 			<div class="main-content row">
 				<section class="columns fullheigth">
@@ -249,37 +252,33 @@
 					  </ul>
 					</aside>
 					<div class="column is-10 is-marginless fullheigth">
-						<#list dtSketchsByFeature.entrySet() as featureEntry>
-							<div v-if="activePanel === '${featureEntry.getKey()}' " >
-								<h1 v-cloak >Module ${featureEntry.getKey()}</h1>
-								<div class="mermaid">
-								classDiagram
-								<#list featureEntry.getValue() as dtSketch>
-									<@generateDtSketchClass dtSketch />
-								</#list>
-						 		</div>
-						 	</div>
-						</#list> 
-						<#list dtSketchsByPackage.entrySet() as featureEntry>
-							<div v-if="activePanel === '${featureEntry.getKey()}' " >
-								<h1 v-cloak >Module ${featureEntry.getKey()}</h1>
-								<div class="mermaid">
-								classDiagram
-								direction BT
-								<#list featureEntry.getValue() as dtSketch>
-									<@generateDtSketchClass dtSketch />
-								</#list>
-						 		</div>
-						 	</div>
-						</#list>
+						<div ref="graphDiv" class="graph"></div>
 					</div>
 				</section>
 			</div>
 		</div>
+		<script>
+			var graphData = {};
+			<#list dtSketchsByFeature.entrySet() as featureEntry>
+			graphData.${featureEntry.getKey()} = `classDiagram
+					<#list featureEntry.getValue() as dtSketch>
+						<@generateDtSketchClass dtSketch />
+					</#list>
+				`
+			</#list> 
+			<#list dtSketchsByPackage.entrySet() as featureEntry>
+			graphData.${featureEntry.getKey()} = `classDiagram
+					direction BT
+					<#list featureEntry.getValue() as dtSketch>
+						<@generateDtSketchClass dtSketch />
+					</#list>
+			 	`
+			</#list>
+		</script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/6.2.0/d3.min.js"></script>
 		<script>
 			function zoomAndPan() {
-				var div = d3.selectAll("div.mermaid");
+				var div = d3.selectAll("div.graph");
 				var svg = div.select("svg");
 				svg.attr('width', "100%");
 				svg.attr('height',  "100%");
@@ -311,8 +310,6 @@
 			}
 		</script> 
 		<script>
-			mermaid.init({noteMargin: 10}, ".mermaid");
-			zoomAndPan();
 			var app = new Vue({
 			  el: '#app',
 			  data: {
@@ -321,9 +318,12 @@
 			  methods : {
 			  	changeActivePanel : function(panelName) {
 			  		this.$data.activePanel = panelName
-			  		this.$nextTick(function() {
-			  			window.zoomAndPan();
-			  		})
+			  		element = this.$refs.graphDiv;
+			  		window.mermaid.render('graphDiv', graphData[panelName]).then(({ svg, bindFunctions }) => {
+					  element.innerHTML = svg;
+					  bindFunctions?.(element);
+					  window.zoomAndPan();
+					});
 			  	}
 			  }
 			})
