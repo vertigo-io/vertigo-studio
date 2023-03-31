@@ -1,7 +1,7 @@
 /**
  * vertigo - application development platform
  *
- * Copyright (C) 2013-2022, Vertigo.io, team@vertigo.io
+ * Copyright (C) 2013-2023, Vertigo.io, team@vertigo.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -67,8 +67,8 @@ public final class MermaidGeneratorPlugin implements GeneratorPlugin {
 
 		final List<MermaidDtModel> mermaidDtModels = notebook.getAll(DtSketch.class)
 				.stream()
+				.filter(dtSketch -> dtSketch.getPackageName().startsWith(generatorConfig.getProjectPackageName()))
 				.filter(DtSketch::isPersistent)
-				//.filter(dtSketch -> dtSketch.getPackageName().contains("basemanagement"))
 				.map(dtSketch -> new MermaidDtModel(dtSketch, getAssociationsByDtDefinition(notebook, dtSketch), DomainUtil.createClassNameFromDtFunction(notebook)))
 				.collect(Collectors.toList());
 
