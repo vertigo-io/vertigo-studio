@@ -78,16 +78,17 @@ public final class TSGeneratorPlugin implements GeneratorPlugin {
 		}
 	}
 
-	private static List<TSStudioDtModel> getTsDtDefinitionModels(final Notebook notebook) {
+	private static List<TSStudioDtModel> getTsDtDefinitionModels(final Notebook notebook, final GeneratorConfig generatorConfig) {
 		return DomainUtil.getDtSketchs(notebook)
 				.stream()
+				.filter(dtSketch -> dtSketch.getPackageName().startsWith(generatorConfig.getProjectPackageName())) // only the one for my project
 				.map(TSStudioDtModel::new)
 				.collect(Collectors.toList());
 	}
 
 	private static void generateTsDtDefinitions(
 			final Notebook notebook, final String targetSubDir, final GeneratorConfig generatorConfig, final GeneratorResultBuilder generatorResultBuilder) {
-		for (final TSStudioDtModel dtDefinitionModel : getTsDtDefinitionModels(notebook)) {
+		for (final TSStudioDtModel dtDefinitionModel : getTsDtDefinitionModels(notebook, generatorConfig)) {
 			generateTs(dtDefinitionModel, targetSubDir, generatorConfig, generatorResultBuilder);
 		}
 	}
@@ -150,7 +151,7 @@ public final class TSGeneratorPlugin implements GeneratorPlugin {
 			final GeneratorResultBuilder generatorResultBuilder) {
 
 		final Map<String, List<TSStudioDtModel>> packageMap = new HashMap<>();
-		for (final TSStudioDtModel dtDefinitionModel : getTsDtDefinitionModels(notebook)) {
+		for (final TSStudioDtModel dtDefinitionModel : getTsDtDefinitionModels(notebook, generatorConfig)) {
 			final String packageName = dtDefinitionModel.getFunctionnalPackageName();
 			packageMap.computeIfAbsent(packageName, o -> new ArrayList<>()).add(dtDefinitionModel);
 		}

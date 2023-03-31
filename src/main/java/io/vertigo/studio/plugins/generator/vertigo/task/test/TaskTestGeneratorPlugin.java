@@ -1,7 +1,7 @@
 /**
  * vertigo - application development platform
  *
- * Copyright (C) 2013-2022, Vertigo.io, team@vertigo.io
+ * Copyright (C) 2013-2023, Vertigo.io, team@vertigo.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -75,7 +75,7 @@ public final class TaskTestGeneratorPlugin implements GeneratorPlugin {
 			final GeneratorResultBuilder generatorResultBuilder) {
 
 		//On liste des taches regroupées par Package.
-		for (final Entry<String, List<TaskSketch>> entry : buildPackageMap(notebook).entrySet()) {
+		for (final Entry<String, List<TaskSketch>> entry : buildPackageMap(notebook, generatorConfig).entrySet()) {
 			final Collection<TaskSketch> taskSketchs = entry.getValue();
 			if (!taskSketchs.isEmpty()) {
 
@@ -98,14 +98,13 @@ public final class TaskTestGeneratorPlugin implements GeneratorPlugin {
 			final GeneratorConfig generatorConfig,
 			final GeneratorResultBuilder generatorResultBuilder) {
 
-		for (final Entry<DtSketch, List<TaskSketch>> entry : builDtSketchMap(notebook).entrySet()) {
+		for (final Entry<DtSketch, List<TaskSketch>> entry : builDtSketchMap(notebook, generatorConfig).entrySet()) {
 			final DtSketch dtSketch = entry.getKey();
-			if (dtSketch.isPersistent()) {
-				final String dtPackageName = dtSketch.getPackageName();
-				final String packageNamePrefix = generatorConfig.getProjectPackageName();
+			final String packageNamePrefix = generatorConfig.getProjectPackageName();
+			final String dtPackageName = dtSketch.getPackageName();
+			if (dtPackageName.startsWith(packageNamePrefix) && dtSketch.isPersistent()) {
 				// ---
 				Assertion.check()
-						.isTrue(dtPackageName.startsWith(packageNamePrefix), "Package name {0}, must begin with normalised prefix: {1}", dtPackageName, packageNamePrefix)
 						.isTrue(dtPackageName.substring(packageNamePrefix.length()).contains(".domain"), "Package name {0}, must contains the modifier .domain", dtPackageName);
 				// ---
 				//we need to find the featureName, aka between projectpackageName and .domain
@@ -213,31 +212,33 @@ public final class TaskTestGeneratorPlugin implements GeneratorPlugin {
 		return null;
 	}
 
-	private static Map<String, List<TaskSketch>> buildPackageMap(final Notebook notebook) {
+	private static Map<String, List<TaskSketch>> buildPackageMap(final Notebook notebook, final GeneratorConfig generatorConfig) {
 		final Collection<TaskSketch> taskSketches = notebook.getAll(TaskSketch.class);
 		final Map<String, List<TaskSketch>> taskSketchesMap = new LinkedHashMap<>();
 		//---
-		for (final TaskSketch taskDefinition : taskSketches) {
-			final TaskModel templateTaskDefinition = new TaskModel(taskDefinition, DomainUtil.createClassNameFromDtFunction(notebook));
-			final SketchKey dtSketchKey = getDtSketchKey(templateTaskDefinition);
-			// Correction bug : task avec retour DtObject (non persistant) non générée
-			//Les taches sont générées dans les pao
-			// - si il n'esxiste pas de définition associées à la tache
-			// - ou si la définition est considérée comme non persistante.
-			final boolean pao = dtSketchKey == null || !notebook.resolve(dtSketchKey.getName(), DtSketch.class).isPersistent();
-			if (pao) {
-				//La tache est liée au package. (PAO)
-				final List<TaskSketch> list = taskSketchesMap
-						.computeIfAbsent(taskDefinition.getPackageName(), k -> new ArrayList<>());
-				//on ajoute la tache aux taches du package.
-				list.add(taskDefinition);
+		for (final TaskSketch taskSketch : taskSketches) {
+			if (taskSketch.getPackageName().startsWith(generatorConfig.getProjectPackageName())) {
+				final TaskModel templateTaskDefinition = new TaskModel(taskSketch, DomainUtil.createClassNameFromDtFunction(notebook));
+				final SketchKey dtSketchKey = getDtSketchKey(templateTaskDefinition);
+				// Correction bug : task avec retour DtObject (non persistant) non générée
+				//Les taches sont générées dans les pao
+				// - si il n'esxiste pas de définition associées à la tache
+				// - ou si la définition est considérée comme non persistante.
+				final boolean pao = dtSketchKey == null || !notebook.resolve(dtSketchKey.getName(), DtSketch.class).isPersistent();
+				if (pao) {
+					//La tache est liée au package. (PAO)
+					final List<TaskSketch> list = taskSketchesMap
+							.computeIfAbsent(taskSketch.getPackageName(), k -> new ArrayList<>());
+					//on ajoute la tache aux taches du package.
+					list.add(taskSketch);
+				}
 			}
 		}
 		return taskSketchesMap;
 
 	}
 
-	private static Map<DtSketch, List<TaskSketch>> builDtSketchMap(final Notebook notebook) {
+	private static Map<DtSketch, List<TaskSketch>> builDtSketchMap(final Notebook notebook, final GeneratorConfig generatorConfig) {
 		final Collection<TaskSketch> taskSketchs = notebook.getAll(TaskSketch.class);
 		final Map<DtSketch, List<TaskSketch>> taskSketchsMap = new LinkedHashMap<>();
 
@@ -245,17 +246,24 @@ public final class TaskTestGeneratorPlugin implements GeneratorPlugin {
 		//Par défaut, On crée pour chaque DT une liste vide des taches lui étant associées.
 		final Collection<DtSketch> dtSketchs = notebook.getAll(DtSketch.class);
 		for (final DtSketch dtSketch : dtSketchs) {
-			taskSketchsMap.put(dtSketch, new ArrayList<TaskSketch>());
+			if (dtSketch.getPackageName().startsWith(generatorConfig.getProjectPackageName())) {
+				taskSketchsMap.put(dtSketch, new ArrayList<TaskSketch>());
+			}
 		}
 		//---
 		for (final TaskSketch taskSketch : taskSketchs) {
-			final TaskModel templateTaskDefinition = new TaskModel(taskSketch, DomainUtil.createClassNameFromDtFunction(notebook));
+			if (taskSketch.getPackageName().startsWith(generatorConfig.getProjectPackageName())) {
+				final TaskModel templateTaskDefinition = new TaskModel(taskSketch, DomainUtil.createClassNameFromDtFunction(notebook));
 
-			final SketchKey dtSketchKey = getDtSketchKey(templateTaskDefinition);
-			final boolean dao = dtSketchKey != null;
-			if (dao) {
-				//Dans le cas d'un DTO ou DTC en sortie on considère que la tache est liée au DAO.
-				taskSketchsMap.get(notebook.resolve(dtSketchKey.getName(), DtSketch.class)).add(taskSketch);
+				final SketchKey dtSketchKey = getDtSketchKey(templateTaskDefinition);
+				final boolean dao = dtSketchKey != null;
+				if (dao) {
+					//Dans le cas d'un DTO ou DTC en sortie on considère que la tache est liée au DAO.
+					taskSketchsMap.computeIfPresent(notebook.resolve(dtSketchKey.getName(), DtSketch.class), (sketch, tasks) -> {
+						tasks.add(taskSketch);
+						return tasks;
+					});
+				}
 			}
 		}
 		return taskSketchsMap;
