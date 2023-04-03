@@ -79,7 +79,7 @@ public final class TaskGeneratorPlugin implements GeneratorPlugin {
 			final GeneratorConfig generatorConfig,
 			final GeneratorResultBuilder generatorResultBuilder) {
 		//On liste des taches regroupées par Package.
-		for (final Entry<String, List<TaskSketch>> entry : buildPackageMap(notebook).entrySet()) {
+		for (final Entry<String, List<TaskSketch>> entry : buildPackageMap(notebook, generatorConfig).entrySet()) {
 			final Collection<TaskSketch> taskSketchs = entry.getValue();
 			if (!taskSketchs.isEmpty()) {
 				final String packageName = entry.getKey();
@@ -96,7 +96,7 @@ public final class TaskGeneratorPlugin implements GeneratorPlugin {
 			final String targetSubDir,
 			final GeneratorConfig generatorConfig,
 			final GeneratorResultBuilder generatorResultBuilder) {
-		for (final Entry<DtSketch, List<TaskSketch>> entry : builDtSketchsMap(notebook).entrySet()) {
+		for (final Entry<DtSketch, List<TaskSketch>> entry : builDtSketchsMap(notebook, generatorConfig).entrySet()) {
 			final DtSketch dtSketch = entry.getKey();
 			if (dtSketch.isPersistent()) {
 				//Si DAO est persitant on génère son CRUD.
@@ -185,31 +185,33 @@ public final class TaskGeneratorPlugin implements GeneratorPlugin {
 		return null;
 	}
 
-	private static Map<String, List<TaskSketch>> buildPackageMap(final Notebook notebook) {
+	private static Map<String, List<TaskSketch>> buildPackageMap(final Notebook notebook, final GeneratorConfig generatorConfig) {
 		final Collection<TaskSketch> taskSketchs = notebook.getAll(TaskSketch.class);
 		final Map<String, List<TaskSketch>> taskSketchsMap = new LinkedHashMap<>();
 		//---
 		for (final TaskSketch taskSketch : taskSketchs) {
-			final TaskModel taskModel = new TaskModel(taskSketch, DomainUtil.createClassNameFromDtFunction(notebook));
-			final SketchKey dtSketchKey = getDtSketchKey(taskModel);
-			// Correction bug : task avec retour DtObject (non persistant) non générée
-			//Les taches sont générées dans les pao
-			// - si il n'esxiste pas de définition associées à la tache
-			// - ou si la définition est considérée comme non persistante.
-			final boolean pao = dtSketchKey == null || !notebook.resolve(dtSketchKey.getName(), DtSketch.class).isPersistent();
-			if (pao) {
-				//La tache est liée au package. (PAO)
-				final List<TaskSketch> list = taskSketchsMap
-						.computeIfAbsent(taskSketch.getPackageName(), k -> new ArrayList<>());
-				//on ajoute la tache aux taches du package.
-				list.add(taskSketch);
+			if (taskSketch.getPackageName().startsWith(generatorConfig.getProjectPackageName())) {
+				final TaskModel taskModel = new TaskModel(taskSketch, DomainUtil.createClassNameFromDtFunction(notebook));
+				final SketchKey dtSketchKey = getDtSketchKey(taskModel);
+				// Correction bug : task avec retour DtObject (non persistant) non générée
+				//Les taches sont générées dans les pao
+				// - si il n'esxiste pas de définition associées à la tache
+				// - ou si la définition est considérée comme non persistante.
+				final boolean pao = dtSketchKey == null || !notebook.resolve(dtSketchKey.getName(), DtSketch.class).isPersistent();
+				if (pao) {
+					//La tache est liée au package. (PAO)
+					final List<TaskSketch> list = taskSketchsMap
+							.computeIfAbsent(taskSketch.getPackageName(), k -> new ArrayList<>());
+					//on ajoute la tache aux taches du package.
+					list.add(taskSketch);
+				}
 			}
 		}
 		return taskSketchsMap;
 
 	}
 
-	private static Map<DtSketch, List<TaskSketch>> builDtSketchsMap(final Notebook notebook) {
+	private static Map<DtSketch, List<TaskSketch>> builDtSketchsMap(final Notebook notebook, final GeneratorConfig generatorConfig) {
 		final Collection<TaskSketch> taskSketchs = notebook.getAll(TaskSketch.class);
 		final Map<DtSketch, List<TaskSketch>> taskSketchsMap = new LinkedHashMap<>();
 
@@ -217,17 +219,24 @@ public final class TaskGeneratorPlugin implements GeneratorPlugin {
 		//Par défaut, On crée pour chaque DT une liste vide des taches lui étant associées.
 		final Collection<DtSketch> dtSketchs = notebook.getAll(DtSketch.class);
 		for (final DtSketch dtSketch : dtSketchs) {
-			taskSketchsMap.put(dtSketch, new ArrayList<TaskSketch>());
+			if (dtSketch.getPackageName().startsWith(generatorConfig.getProjectPackageName())) {
+				taskSketchsMap.put(dtSketch, new ArrayList<TaskSketch>());
+			}
 		}
 		//---
 		for (final TaskSketch taskSketch : taskSketchs) {
-			final TaskModel taskModel = new TaskModel(taskSketch, DomainUtil.createClassNameFromDtFunction(notebook));
+			if (taskSketch.getPackageName().startsWith(generatorConfig.getProjectPackageName())) {
+				final TaskModel taskModel = new TaskModel(taskSketch, DomainUtil.createClassNameFromDtFunction(notebook));
 
-			final SketchKey dtSketchKey = getDtSketchKey(taskModel);
-			final boolean dao = dtSketchKey != null;
-			if (dao) {
-				//Dans le cas d'un DTO ou DTC en sortie on considère que la tache est liée au DAO.
-				taskSketchsMap.get(notebook.resolve(dtSketchKey.getName(), DtSketch.class)).add(taskSketch);
+				final SketchKey dtSketchKey = getDtSketchKey(taskModel);
+				final boolean dao = dtSketchKey != null;
+				if (dao) {
+					//Dans le cas d'un DTO ou DTC en sortie on considère que la tache est liée au DAO.
+					taskSketchsMap.computeIfPresent(notebook.resolve(dtSketchKey.getName(), DtSketch.class), (sketch, tasks) -> {
+						tasks.add(taskSketch);
+						return tasks;
+					});
+				}
 			}
 		}
 		return taskSketchsMap;

@@ -65,9 +65,10 @@ public final class JSGeneratorPlugin implements GeneratorPlugin {
 		}
 	}
 
-	private static List<JSDtModel> getJsDtDefinitionModels(final Notebook notebook) {
+	private static List<JSDtModel> getJsDtDefinitionModels(final Notebook notebook, final GeneratorConfig generatorConfig) {
 		return DomainUtil.getDtSketchs(notebook)
 				.stream()
+				.filter(dtSketch -> dtSketch.getPackageName().startsWith(generatorConfig.getProjectPackageName())) // only the one for my project
 				.map(JSDtModel::new)
 				.collect(Collectors.toList());
 	}
@@ -81,7 +82,7 @@ public final class JSGeneratorPlugin implements GeneratorPlugin {
 		final Map<String, Object> model = new MapBuilder<String, Object>()
 				.put("packageName", generatorConfig.getProjectPackageName() + ".domain")
 				.put("classSimpleName", "DtDefinitions")
-				.put("dtDefinitions", getJsDtDefinitionModels(notebook))
+				.put("dtDefinitions", getJsDtDefinitionModels(notebook, generatorConfig))
 				.build();
 
 		FileGenerator.builder(generatorConfig)
@@ -109,7 +110,7 @@ public final class JSGeneratorPlugin implements GeneratorPlugin {
 		final Map<String, Object> model = new MapBuilder<String, Object>()
 				.put("packageName", packageName)
 				.put("simpleClassName", simpleClassName)
-				.put("dtDefinitions", getJsDtDefinitionModels(notebook))
+				.put("dtDefinitions", getJsDtDefinitionModels(notebook, generatorConfig))
 				.build();
 
 		FileGenerator.builder(generatorConfig)
