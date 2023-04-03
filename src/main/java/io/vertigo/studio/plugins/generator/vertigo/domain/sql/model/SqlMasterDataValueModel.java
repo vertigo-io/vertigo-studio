@@ -52,7 +52,8 @@ public final class SqlMasterDataValueModel {
 								"Field '{0}' is required on '{1}' and no value was provided. Provided values '{2}'",
 								fieldName, dtSketch, allFieldValues));
 		//---
-		return allFieldValues.getOrDefault(fieldName, "null");
+		final String value = allFieldValues.get(fieldName);
+		return value != null ? ("'" + value + "'") : null;
 	}
 
 }
