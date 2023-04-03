@@ -46,9 +46,9 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>javax.servlet</groupId> <!-- For scanning webservices classes -->
-			<artifactId>javax.servlet-api</artifactId>
-			<version>4.0.1</version>
+			<groupId>jakarta.servlet</groupId>
+    		<artifactId>jakarta.servlet-api</artifactId>
+			<version>5.0.0</version>
 		</dependency>
 
 		<dependency>
