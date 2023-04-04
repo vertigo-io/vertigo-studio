@@ -23,6 +23,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
@@ -39,7 +40,7 @@ import io.vertigo.studio.tools.YamlStudioConfig.YamlResourceConfig;
 final class StudioConfigYamlParser {
 
 	static final NotebookConfig parseYaml(final URL configUrl) throws URISyntaxException {
-		final YamlStudioConfig yamlStudioConfig = new Yaml(new Constructor(YamlStudioConfig.class)).loadAs(FileUtil.read(configUrl), YamlStudioConfig.class);
+		final YamlStudioConfig yamlStudioConfig = new Yaml(new Constructor(YamlStudioConfig.class, new LoaderOptions())).loadAs(FileUtil.read(configUrl), YamlStudioConfig.class);
 		final String rootPath = Path.of(configUrl.toURI()).getParent().toString() + "/";
 
 		//metamodelresources
