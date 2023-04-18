@@ -113,9 +113,7 @@ public final class TaskModel {
 	 * @return Attribut de sortie (Unique)
 	 */
 	public String getRequest() {
-		return taskSketch.getRequest()
-				.replaceAll("\"", "\\\\\"")
-				.replaceAll("\\n", "\\\\n\" + \n \" ");
+		return taskSketch.getRequest();
 	}
 
 	/**

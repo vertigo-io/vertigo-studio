@@ -23,7 +23,8 @@
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(<#if taskDefinition.hasSpecificDataSpace()>
 			dataSpace = "${taskDefinition.dataSpace}",<#else><#rt></#if>
 			name = "${taskDefinition.taskName}",
-			request = "${taskDefinition.request}",
+			request = """
+			${taskDefinition.request}""",
 			taskEngineClass = ${taskDefinition.taskEngineClass}.class)
 	<#if taskDefinition.out>
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "${taskDefinition.outAttribute.smartTypeName}", name = "${taskDefinition.outAttribute.name}")
