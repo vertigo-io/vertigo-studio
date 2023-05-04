@@ -90,11 +90,14 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 			final GeneratorConfig generatorConfig,
 			final GeneratorResultBuilder generatorResultBuilder,
 			final String dictionaryClassName) {
-
+		final var projectDtSktecks = DomainUtil.getDtSketchs(notebook)
+				.stream()
+				.filter(dtSketch -> dtSketch.getPackageName().startsWith(generatorConfig.getProjectPackageName()))
+				.collect(Collectors.toList());
 		final Map<String, Object> model = new MapBuilder<String, Object>()
 				.put("packageName", generatorConfig.getProjectPackageName() + ".domain")
 				.put("classSimpleName", dictionaryClassName)
-				.put("dtDefinitions", toModels(notebook, DomainUtil.getDtSketchs(notebook)))
+				.put("dtDefinitions", toModels(notebook, projectDtSktecks))
 				.build();
 
 		FileGenerator.builder(generatorConfig)
@@ -114,7 +117,9 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 			final GeneratorConfig generatorConfig,
 			final GeneratorResultBuilder generatorResultBuilder) {
 		for (final DtSketch dtSketch : DomainUtil.getDtSketchs(notebook)) {
-			generateDtObject(notebook, targetSubDir, generatorConfig, generatorResultBuilder, dtSketch, getAssociationsByDtDefinition(notebook, dtSketch));
+			if (dtSketch.getPackageName().startsWith(generatorConfig.getProjectPackageName())) {
+				generateDtObject(notebook, targetSubDir, generatorConfig, generatorResultBuilder, dtSketch, getAssociationsByDtDefinition(notebook, dtSketch));
+			}
 		}
 	}
 
@@ -211,6 +216,7 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 
 		notebook.getAll(DtSketch.class)
 				.stream()
+				.filter(dtSketch -> dtSketch.getPackageName().startsWith(generatorConfig.getProjectPackageName()))
 				.filter(dtDefinition -> dtDefinition.getStereotype() == StudioStereotype.StaticMasterData)
 				.forEach(dtSketch -> generateJavaEnum(
 						targetSubDir,

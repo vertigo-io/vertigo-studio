@@ -34,7 +34,7 @@ drop sequence IF EXISTS SEQ_${dtDefinition.localName};
 <#list dtDefinitions as dtDefinition>
 <#if dtDefinition.hasSequence()>
 create sequence SEQ_${dtDefinition.localName}
-	start with 1000 cache 20; 
+	start with 1000 cache 1; 
 </#if>
 
 </#list>

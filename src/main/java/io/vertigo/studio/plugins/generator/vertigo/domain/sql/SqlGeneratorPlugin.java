@@ -118,7 +118,7 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 
 		final Map<String, List<SqlStudioDtDefinitionModel>> mapListDtDef = new HashMap<>();
 		for (final DtSketch dtSketch : DomainUtil.sortSketchCollection(DomainUtil.getDtSketchs(notebook))) {
-			if (dtSketch.isPersistent()) {
+			if (dtSketch.getPackageName().startsWith(generatorConfig.getProjectPackageName()) && dtSketch.isPersistent()) {
 				final SqlStudioDtDefinitionModel templateDef = new SqlStudioDtDefinitionModel(dtSketch);
 				final String dataSpace = dtSketch.getDataSpace();
 				final List<SqlStudioDtDefinitionModel> listDtDef = obtainListDtSketchPerDataSpace(mapListDtDef, dataSpace);
