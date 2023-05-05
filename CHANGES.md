@@ -6,6 +6,22 @@ Running 0.9.5-SNAPSHOT
 
 more to come :)
 
+Release 3.6.0 - 2023/05/04
+----------------------
+[Migration help](https://github.com/vertigo-io/vertigo/wiki/Vertigo-Migration-Guide#from-350-to-360)
+* [Mermaid] change to v10
+* [generator] filter generation based on projectPackageName
+* [generator] create sequence `cache 1` (default cache value) on postgre
+  - Performance improvements is more that negligeable in PostgreSQL and the pk field cannot be used safely as an order
+* [generator] support null values in masterData data fields
+* [Core] fix update snakeyaml 1.33 -> 2.0
+  
+
+Release 3.5.0 - 2023/01/06
+----------------------
+[Migration help](https://github.com/vertigo-io/vertigo/wiki/Vertigo-Migration-Guide#from-340-to-350)
+__no changes in studio__
+
 Release 3.4.0 - 2022/10/12
 ----------------------
 [Migration help](https://github.com/vertigo-io/vertigo/wiki/Vertigo-Migration-Guide#from-330-to-340)
