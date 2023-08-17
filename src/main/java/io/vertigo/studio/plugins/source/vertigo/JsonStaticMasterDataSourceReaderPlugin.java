@@ -73,7 +73,7 @@ public final class JsonStaticMasterDataSourceReaderPlugin implements SourceReade
 		//---
 		final JsonMasterDataValues result = new JsonMasterDataValues();
 		for (final Source source : sources) {
-			final String jsonFileAsString = FileUtil.read(resourceManager.resolve(source.getPath()));
+			final String jsonFileAsString = FileUtil.read(resourceManager.resolve(source.path()));
 			final JsonMasterDataValues masterDataValues = gson.fromJson(jsonFileAsString, JsonMasterDataValues.class);
 
 			// we aggregate the results of all files

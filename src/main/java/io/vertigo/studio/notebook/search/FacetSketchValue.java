@@ -36,53 +36,19 @@ import io.vertigo.core.lang.Assertion;
  *
  * @author pchretien, mlaroche
  */
-public final class FacetSketchValue implements Serializable {
-	private static final long serialVersionUID = -7077655936787603783L;
-	private final String code;
-	private final String label;
-	private final String listFilter;
+public record FacetSketchValue(
+		String code, //the code of the facet
+		String listFilter,
+		/**
+		 * This label must be human readable
+		 * 'small files' can be preferred to an expression.
+		 */
+		String label) implements Serializable {
 
-	/**
-	 * Contructor.
-	 * @param code the code of the facet
-	 * @param listFilter the list filter
-	 * @param label the label of the facet
-	 */
-	public FacetSketchValue(final String code, final String listFilter, final String label) {
+	public FacetSketchValue {
 		Assertion.check()
 				.isNotBlank(code)
 				.isNotNull(listFilter)
 				.isNotNull(label);
-		//-----
-		this.code = code;
-		this.listFilter = listFilter;
-		this.label = label;
-	}
-
-	/**
-	 * @return the code of the facet
-	 */
-	public String getCode() {
-		return code;
-	}
-
-	/**
-	 * Returns the label of the facet.
-	 * This label must be human readable.
-	 *
-	 * examples :
-	 * - 'small files' can be preferred to an expression.
-	 *
-	 * @return the label of the facet
-	 */
-	public String getLabel() {
-		return label;
-	}
-
-	/**
-	 * @return the listFilter
-	 */
-	public String getListFilter() {
-		return listFilter;
 	}
 }

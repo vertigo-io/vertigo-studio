@@ -40,9 +40,6 @@ import io.vertigo.datamodel.structure.util.DtObjectUtil;
  */
 public class TaskTestDummyGeneratorBasic implements TaskTestDummyGenerator {
 
-	/* (non-Javadoc)
-	 * @see io.vertigo.studio.plugins.mda.task.test.TaskTestDummyGenerator#dum(java.lang.Class)
-	 */
 	@Override
 	public <T> T dum(final Class<T> type) {
 		if (DtObject.class.isAssignableFrom(type)) {
@@ -73,18 +70,12 @@ public class TaskTestDummyGeneratorBasic implements TaskTestDummyGenerator {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see io.vertigo.studio.plugins.mda.task.test.TaskTestDummyGenerator#dumList(java.lang.Class)
-	 */
 	@Override
 	public <T> List<T> dumList(final Class<T> clazz) {
 		return Collections.singletonList(dum(clazz));
 
 	}
 
-	/* (non-Javadoc)
-	 * @see io.vertigo.studio.plugins.mda.task.test.TaskTestDummyGenerator#dumDtList(java.lang.Class)
-	 */
 	@Override
 	public <D extends DtObject> DtList<D> dumDtList(final Class<D> dtoClass) {
 		return DtList.of(dum(dtoClass));
@@ -111,10 +102,10 @@ public class TaskTestDummyGeneratorBasic implements TaskTestDummyGenerator {
 				.stream()
 				.filter(dtField -> dtField.getType() != FieldType.COMPUTED)// we don't treat computed field (no setter)
 				.forEach(dtField -> {
-					final Class javaClass = dtField.getSmartTypeDefinition().getJavaClass();
+					final Class javaClass = dtField.smartTypeDefinition().getJavaClass();
 					final Object value;
-					if (dtField.getCardinality().hasMany()) {
-						if (dtField.getSmartTypeDefinition().getScope().isDataObject()) {
+					if (dtField.cardinality().hasMany()) {
+						if (dtField.smartTypeDefinition().getScope().isDataType()) {
 							value = dumDtList(javaClass);
 						} else {
 							value = dumList(javaClass);

@@ -60,7 +60,7 @@ public final class DslKspRule extends AbstractRule<Dummy, List<Object>> {
 		final PegRule<DslRaw> definitionRule = new DslRawRule("create", grammar);
 		final PegRule<DslRaw> templateRule = new DslRawRule("alter", grammar);
 		final PegRule<String> declareRule = new DslDeclareRawRule(grammar);
-		
+
 		final PegRule<PegChoice> declarationChoiceRule = PegRules.choice(//"definition or template")
 				definitionRule, //0
 				templateRule, //1
@@ -83,10 +83,10 @@ public final class DslKspRule extends AbstractRule<Dummy, List<Object>> {
 			//Tant qu'il y a du texte, il doit correspondre
 			// - à des définitions qui appartiennent toutes au même package.
 			// - à des gestion de droits.
-			switch (declarationChoice.getChoiceIndex()) {
+			switch (declarationChoice.choiceIndex()) {
 				case 0:
 					//On positionne le Package
-					final DslRaw oldDynamicDefinition = (DslRaw) declarationChoice.getValue();
+					final DslRaw oldDynamicDefinition = (DslRaw) declarationChoice.value();
 					final DslRaw newDynamicDefinition = DslRaw.builder(oldDynamicDefinition.getKey(), oldDynamicDefinition.getEntity())
 							.withPackageName(packageName)
 							.merge(oldDynamicDefinition)
@@ -94,7 +94,7 @@ public final class DslKspRule extends AbstractRule<Dummy, List<Object>> {
 					handleDefinitionRule(newDynamicDefinition);
 					break;
 				case 1:
-					handleTemplateRule((DslRaw) declarationChoice.getValue());
+					handleTemplateRule((DslRaw) declarationChoice.value());
 					break;
 				case 2:
 					//declare
@@ -102,7 +102,7 @@ public final class DslKspRule extends AbstractRule<Dummy, List<Object>> {
 					// this is particularely useful for the Xtext plugin, that only parses ksp files
 					break;
 				default:
-					throw new IllegalArgumentException("case " + declarationChoice.getChoiceIndex() + " not implemented");
+					throw new IllegalArgumentException("case " + declarationChoice.choiceIndex() + " not implemented");
 			}
 		}
 		return Dummy.INSTANCE;

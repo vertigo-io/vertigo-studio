@@ -50,7 +50,7 @@ public final class DslDeclareRawRule extends AbstractRule<String, PegChoice> {
 		//-----
 		final List<PegRule<?>> rules = grammar.getEntities()
 				.stream()
-				.map(entity -> createRule(entity))
+				.map(DslDeclareRawRule::createRule)
 				.collect(Collectors.toList());
 		return PegRules.choice(rules);
 	}
@@ -69,6 +69,6 @@ public final class DslDeclareRawRule extends AbstractRule<String, PegChoice> {
 
 	@Override
 	protected String handle(final PegChoice parsing) {
-		return (String) ((List) parsing.getValue()).get(4); // return the name of the external entity
+		return (String) ((List) parsing.value()).get(4); // return the name of the external entity
 	}
 }

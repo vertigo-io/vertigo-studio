@@ -27,7 +27,7 @@ import java.util.stream.Stream;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Tuple;
-import io.vertigo.core.locale.MessageText;
+import io.vertigo.core.locale.LocaleMessageText;
 import io.vertigo.studio.impl.source.dsl.entity.DslEntity;
 import io.vertigo.studio.impl.source.dsl.entity.DslGrammar;
 import io.vertigo.studio.impl.source.dsl.raw.DslRaw;
@@ -105,7 +105,7 @@ public final class SearchSketchFactory implements DslSketchFactory {
 		//Déclaration des ranges
 		final List<DslRaw> rangeDefinitions = dslSketch.getSubRaws("range");
 		final List<DslRaw> paramsDefinitions = dslSketch.getSubRaws("params");
-		final MessageText labelMsg = MessageText.of(label);
+		final LocaleMessageText labelMsg = LocaleMessageText.of(label);
 		final FacetSketch facetDefinition;
 		if (!rangeDefinitions.isEmpty()) {
 			final List<FacetSketchValue> facetValues = rangeDefinitions
@@ -123,7 +123,7 @@ public final class SearchSketchFactory implements DslSketchFactory {
 		} else if (!paramsDefinitions.isEmpty()) {
 			final Map<String, String> facetParams = paramsDefinitions.stream()
 					.map(SearchSketchFactory::createFacetParam)
-					.collect(Collectors.toMap(Tuple::getVal1, Tuple::getVal2));
+					.collect(Collectors.toMap(Tuple::val1, Tuple::val2));
 			facetDefinition = FacetSketch.createCustomFacetSketch(
 					dslSketch.getKey().getName(),
 					indexDtSketch,

@@ -107,7 +107,7 @@ public final class VertigoStudioMda {
 		try (final AutoCloseableNode studioApp = new AutoCloseableNode(buildNodeConfig())) {
 			final GeneratorManager generatorManager = studioApp.getComponentSpace().resolve(GeneratorManager.class);
 			//-----
-			final GeneratorConfig generatorConfig = notebookConfig.getMdaConfig();
+			final GeneratorConfig generatorConfig = notebookConfig.generatorConfig();
 			generatorManager.clean(generatorConfig);
 		}
 	}
@@ -117,9 +117,9 @@ public final class VertigoStudioMda {
 			final SourceManager sourceManager = studioApp.getComponentSpace().resolve(SourceManager.class);
 			final GeneratorManager generatorManager = studioApp.getComponentSpace().resolve(GeneratorManager.class);
 			//-----
-			final GeneratorConfig generatorConfig = notebookConfig.getMdaConfig();
+			final GeneratorConfig generatorConfig = notebookConfig.generatorConfig();
 			generatorManager.clean(generatorConfig);
-			final Notebook notebook = sourceManager.read(notebookConfig.getMetamodelResources());
+			final Notebook notebook = sourceManager.read(notebookConfig.metaModelResources());
 			final GeneratorResult generatorResult = generatorManager.generate(notebook, generatorConfig);
 			LOGGER_STUDIO.info(generatorResult.getResultMessage());
 		}
@@ -131,7 +131,7 @@ public final class VertigoStudioMda {
 			final GeneratorManager generatorManager = studioApp.getComponentSpace().resolve(GeneratorManager.class);
 			final ResourceManager resourceManager = studioApp.getComponentSpace().resolve(ResourceManager.class);
 			//-----
-			final GeneratorConfig generatorConfig = notebookConfig.getMdaConfig();
+			final GeneratorConfig generatorConfig = notebookConfig.generatorConfig();
 			final List<Path> pathsToWatch = listPathToWatch(notebookConfig, resourceManager);
 			LOGGER_STUDIO.info("Monitored file for generation are {}", pathsToWatch);
 
@@ -164,10 +164,10 @@ public final class VertigoStudioMda {
 												generatorManager.clean(generatorConfig);
 												LOGGER_STUDIO.info("Done cleaning");
 											}
-											final Notebook notebook = sourceManager.read(notebookConfig.getMetamodelResources());
+											final Notebook notebook = sourceManager.read(notebookConfig.metaModelResources());
 											final GeneratorResult generatorResult = generatorManager.generate(notebook, generatorConfig);
 											LOGGER_STUDIO.info("Regeneration completed. {} created files, {} updated files, {} identical files and {} issues in {} ms",
-													generatorResult.getCreatedFiles(), generatorResult.getUpdatedFiles(), generatorResult.getIdenticalFiles(), generatorResult.getErrorFiles(), generatorResult.getDurationMillis());
+													generatorResult.createdFiles(), generatorResult.updatedFiles(), generatorResult.identicalFiles(), generatorResult.errorFiles(), generatorResult.durationMillis());
 										} catch (final Exception e) {
 											LOGGER_STUDIO.error("Error regenerating : ", e);
 										}
@@ -191,9 +191,9 @@ public final class VertigoStudioMda {
 	}
 
 	private static List<Path> listPathToWatch(final NotebookConfig notebookConfig, final ResourceManager resourceManager) {
-		return notebookConfig.getMetamodelResources()
+		return notebookConfig.metaModelResources()
 				.stream()
-				.map(source -> resourceManager.resolve(source.getPath()))
+				.map(source -> resourceManager.resolve(source.path()))
 				.filter(url -> {
 					try {
 						return "file".equals(url.toURI().getScheme());

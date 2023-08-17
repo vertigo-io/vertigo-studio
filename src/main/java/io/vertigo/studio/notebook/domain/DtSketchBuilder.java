@@ -24,8 +24,8 @@ import java.util.Optional;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 import io.vertigo.core.lang.Cardinality;
-import io.vertigo.core.locale.MessageKey;
-import io.vertigo.core.locale.MessageText;
+import io.vertigo.core.locale.LocaleMessageKey;
+import io.vertigo.core.locale.LocaleMessageText;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.tools.SketchUtil;
 
@@ -38,7 +38,7 @@ import io.vertigo.studio.tools.SketchUtil;
  */
 public final class DtSketchBuilder implements Builder<DtSketch> {
 
-	private static class MessageKeyImpl implements MessageKey {
+	private static class MessageKeyImpl implements LocaleMessageKey {
 		private static final long serialVersionUID = 6959551752755175151L;
 
 		private final String name;
@@ -122,7 +122,6 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 	 * @param fkDtSketchName the name of the linked definition
 	 * @param label the label of the field
 	 * @param domainSketch the domain of the field
-	 * @param required if the field is required
 	 * @return this builder
 	 */
 	public DtSketchBuilder addForeignKey(
@@ -182,7 +181,6 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 	 * @param fieldName the name of the field
 	 * @param domainSketch the domain of the field
 	 * @param label the label of the field
-	 * @param required if the field is required
 	 * @param persistent if the fiels is persistent
 	 * @return this builder
 	 */
@@ -257,7 +255,7 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 
 		//2. Sinon Indication de longueur portée par le champ du DT.
 		//-----
-		final MessageText labelMsg = MessageText.ofDefaultMsg(strLabel, new MessageKeyImpl(id));
+		final LocaleMessageText labelMsg = LocaleMessageText.ofDefaultMsg(strLabel, new MessageKeyImpl(id));
 		// Champ CODE_COMMUNE >> getCodeCommune()
 		//Un champ est persisanty s'il est marqué comme tel et si la définition l'est aussi.
 		return new DtSketchField(

@@ -101,19 +101,19 @@ public final class DslRawBodyRule extends AbstractRule<DslRawBody, List<Object>>
 		final List<DslRawEntry> fieldDefinitionEntries = new ArrayList<>();
 		final List<DslPropertyEntry> fieldPropertyEntries = new ArrayList<>();
 		for (final PegChoice item : many) {
-			switch (item.getChoiceIndex()) {
+			switch (item.choiceIndex()) {
 				case 0:
 					//Soit on est en présence d'une propriété standard
-					final DslPropertyEntry propertyEntry = (DslPropertyEntry) item.getValue();
+					final DslPropertyEntry propertyEntry = (DslPropertyEntry) item.value();
 					fieldPropertyEntries.add(propertyEntry);
 					break;
 				case 1:
-					final DslRawEntry xDefinitionEntry = (DslRawEntry) item.getValue();
+					final DslRawEntry xDefinitionEntry = (DslRawEntry) item.value();
 					fieldDefinitionEntries.add(xDefinitionEntry);
 					break;
 				case 2:
-					final PegChoice subTuple = (PegChoice) item.getValue();
-					fieldDefinitionEntries.add((DslRawEntry) subTuple.getValue());
+					final PegChoice subTuple = (PegChoice) item.value();
+					fieldDefinitionEntries.add((DslRawEntry) subTuple.value());
 					break;
 				case 3:
 					break;

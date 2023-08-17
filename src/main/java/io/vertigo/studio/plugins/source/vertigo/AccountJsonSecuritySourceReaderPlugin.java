@@ -59,10 +59,10 @@ public final class AccountJsonSecuritySourceReaderPlugin implements SourceReader
 		Assertion.check()
 				.isNotNull(sources)
 				.isNotNull(notebook);
-		//---	
+		//---
 		return sources
 				.stream()
-				.flatMap(notebookSource -> parseJson(resourceManager.resolve(notebookSource.getPath())).stream());
+				.flatMap(notebookSource -> parseJson(resourceManager.resolve(notebookSource.path())).stream());
 	}
 
 	@Override

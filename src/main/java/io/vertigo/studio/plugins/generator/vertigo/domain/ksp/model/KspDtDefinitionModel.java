@@ -102,22 +102,15 @@ public final class KspDtDefinitionModel {
 	}
 
 	private VertigoClassNames getStereotypeClass() {
-		switch (dtSketch.getStereotype()) {
-			case Entity:
-				return VertigoClassNames.Entity;
-			case ValueObject:
-				return VertigoClassNames.DtObject;
-			case MasterData:
-				return VertigoClassNames.DtMasterData;
-			case StaticMasterData:
-				return VertigoClassNames.DtStaticMasterData;
-			case KeyConcept:
-				return VertigoClassNames.KeyConcept;
-			case Fragment:
-				return VertigoClassNames.Fragment;
-			default:
-				throw new IllegalArgumentException("Stereotype " + dtSketch.getStereotype().name() + " non géré");
-		}
+		return switch (dtSketch.getStereotype()) {
+			case Entity -> VertigoClassNames.Entity;
+			case ValueObject -> VertigoClassNames.DtObject;
+			case MasterData -> VertigoClassNames.DtMasterData;
+			case StaticMasterData -> VertigoClassNames.DtStaticMasterData;
+			case KeyConcept -> VertigoClassNames.KeyConcept;
+			case Fragment -> VertigoClassNames.Fragment;
+			default -> throw new IllegalArgumentException("Stereotype " + dtSketch.getStereotype().name() + " non géré");
+		};
 	}
 
 	/**

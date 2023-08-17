@@ -32,9 +32,9 @@ import java.util.stream.Stream;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
+import io.vertigo.core.lang.Selector;
+import io.vertigo.core.lang.Selector.ClassConditions;
 import io.vertigo.core.util.ClassUtil;
-import io.vertigo.core.util.Selector;
-import io.vertigo.core.util.Selector.ClassConditions;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.impl.source.SourceReaderPlugin;
 import io.vertigo.studio.notebook.Notebook;
@@ -65,10 +65,10 @@ public final class VegaWebServicesSourceReaderPlugin implements SourceReaderPlug
 		Assertion.check()
 				.isNotNull(sources)
 				.isNotNull(notebook);
-		//---	
+		//---
 		final List<WebServiceSketch> webServiceSketch = new ArrayList<>();
 		for (final Source source : sources) {
-			final String resourcePath = source.getPath();
+			final String resourcePath = source.path();
 			if (resourcePath.endsWith(".*")) {
 				scanAndAddPackage(resourcePath.substring(0, resourcePath.length() - ".*".length()), webServiceSketch);
 			} else {

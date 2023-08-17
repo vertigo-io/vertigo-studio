@@ -68,7 +68,7 @@ public final class DslRawRule extends AbstractRule<DslRaw, PegChoice> {
 
 	@Override
 	protected DslRaw handle(final PegChoice parsing) {
-		final DslRawEntry rawEntry = (DslRawEntry) ((List) parsing.getValue()).get(2);
+		final DslRawEntry rawEntry = (DslRawEntry) ((List) parsing.value()).get(2);
 		return rawEntry.getRaw();
 	}
 }
