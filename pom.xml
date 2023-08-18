@@ -5,13 +5,13 @@
 	<parent>
 		<groupId>io.vertigo</groupId>
 		<artifactId>vertigo-parent</artifactId>
-		<version>4.0.0-SNAPSHOT</version>
+		<version>4.0.0</version>
 	</parent>
 
 	<artifactId>vertigo-studio</artifactId>
 	<packaging>jar</packaging>
 	<name>vertigo-studio</name>
-	<version>4.0.0-SNAPSHOT</version>
+	<version>4.1.0-SNAPSHOT</version>
 
 	<dependencies>
 		<dependency>
