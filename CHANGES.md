@@ -1,11 +1,23 @@
 Version history
 ===============
 
-Running 0.9.5-SNAPSHOT
+Running 4.1.0-SNAPSHOT
 ----------------------
 
 more to come :)
 
+Release 4.0.0 - 2023/08/17
+----------------------
+[Migration help](https://github.com/vertigo-io/vertigo/wiki/Vertigo-Migration-Guide#from-360-to-400)
+* [Core] Replace value object class to record when possible
+* [Core] Rename record's getter from getMyProperty to myProperty()
+* [Studio] Fix tableName for SQL generation
+* Update versions :
+  - freemarker 2.3.31 -> 2.3.32
+  - servlet 4.0.1 -> 5.0.0 (jakarta)
+  - h2 2.1.214 -> 2.2.220
+  - slf4j 1.7.33 -> 1.7.36
+  
 Release 3.6.0 - 2023/05/04
 ----------------------
 [Migration help](https://github.com/vertigo-io/vertigo/wiki/Vertigo-Migration-Guide#from-350-to-360)
