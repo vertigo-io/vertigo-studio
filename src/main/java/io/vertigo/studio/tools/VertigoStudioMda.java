@@ -51,6 +51,7 @@ import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugi
 import io.vertigo.core.plugins.resource.local.LocalResourceResolverPlugin;
 import io.vertigo.core.plugins.resource.url.URLResourceResolverPlugin;
 import io.vertigo.core.resource.ResourceManager;
+import io.vertigo.core.util.NamedThreadFactory;
 import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.generator.GeneratorConfig;
 import io.vertigo.studio.generator.GeneratorManager;
@@ -283,7 +284,7 @@ public final class VertigoStudioMda {
 		private Future previousFuture;
 
 		public Debouncer() {
-			scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+			scheduledExecutorService = Executors.newSingleThreadScheduledExecutor(new NamedThreadFactory("v-studio-debounce-"));
 			previousFuture = null;
 		}
 
