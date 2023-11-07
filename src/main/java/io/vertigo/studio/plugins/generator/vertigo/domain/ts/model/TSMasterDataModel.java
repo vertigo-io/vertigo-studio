@@ -44,7 +44,7 @@ public final class TSMasterDataModel {
 				.entrySet()
 				.stream()
 				.map(entry -> new TSMasterDataValueModel(dtSketch, entry.getValue()))
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	public TSStudioDtModel getDefinition() {

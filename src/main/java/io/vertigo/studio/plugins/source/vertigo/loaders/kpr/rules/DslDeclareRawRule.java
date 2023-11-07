@@ -51,7 +51,7 @@ public final class DslDeclareRawRule extends AbstractRule<String, PegChoice> {
 		final List<PegRule<?>> rules = grammar.getEntities()
 				.stream()
 				.map(DslDeclareRawRule::createRule)
-				.collect(Collectors.toList());
+				.toList();
 		return PegRules.choice(rules);
 	}
 

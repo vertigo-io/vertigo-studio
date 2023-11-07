@@ -47,7 +47,7 @@ public final class FacetedQueryModel {
 		facetDefinitionModels = facetedQuerySketch.getFacetSketchs()
 				.stream()
 				.map(FacetModel::new)
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	/**

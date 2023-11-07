@@ -70,7 +70,7 @@ public final class AuthorizationGeneratorPlugin implements GeneratorPlugin {
 				.stream()
 				.filter(o -> o.getLinkedResourceOpt().isEmpty())
 				.map(GlobalAuthorizationModel::new)
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	private static Collection<SecuredEntityModel> getSecuredEntities(final Notebook notebook) {
@@ -82,7 +82,7 @@ public final class AuthorizationGeneratorPlugin implements GeneratorPlugin {
 				.stream()
 				.filter(entry -> notebook.contains(DtDefinition.PREFIX + entry.getKey()))// we have the studioDtDefinition
 				.map(entry -> new SecuredEntityModel(entry.getValue(), notebook.resolve(DtDefinition.PREFIX + entry.getKey(), DtSketch.class)))
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	private static void generateGlobalAuthorizations(final Notebook notebook, final String targetSubDir, final GeneratorConfig generatorConfig, final GeneratorResultBuilder generatorResultBuilder) {

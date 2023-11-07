@@ -42,7 +42,7 @@ public final class MasterDataModel {
 				.entrySet()
 				.stream()
 				.map(entry -> new MasterDataValueModel(dtSketch, entry.getKey(), entry.getValue()))
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	/**

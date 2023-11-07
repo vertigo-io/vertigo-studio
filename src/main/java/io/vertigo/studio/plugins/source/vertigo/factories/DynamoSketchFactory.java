@@ -60,7 +60,7 @@ public final class DynamoSketchFactory implements DslSketchFactory {
 				return sketchFactories
 						.stream()
 						.flatMap(sketchFactory -> sketchFactory.getGrammar().getEntities().stream())
-						.collect(Collectors.toList());
+						.toList();
 			}
 
 			@Override
@@ -68,7 +68,7 @@ public final class DynamoSketchFactory implements DslSketchFactory {
 				return sketchFactories
 						.stream()
 						.flatMap(sketchFactory -> sketchFactory.getGrammar().getRootRaws().stream())
-						.collect(Collectors.toList());
+						.toList();
 			}
 		};
 	}

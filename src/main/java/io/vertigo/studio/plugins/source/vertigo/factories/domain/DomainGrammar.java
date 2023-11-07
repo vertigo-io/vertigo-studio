@@ -224,6 +224,6 @@ public final class DomainGrammar implements DslGrammar {
 		return types
 				.stream()
 				.map(type -> DslRaw.builder(type, DATA_TYPE_ENTITY).build())
-				.collect(Collectors.toList());
+				.toList();
 	}
 }

@@ -70,7 +70,7 @@ public final class JSGeneratorPlugin implements GeneratorPlugin {
 				.stream()
 				.filter(dtSketch -> dtSketch.getPackageName().startsWith(generatorConfig.getProjectPackageName())) // only the one for my project
 				.map(JSDtModel::new)
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	private static void generateJsDtDefinitions(

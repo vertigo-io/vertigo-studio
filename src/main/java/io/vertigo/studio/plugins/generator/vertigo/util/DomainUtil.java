@@ -182,7 +182,7 @@ public final class DomainUtil {
 		return sketchCollection
 				.stream()
 				.sorted(Comparator.comparing(dt -> dt.getKey().getName()))
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	/**
@@ -204,7 +204,7 @@ public final class DomainUtil {
 		return associationCollection
 				.stream()
 				.sorted(Comparator.comparing(dt -> dt.getKey().getName()))
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	public static String getSimpleNameFromCanonicalName(final String canonicalClassName) {

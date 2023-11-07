@@ -36,7 +36,7 @@ public final class SearchIndexModel {
 		copyToModels = searchIndexSketch.getIndexCopyToFields()
 				.stream()
 				.map(fromField -> new IndexCopyToModel(fromField, searchIndexSketch.getIndexCopyToFromFields(fromField)))
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	public String getName() {

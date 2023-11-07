@@ -120,7 +120,7 @@ public final class SearchGeneratorPlugin implements GeneratorPlugin {
 		final List<SearchIndexSketch> searchIndexSketches = notebook.getAll(SearchIndexSketch.class)
 				.stream()
 				.filter(indexSketch -> indexSketch.getIndexDtSketch().equals(dtIndexSketch))
-				.collect(Collectors.toList());
+				.toList();
 
 		final List<FacetedQueryModel> facetedQueryDefinitions = new ArrayList<>();
 		for (final FacetedQuerySketch facetedQuerySketch : notebook.getAll(FacetedQuerySketch.class)) {

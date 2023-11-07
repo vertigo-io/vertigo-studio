@@ -47,7 +47,7 @@ public final class JSDtModel {
 				.stream()
 				.filter(dtField -> DtSketchField.FieldType.COMPUTED != dtField.getType())
 				.map(JSStudioDtFieldModel::new)
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	/**

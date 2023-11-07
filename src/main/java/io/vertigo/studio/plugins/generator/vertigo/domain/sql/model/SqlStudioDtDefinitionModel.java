@@ -59,7 +59,7 @@ public final class SqlStudioDtDefinitionModel {
 				.stream()
 				.filter(dtField -> DtSketchField.FieldType.COMPUTED != dtField.getType())
 				.map(SqlStudioDtFieldModel::new)
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	public String getLocalName() {

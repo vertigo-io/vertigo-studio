@@ -55,7 +55,7 @@ final class StudioConfigYamlParser {
 		//metamodelresources
 		return resources.stream()
 				.map(resource -> Source.of(resource.type, rootPath + resource.path))
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	private static GeneratorConfig parseMdaConfig(final YamlMdaConfig yamlMdaConfig, final String rootPath) {

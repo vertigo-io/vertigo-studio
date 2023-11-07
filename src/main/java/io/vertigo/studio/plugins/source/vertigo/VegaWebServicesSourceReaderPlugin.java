@@ -99,7 +99,7 @@ public final class VegaWebServicesSourceReaderPlugin implements SourceReaderPlug
 				.map(VegaWebServicesSourceReaderPlugin::buildWebServiceSketch)
 				.filter(Optional::isPresent)
 				.map(Optional::get)
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	private static Optional<WebServiceSketch> buildWebServiceSketch(final Method method) {

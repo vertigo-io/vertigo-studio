@@ -36,7 +36,7 @@ public final class SecuredEntityModel {
 		securedFeatureModels = securedFeatureSketchs
 				.stream()
 				.map(SecuredFeatureModel::new)
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	public String getClassSimpleName() {

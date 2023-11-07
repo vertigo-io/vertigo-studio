@@ -215,7 +215,7 @@ public final class VertigoStudioMda {
 					}
 					return Stream.of(sourcePath);
 				})
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	private static NodeConfig buildNodeConfig() {
@@ -275,7 +275,7 @@ public final class VertigoStudioMda {
 					}
 					return Stream.empty();
 				})
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	static class Debouncer {

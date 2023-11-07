@@ -90,7 +90,7 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 				.stream()
 				.filter(dtSketch -> dtSketch.getStereotype() == StudioStereotype.StaticMasterData)
 				.map(dtSketch -> new SqlMasterDataModel(dtSketch, staticMasterDataValues.getOrDefault(dtSketch.getClassCanonicalName(), Collections.emptyMap())))
-				.collect(Collectors.toList());
+				.toList();
 
 		final String targetSubDir = generatorConfig.getOrDefaultAsString("vertigo.domain.sql.targetSubDir", DEFAULT_TARGET_SUBDIR);
 
@@ -178,7 +178,7 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 				.filter(a -> dataSpace.equals(a.getAssociationNodeA().getDtSketch().getDataSpace()))
 				.filter(a -> a.getAssociationNodeA().getDtSketch().isPersistent() && a.getAssociationNodeB().getDtSketch().isPersistent())
 				.map(SqlStudioAssociationSimpleModel::new)
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	private static Collection<SqlStudioAssociationNNModel> filterAssociationNN(
@@ -189,7 +189,7 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 				.filter(a -> dataSpace.equals(a.getAssociationNodeA().getDtSketch().getDataSpace()))
 				.filter(a -> a.getAssociationNodeA().getDtSketch().isPersistent() && a.getAssociationNodeB().getDtSketch().isPersistent())
 				.map(SqlStudioAssociationNNModel::new)
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	private static void generateFile(

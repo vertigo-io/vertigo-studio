@@ -80,6 +80,6 @@ public final class Notebook {
 				.filter(model -> clazz.isAssignableFrom(model.getClass()))
 				.map(clazz::cast)
 				.sorted(Comparator.comparing(s -> s.getKey().getName()))
-				.collect(Collectors.toList());
+				.toList();
 	}
 }

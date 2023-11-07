@@ -176,7 +176,7 @@ public final class TaskGeneratorPlugin implements GeneratorPlugin {
 				.stream()
 				.map(TaskAttributeModel::getDomain)
 				.filter(smartType -> smartType.getScope().isDataObject())
-				.collect(Collectors.toList());
+				.toList();
 		//There MUST be only ONE candidate
 		if (candidates.size() == 1) {
 			return candidates.get(0).getDtSketchKey();

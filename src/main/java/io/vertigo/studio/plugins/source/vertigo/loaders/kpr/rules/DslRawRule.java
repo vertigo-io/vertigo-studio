@@ -53,7 +53,7 @@ public final class DslRawRule extends AbstractRule<DslRaw, PegChoice> {
 				.stream()
 				.map(entity -> new DslInnerRawRule(entity.getName(), entity))
 				.map(innerRawRule -> createRule(operation, innerRawRule))
-				.collect(Collectors.toList());
+				.toList();
 		return PegRules.choice(rules);
 	}
 

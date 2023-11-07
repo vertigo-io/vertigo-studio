@@ -55,7 +55,7 @@ public final class TemplateTaskDefinition {
 		templateInTaskAttributes = taskDefinition.getInAttributes()
 				.stream()
 				.map(taskAttribute -> new TemplateTaskAttribute(taskAttribute, classNameFromDt))
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	/**

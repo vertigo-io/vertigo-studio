@@ -197,6 +197,6 @@ public final class DslRaw {
 		return subRawsByEntityField.values()
 				.stream()
 				.flatMap(List::stream)
-				.collect(Collectors.toList());
+				.toList();
 	}
 }

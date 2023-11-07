@@ -73,7 +73,7 @@ public final class EAXmiLoader extends AbstractXmlLoader {
 				//On ne conserve que les classes et les domaines
 				.filter(obj -> obj.getType() == EAXmiType.Class)
 				.map(obj -> createClass(obj, isConstFieldNameInSource()))
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	/**
@@ -86,7 +86,7 @@ public final class EAXmiLoader extends AbstractXmlLoader {
 				.stream()
 				.filter(obj -> obj.getType() == EAXmiType.Association)
 				.map(obj -> createAssociation(obj, isConstFieldNameInSource()))
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	private static XmlClass createClass(final EAXmiObject obj, final boolean constFieldNameInSource) {

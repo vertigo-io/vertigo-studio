@@ -51,7 +51,7 @@ public final class TSStudioDtModel {
 				.stream()
 				.filter(dtField -> FieldType.COMPUTED != dtField.getType())
 				.map(TSStudioDtFieldModel::new)
-				.collect(Collectors.toList());
+				.toList();
 
 		domainModels = dtSketch.getFields()
 				.stream()

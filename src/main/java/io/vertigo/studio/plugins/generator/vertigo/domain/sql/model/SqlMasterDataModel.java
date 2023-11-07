@@ -42,7 +42,7 @@ public final class SqlMasterDataModel {
 				.entrySet()
 				.stream()
 				.map(entry -> new SqlMasterDataValueModel(dtSketch, entry.getValue()))
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	/**

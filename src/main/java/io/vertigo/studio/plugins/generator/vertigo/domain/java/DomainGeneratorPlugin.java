@@ -93,7 +93,7 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 		final var projectDtSktecks = DomainUtil.getDtSketchs(notebook)
 				.stream()
 				.filter(dtSketch -> dtSketch.getPackageName().startsWith(generatorConfig.getProjectPackageName()))
-				.collect(Collectors.toList());
+				.toList();
 		final Map<String, Object> model = new MapBuilder<String, Object>()
 				.put("packageName", generatorConfig.getProjectPackageName() + ".domain")
 				.put("classSimpleName", dictionaryClassName)
@@ -151,7 +151,7 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 		return dtDefinitions
 				.stream()
 				.map(dtDef -> new StudioDtModel(dtDef, getAssociationsByDtDefinition(notebook, dtDef), DomainUtil.createClassNameFromDtFunction(notebook)))
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	private static List<AssociationSketch> getAssociationsByDtDefinition(final Notebook notebook, final DtSketch dtSketch) {
@@ -159,7 +159,7 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 				.concat(notebook.getAll(AssociationSimpleSketch.class).stream(), notebook.getAll(AssociationNNSketch.class).stream())
 				.filter(association -> association.getAssociationNodeA().getDtSketch().getKey().equals(dtSketch.getKey())
 						|| association.getAssociationNodeB().getDtSketch().getKey().equals(dtSketch.getKey())) // concerns current dt
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	private static void generateDtResources(

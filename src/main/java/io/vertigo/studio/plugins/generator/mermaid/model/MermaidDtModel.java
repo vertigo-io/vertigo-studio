@@ -69,13 +69,13 @@ public final class MermaidDtModel {
 				.map(associationSketch -> (AssociationSimpleSketch) associationSketch)
 				.filter(associationSimpleSketch -> associationSimpleSketch.getForeignAssociationNode().getDtSketch().getKey().equals(dtSketch.getKey())) // only our ones
 				.map(MermaidSimpleAssociationModel::new)
-				.collect(Collectors.toList());
+				.toList();
 
 		nnAssociationModels = associationSketchs.stream()
 				.filter(associationSketch -> associationSketch instanceof AssociationNNSketch)
 				.map(associationSketch -> (AssociationNNSketch) associationSketch)
 				.map(MermaidNNAssociationModel::new)
-				.collect(Collectors.toList());
+				.toList();
 
 	}
 

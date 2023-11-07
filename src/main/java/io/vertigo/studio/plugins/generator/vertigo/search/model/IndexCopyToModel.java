@@ -44,7 +44,7 @@ public final class IndexCopyToModel {
 		return fromFields
 				.stream()
 				.map(DtSketchField::getName)
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 }
