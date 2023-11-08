@@ -24,7 +24,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.MapBuilder;
@@ -203,7 +202,7 @@ public final class TaskTestGeneratorPlugin implements GeneratorPlugin {
 				.stream()
 				.map(TaskAttributeModel::getDomain)
 				.filter(domain -> domain.getScope().isDataObject())
-				.collect(Collectors.toList());
+				.toList();
 		//There MUST be only ONE candidate
 		if (candidates.size() == 1) {
 			return candidates.get(0).getDtSketchKey();

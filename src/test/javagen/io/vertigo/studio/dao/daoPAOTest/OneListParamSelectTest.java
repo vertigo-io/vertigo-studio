@@ -18,7 +18,9 @@
 package io.vertigo.studio.dao.daoPAOTest;
 
 import javax.inject.Inject;
+
 import org.junit.jupiter.api.Test;
+
 import io.vertigo.studio.source.vertigo.data.tasktest.DaoTestClass;
 
 public class OneListParamSelectTest extends DaoTestClass {

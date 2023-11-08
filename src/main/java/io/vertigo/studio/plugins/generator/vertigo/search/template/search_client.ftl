@@ -123,6 +123,15 @@ public final class ${dtDefinition.classSimpleName}SearchClient implements Compon
 	}
 	</#list>
 	
+	<#list searchIndexDefinitions as searchIndexDefinition>
+	/**
+	 * Simple access to definition, need to call some SearchManager function.
+	 * @return SearchDefinition 
+	 */
+	public SearchIndexDefinition getSearchIndexDefinition${searchIndexDefinition.name}() {
+		return io.vertigo.core.node.Node.getNode().getDefinitionSpace().resolve("${searchIndexDefinition.name}",SearchIndexDefinition.class);
+	}
+	</#list>
 
 	/** {@inheritDoc} */
 	@Override

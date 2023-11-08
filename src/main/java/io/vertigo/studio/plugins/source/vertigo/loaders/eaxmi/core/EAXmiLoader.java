@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -73,7 +72,7 @@ public final class EAXmiLoader extends AbstractXmlLoader {
 				//On ne conserve que les classes et les domaines
 				.filter(obj -> obj.getType() == EAXmiType.Class)
 				.map(obj -> createClass(obj, isConstFieldNameInSource()))
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	/**
@@ -86,7 +85,7 @@ public final class EAXmiLoader extends AbstractXmlLoader {
 				.stream()
 				.filter(obj -> obj.getType() == EAXmiType.Association)
 				.map(obj -> createAssociation(obj, isConstFieldNameInSource()))
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	private static XmlClass createClass(final EAXmiObject obj, final boolean constFieldNameInSource) {

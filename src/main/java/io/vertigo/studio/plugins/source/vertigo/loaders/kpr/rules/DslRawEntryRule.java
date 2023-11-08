@@ -75,7 +75,7 @@ public final class DslRawEntryRule extends AbstractRule<DslRawEntry, List<Object
 			case 1 -> ((List<String>) definitionChoice.value())
 					.stream()
 					.map(DslRawKey::of)
-					.collect(Collectors.toList());
+					.toList();
 			case 0 -> {
 				//Déclaration d'une définition identifiée par sa clé
 				final String value = (String) definitionChoice.value();

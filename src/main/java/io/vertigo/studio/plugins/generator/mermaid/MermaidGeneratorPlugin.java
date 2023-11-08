@@ -70,7 +70,7 @@ public final class MermaidGeneratorPlugin implements GeneratorPlugin {
 				.filter(dtSketch -> dtSketch.getPackageName().startsWith(generatorConfig.getProjectPackageName()))
 				.filter(DtSketch::isPersistent)
 				.map(dtSketch -> new MermaidDtModel(dtSketch, getAssociationsByDtDefinition(notebook, dtSketch), DomainUtil.createClassNameFromDtFunction(notebook)))
-				.collect(Collectors.toList());
+				.toList();
 
 		final Map<String, List<MermaidDtModel>> mermaidDtModelsByFeature = mermaidDtModels
 				.stream()
@@ -103,7 +103,7 @@ public final class MermaidGeneratorPlugin implements GeneratorPlugin {
 				.concat(notebook.getAll(AssociationSimpleSketch.class).stream(), notebook.getAll(AssociationNNSketch.class).stream())
 				.filter(association -> association.getAssociationNodeA().getDtSketch().getKey().equals(dtSketch.getKey())
 						|| association.getAssociationNodeB().getDtSketch().getKey().equals(dtSketch.getKey())) // concerns current dt
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	private static String extractFeatureFromPackageName(final String projectPackageName, final String dtPackageName) {

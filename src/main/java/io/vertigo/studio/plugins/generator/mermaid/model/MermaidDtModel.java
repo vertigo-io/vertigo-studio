@@ -20,7 +20,6 @@ package io.vertigo.studio.plugins.generator.mermaid.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.domain.DtSketch;
@@ -69,13 +68,13 @@ public final class MermaidDtModel {
 				.map(associationSketch -> (AssociationSimpleSketch) associationSketch)
 				.filter(associationSimpleSketch -> associationSimpleSketch.getForeignAssociationNode().getDtSketch().getKey().equals(dtSketch.getKey())) // only our ones
 				.map(MermaidSimpleAssociationModel::new)
-				.collect(Collectors.toList());
+				.toList();
 
 		nnAssociationModels = associationSketchs.stream()
 				.filter(associationSketch -> associationSketch instanceof AssociationNNSketch)
 				.map(associationSketch -> (AssociationNNSketch) associationSketch)
 				.map(MermaidNNAssociationModel::new)
-				.collect(Collectors.toList());
+				.toList();
 
 	}
 

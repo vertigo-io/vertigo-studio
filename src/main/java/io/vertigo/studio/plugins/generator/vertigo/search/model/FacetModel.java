@@ -19,7 +19,6 @@ package io.vertigo.studio.plugins.generator.vertigo.search.model;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.search.FacetSketch;
@@ -38,14 +37,14 @@ public final class FacetModel {
 			facetValueModels = facetSketch.getFacetRanges()
 					.stream()
 					.map(FacetValueModel::new)
-					.collect(Collectors.toList());
+					.toList();
 			facetParamModels = Collections.emptyList();
 		} else if (facetSketch.isCustomFacet()) {
 			facetValueModels = Collections.emptyList();
 			facetParamModels = facetSketch.getFacetParams().entrySet()
 					.stream()
 					.map(entry -> new FacetParamModel(entry.getKey(), entry.getValue()))
-					.collect(Collectors.toList());
+					.toList();
 		} else {
 			facetValueModels = Collections.emptyList();
 			facetParamModels = Collections.emptyList();

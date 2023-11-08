@@ -17,12 +17,13 @@
  */
 package io.vertigo.studio.dao;
 
+import java.util.Optional;
+
 import javax.inject.Inject;
 
-import java.util.Optional;
-import io.vertigo.core.node.Node;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Generated;
+import io.vertigo.core.node.Node;
 import io.vertigo.datamodel.task.TaskManager;
 import io.vertigo.datamodel.task.definitions.TaskDefinition;
 import io.vertigo.datamodel.task.model.Task;

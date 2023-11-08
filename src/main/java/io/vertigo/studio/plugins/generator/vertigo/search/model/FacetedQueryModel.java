@@ -19,7 +19,6 @@ package io.vertigo.studio.plugins.generator.vertigo.search.model;
 
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.search.FacetedQuerySketch;
@@ -47,7 +46,7 @@ public final class FacetedQueryModel {
 		facetDefinitionModels = facetedQuerySketch.getFacetSketchs()
 				.stream()
 				.map(FacetModel::new)
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	/**

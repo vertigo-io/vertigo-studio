@@ -18,7 +18,6 @@
 package io.vertigo.studio.plugins.generator.vertigo.search.model;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.search.SearchIndexSketch;
@@ -36,7 +35,7 @@ public final class SearchIndexModel {
 		copyToModels = searchIndexSketch.getIndexCopyToFields()
 				.stream()
 				.map(fromField -> new IndexCopyToModel(fromField, searchIndexSketch.getIndexCopyToFromFields(fromField)))
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	public String getName() {

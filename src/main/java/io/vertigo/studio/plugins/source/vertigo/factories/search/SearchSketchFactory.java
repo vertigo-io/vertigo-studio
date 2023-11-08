@@ -111,7 +111,7 @@ public final class SearchSketchFactory implements DslSketchFactory {
 			final List<FacetSketchValue> facetValues = rangeDefinitions
 					.stream()
 					.map(SearchSketchFactory::createFacetValue)
-					.collect(Collectors.toList());
+					.toList();
 			facetDefinition = FacetSketch.createFacetSketchByRange(
 					dslSketch.getKey().getName(),
 					indexDtSketch,
@@ -177,7 +177,7 @@ public final class SearchSketchFactory implements DslSketchFactory {
 		final List<FacetSketch> facetSketches = facetSketchRawKeys
 				.stream()
 				.map(key -> notebook.resolve(key.getName(), FacetSketch.class))
-				.collect(Collectors.toList());
+				.toList();
 		final String listFilterBuilderQuery = (String) dslSketch.getPropertyValue(SearchGrammar.LIST_FILTER_BUILDER_QUERY);
 		final String geoSearchQuery = (String) dslSketch.getPropertyValue(SearchGrammar.GEO_SEARCH_QUERY);
 		final String listFilterBuilderClassName = getListFilterBuilderClassName(dslSketch);

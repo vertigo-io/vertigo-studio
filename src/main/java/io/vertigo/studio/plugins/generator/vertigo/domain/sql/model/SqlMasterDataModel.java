@@ -19,7 +19,6 @@ package io.vertigo.studio.plugins.generator.vertigo.domain.sql.model;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.domain.DtSketch;
@@ -42,7 +41,7 @@ public final class SqlMasterDataModel {
 				.entrySet()
 				.stream()
 				.map(entry -> new SqlMasterDataValueModel(dtSketch, entry.getValue()))
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	/**

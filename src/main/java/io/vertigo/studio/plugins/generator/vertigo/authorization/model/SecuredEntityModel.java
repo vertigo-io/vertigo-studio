@@ -18,7 +18,6 @@
 package io.vertigo.studio.plugins.generator.vertigo.authorization.model;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.authorization.SecuredFeatureSketch;
@@ -36,7 +35,7 @@ public final class SecuredEntityModel {
 		securedFeatureModels = securedFeatureSketchs
 				.stream()
 				.map(SecuredFeatureModel::new)
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	public String getClassSimpleName() {

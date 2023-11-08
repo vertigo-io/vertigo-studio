@@ -89,7 +89,7 @@ public final class KspGeneratorPlugin implements GeneratorPlugin {
 				.stream()
 				.filter(a -> packageName.equals(a.getAssociationNodeA().getDtSketch().getPackageName()))
 				.map(KspAssociationSimpleModel::new)
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	private static Collection<KspAssociationNNModel> filterAssociationNN(
@@ -99,7 +99,7 @@ public final class KspGeneratorPlugin implements GeneratorPlugin {
 				.stream()
 				.filter(a -> packageName.equals(a.getAssociationNodeA().getDtSketch().getPackageName()))
 				.map(KspAssociationNNModel::new)
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	private static void generateFile(

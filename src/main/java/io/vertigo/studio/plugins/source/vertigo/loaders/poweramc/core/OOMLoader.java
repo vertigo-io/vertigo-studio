@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -66,7 +65,7 @@ public final class OOMLoader extends AbstractXmlLoader {
 				//On ne conserve que les classes et les domaines
 				.filter(obj -> obj.getType() == OOMType.Class)
 				.map(obj -> createClass(obj, isConstFieldNameInSource()))
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	@Override
@@ -75,7 +74,7 @@ public final class OOMLoader extends AbstractXmlLoader {
 				.stream()
 				.filter(obj -> obj.getType() == OOMType.Association)
 				.map(obj -> createAssociation(obj, isConstFieldNameInSource()))
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	private XmlClass createClass(final OOMObject obj, final boolean constFieldNameInSource) {

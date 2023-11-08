@@ -19,7 +19,6 @@ package io.vertigo.studio.plugins.generator.vertigo.domain.sql.model;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.BasicType;
@@ -59,7 +58,7 @@ public final class SqlStudioDtDefinitionModel {
 				.stream()
 				.filter(dtField -> DtSketchField.FieldType.COMPUTED != dtField.getType())
 				.map(SqlStudioDtFieldModel::new)
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	public String getLocalName() {

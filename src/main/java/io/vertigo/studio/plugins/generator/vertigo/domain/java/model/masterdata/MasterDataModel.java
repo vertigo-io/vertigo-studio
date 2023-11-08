@@ -19,7 +19,6 @@ package io.vertigo.studio.plugins.generator.vertigo.domain.java.model.masterdata
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.domain.DtSketch;
@@ -42,7 +41,7 @@ public final class MasterDataModel {
 				.entrySet()
 				.stream()
 				.map(entry -> new MasterDataValueModel(dtSketch, entry.getKey(), entry.getValue()))
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	/**

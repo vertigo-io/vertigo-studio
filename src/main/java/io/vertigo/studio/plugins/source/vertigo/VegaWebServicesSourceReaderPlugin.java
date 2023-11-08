@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import io.vertigo.core.lang.Assertion;
@@ -99,7 +98,7 @@ public final class VegaWebServicesSourceReaderPlugin implements SourceReaderPlug
 				.map(VegaWebServicesSourceReaderPlugin::buildWebServiceSketch)
 				.filter(Optional::isPresent)
 				.map(Optional::get)
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	private static Optional<WebServiceSketch> buildWebServiceSketch(final Method method) {

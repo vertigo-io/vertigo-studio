@@ -83,7 +83,7 @@ public final class TSGeneratorPlugin implements GeneratorPlugin {
 				.stream()
 				.filter(dtSketch -> dtSketch.getPackageName().startsWith(generatorConfig.getProjectPackageName())) // only the one for my project
 				.map(TSStudioDtModel::new)
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	private static void generateTsDtDefinitions(
@@ -107,7 +107,7 @@ public final class TSGeneratorPlugin implements GeneratorPlugin {
 				.stream()
 				.filter(dtSketch -> dtSketch.getStereotype() == StudioStereotype.StaticMasterData)
 				.map(dtSketch -> new TSMasterDataModel(dtSketch, staticMasterDataValues.getOrDefault(dtSketch.getClassCanonicalName(), Collections.emptyMap())))
-				.collect(Collectors.toList());
+				.toList();
 
 		final Map<String, Object> model = new MapBuilder<String, Object>()
 				.put("masterdatas", tsMasterDataModels)

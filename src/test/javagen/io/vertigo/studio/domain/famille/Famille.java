@@ -19,10 +19,10 @@ package io.vertigo.studio.domain.famille;
 
 import io.vertigo.core.lang.Generated;
 import io.vertigo.datamodel.structure.model.Entity;
-import io.vertigo.datastore.impl.entitystore.StoreListVAccessor;
 import io.vertigo.datamodel.structure.model.UID;
 import io.vertigo.datamodel.structure.stereotype.Field;
 import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datastore.impl.entitystore.StoreListVAccessor;
 
 /**
  * This class is automatically generated.

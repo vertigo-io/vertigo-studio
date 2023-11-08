@@ -21,7 +21,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
@@ -55,7 +54,7 @@ final class StudioConfigYamlParser {
 		//metamodelresources
 		return resources.stream()
 				.map(resource -> Source.of(resource.type, rootPath + resource.path))
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	private static GeneratorConfig parseMdaConfig(final YamlMdaConfig yamlMdaConfig, final String rootPath) {
