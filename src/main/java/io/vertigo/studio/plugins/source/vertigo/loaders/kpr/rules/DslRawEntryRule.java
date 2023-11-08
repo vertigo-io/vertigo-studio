@@ -53,7 +53,7 @@ public final class DslRawEntryRule extends AbstractRule<DslRawEntry, List<Object
 		final List<PegRule<?>> fieldNamesRules = fieldNames
 				.stream()
 				.map(PegRules::term)
-				.toList();
+				.collect(Collectors.toList());
 		//-----
 		return PegRules.sequence(//"DefinitionKey"
 				PegRules.choice(fieldNamesRules), //0

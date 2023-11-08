@@ -19,7 +19,6 @@ package io.vertigo.studio.plugins.generator.vertigo.domain.ts.model;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.domain.DtSketch;

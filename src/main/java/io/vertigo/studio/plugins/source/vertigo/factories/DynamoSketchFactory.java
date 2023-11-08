@@ -19,7 +19,6 @@ package io.vertigo.studio.plugins.source.vertigo.factories;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.studio.impl.source.dsl.entity.DslEntity;

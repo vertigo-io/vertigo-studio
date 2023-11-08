@@ -19,7 +19,6 @@ package io.vertigo.studio.plugins.generator.vertigo.task.test;
 
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.util.StringUtil;

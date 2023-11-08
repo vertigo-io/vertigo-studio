@@ -19,7 +19,6 @@ package io.vertigo.studio.plugins.generator.vertigo.search.model;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.notebook.search.FacetSketch;

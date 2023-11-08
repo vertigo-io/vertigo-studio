@@ -20,7 +20,6 @@ package io.vertigo.studio.plugins.generator.vertigo.domain.js;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.MapBuilder;
