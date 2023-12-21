@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>io.vertigo</groupId>
 		<artifactId>vertigo-parent</artifactId>
-		<version>4.1.0</version>
+		<version>4.2.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>vertigo-studio</artifactId>
@@ -159,7 +159,7 @@
 				<repository>
 					<id>github-extensions</id>
 					<name>GitHub Vertigo-io Apache Maven Packages</name>
-					<url>https://maven.pkg.github.com/vertigo-io/vertigo-extensions</url>
+					<url>https://maven.pkg.github.com/vertigo-io/vertigo-libs</url>
 					<snapshots><enabled>true</enabled></snapshots>
 				</repository>
 			</repositories>
