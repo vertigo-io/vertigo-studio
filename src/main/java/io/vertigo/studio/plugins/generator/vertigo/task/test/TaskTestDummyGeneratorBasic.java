@@ -26,7 +26,7 @@ import java.util.List;
 
 import io.vertigo.core.lang.DataStream;
 import io.vertigo.core.lang.VSystemException;
-import io.vertigo.datamodel.data.definitions.DtDefinition;
+import io.vertigo.datamodel.data.definitions.DataDefinition;
 import io.vertigo.datamodel.data.definitions.DtField.FieldType;
 import io.vertigo.datamodel.data.model.DtList;
 import io.vertigo.datamodel.data.model.DtObject;
@@ -86,7 +86,7 @@ public class TaskTestDummyGeneratorBasic implements TaskTestDummyGenerator {
 	 */
 	@Override
 	public <D extends DtObject> D dumNew(final Class<D> dtoClass) {
-		final DtDefinition dtDefinition = DtObjectUtil.findDtDefinition(dtoClass);
+		final DataDefinition dtDefinition = DtObjectUtil.findDtDefinition(dtoClass);
 		final D object = dum(dtoClass);
 		dtDefinition.getIdField()
 				.ifPresent(idField -> idField.getDataAccessor().setValue(object, null));// we make it pristine
@@ -94,7 +94,7 @@ public class TaskTestDummyGeneratorBasic implements TaskTestDummyGenerator {
 
 	}
 
-	private DtObject dum(final DtDefinition def) {
+	private DtObject dum(final DataDefinition def) {
 		/* Créé une instance du dto. */
 		final DtObject dto = DtObjectUtil.createDtObject(def);
 		/* Parcourt les champs */
