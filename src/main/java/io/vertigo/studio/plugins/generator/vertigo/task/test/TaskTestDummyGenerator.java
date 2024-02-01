@@ -19,8 +19,8 @@ package io.vertigo.studio.plugins.generator.vertigo.task.test;
 
 import java.util.List;
 
-import io.vertigo.datamodel.structure.model.DtList;
-import io.vertigo.datamodel.structure.model.DtObject;
+import io.vertigo.datamodel.data.model.DtList;
+import io.vertigo.datamodel.data.model.DtObject;
 
 /**
  *

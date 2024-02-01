@@ -17,7 +17,7 @@
  */
 package io.vertigo.studio.source.vertigo.data.domain;
 
-import io.vertigo.datamodel.task.model.TaskEngine;
+import io.vertigo.datafactory.task.model.TaskEngine;
 
 public final class CarEngine extends TaskEngine {
 

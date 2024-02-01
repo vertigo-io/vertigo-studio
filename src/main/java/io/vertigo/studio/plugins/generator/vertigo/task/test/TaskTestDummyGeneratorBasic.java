@@ -26,11 +26,11 @@ import java.util.List;
 
 import io.vertigo.core.lang.DataStream;
 import io.vertigo.core.lang.VSystemException;
-import io.vertigo.datamodel.structure.definitions.DtDefinition;
-import io.vertigo.datamodel.structure.definitions.DtField.FieldType;
-import io.vertigo.datamodel.structure.model.DtList;
-import io.vertigo.datamodel.structure.model.DtObject;
-import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datamodel.data.definitions.DtDefinition;
+import io.vertigo.datamodel.data.definitions.DtField.FieldType;
+import io.vertigo.datamodel.data.model.DtList;
+import io.vertigo.datamodel.data.model.DtObject;
+import io.vertigo.datamodel.data.util.DtObjectUtil;
 
 /**
  * Basic dummy values generator. (One possible value for each type)

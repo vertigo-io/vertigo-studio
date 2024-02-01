@@ -19,11 +19,11 @@ package io.vertigo.studio.source.vertigo.java.data.domain;
 
 import io.vertigo.core.lang.Cardinality;
 import io.vertigo.core.lang.Generated;
-import io.vertigo.datamodel.structure.model.Entity;
-import io.vertigo.datamodel.structure.model.UID;
-import io.vertigo.datamodel.structure.model.VAccessor;
-import io.vertigo.datamodel.structure.stereotype.Field;
-import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datamodel.data.model.Entity;
+import io.vertigo.datamodel.data.model.UID;
+import io.vertigo.datamodel.data.model.VAccessor;
+import io.vertigo.datamodel.data.stereotype.Field;
+import io.vertigo.datamodel.data.util.DtObjectUtil;
 
 /**
  * This class is automatically generated.
@@ -36,7 +36,7 @@ public final class Attachment implements Entity {
 	private Long attId;
 	private String url;
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "ACmdAtt",
 			fkFieldName = "cmdId",
 			primaryDtDefinitionName = "DtCommand",

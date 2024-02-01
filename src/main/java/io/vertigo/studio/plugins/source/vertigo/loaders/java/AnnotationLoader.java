@@ -50,14 +50,14 @@ import io.vertigo.core.lang.Selector;
 import io.vertigo.core.lang.Selector.ClassConditions;
 import io.vertigo.core.util.ClassUtil;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.datamodel.structure.definitions.DtField.FieldType;
-import io.vertigo.datamodel.structure.model.DtMasterData;
-import io.vertigo.datamodel.structure.model.DtObject;
-import io.vertigo.datamodel.structure.model.DtStaticMasterData;
-import io.vertigo.datamodel.structure.model.Entity;
-import io.vertigo.datamodel.structure.model.Fragment;
-import io.vertigo.datamodel.structure.model.KeyConcept;
-import io.vertigo.datamodel.structure.stereotype.DataSpace;
+import io.vertigo.datamodel.data.definitions.DtField.FieldType;
+import io.vertigo.datamodel.data.model.DtMasterData;
+import io.vertigo.datamodel.data.model.DtObject;
+import io.vertigo.datamodel.data.model.DtStaticMasterData;
+import io.vertigo.datamodel.data.model.Entity;
+import io.vertigo.datamodel.data.model.Fragment;
+import io.vertigo.datamodel.data.model.KeyConcept;
+import io.vertigo.datamodel.data.stereotype.DataSpace;
 import io.vertigo.studio.impl.source.dsl.raw.DslRaw;
 import io.vertigo.studio.impl.source.dsl.raw.DslRawBuilder;
 import io.vertigo.studio.impl.source.dsl.raw.DslRawRepository;
@@ -125,8 +125,8 @@ public final class AnnotationLoader implements Loader {
 		if (Fragment.class.isAssignableFrom(clazz)) {
 			//Fragments
 			for (final Annotation annotation : clazz.getAnnotations()) {
-				if (annotation instanceof io.vertigo.datamodel.structure.stereotype.Fragment) {
-					fragmentOf = ((io.vertigo.datamodel.structure.stereotype.Fragment) annotation).fragmentOf();
+				if (annotation instanceof io.vertigo.datamodel.data.stereotype.Fragment) {
+					fragmentOf = ((io.vertigo.datamodel.data.stereotype.Fragment) annotation).fragmentOf();
 					break;
 				}
 			}
@@ -233,8 +233,8 @@ public final class AnnotationLoader implements Loader {
 	}
 
 	private static void parseAssociationDefinition(final DslRawRepository rawRepository, final Annotation annotation, final String packageName) {
-		if (annotation instanceof io.vertigo.datamodel.structure.stereotype.Association) {
-			final io.vertigo.datamodel.structure.stereotype.Association association = (io.vertigo.datamodel.structure.stereotype.Association) annotation;
+		if (annotation instanceof io.vertigo.datamodel.data.stereotype.Association) {
+			final io.vertigo.datamodel.data.stereotype.Association association = (io.vertigo.datamodel.data.stereotype.Association) annotation;
 			//============================================================
 			//Attention pamc inverse dans oom les déclarations des objets !!
 
@@ -263,8 +263,8 @@ public final class AnnotationLoader implements Loader {
 				//Les associations peuvent être déclarées sur les deux noeuds de l'association.
 				rawRepository.addRaw(associationDefinition);
 			}
-		} else if (annotation instanceof io.vertigo.datamodel.structure.stereotype.AssociationNN) {
-			final io.vertigo.datamodel.structure.stereotype.AssociationNN association = (io.vertigo.datamodel.structure.stereotype.AssociationNN) annotation;
+		} else if (annotation instanceof io.vertigo.datamodel.data.stereotype.AssociationNN) {
+			final io.vertigo.datamodel.data.stereotype.AssociationNN association = (io.vertigo.datamodel.data.stereotype.AssociationNN) annotation;
 			//============================================================
 
 			//Attention pamc inverse dans oom les déclarations des objets !!
@@ -297,20 +297,20 @@ public final class AnnotationLoader implements Loader {
 
 	private static void parseFieldAnnotations(final Field field, final DslRawBuilder dtDefinition) {
 		for (final Annotation annotation : field.getAnnotations()) {
-			if (annotation instanceof io.vertigo.datamodel.structure.stereotype.Field) {
+			if (annotation instanceof io.vertigo.datamodel.data.stereotype.Field) {
 				//Le nom est automatiquement déduit du nom du champ
 				final String fieldName = createFieldName(field);
-				parseAnnotation(fieldName, dtDefinition, io.vertigo.datamodel.structure.stereotype.Field.class.cast(annotation));
+				parseAnnotation(fieldName, dtDefinition, io.vertigo.datamodel.data.stereotype.Field.class.cast(annotation));
 			}
 		}
 	}
 
 	private static void parseMethodAnnotations(final Method method, final DslRawBuilder dtDefinition) {
 		for (final Annotation annotation : method.getAnnotations()) {
-			if (annotation instanceof io.vertigo.datamodel.structure.stereotype.Field) {
+			if (annotation instanceof io.vertigo.datamodel.data.stereotype.Field) {
 				//Le nom est automatiquement déduit du nom de la méthode
 				final String fieldName = createFieldName(method);
-				parseAnnotation(fieldName, dtDefinition, io.vertigo.datamodel.structure.stereotype.Field.class.cast(annotation));
+				parseAnnotation(fieldName, dtDefinition, io.vertigo.datamodel.data.stereotype.Field.class.cast(annotation));
 			}
 		}
 	}
@@ -318,7 +318,7 @@ public final class AnnotationLoader implements Loader {
 	/*
 	 * Centralisation du parsing des annotations liées à un champ.
 	 */
-	private static void parseAnnotation(final String fieldName, final DslRawBuilder dtRawBuilder, final io.vertigo.datamodel.structure.stereotype.Field field) {
+	private static void parseAnnotation(final String fieldName, final DslRawBuilder dtRawBuilder, final io.vertigo.datamodel.data.stereotype.Field field) {
 		//Si on trouve un domaine on est dans un objet dynamo.
 		final FieldType type = FieldType.valueOf(field.type());
 

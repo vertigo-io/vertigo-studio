@@ -24,10 +24,10 @@ import javax.inject.Inject;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Generated;
 import io.vertigo.core.node.Node;
-import io.vertigo.datamodel.task.TaskManager;
-import io.vertigo.datamodel.task.definitions.TaskDefinition;
-import io.vertigo.datamodel.task.model.Task;
-import io.vertigo.datamodel.task.model.TaskBuilder;
+import io.vertigo.datafactory.task.TaskManager;
+import io.vertigo.datafactory.task.definitions.TaskDefinition;
+import io.vertigo.datafactory.task.model.Task;
+import io.vertigo.datafactory.task.model.TaskBuilder;
 import io.vertigo.datastore.impl.dao.StoreServices;
 
 /**
@@ -64,12 +64,12 @@ public final class DaoPAO implements StoreServices {
 	 * @param input List de Integer
 	 * @return Integer result
 	*/
-	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
+	@io.vertigo.datafactory.task.proxy.TaskAnnotation(
 			name = "TkOneListParamSelect",
 			request = "select 1 where 1 in  (#input.rownum#)",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
-	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyInteger")
-	public Integer oneListParamSelect(@io.vertigo.datamodel.task.proxy.TaskInput(name = "input", smartType = "STyInteger") final java.util.List<Integer> input) {
+	@io.vertigo.datafactory.task.proxy.TaskOutput(smartType = "STyInteger")
+	public Integer oneListParamSelect(@io.vertigo.datafactory.task.proxy.TaskInput(name = "input", smartType = "STyInteger") final java.util.List<Integer> input) {
 		final Task task = createTaskBuilder("TkOneListParamSelect")
 				.addValue("input", input)
 				.build();
@@ -83,12 +83,12 @@ public final class DaoPAO implements StoreServices {
 	 * @param input Integer
 	 * @return Integer result
 	*/
-	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
+	@io.vertigo.datafactory.task.proxy.TaskAnnotation(
 			name = "TkOneParamSelect",
 			request = "select 1 where 1 = #input#",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
-	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyInteger")
-	public Integer oneParamSelect(@io.vertigo.datamodel.task.proxy.TaskInput(name = "input", smartType = "STyInteger") final Integer input) {
+	@io.vertigo.datafactory.task.proxy.TaskOutput(smartType = "STyInteger")
+	public Integer oneParamSelect(@io.vertigo.datafactory.task.proxy.TaskInput(name = "input", smartType = "STyInteger") final Integer input) {
 		final Task task = createTaskBuilder("TkOneParamSelect")
 				.addValue("input", input)
 				.build();
@@ -101,11 +101,11 @@ public final class DaoPAO implements StoreServices {
 	 * Execute la tache TkPing.
 	 * @return Option de Integer result
 	*/
-	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
+	@io.vertigo.datafactory.task.proxy.TaskAnnotation(
 			name = "TkPing",
 			request = "select 1",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
-	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyInteger")
+	@io.vertigo.datafactory.task.proxy.TaskOutput(smartType = "STyInteger")
 	public Optional<Integer> ping() {
 		final Task task = createTaskBuilder("TkPing")
 				.build();

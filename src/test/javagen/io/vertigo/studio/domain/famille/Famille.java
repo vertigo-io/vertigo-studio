@@ -18,10 +18,10 @@
 package io.vertigo.studio.domain.famille;
 
 import io.vertigo.core.lang.Generated;
-import io.vertigo.datamodel.structure.model.Entity;
-import io.vertigo.datamodel.structure.model.UID;
-import io.vertigo.datamodel.structure.stereotype.Field;
-import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datamodel.data.model.Entity;
+import io.vertigo.datamodel.data.model.UID;
+import io.vertigo.datamodel.data.stereotype.Field;
+import io.vertigo.datamodel.data.util.DtObjectUtil;
 import io.vertigo.datastore.impl.entitystore.StoreListVAccessor;
 
 /**
@@ -35,7 +35,7 @@ public final class Famille implements Entity {
 	private Long famId;
 	private String libelle;
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "AFamCarFamille",
 			fkFieldName = "famId",
 			primaryDtDefinitionName = "DtFamille",
@@ -50,7 +50,7 @@ public final class Famille implements Entity {
 			foreignMultiplicity = "0..*")
 	private final StoreListVAccessor<io.vertigo.studio.domain.car.Car> voituresFamilleAccessor = new StoreListVAccessor<>(this, "AFamCarFamille", "VoituresFamille");
 
-	@io.vertigo.datamodel.structure.stereotype.AssociationNN(
+	@io.vertigo.datamodel.data.stereotype.AssociationNN(
 			name = "AnnFamCarLocation",
 			tableName = "FAM_CAR_LOCATION",
 			dtDefinitionA = "DtFamille",

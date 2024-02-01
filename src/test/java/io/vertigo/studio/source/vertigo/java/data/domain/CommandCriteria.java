@@ -17,9 +17,9 @@
  */
 package io.vertigo.studio.source.vertigo.java.data.domain;
 
-import io.vertigo.datamodel.structure.model.DtObject;
-import io.vertigo.datamodel.structure.stereotype.Field;
-import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datamodel.data.model.DtObject;
+import io.vertigo.datamodel.data.stereotype.Field;
+import io.vertigo.datamodel.data.util.DtObjectUtil;
 
 /**
  * Attention cette classe est générée automatiquement !

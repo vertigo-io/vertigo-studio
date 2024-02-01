@@ -18,10 +18,10 @@
 package io.vertigo.studio.domain.stereotype;
 
 import io.vertigo.core.lang.Generated;
-import io.vertigo.datamodel.structure.model.KeyConcept;
-import io.vertigo.datamodel.structure.model.UID;
-import io.vertigo.datamodel.structure.stereotype.Field;
-import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datamodel.data.model.KeyConcept;
+import io.vertigo.datamodel.data.model.UID;
+import io.vertigo.datamodel.data.stereotype.Field;
+import io.vertigo.datamodel.data.util.DtObjectUtil;
 import io.vertigo.datastore.impl.entitystore.EnumStoreVAccessor;
 import io.vertigo.datastore.impl.entitystore.StoreListVAccessor;
 import io.vertigo.datastore.impl.entitystore.StoreVAccessor;
@@ -36,7 +36,7 @@ public final class Command implements KeyConcept {
 
 	private Long cmdId;
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "ACtyCmd",
 			fkFieldName = "ctyId",
 			primaryDtDefinitionName = "DtCommandType",
@@ -51,7 +51,7 @@ public final class Command implements KeyConcept {
 			foreignMultiplicity = "0..*")
 	private final EnumStoreVAccessor<io.vertigo.studio.domain.stereotype.CommandType, io.vertigo.studio.domain.stereotype.CommandTypeEnum> ctyIdAccessor = new EnumStoreVAccessor<>(io.vertigo.studio.domain.stereotype.CommandType.class, "CommandType", io.vertigo.studio.domain.stereotype.CommandTypeEnum.class);
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "ACitCmd",
 			fkFieldName = "citId",
 			primaryDtDefinitionName = "DtCity",
@@ -66,7 +66,7 @@ public final class Command implements KeyConcept {
 			foreignMultiplicity = "0..*")
 	private final StoreVAccessor<io.vertigo.studio.domain.stereotype.City> citIdAccessor = new StoreVAccessor<>(io.vertigo.studio.domain.stereotype.City.class, "City");
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "ACmdAtt",
 			fkFieldName = "cmdId",
 			primaryDtDefinitionName = "DtCommand",
@@ -111,7 +111,7 @@ public final class Command implements KeyConcept {
 	 * Récupère la valeur de la propriété 'Command type'.
 	 * @return Long ctyId
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Command type", fkDefinition = "DtCommandType" )
+	@io.vertigo.datamodel.data.stereotype.ForeignKey(smartType = "STyId", label = "Command type", fkDefinition = "DtCommandType" )
 	public Long getCtyId() {
 		return (Long) ctyIdAccessor.getId();
 	}
@@ -130,7 +130,7 @@ public final class Command implements KeyConcept {
 	 * Récupère la valeur de la propriété 'City'.
 	 * @return Long citId
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "City", fkDefinition = "DtCity" )
+	@io.vertigo.datamodel.data.stereotype.ForeignKey(smartType = "STyId", label = "City", fkDefinition = "DtCity" )
 	public Long getCitId() {
 		return (Long) citIdAccessor.getId();
 	}

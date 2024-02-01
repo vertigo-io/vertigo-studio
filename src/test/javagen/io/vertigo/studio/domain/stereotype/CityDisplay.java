@@ -18,9 +18,9 @@
 package io.vertigo.studio.domain.stereotype;
 
 import io.vertigo.core.lang.Generated;
-import io.vertigo.datamodel.structure.model.DtObject;
-import io.vertigo.datamodel.structure.stereotype.Field;
-import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datamodel.data.model.DtObject;
+import io.vertigo.datamodel.data.stereotype.Field;
+import io.vertigo.datamodel.data.util.DtObjectUtil;
 
 /**
  * This class is automatically generated.
@@ -39,7 +39,7 @@ public final class CityDisplay implements DtObject {
 	 * @return Long citId
 	 */
 	@Field(smartType = "STyId", label = "id")
-	@io.vertigo.datamodel.structure.stereotype.KeyField
+	@io.vertigo.datamodel.data.stereotype.KeyField
 	public Long getCitId() {
 		return citId;
 	}

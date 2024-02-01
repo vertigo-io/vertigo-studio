@@ -18,10 +18,10 @@
 package io.vertigo.studio.domain.stereotype;
 
 import io.vertigo.core.lang.Generated;
-import io.vertigo.datamodel.structure.model.Entity;
-import io.vertigo.datamodel.structure.model.UID;
-import io.vertigo.datamodel.structure.stereotype.Field;
-import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datamodel.data.model.Entity;
+import io.vertigo.datamodel.data.model.UID;
+import io.vertigo.datamodel.data.stereotype.Field;
+import io.vertigo.datamodel.data.util.DtObjectUtil;
 import io.vertigo.datastore.impl.entitystore.StoreVAccessor;
 
 /**
@@ -35,7 +35,7 @@ public final class Attachment implements Entity {
 	private Long attId;
 	private String url;
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "ACmdAtt",
 			fkFieldName = "cmdId",
 			primaryDtDefinitionName = "DtCommand",
@@ -99,7 +99,7 @@ public final class Attachment implements Entity {
 	 * Récupère la valeur de la propriété 'Command'.
 	 * @return Long cmdId
 	 */
-	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Command", fkDefinition = "DtCommand" )
+	@io.vertigo.datamodel.data.stereotype.ForeignKey(smartType = "STyId", label = "Command", fkDefinition = "DtCommand" )
 	public Long getCmdId() {
 		return (Long) cmdIdAccessor.getId();
 	}
