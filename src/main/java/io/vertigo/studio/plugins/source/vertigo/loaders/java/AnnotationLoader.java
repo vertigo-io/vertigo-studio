@@ -50,7 +50,7 @@ import io.vertigo.core.lang.Selector;
 import io.vertigo.core.lang.Selector.ClassConditions;
 import io.vertigo.core.util.ClassUtil;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.datamodel.data.definitions.DtField.FieldType;
+import io.vertigo.datamodel.data.definitions.DataField.FieldType;
 import io.vertigo.datamodel.data.model.DtMasterData;
 import io.vertigo.datamodel.data.model.DtObject;
 import io.vertigo.datamodel.data.model.DtStaticMasterData;
