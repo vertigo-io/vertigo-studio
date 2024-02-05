@@ -17,7 +17,7 @@
  */
 package io.vertigo.studio.source.vertigo.java.data.domain;
 
-import io.vertigo.datamodel.data.model.DtObject;
+import io.vertigo.datamodel.data.model.Data;
 import io.vertigo.datamodel.data.stereotype.Field;
 import io.vertigo.datamodel.data.util.DtObjectUtil;
 
@@ -25,7 +25,7 @@ import io.vertigo.datamodel.data.util.DtObjectUtil;
  * Attention cette classe est générée automatiquement !
  * Objet de données Command
  */
-public final class CommandCriteria implements DtObject {
+public final class CommandCriteria implements Data {
 
 	/** SerialVersionUID. */
 	private static final long serialVersionUID = 1L;

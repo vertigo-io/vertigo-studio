@@ -19,8 +19,8 @@ package io.vertigo.studio.plugins.generator.vertigo.task.test;
 
 import java.util.List;
 
+import io.vertigo.datamodel.data.model.Data;
 import io.vertigo.datamodel.data.model.DtList;
-import io.vertigo.datamodel.data.model.DtObject;
 
 /**
  *
@@ -52,7 +52,7 @@ public interface TaskTestDummyGenerator {
 	 * @param <D> class of the wanted object
 	 * @return dummy values as DtList
 	 */
-	<D extends DtObject> DtList<D> dumDtList(final Class<D> dtoClass);
+	<D extends Data> DtList<D> dumDtList(final Class<D> dtoClass);
 
 	/**
 	 * Creates a dummy dtObject for the specified type as new (no pk)
@@ -60,5 +60,5 @@ public interface TaskTestDummyGenerator {
 	 * @param <D> class of the wanted object
 	 * @return dummy value
 	 */
-	<D extends DtObject> D dumNew(final Class<D> dtoClass);
+	<D extends Data> D dumNew(final Class<D> dtoClass);
 }

@@ -51,8 +51,8 @@ import io.vertigo.core.lang.Selector.ClassConditions;
 import io.vertigo.core.util.ClassUtil;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.datamodel.data.definitions.DataField.FieldType;
+import io.vertigo.datamodel.data.model.Data;
 import io.vertigo.datamodel.data.model.DtMasterData;
-import io.vertigo.datamodel.data.model.DtObject;
 import io.vertigo.datamodel.data.model.DtStaticMasterData;
 import io.vertigo.datamodel.data.model.Entity;
 import io.vertigo.datamodel.data.model.Fragment;
@@ -109,12 +109,12 @@ public final class AnnotationLoader implements Loader {
 				.isNotNull(rawRepository);
 		//-----
 		//--Enregistrement des fichiers java annotés
-		for (final Class<DtObject> javaClass : selectClasses(resourcePath, DtObject.class)) {
+		for (final Class<Data> javaClass : selectClasses(resourcePath, Data.class)) {
 			load(javaClass, rawRepository);
 		}
 	}
 
-	private static void load(final Class<DtObject> clazz, final DslRawRepository rawRepository) {
+	private static void load(final Class<Data> clazz, final DslRawRepository rawRepository) {
 		Assertion.check().isNotNull(rawRepository);
 		//-----
 		final String simpleName = clazz.getSimpleName();
@@ -139,7 +139,7 @@ public final class AnnotationLoader implements Loader {
 	}
 
 	private static void parseFragment(
-			final Class<DtObject> clazz,
+			final Class<Data> clazz,
 			final String fragmentOf,
 			final String dtName,
 			final String packageName,
@@ -152,7 +152,7 @@ public final class AnnotationLoader implements Loader {
 	}
 
 	private static void parseDtDefinition(
-			final Class<DtObject> clazz,
+			final Class<Data> clazz,
 			final StudioStereotype stereotype,
 			final String dtDefinitionName,
 			final String packageName,
@@ -168,7 +168,7 @@ public final class AnnotationLoader implements Loader {
 		parseRawBuilder(clazz, dtSketchBuilder, rawRepository);
 	}
 
-	private static void parseRawBuilder(final Class<DtObject> clazz, final DslRawBuilder dtRawBuilder, final DslRawRepository rawRepository) {
+	private static void parseRawBuilder(final Class<Data> clazz, final DslRawBuilder dtRawBuilder, final DslRawRepository rawRepository) {
 		final String packageName = clazz.getPackage().getName();
 
 		// Le tri des champs et des méthodes par ordre alphabétique est important car classe.getMethods() retourne
@@ -207,7 +207,7 @@ public final class AnnotationLoader implements Loader {
 		return VertigoConstants.DEFAULT_DATA_SPACE;
 	}
 
-	private static StudioStereotype parseStereotype(final Class<DtObject> clazz) {
+	private static StudioStereotype parseStereotype(final Class<Data> clazz) {
 		if (DtStaticMasterData.class.isAssignableFrom(clazz)) {
 			return StudioStereotype.StaticMasterData;
 		} else if (DtMasterData.class.isAssignableFrom(clazz)) {

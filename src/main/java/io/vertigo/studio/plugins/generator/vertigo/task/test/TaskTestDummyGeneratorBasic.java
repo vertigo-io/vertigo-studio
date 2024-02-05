@@ -28,8 +28,8 @@ import io.vertigo.core.lang.DataStream;
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.datamodel.data.definitions.DataDefinition;
 import io.vertigo.datamodel.data.definitions.DataField.FieldType;
+import io.vertigo.datamodel.data.model.Data;
 import io.vertigo.datamodel.data.model.DtList;
-import io.vertigo.datamodel.data.model.DtObject;
 import io.vertigo.datamodel.data.util.DtObjectUtil;
 
 /**
@@ -42,9 +42,9 @@ public class TaskTestDummyGeneratorBasic implements TaskTestDummyGenerator {
 
 	@Override
 	public <T> T dum(final Class<T> type) {
-		if (DtObject.class.isAssignableFrom(type)) {
+		if (Data.class.isAssignableFrom(type)) {
 			//we are a dtObject
-			return (T) dum(DtObjectUtil.findDtDefinition((Class<DtObject>) type));
+			return (T) dum(DtObjectUtil.findDataDefinition((Class<Data>) type));
 		} else if (Integer.class.equals(type) || int.class.equals(type)) {
 			return (T) Integer.valueOf(1);
 		} else if (Double.class.equals(type) || double.class.equals(type)) {
@@ -77,7 +77,7 @@ public class TaskTestDummyGeneratorBasic implements TaskTestDummyGenerator {
 	}
 
 	@Override
-	public <D extends DtObject> DtList<D> dumDtList(final Class<D> dtoClass) {
+	public <D extends Data> DtList<D> dumDtList(final Class<D> dtoClass) {
 		return DtList.of(dum(dtoClass));
 	}
 
@@ -85,8 +85,8 @@ public class TaskTestDummyGeneratorBasic implements TaskTestDummyGenerator {
 	 * @see io.vertigo.studio.plugins.mda.task.test.TaskTestDummyGenerator#dumNew(java.lang.Class)
 	 */
 	@Override
-	public <D extends DtObject> D dumNew(final Class<D> dtoClass) {
-		final DataDefinition dtDefinition = DtObjectUtil.findDtDefinition(dtoClass);
+	public <D extends Data> D dumNew(final Class<D> dtoClass) {
+		final DataDefinition dtDefinition = DtObjectUtil.findDataDefinition(dtoClass);
 		final D object = dum(dtoClass);
 		dtDefinition.getIdField()
 				.ifPresent(idField -> idField.getDataAccessor().setValue(object, null));// we make it pristine
@@ -94,9 +94,9 @@ public class TaskTestDummyGeneratorBasic implements TaskTestDummyGenerator {
 
 	}
 
-	private DtObject dum(final DataDefinition def) {
+	private Data dum(final DataDefinition def) {
 		/* Créé une instance du dto. */
-		final DtObject dto = DtObjectUtil.createDtObject(def);
+		final Data dto = DtObjectUtil.createData(def);
 		/* Parcourt les champs */
 		def.getFields()
 				.stream()
