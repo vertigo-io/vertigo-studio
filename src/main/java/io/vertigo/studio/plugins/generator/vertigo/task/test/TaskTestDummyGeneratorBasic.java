@@ -30,7 +30,7 @@ import io.vertigo.datamodel.data.definitions.DataDefinition;
 import io.vertigo.datamodel.data.definitions.DataField.FieldType;
 import io.vertigo.datamodel.data.model.Data;
 import io.vertigo.datamodel.data.model.DtList;
-import io.vertigo.datamodel.data.util.DtObjectUtil;
+import io.vertigo.datamodel.data.util.DataUtil;
 
 /**
  * Basic dummy values generator. (One possible value for each type)
@@ -44,7 +44,7 @@ public class TaskTestDummyGeneratorBasic implements TaskTestDummyGenerator {
 	public <T> T dum(final Class<T> type) {
 		if (Data.class.isAssignableFrom(type)) {
 			//we are a dtObject
-			return (T) dum(DtObjectUtil.findDataDefinition((Class<Data>) type));
+			return (T) dum(DataUtil.findDataDefinition((Class<Data>) type));
 		} else if (Integer.class.equals(type) || int.class.equals(type)) {
 			return (T) Integer.valueOf(1);
 		} else if (Double.class.equals(type) || double.class.equals(type)) {
@@ -86,7 +86,7 @@ public class TaskTestDummyGeneratorBasic implements TaskTestDummyGenerator {
 	 */
 	@Override
 	public <D extends Data> D dumNew(final Class<D> dtoClass) {
-		final DataDefinition dtDefinition = DtObjectUtil.findDataDefinition(dtoClass);
+		final DataDefinition dtDefinition = DataUtil.findDataDefinition(dtoClass);
 		final D object = dum(dtoClass);
 		dtDefinition.getIdField()
 				.ifPresent(idField -> idField.getDataAccessor().setValue(object, null));// we make it pristine
@@ -96,7 +96,7 @@ public class TaskTestDummyGeneratorBasic implements TaskTestDummyGenerator {
 
 	private Data dum(final DataDefinition def) {
 		/* Créé une instance du dto. */
-		final Data dto = DtObjectUtil.createData(def);
+		final Data dto = DataUtil.createData(def);
 		/* Parcourt les champs */
 		def.getFields()
 				.stream()

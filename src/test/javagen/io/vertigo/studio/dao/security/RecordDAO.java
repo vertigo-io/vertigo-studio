@@ -65,6 +65,6 @@ public final class RecordDAO extends DAO<Record, java.lang.Long> implements Stor
 	 * @return KeyConcept à modifier
 	 */
 	public Record readOneForUpdate(final java.lang.Long id) {
-		return readOneForUpdate(createDtObjectUID(id));
+		return readOneForUpdate(createUID(id));
 	}
 }

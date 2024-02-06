@@ -21,7 +21,7 @@ import io.vertigo.core.lang.Cardinality;
 import io.vertigo.datamodel.data.model.Fragment;
 import io.vertigo.datamodel.data.model.UID;
 import io.vertigo.datamodel.data.stereotype.Field;
-import io.vertigo.datamodel.data.util.DtObjectUtil;
+import io.vertigo.datamodel.data.util.DataUtil;
 
 /**
  * Attention cette classe est générée automatiquement !
@@ -40,7 +40,7 @@ public final class CityFragment implements Fragment<City> {
 	/** {@inheritDoc} */
 	@Override
 	public UID<City> getEntityUID() {
-		return DtObjectUtil.createEntityUID(this);
+		return DataUtil.createEntityUID(this);
 	}
 
 	/**
@@ -105,6 +105,6 @@ public final class CityFragment implements Fragment<City> {
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
-		return DtObjectUtil.toString(this);
+		return DataUtil.toString(this);
 	}
 }

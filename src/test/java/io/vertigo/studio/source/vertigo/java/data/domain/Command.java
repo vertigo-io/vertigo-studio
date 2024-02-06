@@ -24,7 +24,7 @@ import io.vertigo.datamodel.data.model.ListVAccessor;
 import io.vertigo.datamodel.data.model.UID;
 import io.vertigo.datamodel.data.model.VAccessor;
 import io.vertigo.datamodel.data.stereotype.Field;
-import io.vertigo.datamodel.data.util.DtObjectUtil;
+import io.vertigo.datamodel.data.util.DataUtil;
 
 /**
  * This class is automatically generated.
@@ -171,6 +171,6 @@ public final class Command implements KeyConcept {
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
-		return DtObjectUtil.toString(this);
+		return DataUtil.toString(this);
 	}
 }

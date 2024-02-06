@@ -65,6 +65,6 @@ public final class CommandDAO extends DAO<Command, java.lang.Long> implements St
 	 * @return KeyConcept à modifier
 	 */
 	public Command readOneForUpdate(final java.lang.Long id) {
-		return readOneForUpdate(createDtObjectUID(id));
+		return readOneForUpdate(createUID(id));
 	}
 }

@@ -19,7 +19,7 @@ package io.vertigo.studio.source.vertigo.java.data.domain;
 
 import io.vertigo.datamodel.data.model.Data;
 import io.vertigo.datamodel.data.stereotype.Field;
-import io.vertigo.datamodel.data.util.DtObjectUtil;
+import io.vertigo.datamodel.data.util.DataUtil;
 
 /**
  * Attention cette classe est générée automatiquement !
@@ -94,6 +94,6 @@ public final class CommandCriteria implements Data {
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
-		return DtObjectUtil.toString(this);
+		return DataUtil.toString(this);
 	}
 }
