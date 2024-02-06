@@ -1,10 +1,21 @@
 Version history
 ===============
 
-Running 4.1.0-SNAPSHOT
+Running 4.2.0
 ----------------------
-
+[Migration help](https://github.com/vertigo-io/vertigo/wiki/Vertigo-Migration-Guide#from-410-to-420)
+  
 more to come :)
+
+
+Release 4.1.0 - 2023/11/09
+----------------------
+[Migration help](https://github.com/vertigo-io/vertigo/wiki/Vertigo-Migration-Guide#from-400-to-410)
+* [Studio] Add Standard NamedThreadFactory for ExecutorsServices
+* [Studio] Add usefull getSearchindexDefinition in generator
+* Update libs 
+  - h2 2.2.220 -> 2.2.224
+
 
 Release 4.0.0 - 2023/08/17
 ----------------------
