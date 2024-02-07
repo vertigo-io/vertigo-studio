@@ -284,8 +284,8 @@ public final class AnnotationLoader implements Loader {
 					.addPropertyValue(ROLE_B, association.roleB())
 					.addPropertyValue(LABEL_B, association.labelB())
 
-					.addRawLink("dtDefinitionA", association.dtDefinitionA())
-					.addRawLink("dtDefinitionB", association.dtDefinitionB())
+					.addRawLink("dtDefinitionA", association.dataDefinitionA())
+					.addRawLink("dtDefinitionB", association.dataDefinitionB())
 					.build();
 
 			if (!rawRepository.contains(associationDefinition.getKey())) {
