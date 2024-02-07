@@ -25,6 +25,7 @@ import io.vertigo.core.param.Param;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.core.plugins.resource.local.LocalResourceResolverPlugin;
 import io.vertigo.database.DatabaseFeatures;
+import io.vertigo.datafactory.DataFactoryFeatures;
 import io.vertigo.datamodel.DataModelFeatures;
 import io.vertigo.datastore.DataStoreFeatures;
 
@@ -47,6 +48,7 @@ public final class SqlTestConfigurator {
 								Param.of("jdbcUrl", "jdbc:h2:mem:database;NON_KEYWORDS=YEAR"))
 						.build())
 				.addModule(new DataModelFeatures().build())
+				.addModule(new DataFactoryFeatures().build())
 				.addModule(new DataStoreFeatures()
 						.withCache()
 						.withMemoryCache()
