@@ -17,15 +17,15 @@
  */
 package io.vertigo.studio.source.vertigo.java.data.domain;
 
-import io.vertigo.datamodel.data.model.Data;
+import io.vertigo.datamodel.data.model.DataObject;
 import io.vertigo.datamodel.data.stereotype.Field;
-import io.vertigo.datamodel.data.util.DataUtil;
+import io.vertigo.datamodel.data.util.DataModelUtil;
 
 /**
  * Attention cette classe est générée automatiquement !
  * Objet de données Command
  */
-public final class CommandCriteria implements Data {
+public final class CommandCriteria implements DataObject {
 
 	/** SerialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -94,6 +94,6 @@ public final class CommandCriteria implements Data {
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
-		return DataUtil.toString(this);
+		return DataModelUtil.toString(this);
 	}
 }

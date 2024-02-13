@@ -28,9 +28,9 @@ import io.vertigo.core.lang.DataStream;
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.datamodel.data.definitions.DataDefinition;
 import io.vertigo.datamodel.data.definitions.DataField.FieldType;
-import io.vertigo.datamodel.data.model.Data;
+import io.vertigo.datamodel.data.model.DataObject;
 import io.vertigo.datamodel.data.model.DtList;
-import io.vertigo.datamodel.data.util.DataUtil;
+import io.vertigo.datamodel.data.util.DataModelUtil;
 
 /**
  * Basic dummy values generator. (One possible value for each type)
@@ -42,9 +42,9 @@ public class TaskTestDummyGeneratorBasic implements TaskTestDummyGenerator {
 
 	@Override
 	public <T> T dum(final Class<T> type) {
-		if (Data.class.isAssignableFrom(type)) {
+		if (DataObject.class.isAssignableFrom(type)) {
 			//we are a dtObject
-			return (T) dum(DataUtil.findDataDefinition((Class<Data>) type));
+			return (T) dum(DataModelUtil.findDataDefinition((Class<DataObject>) type));
 		} else if (Integer.class.equals(type) || int.class.equals(type)) {
 			return (T) Integer.valueOf(1);
 		} else if (Double.class.equals(type) || double.class.equals(type)) {
@@ -77,7 +77,7 @@ public class TaskTestDummyGeneratorBasic implements TaskTestDummyGenerator {
 	}
 
 	@Override
-	public <D extends Data> DtList<D> dumDtList(final Class<D> dtoClass) {
+	public <D extends DataObject> DtList<D> dumDtList(final Class<D> dtoClass) {
 		return DtList.of(dum(dtoClass));
 	}
 
@@ -85,8 +85,8 @@ public class TaskTestDummyGeneratorBasic implements TaskTestDummyGenerator {
 	 * @see io.vertigo.studio.plugins.mda.task.test.TaskTestDummyGenerator#dumNew(java.lang.Class)
 	 */
 	@Override
-	public <D extends Data> D dumNew(final Class<D> dtoClass) {
-		final DataDefinition dtDefinition = DataUtil.findDataDefinition(dtoClass);
+	public <D extends DataObject> D dumNew(final Class<D> dtoClass) {
+		final DataDefinition dtDefinition = DataModelUtil.findDataDefinition(dtoClass);
 		final D object = dum(dtoClass);
 		dtDefinition.getIdField()
 				.ifPresent(idField -> idField.getDataAccessor().setValue(object, null));// we make it pristine
@@ -94,9 +94,9 @@ public class TaskTestDummyGeneratorBasic implements TaskTestDummyGenerator {
 
 	}
 
-	private Data dum(final DataDefinition def) {
+	private DataObject dum(final DataDefinition def) {
 		/* Créé une instance du dto. */
-		final Data dto = DataUtil.createData(def);
+		final DataObject dto = DataModelUtil.createDataObject(def);
 		/* Parcourt les champs */
 		def.getFields()
 				.stream()

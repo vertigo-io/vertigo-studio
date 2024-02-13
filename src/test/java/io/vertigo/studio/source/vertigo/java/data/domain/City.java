@@ -22,7 +22,7 @@ import io.vertigo.core.lang.Generated;
 import io.vertigo.datamodel.data.model.DtMasterData;
 import io.vertigo.datamodel.data.model.UID;
 import io.vertigo.datamodel.data.stereotype.Field;
-import io.vertigo.datamodel.data.util.DataUtil;
+import io.vertigo.datamodel.data.util.DataModelUtil;
 
 /**
  * This class is automatically generated.
@@ -102,6 +102,6 @@ public final class City implements DtMasterData {
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
-		return DataUtil.toString(this);
+		return DataModelUtil.toString(this);
 	}
 }
