@@ -93,7 +93,7 @@ public final class DomainUtil {
 	public static String getManyTargetJavaClass(final DomainSketch domainSketch) {
 		switch (domainSketch.getScope()) {
 			case DATA_OBJECT:
-				return "io.vertigo.datamodel.structure.model.DtList";
+				return "io.vertigo.datamodel.data.model.DtList";
 			case PRIMITIVE:
 			case VALUE_OBJECT:
 				return List.class.getName();

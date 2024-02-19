@@ -1,7 +1,7 @@
 package ${packageName}
 
 <#list dtSketchs as dtSketch>
-create DtDefinition ${dtSketch.name} {
+create DataDefinition ${dtSketch.name} {
 	<#list dtSketch.idFields as idField>
 	id ${idField.name} { label : "${idField.label}" domain: ${idField.domainName} }
 	</#list>

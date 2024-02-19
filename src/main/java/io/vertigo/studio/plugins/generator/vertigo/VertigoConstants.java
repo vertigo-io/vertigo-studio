@@ -25,18 +25,18 @@ public class VertigoConstants {
 
 	public enum VertigoClassNames {
 
-		DtList("io.vertigo.datamodel.structure.model.DtList"),
-		Entity("io.vertigo.datamodel.structure.model.Entity"),
-		DtObject("io.vertigo.datamodel.structure.model.DtObject"),
-		DtMasterData("io.vertigo.datamodel.structure.model.DtMasterData"),
-		DtStaticMasterData("io.vertigo.datamodel.structure.model.DtStaticMasterData"),
-		KeyConcept("io.vertigo.datamodel.structure.model.KeyConcept"),
-		Fragment("io.vertigo.datamodel.structure.model.Fragment"),
-		FragmentAnnotation("io.vertigo.datamodel.structure.stereotype.Fragment"),
-		AnnotationDataSpace("io.vertigo.datamodel.structure.stereotype.DataSpace"),
-		AnnotationForeignKey("io.vertigo.datamodel.structure.stereotype.ForeignKey"),
-		AnnotationAssociation("io.vertigo.datamodel.structure.stereotype.Association"),
-		AnnotationAssociationNN("io.vertigo.datamodel.structure.stereotype.AssociationNN");
+		DtList("io.vertigo.datamodel.data.model.DtList"), //
+		Entity("io.vertigo.datamodel.data.model.Entity"), //
+		DtObject("io.vertigo.datamodel.data.model.DataObject"), //
+		DtMasterData("io.vertigo.datamodel.data.model.DtMasterData"), //
+		DtStaticMasterData("io.vertigo.datamodel.data.model.DtStaticMasterData"), //
+		KeyConcept("io.vertigo.datamodel.data.model.KeyConcept"), //
+		Fragment("io.vertigo.datamodel.data.model.Fragment"), //
+		FragmentAnnotation("io.vertigo.datamodel.data.stereotype.Fragment"), //
+		AnnotationDataSpace("io.vertigo.datamodel.data.stereotype.DataSpace"), //
+		AnnotationForeignKey("io.vertigo.datamodel.data.stereotype.ForeignKey"), //
+		AnnotationAssociation("io.vertigo.datamodel.data.stereotype.Association"), //
+		AnnotationAssociationNN("io.vertigo.datamodel.data.stereotype.AssociationNN");
 
 		private final String packageName;
 		private final String simpleName;
@@ -68,9 +68,9 @@ public class VertigoConstants {
 
 	public enum VertigoDefinitionPrefix {
 
-		DtDefinition("Dt"),
-		FacetedQueryDefiniton("Qry"),
-		SearchIndexDefinition("Idx"),
+		DtDefinition("Dt"), //
+		FacetedQueryDefiniton("Qry"), //
+		SearchIndexDefinition("Idx"), //
 		Authorization("Atz");
 
 		private final String prefix;

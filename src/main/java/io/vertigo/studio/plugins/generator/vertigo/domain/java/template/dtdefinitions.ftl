@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 import io.vertigo.core.lang.Generated;
-import io.vertigo.datamodel.structure.definitions.DtFieldName;
+import io.vertigo.datamodel.data.definitions.DataFieldName;
 
 /**
  * This class is automatically generated.
@@ -42,7 +42,7 @@ public final class ${classSimpleName} implements Iterable<Class<?>> {
 	/**
 	 * Enumération des champs de ${dtDefinition.classSimpleName}.
 	 */
-	public enum ${dtDefinition.classSimpleName}Fields implements DtFieldName<${dtDefinition.classCanonicalName}> {
+	public enum ${dtDefinition.classSimpleName}Fields implements DataFieldName<${dtDefinition.classCanonicalName}> {
 		<#list dtDefinition.allFields as dtField>
 		/** Propriété '${dtField.label}'. */
 		${dtField.name}<#sep>,<#sep>

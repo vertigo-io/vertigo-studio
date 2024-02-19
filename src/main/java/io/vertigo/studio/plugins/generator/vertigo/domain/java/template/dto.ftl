@@ -9,13 +9,13 @@ import io.vertigo.datastore.impl.entitystore.EnumStoreVAccessor;
 import io.vertigo.datastore.impl.entitystore.StoreListVAccessor;
 </#if>
 <#if dtDefinition.entity || dtDefinition.fragment>
-import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datamodel.data.model.UID;
 </#if>
 <#if dtDefinition.containsAccessor()>
 import io.vertigo.datastore.impl.entitystore.StoreVAccessor;
 </#if>	
-import io.vertigo.datamodel.structure.stereotype.Field;
-import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datamodel.data.stereotype.Field;
+import io.vertigo.datamodel.data.util.DataModelUtil;
 
 /**
  * This class is automatically generated.
@@ -40,7 +40,7 @@ public final class ${dtDefinition.classSimpleName} implements ${dtDefinition.ste
 	private final StoreVAccessor<${dtField.association.returnType}> ${dtField.name?uncap_first}Accessor = new StoreVAccessor<>(${dtField.association.returnType}.class, "${dtField.association.role}");
 			</#if>
 		<#else>
-	private ${dtField.javaType} ${dtField.name}<#if dtField.multiple> = <#if dtField.dataObject > new io.vertigo.datamodel.structure.model.DtList<>(${dtField.dataObjectClassName}.class)<#else>new java.util.ArrayList<>()</#if></#if>;
+	private ${dtField.javaType} ${dtField.name}<#if dtField.multiple> = <#if dtField.dataObject > new io.vertigo.datamodel.data.model.DtList<>(${dtField.dataObjectClassName}.class)<#else>new java.util.ArrayList<>()</#if></#if>;
 		</#if>
 	</#list>
 	<#list dtDefinition.associations as association>
@@ -73,7 +73,7 @@ public final class ${dtDefinition.classSimpleName} implements ${dtDefinition.ste
 		</#list>
 	@Override
 	public UID<${dtDefinition.entityClassSimpleName}> getEntityUID() {
-		return DtObjectUtil.createEntityUID(this); 
+		return DataModelUtil.createEntityUID(this); 
 	}
 	</#if>
 	<#list dtDefinition.fields as dtField>
@@ -110,13 +110,13 @@ public final class ${dtDefinition.classSimpleName} implements ${dtDefinition.ste
 	${annotation}
 	</#list>
 	<#if dtField.isSortField()>
-	@io.vertigo.datamodel.structure.stereotype.SortField
+	@io.vertigo.datamodel.data.stereotype.SortField
 	</#if>
 	<#if dtField.isDisplayField()>
-	@io.vertigo.datamodel.structure.stereotype.DisplayField
+	@io.vertigo.datamodel.data.stereotype.DisplayField
 	</#if>
 	<#if dtField.isKeyField()>
-	@io.vertigo.datamodel.structure.stereotype.KeyField
+	@io.vertigo.datamodel.data.stereotype.KeyField
 	</#if>
 	public ${dtField.javaType} get${dtField.name?cap_first}() {
 		return ${dtField.name};
@@ -147,13 +147,13 @@ public final class ${dtDefinition.classSimpleName} implements ${dtDefinition.ste
 	${annotation}
 		</#list>
 	<#if dtField.isSortField()>
-	@io.vertigo.datamodel.structure.stereotype.SortField
+	@io.vertigo.datamodel.data.stereotype.SortField
 	</#if>
 	<#if dtField.isDisplayField()>
-	@io.vertigo.datamodel.structure.stereotype.DisplayField
+	@io.vertigo.datamodel.data.stereotype.DisplayField
 	</#if>
 	<#if dtField.isKeyField()>
-	@io.vertigo.datamodel.structure.stereotype.KeyField
+	@io.vertigo.datamodel.data.stereotype.KeyField
 	</#if>
 	public ${dtField.javaType} get${dtField.name?cap_first}() {
 		${dtField.javaCode}
@@ -190,6 +190,6 @@ public final class ${dtDefinition.classSimpleName} implements ${dtDefinition.ste
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
-		return DtObjectUtil.toString(this);
+		return DataModelUtil.toString(this);
 	}
 }
