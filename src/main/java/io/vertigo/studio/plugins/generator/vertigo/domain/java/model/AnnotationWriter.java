@@ -151,6 +151,7 @@ class AnnotationWriter {
 
 	/**
 	 * Ectiture des annotations sur le getURI.
+	 *
 	 * @return Liste des lignes de code java à ajouter.
 	 */
 	List<String> writeUIDAnnotations() {
@@ -199,8 +200,8 @@ class AnnotationWriter {
 				"@" + VertigoClassNames.AnnotationAssociationNN.getClassName() + "(",
 				INDENT + "name = \"" + "Ann" + associationNN.getLocalName() + "\",",
 				INDENT + "tableName = \"" + associationNN.getTableName() + "\",",
-				INDENT + "dtDefinitionA = \"" + "Dt" + nodeA.getDtSketch().getLocalName() + "\",",
-				INDENT + "dtDefinitionB = \"" + "Dt" + nodeB.getDtSketch().getLocalName() + "\",",
+				INDENT + "dataDefinitionA = \"" + "Dt" + nodeA.getDtSketch().getLocalName() + "\",",
+				INDENT + "dataDefinitionB = \"" + "Dt" + nodeB.getDtSketch().getLocalName() + "\",",
 				INDENT + "navigabilityA = " + nodeA.isNavigable() + ',',
 				INDENT + "navigabilityB = " + nodeB.isNavigable() + ',',
 				INDENT + "roleA = \"" + nodeA.getRole() + "\",",
