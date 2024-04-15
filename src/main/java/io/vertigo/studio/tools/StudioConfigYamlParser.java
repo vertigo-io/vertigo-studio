@@ -53,7 +53,7 @@ final class StudioConfigYamlParser {
 	private static List<Source> parseResources(final List<YamlResourceConfig> resources, final String rootPath) {
 		//metamodelresources
 		return resources.stream()
-				.map(resource -> Source.of(resource.type, rootPath + resource.path))
+				.map(resource -> Source.of(resource.type, resource.path.startsWith("classpath:") ? resource.path.substring(10) : rootPath + resource.path))
 				.toList();
 	}
 
