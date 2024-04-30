@@ -38,7 +38,7 @@ import io.vertigo.studio.tools.YamlStudioConfig.YamlResourceConfig;
 
 final class StudioConfigYamlParser {
 
-	static final NotebookConfig parseYaml(final URL configUrl) throws URISyntaxException {
+	static NotebookConfig parseYaml(final URL configUrl) throws URISyntaxException {
 		final YamlStudioConfig yamlStudioConfig = new Yaml(new Constructor(YamlStudioConfig.class, new LoaderOptions())).loadAs(FileUtil.read(configUrl), YamlStudioConfig.class);
 		final String rootPath = Path.of(configUrl.toURI()).getParent().toString() + "/";
 
@@ -53,7 +53,7 @@ final class StudioConfigYamlParser {
 	private static List<Source> parseResources(final List<YamlResourceConfig> resources, final String rootPath) {
 		//metamodelresources
 		return resources.stream()
-				.map(resource -> Source.of(resource.type, resource.path.startsWith("classpath:") ? resource.path.substring(10) : rootPath + resource.path))
+				.map(resource -> Source.of(resource.type, resource.path.startsWith("classpath:") ? resource.path.substring("classpath:".length()) : rootPath + resource.path))
 				.toList();
 	}
 
