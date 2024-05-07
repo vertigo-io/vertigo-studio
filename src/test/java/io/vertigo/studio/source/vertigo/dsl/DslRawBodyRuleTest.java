@@ -62,8 +62,23 @@ public class DslRawBodyRuleTest {
 					.parse(testValue);
 			Assertions.fail();
 		} catch (final PegNoMatchFoundException e) {
-			//System.out.println(e.getFullMessage());
+			// System.out.println(e.getFullMessage());
 			Assertions.assertEquals(testValue.indexOf("maxLengh") + "maxLengh".length() - 1, e.getIndex());
+		}
+	}
+
+	@Test
+	public void testError2() {
+		final List<DslEntity> entities = rawRepository.getGrammar().getEntities();
+		final DslEntity entity = find(entities, "Domain");
+		final String testValue = "{ dataType: String,  maxLength } ";
+		try {
+			new DslRawBodyRule(entity)
+					.parse(testValue);
+			Assertions.fail();
+		} catch (final PegNoMatchFoundException e) {
+			// System.out.println(e.getFullMessage());
+			Assertions.assertEquals(31, e.getIndex());
 		}
 	}
 }
