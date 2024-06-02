@@ -46,8 +46,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.lang.Selector;
-import io.vertigo.core.lang.Selector.ClassConditions;
+import io.vertigo.core.lang.ClassSelector;
+import io.vertigo.core.lang.ClassSelector.ClassConditions;
 import io.vertigo.core.util.ClassUtil;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.datamodel.data.definitions.DataField.FieldType;
@@ -78,11 +78,11 @@ public final class AnnotationLoader implements Loader {
 	 * @return Liste des fichiers Java représentant des objets métiers.
 	 */
 	private static <F> Set<Class<F>> selectClasses(final String resourcePath, final Class<F> filterClass) {
-		final Selector selector;
+		final ClassSelector classSelector;
 		if (resourcePath.endsWith("*")) {
 			//by package
 			final String packageName = resourcePath.substring(0, resourcePath.length() - 1);
-			selector = Selector
+			classSelector = ClassSelector
 					.from(packageName);
 		} else {
 			//by Iterable of classes
@@ -90,10 +90,10 @@ public final class AnnotationLoader implements Loader {
 			Iterator<Class> iterator = dtDefinitionsClass.iterator();
 			Set<Class> classes = new HashSet();
 			iterator.forEachRemaining(c -> classes.add(c));
-			selector = Selector
+			classSelector = ClassSelector
 					.from(classes);
 		}
-		return selector
+		return classSelector
 				.filterClasses(ClassConditions.subTypeOf(filterClass))
 				.findClasses()
 				.stream()
