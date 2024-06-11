@@ -179,6 +179,10 @@ public final class DomainGeneratorPlugin implements GeneratorPlugin {
 			Assertion.check().isNotNull(dtDefinitions);
 			final String packageName = entry.getKey();
 
+			if (!packageName.startsWith(generatorConfig.getProjectPackageName())) {
+				continue;
+			}
+
 			final Map<String, Object> model = new MapBuilder<String, Object>()
 					.put("packageName", packageName)
 					.put("simpleClassName", simpleClassName)
