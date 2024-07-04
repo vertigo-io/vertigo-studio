@@ -3,7 +3,7 @@
   <parent>
     <artifactId>vertigo-parent</artifactId>
     <groupId>io.vertigo</groupId>
-    <version>4.2.0-SNAPSHOT</version>
+    <version>4.2.0</version>
     <relativePath>../pom.xml/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
