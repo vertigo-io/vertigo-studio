@@ -14,7 +14,7 @@ import io.vertigo.datamodel.task.model.Task;
 import io.vertigo.datamodel.task.model.TaskBuilder;
 </#if>
 <#if dao.keyConcept>
-import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datamodel.data.model.UID;
 </#if>
 import io.vertigo.datastore.entitystore.EntityStoreManager;
 import io.vertigo.datastore.impl.dao.DAO;
@@ -61,7 +61,7 @@ public final class ${dao.classSimpleName} extends DAO<${dao.dtClassSimpleName}, 
 	 * @return KeyConcept à modifier
 	 */
 	public ${dao.dtClassSimpleName} readOneForUpdate(final ${dao.idFieldType} id) {
-		return readOneForUpdate(createDtObjectUID(id));
+		return readOneForUpdate(createUID(id));
 	}
 	</#if>
 	<#if !dao.taskDefinitions.empty>

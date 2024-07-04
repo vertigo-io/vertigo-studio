@@ -1,7 +1,7 @@
 /*
  * vertigo - application development platform
  *
- * Copyright (C) 2013-2023, Vertigo.io, team@vertigo.io
+ * Copyright (C) 2013-2024, Vertigo.io, team@vertigo.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,6 +42,7 @@ import org.apache.logging.log4j.Logger;
 
 import io.vertigo.commons.CommonsFeatures;
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.NamedThreadFactory;
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.node.AutoCloseableNode;
@@ -51,7 +52,6 @@ import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugi
 import io.vertigo.core.plugins.resource.local.LocalResourceResolverPlugin;
 import io.vertigo.core.plugins.resource.url.URLResourceResolverPlugin;
 import io.vertigo.core.resource.ResourceManager;
-import io.vertigo.core.util.NamedThreadFactory;
 import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.generator.GeneratorConfig;
 import io.vertigo.studio.generator.GeneratorManager;
@@ -168,7 +168,8 @@ public final class VertigoStudioMda {
 											final Notebook notebook = sourceManager.read(notebookConfig.metaModelResources());
 											final GeneratorResult generatorResult = generatorManager.generate(notebook, generatorConfig);
 											LOGGER_STUDIO.info("Regeneration completed. {} created files, {} updated files, {} identical files and {} issues in {} ms",
-													generatorResult.createdFiles(), generatorResult.updatedFiles(), generatorResult.identicalFiles(), generatorResult.errorFiles(), generatorResult.durationMillis());
+													generatorResult.createdFiles(), generatorResult.updatedFiles(), generatorResult.identicalFiles(), generatorResult.errorFiles(),
+													generatorResult.durationMillis());
 										} catch (final Exception e) {
 											LOGGER_STUDIO.error("Error regenerating : ", e);
 										}

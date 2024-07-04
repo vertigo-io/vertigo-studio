@@ -1,7 +1,7 @@
 /*
  * vertigo - application development platform
  *
- * Copyright (C) 2013-2023, Vertigo.io, team@vertigo.io
+ * Copyright (C) 2013-2024, Vertigo.io, team@vertigo.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,7 +51,6 @@ public final class CarDAO extends DAO<Car, java.lang.Long> implements StoreServi
 		super(Car.class, entityStoreManager, taskManager, smartTypeManager);
 	}
 
-
 	/**
 	 * Creates a taskBuilder.
 	 * @param name  the name of the task
@@ -68,8 +67,8 @@ public final class CarDAO extends DAO<Car, java.lang.Long> implements StoreServi
 	*/
 	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
 			name = "TkGetFirstCar",
-			request = "select * from car\n" + 
- " 				limit 1",
+			request = "select * from car\n" +
+					" 				limit 1",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtCar")
 	public Optional<io.vertigo.studio.domain.car.Car> getFirstCar() {
@@ -90,7 +89,7 @@ public final class CarDAO extends DAO<Car, java.lang.Long> implements StoreServi
 			request = "select * from car where id in (#input.rownum.id#)",
 			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
 	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtCar")
-	public io.vertigo.datamodel.structure.model.DtList<io.vertigo.studio.domain.car.Car> selectCarByIds(@io.vertigo.datamodel.task.proxy.TaskInput(name = "input", smartType = "STyDtCar") final io.vertigo.datamodel.structure.model.DtList<io.vertigo.studio.domain.car.Car> input) {
+	public io.vertigo.datamodel.data.model.DtList<io.vertigo.studio.domain.car.Car> selectCarByIds(@io.vertigo.datamodel.task.proxy.TaskInput(name = "input", smartType = "STyDtCar") final io.vertigo.datamodel.data.model.DtList<io.vertigo.studio.domain.car.Car> input) {
 		final Task task = createTaskBuilder("TkSelectCarByIds")
 				.addValue("input", input)
 				.build();

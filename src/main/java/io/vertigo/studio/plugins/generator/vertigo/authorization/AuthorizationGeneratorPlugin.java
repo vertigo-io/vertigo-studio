@@ -1,7 +1,7 @@
 /*
  * vertigo - application development platform
  *
- * Copyright (C) 2013-2023, Vertigo.io, team@vertigo.io
+ * Copyright (C) 2013-2024, Vertigo.io, team@vertigo.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.MapBuilder;
-import io.vertigo.datamodel.structure.definitions.DtDefinition;
+import io.vertigo.datamodel.data.definitions.DataDefinition;
 import io.vertigo.studio.generator.GeneratorConfig;
 import io.vertigo.studio.generator.GeneratorResultBuilder;
 import io.vertigo.studio.impl.generator.FileGenerator;
@@ -80,8 +80,8 @@ public final class AuthorizationGeneratorPlugin implements GeneratorPlugin {
 				.collect(Collectors.groupingBy(securedFeature -> securedFeature.getLinkedResourceOpt().get(), Collectors.toList()))
 				.entrySet()
 				.stream()
-				.filter(entry -> notebook.contains(DtDefinition.PREFIX + entry.getKey()))// we have the studioDtDefinition
-				.map(entry -> new SecuredEntityModel(entry.getValue(), notebook.resolve(DtDefinition.PREFIX + entry.getKey(), DtSketch.class)))
+				.filter(entry -> notebook.contains(DataDefinition.PREFIX + entry.getKey()))// we have the studioDtDefinition
+				.map(entry -> new SecuredEntityModel(entry.getValue(), notebook.resolve(DataDefinition.PREFIX + entry.getKey(), DtSketch.class)))
 				.toList();
 	}
 

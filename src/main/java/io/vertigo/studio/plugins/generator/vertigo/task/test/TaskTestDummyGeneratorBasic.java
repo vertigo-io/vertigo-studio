@@ -1,7 +1,7 @@
 /*
  * vertigo - application development platform
  *
- * Copyright (C) 2013-2023, Vertigo.io, team@vertigo.io
+ * Copyright (C) 2013-2024, Vertigo.io, team@vertigo.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,11 +26,11 @@ import java.util.List;
 
 import io.vertigo.core.lang.DataStream;
 import io.vertigo.core.lang.VSystemException;
-import io.vertigo.datamodel.structure.definitions.DtDefinition;
-import io.vertigo.datamodel.structure.definitions.DtField.FieldType;
-import io.vertigo.datamodel.structure.model.DtList;
-import io.vertigo.datamodel.structure.model.DtObject;
-import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datamodel.data.definitions.DataDefinition;
+import io.vertigo.datamodel.data.definitions.DataField.FieldType;
+import io.vertigo.datamodel.data.model.DataObject;
+import io.vertigo.datamodel.data.model.DtList;
+import io.vertigo.datamodel.data.util.DataModelUtil;
 
 /**
  * Basic dummy values generator. (One possible value for each type)
@@ -42,9 +42,9 @@ public class TaskTestDummyGeneratorBasic implements TaskTestDummyGenerator {
 
 	@Override
 	public <T> T dum(final Class<T> type) {
-		if (DtObject.class.isAssignableFrom(type)) {
+		if (DataObject.class.isAssignableFrom(type)) {
 			//we are a dtObject
-			return (T) dum(DtObjectUtil.findDtDefinition((Class<DtObject>) type));
+			return (T) dum(DataModelUtil.findDataDefinition((Class<DataObject>) type));
 		} else if (Integer.class.equals(type) || int.class.equals(type)) {
 			return (T) Integer.valueOf(1);
 		} else if (Double.class.equals(type) || double.class.equals(type)) {
@@ -77,7 +77,7 @@ public class TaskTestDummyGeneratorBasic implements TaskTestDummyGenerator {
 	}
 
 	@Override
-	public <D extends DtObject> DtList<D> dumDtList(final Class<D> dtoClass) {
+	public <D extends DataObject> DtList<D> dumDtList(final Class<D> dtoClass) {
 		return DtList.of(dum(dtoClass));
 	}
 
@@ -85,8 +85,8 @@ public class TaskTestDummyGeneratorBasic implements TaskTestDummyGenerator {
 	 * @see io.vertigo.studio.plugins.mda.task.test.TaskTestDummyGenerator#dumNew(java.lang.Class)
 	 */
 	@Override
-	public <D extends DtObject> D dumNew(final Class<D> dtoClass) {
-		final DtDefinition dtDefinition = DtObjectUtil.findDtDefinition(dtoClass);
+	public <D extends DataObject> D dumNew(final Class<D> dtoClass) {
+		final DataDefinition dtDefinition = DataModelUtil.findDataDefinition(dtoClass);
 		final D object = dum(dtoClass);
 		dtDefinition.getIdField()
 				.ifPresent(idField -> idField.getDataAccessor().setValue(object, null));// we make it pristine
@@ -94,9 +94,9 @@ public class TaskTestDummyGeneratorBasic implements TaskTestDummyGenerator {
 
 	}
 
-	private DtObject dum(final DtDefinition def) {
+	private DataObject dum(final DataDefinition def) {
 		/* Créé une instance du dto. */
-		final DtObject dto = DtObjectUtil.createDtObject(def);
+		final DataObject dto = DataModelUtil.createDataObject(def);
 		/* Parcourt les champs */
 		def.getFields()
 				.stream()

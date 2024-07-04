@@ -1,7 +1,7 @@
 /*
  * vertigo - application development platform
  *
- * Copyright (C) 2013-2023, Vertigo.io, team@vertigo.io
+ * Copyright (C) 2013-2024, Vertigo.io, team@vertigo.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,8 +31,8 @@ import java.util.stream.Stream;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
-import io.vertigo.core.lang.Selector;
-import io.vertigo.core.lang.Selector.ClassConditions;
+import io.vertigo.core.lang.ClassSelector;
+import io.vertigo.core.lang.ClassSelector.ClassConditions;
 import io.vertigo.core.util.ClassUtil;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.impl.source.SourceReaderPlugin;
@@ -80,7 +80,7 @@ public final class VegaWebServicesSourceReaderPlugin implements SourceReaderPlug
 	}
 
 	private static void scanAndAddPackage(final String packagePath, final List<WebServiceSketch> webServiceSketch) {
-		final Collection<Class> webServicesClasses = Selector
+		final Collection<Class> webServicesClasses = ClassSelector
 				.from(packagePath)
 				.filterClasses(ClassConditions.subTypeOf(WebServices.class))
 				.findClasses();

@@ -1,7 +1,7 @@
 /*
  * vertigo - application development platform
  *
- * Copyright (C) 2013-2023, Vertigo.io, team@vertigo.io
+ * Copyright (C) 2013-2024, Vertigo.io, team@vertigo.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,12 +19,12 @@ package io.vertigo.studio.source.vertigo.java.data.domain;
 
 import io.vertigo.core.lang.Cardinality;
 import io.vertigo.core.lang.Generated;
-import io.vertigo.datamodel.structure.model.KeyConcept;
-import io.vertigo.datamodel.structure.model.ListVAccessor;
-import io.vertigo.datamodel.structure.model.UID;
-import io.vertigo.datamodel.structure.model.VAccessor;
-import io.vertigo.datamodel.structure.stereotype.Field;
-import io.vertigo.datamodel.structure.util.DtObjectUtil;
+import io.vertigo.datamodel.data.model.KeyConcept;
+import io.vertigo.datamodel.data.model.ListVAccessor;
+import io.vertigo.datamodel.data.model.UID;
+import io.vertigo.datamodel.data.model.VAccessor;
+import io.vertigo.datamodel.data.stereotype.Field;
+import io.vertigo.datamodel.data.util.DataModelUtil;
 
 /**
  * This class is automatically generated.
@@ -36,7 +36,7 @@ public final class Command implements KeyConcept {
 
 	private Long cmdId;
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "ACtyCmd",
 			fkFieldName = "ctyId",
 			primaryDtDefinitionName = "DtCommandType",
@@ -51,7 +51,7 @@ public final class Command implements KeyConcept {
 			foreignMultiplicity = "0..*")
 	private final VAccessor<CommandType> ctyIdAccessor = new VAccessor<>(CommandType.class, "CommandType");
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "ACitCmd",
 			fkFieldName = "citId",
 			primaryDtDefinitionName = "DtCity",
@@ -66,7 +66,7 @@ public final class Command implements KeyConcept {
 			foreignMultiplicity = "0..*")
 	private final VAccessor<City> citIdAccessor = new VAccessor<>(City.class, "City");
 
-	@io.vertigo.datamodel.structure.stereotype.Association(
+	@io.vertigo.datamodel.data.stereotype.Association(
 			name = "ACmdAtt",
 			fkFieldName = "cmdId",
 			primaryDtDefinitionName = "DtCommand",
@@ -171,6 +171,6 @@ public final class Command implements KeyConcept {
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
-		return DtObjectUtil.toString(this);
+		return DataModelUtil.toString(this);
 	}
 }

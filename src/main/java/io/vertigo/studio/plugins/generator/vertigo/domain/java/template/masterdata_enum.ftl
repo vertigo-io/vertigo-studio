@@ -2,8 +2,8 @@ package ${entity.packageName};
 
 import java.io.Serializable;
 
-import io.vertigo.datamodel.structure.model.MasterDataEnum;
-import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datamodel.data.model.MasterDataEnum;
+import io.vertigo.datamodel.data.model.UID;
 
 public enum ${entity.classSimpleName}Enum implements MasterDataEnum<${entity.className}> {
 

@@ -1,7 +1,7 @@
 /*
  * vertigo - application development platform
  *
- * Copyright (C) 2013-2023, Vertigo.io, team@vertigo.io
+ * Copyright (C) 2013-2024, Vertigo.io, team@vertigo.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,8 +62,23 @@ public class DslRawBodyRuleTest {
 					.parse(testValue);
 			Assertions.fail();
 		} catch (final PegNoMatchFoundException e) {
-			//System.out.println(e.getFullMessage());
+			// System.out.println(e.getFullMessage());
 			Assertions.assertEquals(testValue.indexOf("maxLengh") + "maxLengh".length() - 1, e.getIndex());
+		}
+	}
+
+	@Test
+	public void testError2() {
+		final List<DslEntity> entities = rawRepository.getGrammar().getEntities();
+		final DslEntity entity = find(entities, "Domain");
+		final String testValue = "{ dataType: String,  maxLength } ";
+		try {
+			new DslRawBodyRule(entity)
+					.parse(testValue);
+			Assertions.fail();
+		} catch (final PegNoMatchFoundException e) {
+			// System.out.println(e.getFullMessage());
+			Assertions.assertEquals(31, e.getIndex());
 		}
 	}
 }

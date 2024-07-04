@@ -1,7 +1,7 @@
 /*
  * vertigo - application development platform
  *
- * Copyright (C) 2013-2023, Vertigo.io, team@vertigo.io
+ * Copyright (C) 2013-2024, Vertigo.io, team@vertigo.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ import io.vertigo.studio.tools.YamlStudioConfig.YamlResourceConfig;
 
 final class StudioConfigYamlParser {
 
-	static final NotebookConfig parseYaml(final URL configUrl) throws URISyntaxException {
+	static NotebookConfig parseYaml(final URL configUrl) throws URISyntaxException {
 		final YamlStudioConfig yamlStudioConfig = new Yaml(new Constructor(YamlStudioConfig.class, new LoaderOptions())).loadAs(FileUtil.read(configUrl), YamlStudioConfig.class);
 		final String rootPath = Path.of(configUrl.toURI()).getParent().toString() + "/";
 
@@ -53,7 +53,7 @@ final class StudioConfigYamlParser {
 	private static List<Source> parseResources(final List<YamlResourceConfig> resources, final String rootPath) {
 		//metamodelresources
 		return resources.stream()
-				.map(resource -> Source.of(resource.type, rootPath + resource.path))
+				.map(resource -> Source.of(resource.type, resource.path.startsWith("classpath:") ? resource.path.substring("classpath:".length()) : rootPath + resource.path))
 				.toList();
 	}
 

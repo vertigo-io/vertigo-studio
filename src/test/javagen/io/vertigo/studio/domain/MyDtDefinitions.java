@@ -1,7 +1,7 @@
 /*
  * vertigo - application development platform
  *
- * Copyright (C) 2013-2023, Vertigo.io, team@vertigo.io
+ * Copyright (C) 2013-2024, Vertigo.io, team@vertigo.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 import io.vertigo.core.lang.Generated;
-import io.vertigo.datamodel.structure.definitions.DtFieldName;
+import io.vertigo.datamodel.data.definitions.DataFieldName;
 
 /**
  * This class is automatically generated.
@@ -55,7 +55,7 @@ public final class MyDtDefinitions implements Iterable<Class<?>> {
 		/** Objet de données Record. */
 		Record(io.vertigo.studio.domain.security.Record.class),
 		/** Objet de données VxFileInfo. */
-		VxFileInfo(io.vertigo.studio.domain.fileinfo.VxFileInfo.class)		;
+		VxFileInfo(io.vertigo.studio.domain.fileinfo.VxFileInfo.class);
 
 		private final Class<?> clazz;
 
@@ -75,18 +75,19 @@ public final class MyDtDefinitions implements Iterable<Class<?>> {
 	/**
 	 * Enumération des champs de Attachment.
 	 */
-	public enum AttachmentFields implements DtFieldName<io.vertigo.studio.domain.stereotype.Attachment> {
+	public enum AttachmentFields implements DataFieldName<io.vertigo.studio.domain.stereotype.Attachment> {
 		/** Propriété 'id'. */
 		attId,
 		/** Propriété 'Url'. */
 		url,
 		/** Propriété 'Command'. */
-		cmdId	}
+		cmdId
+	}
 
 	/**
 	 * Enumération des champs de Car.
 	 */
-	public enum CarFields implements DtFieldName<io.vertigo.studio.domain.car.Car> {
+	public enum CarFields implements DataFieldName<io.vertigo.studio.domain.car.Car> {
 		/** Propriété 'identifiant de la voiture'. */
 		id,
 		/** Propriété 'Constructeur'. */
@@ -106,83 +107,91 @@ public final class MyDtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Motor type'. */
 		mtyCd,
 		/** Propriété 'Famille'. */
-		famId	}
+		famId
+	}
 
 	/**
 	 * Enumération des champs de City.
 	 */
-	public enum CityFields implements DtFieldName<io.vertigo.studio.domain.stereotype.City> {
+	public enum CityFields implements DataFieldName<io.vertigo.studio.domain.stereotype.City> {
 		/** Propriété 'id'. */
 		citId,
 		/** Propriété 'Label'. */
 		label,
 		/** Propriété 'Postal code'. */
-		postalCode	}
+		postalCode
+	}
 
 	/**
 	 * Enumération des champs de CityDisplay.
 	 */
-	public enum CityDisplayFields implements DtFieldName<io.vertigo.studio.domain.stereotype.CityDisplay> {
+	public enum CityDisplayFields implements DataFieldName<io.vertigo.studio.domain.stereotype.CityDisplay> {
 		/** Propriété 'id'. */
 		citId,
 		/** Propriété 'Label'. */
-		label	}
+		label
+	}
 
 	/**
 	 * Enumération des champs de Command.
 	 */
-	public enum CommandFields implements DtFieldName<io.vertigo.studio.domain.stereotype.Command> {
+	public enum CommandFields implements DataFieldName<io.vertigo.studio.domain.stereotype.Command> {
 		/** Propriété 'id'. */
 		cmdId,
 		/** Propriété 'Command type'. */
 		ctyId,
 		/** Propriété 'City'. */
-		citId	}
+		citId
+	}
 
 	/**
 	 * Enumération des champs de CommandType.
 	 */
-	public enum CommandTypeFields implements DtFieldName<io.vertigo.studio.domain.stereotype.CommandType> {
+	public enum CommandTypeFields implements DataFieldName<io.vertigo.studio.domain.stereotype.CommandType> {
 		/** Propriété 'id'. */
 		ctyId,
 		/** Propriété 'Label'. */
-		label	}
+		label
+	}
 
 	/**
 	 * Enumération des champs de CommandValidation.
 	 */
-	public enum CommandValidationFields implements DtFieldName<io.vertigo.studio.domain.stereotype.CommandValidation> {
+	public enum CommandValidationFields implements DataFieldName<io.vertigo.studio.domain.stereotype.CommandValidation> {
 		/** Propriété 'id'. */
 		cvaId,
 		/** Propriété 'Signer name'. */
 		signerName,
 		/** Propriété 'Command'. */
-		cmdId	}
+		cmdId
+	}
 
 	/**
 	 * Enumération des champs de Famille.
 	 */
-	public enum FamilleFields implements DtFieldName<io.vertigo.studio.domain.famille.Famille> {
+	public enum FamilleFields implements DataFieldName<io.vertigo.studio.domain.famille.Famille> {
 		/** Propriété 'identifiant de la famille'. */
 		famId,
 		/** Propriété 'Libelle'. */
 		libelle,
 		/** Propriété 'Libelle'. */
-		description	}
+		description
+	}
 
 	/**
 	 * Enumération des champs de MotorType.
 	 */
-	public enum MotorTypeFields implements DtFieldName<io.vertigo.studio.domain.car.MotorType> {
+	public enum MotorTypeFields implements DataFieldName<io.vertigo.studio.domain.car.MotorType> {
 		/** Propriété 'id'. */
 		mtyCd,
 		/** Propriété 'Label'. */
-		label	}
+		label
+	}
 
 	/**
 	 * Enumération des champs de Record.
 	 */
-	public enum RecordFields implements DtFieldName<io.vertigo.studio.domain.security.Record> {
+	public enum RecordFields implements DataFieldName<io.vertigo.studio.domain.security.Record> {
 		/** Propriété 'Id'. */
 		dosId,
 		/** Propriété 'Region'. */
@@ -200,12 +209,13 @@ public final class MyDtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Owner'. */
 		utiIdOwner,
 		/** Propriété 'State'. */
-		etaCd	}
+		etaCd
+	}
 
 	/**
 	 * Enumération des champs de VxFileInfo.
 	 */
-	public enum VxFileInfoFields implements DtFieldName<io.vertigo.studio.domain.fileinfo.VxFileInfo> {
+	public enum VxFileInfoFields implements DataFieldName<io.vertigo.studio.domain.fileinfo.VxFileInfo> {
 		/** Propriété 'Identifiant'. */
 		filId,
 		/** Propriété 'Nom'. */
@@ -217,7 +227,8 @@ public final class MyDtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Date de dernière modification'. */
 		lastModified,
 		/** Propriété 'data'. */
-		fileData	}
+		fileData
+	}
 
 	/** {@inheritDoc} */
 	@Override
