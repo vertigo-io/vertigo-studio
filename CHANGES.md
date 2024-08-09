@@ -1,11 +1,25 @@
 Version history
 ===============
 
-Running 4.2.0
+Running 4.3.0
 ----------------------
-[Migration help](https://github.com/vertigo-io/vertigo/wiki/Vertigo-Migration-Guide#from-410-to-420)
+[Migration help](https://github.com/vertigo-io/vertigo/wiki/Vertigo-Migration-Guide#from-420-to-430)
   
 more to come :)
+
+
+Running 4.2.0 - 2024/07/04
+----------------------
+[Migration help](https://github.com/vertigo-io/vertigo/wiki/Vertigo-Migration-Guide#from-410-to-420)
+
+* **[Studio] Apply renamings from Core**
+* **[Studio] Rename dtDefinitionA/B to dataDefinitionA/B in NN annotation**
+* [Studio] Support "classpath:" protocol in resources path
+* [Studio] Fix : Don't generate dtResources for external package
+* Update libs 
+  - jakarta.servlet-api 5.0.0 -> 6.1.0
+  - c3p0 0.9.5.5 -> 0.10.1
+  - slf4j 1.7.36 -> 2.0.13
 
 
 Release 4.1.0 - 2023/11/09
