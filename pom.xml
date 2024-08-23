@@ -85,6 +85,7 @@
 				<version>3.6.0</version>
 				<!-- Congfiguration is needed because of a bug of log4j see : https://issues.apache.org/jira/browse/LOG4J2-673 -->
 				<configuration>
+					<createDependencyReducedPom>false</createDependencyReducedPom>
 					<filters>
 						<filter>
 							<artifact>*:*</artifact>
