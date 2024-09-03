@@ -1,20 +1,3 @@
-/*
- * vertigo - application development platform
- *
- * Copyright (C) 2013-2024, Vertigo.io, team@vertigo.io
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package io.vertigo.studio.domain;
 
 import java.util.Arrays;
@@ -55,7 +38,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Objet de données Record. */
 		Record(io.vertigo.studio.domain.security.Record.class),
 		/** Objet de données VxFileInfo. */
-		VxFileInfo(io.vertigo.studio.domain.fileinfo.VxFileInfo.class);
+		VxFileInfo(io.vertigo.studio.domain.fileinfo.VxFileInfo.class)		;
 
 		private final Class<?> clazz;
 
@@ -81,8 +64,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Url'. */
 		url,
 		/** Propriété 'Command'. */
-		cmdId
-	}
+		cmdId	}
 
 	/**
 	 * Enumération des champs de Car.
@@ -107,8 +89,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Motor type'. */
 		mtyCd,
 		/** Propriété 'Famille'. */
-		famId
-	}
+		famId	}
 
 	/**
 	 * Enumération des champs de City.
@@ -119,8 +100,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Label'. */
 		label,
 		/** Propriété 'Postal code'. */
-		postalCode
-	}
+		postalCode	}
 
 	/**
 	 * Enumération des champs de CityDisplay.
@@ -129,8 +109,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'id'. */
 		citId,
 		/** Propriété 'Label'. */
-		label
-	}
+		label	}
 
 	/**
 	 * Enumération des champs de Command.
@@ -141,8 +120,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Command type'. */
 		ctyId,
 		/** Propriété 'City'. */
-		citId
-	}
+		citId	}
 
 	/**
 	 * Enumération des champs de CommandType.
@@ -151,8 +129,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'id'. */
 		ctyId,
 		/** Propriété 'Label'. */
-		label
-	}
+		label	}
 
 	/**
 	 * Enumération des champs de CommandValidation.
@@ -163,8 +140,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Signer name'. */
 		signerName,
 		/** Propriété 'Command'. */
-		cmdId
-	}
+		cmdId	}
 
 	/**
 	 * Enumération des champs de Famille.
@@ -175,8 +151,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Libelle'. */
 		libelle,
 		/** Propriété 'Libelle'. */
-		description
-	}
+		description	}
 
 	/**
 	 * Enumération des champs de MotorType.
@@ -185,8 +160,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'id'. */
 		mtyCd,
 		/** Propriété 'Label'. */
-		label
-	}
+		label	}
 
 	/**
 	 * Enumération des champs de Record.
@@ -209,8 +183,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Owner'. */
 		utiIdOwner,
 		/** Propriété 'State'. */
-		etaCd
-	}
+		etaCd	}
 
 	/**
 	 * Enumération des champs de VxFileInfo.
@@ -227,8 +200,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'Date de dernière modification'. */
 		lastModified,
 		/** Propriété 'data'. */
-		fileData
-	}
+		fileData	}
 
 	/** {@inheritDoc} */
 	@Override
