@@ -29,9 +29,10 @@ import io.vertigo.studio.notebook.domain.DomainSketch;
 /**
  * Builder of taskSketch.
  *
- * @author  fconstantin, pchretien
+ * @author fconstantin, pchretien
  */
 public final class TaskSketchBuilder implements Builder<TaskSketch> {
+
 	private final List<TaskSketchAttribute> myInTaskAttributes = new ArrayList<>();
 	private TaskSketchAttribute myOutTaskAttribute;
 	private final String myTaskSketchName;
@@ -71,10 +72,10 @@ public final class TaskSketchBuilder implements Builder<TaskSketch> {
 	public TaskSketchBuilder withRequest(final String request) {
 		Assertion.check().isNotNull(request);
 		//-----
-		//Pour unifier la saisie de la request sous un environnement unix ou dos
-		// et pour éviter la disparité de gestion des retours chariot
-		//par certains drivers de base de données.
-		myRequest = request.replace("\r", "");
+		// Now we keep the request as it is (before we replaced \r\n by \n).
+		// Because we use multiline string, we can't change cariage return.
+		// If we do, git we replace it when file is downloaded and file is marked as modified
+		myRequest = request;
 		return this;
 	}
 
