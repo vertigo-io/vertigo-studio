@@ -18,7 +18,7 @@
 package io.vertigo.studio.plugins.source.vertigo.factories.search;
 
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -85,7 +85,7 @@ public final class SearchSketchFactory implements DslSketchFactory {
 	}
 
 	private static Map<DtSketchField, List<DtSketchField>> populateCopyFields(final DslRaw xsearchObjet, final DtSketch indexDtDefinition) {
-		final Map<DtSketchField, List<DtSketchField>> copyToFields = new HashMap<>(); //(map toField : [fromField, fromField, ...])
+		final Map<DtSketchField, List<DtSketchField>> copyToFields = new LinkedHashMap<>(); //(map toField : [fromField, fromField, ...])
 		final List<DslRaw> copyToFieldNames = xsearchObjet.getSubRaws(SearchGrammar.INDEX_COPY_TO_PROPERTY);
 		for (final DslRaw copyToFieldDefinition : copyToFieldNames) {
 			final String copyFromFieldNames = (String) copyToFieldDefinition.getPropertyValue(SearchGrammar.INDEX_COPY_FROM_PROPERTY);
