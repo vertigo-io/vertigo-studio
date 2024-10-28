@@ -81,8 +81,8 @@ Release 3.3.0 - 2022/02/03
 * fixed a bug when the sortField or the displayField is a computed
 * add keyField on dtSketch
 * Fix tableName of NN : const case
-* Fix tableName in constCase
-* Change detection of Association code : must have CamelCase AFTER 2 trigrams
+* Fix tableName in constCase* 
+* __Change detection of Association code : must have CamelCase AFTER 2 trigrams__
 * Fix association code name with number (accept XxxYyy123)
 * [Task] Keep \n in request into SQL request
 * update dependencies
