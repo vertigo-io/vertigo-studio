@@ -34,7 +34,7 @@ public final class KspAssociationNNModel extends KspAssociationModel {
 	}
 
 	public String getName() {
-		return "Ann" + ((AssociationNNSketch) getAssociationSketch()).getLocalName();
+		return "Ann" + getAssociationSketch().getLocalName();
 	}
 
 	public String getTableName() {

@@ -28,6 +28,7 @@ public final class KspAssociationSimpleModel extends KspAssociationModel {
 
 	/**
 	 * Constructeur.
+	 *
 	 * @param associationSketchNode Noeud de l'association à générer
 	 */
 	public KspAssociationSimpleModel(final AssociationSimpleSketch associationSimpleSketch) {
@@ -35,7 +36,7 @@ public final class KspAssociationSimpleModel extends KspAssociationModel {
 	}
 
 	public String getName() {
-		return "A" + ((AssociationSimpleSketch) getAssociationSketch()).getLocalName();
+		return "A" + getAssociationSketch().getLocalName();
 	}
 
 	public String getFkFieldName() {
