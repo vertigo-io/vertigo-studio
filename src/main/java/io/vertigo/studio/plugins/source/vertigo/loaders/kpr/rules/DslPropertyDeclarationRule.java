@@ -30,10 +30,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import io.vertigo.commons.peg.AbstractRule;
 import io.vertigo.commons.peg.PegChoice;
-import io.vertigo.commons.peg.PegRule;
-import io.vertigo.commons.peg.PegRules;
+import io.vertigo.commons.peg.rule.PegAbstractRule;
+import io.vertigo.commons.peg.rule.PegRule;
+import io.vertigo.commons.peg.rule.PegRules;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw.DslPropertyEntry;
@@ -49,7 +49,7 @@ import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw.DslPropertyEntry
  *
  * @author pchretien, mlaroche
  */
-public final class DslPropertyDeclarationRule extends AbstractRule<DslPropertyEntry, List<Object>> {
+public final class DslPropertyDeclarationRule extends PegAbstractRule<DslPropertyEntry, List<Object>> {
 	private final Map<String, String> entityProperties;
 
 	/**

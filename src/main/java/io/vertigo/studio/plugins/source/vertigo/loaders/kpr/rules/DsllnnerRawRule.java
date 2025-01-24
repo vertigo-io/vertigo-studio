@@ -19,9 +19,9 @@ package io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules;
 
 import java.util.List;
 
-import io.vertigo.commons.peg.AbstractRule;
-import io.vertigo.commons.peg.PegRule;
-import io.vertigo.commons.peg.PegRules;
+import io.vertigo.commons.peg.rule.PegAbstractRule;
+import io.vertigo.commons.peg.rule.PegRule;
+import io.vertigo.commons.peg.rule.PegRules;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.impl.source.dsl.entity.DslEntity;
 import io.vertigo.studio.impl.source.dsl.raw.DslRaw;
@@ -30,7 +30,7 @@ import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw.DslPropertyEntry
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw.DslRawBody;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw.DslRawEntry;
 
-final class DslInnerRawRule extends AbstractRule<DslRawEntry, List<Object>> {
+final class DslInnerRawRule extends PegAbstractRule<DslRawEntry, List<Object>> {
 	private final String entityName;
 	private final DslEntity entity;
 

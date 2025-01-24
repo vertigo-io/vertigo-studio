@@ -17,9 +17,9 @@
  */
 package io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules;
 
-import io.vertigo.commons.peg.PegRule;
-import io.vertigo.commons.peg.PegRules;
-import io.vertigo.commons.peg.PegWordRule;
+import io.vertigo.commons.peg.rule.PegWordRuleMode;
+import io.vertigo.commons.peg.rule.PegRule;
+import io.vertigo.commons.peg.rule.PegRules;
 
 /**
  *
@@ -51,10 +51,10 @@ final class DslSyntaxRules {
 	static final PegRule<String> QUOTATION_MARK = PegRules.term("\"");
 	static final PegRule<String> BACK_QUOTATION_MARK = PegRules.term("`");
 
-	static final PegRule<String> PROPERTY_VALUE = PegRules.word(false, "\"", PegWordRule.Mode.REJECT_ESCAPABLE, "propertyValue"); //En fait il faut autoriser tous les caractères sauf les guillemets".
-	static final PegRule<String> RAW_PROPERTY_VALUE = PegRules.word(false, "`", PegWordRule.Mode.REJECT_ESCAPABLE, "propertyValue"); //En fait il faut autoriser tous les caractères sauf les back quote".
+	static final PegRule<String> PROPERTY_VALUE = PegRules.word(false, "\"", PegWordRuleMode.REJECT_ESCAPABLE, "propertyValue"); //En fait il faut autoriser tous les caractères sauf les guillemets".
+	static final PegRule<String> RAW_PROPERTY_VALUE = PegRules.word(false, "`", PegWordRuleMode.REJECT_ESCAPABLE, "propertyValue"); //En fait il faut autoriser tous les caractères sauf les back quote".
 	//Il faut gérer le caractère d'évitement.
-	static final PegRule<String> WORD = PegRules.word(false, DELIMITERS, PegWordRule.Mode.REJECT, "word");
+	static final PegRule<String> WORD = PegRules.word(false, DELIMITERS, PegWordRuleMode.REJECT, "word");
 
 	private DslSyntaxRules() {
 		//Classe sans état

@@ -26,17 +26,17 @@ import static io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslSynt
 import java.util.ArrayList;
 import java.util.List;
 
-import io.vertigo.commons.peg.AbstractRule;
 import io.vertigo.commons.peg.PegChoice;
-import io.vertigo.commons.peg.PegRule;
-import io.vertigo.commons.peg.PegRules;
+import io.vertigo.commons.peg.rule.PegAbstractRule;
+import io.vertigo.commons.peg.rule.PegRule;
+import io.vertigo.commons.peg.rule.PegRules;
 
 /**
  * règle de composition d'une déclaration de liste de mots.
  * {mot1, mot2, mot3}
  * @author pchretien, mlaroche
  */
-public final class DslWordsRule extends AbstractRule<List<String>, PegChoice> {
+public final class DslWordsRule extends PegAbstractRule<List<String>, PegChoice> {
 
 	// 	{ }
 	private static final PegRule<List<Object>> EMPTY_LIST = PegRules.sequence(//Liste vide

@@ -22,9 +22,9 @@ import static io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslSynt
 
 import java.util.List;
 
-import io.vertigo.commons.peg.AbstractRule;
-import io.vertigo.commons.peg.PegRule;
-import io.vertigo.commons.peg.PegRules;
+import io.vertigo.commons.peg.rule.PegAbstractRule;
+import io.vertigo.commons.peg.rule.PegRule;
+import io.vertigo.commons.peg.rule.PegRules;
 
 /**
  * règle de déclaration d'un package.
@@ -33,7 +33,7 @@ import io.vertigo.commons.peg.PegRules;
  * package nomdupackage;.
  * @author pchretien, mlaroche
  */
-public final class DslPackageDeclarationRule extends AbstractRule<String, List<Object>> {
+public final class DslPackageDeclarationRule extends PegAbstractRule<String, List<Object>> {
 
 	public DslPackageDeclarationRule() {
 		super(createMainRule());

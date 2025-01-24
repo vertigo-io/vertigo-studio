@@ -25,10 +25,10 @@ import static io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslWord
 import java.util.List;
 import java.util.stream.Collectors;
 
-import io.vertigo.commons.peg.AbstractRule;
 import io.vertigo.commons.peg.PegChoice;
-import io.vertigo.commons.peg.PegRule;
-import io.vertigo.commons.peg.PegRules;
+import io.vertigo.commons.peg.rule.PegAbstractRule;
+import io.vertigo.commons.peg.rule.PegRule;
+import io.vertigo.commons.peg.rule.PegRules;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.impl.source.dsl.raw.DslRawKey;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw.DslRawEntry;
@@ -37,7 +37,7 @@ import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw.DslRawEntry;
  * Règle de déclaration d'une champ référenéant une listes de clés.
  * @author pchretien, mlaroche
  */
-public final class DslRawEntryRule extends AbstractRule<DslRawEntry, List<Object>> {
+public final class DslRawEntryRule extends PegAbstractRule<DslRawEntry, List<Object>> {
 
 	/**
 	 * Constructor.

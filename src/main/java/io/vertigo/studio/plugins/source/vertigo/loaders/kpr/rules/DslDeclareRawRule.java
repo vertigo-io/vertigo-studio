@@ -23,10 +23,10 @@ import static io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslSynt
 import java.util.List;
 import java.util.stream.Collectors;
 
-import io.vertigo.commons.peg.AbstractRule;
 import io.vertigo.commons.peg.PegChoice;
-import io.vertigo.commons.peg.PegRule;
-import io.vertigo.commons.peg.PegRules;
+import io.vertigo.commons.peg.rule.PegAbstractRule;
+import io.vertigo.commons.peg.rule.PegRule;
+import io.vertigo.commons.peg.rule.PegRules;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.impl.source.dsl.entity.DslEntity;
 import io.vertigo.studio.impl.source.dsl.entity.DslGrammar;
@@ -34,7 +34,7 @@ import io.vertigo.studio.impl.source.dsl.entity.DslGrammar;
 /*
  * @author mlaroche
  */
-public final class DslDeclareRawRule extends AbstractRule<String, PegChoice> {
+public final class DslDeclareRawRule extends PegAbstractRule<String, PegChoice> {
 
 	/**
 	 * Constructor.
