@@ -344,6 +344,6 @@ class ${dtSketch.localName}:::${dtSketch.stereotypeInterfaceName?uncap_first} {
 ${simpleAssociation.foreignDtSketchName} "${simpleAssociation.foreignCardinality}" --> "${simpleAssociation.primaryCardinality}" ${simpleAssociation.primaryDtSketchName} : ${simpleAssociation.role}
 </#list>
 <#list dtSketch.nnAssociations as nnAssociation >
-${nnAssociation.nodeADtSketchName} "*" <--> "*" ${nnAssociation.nodeBDtSketchName}
+${nnAssociation.nodeADtSketchName} "*" <#if nnAssociation.isNodeANavigable()><</#if>--<#if nnAssociation.isNodeBNavigable()>></#if> "*" ${nnAssociation.nodeBDtSketchName} : ${nnAssociation.nodeARole} / ${nnAssociation.nodeBRole}
 </#list>
 </#macro>

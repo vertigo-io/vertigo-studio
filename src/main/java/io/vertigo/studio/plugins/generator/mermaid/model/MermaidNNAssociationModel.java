@@ -23,9 +23,10 @@ import io.vertigo.studio.notebook.domain.association.AssociationNNSketch;
 /**
  * Objet utilisé par FreeMarker.
  *
- * @author  mlaroche
+ * @author mlaroche
  */
 public final class MermaidNNAssociationModel {
+
 	private final AssociationNNSketch associationNNSketch;
 
 	/**
@@ -54,10 +55,38 @@ public final class MermaidNNAssociationModel {
 	}
 
 	/**
+	 * @return Role
+	 */
+	public String getNodeARole() {
+		return associationNNSketch.getAssociationNodeA().getRole();
+	}
+
+	/**
+	 * @return is navigeable
+	 */
+	public boolean isNodeANavigable() {
+		return associationNNSketch.getAssociationNodeA().isNavigable();
+	}
+
+	/**
 	 * @return Type à retourner
 	 */
 	public String getNodeBDtSketchName() {
 		return associationNNSketch.getAssociationNodeB().getDtSketch().getLocalName();
+	}
+
+	/**
+	 * @return Role
+	 */
+	public String getNodeBRole() {
+		return associationNNSketch.getAssociationNodeB().getRole();
+	}
+
+	/**
+	 * @return is navigeable
+	 */
+	public boolean isNodeBNavigable() {
+		return associationNNSketch.getAssociationNodeB().isNavigable();
 	}
 
 }
