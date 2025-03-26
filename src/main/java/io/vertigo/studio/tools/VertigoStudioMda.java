@@ -61,7 +61,7 @@ import io.vertigo.studio.notebook.NotebookConfig;
 import io.vertigo.studio.source.SourceManager;
 
 /**
- * Génération des fichiers Java et SQL à patrir de fichiers template freemarker.
+ * Génération des fichiers Java et SQL à partir de fichiers template freemarker.
  *
  * @author mlaroche, pchretien
  */
