@@ -33,6 +33,7 @@ import io.vertigo.studio.notebook.domain.DtSketchField.FieldType;
  * @author pchretien, mlaroche
  */
 public final class TSStudioDtModel {
+
 	private final DtSketch dtSketch;
 	private final List<TSStudioDtFieldModel> dtFieldModels;
 	private final Set<TSDomainModel> domainModels;
@@ -107,7 +108,7 @@ public final class TSStudioDtModel {
 	 * @return Nom du fichier de la classe normalisÃ© (AAA_BBB_CCC => aaa-bbb-ccc).
 	 */
 	public String getJsClassFileName() {
-		return dtSketch.getLocalName().toLowerCase(Locale.ENGLISH).replaceAll("_", "-");
+		return dtSketch.getLocalName().toLowerCase(Locale.ENGLISH).replace('_', '-');
 	}
 
 	/**

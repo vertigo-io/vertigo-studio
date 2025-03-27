@@ -147,7 +147,7 @@ public final class VegaWebServicesSourceReaderPlugin implements SourceReaderPlug
 				webServiceParams,
 				isVoid ? Optional.empty() : Optional.of(new WebServiceSketchResponseContent(returnType, cardinality)),
 				moduleName,
-				Optional.of(method.getDeclaringClass().getSimpleName().replaceAll("WebServices", "")),
+				Optional.of(method.getDeclaringClass().getSimpleName().replace("WebServices", "")),
 				method.getName(),
 				doc);
 	}
