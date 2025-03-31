@@ -3,12 +3,25 @@ Version history
 
 Running 4.3.0
 ----------------------
-[Migration help](https://github.com/vertigo-io/vertigo/wiki/Vertigo-Migration-Guide#from-420-to-430)
-  
+
 more to come :)
 
 
-Running 4.2.0 - 2024/07/04
+Release 4.2.0 - 2025/03/27
+----------------------
+[Migration help](https://github.com/vertigo-io/vertigo/wiki/Vertigo-Migration-Guide#from-420-to-430)
+* [Studio] Fix change cariage return into tasks request
+* [Studio] Fix order of search copyFields list
+* [Studio] Refacto peg rules in commons
+* [Studio] Mermaid better show navigations for NN
+* [Studio] Assert if NN name too short
+* [Studio] Update libs
+  - freemarker 2.3.33 -> 2.3.34
+  - c3p0 0.10.1 -> 0.10.2
+  - slf4j 2.0.13 -> 2.0.17
+
+
+Release 4.2.0 - 2024/07/04
 ----------------------
 [Migration help](https://github.com/vertigo-io/vertigo/wiki/Vertigo-Migration-Guide#from-410-to-420)
 
