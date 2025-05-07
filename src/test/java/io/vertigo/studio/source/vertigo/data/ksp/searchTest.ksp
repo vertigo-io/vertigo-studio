@@ -1,0 +1,32 @@
+package io.vertigo.studio.search
+
+create IndexDefinition IdxCar {  
+  keyConcept : DtCar
+  dtIndex : DtCar 
+  indexCopyTo allText { from: "manufacturer,model,description" }
+  loaderId : "CarSearchLoader"
+} 
+
+alter DtDefinition DtCar {
+	stereotype : "KeyConcept"
+    computed allText {	domain : DoFullText, label:"ALL_TEXT", expression:"throw new io.vertigo.core.lang.VSystemException(\"Can't use index copyTo field\");"     }
+}
+
+create FacetDefinition FctCarYear {
+    dtDefinition:DtCar, fieldName:"year", label:"Car years"
+} 
+
+create FacetDefinition FctCarPurchaseDate {
+	dtDefinition:DtCar, fieldName:"mtyCd", label:"Motor Type"
+	range ESS { filter:"mtyCd:'ESS'", label:"essence"},
+	range DIE { filter:"mtyCd:'DIE'", label:"diesel"},
+	multiselectable: "true"
+}
+
+create FacetedQueryDefinition QryCar {
+	dtIndex : DtCar
+	facets : [FctCarYear, FctCarPurchaseDate ]
+	domainCriteria : DoFullText
+	listFilterBuilderClass : "io.vertigo.datafactory.impl.search.dsl.DslListFilterBuilder"  
+	listFilterBuilderQuery : "allText:#+query*#"
+}
