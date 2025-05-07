@@ -20,7 +20,7 @@ create FacetDefinition FctCarPurchaseDate {
 	dtDefinition:DtCar, fieldName:"mtyCd", label:"Motor Type"
 	range ESS { filter:"mtyCd:'ESS'", label:"essence"},
 	range DIE { filter:"mtyCd:'DIE'", label:"diesel"},
-	multiselectable: "true"
+	multiSelectable: "true"
 }
 
 create FacetedQueryDefinition QryCar {

@@ -31,6 +31,7 @@ import io.vertigo.studio.plugins.source.vertigo.factories.domain.DomainGrammar;
  * @author pchretien, mlaroche
  */
 final class SearchGrammar implements DslGrammar {
+
 	/** Index definition. */
 	public static final DslEntity INDEX_ENTITY;
 	/** Facet definition. */
@@ -52,7 +53,7 @@ final class SearchGrammar implements DslGrammar {
 	public static final String FACET_ORDER = "ORDER";
 
 	/** MultiSelectable values. */
-	public static final String FACET_MULTISELECTABLE = "multiSelectable";
+	public static final String FACET_MULTISELECTABLE = "MULTI_SELECTABLE";
 	/** Range filter. */
 	public static final String RANGE_FILTER_PROPERTY = "FILTER";
 	/** Params Value. */
@@ -69,21 +70,22 @@ final class SearchGrammar implements DslGrammar {
 	    dtIndex : DT_TEST,
 	    indexCopyTo FIELD_TO_1 : { from: "FIELD_FROM_1,FIELD_FROM_2" }, //use field formatters
 	    indexCopyTo FIELD_TO_2 : { from: "FIELD_FROM_3" }, //use field formatters
-
+	
 	    searchLoader : com.project.domain.search.dao.SearchLoaderPeople
 	}
-
+	
 	create FacetDefinition FCT_MOVIE_GENRE {
-		dtDefinition : DT_TEST, fieldName : "GENRE", label : "Par genre"
+		dtDefinition : DT_TEST, fieldName : "GENRE", label : "Par genre",
+		multiselectable: "true"
 	}
-
+	
 	create FacetDefinition FCT_MOVIE_ANNEE {
 		dtDefinition : DT_TEST, fieldName : "YEAR", label : "Par année",
 	 	range R1 { filter : "YEAR:[* TO 2000]", label : "avant 2000"}, //TODO : fieldName in filter too ?
 	 	range R2 { filter : "YEAR:[2000 TO 2005]", label : "2000-2005"},
 	 	range R3 { filter : "YEAR:[2005 TO *]", label : "après 2005"}
 	}
-
+	
 	create FacetedQueryDefinition QRY_MOVIE {
 		facet FCT_MOVIE_GENRE,
 		facet FCT_MOVIE_ANNEE,
