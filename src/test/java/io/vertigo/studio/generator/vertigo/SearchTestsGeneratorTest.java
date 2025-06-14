@@ -19,9 +19,15 @@ package io.vertigo.studio.generator.vertigo;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import io.vertigo.commons.CommonsFeatures;
 import io.vertigo.core.node.AutoCloseableNode;
+import io.vertigo.core.node.component.di.DIInjector;
 import io.vertigo.core.node.config.BootConfig;
 import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
@@ -31,19 +37,41 @@ import io.vertigo.studio.generator.GeneratorManager;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.source.Source;
 import io.vertigo.studio.source.SourceManager;
+import io.vertigo.studio.source.vertigo.data.DtDefinitions;
 
 /**
  * Test la génération à partir des oom et ksp.
- * @author dchallas
+ * @author npiedeloup
  */
-public class SqlGeneratorTest {
+public class SearchTestsGeneratorTest {
 
-	protected NodeConfig buildNodeConfig() {
+	private AutoCloseableNode node;
+
+	@Inject
+	private SourceManager sourceManager;
+	@Inject
+	private GeneratorManager generatorManager;
+
+	@BeforeEach
+	public final void setUp() {
+		node = new AutoCloseableNode(buildNodeConfig());
+		DIInjector.injectMembers(this, node.getComponentSpace());
+	}
+
+	@AfterEach
+	public final void tearDown() {
+		if (node != null) {
+			node.close();
+		}
+	}
+
+	private NodeConfig buildNodeConfig() {
 		return NodeConfig.builder()
 				.withBoot(BootConfig.builder()
 						.withLocales("fr_FR")
 						.addPlugin(ClassPathResourceResolverPlugin.class)
 						.build())
+				.addModule(new CommonsFeatures().build())
 				.addModule(new StudioFeatures()
 						.withSource()
 						.withVertigoSource()
@@ -58,29 +86,20 @@ public class SqlGeneratorTest {
 	 */
 	@Test
 	public void testGenerate() {
-		try (AutoCloseableNode studioApp = new AutoCloseableNode(buildNodeConfig())) {
-			final List<Source> resources = List.of(
-					Source.of("kpr", "io/vertigo/studio/source/vertigo/data/model.kpr"),
-					Source.of("kpr", "io/vertigo/studio/source/vertigo/data/tasks.kpr"));
-			final SourceManager sourceManager = studioApp.getComponentSpace().resolve(SourceManager.class);
-			final GeneratorManager generatorManager = studioApp.getComponentSpace().resolve(GeneratorManager.class);
+		final List<Source> resources = List.of(
+				Source.of("kpr", "io/vertigo/studio/source/vertigo/data/model.kpr"),
+				Source.of("kpr", "io/vertigo/studio/source/vertigo/data/search.kpr"),
+				Source.of("classes", DtDefinitions.class.getName()));
 
-			final GeneratorConfig generatorConfig = GeneratorConfig.builder("io.vertigo.studio")
-					.withTargetGenDir("target/")
-					.addProperty("vertigo.domain.sql", "true")
-					.addProperty("vertigo.domain.sql.targetSubDir", "databasegenh2")
-					.addProperty("vertigo.domain.sql.baseCible", "PostgreSql")
-					.addProperty("vertigo.domain.sql.generateDrop", "false")
-					.addProperty("vertigo.domain.sql.generateMasterData", "false")
-					.build();
+		final GeneratorConfig generatorConfig = GeneratorConfig.builder("io.vertigo.studio")
+				.withTargetGenDir("target/")
+				.addProperty("vertigo.taskTest", "true")
+				.addProperty("vertigo.taskTest.targetSubDir", "javagen")
+				.addProperty("vertigo.taskTest.baseTestClass", io.vertigo.studio.source.vertigo.data.tasktest.DaoTestClass.class.getCanonicalName())
+				.build();
 
-			final Notebook notebook = sourceManager.read(resources);
-			generatorManager.generate(notebook, generatorConfig);
-		}
-
-		try (AutoCloseableNode node = new AutoCloseableNode(SqlTestConfigurator.config())) {
-			DataBaseScriptUtil.execSqlScript("target/databasegenh2/crebas.sql", node);
-		}
+		final Notebook notebook = sourceManager.read(resources);
+		generatorManager.generate(notebook, generatorConfig);
 	}
 
 }

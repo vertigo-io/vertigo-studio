@@ -6,20 +6,26 @@ Running 5.0.0
 
 more to come :)
 
+Release 4.3.1 - 2025/06/13
+----------------------
+[Migration help](https://github.com/vertigo-io/vertigo/wiki/Vertigo-Migration-Guide#from-430-to-431)
 
-Release 4.3.0 - 2025/03/27
+* [Studio] Fix name multiSelectable in FacetDefinition (multi**s**electable before)
+
+
+Release 4.3.0 - 2025/03/28
 ----------------------
 [Migration help](https://github.com/vertigo-io/vertigo/wiki/Vertigo-Migration-Guide#from-420-to-430)
+
+* **[Studio] Apply renamings from Commons PEG**
 * [Studio] Fix change cariage return into tasks request
-* [Studio] Fix order of search copyFields list
-* [Studio] Refacto peg rules in commons
+* [Studio] Keep order of search copyFields list
 * [Studio] Mermaid better show navigations for NN
 * [Studio] Assert if NN name too short
-* [Studio] Update libs
+* Update libs 
   - freemarker 2.3.33 -> 2.3.34
-  - c3p0 0.10.1 -> 0.10.2
-  - slf4j 2.0.13 -> 2.0.17
-
+ - c3p0 0.10.1 -> 0.10.2
+ - slf4j-simple 2.0.13 -> 2.0.17
 
 Release 4.2.0 - 2024/07/04
 ----------------------
