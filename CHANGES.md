@@ -1,13 +1,16 @@
 Version history
 ===============
 
-Running 4.3.1
+Running 5.0.0
+----------------------
+
+more to come :)
+
+Release 4.3.1 - 2025/06/13
 ----------------------
 [Migration help](https://github.com/vertigo-io/vertigo/wiki/Vertigo-Migration-Guide#from-430-to-431)
 
 * [Studio] Fix name multiSelectable in FacetDefinition (multi**s**electable before)
-
-more to come :)
 
 
 Release 4.3.0 - 2025/03/28
@@ -23,8 +26,7 @@ Release 4.3.0 - 2025/03/28
   - freemarker 2.3.33 -> 2.3.34
  - c3p0 0.10.1 -> 0.10.2
  - slf4j-simple 2.0.13 -> 2.0.17
- 
-  
+
 Release 4.2.0 - 2024/07/04
 ----------------------
 [Migration help](https://github.com/vertigo-io/vertigo/wiki/Vertigo-Migration-Guide#from-410-to-420)
