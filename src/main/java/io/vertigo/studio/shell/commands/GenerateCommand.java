@@ -6,7 +6,7 @@ import com.beust.jcommander.Parameters;
 import io.vertigo.studio.shell.ShellContext;
 import io.vertigo.studio.tools.VertigoStudioMda;
 
-@Parameters(commandDescription = "Generate source files from a configuration file.")
+@Parameters(commandNames = "generate", commandDescription = "Generate source files from a configuration file.")
 public final class GenerateCommand implements Runnable {
 	@Parameter(names = { "--help", "-h" }, help = true, description = "Display help information")
 	private boolean help;

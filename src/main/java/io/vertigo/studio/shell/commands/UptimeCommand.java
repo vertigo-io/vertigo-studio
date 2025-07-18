@@ -7,7 +7,7 @@ import com.beust.jcommander.Parameters;
 
 import io.vertigo.core.lang.Assertion;
 
-@Parameters(commandDescription = "Displays the shell uptime.")
+@Parameters(commandNames = "uptime", commandDescription = "Displays the shell uptime.")
 public class UptimeCommand implements Runnable {
 
 	private final Instant startTime;

@@ -16,7 +16,6 @@ import io.vertigo.studio.shell.commands.HelpCommand;
 import io.vertigo.studio.shell.commands.UptimeCommand;
 import io.vertigo.studio.shell.commands.WatchCommand;
 import io.vertigo.studio.shell.labs.ClearCommand;
-import io.vertigo.studio.shell.labs.HelloCommand;
 import io.vertigo.studio.shell.labs.HistoryCommand;
 import io.vertigo.studio.shell.labs.WhoCommand;
 import io.vertigo.studio.tools.VertigoStudioMda;
@@ -31,17 +30,16 @@ public final class Shell {
 		ShellContext.notebookConfig = VertigoStudioMda.loadNotebookConfig(notebookConfigYaml);
 		//---
 		JCommander.Builder builder = JCommander.newBuilder()
-				.addCommand("clean", new CleanCommand())
-				.addCommand("generate", new GenerateCommand())
-				.addCommand("watch", new WatchCommand())
+				.addCommand(new CleanCommand())
+				.addCommand(new GenerateCommand())
+				.addCommand(new WatchCommand())
 				//--- experimental commands 
-				.addCommand("clear", new ClearCommand())
-				.addCommand("exit", new ExitCommand(this))
-				.addCommand("generate", new GenerateCommand())
-				.addCommand("hello", new HelloCommand())
-				.addCommand("history", new HistoryCommand(history))
-				.addCommand("uptime", new UptimeCommand(startTime))
-				.addCommand("who", new WhoCommand());
+				.addCommand(new ClearCommand())
+				.addCommand(new ExitCommand(this))
+				.addCommand(new GenerateCommand())
+				.addCommand(new HistoryCommand(history))
+				.addCommand(new UptimeCommand(startTime))
+				.addCommand(new WhoCommand());
 		//.addCommand("list-modules", new ListSketchesCommand());
 		//.addCommand("list-sketches", new ListSketchesCommand());
 		//show

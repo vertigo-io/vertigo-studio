@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.beust.jcommander.Parameters;
 
-@Parameters(commandDescription = "Displays the command history.")
+@Parameters(commandNames = "history", commandDescription = "Displays the command history.")
 public class HistoryCommand implements Runnable {
 	private final List<String> history;
 

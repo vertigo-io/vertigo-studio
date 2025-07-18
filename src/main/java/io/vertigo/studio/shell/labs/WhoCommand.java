@@ -4,7 +4,7 @@ import java.net.InetAddress;
 
 import com.beust.jcommander.Parameters;
 
-@Parameters(commandDescription = "Displays the current user's IP address.")
+@Parameters(commandNames = "who", commandDescription = "Displays the current user's IP address.")
 public class WhoCommand implements Runnable {
 	public void run() {
 		try {

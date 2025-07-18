@@ -5,7 +5,7 @@ import com.beust.jcommander.Parameters;
 
 import io.vertigo.core.lang.Assertion;
 
-@Parameters(commandDescription = "Displays help information.")
+@Parameters(commandNames = "help", commandDescription = "Displays help information.")
 public class HelpCommand implements Runnable {
 
 	private JCommander jc;

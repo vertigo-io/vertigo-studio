@@ -6,7 +6,7 @@ import com.beust.jcommander.Parameters;
 import io.vertigo.studio.shell.ShellContext;
 import io.vertigo.studio.tools.VertigoStudioMda;
 
-@Parameters(commandDescription = "Cleans all generated files.")
+@Parameters(commandNames = "clean", commandDescription = "Cleans all generated files.")
 public final class CleanCommand implements Runnable {
 	@Parameter(names = { "--help", "-h" }, help = true, description = "Display help information")
 	private boolean help;
