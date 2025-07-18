@@ -92,7 +92,7 @@ final class DslRawValidator {
 		for (final String propertyName : entityPropertyNames) {
 			final DslEntityField entityField = entity.getField(propertyName);
 
-			if ((entityField.getCardinality().hasOne())
+			if ((entityField.cardinality().hasOne())
 					&& (!propertyNames.contains(propertyName) || raw.getPropertyValue(propertyName) == null)) {
 				// Si la propriété obligatoire n'est pas renseignée alors erreur
 				// Ou si la propriété obligatoire est renseignée mais qu'elle

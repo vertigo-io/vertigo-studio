@@ -72,9 +72,9 @@ public final class DslRawBuilder implements Builder<DslRaw> {
 		this.rawKey = rawKey;
 		this.entity = entity;
 		for (final DslEntityField dslEntityField : entity.getFields()) {
-			if (dslEntityField.getType().isEntityLink()) {
+			if (dslEntityField.type().isEntityLink()) {
 				rawKeysByEntityField.put(dslEntityField, new ArrayList<>());
-			} else if (dslEntityField.getType().isEntity()) {
+			} else if (dslEntityField.type().isEntity()) {
 				subRawsByEntityField.put(dslEntityField, new ArrayList<>());
 			}
 			// else : nothing for property
@@ -108,12 +108,12 @@ public final class DslRawBuilder implements Builder<DslRaw> {
 		}
 
 		for (final DslEntityField dslEntityField : entity.getFields()) {
-			if (dslEntityField.getType().isEntityLink()) {
+			if (dslEntityField.type().isEntityLink()) {
 				// 2. link
-				addAllRawLinks(dslEntityField.getName(), raw.getRawKeysByFieldName(dslEntityField.getName()));
-			} else if (dslEntityField.getType().isEntity()) {
+				addAllRawLinks(dslEntityField.name(), raw.getRawKeysByFieldName(dslEntityField.name()));
+			} else if (dslEntityField.type().isEntity()) {
 				// 3. children
-				addAllSubRaws(dslEntityField.getName(), raw.getSubRaws(dslEntityField.getName()));
+				addAllSubRaws(dslEntityField.name(), raw.getSubRaws(dslEntityField.name()));
 			}
 			// else : nothing for property (already processed)
 		}
@@ -127,7 +127,7 @@ public final class DslRawBuilder implements Builder<DslRaw> {
 	 */
 	public DslRawBuilder addPropertyValue(final String fieldName, final Object value) {
 		final DslEntityField dslEntityField = entity.getField(fieldName);
-		Assertion.check().isTrue(dslEntityField.getType().isProperty(), "expected a property on {0}", fieldName);
+		Assertion.check().isTrue(dslEntityField.type().isProperty(), "expected a property on {0}", fieldName);
 		//----
 		entity.getPropertyType(fieldName).checkValue(value);
 		propertyValueByEntityField.put(dslEntityField, value);
@@ -159,7 +159,7 @@ public final class DslRawBuilder implements Builder<DslRaw> {
 	public DslRawBuilder addAllRawLinks(final String fieldName, final List<DslRawKey> rawKeys) {
 		Assertion.check().isNotNull(rawKeys);
 		final DslEntityField dslEntityField = entity.getField(fieldName);
-		Assertion.check().isTrue(dslEntityField.getType().isEntityLink(), "expected a link on {0}", fieldName);
+		Assertion.check().isTrue(dslEntityField.type().isEntityLink(), "expected a link on {0}", fieldName);
 		//---
 		rawKeysByEntityField.get(dslEntityField)
 				.addAll(rawKeys);
@@ -169,7 +169,7 @@ public final class DslRawBuilder implements Builder<DslRaw> {
 	private void addAllSubRaws(final String fieldName, final List<DslRaw> raws) {
 		Assertion.check().isNotNull(raws);
 		final DslEntityField dslEntityField = entity.getField(fieldName);
-		Assertion.check().isTrue(dslEntityField.getType().isEntity(), "expected an entity on {0}", fieldName);
+		Assertion.check().isTrue(dslEntityField.type().isEntity(), "expected an entity on {0}", fieldName);
 		//---
 		subRawsByEntityField.get(dslEntityField)
 				.addAll(raws);

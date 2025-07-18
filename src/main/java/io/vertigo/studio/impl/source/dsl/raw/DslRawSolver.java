@@ -91,7 +91,7 @@ final class DslRawSolver {
 
 		//We check all references were known
 		for (final DslEntityField entityField : raw.getAllRawLinkFields()) {
-			final String fieldName = entityField.getName();
+			final String fieldName = entityField.name();
 			for (final DslRawKey rawKey : raw.getRawKeysByFieldName(fieldName)) {
 				//reference should be already solved in a previous resources module : then continue
 				if (!notebook.contains(rawKey.getName())) {
@@ -100,7 +100,7 @@ final class DslRawSolver {
 						final DslRawKey xdefRootKey = xdefRoot.getKey().equals(raw.getKey()) ? xdefRoot.getKey()
 								: DslRawKey.of((xdefRoot.getKey().getName() + "." + raw.getKey().getName()));
 						throw new VSystemException("Clé {0} de type {1}, référencée par la propriété {2} de {3} non trouvée",
-								rawKey, raw.getEntity().getField(fieldName).getType(), fieldName, xdefRootKey);
+								rawKey, raw.getEntity().getField(fieldName).type(), fieldName, xdefRootKey);
 					}
 					final DslRaw linkedRaw = rawRepository.getRaw(rawKey);
 					if (!sortedRaws.contains(linkedRaw)) {

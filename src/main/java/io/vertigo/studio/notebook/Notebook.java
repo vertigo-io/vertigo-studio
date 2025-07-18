@@ -63,7 +63,6 @@ public final class Notebook {
 		return clazz.cast(sketches.get(name));
 	}
 
-	/** {@inheritDoc} */
 	public Set<Class<? extends Sketch>> getAllTypes() {
 		return sketches.values()
 				.stream()
@@ -71,7 +70,13 @@ public final class Notebook {
 				.collect(Collectors.toSet());
 	}
 
-	/** {@inheritDoc} */
+	public List<Sketch> getAll() {
+		return sketches.values()
+				.stream()
+				//				.sorted(Comparator.comparing(s -> s.getLLName()))
+				.toList();
+	}
+
 	public <S extends Sketch> List<S> getAll(final Class<S> clazz) {
 		Assertion.check().isNotNull(clazz);
 		//---

@@ -22,83 +22,97 @@ import java.util.Locale;
 import io.vertigo.core.lang.Assertion;
 
 /**
- * @author  pchretien
+ * Enumeration of supported DSL property types.
+ * To ensure simplicity, only a few Java types are supported:
+ * - Integer
+ * - Double
+ * - Boolean
+ * - String
+ *
+ * @author pchretien
  */
 public enum DslPropertyType implements DslEntityFieldType {
-	/** Integer. */
+	/** Integer type. */
 	Integer(Integer.class),
-	/** Double. */
+
+	/** Double type. */
 	Double(Double.class),
-	/** Boolean. */
+
+	/** Boolean type. */
 	Boolean(Boolean.class),
-	/** String. */
+
+	/** String type. */
 	String(String.class);
 
 	/**
-	 * Classe java que le Type encapsule.
+	 * The Java class encapsulated by this type.
 	 */
 	private final Class<?> javaClass;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param javaClass Classe java encapsulée
+	 * @param javaClass The encapsulated Java class
 	 */
 	DslPropertyType(final Class<?> javaClass) {
-		Assertion.check().isNotNull(javaClass);
-		//-----
+		Assertion.check().isNotNull(javaClass, "Java class cannot be null");
 		this.javaClass = javaClass;
 	}
 
 	/**
-	 * Check value against this type.
-	 * @param value Value to check (nullable)
+	 * Checks if a value is compatible with this type.
+	 *
+	 * @param value The value to check (can be null)
+	 * @throws ClassCastException If the value is not an instance of the defined Java class
 	 */
 	public void checkValue(final Object value) {
-		//Il suffit de vérifier que la valeur passée est une instance de la classe java définie pour le type Dynamo.
-		//Le test doit être effectué car le cast est non fiable par les generics
 		if (value != null && !javaClass.isInstance(value)) {
-			throw new ClassCastException("Valeur " + value + " ne correspond pas au type :" + this);
+			throw new ClassCastException("Value " + value + " does not match type: " + this);
 		}
 	}
 
 	/**
-	 * Convert a read string value, to this DSL type.
-	 * @param stringValue string input
-	 * @return Typed object of this string
+	 * Converts a string to a typed value matching this DSL type.
+	 *
+	 * @param stringValue The input string to convert (can be null)
+	 * @return The typed object corresponding to the string, or null if the string is empty or null
+	 * @throws IllegalArgumentException If the conversion is not possible or the type is not supported
 	 */
 	public Object cast(final String stringValue) {
 		final String sValue = stringValue == null ? null : stringValue.trim();
-		if (sValue == null || sValue.length() == 0) {
+		if (sValue == null || sValue.isEmpty()) {
 			return null;
 		}
-		switch (this) {
-			case Integer:
-				return java.lang.Integer.valueOf(sValue);
-			case Double:
-				return java.lang.Double.valueOf(sValue);
-			case String:
-				return sValue;
-			case Boolean:
-				return parseBoolean(sValue);
-			default:
-				throw new IllegalArgumentException("unsupported type of property : '" + javaClass + "'");
-		}
+		return switch (this) {
+			case Integer -> java.lang.Integer.valueOf(sValue);
+			case Double -> java.lang.Double.valueOf(sValue);
+			case String -> sValue;
+			case Boolean -> parseBoolean(sValue);
+			default -> throw new IllegalArgumentException("Unsupported property type: '" + javaClass.getName() + "'");
+		};
 	}
 
+	/**
+	 * Converts a string to a boolean.
+	 * Only "true" and "false" (case-insensitive) are accepted.
+	 *
+	 * @param sValue The string to convert
+	 * @return The corresponding boolean value
+	 * @throws IllegalArgumentException If the string is neither "true" nor "false"
+	 */
 	private Object parseBoolean(final String sValue) {
-		switch (sValue.toLowerCase(Locale.ROOT)) {
-			/* only true and false are accepted*/
-			case "true":
-				return true;
-			case "false":
-				return false;
-			default:
-				throw new IllegalArgumentException("unable to cast boolean property from '" + sValue + "', only. 'true' or 'false' are accepted");
-		}
+		return switch (sValue.toLowerCase(Locale.ROOT)) {
+			case "true" -> true;
+			case "false" -> false;
+			default -> throw new IllegalArgumentException("Cannot convert boolean property from '" + sValue + "', only 'true' or 'false' are accepted");
+		};
 	}
 
-	/** {@inheritDoc} */
+	/**
+	 * Indicates if this type represents a property.
+	 *
+	 * @return true, as this type is a property
+	 */
 	@Override
 	public boolean isProperty() {
 		return true;

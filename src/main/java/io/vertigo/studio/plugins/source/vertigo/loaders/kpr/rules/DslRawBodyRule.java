@@ -61,19 +61,19 @@ public final class DslRawBodyRule extends PegAbstractRule<DslRawBody, List<Objec
 		final List<PegRule<?>> innerDefinitionRules = new ArrayList<>();
 
 		for (final DslEntityField dslEntityField : entity.getFields()) {
-			attributeNames.add(dslEntityField.getName());
+			attributeNames.add(dslEntityField.name());
 
 			final DslEntity dslEntity;
-			if (dslEntityField.getType() instanceof DslEntity) {
-				dslEntity = DslEntity.class.cast(dslEntityField.getType());
-			} else if (dslEntityField.getType() instanceof DslEntityLink) {
-				dslEntity = DslEntityLink.class.cast(dslEntityField.getType()).getEntity();
+			if (dslEntityField.type() instanceof DslEntity) {
+				dslEntity = DslEntity.class.cast(dslEntityField.type());
+			} else if (dslEntityField.type() instanceof DslEntityLink) {
+				dslEntity = DslEntityLink.class.cast(dslEntityField.type()).getEntity();
 			} else {
 				//case property
 				dslEntity = null;
 			}
 			if (dslEntity != null) {
-				innerDefinitionRules.add(new DslInnerRawRule(dslEntityField.getName(), dslEntity));
+				innerDefinitionRules.add(new DslInnerRawRule(dslEntityField.name(), dslEntity));
 			}
 		}
 

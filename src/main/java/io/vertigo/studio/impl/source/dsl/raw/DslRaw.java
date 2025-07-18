@@ -124,7 +124,7 @@ public final class DslRaw {
 	 */
 	public Object getPropertyValue(final String fieldName) {
 		final DslEntityField entityField = entity.getField(fieldName);
-		Assertion.check().isTrue(entityField.getType().isProperty(), "expected a property on {0}", fieldName);
+		Assertion.check().isTrue(entityField.type().isProperty(), "expected a property on {0}", fieldName);
 		// On ne vérifie rien sur le type retourné par le getter.
 		// le type a été validé lors du put.
 		//-----
@@ -139,7 +139,7 @@ public final class DslRaw {
 	public Set<String> getPropertyNames() {
 		return propertyValueByEntityField.keySet()
 				.stream()
-				.map(DslEntityField::getName)
+				.map(DslEntityField::name)
 				.collect(Collectors.toSet());
 	}
 
@@ -151,7 +151,7 @@ public final class DslRaw {
 	 */
 	public List<DslRawKey> getRawKeysByFieldName(final String fieldName) {
 		final DslEntityField entityField = entity.getField(fieldName);
-		Assertion.check().isTrue(entityField.getType().isEntityLink(), "expected a link on {0}", fieldName);
+		Assertion.check().isTrue(entityField.type().isEntityLink(), "expected a link on {0}", fieldName);
 		//---
 		return rawKeysByEntityField.get(entityField);
 	}
@@ -185,7 +185,7 @@ public final class DslRaw {
 	 */
 	public List<DslRaw> getSubRaws(final String fieldName) {
 		final DslEntityField entityField = entity.getField(fieldName);
-		Assertion.check().isTrue(entityField.getType().isEntity(), "expected an entity on {0}", fieldName);
+		Assertion.check().isTrue(entityField.type().isEntity(), "expected an entity on {0}", fieldName);
 		//---
 		return subRawsByEntityField.get(entityField);
 	}

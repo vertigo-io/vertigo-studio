@@ -21,49 +21,23 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
 
 /**
- * Field of an entity.
+ * Represents a field of a DSL entity.
+ * A field is defined by its name, type, and cardinality.
  *
  * @author pchretien, mlaroche
+ * @param name The name of the field
+ * @param type The type of the field
+ * @param cardinality The cardinality of the field (e.g., single or multiple values)
  */
-public final class DslEntityField {
-	private final String name;
-	private final Cardinality cardinality;
-	private final DslEntityFieldType entityFieldType;
+public record DslEntityField(
+		String name,
+		DslEntityFieldType type,
+		Cardinality cardinality) {
 
-	/**
-	 * Constructor.
-	 * @param name Name
-	 * @param entityFieldType Type of the entity
-	 */
-	DslEntityField(final String name, final DslEntityFieldType entityFieldType, final Cardinality cardinality) {
+	public DslEntityField {
 		Assertion.check()
 				.isNotBlank(name)
-				.isNotNull(entityFieldType)
+				.isNotNull(type)
 				.isNotNull(cardinality);
-		//-----
-		this.name = name;
-		this.cardinality = cardinality;
-		this.entityFieldType = entityFieldType;
-	}
-
-	/**
-	 * @return Name
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * @return the cardinality
-	 */
-	public Cardinality getCardinality() {
-		return cardinality;
-	}
-
-	/**
-	 * @return the type of the entity
-	 */
-	public DslEntityFieldType getType() {
-		return entityFieldType;
 	}
 }
