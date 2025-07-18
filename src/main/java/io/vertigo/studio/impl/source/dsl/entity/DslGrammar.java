@@ -22,14 +22,13 @@ import java.util.List;
 import io.vertigo.studio.impl.source.dsl.raw.DslRaw;
 
 /**
- * Une grammaire est composée d'entités et de propriétés.
+ * Une grammaire est composée d'entités.
  * Les entités sont une composition d'entités et de propriétés.
  *
  * Il est possible de composer une grammaire à partir de grammaires.
  *
  * @author pchretien, mlaroche
  */
-@FunctionalInterface
 public interface DslGrammar {
 	/**
 	 * Returns the list of entities

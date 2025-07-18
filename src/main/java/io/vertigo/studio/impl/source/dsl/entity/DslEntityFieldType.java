@@ -21,12 +21,12 @@ package io.vertigo.studio.impl.source.dsl.entity;
  * There are 3 types of field :
  * - property
  * - entity
- * - entity Link
+ * - link
  *
  * @author pchretien, mlaroche
  *
  */
-public interface DslEntityFieldType {
+public sealed interface DslEntityFieldType permits DslEntity, DslPropertyType, DslEntityLink {
 
 	/**
 	 * @return If the field is a property
