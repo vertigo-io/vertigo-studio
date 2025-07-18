@@ -78,12 +78,12 @@ public final class VertigoStudioMda {
 				.isTrue(args.length == 2, "expected the target (clean, generate, watch or clean_watch) and the studio json config");
 		//--
 		final StudioTarget studioTarget = StudioTarget.valueOf(args[0]);
-		final String studioProjectConfigJson = args[1];
-		doMain(studioTarget, studioProjectConfigJson);
+		final String notebookConfigYaml = args[1];
+		doMain(studioTarget, notebookConfigYaml);
 	}
 
-	private static void doMain(final StudioTarget studioTarget, final String studioProjectConfigJson) {
-		final NotebookConfig notebookConfig = loadStudioProjectConfig(studioProjectConfigJson);
+	private static void doMain(final StudioTarget studioTarget, final String notebookConfigYaml) {
+		final NotebookConfig notebookConfig = loadNotebookConfig(notebookConfigYaml);
 		//---
 		switch (studioTarget) {
 			case clean:
@@ -104,7 +104,7 @@ public final class VertigoStudioMda {
 
 	}
 
-	private static void clean(final NotebookConfig notebookConfig) {
+	public static void clean(final NotebookConfig notebookConfig) {
 		try (final AutoCloseableNode studioApp = new AutoCloseableNode(buildNodeConfig())) {
 			final GeneratorManager generatorManager = studioApp.getComponentSpace().resolve(GeneratorManager.class);
 			//-----
@@ -113,7 +113,7 @@ public final class VertigoStudioMda {
 		}
 	}
 
-	private static void generate(final NotebookConfig notebookConfig) {
+	public static void generate(final NotebookConfig notebookConfig) {
 		try (final AutoCloseableNode studioApp = new AutoCloseableNode(buildNodeConfig())) {
 			final SourceManager sourceManager = studioApp.getComponentSpace().resolve(SourceManager.class);
 			final GeneratorManager generatorManager = studioApp.getComponentSpace().resolve(GeneratorManager.class);
@@ -126,7 +126,7 @@ public final class VertigoStudioMda {
 		}
 	}
 
-	private static void watch(final NotebookConfig notebookConfig, final boolean withClean) {
+	public static void watch(final NotebookConfig notebookConfig, final boolean withClean) {
 		try (final AutoCloseableNode studioApp = new AutoCloseableNode(buildNodeConfig())) {
 			final SourceManager sourceManager = studioApp.getComponentSpace().resolve(SourceManager.class);
 			final GeneratorManager generatorManager = studioApp.getComponentSpace().resolve(GeneratorManager.class);
@@ -240,9 +240,9 @@ public final class VertigoStudioMda {
 
 	}
 
-	private static NotebookConfig loadStudioProjectConfig(final String configFileUrl) {
+	public static NotebookConfig loadNotebookConfig(final String notebookConfigYaml) {
 		try {
-			return StudioConfigYamlParser.parseYaml(new URL(configFileUrl));
+			return StudioConfigYamlParser.parseYaml(new URL(notebookConfigYaml));
 		} catch (IOException | URISyntaxException e) {
 			throw WrappedException.wrap(e);
 		}
