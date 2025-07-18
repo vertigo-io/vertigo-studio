@@ -1,0 +1,26 @@
+package io.vertigo.studio.shell.commands;
+
+import com.beust.jcommander.Parameter;
+import com.beust.jcommander.Parameters;
+
+import io.vertigo.studio.shell.ShellContext;
+import io.vertigo.studio.tools.VertigoStudioMda;
+
+@Parameters(commandDescription = "Cleans all generated files.")
+public final class CleanCommand implements Runnable {
+	@Parameter(names = { "--help", "-h" }, help = true, description = "Display help information")
+	private boolean help;
+
+	//	@Parameter(description = "The configuration file (e.g., studio-config.yaml)", required = true)
+	//	private String configFile;
+
+	@Override
+	public void run() {
+		if (help) {
+			System.out.println("Help: Use this command to clean all generated files.");
+			return;
+		} else {
+			VertigoStudioMda.clean(ShellContext.notebookConfig);
+		}
+	}
+}
