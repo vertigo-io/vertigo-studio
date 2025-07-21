@@ -20,7 +20,7 @@ package io.vertigo.studio.plugins.generator.vertigo.search.model;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.notebook.domain.DtSketchField;
+import io.vertigo.studio.vertigo.domain.DtSketchField;
 
 public final class IndexCopyToModel {
 	private final DtSketchField toField;

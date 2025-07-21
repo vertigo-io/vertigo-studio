@@ -19,7 +19,7 @@ package io.vertigo.studio.plugins.generator.vertigo.domain.sql.model;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
+import io.vertigo.studio.vertigo.domain.association.AssociationSimpleSketch;
 
 /**
  * Objet utilisé par FreeMarker.

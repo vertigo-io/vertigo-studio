@@ -33,15 +33,15 @@ import io.vertigo.studio.impl.generator.FileGenerator;
 import io.vertigo.studio.impl.generator.GeneratorPlugin;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.SketchKey;
-import io.vertigo.studio.notebook.domain.DomainSketch;
-import io.vertigo.studio.notebook.domain.DtSketch;
-import io.vertigo.studio.notebook.task.TaskSketch;
 import io.vertigo.studio.plugins.generator.vertigo.task.model.DAOModel;
 import io.vertigo.studio.plugins.generator.vertigo.task.model.PAOModel;
 import io.vertigo.studio.plugins.generator.vertigo.task.model.TaskAttributeModel;
 import io.vertigo.studio.plugins.generator.vertigo.task.model.TaskModel;
 import io.vertigo.studio.plugins.generator.vertigo.util.DomainUtil;
 import io.vertigo.studio.plugins.generator.vertigo.util.MdaUtil;
+import io.vertigo.studio.vertigo.domain.DomainSketch;
+import io.vertigo.studio.vertigo.domain.DtSketch;
+import io.vertigo.studio.vertigo.task.TaskSketch;
 
 /**
  * Génération des objets relatifs au module Task.

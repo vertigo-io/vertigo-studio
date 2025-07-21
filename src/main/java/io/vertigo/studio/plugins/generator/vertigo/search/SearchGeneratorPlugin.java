@@ -31,16 +31,16 @@ import io.vertigo.studio.generator.GeneratorResultBuilder;
 import io.vertigo.studio.impl.generator.FileGenerator;
 import io.vertigo.studio.impl.generator.GeneratorPlugin;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.domain.DtSketch;
-import io.vertigo.studio.notebook.search.FacetSketch;
-import io.vertigo.studio.notebook.search.FacetedQuerySketch;
-import io.vertigo.studio.notebook.search.SearchIndexSketch;
 import io.vertigo.studio.plugins.generator.vertigo.search.model.FacetModel;
 import io.vertigo.studio.plugins.generator.vertigo.search.model.FacetedQueryModel;
 import io.vertigo.studio.plugins.generator.vertigo.search.model.SearchDtModel;
 import io.vertigo.studio.plugins.generator.vertigo.search.model.SearchIndexModel;
 import io.vertigo.studio.plugins.generator.vertigo.util.DomainUtil;
 import io.vertigo.studio.plugins.generator.vertigo.util.MdaUtil;
+import io.vertigo.studio.vertigo.domain.DtSketch;
+import io.vertigo.studio.vertigo.search.FacetSketch;
+import io.vertigo.studio.vertigo.search.FacetedQuerySketch;
+import io.vertigo.studio.vertigo.search.SearchIndexSketch;
 
 /**
  * Génération des objets relatifs au module Task.

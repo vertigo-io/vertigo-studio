@@ -38,10 +38,10 @@ import io.vertigo.studio.impl.source.dsl.raw.DslRaw;
 import io.vertigo.studio.impl.source.dsl.raw.DslRawBuilder;
 import io.vertigo.studio.impl.source.dsl.raw.DslRawKey;
 import io.vertigo.studio.impl.source.dsl.raw.DslRawRepository;
-import io.vertigo.studio.notebook.domain.association.AssociationUtil;
 import io.vertigo.studio.plugins.source.vertigo.KspProperty;
 import io.vertigo.studio.plugins.source.vertigo.factories.domain.DomainGrammar;
 import io.vertigo.studio.plugins.source.vertigo.loaders.Loader;
+import io.vertigo.studio.vertigo.domain.association.AssociationUtil;
 
 /**
  * Parser d'un fichier powerAMC/OOM ou EA/XMI.

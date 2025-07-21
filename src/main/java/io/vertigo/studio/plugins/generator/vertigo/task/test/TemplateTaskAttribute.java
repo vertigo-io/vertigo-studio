@@ -22,9 +22,9 @@ import java.util.function.Function;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
-import io.vertigo.studio.notebook.domain.DomainSketch;
-import io.vertigo.studio.notebook.task.TaskSketchAttribute;
 import io.vertigo.studio.plugins.generator.vertigo.util.DomainUtil;
+import io.vertigo.studio.vertigo.domain.DomainSketch;
+import io.vertigo.studio.vertigo.task.TaskSketchAttribute;
 
 /**
  * Représente un attribut de task.

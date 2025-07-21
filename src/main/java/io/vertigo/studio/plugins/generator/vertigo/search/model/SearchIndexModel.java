@@ -20,8 +20,8 @@ package io.vertigo.studio.plugins.generator.vertigo.search.model;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.notebook.search.SearchIndexSketch;
 import io.vertigo.studio.plugins.generator.vertigo.VertigoConstants.VertigoDefinitionPrefix;
+import io.vertigo.studio.vertigo.search.SearchIndexSketch;
 
 public final class SearchIndexModel {
 

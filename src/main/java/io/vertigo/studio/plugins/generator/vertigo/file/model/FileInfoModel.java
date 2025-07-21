@@ -18,7 +18,7 @@
 package io.vertigo.studio.plugins.generator.vertigo.file.model;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.notebook.file.FileInfoSketch;
+import io.vertigo.studio.vertigo.file.FileInfoSketch;
 
 /**
  * Génération des classes/méthodes des fileInfo.

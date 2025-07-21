@@ -20,7 +20,7 @@ package io.vertigo.studio.plugins.generator.vertigo.domain.sql.model;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.BasicType;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.studio.notebook.domain.DtSketchField;
+import io.vertigo.studio.vertigo.domain.DtSketchField;
 
 /**
  * Model used to define a DtField.

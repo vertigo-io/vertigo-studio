@@ -30,13 +30,13 @@ import io.vertigo.studio.generator.GeneratorResultBuilder;
 import io.vertigo.studio.impl.generator.FileGenerator;
 import io.vertigo.studio.impl.generator.GeneratorPlugin;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.domain.DtSketch;
-import io.vertigo.studio.notebook.domain.association.AssociationNNSketch;
-import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
 import io.vertigo.studio.plugins.generator.vertigo.domain.ksp.model.KspAssociationNNModel;
 import io.vertigo.studio.plugins.generator.vertigo.domain.ksp.model.KspAssociationSimpleModel;
 import io.vertigo.studio.plugins.generator.vertigo.domain.ksp.model.KspDtDefinitionModel;
 import io.vertigo.studio.plugins.generator.vertigo.util.MdaUtil;
+import io.vertigo.studio.vertigo.domain.DtSketch;
+import io.vertigo.studio.vertigo.domain.association.AssociationNNSketch;
+import io.vertigo.studio.vertigo.domain.association.AssociationSimpleSketch;
 
 /**
  * Generate crebas.sql.

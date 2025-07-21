@@ -33,9 +33,9 @@ import io.vertigo.core.util.FileUtil;
 import io.vertigo.studio.impl.source.SourceReaderPlugin;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
-import io.vertigo.studio.notebook.domain.masterdata.MasterDataValue;
-import io.vertigo.studio.notebook.domain.masterdata.StaticMasterDataSketch;
 import io.vertigo.studio.source.Source;
+import io.vertigo.studio.vertigo.domain.masterdata.MasterDataValue;
+import io.vertigo.studio.vertigo.domain.masterdata.StaticMasterDataSketch;
 
 /**
  * Plugin for retrieving masterdata values from a json file.

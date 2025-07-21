@@ -18,8 +18,8 @@
 package io.vertigo.studio.plugins.generator.vertigo.webservice.model;
 
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.studio.notebook.webservices.WebServiceSketchParam;
-import io.vertigo.studio.notebook.webservices.WebServiceSketchParam.WebServiceParamLocation;
+import io.vertigo.studio.vertigo.webservices.WebServiceSketchParam;
+import io.vertigo.studio.vertigo.webservices.WebServiceSketchParam.WebServiceParamLocation;
 
 /**
  * FreeMarker Model of WebServiceParamModel.

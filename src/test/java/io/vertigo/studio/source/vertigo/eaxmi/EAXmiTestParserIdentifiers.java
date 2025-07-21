@@ -34,9 +34,9 @@ import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugi
 import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.SketchKey;
-import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.source.Source;
 import io.vertigo.studio.source.SourceManager;
+import io.vertigo.studio.vertigo.domain.DtSketch;
 
 /**
  * Test de lecture d'un OOM.

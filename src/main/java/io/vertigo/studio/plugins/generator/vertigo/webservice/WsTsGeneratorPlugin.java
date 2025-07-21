@@ -33,10 +33,10 @@ import io.vertigo.studio.generator.GeneratorResultBuilder;
 import io.vertigo.studio.impl.generator.FileGenerator;
 import io.vertigo.studio.impl.generator.GeneratorPlugin;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.webservices.WebServiceSketch;
 import io.vertigo.studio.plugins.generator.vertigo.util.MdaUtil;
 import io.vertigo.studio.plugins.generator.vertigo.webservice.model.WebServiceInitializerModelTs;
 import io.vertigo.studio.plugins.generator.vertigo.webservice.model.WebServiceModelTs;
+import io.vertigo.studio.vertigo.webservices.WebServiceSketch;
 
 /**
  * Generation des objets relatifs au module Vega.

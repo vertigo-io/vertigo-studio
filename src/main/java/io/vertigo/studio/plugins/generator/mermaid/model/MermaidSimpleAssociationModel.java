@@ -20,8 +20,8 @@ package io.vertigo.studio.plugins.generator.mermaid.model;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
 import io.vertigo.core.lang.VSystemException;
-import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
-import io.vertigo.studio.notebook.domain.association.AssociationSketch;
+import io.vertigo.studio.vertigo.domain.association.AssociationSimpleSketch;
+import io.vertigo.studio.vertigo.domain.association.AssociationSketch;
 
 /**
  * Objet utilisé par FreeMarker.

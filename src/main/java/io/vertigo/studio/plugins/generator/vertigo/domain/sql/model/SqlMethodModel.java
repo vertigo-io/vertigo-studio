@@ -25,7 +25,7 @@ import freemarker.template.TemplateMethodModelEx;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.notebook.domain.DomainSketch;
+import io.vertigo.studio.vertigo.domain.DomainSketch;
 
 /**
  * Méthode Freemarker 'sql'.

@@ -43,20 +43,20 @@ import io.vertigo.studio.impl.source.dsl.raw.DslSketchFactory;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
 import io.vertigo.studio.notebook.SketchKey;
-import io.vertigo.studio.notebook.domain.ComputedExpression;
-import io.vertigo.studio.notebook.domain.DomainSketch;
-import io.vertigo.studio.notebook.domain.DtSketch;
-import io.vertigo.studio.notebook.domain.DtSketchBuilder;
-import io.vertigo.studio.notebook.domain.DtSketchField;
-import io.vertigo.studio.notebook.domain.StudioStereotype;
-import io.vertigo.studio.notebook.domain.association.AssociationNNSketch;
-import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
-import io.vertigo.studio.notebook.domain.association.AssociationSketchNode;
-import io.vertigo.studio.notebook.domain.association.AssociationUtil;
-import io.vertigo.studio.notebook.domain.masterdata.MasterDataValue;
-import io.vertigo.studio.notebook.domain.masterdata.StaticMasterDataSketch;
 import io.vertigo.studio.plugins.source.vertigo.KspProperty;
 import io.vertigo.studio.tools.SketchUtil;
+import io.vertigo.studio.vertigo.domain.ComputedExpression;
+import io.vertigo.studio.vertigo.domain.DomainSketch;
+import io.vertigo.studio.vertigo.domain.DtSketch;
+import io.vertigo.studio.vertigo.domain.DtSketchBuilder;
+import io.vertigo.studio.vertigo.domain.DtSketchField;
+import io.vertigo.studio.vertigo.domain.StudioStereotype;
+import io.vertigo.studio.vertigo.domain.association.AssociationNNSketch;
+import io.vertigo.studio.vertigo.domain.association.AssociationSimpleSketch;
+import io.vertigo.studio.vertigo.domain.association.AssociationSketchNode;
+import io.vertigo.studio.vertigo.domain.association.AssociationUtil;
+import io.vertigo.studio.vertigo.domain.masterdata.MasterDataValue;
+import io.vertigo.studio.vertigo.domain.masterdata.StaticMasterDataSketch;
 
 /**
  * @author pchretien, mlaroche

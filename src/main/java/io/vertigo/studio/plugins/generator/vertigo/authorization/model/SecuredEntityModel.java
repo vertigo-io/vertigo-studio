@@ -20,8 +20,8 @@ package io.vertigo.studio.plugins.generator.vertigo.authorization.model;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.notebook.authorization.SecuredFeatureSketch;
-import io.vertigo.studio.notebook.domain.DtSketch;
+import io.vertigo.studio.vertigo.authorization.SecuredFeatureSketch;
+import io.vertigo.studio.vertigo.domain.DtSketch;
 
 public final class SecuredEntityModel {
 

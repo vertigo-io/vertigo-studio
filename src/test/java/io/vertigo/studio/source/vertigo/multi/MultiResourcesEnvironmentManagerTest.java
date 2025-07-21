@@ -33,11 +33,11 @@ import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.domain.DomainSketch;
-import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.source.Source;
 import io.vertigo.studio.source.SourceManager;
 import io.vertigo.studio.source.vertigo.multi.data.DtDefinitions;
+import io.vertigo.studio.vertigo.domain.DomainSketch;
+import io.vertigo.studio.vertigo.domain.DtSketch;
 
 /**
  * Test de l'implémentation standard.

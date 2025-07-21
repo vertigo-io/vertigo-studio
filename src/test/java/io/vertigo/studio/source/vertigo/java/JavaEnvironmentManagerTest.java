@@ -34,11 +34,11 @@ import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.domain.DomainSketch;
-import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.source.Source;
 import io.vertigo.studio.source.SourceManager;
 import io.vertigo.studio.source.vertigo.java.data.DtDefinitions;
+import io.vertigo.studio.vertigo.domain.DomainSketch;
+import io.vertigo.studio.vertigo.domain.DtSketch;
 
 /**
  * Test de l'implémentation standard.
@@ -83,7 +83,7 @@ public final class JavaEnvironmentManagerTest {
 
 	@Test
 	public void testDomain() {
-		final io.vertigo.studio.notebook.domain.DomainSketch domainSketch = notebook.resolve("DoId", DomainSketch.class);
+		final io.vertigo.studio.vertigo.domain.DomainSketch domainSketch = notebook.resolve("DoId", DomainSketch.class);
 		Assertions.assertEquals(BasicType.Long, domainSketch.getDataType());
 	}
 

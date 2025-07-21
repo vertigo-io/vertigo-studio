@@ -20,7 +20,7 @@ package io.vertigo.studio.plugins.generator.vertigo.authorization.model;
 import java.util.Optional;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.notebook.authorization.SecuredFeatureSketch;
+import io.vertigo.studio.vertigo.authorization.SecuredFeatureSketch;
 
 public class SecuredFeatureModel {
 

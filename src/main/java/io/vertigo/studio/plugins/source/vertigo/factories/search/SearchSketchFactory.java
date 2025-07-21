@@ -35,15 +35,15 @@ import io.vertigo.studio.impl.source.dsl.raw.DslRawKey;
 import io.vertigo.studio.impl.source.dsl.raw.DslSketchFactory;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
-import io.vertigo.studio.notebook.domain.DomainSketch;
-import io.vertigo.studio.notebook.domain.DtSketch;
-import io.vertigo.studio.notebook.domain.DtSketchField;
-import io.vertigo.studio.notebook.search.FacetSketch;
-import io.vertigo.studio.notebook.search.FacetSketch.FacetOrder;
-import io.vertigo.studio.notebook.search.FacetSketchValue;
-import io.vertigo.studio.notebook.search.FacetedQuerySketch;
-import io.vertigo.studio.notebook.search.SearchIndexSketch;
 import io.vertigo.studio.plugins.source.vertigo.KspProperty;
+import io.vertigo.studio.vertigo.domain.DomainSketch;
+import io.vertigo.studio.vertigo.domain.DtSketch;
+import io.vertigo.studio.vertigo.domain.DtSketchField;
+import io.vertigo.studio.vertigo.search.FacetSketch;
+import io.vertigo.studio.vertigo.search.FacetSketchValue;
+import io.vertigo.studio.vertigo.search.FacetedQuerySketch;
+import io.vertigo.studio.vertigo.search.SearchIndexSketch;
+import io.vertigo.studio.vertigo.search.FacetSketch.FacetOrder;
 
 /**
  * @author pchretien, mlaroche

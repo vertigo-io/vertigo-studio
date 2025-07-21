@@ -22,14 +22,14 @@ import java.util.Collections;
 import java.util.List;
 
 import io.vertigo.core.lang.Cardinality;
-import io.vertigo.studio.notebook.domain.DtSketch;
-import io.vertigo.studio.notebook.domain.DtSketchField;
-import io.vertigo.studio.notebook.domain.association.AssociationNNSketch;
-import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
-import io.vertigo.studio.notebook.domain.association.AssociationSketchNode;
-import io.vertigo.studio.notebook.domain.association.AssociationUtil;
 import io.vertigo.studio.plugins.generator.vertigo.VertigoConstants.VertigoClassNames;
 import io.vertigo.studio.tools.SketchUtil;
+import io.vertigo.studio.vertigo.domain.DtSketch;
+import io.vertigo.studio.vertigo.domain.DtSketchField;
+import io.vertigo.studio.vertigo.domain.association.AssociationNNSketch;
+import io.vertigo.studio.vertigo.domain.association.AssociationSimpleSketch;
+import io.vertigo.studio.vertigo.domain.association.AssociationSketchNode;
+import io.vertigo.studio.vertigo.domain.association.AssociationUtil;
 
 /**
  * Gestion centralisée des annotations sur les objets générés.

@@ -28,13 +28,13 @@ import java.util.function.Function;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Cardinality;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.domain.DomainSketch;
-import io.vertigo.studio.notebook.domain.DtSketch;
-import io.vertigo.studio.notebook.domain.DtSketchField;
-import io.vertigo.studio.notebook.domain.association.AssociationNNSketch;
-import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
-import io.vertigo.studio.notebook.domain.association.AssociationSketch;
-import io.vertigo.studio.notebook.task.TaskSketchAttribute;
+import io.vertigo.studio.vertigo.domain.DomainSketch;
+import io.vertigo.studio.vertigo.domain.DtSketch;
+import io.vertigo.studio.vertigo.domain.DtSketchField;
+import io.vertigo.studio.vertigo.domain.association.AssociationNNSketch;
+import io.vertigo.studio.vertigo.domain.association.AssociationSimpleSketch;
+import io.vertigo.studio.vertigo.domain.association.AssociationSketch;
+import io.vertigo.studio.vertigo.task.TaskSketchAttribute;
 
 /**
  * Helper.

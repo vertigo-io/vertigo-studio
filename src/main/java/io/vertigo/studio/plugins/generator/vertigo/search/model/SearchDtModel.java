@@ -18,7 +18,7 @@
 package io.vertigo.studio.plugins.generator.vertigo.search.model;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.notebook.domain.DtSketch;
+import io.vertigo.studio.vertigo.domain.DtSketch;
 
 /**
  * Model used by FreeMarker.

@@ -17,7 +17,7 @@
  */
 package io.vertigo.studio.plugins.generator.vertigo.domain.ksp.model;
 
-import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
+import io.vertigo.studio.vertigo.domain.association.AssociationSimpleSketch;
 
 /**
  * Objet utilisé par FreeMarker.

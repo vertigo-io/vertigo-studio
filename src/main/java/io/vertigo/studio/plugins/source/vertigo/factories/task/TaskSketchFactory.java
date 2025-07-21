@@ -28,10 +28,10 @@ import io.vertigo.studio.impl.source.dsl.raw.DslRawKey;
 import io.vertigo.studio.impl.source.dsl.raw.DslSketchFactory;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
-import io.vertigo.studio.notebook.domain.DomainSketch;
-import io.vertigo.studio.notebook.task.TaskSketch;
-import io.vertigo.studio.notebook.task.TaskSketchBuilder;
 import io.vertigo.studio.plugins.source.vertigo.KspProperty;
+import io.vertigo.studio.vertigo.domain.DomainSketch;
+import io.vertigo.studio.vertigo.task.TaskSketch;
+import io.vertigo.studio.vertigo.task.TaskSketchBuilder;
 
 /**
  * @author pchretien, mlaroche

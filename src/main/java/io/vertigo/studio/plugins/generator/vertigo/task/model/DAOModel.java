@@ -24,9 +24,9 @@ import java.util.function.Function;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.util.StringUtil;
 import io.vertigo.studio.generator.GeneratorConfig;
-import io.vertigo.studio.notebook.domain.DtSketch;
-import io.vertigo.studio.notebook.domain.StudioStereotype;
-import io.vertigo.studio.notebook.task.TaskSketch;
+import io.vertigo.studio.vertigo.domain.DtSketch;
+import io.vertigo.studio.vertigo.domain.StudioStereotype;
+import io.vertigo.studio.vertigo.task.TaskSketch;
 
 /**
  * Objet utilisé par FreeMarker.

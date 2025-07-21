@@ -18,7 +18,7 @@
 package io.vertigo.studio.plugins.generator.vertigo.domain.js.model;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.notebook.domain.DtSketchField;
+import io.vertigo.studio.vertigo.domain.DtSketchField;
 
 /**
  * Model used to define a DtField.

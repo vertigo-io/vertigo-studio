@@ -23,9 +23,9 @@ import freemarker.template.SimpleScalar;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateSequenceModel;
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.notebook.domain.DtSketch;
-import io.vertigo.studio.notebook.domain.association.AssociationNNSketch;
-import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
+import io.vertigo.studio.vertigo.domain.DtSketch;
+import io.vertigo.studio.vertigo.domain.association.AssociationNNSketch;
+import io.vertigo.studio.vertigo.domain.association.AssociationSimpleSketch;
 
 /**
  * Permet de construire les lignes décritants l'annotation.

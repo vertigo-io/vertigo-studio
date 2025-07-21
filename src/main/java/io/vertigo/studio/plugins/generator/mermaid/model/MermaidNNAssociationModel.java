@@ -18,7 +18,7 @@
 package io.vertigo.studio.plugins.generator.mermaid.model;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.notebook.domain.association.AssociationNNSketch;
+import io.vertigo.studio.vertigo.domain.association.AssociationNNSketch;
 
 /**
  * Objet utilisé par FreeMarker.

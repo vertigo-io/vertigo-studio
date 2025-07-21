@@ -20,7 +20,7 @@ package io.vertigo.studio.plugins.generator.vertigo.domain.java.model.masterdata
 import java.util.Map;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.notebook.domain.DtSketch;
+import io.vertigo.studio.vertigo.domain.DtSketch;
 
 /**
  * Model Sql des materdata.

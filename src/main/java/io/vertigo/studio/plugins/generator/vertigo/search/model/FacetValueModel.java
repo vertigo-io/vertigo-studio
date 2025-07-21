@@ -18,7 +18,7 @@
 package io.vertigo.studio.plugins.generator.vertigo.search.model;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.notebook.search.FacetSketchValue;
+import io.vertigo.studio.vertigo.search.FacetSketchValue;
 
 public final class FacetValueModel {
 

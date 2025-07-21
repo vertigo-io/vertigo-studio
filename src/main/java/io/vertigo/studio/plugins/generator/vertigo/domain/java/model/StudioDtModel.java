@@ -22,13 +22,13 @@ import java.util.List;
 import java.util.function.Function;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.notebook.domain.DtSketch;
-import io.vertigo.studio.notebook.domain.DtSketchField;
-import io.vertigo.studio.notebook.domain.DtSketchField.FieldType;
-import io.vertigo.studio.notebook.domain.StudioStereotype;
-import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
-import io.vertigo.studio.notebook.domain.association.AssociationSketch;
 import io.vertigo.studio.plugins.generator.vertigo.VertigoConstants.VertigoClassNames;
+import io.vertigo.studio.vertigo.domain.DtSketch;
+import io.vertigo.studio.vertigo.domain.DtSketchField;
+import io.vertigo.studio.vertigo.domain.StudioStereotype;
+import io.vertigo.studio.vertigo.domain.DtSketchField.FieldType;
+import io.vertigo.studio.vertigo.domain.association.AssociationSimpleSketch;
+import io.vertigo.studio.vertigo.domain.association.AssociationSketch;
 
 /**
  * Model used by FreeMarker.

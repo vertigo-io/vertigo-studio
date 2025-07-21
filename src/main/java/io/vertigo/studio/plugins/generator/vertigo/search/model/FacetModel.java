@@ -21,7 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.notebook.search.FacetSketch;
+import io.vertigo.studio.vertigo.search.FacetSketch;
 
 public final class FacetModel {
 

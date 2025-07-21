@@ -19,10 +19,10 @@ package io.vertigo.studio.plugins.generator.vertigo.domain.ts.model;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.BasicType;
-import io.vertigo.studio.notebook.domain.DomainSketch;
-import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.plugins.generator.vertigo.util.DomainUtil;
 import io.vertigo.studio.tools.SketchUtil;
+import io.vertigo.studio.vertigo.domain.DomainSketch;
+import io.vertigo.studio.vertigo.domain.DtSketch;
 
 /**
  * Model used to define a Domain.

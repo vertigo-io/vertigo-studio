@@ -28,9 +28,9 @@ import io.vertigo.studio.generator.GeneratorResultBuilder;
 import io.vertigo.studio.impl.generator.FileGenerator;
 import io.vertigo.studio.impl.generator.GeneratorPlugin;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.file.FileInfoSketch;
 import io.vertigo.studio.plugins.generator.vertigo.file.model.FileInfoModel;
 import io.vertigo.studio.plugins.generator.vertigo.util.MdaUtil;
+import io.vertigo.studio.vertigo.file.FileInfoSketch;
 
 /**
  * Génération des objets relatifs au module File.

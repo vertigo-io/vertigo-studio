@@ -38,8 +38,8 @@ import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.resource.ResourceManager;
 import io.vertigo.studio.impl.source.SourceReaderPlugin;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.authorization.SecuredFeatureSketch;
 import io.vertigo.studio.source.Source;
+import io.vertigo.studio.vertigo.authorization.SecuredFeatureSketch;
 
 public final class AccountJsonSecuritySourceReaderPlugin implements SourceReaderPlugin {
 

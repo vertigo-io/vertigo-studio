@@ -33,18 +33,18 @@ import io.vertigo.studio.generator.GeneratorResultBuilder;
 import io.vertigo.studio.impl.generator.FileGenerator;
 import io.vertigo.studio.impl.generator.GeneratorPlugin;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.domain.DtSketch;
-import io.vertigo.studio.notebook.domain.StudioStereotype;
-import io.vertigo.studio.notebook.domain.association.AssociationNNSketch;
-import io.vertigo.studio.notebook.domain.association.AssociationSimpleSketch;
-import io.vertigo.studio.notebook.domain.association.AssociationSketch;
-import io.vertigo.studio.notebook.domain.masterdata.MasterDataValue;
-import io.vertigo.studio.notebook.domain.masterdata.StaticMasterDataSketch;
 import io.vertigo.studio.plugins.generator.vertigo.domain.java.model.MethodAnnotationsModel;
 import io.vertigo.studio.plugins.generator.vertigo.domain.java.model.StudioDtModel;
 import io.vertigo.studio.plugins.generator.vertigo.domain.java.model.masterdata.MasterDataModel;
 import io.vertigo.studio.plugins.generator.vertigo.util.DomainUtil;
 import io.vertigo.studio.plugins.generator.vertigo.util.MdaUtil;
+import io.vertigo.studio.vertigo.domain.DtSketch;
+import io.vertigo.studio.vertigo.domain.StudioStereotype;
+import io.vertigo.studio.vertigo.domain.association.AssociationNNSketch;
+import io.vertigo.studio.vertigo.domain.association.AssociationSimpleSketch;
+import io.vertigo.studio.vertigo.domain.association.AssociationSketch;
+import io.vertigo.studio.vertigo.domain.masterdata.MasterDataValue;
+import io.vertigo.studio.vertigo.domain.masterdata.StaticMasterDataSketch;
 
 /**
  * Génération des objets relatifs au module Domain.

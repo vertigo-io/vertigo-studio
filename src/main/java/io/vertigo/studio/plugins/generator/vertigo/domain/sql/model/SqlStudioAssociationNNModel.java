@@ -19,8 +19,8 @@ package io.vertigo.studio.plugins.generator.vertigo.domain.sql.model;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.util.StringUtil;
-import io.vertigo.studio.notebook.domain.DomainSketch;
-import io.vertigo.studio.notebook.domain.association.AssociationNNSketch;
+import io.vertigo.studio.vertigo.domain.DomainSketch;
+import io.vertigo.studio.vertigo.domain.association.AssociationNNSketch;
 
 /**
  * Objet utilisé par FreeMarker.

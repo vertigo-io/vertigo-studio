@@ -26,8 +26,8 @@ import io.vertigo.studio.impl.source.dsl.raw.DslRawKey;
 import io.vertigo.studio.impl.source.dsl.raw.DslSketchFactory;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
-import io.vertigo.studio.notebook.file.FileInfoSketch;
 import io.vertigo.studio.plugins.source.vertigo.KspProperty;
+import io.vertigo.studio.vertigo.file.FileInfoSketch;
 
 /**
  * @author pchretien, mlaroche

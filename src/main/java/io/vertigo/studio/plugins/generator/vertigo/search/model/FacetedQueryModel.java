@@ -21,9 +21,9 @@ import java.util.List;
 import java.util.function.Function;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.notebook.search.FacetedQuerySketch;
 import io.vertigo.studio.plugins.generator.vertigo.VertigoConstants.VertigoDefinitionPrefix;
 import io.vertigo.studio.plugins.generator.vertigo.util.DomainUtil;
+import io.vertigo.studio.vertigo.search.FacetedQuerySketch;
 
 /**
  * Génération des classes/méthodes des taches de type DAO.

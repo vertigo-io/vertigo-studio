@@ -34,10 +34,10 @@ import io.vertigo.core.node.config.NodeConfig;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.studio.StudioFeatures;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.domain.DomainSketch;
-import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.source.Source;
 import io.vertigo.studio.source.SourceManager;
+import io.vertigo.studio.vertigo.domain.DomainSketch;
+import io.vertigo.studio.vertigo.domain.DtSketch;
 
 /**
  * Test de l'implémentation standard.
@@ -83,7 +83,7 @@ public final class EAXmiEnvironmentManagerTest {
 
 	@Test
 	public void testDomain() {
-		final io.vertigo.studio.notebook.domain.DomainSketch domainSketch = notebook.resolve("DoEmail", DomainSketch.class);
+		final io.vertigo.studio.vertigo.domain.DomainSketch domainSketch = notebook.resolve("DoEmail", DomainSketch.class);
 		Assertions.assertEquals(BasicType.String, domainSketch.getDataType());
 	}
 

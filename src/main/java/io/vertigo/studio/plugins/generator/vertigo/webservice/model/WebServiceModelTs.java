@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import io.vertigo.studio.notebook.webservices.WebServiceSketch;
-import io.vertigo.studio.notebook.webservices.WebServiceSketchParam;
+import io.vertigo.studio.vertigo.webservices.WebServiceSketch;
+import io.vertigo.studio.vertigo.webservices.WebServiceSketchParam;
 
 /**
  * Model for TypeScript generation.

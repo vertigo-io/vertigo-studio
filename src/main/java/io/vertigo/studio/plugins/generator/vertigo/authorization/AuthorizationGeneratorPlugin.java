@@ -32,11 +32,11 @@ import io.vertigo.studio.generator.GeneratorResultBuilder;
 import io.vertigo.studio.impl.generator.FileGenerator;
 import io.vertigo.studio.impl.generator.GeneratorPlugin;
 import io.vertigo.studio.notebook.Notebook;
-import io.vertigo.studio.notebook.authorization.SecuredFeatureSketch;
-import io.vertigo.studio.notebook.domain.DtSketch;
 import io.vertigo.studio.plugins.generator.vertigo.authorization.model.GlobalAuthorizationModel;
 import io.vertigo.studio.plugins.generator.vertigo.authorization.model.SecuredEntityModel;
 import io.vertigo.studio.plugins.generator.vertigo.util.MdaUtil;
+import io.vertigo.studio.vertigo.authorization.SecuredFeatureSketch;
+import io.vertigo.studio.vertigo.domain.DtSketch;
 
 /**
  * Generation des objets relatifs au module Securite.
