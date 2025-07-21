@@ -113,6 +113,13 @@ public final class VertigoStudioMda {
 		}
 	}
 
+	public static Notebook read(final NotebookConfig notebookConfig) {
+		try (final AutoCloseableNode studioApp = new AutoCloseableNode(buildNodeConfig())) {
+			final SourceManager sourceManager = studioApp.getComponentSpace().resolve(SourceManager.class);
+			return sourceManager.read(notebookConfig.metaModelResources());
+		}
+	}
+
 	public static void generate(final NotebookConfig notebookConfig) {
 		try (final AutoCloseableNode studioApp = new AutoCloseableNode(buildNodeConfig())) {
 			final SourceManager sourceManager = studioApp.getComponentSpace().resolve(SourceManager.class);

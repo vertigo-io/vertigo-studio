@@ -17,6 +17,7 @@ import io.vertigo.studio.shell.commands.UptimeCommand;
 import io.vertigo.studio.shell.commands.WatchCommand;
 import io.vertigo.studio.shell.labs.ClearCommand;
 import io.vertigo.studio.shell.labs.HistoryCommand;
+import io.vertigo.studio.shell.labs.ListSketchesCommand;
 import io.vertigo.studio.shell.labs.WhoCommand;
 import io.vertigo.studio.tools.VertigoStudioMda;
 
@@ -36,6 +37,7 @@ public final class Shell {
 				//--- experimental commands 
 				.addCommand(new ClearCommand())
 				.addCommand(new ExitCommand(this))
+				.addCommand(new ListSketchesCommand())
 				.addCommand(new GenerateCommand())
 				.addCommand(new HistoryCommand(history))
 				.addCommand(new UptimeCommand(startTime))
