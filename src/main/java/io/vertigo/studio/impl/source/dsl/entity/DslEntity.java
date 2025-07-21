@@ -26,34 +26,32 @@ import java.util.stream.Collectors;
 import io.vertigo.core.lang.Assertion;
 
 /**
- * Une entité permet de décrire un modèle, une classe.
- * - Elle est définie par son nom.
- * - Elle possède une liste de propriétés (Chacune étant obligatoire / facultative)
- * - Elle est composée d'une liste d'attibuts.
+ * An entity describes a model (e.g., DataDefinition, TaskDefinition...).
+ * - It is identified by a unique name.
+ * - It contains properties (mandatory or optional).
+ * - It is composed of fields.
  *
- * Une entité permet, ainsi, d'adopter des comportement dynamique, de fabriquer des grammaires.
- * Si l'ensemble des définitions permet de construire le modèle, l'ensemble des entités permet de décrire le métamodèle.
+ * An entity enables dynamic behaviors and the creation of grammars.
+ * The set of entities describes the grammar ( metamodel), while the definitions build the model.
  *
  * @author pchretien, mlaroche
  */
 public final class DslEntity implements DslEntityFieldType {
-	/**
-	 * Nom de la metadefinition (Type de la définition).
-	 */
+	/** Name of the entity (type of the definition). */
 	private final String name;
 
-	/**
-	 * Map : Field by names
-	 */
+	/** Map of fields by name. */
 	private final Map<String, DslEntityField> entityFields;
 
+	/** Indicates if the entity is provided and managed specifically. */
 	private final boolean provided;
 
 	/**
-	 * Constructeur de la MetaDefinition
-	 * Une instance de MetaDefinition correspond à une classe -ou une interface- de Definition
-	 * (Exemple : Classe Service).
-	 * @param name Classe représentant l'instance métaDéfinition
+	 * Constructor for an entity.
+	 * An entity corresponds to a class or interface of a definition .
+	 * @param name Name of the entity
+	 * @param entityFields Set of the entity's fields
+	 * @param provided Indicates if the entity is provided
 	 */
 	DslEntity(final String name, final Set<DslEntityField> entityFields, final boolean provided) {
 		Assertion.check()
@@ -65,30 +63,29 @@ public final class DslEntity implements DslEntityFieldType {
 		this.entityFields = new HashMap<>();
 		for (final DslEntityField entityField : entityFields) {
 			Assertion.check().isFalse(this.entityFields.containsKey(entityField.name()), "field {0} is already registered for {1}", entityField, this);
-			//Une propriété est unique pour une définition donnée.
-			//Il n'y a jamais de multiplicité
+			//a property is unique for an entity .
 			this.entityFields.put(entityField.name(), entityField);
 		}
 	}
 
 	/**
-	 * Static method factory for TaskBuilder
+	 * Static method factory for DslEntityBuilder
 	 * @param name the name of the entity
-	 * @return TaskBuilder
+	 * @return DslEntityBuilder
 	 */
 	public static DslEntityBuilder builder(final String name) {
 		return new DslEntityBuilder(name);
 	}
 
 	/**
-	 * @return Nom de l'entité (Type de la définition).
+	 * @return Name of the entity
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * @return Ensemble de toutes les propriétés gérées (obligatoires ou non).
+	 * @return Set of all property names (mandatory or optional)
 	 */
 	public Set<String> getPropertyNames() {
 		return entityFields.values()
@@ -99,6 +96,7 @@ public final class DslEntity implements DslEntityFieldType {
 	}
 
 	/**
+	 * Retrieves the property type for a given field.
 	 * @param fieldName Name of the field
 	 * @return Property type
 	 */
@@ -110,7 +108,7 @@ public final class DslEntity implements DslEntityFieldType {
 	}
 
 	/**
-	 * Returns the value to which the specified name is mapped.
+	 * Retrieves the field associated with the specified name.
 	 * @param fieldName Name of the field
 	 * @return Field
 	 */
@@ -123,12 +121,15 @@ public final class DslEntity implements DslEntityFieldType {
 	}
 
 	/**
-	 * @return List of the entity's fields
+	 * @return Collection of the entity's fields
 	 */
 	public Collection<DslEntityField> getFields() {
 		return entityFields.values();
 	}
 
+	/**
+	 * @return Link to this entity
+	 */
 	public DslEntityLink getLink() {
 		return new DslEntityLink(this);
 	}
