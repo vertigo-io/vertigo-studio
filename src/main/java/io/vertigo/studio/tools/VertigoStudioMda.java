@@ -116,7 +116,7 @@ public final class VertigoStudioMda {
 	public static Notebook read(final NotebookConfig notebookConfig) {
 		try (final AutoCloseableNode studioApp = new AutoCloseableNode(buildNodeConfig())) {
 			final SourceManager sourceManager = studioApp.getComponentSpace().resolve(SourceManager.class);
-			return sourceManager.read(notebookConfig.metaModelResources());
+			return sourceManager.read(notebookConfig.sources());
 		}
 	}
 
@@ -127,7 +127,7 @@ public final class VertigoStudioMda {
 			//-----
 			final GeneratorConfig generatorConfig = notebookConfig.generatorConfig();
 			generatorManager.clean(generatorConfig);
-			final Notebook notebook = sourceManager.read(notebookConfig.metaModelResources());
+			final Notebook notebook = sourceManager.read(notebookConfig.sources());
 			final GeneratorResult generatorResult = generatorManager.generate(notebook, generatorConfig);
 			LOGGER_STUDIO.info(generatorResult.getResultMessage());
 		}
@@ -172,7 +172,7 @@ public final class VertigoStudioMda {
 												generatorManager.clean(generatorConfig);
 												LOGGER_STUDIO.info("Done cleaning");
 											}
-											final Notebook notebook = sourceManager.read(notebookConfig.metaModelResources());
+											final Notebook notebook = sourceManager.read(notebookConfig.sources());
 											final GeneratorResult generatorResult = generatorManager.generate(notebook, generatorConfig);
 											LOGGER_STUDIO.info("Regeneration completed. {} created files, {} updated files, {} identical files and {} issues in {} ms",
 													generatorResult.createdFiles(), generatorResult.updatedFiles(), generatorResult.identicalFiles(), generatorResult.errorFiles(),
@@ -200,7 +200,7 @@ public final class VertigoStudioMda {
 	}
 
 	private static List<Path> listPathToWatch(final NotebookConfig notebookConfig, final ResourceManager resourceManager) {
-		return notebookConfig.metaModelResources()
+		return notebookConfig.sources()
 				.stream()
 				.map(source -> resourceManager.resolve(source.path()))
 				.filter(url -> {

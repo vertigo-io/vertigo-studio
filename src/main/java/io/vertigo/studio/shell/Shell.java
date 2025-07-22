@@ -18,6 +18,7 @@ import io.vertigo.studio.shell.commands.WatchCommand;
 import io.vertigo.studio.shell.labs.ClearCommand;
 import io.vertigo.studio.shell.labs.HistoryCommand;
 import io.vertigo.studio.shell.labs.ListSketchesCommand;
+import io.vertigo.studio.shell.labs.ListSourcesCommand;
 import io.vertigo.studio.shell.labs.WhoCommand;
 import io.vertigo.studio.tools.VertigoStudioMda;
 
@@ -34,18 +35,14 @@ public final class Shell {
 				.addCommand(new CleanCommand())
 				.addCommand(new GenerateCommand())
 				.addCommand(new WatchCommand())
+				.addCommand(new ExitCommand(this))
+				.addCommand(new UptimeCommand(startTime))
+				.addCommand(new HistoryCommand(history))
 				//--- experimental commands 
 				.addCommand(new ClearCommand())
-				.addCommand(new ExitCommand(this))
 				.addCommand(new ListSketchesCommand())
-				.addCommand(new GenerateCommand())
-				.addCommand(new HistoryCommand(history))
-				.addCommand(new UptimeCommand(startTime))
+				.addCommand(new ListSourcesCommand())
 				.addCommand(new WhoCommand());
-		//.addCommand("list-modules", new ListSketchesCommand());
-		//.addCommand("list-sketches", new ListSketchesCommand());
-		//show
-		//stats
 
 		jc = builder.build();
 		builder.addCommand("help", new HelpCommand(jc));
@@ -70,13 +67,12 @@ public final class Shell {
 					continue;
 				}
 
-				history.add(line);
-
 				if (line.startsWith("!")) {
 					runFromHistory(line);
 				} else {
 					handleCommand(line.split("\\s+"));
 				}
+				history.add(line);
 			}
 		}
 	}

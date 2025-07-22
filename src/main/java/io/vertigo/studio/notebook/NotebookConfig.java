@@ -24,12 +24,12 @@ import io.vertigo.studio.generator.GeneratorConfig;
 import io.vertigo.studio.source.Source;
 
 public record NotebookConfig(
-		List<Source> metaModelResources,
+		List<Source> sources,
 		GeneratorConfig generatorConfig) {
 
 	public NotebookConfig {
 		Assertion.check()
-				.isNotNull(metaModelResources)
+				.isNotNull(sources)
 				.isNotNull(generatorConfig);
 	}
 }
