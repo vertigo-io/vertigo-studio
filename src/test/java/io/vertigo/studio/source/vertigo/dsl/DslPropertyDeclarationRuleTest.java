@@ -45,10 +45,10 @@ public final class DslPropertyDeclarationRuleTest {
 		final String text = "label   : \"BLeU\", non reconnu";
 		final PegResult<DslPropertyEntry> cursor = MAIN
 				.parse(text);
-		final DslPropertyEntry propertyEntry = cursor.getValue();
+		final DslPropertyEntry propertyEntry = cursor.value();
 		Assertions.assertEquals(LABEL, propertyEntry.getPropertyName());
 		Assertions.assertEquals("BLeU", propertyEntry.getPropertyValueAsString());
-		Assertions.assertEquals(text.length() - " non reconnu".length(), cursor.getIndex()); //On vérfifie que le pointeur a avancé jusqu'à 'non reconnu'
+		Assertions.assertEquals(text.length() - " non reconnu".length(), cursor.index()); //On vérfifie que le pointeur a avancé jusqu'à 'non reconnu'
 
 	}
 
@@ -58,10 +58,10 @@ public final class DslPropertyDeclarationRuleTest {
 		final PegResult<DslPropertyEntry> cursor = MAIN
 				.parse(text);
 		//On ne met pas de séparateur final et on met un espace
-		final DslPropertyEntry propertyEntry = cursor.getValue();
+		final DslPropertyEntry propertyEntry = cursor.value();
 		Assertions.assertEquals(LABEL, propertyEntry.getPropertyName());
 		Assertions.assertEquals(" vert ", propertyEntry.getPropertyValueAsString()); //l'espace doit être conservé
-		Assertions.assertEquals(text.length(), cursor.getIndex());
+		Assertions.assertEquals(text.length(), cursor.index());
 	}
 
 	@Test
@@ -70,10 +70,10 @@ public final class DslPropertyDeclarationRuleTest {
 		final PegResult<DslPropertyEntry> cursor = MAIN
 				.parse(text);
 
-		final DslPropertyEntry propertyEntry = cursor.getValue();
+		final DslPropertyEntry propertyEntry = cursor.value();
 		Assertions.assertEquals(SIZE, propertyEntry.getPropertyName());
 		Assertions.assertEquals("54", propertyEntry.getPropertyValueAsString());
-		Assertions.assertEquals(text.length(), cursor.getIndex());
+		Assertions.assertEquals(text.length(), cursor.index());
 	}
 
 	@Test

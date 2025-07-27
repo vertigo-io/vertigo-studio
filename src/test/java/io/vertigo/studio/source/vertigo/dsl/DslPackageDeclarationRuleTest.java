@@ -31,8 +31,8 @@ public final class DslPackageDeclarationRuleTest {
 	public void testExpression() throws PegNoMatchFoundException {
 		final PegResult<String> result = PACKAGE_DECLARATION_RULE
 				.parse("package io.vertigo  xxxx");
-		Assertions.assertEquals("io.vertigo", result.getValue());
-		Assertions.assertEquals("package io.vertigo".length(), result.getIndex());
+		Assertions.assertEquals("io.vertigo", result.value());
+		Assertions.assertEquals("package io.vertigo".length(), result.index());
 	}
 
 	@Test

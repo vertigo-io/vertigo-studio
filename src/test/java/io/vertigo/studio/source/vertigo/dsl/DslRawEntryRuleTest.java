@@ -36,11 +36,11 @@ public final class DslRawEntryRuleTest {
 		final String text = "myFirstProperty : [BLEU ], non reconnu";
 		final PegResult<DslRawEntry> cursor = MAIN
 				.parse(text);
-		final DslRawEntry dslSketchEntry = cursor.getValue();
+		final DslRawEntry dslSketchEntry = cursor.value();
 		Assertions.assertEquals("myFirstProperty", dslSketchEntry.getFieldName());
 		Assertions.assertEquals(1, dslSketchEntry.getRawKeys().size());
 		Assertions.assertTrue(dslSketchEntry.getRawKeys().contains(DslRawKey.of("BLEU")));
-		Assertions.assertEquals(text.length() - " non reconnu".length(), cursor.getIndex());
+		Assertions.assertEquals(text.length() - " non reconnu".length(), cursor.index());
 	}
 
 	@Test
@@ -48,11 +48,11 @@ public final class DslRawEntryRuleTest {
 		final String text = "myFirstProperty : [BLEU, VerT, ROUGE, T_REX ], non reconnu";
 		final PegResult<DslRawEntry> cursor = MAIN
 				.parse(text);
-		final DslRawEntry dslSketchEntry = cursor.getValue();
+		final DslRawEntry dslSketchEntry = cursor.value();
 		Assertions.assertEquals("myFirstProperty", dslSketchEntry.getFieldName());
 		Assertions.assertEquals(4, dslSketchEntry.getRawKeys().size());
 		Assertions.assertTrue(dslSketchEntry.getRawKeys().contains(DslRawKey.of("VerT")));
-		Assertions.assertEquals(text.length() - " non reconnu".length(), cursor.getIndex());
+		Assertions.assertEquals(text.length() - " non reconnu".length(), cursor.index());
 
 	}
 
@@ -62,10 +62,10 @@ public final class DslRawEntryRuleTest {
 		final PegResult<DslRawEntry> cursor = MAIN
 				.parse(text);
 
-		final DslRawEntry dslSketchEntry = cursor.getValue();
+		final DslRawEntry dslSketchEntry = cursor.value();
 		Assertions.assertEquals("myLastProperty", dslSketchEntry.getFieldName());
 		Assertions.assertEquals(0, dslSketchEntry.getRawKeys().size());
-		Assertions.assertEquals(text.length(), cursor.getIndex());
+		Assertions.assertEquals(text.length(), cursor.index());
 	}
 
 	@Test
@@ -73,11 +73,11 @@ public final class DslRawEntryRuleTest {
 		final String text = "myFirstProperty    :    [BLEU,VerT,    ROUGE    ]";
 		final PegResult<DslRawEntry> cursor = MAIN
 				.parse(text);
-		final DslRawEntry xDefinitionEntry = cursor.getValue();
+		final DslRawEntry xDefinitionEntry = cursor.value();
 		Assertions.assertEquals("myFirstProperty", xDefinitionEntry.getFieldName());
 		Assertions.assertEquals(3, xDefinitionEntry.getRawKeys().size());
 		Assertions.assertTrue(xDefinitionEntry.getRawKeys().contains(DslRawKey.of("VerT")));
-		Assertions.assertEquals(text.length(), cursor.getIndex());
+		Assertions.assertEquals(text.length(), cursor.index());
 	}
 
 	@Test
@@ -85,11 +85,11 @@ public final class DslRawEntryRuleTest {
 		final String text = "myFirstProperty : BLEU,";
 		final PegResult<DslRawEntry> cursor = MAIN
 				.parse(text);
-		final DslRawEntry xDefinitionEntry = cursor.getValue();
+		final DslRawEntry xDefinitionEntry = cursor.value();
 		Assertions.assertEquals("myFirstProperty", xDefinitionEntry.getFieldName());
 		Assertions.assertEquals(1, xDefinitionEntry.getRawKeys().size());
 		Assertions.assertTrue(xDefinitionEntry.getRawKeys().contains(DslRawKey.of("BLEU")));
-		Assertions.assertEquals(text.length(), cursor.getIndex());
+		Assertions.assertEquals(text.length(), cursor.index());
 	}
 
 	@Test

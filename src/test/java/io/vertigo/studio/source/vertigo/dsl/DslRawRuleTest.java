@@ -32,7 +32,7 @@ public class DslRawRuleTest {
 	public void test2() throws PegNoMatchFoundException {
 		final DslRaw raw = new DslRawRule("create", rawRepository.getGrammar())
 				.parse("create Domain DoCodePostal { dataType : String } ")
-				.getValue();
+				.value();
 		Assertions.assertNotNull(raw);
 	}
 

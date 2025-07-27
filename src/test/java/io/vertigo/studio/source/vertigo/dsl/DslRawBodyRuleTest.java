@@ -47,7 +47,7 @@ public class DslRawBodyRuleTest {
 
 		final DslRawBody dslSketchBody = new DslRawBodyRule(entity)
 				.parse("{ dataType : String } ")
-				.getValue();
+				.value();
 
 		Assertions.assertNotNull(dslSketchBody);
 	}
