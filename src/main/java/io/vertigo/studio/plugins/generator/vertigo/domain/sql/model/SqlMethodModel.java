@@ -40,11 +40,11 @@ public final class SqlMethodModel implements TemplateMethodModelEx {
 	@Override
 	public TemplateModel exec(final List params) throws TemplateModelException {
 		final Object type = ((StringModel) params.get(0)).getWrappedObject();
-		if (type instanceof SqlStudioDtFieldModel) {
-			final DomainSketch smartType = ((SqlStudioDtFieldModel) type).getSource().getDomain();
+		if (type instanceof SqlStudioDtFieldModel s) {
+			final DomainSketch smartType = s.getSource().getDomain();
 			return new SimpleScalar(getSqlType((smartType)));
-		} else if (type instanceof DomainSketch) {
-			return new SimpleScalar(getSqlType(((DomainSketch) type)));
+		} else if (type instanceof DomainSketch d) {
+			return new SimpleScalar(getSqlType(d));
 		}
 		throw new TemplateModelException("Le paramètre type n'est pas un Domain.");
 	}

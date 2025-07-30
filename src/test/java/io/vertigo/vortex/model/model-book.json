@@ -1,0 +1,33 @@
+{
+  "header": {
+	"description": "modélisation d'une bibliothèque",
+	"tags":["books", "authors"]
+  }, 	
+  
+  "domainTypes": 
+  [
+    { "name": "do-label", "dataType": "String"},
+	{ "name": "do-id", "dataType": "Long"}
+  ],
+  
+  "entities": 
+  [
+    { 
+	  "name": "book",
+      "attributes": [
+		{ "name": "id", "domainType": "do-id", "cardinality": "1", "role":"id"},
+		{ "name": "title", "domainType": "do-label", "cardinality": "1"},
+        { "name": "isbn", "domainType": "do-label", "cardinality": "1"},
+        { "name": "author","domainType": "do-author", "cardinality": "1"}
+      ]
+    }, 
+	{ 
+	  "name": "author",
+	  "attributes": [
+		{ "name": "id", "domainType": "do-id", "cardinality": "1", "role":"id"},
+	    { "name": "first-name", "domainType": "do-label", "cardinality": "1"},
+	    {"name": "last-name", "domainType": "do-label", "cardinality": "1"}
+	  ]
+	}
+  ]
+}
