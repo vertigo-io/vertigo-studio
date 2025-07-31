@@ -17,6 +17,9 @@ import io.vertigo.studio.shell.commands.UptimeCommand;
 import io.vertigo.studio.shell.commands.WatchCommand;
 import io.vertigo.studio.shell.labs.ClearCommand;
 import io.vertigo.studio.shell.labs.HistoryCommand;
+import io.vertigo.studio.shell.labs.JdbcConnectCommand;
+import io.vertigo.studio.shell.labs.JdbcDisconnectCommand;
+import io.vertigo.studio.shell.labs.JdbcSqlCommand;
 import io.vertigo.studio.shell.labs.ListSketchesCommand;
 import io.vertigo.studio.shell.labs.ListSourcesCommand;
 import io.vertigo.studio.shell.labs.WhoCommand;
@@ -39,9 +42,13 @@ public final class Shell {
 				.addCommand(new UptimeCommand(startTime))
 				.addCommand(new HistoryCommand(history))
 				//--- experimental commands 
+				.addCommand(new JdbcConnectCommand())
+				.addCommand(new JdbcSqlCommand())
+				.addCommand(new JdbcDisconnectCommand())
 				.addCommand(new ClearCommand())
 				.addCommand(new ListSketchesCommand())
 				.addCommand(new ListSourcesCommand())
+				//ip ??
 				.addCommand(new WhoCommand());
 
 		jc = builder.build();

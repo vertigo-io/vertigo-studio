@@ -1,9 +1,10 @@
-package io.vertigo.vortex.reader;
+package io.vertigo.vortex;
 
 import java.io.File;
 
 import io.vertigo.vortex.model.Entity;
 import io.vertigo.vortex.model.Model;
+import io.vertigo.vortex.reader.ModelReader;
 
 public class Vortex {
 	public static String MODEL_BOOK = "C:\\Users\\pchretien\\GitHub\\vertigo-studio\\src\\test\\java\\io\\vertigo\\vortex\\model\\model-book.json";

@@ -29,7 +29,7 @@ public final class ModelReader {
 
 	private final File file;
 
-	ModelReader(File file) {
+	public ModelReader(File file) {
 		Assertion.check().isNotNull(file);
 		//---
 		this.file = file;
