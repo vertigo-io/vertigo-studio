@@ -1,6 +1,8 @@
 package io.vertigo.studio.shell.labs;
 
 import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
@@ -8,6 +10,7 @@ import com.beust.jcommander.Parameters;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
 import io.vertigo.studio.shell.ShellContext;
+import io.vertigo.studio.shell.ShellUtil;
 import io.vertigo.studio.tools.VertigoStudioMda;
 import io.vertigo.studio.vertigo.domain.DomainSketch;
 import io.vertigo.studio.vertigo.domain.DtSketch;
@@ -31,14 +34,20 @@ public final class ListSketchesCommand implements Runnable {
 	@Override
 	public void run() {
 		final Notebook notebook = VertigoStudioMda.read(ShellContext.notebookConfig);
-		System.out.printf("%-50s %-50s %-50s%n", "Key", "Name", "type");
-		System.out.println("------------------------------------------------------------------------------------------------------------------------");
+		String[] header = { "Key", "Name", "type" };
 
-		notebook.getAll()
+		final List<Sketch> sketches = notebook.getAll()
 				.stream()
 				.filter(s -> filter(s))
 				.sorted(Comparator.comparing(s -> s.getClass().getSimpleName()))
-				.forEach(this::printSketchInfo);
+				.collect(Collectors.toList());
+		String[][] rows = new String[sketches.size()][3];
+		for (int i = 0; i < sketches.size(); i++) {
+			rows[i][0] = sketches.get(i).getKey().getName();
+			rows[i][1] = sketches.get(i).getLocalName();
+			rows[i][2] = sketches.get(i).getClass().getSimpleName();
+		}
+		ShellUtil.printTable("List of sketches:", header, rows);
 		//---
 		resetParameters();
 	}
@@ -62,11 +71,4 @@ public final class ListSketchesCommand implements Runnable {
 		return false;
 	}
 
-	private void printSketchInfo(final Sketch sketch) {
-		final String key = sketch.getKey().getName();
-		final String name = sketch.getLocalName();
-		final String type = sketch.getClass().getSimpleName();
-
-		System.out.printf("%-50s %-50s %-50s%n", key, name, type);
-	}
 }
