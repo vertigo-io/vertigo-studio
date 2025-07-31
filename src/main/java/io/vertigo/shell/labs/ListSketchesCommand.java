@@ -8,7 +8,7 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
 import io.vertigo.shell.ShellContext;
-import io.vertigo.shell.ShellUtil;
+import io.vertigo.shell.Table;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
 import io.vertigo.studio.tools.VertigoStudioMda;
@@ -34,8 +34,6 @@ public final class ListSketchesCommand implements Runnable {
 	@Override
 	public void run() {
 		final Notebook notebook = VertigoStudioMda.read(ShellContext.notebookConfig);
-		String[] header = { "Key", "Name", "type" };
-
 		final List<Sketch> sketches = notebook.getAll()
 				.stream()
 				.filter(s -> filter(s))
@@ -47,7 +45,12 @@ public final class ListSketchesCommand implements Runnable {
 			rows[i][1] = sketches.get(i).getLocalName();
 			rows[i][2] = sketches.get(i).getClass().getSimpleName();
 		}
-		ShellUtil.printTable("List of sketches:", header, rows);
+		Table.builder()
+				.title("List of sketches:")
+				.header("Key", "Name", "type")
+				.rows(rows)
+				.build()
+				.print();
 		//---
 		resetParameters();
 	}

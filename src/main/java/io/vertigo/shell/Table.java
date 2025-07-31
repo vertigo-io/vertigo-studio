@@ -1,18 +1,64 @@
 package io.vertigo.shell;
 
 import java.text.NumberFormat;
+import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.Builder;
 
-public final class ShellUtil {
+public final class Table {
 	private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance(ShellContext.LOCALE);
 
-	public static void printTable(String title, String[] header, String[][] rows) {
+	private final String title;
+	private final String[] header;
+	private final String[][] rows;
+
+	private Table(String title, String[] header, String[][] rows) {
 		Assertion.check()
 				.isNotBlank(title)
 				.isNotNull(header)
 				.isNotNull(rows);
 		//---
+		this.title = title;
+		this.header = header;
+		this.rows = rows;
+	}
+
+	public static class TableBuilder implements Builder<Table> {
+		private String myTitle;
+		private String[] myHeader;
+		private String[][] myRows;
+
+		public TableBuilder title(String title) {
+			myTitle = title;
+			return this;
+		}
+
+		public TableBuilder header(String... header) {
+			myHeader = header;
+			return this;
+		}
+
+		public TableBuilder rows(String[][] rows) {
+			myRows = rows;
+			return this;
+		}
+
+		public TableBuilder rows(List<String[]> rows) {
+			rows(rows.toArray(new String[0][]));
+			return this;
+		}
+
+		public Table build() {
+			return new Table(myTitle, myHeader, myRows);
+		}
+	}
+
+	public static TableBuilder builder() {
+		return new TableBuilder();
+	}
+
+	public void print() {
 		int columns = header.length;
 
 		// 1. Formatage des données et détection des colonnes numériques
@@ -143,4 +189,5 @@ public final class ShellUtil {
 			return str; // Retourne la valeur originale si le formatage échoue
 		}
 	}
-}
+
+};

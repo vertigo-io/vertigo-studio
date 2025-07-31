@@ -12,7 +12,7 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
 import io.vertigo.core.lang.VSystemException;
-import io.vertigo.shell.ShellUtil;
+import io.vertigo.shell.Table;
 
 @Parameters(commandNames = "jdbc-sql", commandDescription = "Executes a SQL query")
 public final class JdbcSqlCommand implements Runnable {
@@ -75,27 +75,28 @@ public final class JdbcSqlCommand implements Runnable {
 		final int columnsNumber = rsmd.getColumnCount();
 
 		// Récupération des en-têtes
-		String[] headers = new String[columnsNumber];
+		final String[] header = new String[columnsNumber];
 		for (int i = 1; i <= columnsNumber; i++) {
-			headers[i - 1] = rsmd.getColumnName(i);
+			header[i - 1] = rsmd.getColumnName(i);
 		}
 
 		// Récupération des données
-		List<String[]> rowsList = new ArrayList<>();
+		List<String[]> rows = new ArrayList<>();
 		while (rs.next()) {
 			String[] row = new String[columnsNumber];
 			for (int i = 1; i <= columnsNumber; i++) {
 				String value = rs.getString(i);
 				row[i - 1] = value != null ? value : "NULL";
 			}
-			rowsList.add(row);
+			rows.add(row);
 		}
 
-		// Conversion en tableau
-		String[][] rows = rowsList.toArray(new String[0][]);
-
-		// Affichage avec ShellUtil
-		ShellUtil.printTable("Result of query:", headers, rows);
+		Table.builder()
+				.title("Result of query:")
+				.header(header)
+				.rows(rows)
+				.build()
+				.print();
 	}
 
 	private void ping() {
@@ -114,15 +115,18 @@ public final class JdbcSqlCommand implements Runnable {
 			DatabaseMetaData metaData = JdbcContext.connection.getMetaData();
 			ResultSet rs = metaData.getTables(null, null, "%", new String[] { "TABLE" });
 
-			List<String[]> tablesList = new ArrayList<>();
+			List<String[]> rows = new ArrayList<>();
 			while (rs.next()) {
-				tablesList.add(new String[] { rs.getString("TABLE_NAME") });
+				rows.add(new String[] { rs.getString("TABLE_NAME") });
 			}
 
-			if (!tablesList.isEmpty()) {
-				String[] headers = { "TABLE_NAME" };
-				String[][] tables = tablesList.toArray(new String[0][]);
-				ShellUtil.printTable("Tables in the database:", headers, tables);
+			if (!rows.isEmpty()) {
+				Table.builder()
+						.title("Tables in the database:")
+						.header("TABLE_NAME")
+						.rows(rows)
+						.build()
+						.print();
 			} else {
 				System.out.println("No tables found in the database.");
 			}
@@ -148,10 +152,12 @@ public final class JdbcSqlCommand implements Runnable {
 			}
 
 			if (!columnsList.isEmpty()) {
-				String title = "Structure of table " + tableName + ":";
-				String[] headers = { "Name", "Type", "Size", "Nullable" };
-				String[][] columns = columnsList.toArray(new String[0][]);
-				ShellUtil.printTable(title, headers, columns);
+				Table.builder()
+						.title("Structure of table " + tableName + ":")
+						.header("Name", "Type", "Size", "Nullable")
+						.rows(columnsList.toArray(new String[0][]))
+						.build()
+						.print();
 			} else {
 				System.out.println("Table '" + tableName + "' not found or has no columns.");
 			}

@@ -17,18 +17,18 @@ final class JsonValidator {
 				.isNotNull(schemaFile)
 				.isNotNull(dataFile);
 		//---
-		ObjectMapper mapper = new ObjectMapper();
+		final ObjectMapper mapper = new ObjectMapper();
 
 		// Charge le schéma et le JSON à valider
-		JsonNode schemaNode = mapper.readTree(schemaFile);
-		JsonNode dataNode = mapper.readTree(dataFile);
+		final JsonNode schemaNode = mapper.readTree(schemaFile);
+		final JsonNode dataNode = mapper.readTree(dataFile);
 
 		// Crée un validateur JSON Schema
-		JsonSchemaFactory factory = JsonSchemaFactory.byDefault();
-		JsonSchema schema = factory.getJsonSchema(schemaNode);
+		final JsonSchemaFactory factory = JsonSchemaFactory.byDefault();
+		final JsonSchema schema = factory.getJsonSchema(schemaNode);
 
 		// Valide le document JSON
-		ProcessingReport report = schema.validate(dataNode);
+		final ProcessingReport report = schema.validate(dataNode);
 
 		// Affiche les erreurs éventuelles
 		if (report.isSuccess()) {
