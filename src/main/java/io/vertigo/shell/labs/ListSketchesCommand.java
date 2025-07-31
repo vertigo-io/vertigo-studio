@@ -1,4 +1,4 @@
-package io.vertigo.studio.shell.labs;
+package io.vertigo.shell.labs;
 
 import java.util.Comparator;
 import java.util.List;
@@ -7,10 +7,10 @@ import java.util.stream.Collectors;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
+import io.vertigo.shell.ShellContext;
+import io.vertigo.shell.ShellUtil;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
-import io.vertigo.studio.shell.ShellContext;
-import io.vertigo.studio.shell.ShellUtil;
 import io.vertigo.studio.tools.VertigoStudioMda;
 import io.vertigo.studio.vertigo.domain.DomainSketch;
 import io.vertigo.studio.vertigo.domain.DtSketch;

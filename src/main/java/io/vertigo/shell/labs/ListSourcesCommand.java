@@ -1,8 +1,8 @@
-package io.vertigo.studio.shell.labs;
+package io.vertigo.shell.labs;
 
 import com.beust.jcommander.Parameters;
 
-import io.vertigo.studio.shell.ShellContext;
+import io.vertigo.shell.ShellContext;
 import io.vertigo.studio.source.Source;
 
 @Parameters(commandNames = "ls", commandDescription = "Lists all sources.")

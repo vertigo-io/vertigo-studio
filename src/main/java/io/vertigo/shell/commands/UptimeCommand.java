@@ -1,4 +1,4 @@
-package io.vertigo.studio.shell.commands;
+package io.vertigo.shell.commands;
 
 import java.time.Duration;
 import java.time.Instant;

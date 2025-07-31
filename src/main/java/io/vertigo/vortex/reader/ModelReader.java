@@ -106,8 +106,6 @@ public final class ModelReader {
 	}
 
 	private static DomainType transform(RawDomainType rawDomainType) {
-		Assertion.check().isNotNull(rawDomainType);
-		//---
 		return new DomainType(rawDomainType.name, rawDomainType.dataType);
 	}
 }

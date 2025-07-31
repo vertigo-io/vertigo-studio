@@ -1,4 +1,4 @@
-package io.vertigo.studio.shell.labs;
+package io.vertigo.shell.labs;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -12,7 +12,7 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
 import io.vertigo.core.lang.VSystemException;
-import io.vertigo.studio.shell.ShellUtil;
+import io.vertigo.shell.ShellUtil;
 
 @Parameters(commandNames = "jdbc-sql", commandDescription = "Executes a SQL query")
 public final class JdbcSqlCommand implements Runnable {

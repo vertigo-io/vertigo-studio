@@ -1,4 +1,4 @@
-package io.vertigo.studio.shell;
+package io.vertigo.shell;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -9,20 +9,20 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.shell.commands.CleanCommand;
-import io.vertigo.studio.shell.commands.ExitCommand;
-import io.vertigo.studio.shell.commands.GenerateCommand;
-import io.vertigo.studio.shell.commands.HelpCommand;
-import io.vertigo.studio.shell.commands.UptimeCommand;
-import io.vertigo.studio.shell.commands.WatchCommand;
-import io.vertigo.studio.shell.labs.ClearCommand;
-import io.vertigo.studio.shell.labs.HistoryCommand;
-import io.vertigo.studio.shell.labs.JdbcConnectCommand;
-import io.vertigo.studio.shell.labs.JdbcDisconnectCommand;
-import io.vertigo.studio.shell.labs.JdbcSqlCommand;
-import io.vertigo.studio.shell.labs.ListSketchesCommand;
-import io.vertigo.studio.shell.labs.ListSourcesCommand;
-import io.vertigo.studio.shell.labs.WhoCommand;
+import io.vertigo.shell.commands.CleanCommand;
+import io.vertigo.shell.commands.ExitCommand;
+import io.vertigo.shell.commands.GenerateCommand;
+import io.vertigo.shell.commands.HelpCommand;
+import io.vertigo.shell.commands.UptimeCommand;
+import io.vertigo.shell.commands.WatchCommand;
+import io.vertigo.shell.labs.ClearCommand;
+import io.vertigo.shell.labs.HistoryCommand;
+import io.vertigo.shell.labs.JdbcConnectCommand;
+import io.vertigo.shell.labs.JdbcDisconnectCommand;
+import io.vertigo.shell.labs.JdbcSqlCommand;
+import io.vertigo.shell.labs.ListSketchesCommand;
+import io.vertigo.shell.labs.ListSourcesCommand;
+import io.vertigo.shell.labs.WhoCommand;
 import io.vertigo.studio.tools.VertigoStudioMda;
 
 public final class Shell {

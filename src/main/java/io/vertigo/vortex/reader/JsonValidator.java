@@ -8,9 +8,15 @@ import com.github.fge.jsonschema.core.report.ProcessingReport;
 import com.github.fge.jsonschema.main.JsonSchema;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
 
+import io.vertigo.core.lang.Assertion;
+
 final class JsonValidator {
 
 	public static void validate(File schemaFile, File dataFile) throws Exception {
+		Assertion.check()
+				.isNotNull(schemaFile)
+				.isNotNull(dataFile);
+		//---
 		ObjectMapper mapper = new ObjectMapper();
 
 		// Charge le schéma et le JSON à valider

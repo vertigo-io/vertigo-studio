@@ -1,8 +1,8 @@
-package io.vertigo.studio.shell.commands;
+package io.vertigo.shell.commands;
 
 import com.beust.jcommander.Parameters;
 
-import io.vertigo.studio.shell.ShellContext;
+import io.vertigo.shell.ShellContext;
 import io.vertigo.studio.tools.VertigoStudioMda;
 
 @Parameters(commandNames = "watch", commandDescription = "Watch source files from a configuration file.")

@@ -1,4 +1,4 @@
-package io.vertigo.studio.shell;
+package io.vertigo.shell;
 
 import java.util.Locale;
 

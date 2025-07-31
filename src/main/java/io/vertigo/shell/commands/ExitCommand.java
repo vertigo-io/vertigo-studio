@@ -1,9 +1,9 @@
-package io.vertigo.studio.shell.commands;
+package io.vertigo.shell.commands;
 
 import com.beust.jcommander.Parameters;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.studio.shell.Shell;
+import io.vertigo.shell.Shell;
 
 @Parameters(commandNames = "exit", commandDescription = "Exits the shell.")
 public class ExitCommand implements Runnable {

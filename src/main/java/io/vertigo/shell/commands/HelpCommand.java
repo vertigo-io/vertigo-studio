@@ -1,4 +1,4 @@
-package io.vertigo.studio.shell.commands;
+package io.vertigo.shell.commands;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameters;

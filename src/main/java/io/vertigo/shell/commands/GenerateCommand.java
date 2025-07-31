@@ -1,9 +1,9 @@
-package io.vertigo.studio.shell.commands;
+package io.vertigo.shell.commands;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
-import io.vertigo.studio.shell.ShellContext;
+import io.vertigo.shell.ShellContext;
 import io.vertigo.studio.tools.VertigoStudioMda;
 
 @Parameters(commandNames = "generate", commandDescription = "Generate source files from a configuration file.")

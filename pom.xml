@@ -23,8 +23,6 @@
 			<artifactId>vertigo-commons</artifactId>
 			<version>${vertigo.version}</version>
 		</dependency>
-
-
 		<dependency>
 			<groupId>io.vertigo</groupId>
 			<artifactId>vertigo-account</artifactId>
@@ -87,7 +85,7 @@
     		<version>2.2.14</version>
 		</dependency>
 		<dependency>
-		<groupId>org.postgresql</groupId>
+			<groupId>org.postgresql</groupId>
   			<artifactId>postgresql</artifactId>
   			<version>42.7.3</version>
 		</dependency>
