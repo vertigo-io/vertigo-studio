@@ -1,68 +1,66 @@
 package io.vertigo.shell;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.core.lang.Builder;
 
 public final class Table {
 	private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance(ShellContext.LOCALE);
 
-	private final String title;
-	private final String[] header;
-	private final String[][] rows;
+	private String title;
+	private String noDataFound;
+	private String[] header;
+	private List<String[]> rows;
 
-	private Table(String title, String[] header, String[][] rows) {
-		Assertion.check()
-				.isNotBlank(title)
-				.isNotNull(header)
-				.isNotNull(rows);
-		//---
+	public static Table init() {
+		return new Table();
+	}
+
+	private Table() {
+	}
+
+	public Table title(String title) {
 		this.title = title;
+		return this;
+	}
+
+	public Table noDataFound(String noDataFound) {
+		this.noDataFound = noDataFound;
+		return this;
+	}
+
+	public Table header(String... header) {
 		this.header = header;
+		return this;
+	}
+
+	public Table rows(String[][] rows) {
+		this.rows(Arrays.asList(rows));
+		return this;
+	}
+
+	public Table rows(List<String[]> rows) {
 		this.rows = rows;
-	}
-
-	public static class TableBuilder implements Builder<Table> {
-		private String myTitle;
-		private String[] myHeader;
-		private String[][] myRows;
-
-		public TableBuilder title(String title) {
-			myTitle = title;
-			return this;
-		}
-
-		public TableBuilder header(String... header) {
-			myHeader = header;
-			return this;
-		}
-
-		public TableBuilder rows(String[][] rows) {
-			myRows = rows;
-			return this;
-		}
-
-		public TableBuilder rows(List<String[]> rows) {
-			rows(rows.toArray(new String[0][]));
-			return this;
-		}
-
-		public Table build() {
-			return new Table(myTitle, myHeader, myRows);
-		}
-	}
-
-	public static TableBuilder builder() {
-		return new TableBuilder();
+		return this;
 	}
 
 	public void print() {
+		Assertion.check()
+				.isNotBlank(title)
+				.isNotBlank(noDataFound)
+				.isNotNull(header)
+				.isNotNull(rows);
+		//---
+		if (rows.isEmpty()) {
+			System.out.println(noDataFound);
+			return;
+		}
 		int columns = header.length;
-
 		// 1. Formatage des données et détection des colonnes numériques
-		String[][] formattedRows = new String[rows.length][columns];
+		List<String[]> formattedRows = new ArrayList<>();
 		boolean[] isNumericColumn = new boolean[columns];
 
 		// Détection des colonnes numériques
@@ -71,13 +69,13 @@ public final class Table {
 		}
 
 		// Formatage des données
-		for (int rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+		for (int rowIndex = 0; rowIndex < rows.size(); rowIndex++) {
 			for (int colIndex = 0; colIndex < columns; colIndex++) {
-				String value = rows[rowIndex][colIndex];
+				String value = rows.get(rowIndex)[colIndex];
 				if (value != null && isNumericColumn[colIndex] && isNumeric(value)) {
-					formattedRows[rowIndex][colIndex] = formatNumber(value);
+					formattedRows.get(rowIndex)[colIndex] = formatNumber(value);
 				} else {
-					formattedRows[rowIndex][colIndex] = value != null ? value : "";
+					formattedRows.get(rowIndex)[colIndex] = value != null ? value : "";
 				}
 			}
 		}
@@ -132,7 +130,7 @@ public final class Table {
 	/**
 	 * Détermine si une colonne contient principalement des nombres
 	 */
-	private static boolean isColumnNumeric(String[][] rows, int columnIndex) {
+	private static boolean isColumnNumeric(List<String[]> rows, int columnIndex) {
 		int numericCount = 0;
 		int totalNonNullValues = 0;
 

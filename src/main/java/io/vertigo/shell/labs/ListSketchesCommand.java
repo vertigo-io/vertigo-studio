@@ -41,15 +41,16 @@ public final class ListSketchesCommand implements Runnable {
 				.collect(Collectors.toList());
 		String[][] rows = new String[sketches.size()][3];
 		for (int i = 0; i < sketches.size(); i++) {
-			rows[i][0] = sketches.get(i).getKey().getName();
-			rows[i][1] = sketches.get(i).getLocalName();
-			rows[i][2] = sketches.get(i).getClass().getSimpleName();
+			final Sketch sketch = sketches.get(i);
+			rows[i][0] = sketch.getKey().getName();
+			rows[i][1] = sketch.getLocalName();
+			rows[i][2] = sketch.getClass().getSimpleName();
 		}
-		Table.builder()
+		Table.init()
 				.title("List of sketches:")
+				.noDataFound("No sketch found")
 				.header("Key", "Name", "type")
 				.rows(rows)
-				.build()
 				.print();
 		//---
 		resetParameters();

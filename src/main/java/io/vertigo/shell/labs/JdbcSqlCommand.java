@@ -91,11 +91,11 @@ public final class JdbcSqlCommand implements Runnable {
 			rows.add(row);
 		}
 
-		Table.builder()
+		Table.init()
 				.title("Result of query:")
+				.noDataFound("No data found")
 				.header(header)
 				.rows(rows)
-				.build()
 				.print();
 	}
 
@@ -112,24 +112,20 @@ public final class JdbcSqlCommand implements Runnable {
 
 	private void listTables() {
 		try {
-			DatabaseMetaData metaData = JdbcContext.connection.getMetaData();
-			ResultSet rs = metaData.getTables(null, null, "%", new String[] { "TABLE" });
+			final DatabaseMetaData metaData = JdbcContext.connection.getMetaData();
+			final ResultSet rs = metaData.getTables(null, null, "%", new String[] { "TABLE" });
 
-			List<String[]> rows = new ArrayList<>();
+			final List<String[]> rows = new ArrayList<>();
 			while (rs.next()) {
 				rows.add(new String[] { rs.getString("TABLE_NAME") });
 			}
 
-			if (!rows.isEmpty()) {
-				Table.builder()
-						.title("Tables in the database:")
-						.header("TABLE_NAME")
-						.rows(rows)
-						.build()
-						.print();
-			} else {
-				System.out.println("No tables found in the database.");
-			}
+			Table.init()
+					.title("Tables in the database:")
+					.noDataFound("No tables found in the database.")
+					.header("TABLE_NAME")
+					.rows(rows)
+					.print();
 		} catch (SQLException e) {
 			System.out.println("Error: " + e.getMessage());
 		}
@@ -137,10 +133,10 @@ public final class JdbcSqlCommand implements Runnable {
 
 	private void describeTable() {
 		try {
-			DatabaseMetaData metaData = JdbcContext.connection.getMetaData();
-			ResultSet rs = metaData.getColumns(null, null, tableName, "%");
+			final DatabaseMetaData metaData = JdbcContext.connection.getMetaData();
+			final ResultSet rs = metaData.getColumns(null, null, tableName, "%");
 
-			List<String[]> columnsList = new ArrayList<>();
+			final List<String[]> columns = new ArrayList<>();
 			while (rs.next()) {
 				String[] column = {
 						rs.getString("COLUMN_NAME"),
@@ -148,19 +144,15 @@ public final class JdbcSqlCommand implements Runnable {
 						rs.getString("COLUMN_SIZE"),
 						rs.getString("IS_NULLABLE")
 				};
-				columnsList.add(column);
+				columns.add(column);
 			}
 
-			if (!columnsList.isEmpty()) {
-				Table.builder()
-						.title("Structure of table " + tableName + ":")
-						.header("Name", "Type", "Size", "Nullable")
-						.rows(columnsList.toArray(new String[0][]))
-						.build()
-						.print();
-			} else {
-				System.out.println("Table '" + tableName + "' not found or has no columns.");
-			}
+			Table.init()
+					.title("Structure of table " + tableName + ":")
+					.noDataFound("\"Table '\" + tableName + \"' not found or has no columns.\"")
+					.header("Name", "Type", "Size", "Nullable")
+					.rows(columns)
+					.print();
 		} catch (SQLException e) {
 			System.out.println("Error: " + e.getMessage());
 		}
