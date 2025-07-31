@@ -19,6 +19,9 @@ public final class JdbcSqlCommand implements Runnable {
 	@Parameter(names = { "--tables", "-t" }, description = "SQL list tables")
 	private boolean tables;
 
+	@Parameter(names = { "--ping", "-p" }, description = "SQL ping database")
+	private boolean ping;
+
 	@Parameter(names = { "--table", "-T" }, description = "SQL describe table")
 	private String tableName;
 
@@ -39,6 +42,9 @@ public final class JdbcSqlCommand implements Runnable {
 		}
 		if (tables) {
 			listTables();
+		}
+		if (ping) {
+			ping();
 		}
 		if (tableName != null) {
 			describeTable();
@@ -73,6 +79,17 @@ public final class JdbcSqlCommand implements Runnable {
 				System.out.print(rs.getString(i) + (i == columnsNumber ? "" : "	"));
 			}
 			System.out.println();
+		}
+	}
+
+	private void ping() {
+		try {
+			long startTime = System.nanoTime();
+			JdbcContext.connection.isValid(2);
+			long endTime = System.nanoTime();
+			System.out.println("Ping: " + (endTime - startTime) / 1_000_000.0 + " ms");
+		} catch (SQLException e) {
+			System.out.println("Ping error: " + e.getMessage());
 		}
 	}
 
