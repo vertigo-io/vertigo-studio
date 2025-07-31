@@ -7,8 +7,9 @@ import io.vertigo.core.lang.Assertion;
 public final class ShellUtil {
 	private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance(ShellContext.LOCALE);
 
-	public static void printTable(String[] header, String[][] rows) {
+	public static void printTable(String title, String[] header, String[][] rows) {
 		Assertion.check()
+				.isNotBlank(title)
 				.isNotNull(header)
 				.isNotNull(rows);
 		//---
@@ -72,6 +73,8 @@ public final class ShellUtil {
 		separator.append("+\n");
 
 		// 5. Affichage de la table
+		System.out.print(separator);
+		System.out.print(title);
 		System.out.print(separator);
 		System.out.printf(format, (Object[]) header);
 		System.out.print(separator);

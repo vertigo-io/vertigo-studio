@@ -95,7 +95,7 @@ public final class JdbcSqlCommand implements Runnable {
 		String[][] rows = rowsList.toArray(new String[0][]);
 
 		// Affichage avec ShellUtil
-		ShellUtil.printTable(headers, rows);
+		ShellUtil.printTable("Result of query:", headers, rows);
 	}
 
 	private void ping() {
@@ -122,8 +122,7 @@ public final class JdbcSqlCommand implements Runnable {
 			if (!tablesList.isEmpty()) {
 				String[] headers = { "TABLE_NAME" };
 				String[][] tables = tablesList.toArray(new String[0][]);
-				System.out.println("Tables in the database:");
-				ShellUtil.printTable(headers, tables);
+				ShellUtil.printTable("Tables in the database:", headers, tables);
 			} else {
 				System.out.println("No tables found in the database.");
 			}
@@ -149,10 +148,10 @@ public final class JdbcSqlCommand implements Runnable {
 			}
 
 			if (!columnsList.isEmpty()) {
+				String title = "Structure of table " + tableName + ":";
 				String[] headers = { "Name", "Type", "Size", "Nullable" };
 				String[][] columns = columnsList.toArray(new String[0][]);
-				System.out.println("Structure of table " + tableName + ":");
-				ShellUtil.printTable(headers, columns);
+				ShellUtil.printTable(title, headers, columns);
 			} else {
 				System.out.println("Table '" + tableName + "' not found or has no columns.");
 			}
