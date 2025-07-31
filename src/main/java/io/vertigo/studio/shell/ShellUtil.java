@@ -73,8 +73,7 @@ public final class ShellUtil {
 		separator.append("+\n");
 
 		// 5. Affichage de la table
-		System.out.print(separator);
-		System.out.print(title);
+		System.out.println(title);
 		System.out.print(separator);
 		System.out.printf(format, (Object[]) header);
 		System.out.print(separator);
