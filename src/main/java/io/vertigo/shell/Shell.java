@@ -4,6 +4,8 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
@@ -77,11 +79,30 @@ public final class Shell {
 				if (line.startsWith("!")) {
 					runFromHistory(line);
 				} else {
-					handleCommand(line.split("\\s+"));
+					handleCommand(splitArguments(line));
 				}
 				history.add(line);
 			}
 		}
+	}
+
+	public static String[] splitArguments(String input) {
+		List<String> result = new ArrayList<>();
+		// Pattern pour matcher les chaînes entre guillemets ou les tokens simples
+		Pattern pattern = Pattern.compile("\"([^\"]*)\"|(\\S+)");
+		Matcher matcher = pattern.matcher(input.trim());
+
+		while (matcher.find()) {
+			if (matcher.group(1) != null) {
+				// Contenu entre guillemets
+				result.add(matcher.group(1));
+			} else {
+				// Token sans guillemets
+				result.add(matcher.group(2));
+			}
+		}
+
+		return result.toArray(new String[0]);
 	}
 
 	private void runFromHistory(String line) {
@@ -100,19 +121,28 @@ public final class Shell {
 	}
 
 	private void handleCommand(String[] args) {
+		String parsedCommand = null;
 		try {
 			jc.parse(args);
-			String parsedCommand = jc.getParsedCommand();
-			if (parsedCommand != null) {
-				Runnable command = (Runnable) jc.getCommands().get(parsedCommand).getObjects().get(0);
-				command.run();
-			} else {
-				System.out.println("Unknown command: " + args[0]);
-				jc.usage();
-			}
+			parsedCommand = jc.getParsedCommand();
 		} catch (ParameterException e) {
-			System.err.println(e.getMessage());
-			//jc.usage(jc.getParsedCommand());
+			System.err.println("Unknown command: " + args[0]);
+			return;
+		}
+		if (parsedCommand != null) {
+			ShellCommand command = null;
+			try {
+				command = (ShellCommand) jc.getCommands().get(parsedCommand).getObjects().get(0);
+				command.run();
+			} catch (Exception e) {
+				System.err.println("Error during execution command: " + parsedCommand);
+			}
+			if (command != null) {
+				command.reset();
+			}
+		} else {
+			System.err.println("Unknown command: " + args[0]);
+			jc.usage();
 		}
 	}
 

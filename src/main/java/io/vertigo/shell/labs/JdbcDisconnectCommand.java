@@ -6,9 +6,10 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
 import io.vertigo.core.lang.VSystemException;
+import io.vertigo.shell.ShellCommand;
 
 @Parameters(commandNames = "jdbc-disconnect", commandDescription = "Disconnects from the JDBC database")
-public final class JdbcDisconnectCommand implements Runnable {
+public final class JdbcDisconnectCommand implements ShellCommand {
 	@Parameter(names = { "--help", "-h" }, description = "Show help for disconnect command", help = true)
 	private boolean help;
 
@@ -28,5 +29,10 @@ public final class JdbcDisconnectCommand implements Runnable {
 		} catch (final SQLException e) {
 			throw new VSystemException(e, "Failed to disconnect from database: {0}", e.getMessage());
 		}
+	}
+
+	@Override
+	public void reset() {
+		help = false;
 	}
 }

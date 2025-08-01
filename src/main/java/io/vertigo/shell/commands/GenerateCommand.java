@@ -3,11 +3,12 @@ package io.vertigo.shell.commands;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
+import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.ShellContext;
 import io.vertigo.studio.tools.VertigoStudioMda;
 
 @Parameters(commandNames = "generate", commandDescription = "Generate source files from a configuration file.")
-public final class GenerateCommand implements Runnable {
+public final class GenerateCommand implements ShellCommand {
 	@Parameter(names = { "--help", "-h" }, help = true, description = "Display help information")
 	private boolean help;
 	//    @Parameter(description = "The configuration file (e.g., studio-config.yaml)", required = true)
@@ -20,5 +21,10 @@ public final class GenerateCommand implements Runnable {
 		} else {
 			VertigoStudioMda.generate(ShellContext.notebookConfig);
 		}
+	}
+
+	@Override
+	public void reset() {
+		help = false;
 	}
 }

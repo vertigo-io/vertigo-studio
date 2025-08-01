@@ -4,8 +4,10 @@ import java.util.List;
 
 import com.beust.jcommander.Parameters;
 
+import io.vertigo.shell.ShellCommand;
+
 @Parameters(commandNames = "history", commandDescription = "Displays the command history.")
-public class HistoryCommand implements Runnable {
+public class HistoryCommand implements ShellCommand {
 	private final List<String> history;
 
 	public HistoryCommand(List<String> history) {
@@ -17,5 +19,9 @@ public class HistoryCommand implements Runnable {
 		for (String command : history) {
 			System.out.printf("%2d: %s%n", i++, command);
 		}
+	}
+
+	@Override
+	public void reset() {
 	}
 }

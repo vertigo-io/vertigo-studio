@@ -1,7 +1,6 @@
 package io.vertigo.shell;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,11 +12,7 @@ public final class Table {
 	private String title;
 	private String noDataFound;
 	private String[] header;
-	private List<String[]> rows;
-
-	public static Table init() {
-		return new Table();
-	}
+	private String[][] rows;
 
 	private Table() {
 	}
@@ -38,13 +33,17 @@ public final class Table {
 	}
 
 	public Table rows(String[][] rows) {
-		this.rows(Arrays.asList(rows));
+		this.rows = rows;
 		return this;
 	}
 
 	public Table rows(List<String[]> rows) {
-		this.rows = rows;
+		rows(rows.toArray(new String[0][]));
 		return this;
+	}
+
+	public static Table init() {
+		return new Table();
 	}
 
 	public void print() {
@@ -54,13 +53,15 @@ public final class Table {
 				.isNotNull(header)
 				.isNotNull(rows);
 		//---
-		if (rows.isEmpty()) {
+		if (Arrays.asList(rows).isEmpty()) {
 			System.out.println(noDataFound);
 			return;
 		}
+
 		int columns = header.length;
+
 		// 1. Formatage des données et détection des colonnes numériques
-		List<String[]> formattedRows = new ArrayList<>();
+		String[][] formattedRows = new String[rows.length][columns];
 		boolean[] isNumericColumn = new boolean[columns];
 
 		// Détection des colonnes numériques
@@ -69,13 +70,13 @@ public final class Table {
 		}
 
 		// Formatage des données
-		for (int rowIndex = 0; rowIndex < rows.size(); rowIndex++) {
+		for (int rowIndex = 0; rowIndex < rows.length; rowIndex++) {
 			for (int colIndex = 0; colIndex < columns; colIndex++) {
-				String value = rows.get(rowIndex)[colIndex];
+				String value = rows[rowIndex][colIndex];
 				if (value != null && isNumericColumn[colIndex] && isNumeric(value)) {
-					formattedRows.get(rowIndex)[colIndex] = formatNumber(value);
+					formattedRows[rowIndex][colIndex] = formatNumber(value);
 				} else {
-					formattedRows.get(rowIndex)[colIndex] = value != null ? value : "";
+					formattedRows[rowIndex][colIndex] = value != null ? value : "";
 				}
 			}
 		}
@@ -130,7 +131,7 @@ public final class Table {
 	/**
 	 * Détermine si une colonne contient principalement des nombres
 	 */
-	private static boolean isColumnNumeric(List<String[]> rows, int columnIndex) {
+	private static boolean isColumnNumeric(String[][] rows, int columnIndex) {
 		int numericCount = 0;
 		int totalNonNullValues = 0;
 

@@ -12,10 +12,11 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
 import io.vertigo.core.lang.VSystemException;
+import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.Table;
 
 @Parameters(commandNames = "jdbc-sql", commandDescription = "Executes a SQL query")
-public final class JdbcSqlCommand implements Runnable {
+public final class JdbcSqlCommand implements ShellCommand {
 	@Parameter(names = { "--query", "-q" }, description = "SQL query to execute")
 	private String query;
 
@@ -52,6 +53,15 @@ public final class JdbcSqlCommand implements Runnable {
 		if (tableName != null) {
 			describeTable();
 		}
+	}
+
+	@Override
+	public void reset() {
+		query = null;
+		tables = false;
+		ping = false;
+		tableName = null;
+		help = false;
 	}
 
 	private void executeQuery() {

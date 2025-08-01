@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
+import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.ShellContext;
 import io.vertigo.shell.Table;
 import io.vertigo.studio.notebook.Notebook;
@@ -17,7 +18,7 @@ import io.vertigo.studio.vertigo.domain.DtSketch;
 import io.vertigo.studio.vertigo.task.TaskSketch;
 
 @Parameters(commandNames = "list", commandDescription = "Lists all sketches  with their stereotype and package.")
-public final class ListSketchesCommand implements Runnable {
+public final class ListSketchesCommand implements ShellCommand {
 
 	@Parameter(names = { "-a", "--all" }, description = "filters all sketches")
 	private boolean a = false;
@@ -52,11 +53,9 @@ public final class ListSketchesCommand implements Runnable {
 				.header("Key", "Name", "type")
 				.rows(rows)
 				.print();
-		//---
-		resetParameters();
 	}
 
-	private void resetParameters() {
+	public void reset() {
 		a = false;
 		d = false;
 		s = false;

@@ -6,9 +6,10 @@ import java.time.Instant;
 import com.beust.jcommander.Parameters;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.shell.ShellCommand;
 
 @Parameters(commandNames = "uptime", commandDescription = "Displays the shell uptime.")
-public class UptimeCommand implements Runnable {
+public class UptimeCommand implements ShellCommand {
 
 	private final Instant startTime;
 
@@ -23,5 +24,9 @@ public class UptimeCommand implements Runnable {
 		System.out.printf("Uptime: %d minutes, %d seconds%n",
 				uptime.toMinutes(),
 				uptime.toSecondsPart());
+	}
+
+	@Override
+	public void reset() {
 	}
 }

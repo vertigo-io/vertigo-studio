@@ -4,9 +4,10 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameters;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.shell.ShellCommand;
 
 @Parameters(commandNames = "help", commandDescription = "Displays help information.")
-public class HelpCommand implements Runnable {
+public class HelpCommand implements ShellCommand {
 
 	private JCommander jc;
 
@@ -18,5 +19,8 @@ public class HelpCommand implements Runnable {
 
 	public void run() {
 		jc.usage();
+	}
+
+	public void reset() {
 	}
 }
