@@ -14,11 +14,16 @@ import com.beust.jcommander.Parameters;
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.Shiny;
+import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcSchema;
+import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcTable;
 
 @Parameters(commandNames = "jdbc-sql", commandDescription = "Executes a SQL query")
 public final class JdbcSqlCommand implements ShellCommand {
 	@Parameter(names = { "--query", "-q" }, description = "SQL query to execute")
 	private String query;
+
+	@Parameter(names = { "--schema", "-s" }, description = "SQL list schemas")
+	private boolean schemas;
 
 	@Parameter(names = { "--tables", "-t" }, description = "SQL list tables")
 	private boolean tables;
@@ -44,6 +49,9 @@ public final class JdbcSqlCommand implements ShellCommand {
 		if (query != null) {
 			executeQuery();
 		}
+		if (schemas) {
+			listSchemas();
+		}
 		if (tables) {
 			listTables();
 		}
@@ -58,6 +66,7 @@ public final class JdbcSqlCommand implements ShellCommand {
 	@Override
 	public void reset() {
 		query = null;
+		schemas = false;
 		tables = false;
 		ping = false;
 		tableName = null;
@@ -114,6 +123,15 @@ public final class JdbcSqlCommand implements ShellCommand {
 		JdbcContext.connection.isValid(2);
 		long endTime = System.nanoTime();
 		System.out.println("Ping: " + (endTime - startTime) / 1_000_000.0 + " ms");
+	}
+
+	private void listSchemas() throws Exception {
+		List<JdbcSchema> schemas = new JdbcModelLoader(JdbcContext.connection).loadSchemas();
+		for (JdbcSchema schema : schemas) {
+			for (JdbcTable table : schema.tables()) {
+				System.out.println(table.name());
+			}
+		}
 	}
 
 	private void listTables() throws Exception {

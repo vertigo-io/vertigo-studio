@@ -136,6 +136,7 @@ public final class Shell {
 				command.run();
 			} catch (Exception e) {
 				System.err.println("Error during execution command: " + parsedCommand);
+				e.printStackTrace();
 			}
 			if (command != null) {
 				command.reset();
