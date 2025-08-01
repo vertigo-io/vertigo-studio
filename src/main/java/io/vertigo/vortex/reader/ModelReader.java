@@ -69,7 +69,7 @@ public final class ModelReader {
 		}
 		for (RawEntity rawEntity : rawModel.rawEntities) {
 			var name = "do-" + rawEntity.name;
-			domainTypeCatalog.put(name, new VXDomainType(name, "entity"));
+			domainTypeCatalog.put(name, new VXDomainType(name, "Entity"));
 		}
 
 		for (RawEntity rawEntity : rawModel.rawEntities) {

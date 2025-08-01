@@ -3,16 +3,9 @@ package io.vertigo.shell.labs.Jdbc;
 import java.util.List;
 
 public record JdbcModel(List<JdbcSchema> schemas) {
-	//	//Liste des catalogues
-	//	private Map<String, JdbcTable> tables = new ArrayList<>();
 
 	public JdbcModel {
 		schemas = List.copyOf(schemas);
-		//		for (JdbcSchema schema : schemas) {
-		//			for (JdbcTable table : schema.tables) {
-		//				tables.put(schema.name() + "." + table.name(), table);
-		//			}
-		//		}
 	}
 
 	// Représente un schéma dans la base de données
@@ -80,12 +73,6 @@ public record JdbcModel(List<JdbcSchema> schemas) {
 			String sourceColumn,
 			String targetTable,
 			String targetColumn) {
-
-		@Override
-		public String toString() {
-			return "JdbcRelation{name='%s', sourceTable='%s', sourceColumn='%s', targetTable='%s', targetColumn='%s'}"
-					.formatted(name, sourceTable, sourceColumn, targetTable, targetColumn);
-		}
 	}
 
 	// Représente un trigger sur une table

@@ -137,6 +137,7 @@ public class JdbcModelLoader {
 	// Charge les relations
 	private List<JdbcRelation> loadRelations(DatabaseMetaData metaData, String tableName, String schema) throws SQLException {
 		final List<JdbcRelation> relations = new ArrayList<>();
+
 		try (ResultSet rs = metaData.getImportedKeys(null, schema, tableName)) {
 			while (rs.next()) {
 				final String fkName = rs.getString("FK_NAME");
@@ -157,7 +158,8 @@ public class JdbcModelLoader {
 				"""
 						SELECT trigger_name, event_manipulation AS event, action_timing AS timing, action_statement AS procedure
 						FROM information_schema.triggers
-						WHERE trigger_schema = ? AND event_object_table = ?""")) {
+						WHERE trigger_schema = ? AND event_object_table = ?
+						""")) {
 			stmt.setString(1, schema);
 			stmt.setString(2, tableName);
 			try (ResultSet rs = stmt.executeQuery()) {
@@ -182,7 +184,8 @@ public class JdbcModelLoader {
 						FROM pg_constraint c
 						JOIN pg_class t ON c.conrelid = t.oid
 						WHERE t.relname = ? AND t.relnamespace = (SELECT oid FROM pg_namespace WHERE nspname = ?)
-						AND contype IN ('c', 'u')""")) {
+						AND contype IN ('c', 'u')
+						""")) {
 			stmt.setString(1, tableName);
 			stmt.setString(2, schema);
 			try (ResultSet rs = stmt.executeQuery()) {
@@ -209,7 +212,8 @@ public class JdbcModelLoader {
 				"""
 						SELECT sequence_name, start_value, increment, minimum_value, maximum_value
 						FROM information_schema.sequences
-						WHERE sequence_schema = ?""")) {
+						WHERE sequence_schema = ?
+						""")) {
 			stmt.setString(1, schema);
 			try (ResultSet rs = stmt.executeQuery()) {
 				while (rs.next()) {
@@ -232,7 +236,8 @@ public class JdbcModelLoader {
 				"""
 						SELECT matviewname, definition
 						FROM pg_matviews
-						WHERE schemaname = ?""")) {
+						WHERE schemaname = ?
+						""")) {
 			stmt.setString(1, schema);
 			try (ResultSet rs = stmt.executeQuery()) {
 				while (rs.next()) {
@@ -253,7 +258,8 @@ public class JdbcModelLoader {
 				"""
 						SELECT routine_name, routine_type, data_type, routine_definition
 						FROM information_schema.routines
-						WHERE routine_schema = ?""")) {
+						WHERE routine_schema = ?
+						""")) {
 			stmt.setString(1, schema);
 			try (ResultSet rs = stmt.executeQuery()) {
 				while (rs.next()) {
@@ -296,7 +302,8 @@ public class JdbcModelLoader {
 	private String loadTableComment(String tableName, String schema) throws SQLException {
 		try (PreparedStatement stmt = connection.prepareStatement(
 				"""
-						SELECT obj_description((SELECT oid FROM pg_class WHERE relname = ? AND relnamespace = (SELECT oid FROM pg_namespace WHERE nspname = ?)), 'pg_class')""")) {
+						SELECT obj_description((SELECT oid FROM pg_class WHERE relname = ? AND relnamespace = (SELECT oid FROM pg_namespace WHERE nspname = ?)), 'pg_class')
+						""")) {
 			stmt.setString(1, tableName);
 			stmt.setString(2, schema);
 			try (ResultSet rs = stmt.executeQuery()) {
@@ -310,7 +317,8 @@ public class JdbcModelLoader {
 		try (PreparedStatement stmt = connection.prepareStatement(
 				"""
 						SELECT col_description((SELECT oid FROM pg_class WHERE relname = ? AND relnamespace = (SELECT oid FROM pg_namespace WHERE nspname = ?)),
-						                       (SELECT attnum FROM pg_attribute WHERE attrelid = (SELECT oid FROM pg_class WHERE relname = ?) AND attname = ?))""")) {
+						                       (SELECT attnum FROM pg_attribute WHERE attrelid = (SELECT oid FROM pg_class WHERE relname = ?) AND attname = ?))
+						                       """)) {
 			stmt.setString(1, tableName);
 			stmt.setString(2, schema);
 			stmt.setString(3, tableName);

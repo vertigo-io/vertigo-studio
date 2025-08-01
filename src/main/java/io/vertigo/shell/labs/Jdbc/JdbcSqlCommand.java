@@ -14,6 +14,7 @@ import com.beust.jcommander.Parameters;
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.Shiny;
+import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcRelation;
 import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcSchema;
 import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcTable;
 
@@ -129,7 +130,17 @@ public final class JdbcSqlCommand implements ShellCommand {
 		List<JdbcSchema> schemas = new JdbcModelLoader(JdbcContext.connection).loadSchemas();
 		for (JdbcSchema schema : schemas) {
 			for (JdbcTable table : schema.tables()) {
-				System.out.println(table.name());
+				System.out.println("==table :" + table.name() + "==");
+				for (JdbcRelation relation : table.relations()) {
+					System.out.print(relation.sourceTable());
+					System.out.print(" - ");
+					System.out.print(relation.sourceColumn());
+					System.out.print(" --> ");
+					System.out.print(relation.targetTable());
+					System.out.print(" - ");
+					System.out.print(relation.targetColumn());
+					System.out.println();
+				}
 			}
 		}
 	}

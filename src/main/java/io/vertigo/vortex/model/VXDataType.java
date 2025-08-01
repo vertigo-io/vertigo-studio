@@ -7,5 +7,7 @@ public enum VXDataType {
 	Integer,
 	Double,
 	Boolean,
-	Json
+	Json,
+	//---
+	Entity
 }
