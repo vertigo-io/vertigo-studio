@@ -13,7 +13,7 @@ import com.beust.jcommander.Parameters;
 
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shell.ShellCommand;
-import io.vertigo.shell.Table;
+import io.vertigo.shell.Shiny;
 
 @Parameters(commandNames = "jdbc-sql", commandDescription = "Executes a SQL query")
 public final class JdbcSqlCommand implements ShellCommand {
@@ -101,7 +101,7 @@ public final class JdbcSqlCommand implements ShellCommand {
 			rows.add(row);
 		}
 
-		Table.init()
+		Shiny.table()
 				.title("Result of query:")
 				.noDataFound("No data found")
 				.header(header)
@@ -130,7 +130,7 @@ public final class JdbcSqlCommand implements ShellCommand {
 				rows.add(new String[] { rs.getString("TABLE_NAME") });
 			}
 
-			Table.init()
+			Shiny.table()
 					.title("Tables in the database:")
 					.noDataFound("No tables found in the database.")
 					.header("TABLE_NAME")
@@ -157,7 +157,7 @@ public final class JdbcSqlCommand implements ShellCommand {
 				columns.add(column);
 			}
 
-			Table.init()
+			Shiny.table()
 					.title("Structure of table " + tableName + ":")
 					.noDataFound("\"Table '\" + tableName + \"' not found or has no columns.\"")
 					.header("Name", "Type", "Size", "Nullable")

@@ -4,11 +4,11 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 
-public final class Entity {
+public final class VXEntity {
 	public final String name;
-	public final List<Attribute> attributes;
+	public final List<VXAttribute> attributes;
 
-	public Entity(String name, List<Attribute> attributes) {
+	public VXEntity(String name, List<VXAttribute> attributes) {
 		Assertion.check()
 				.isNotBlank(name)
 				.isNotNull(attributes);

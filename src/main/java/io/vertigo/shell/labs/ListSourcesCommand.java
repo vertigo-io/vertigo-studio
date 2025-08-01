@@ -6,7 +6,7 @@ import com.beust.jcommander.Parameters;
 
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.ShellContext;
-import io.vertigo.shell.Table;
+import io.vertigo.shell.Shiny;
 import io.vertigo.studio.source.Source;
 
 @Parameters(commandNames = "ls", commandDescription = "Lists all sources.")
@@ -20,7 +20,7 @@ public final class ListSourcesCommand implements ShellCommand {
 			rows[i][0] = sources.get(i).type();
 			rows[i][1] = sources.get(i).path();
 		}
-		Table.init()
+		Shiny.table()
 				.title("List of sources:")
 				.noDataFound("No source found")
 				.header("Type", "Path")

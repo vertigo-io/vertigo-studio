@@ -2,11 +2,11 @@ package io.vertigo.vortex.model;
 
 import io.vertigo.core.lang.Assertion;
 
-public final class Header {
+public final class VXHeader {
 	public final String description;
 	public final String[] tags;
 
-	public Header(String description, String[] tags) {
+	public VXHeader(String description, String[] tags) {
 		Assertion.check()
 				.isNotBlank(description)
 				.isNotNull(tags);

@@ -1,6 +1,6 @@
 package io.vertigo.vortex.model;
 
-public enum Role {
+public enum VXRole {
 	/**identity	 */
 	ID,
 

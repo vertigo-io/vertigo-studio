@@ -2,8 +2,8 @@ package io.vertigo.vortex;
 
 import java.io.File;
 
-import io.vertigo.vortex.model.Entity;
-import io.vertigo.vortex.model.Model;
+import io.vertigo.vortex.model.VXEntity;
+import io.vertigo.vortex.model.VXModel;
 import io.vertigo.vortex.reader.ModelReader;
 
 public class Vortex {
@@ -12,10 +12,10 @@ public class Vortex {
 	public static void main(String[] args) throws Exception {
 		ModelReader modelReader = new ModelReader(new File(MODEL_BOOK));
 
-		final Model model = modelReader.process();
+		final VXModel model = modelReader.process();
 
 		//-
-		for (Entity entity : model.entities) {
+		for (VXEntity entity : model.entities) {
 			System.out.println(entity);
 		}
 	}

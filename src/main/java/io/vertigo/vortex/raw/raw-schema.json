@@ -31,7 +31,7 @@
           },
           "dataType": {
             "type": "string",
-            "enum": ["String", "Long", "Integer", "Decimal"]
+            "enum": ["String", "Text", "Long", "Integer", "Double", "Boolean"]
           }
         },
         "required": ["name", "dataType"]

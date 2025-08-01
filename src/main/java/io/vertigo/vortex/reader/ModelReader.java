@@ -11,21 +11,21 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.vortex.model.Attribute;
-import io.vertigo.vortex.model.Cardinality;
-import io.vertigo.vortex.model.DomainType;
-import io.vertigo.vortex.model.Entity;
-import io.vertigo.vortex.model.Header;
-import io.vertigo.vortex.model.Model;
-import io.vertigo.vortex.model.Role;
+import io.vertigo.vortex.model.VXAttribute;
+import io.vertigo.vortex.model.VXCardinality;
+import io.vertigo.vortex.model.VXDomainType;
+import io.vertigo.vortex.model.VXEntity;
+import io.vertigo.vortex.model.VXHeader;
+import io.vertigo.vortex.model.VXModel;
+import io.vertigo.vortex.model.VXRole;
 import io.vertigo.vortex.raw.RawAttribute;
 import io.vertigo.vortex.raw.RawDomainType;
 import io.vertigo.vortex.raw.RawEntity;
 import io.vertigo.vortex.raw.RawModel;
 
 public final class ModelReader {
-	private Map<String, DomainType> domainTypeCatalog = new HashMap<>();
-	private Map<String, Entity> entityCatalog = new HashMap<>();
+	private Map<String, VXDomainType> domainTypeCatalog = new HashMap<>();
+	private Map<String, VXEntity> entityCatalog = new HashMap<>();
 
 	private final File file;
 
@@ -35,7 +35,7 @@ public final class ModelReader {
 		this.file = file;
 	}
 
-	public Model process() throws Exception {
+	public VXModel process() throws Exception {
 		//- STEP 1
 		validate();
 
@@ -58,10 +58,10 @@ public final class ModelReader {
 		return mapper.readValue(file, RawModel.class);
 	}
 
-	private Model transform(RawModel rawModel) {
+	private VXModel transform(RawModel rawModel) {
 		Assertion.check().isNotNull(rawModel);
 		//---
-		var header = new Header(rawModel.rawHeader.description, rawModel.rawHeader.tags);
+		var header = new VXHeader(rawModel.rawHeader.description, rawModel.rawHeader.tags);
 
 		for (RawDomainType rawDomainType : rawModel.rawDomainTypes) {
 			var domainType = transform(rawDomainType);
@@ -69,7 +69,7 @@ public final class ModelReader {
 		}
 		for (RawEntity rawEntity : rawModel.rawEntities) {
 			var name = "do-" + rawEntity.name;
-			domainTypeCatalog.put(name, new DomainType(name, "entity"));
+			domainTypeCatalog.put(name, new VXDomainType(name, "entity"));
 		}
 
 		for (RawEntity rawEntity : rawModel.rawEntities) {
@@ -77,35 +77,35 @@ public final class ModelReader {
 			entityCatalog.put(entity.name, entity);
 		}
 
-		return new Model(
+		return new VXModel(
 				header,
 				new ArrayList<>(domainTypeCatalog.values()),
 				new ArrayList<>(entityCatalog.values()));
 	}
 
-	private Attribute transform(RawAttribute rawAttribute) {
+	private VXAttribute transform(RawAttribute rawAttribute) {
 		//default values
-		Role role = rawAttribute.role == null
-				? Role.DATA
-				: Role.valueOf(rawAttribute.role.toUpperCase());
+		VXRole role = rawAttribute.role == null
+				? VXRole.DATA
+				: VXRole.valueOf(rawAttribute.role.toUpperCase());
 
-		return new Attribute(
+		return new VXAttribute(
 				rawAttribute.name,
 				domainTypeCatalog.get(rawAttribute.domainType),
 				role,
-				Cardinality.fromSymbol(rawAttribute.cardinality));
+				VXCardinality.fromSymbol(rawAttribute.cardinality));
 	}
 
-	private Entity transform(RawEntity rawEntity) {
-		List<Attribute> attributes = rawEntity.rawAttributes
+	private VXEntity transform(RawEntity rawEntity) {
+		List<VXAttribute> attributes = rawEntity.rawAttributes
 				.stream()
 				.map(rawAttribute -> transform(rawAttribute))
 				.collect(Collectors.toList());
 
-		return new Entity(rawEntity.name, attributes);
+		return new VXEntity(rawEntity.name, attributes);
 	}
 
-	private static DomainType transform(RawDomainType rawDomainType) {
-		return new DomainType(rawDomainType.name, rawDomainType.dataType);
+	private static VXDomainType transform(RawDomainType rawDomainType) {
+		return new VXDomainType(rawDomainType.name, rawDomainType.dataType);
 	}
 }

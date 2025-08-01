@@ -4,12 +4,12 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 
-public final class Model {
-	public Header header;
-	public List<DomainType> domainTypes;
-	public List<Entity> entities;
+public final class VXModel {
+	public VXHeader header;
+	public List<VXDomainType> domainTypes;
+	public List<VXEntity> entities;
 
-	public Model(Header header, List<DomainType> domainTypes, List<Entity> entities) {
+	public VXModel(VXHeader header, List<VXDomainType> domainTypes, List<VXEntity> entities) {
 		Assertion.check()
 				.isNotNull(header)
 				.isNotNull(domainTypes)

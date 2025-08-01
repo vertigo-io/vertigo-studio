@@ -3,7 +3,7 @@ package io.vertigo.vortex.model;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.VSystemException;
 
-public enum Cardinality {
+public enum VXCardinality {
 	/** 
 	 * Used for nullable references.
 	 * Symbol: ?
@@ -18,7 +18,7 @@ public enum Cardinality {
 	 */
 	MANY;
 
-	public static Cardinality fromSymbol(final String sCardinality) {
+	public static VXCardinality fromSymbol(final String sCardinality) {
 		Assertion.check().isNotBlank(sCardinality);
 		//---
 		return switch (sCardinality) {

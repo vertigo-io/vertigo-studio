@@ -2,13 +2,13 @@ package io.vertigo.vortex.model;
 
 import io.vertigo.core.lang.Assertion;
 
-public final class Attribute {
+public final class VXAttribute {
 	public final String name;
-	public final DomainType domainType;
-	public final Role role;
-	public final Cardinality cardinality;
+	public final VXDomainType domainType;
+	public final VXRole role;
+	public final VXCardinality cardinality;
 
-	public Attribute(String name, DomainType domainType, Role role, Cardinality cardinality) {
+	public VXAttribute(String name, VXDomainType domainType, VXRole role, VXCardinality cardinality) {
 		Assertion.check()
 				.isNotBlank(name)
 				.isNotNull(domainType)

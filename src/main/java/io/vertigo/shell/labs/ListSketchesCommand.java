@@ -9,7 +9,7 @@ import com.beust.jcommander.Parameters;
 
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.ShellContext;
-import io.vertigo.shell.Table;
+import io.vertigo.shell.Shiny;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
 import io.vertigo.studio.tools.VertigoStudioMda;
@@ -47,7 +47,7 @@ public final class ListSketchesCommand implements ShellCommand {
 			rows[i][1] = sketch.getLocalName();
 			rows[i][2] = sketch.getClass().getSimpleName();
 		}
-		Table.init()
+		Shiny.table()
 				.title("List of sketches:")
 				.noDataFound("No sketch found")
 				.header("Key", "Name", "type")
