@@ -19,12 +19,12 @@ import io.vertigo.shell.commands.UptimeCommand;
 import io.vertigo.shell.commands.WatchCommand;
 import io.vertigo.shell.labs.ClearCommand;
 import io.vertigo.shell.labs.HistoryCommand;
-import io.vertigo.shell.labs.JdbcConnectCommand;
-import io.vertigo.shell.labs.JdbcDisconnectCommand;
-import io.vertigo.shell.labs.JdbcSqlCommand;
 import io.vertigo.shell.labs.ListSketchesCommand;
 import io.vertigo.shell.labs.ListSourcesCommand;
 import io.vertigo.shell.labs.WhoCommand;
+import io.vertigo.shell.labs.Jdbc.JdbcConnectCommand;
+import io.vertigo.shell.labs.Jdbc.JdbcDisconnectCommand;
+import io.vertigo.shell.labs.Jdbc.JdbcSqlCommand;
 import io.vertigo.studio.tools.VertigoStudioMda;
 
 public final class Shell {

@@ -1,4 +1,4 @@
-package io.vertigo.shell.labs;
+package io.vertigo.shell.labs.Jdbc;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -32,7 +32,7 @@ public final class JdbcSqlCommand implements ShellCommand {
 	@Parameter(names = { "--help", "-h" }, description = "Show help for sql command")
 	private boolean help;
 
-	public void run() {
+	public void run() throws Exception {
 		if (help) {
 			// JCommander will print usage
 			return;
@@ -109,44 +109,33 @@ public final class JdbcSqlCommand implements ShellCommand {
 				.print();
 	}
 
-	private void ping() {
-		try {
-			long startTime = System.nanoTime();
-			JdbcContext.connection.isValid(2);
-			long endTime = System.nanoTime();
-			System.out.println("Ping: " + (endTime - startTime) / 1_000_000.0 + " ms");
-		} catch (SQLException e) {
-			System.out.println("Ping error: " + e.getMessage());
-		}
+	private void ping() throws Exception {
+		long startTime = System.nanoTime();
+		JdbcContext.connection.isValid(2);
+		long endTime = System.nanoTime();
+		System.out.println("Ping: " + (endTime - startTime) / 1_000_000.0 + " ms");
 	}
 
-	private void listTables() {
-		try {
-			final DatabaseMetaData metaData = JdbcContext.connection.getMetaData();
-			final ResultSet rs = metaData.getTables(null, null, "%", new String[] { "TABLE" });
-
-			final List<String[]> rows = new ArrayList<>();
+	private void listTables() throws Exception {
+		final DatabaseMetaData metaData = JdbcContext.connection.getMetaData();
+		final List<String[]> rows = new ArrayList<>();
+		try (final ResultSet rs = metaData.getTables(null, null, "%", new String[] { "TABLE" })) {
 			while (rs.next()) {
 				rows.add(new String[] { rs.getString("TABLE_NAME") });
 			}
-
-			Shiny.table()
-					.title("Tables in the database:")
-					.noDataFound("No tables found in the database.")
-					.header("TABLE_NAME")
-					.rows(rows)
-					.print();
-		} catch (SQLException e) {
-			System.out.println("Error: " + e.getMessage());
 		}
+		Shiny.table()
+				.title("Tables in the database:")
+				.noDataFound("No tables found in the database.")
+				.header("TABLE_NAME")
+				.rows(rows)
+				.print();
 	}
 
-	private void describeTable() {
-		try {
-			final DatabaseMetaData metaData = JdbcContext.connection.getMetaData();
-			final ResultSet rs = metaData.getColumns(null, null, tableName, "%");
-
-			final List<String[]> columns = new ArrayList<>();
+	private void describeTable() throws Exception {
+		final DatabaseMetaData metaData = JdbcContext.connection.getMetaData();
+		final List<String[]> columns = new ArrayList<>();
+		try (final ResultSet rs = metaData.getColumns(null, null, tableName, "%")) {
 			while (rs.next()) {
 				String[] column = {
 						rs.getString("COLUMN_NAME"),
@@ -156,15 +145,12 @@ public final class JdbcSqlCommand implements ShellCommand {
 				};
 				columns.add(column);
 			}
-
-			Shiny.table()
-					.title("Structure of table " + tableName + ":")
-					.noDataFound("\"Table '\" + tableName + \"' not found or has no columns.\"")
-					.header("Name", "Type", "Size", "Nullable")
-					.rows(columns)
-					.print();
-		} catch (SQLException e) {
-			System.out.println("Error: " + e.getMessage());
 		}
+		Shiny.table()
+				.title("Structure of table " + tableName + ":")
+				.noDataFound("\"Table '\" + tableName + \"' not found or has no columns.\"")
+				.header("Name", "Type", "Size", "Nullable")
+				.rows(columns)
+				.print();
 	}
 }

@@ -1,4 +1,4 @@
-package io.vertigo.shell.labs;
+package io.vertigo.shell.labs.Jdbc;
 
 import java.sql.SQLException;
 

@@ -31,7 +31,7 @@
           },
           "dataType": {
             "type": "string",
-            "enum": ["String", "Text", "Long", "Integer", "Double", "Boolean"]
+            "enum": ["String", "Text", "Long", "Integer", "Double", "Boolean", "Json"]
           }
         },
         "required": ["name", "dataType"]
@@ -78,6 +78,5 @@
       }
     }
   },
-  "required": ["header", "domainTypes", "entities"],
-  "definitions": {}
+  "required": ["header", "domainTypes", "entities"]
 }

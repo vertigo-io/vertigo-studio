@@ -6,5 +6,6 @@ public enum VXDataType {
 	Long,
 	Integer,
 	Double,
-	Boolean
+	Boolean,
+	Json
 }
