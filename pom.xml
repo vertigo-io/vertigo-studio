@@ -12,6 +12,10 @@
 	<packaging>jar</packaging>
 	<name>vertigo-studio</name>
 
+	<properties>
+		<langchain4j.version>0.36.2</langchain4j.version> 
+    </properties>	
+    	
 	<dependencies>
 		<dependency>
 			<groupId>io.vertigo</groupId>
@@ -89,6 +93,18 @@
   			<artifactId>postgresql</artifactId>
   			<version>42.7.3</version>
 		</dependency>
+		<!-- LangChain4j -->
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j</artifactId>
+            <version>${langchain4j.version}</version>
+        </dependency>
+		<dependency>
+    		<groupId>dev.langchain4j</groupId>
+    		<artifactId>langchain4j-open-ai</artifactId>
+    		<version>${langchain4j.version}</version>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>

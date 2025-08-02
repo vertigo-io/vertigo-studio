@@ -13,6 +13,8 @@ import com.beust.jcommander.Parameters;
 
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shell.ShellCommand;
+import io.vertigo.shell.ai.Agent;
+import io.vertigo.shell.ai.AgentBuilder;
 import io.vertigo.shell.labs.Jdbc.JdbcClusterAnalyzer.JdbcCluster;
 import io.vertigo.shell.labs.Jdbc.JdbcClusterAnalyzer.Strategy;
 import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcColumn;
@@ -31,6 +33,9 @@ public final class JdbcSqlCommand implements ShellCommand {
 
 	@Parameter(names = { "--model", "-m" }, description = "SQL load model (schemas, tables..)")
 	private boolean load;
+
+	@Parameter(names = { "--fancy", "-f" }, description = "SQL create a fancy set of 10 data for a table")
+	private boolean fancy;
 
 	@Parameter(names = { "--analyze", "-a" }, description = "SQL analyze model")
 	private boolean analyze;
@@ -77,6 +82,9 @@ public final class JdbcSqlCommand implements ShellCommand {
 		if (stats) {
 			stats();
 		}
+		if (fancy) {
+			fancy();
+		}
 		if (tables) {
 			listTables();
 		}
@@ -95,6 +103,7 @@ public final class JdbcSqlCommand implements ShellCommand {
 		analyze = false;
 		cluster = false;
 		tables = false;
+		fancy = false;
 		stats = false;
 		ping = false;
 		tableName = null;
@@ -144,6 +153,40 @@ public final class JdbcSqlCommand implements ShellCommand {
 				.header(header)
 				.rows(rows)
 				.print();
+	}
+
+	private void fancy() {
+		final Agent agent = new AgentBuilder().build();
+		if (JdbcContext.model == null) {
+			throw new VSystemException("The model must de loaded before analyze");
+		}
+		JdbcTable tableXX = null;
+		for (JdbcModel.JdbcSchema schema : JdbcContext.model.schemas()) {
+			for (JdbcTable table : schema.tables()) {
+				if ("artist".equals(table.name()))
+					tableXX = table;
+			}
+		}
+		StringBuilder info = new StringBuilder()
+				.append("table : ").append(tableName);
+		for (JdbcColumn column : tableXX.columns()) {
+			info
+					.append("{ column ")
+					.append("name : ").append(column.name()).append(", ")
+					.append("primaryKey : ").append(column.isPrimaryKey()).append(", ")
+					.append("nullable : ").append(column.nullable()).append(", ")
+					.append("type : ").append(column.typeName())
+					.append(" }, ");
+		}
+		String query = """
+				Crée un insert SQL pour remplir la table artist
+				dont la structure est la suivants :"
+				""" + info.toString()
+				+ """
+						utilise des noms d'artistes pop connus de tous
+							""";
+		String response = agent.answer(query);
+		System.out.println(response);
 	}
 
 	private void ping() throws Exception {

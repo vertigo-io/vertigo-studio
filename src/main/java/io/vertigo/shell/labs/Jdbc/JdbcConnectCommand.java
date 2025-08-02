@@ -1,8 +1,5 @@
 package io.vertigo.shell.labs.Jdbc;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -27,21 +24,6 @@ public final class JdbcConnectCommand implements ShellCommand {
 	@Parameter(names = { "--help", "-h" }, description = "Show help for connect command", help = true)
 	private boolean help;
 
-	private Properties secrets = new Properties();
-
-	public JdbcConnectCommand() {
-		String userHome = System.getProperty("user.home");
-		String filePath = userHome + File.separator + "vortex.txt";
-
-		System.out.println("loading secrets");
-		try (FileInputStream fis = new FileInputStream(filePath)) {
-			secrets.load(fis);
-			System.out.println("secrets found :" + secrets.size());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public void run() {
 		if (help) {
 			// JCommander will print usage
@@ -53,20 +35,20 @@ public final class JdbcConnectCommand implements ShellCommand {
 		}
 		try {
 			if (url == null) {
-				url = secrets.getProperty("db.url");
+				url = JdbcContext.secrets.getProperty("db.url");
 			}
 
 			final Properties props = new Properties();
 			if (user != null) {
 				props.setProperty("user", user);
 			} else {
-				props.setProperty("user", secrets.getProperty("db.user"));
+				props.setProperty("user", JdbcContext.secrets.getProperty("db.user"));
 			}
 
 			if (password != null) {
 				props.setProperty("password", password);
 			} else {
-				props.setProperty("password", secrets.getProperty("db.password"));
+				props.setProperty("password", JdbcContext.secrets.getProperty("db.password"));
 			}
 			JdbcContext.connection = DriverManager.getConnection(url, props);
 		} catch (final SQLException e) {
