@@ -7,7 +7,7 @@ import com.beust.jcommander.Parameters;
 
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.ShellContext;
-import io.vertigo.shell.Shiny;
+import io.vertigo.shell.shiny.Shiny;
 import io.vertigo.studio.source.Source;
 
 @Parameters(commandNames = "ls", commandDescription = "Lists all sources.")

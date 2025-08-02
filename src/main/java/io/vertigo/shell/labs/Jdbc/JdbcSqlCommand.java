@@ -13,11 +13,14 @@ import com.beust.jcommander.Parameters;
 
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shell.ShellCommand;
-import io.vertigo.shell.Shiny;
 import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcColumn;
 import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcRelation;
 import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcSchema;
 import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcTable;
+import io.vertigo.shell.shiny.Shiny;
+import io.vertigo.shell.shiny.ShinyColor;
+import io.vertigo.shell.shiny.ShinyNode;
+import io.vertigo.shell.shiny.ShinyTree;
 
 @Parameters(commandNames = "jdbc-sql", commandDescription = "Executes a SQL query")
 public final class JdbcSqlCommand implements ShellCommand {
@@ -145,21 +148,26 @@ public final class JdbcSqlCommand implements ShellCommand {
 		if (JdbcContext.model == null) {
 			JdbcContext.model = new JdbcModelLoader(JdbcContext.connection).loadModel();
 		}
+		final ShinyTree tree = Shiny.tree("model");
 		for (JdbcSchema schema : JdbcContext.model.schemas()) {
+			final ShinyNode schemaNode = tree.getRoot().addNode("schema : " + schema.name());
+			final ShinyNode tablesNode = schemaNode.addNode("tables (" + schema.tables().size() + ")");
 			for (JdbcTable table : schema.tables()) {
-				System.out.println("==table :" + table.name() + "==");
-				for (JdbcRelation relation : table.relations()) {
-					System.out.print(relation.sourceTable());
-					System.out.print(" - ");
-					System.out.print(relation.sourceColumn());
-					System.out.print(" --> ");
-					System.out.print(relation.targetTable());
-					System.out.print(" - ");
-					System.out.print(relation.targetColumn());
-					System.out.println();
+				final ShinyNode tableNode = tablesNode.addNode(table.name());
+				final ShinyNode columnsNode = tableNode.addNode("columns");
+				for (JdbcColumn column : table.columns()) {
+
+					String info = column.name() + " " + ShinyColor.GREEN_BRIGHT.code() + column.typeName() + ShinyColor.RESET.code();
+
+					if (column.isPrimaryKey()) {
+						info = ShinyColor.UNDERLINE.code() + info + ShinyColor.RESET.code();
+					}
+					columnsNode.addNode(info);
 				}
 			}
 		}
+
+		tree.print();
 	}
 
 	private void stats() throws Exception {

@@ -10,7 +10,7 @@ import com.beust.jcommander.Parameters;
 
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.ShellContext;
-import io.vertigo.shell.Shiny;
+import io.vertigo.shell.shiny.Shiny;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
 import io.vertigo.studio.tools.VertigoStudioMda;
