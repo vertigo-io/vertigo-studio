@@ -248,6 +248,16 @@ public final class JdbcSqlCommand implements ShellCommand {
 		//A linear 
 		int complexity = 10 * tables + 1 * columns + relations * 3;
 		System.out.println("Complexity :" + complexity);
+
+		//--------------------------------------------
+		//------ANALYZER------------------------------
+		//--------------------------------------------
+		JdbcModelAnalysisReport report = JdbcModelAnalyzer.analyze(JdbcContext.model);
+		//lister ici toutes les anomalies détectées
+		report.tableDependencyStats().forEach((table, stats) -> {
+			System.out.printf("Table %s: fanIn=%d, fanOut=%d, fanInTransitive=%d%n",
+					table, stats.fanIn(), stats.fanOut(), stats.transitiveFanIn());
+		});
 	}
 
 	private void describeTable() throws Exception {
