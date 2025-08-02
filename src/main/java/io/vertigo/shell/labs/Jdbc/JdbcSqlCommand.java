@@ -13,6 +13,8 @@ import com.beust.jcommander.Parameters;
 
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shell.ShellCommand;
+import io.vertigo.shell.labs.Jdbc.JdbcClusterAnalyzer.JdbcCluster;
+import io.vertigo.shell.labs.Jdbc.JdbcClusterAnalyzer.Strategy;
 import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcColumn;
 import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcRelation;
 import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcSchema;
@@ -32,6 +34,9 @@ public final class JdbcSqlCommand implements ShellCommand {
 
 	@Parameter(names = { "--analyze", "-a" }, description = "SQL analyze model")
 	private boolean analyze;
+
+	@Parameter(names = { "--cluster", "-c" }, description = "SQL cluster tables")
+	private boolean cluster;
 
 	@Parameter(names = { "--tables", "-t" }, description = "SQL list tables")
 	private boolean tables;
@@ -66,6 +71,9 @@ public final class JdbcSqlCommand implements ShellCommand {
 		if (analyze) {
 			analyzeModel();
 		}
+		if (cluster) {
+			cluster();
+		}
 		if (stats) {
 			stats();
 		}
@@ -85,6 +93,7 @@ public final class JdbcSqlCommand implements ShellCommand {
 		query = null;
 		load = false;
 		analyze = false;
+		cluster = false;
 		tables = false;
 		stats = false;
 		ping = false;
@@ -214,6 +223,22 @@ public final class JdbcSqlCommand implements ShellCommand {
 				.header("TABLE_NAME")
 				.rows(rows)
 				.print();
+	}
+
+	private void cluster() throws Exception {
+		if (JdbcContext.model == null) {
+			throw new VSystemException("The model must de loaded before analyze");
+		}
+		List<JdbcCluster> clusters = JdbcClusterAnalyzer.analyze(JdbcContext.model, Strategy.BY_DENSITY);
+
+		ShinyTree tree = Shiny.tree("Clusters");
+		for (JdbcCluster cluster : clusters) {
+			var node = tree.getRoot().addNode(cluster.name());
+			for (String tableName : cluster.tableNames()) {
+				node.addNode(tableName);
+			}
+		}
+		tree.print();
 	}
 
 	private void analyzeModel() throws Exception {
