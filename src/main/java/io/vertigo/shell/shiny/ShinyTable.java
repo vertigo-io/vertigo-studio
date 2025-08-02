@@ -113,23 +113,23 @@ public final class ShinyTable {
 		separator.append("+\n");
 
 		// 5. Affichage de la table
-		System.out.print(ShinyColor.MAGENTA_BG.code());
-		System.out.print(ShinyColor.WHITE.code());
+		System.out.print(ShinyColors.MAGENTA_BG);
+		System.out.print(ShinyColors.WHITE);
 		System.out.println(title);
-		System.out.print(ShinyColor.RESET.code());
+		System.out.print(ShinyColors.RESET);
 		System.out.print(separator);
-		System.out.print(ShinyColor.BLUE_BRIGHT_BG.code());
+		System.out.print(ShinyColors.BLUE_BRIGHT_BG);
 		System.out.printf(format, (Object[]) header);
-		System.out.print(ShinyColor.RESET.code());
+		System.out.print(ShinyColors.RESET);
 		System.out.print(separator);
 		boolean invert = false;
 		for (String[] formattedRow : formattedRows) {
 			if (invert) {
-				System.out.print(ShinyColor.CYAN_BRIGHT_BG.code());
+				System.out.print(ShinyColors.CYAN_BRIGHT_BG);
 			}
 			System.out.printf(format, (Object[]) formattedRow);
 			if (invert) {
-				System.out.print(ShinyColor.RESET.code());
+				System.out.print(ShinyColors.RESET);
 			}
 			invert = !invert;
 		}

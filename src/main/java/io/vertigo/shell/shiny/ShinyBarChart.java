@@ -63,7 +63,7 @@ public final class ShinyBarChart {
 			// Normaliser la longueur de la barre
 			int barLength = (int) ((double) count / maxCount * maxBarLength);
 			final String bar = "\u2588".repeat(Math.max(0, barLength)); // Utiliser le caractère carré plein █
-			String coloredBar = ShinyColor.GREEN_BRIGHT.code() + bar + ShinyColor.RESET.code();
+			String coloredBar = ShinyColors.GREEN_BRIGHT + bar + ShinyColors.RESET;
 			System.out.printf("%-" + maxLabelLength + "s | %-50s (%d)%n", category, coloredBar, count);
 		}
 

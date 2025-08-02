@@ -18,7 +18,7 @@ import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcRelation;
 import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcSchema;
 import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcTable;
 import io.vertigo.shell.shiny.Shiny;
-import io.vertigo.shell.shiny.ShinyColor;
+import io.vertigo.shell.shiny.ShinyColors;
 import io.vertigo.shell.shiny.ShinyNode;
 import io.vertigo.shell.shiny.ShinyTree;
 
@@ -157,10 +157,10 @@ public final class JdbcSqlCommand implements ShellCommand {
 				final ShinyNode columnsNode = tableNode.addNode("columns");
 				for (JdbcColumn column : table.columns()) {
 
-					String info = column.name() + " " + ShinyColor.GREEN_BRIGHT.code() + column.typeName() + ShinyColor.RESET.code();
+					String info = column.name() + " " + ShinyColors.GREEN_BRIGHT + column.typeName() + ShinyColors.RESET;
 
 					if (column.isPrimaryKey()) {
-						info = ShinyColor.UNDERLINE.code() + info + ShinyColor.RESET.code();
+						info = ShinyColors.UNDERLINE + info + ShinyColors.RESET;
 					}
 					columnsNode.addNode(info);
 				}
