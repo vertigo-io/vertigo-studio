@@ -14,6 +14,7 @@ import com.beust.jcommander.Parameters;
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.Shiny;
+import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcColumn;
 import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcRelation;
 import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcSchema;
 import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcTable;
@@ -23,11 +24,17 @@ public final class JdbcSqlCommand implements ShellCommand {
 	@Parameter(names = { "--query", "-q" }, description = "SQL query to execute")
 	private String query;
 
-	@Parameter(names = { "--schema", "-s" }, description = "SQL list schemas")
-	private boolean schemas;
+	@Parameter(names = { "--model", "-m" }, description = "SQL load model (schemas, tables..)")
+	private boolean load;
+
+	@Parameter(names = { "--analyze", "-a" }, description = "SQL analyze model")
+	private boolean analyze;
 
 	@Parameter(names = { "--tables", "-t" }, description = "SQL list tables")
 	private boolean tables;
+
+	@Parameter(names = { "--stats", "-s" }, description = "SQL list stats")
+	private boolean stats;
 
 	@Parameter(names = { "--ping", "-p" }, description = "SQL ping database")
 	private boolean ping;
@@ -50,8 +57,14 @@ public final class JdbcSqlCommand implements ShellCommand {
 		if (query != null) {
 			executeQuery();
 		}
-		if (schemas) {
-			listSchemas();
+		if (load) {
+			loadModel();
+		}
+		if (analyze) {
+			analyzeModel();
+		}
+		if (stats) {
+			stats();
 		}
 		if (tables) {
 			listTables();
@@ -67,8 +80,10 @@ public final class JdbcSqlCommand implements ShellCommand {
 	@Override
 	public void reset() {
 		query = null;
-		schemas = false;
+		load = false;
+		analyze = false;
 		tables = false;
+		stats = false;
 		ping = false;
 		tableName = null;
 		help = false;
@@ -126,9 +141,11 @@ public final class JdbcSqlCommand implements ShellCommand {
 		System.out.println("Ping: " + (endTime - startTime) / 1_000_000.0 + " ms");
 	}
 
-	private void listSchemas() throws Exception {
-		List<JdbcSchema> schemas = new JdbcModelLoader(JdbcContext.connection).loadSchemas();
-		for (JdbcSchema schema : schemas) {
+	private void loadModel() throws Exception {
+		if (JdbcContext.model == null) {
+			JdbcContext.model = new JdbcModelLoader(JdbcContext.connection).loadModel();
+		}
+		for (JdbcSchema schema : JdbcContext.model.schemas()) {
 			for (JdbcTable table : schema.tables()) {
 				System.out.println("==table :" + table.name() + "==");
 				for (JdbcRelation relation : table.relations()) {
@@ -145,6 +162,36 @@ public final class JdbcSqlCommand implements ShellCommand {
 		}
 	}
 
+	private void stats() throws Exception {
+		if (JdbcContext.model == null) {
+			throw new VSystemException("The model must de loaded before analyze");
+		}
+
+		final List<String> tableNames = new ArrayList<String>();
+		final List<Integer> tableCounts = new ArrayList<Integer>();
+
+		for (JdbcSchema schema : JdbcContext.model.schemas()) {
+			for (JdbcTable table : schema.tables()) {
+				String query = "select count(*) as count from " + table.name();
+				try (Statement stmt = JdbcContext.connection.createStatement()) {
+					try (ResultSet rs = stmt.executeQuery(query)) {
+						rs.next();
+						tableNames.add(table.name());
+						tableCounts.add(rs.getInt(1));
+					}
+				} catch (final SQLException e) {
+					throw new VSystemException(e, "Failed to execute SQL query: {0}", e.getMessage());
+				}
+			}
+		}
+
+		Shiny.barChart()
+				.title("Tables Row Count")
+				.header(tableNames)
+				.rows(tableCounts)
+				.print(100);
+	}
+
 	private void listTables() throws Exception {
 		final DatabaseMetaData metaData = JdbcContext.connection.getMetaData();
 		final List<String[]> rows = new ArrayList<>();
@@ -159,6 +206,40 @@ public final class JdbcSqlCommand implements ShellCommand {
 				.header("TABLE_NAME")
 				.rows(rows)
 				.print();
+	}
+
+	private void analyzeModel() throws Exception {
+		if (JdbcContext.model == null) {
+			throw new VSystemException("The model must de loaded before analyze");
+		}
+		int tables = 0;
+		int columns = 0;
+		int relations = 0;
+
+		for (JdbcSchema schema : JdbcContext.model.schemas()) {
+			for (JdbcTable table : schema.tables()) {
+				tables++;
+				for (JdbcColumn column : table.columns()) {
+					columns++;
+				}
+				for (JdbcRelation relation : table.relations()) {
+					relations++;
+				}
+			}
+		}
+		String[] result = { "" + tables, "" + columns, "" + relations };
+		List<String[]> rows = new ArrayList<>();
+		rows.add(result);
+
+		Shiny.table()
+				.title("Objects in the database:")
+				.noDataFound("No object found in the database.")
+				.header("Table", "Column", "Relations")
+				.rows(rows)
+				.print();
+		//A linear 
+		int complexity = 10 * tables + 1 * columns + relations * 3;
+		System.out.println("Complexity :" + complexity);
 	}
 
 	private void describeTable() throws Exception {

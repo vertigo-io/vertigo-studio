@@ -1,5 +1,6 @@
 package io.vertigo.shell.labs;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,12 +41,14 @@ public final class ListSketchesCommand implements ShellCommand {
 				.filter(s -> filter(s))
 				.sorted(Comparator.comparing(s -> s.getClass().getSimpleName()))
 				.collect(Collectors.toList());
-		String[][] rows = new String[sketches.size()][3];
+		List<String[]> rows = new ArrayList<>();
 		for (int i = 0; i < sketches.size(); i++) {
 			final Sketch sketch = sketches.get(i);
-			rows[i][0] = sketch.getKey().getName();
-			rows[i][1] = sketch.getLocalName();
-			rows[i][2] = sketch.getClass().getSimpleName();
+			final String[] row = new String[3];
+			row[0] = sketch.getKey().getName();
+			row[1] = sketch.getLocalName();
+			row[2] = sketch.getClass().getSimpleName();
+			rows.add(row);
 		}
 		Shiny.table()
 				.title("List of sketches:")

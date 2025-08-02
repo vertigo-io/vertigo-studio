@@ -1,5 +1,6 @@
 package io.vertigo.shell.labs;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.beust.jcommander.Parameters;
@@ -14,11 +15,13 @@ public final class ListSourcesCommand implements ShellCommand {
 
 	@Override
 	public void run() {
-		List<Source> sources = ShellContext.notebookConfig.sources();
-		String rows[][] = new String[sources.size()][2];
-		for (int i = 0; i < sources.size(); i++) {
-			rows[i][0] = sources.get(i).type();
-			rows[i][1] = sources.get(i).path();
+		final List<Source> sources = ShellContext.notebookConfig.sources();
+		final List<String[]> rows = new ArrayList<>();
+		for (Source source : sources) {
+			String[] row = new String[2];
+			row[0] = source.type();
+			row[1] = source.path();
+			rows.add(row);
 		}
 		Shiny.table()
 				.title("List of sources:")

@@ -31,7 +31,11 @@ public class JdbcModelLoader {
 	}
 
 	// Charge tous les schémas
-	public List<JdbcSchema> loadSchemas() throws SQLException {
+	public JdbcModel loadModel() throws SQLException {
+		return new JdbcModel(loadSchemas());
+	}
+
+	private List<JdbcSchema> loadSchemas() throws SQLException {
 		final List<JdbcSchema> schemas = new ArrayList<>();
 		final DatabaseMetaData metaData = connection.getMetaData();
 
