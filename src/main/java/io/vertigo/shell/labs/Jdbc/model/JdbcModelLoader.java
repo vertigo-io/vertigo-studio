@@ -1,4 +1,4 @@
-package io.vertigo.shell.labs.Jdbc;
+package io.vertigo.shell.labs.Jdbc.model;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -10,17 +10,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcColumn;
-import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcConstraint;
-import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcFunction;
-import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcIndex;
-import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcMaterializedView;
-import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcPrivilege;
-import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcRelation;
-import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcSchema;
-import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcSequence;
-import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcTable;
-import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcTrigger;
+import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcColumn;
+import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcConstraint;
+import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcFunction;
+import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcIndex;
+import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcMaterializedView;
+import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcPrivilege;
+import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcRelation;
+import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcSchema;
+import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcSequence;
+import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcTable;
+import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcTrigger;
 
 // Classe pour charger le modèle à partir d’une connexion JDBC
 public class JdbcModelLoader {

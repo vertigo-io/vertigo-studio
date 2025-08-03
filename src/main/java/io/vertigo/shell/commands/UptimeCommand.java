@@ -3,30 +3,19 @@ package io.vertigo.shell.commands;
 import java.time.Duration;
 import java.time.Instant;
 
-import com.beust.jcommander.Parameters;
-
-import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.ShellCommand;
+import io.vertigo.shell.ShellContext;
+import picocli.CommandLine.Command;
 
-@Parameters(commandNames = "uptime", commandDescription = "Displays the shell uptime.")
+@Command(name = "uptime", description = "Displays the shell uptime.")
 public class UptimeCommand implements ShellCommand {
 
-	private final Instant startTime;
-
-	public UptimeCommand(Instant startTime) {
-		Assertion.check().isNotNull(startTime);
-		//---
-		this.startTime = startTime;
-	}
-
+	@Override
 	public void run() {
-		final Duration uptime = Duration.between(startTime, Instant.now());
+		final Duration uptime = Duration.between(ShellContext.startTime, Instant.now());
 		System.out.printf("Uptime: %d minutes, %d seconds%n",
 				uptime.toMinutes(),
 				uptime.toSecondsPart());
 	}
 
-	@Override
-	public void reset() {
-	}
 }

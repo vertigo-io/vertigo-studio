@@ -1,20 +1,15 @@
 package io.vertigo.shell.commands;
 
-import com.beust.jcommander.Parameters;
-
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.ShellContext;
 import io.vertigo.studio.tools.VertigoStudioMda;
+import picocli.CommandLine.Command;
 
-@Parameters(commandNames = "watch", commandDescription = "Watch source files from a configuration file.")
+@Command(name = "watch", description = "Watch source files from a configuration file.")
 public final class WatchCommand implements ShellCommand {
 
 	@Override
 	public void run() {
 		VertigoStudioMda.watch(ShellContext.notebookConfig, false);
-	}
-
-	@Override
-	public void reset() {
 	}
 }

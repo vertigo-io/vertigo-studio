@@ -1,4 +1,4 @@
-package io.vertigo.shell.labs.Jdbc;
+package io.vertigo.shell.labs.Jdbc.model;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcTable;
+import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcTable;
 
 public final class JdbcModelAnalyzer {
 

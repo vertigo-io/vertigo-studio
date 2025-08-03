@@ -5,9 +5,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.beust.jcommander.Parameter;
-import com.beust.jcommander.Parameters;
-
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.ShellContext;
 import io.vertigo.shell.shiny.Shiny;
@@ -17,20 +14,22 @@ import io.vertigo.studio.tools.VertigoStudioMda;
 import io.vertigo.studio.vertigo.domain.DomainSketch;
 import io.vertigo.studio.vertigo.domain.DtSketch;
 import io.vertigo.studio.vertigo.task.TaskSketch;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
-@Parameters(commandNames = "list", commandDescription = "Lists all sketches  with their stereotype and package.")
+@Command(name = "list", description = "Lists all sketches  with their stereotype and package.")
 public final class ListSketchesCommand implements ShellCommand {
 
-	@Parameter(names = { "-a", "--all" }, description = "filters all sketches")
+	@Option(names = { "-a", "--all" }, description = "filters all sketches")
 	private boolean a = false;
 
-	@Parameter(names = { "-d", "--data-definition" }, description = "filters data-definitions")
+	@Option(names = { "-d", "--data-definition" }, description = "filters data-definitions")
 	private boolean d = false;
 
-	@Parameter(names = { "-s", "--smart-types" }, description = "filters smart-types")
+	@Option(names = { "-s", "--smart-types" }, description = "filters smart-types")
 	private boolean s = false;
 
-	@Parameter(names = { "-t", "--tasks" }, description = "filters tasks")
+	@Option(names = { "-t", "--tasks" }, description = "filters tasks")
 	private boolean t = false;
 
 	@Override

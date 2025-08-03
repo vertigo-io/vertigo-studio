@@ -3,14 +3,13 @@ package io.vertigo.shell.labs;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.beust.jcommander.Parameters;
-
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.ShellContext;
 import io.vertigo.shell.shiny.Shiny;
 import io.vertigo.studio.source.Source;
+import picocli.CommandLine.Command;
 
-@Parameters(commandNames = "ls", commandDescription = "Lists all sources.")
+@Command(name = "ls", description = "Lists all sources.")
 public final class ListSourcesCommand implements ShellCommand {
 
 	@Override

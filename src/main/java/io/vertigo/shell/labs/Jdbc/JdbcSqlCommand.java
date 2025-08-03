@@ -2,76 +2,83 @@ package io.vertigo.shell.labs.Jdbc;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.beust.jcommander.Parameter;
-import com.beust.jcommander.Parameters;
-
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.ai.Agent;
 import io.vertigo.shell.ai.AgentBuilder;
-import io.vertigo.shell.labs.Jdbc.JdbcClusterAnalyzer.JdbcCluster;
-import io.vertigo.shell.labs.Jdbc.JdbcClusterAnalyzer.Strategy;
-import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcColumn;
-import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcRelation;
-import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcSchema;
-import io.vertigo.shell.labs.Jdbc.JdbcModel.JdbcTable;
+import io.vertigo.shell.labs.Jdbc.model.JdbcModel;
+import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcColumn;
+import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcRelation;
+import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcSchema;
+import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcTable;
+import io.vertigo.shell.labs.Jdbc.model.JdbcModelAnalysisReport;
+import io.vertigo.shell.labs.Jdbc.model.JdbcModelAnalyzer;
+import io.vertigo.shell.labs.Jdbc.model.JdbcModelClusterAnalyzer;
+import io.vertigo.shell.labs.Jdbc.model.JdbcModelClusterAnalyzer.JdbcCluster;
+import io.vertigo.shell.labs.Jdbc.model.JdbcModelClusterAnalyzer.Strategy;
+import io.vertigo.shell.labs.Jdbc.model.JdbcModelLoader;
 import io.vertigo.shell.shiny.Shiny;
 import io.vertigo.shell.shiny.ShinyColors;
 import io.vertigo.shell.shiny.ShinyNode;
 import io.vertigo.shell.shiny.ShinyTree;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
-@Parameters(commandNames = "jdbc-sql", commandDescription = "Executes a SQL query")
+@Command(name = "sql", description = "Executes a SQL query")
 public final class JdbcSqlCommand implements ShellCommand {
-	@Parameter(names = { "--query", "-q" }, description = "SQL query to execute")
-	private String query;
 
-	@Parameter(names = { "--model", "-m" }, description = "SQL load model (schemas, tables..)")
+	@Option(names = { "--model", "-m" }, description = "SQL load model (schemas, tables..)")
 	private boolean load;
 
-	@Parameter(names = { "--fancy", "-f" }, description = "SQL create a fancy set of 10 data for a table")
+	@Option(names = { "--fancy", "-f" }, description = "SQL create a fancy set of 10 data for a table")
 	private boolean fancy;
 
-	@Parameter(names = { "--analyze", "-a" }, description = "SQL analyze model")
+	@Option(names = { "--analyze", "-a" }, description = "SQL analyze model")
 	private boolean analyze;
 
-	@Parameter(names = { "--cluster", "-c" }, description = "SQL cluster tables")
+	@Option(names = { "--cluster", "-c" }, description = "SQL cluster tables")
 	private boolean cluster;
 
-	@Parameter(names = { "--tables", "-t" }, description = "SQL list tables")
+	@Option(names = { "--tables", "-t" }, description = "SQL list tables")
 	private boolean tables;
 
-	@Parameter(names = { "--stats", "-s" }, description = "SQL list stats")
+	@Option(names = { "--stats", "-s" }, description = "SQL list stats")
 	private boolean stats;
 
-	@Parameter(names = { "--ping", "-p" }, description = "SQL ping database")
-	private boolean ping;
-
-	@Parameter(names = { "--table", "-T" }, description = "SQL describe table")
+	@Option(names = { "--table", "-T" }, description = "SQL describe table")
 	private String tableName;
 
-	@Parameter(names = { "--help", "-h" }, description = "Show help for sql command")
+	@Option(names = { "--help", "-h" }, usageHelp = true, description = "Show help for sql command")
 	private boolean help;
 
-	public void run() throws Exception {
+	@Override
+	public void run() {
 		if (help) {
-			// JCommander will print usage
+			// Picocli will print usage
 			return;
 		}
 		if (JdbcContext.connection == null) {
-			System.out.println("Not connected. Use 'connect' first.");
+			System.err.println("Not connected. Use 'connect' first.");
 			return;
 		}
-		if (query != null) {
-			executeQuery();
-		}
-		if (load) {
-			loadModel();
+
+		try {
+			if (load) {
+				loadModel();
+			}
+			if (tables) {
+				listTables();
+			}
+			if (tableName != null) {
+				describeTable();
+			}
+		} catch (SQLException e) {
+			System.err.println("Error : " + e.getMessage());
 		}
 		if (analyze) {
 			analyzeModel();
@@ -85,74 +92,19 @@ public final class JdbcSqlCommand implements ShellCommand {
 		if (fancy) {
 			fancy();
 		}
-		if (tables) {
-			listTables();
-		}
-		if (ping) {
-			ping();
-		}
-		if (tableName != null) {
-			describeTable();
-		}
+
 	}
 
 	@Override
 	public void reset() {
-		query = null;
 		load = false;
 		analyze = false;
 		cluster = false;
 		tables = false;
 		fancy = false;
 		stats = false;
-		ping = false;
 		tableName = null;
 		help = false;
-	}
-
-	private void executeQuery() {
-		try (Statement stmt = JdbcContext.connection.createStatement()) {
-			if (query.trim().toLowerCase().startsWith("select")) {
-				try (ResultSet rs = stmt.executeQuery(query)) {
-					printResultSet(rs);
-				}
-			} else {
-				final int rowsAffected = stmt.executeUpdate(query);
-				System.out.println(rowsAffected + " row(s) affected.");
-			}
-			query = null;
-		} catch (final SQLException e) {
-			throw new VSystemException(e, "Failed to execute SQL query: {0}", e.getMessage());
-		}
-	}
-
-	private void printResultSet(final ResultSet rs) throws SQLException {
-		final ResultSetMetaData rsmd = rs.getMetaData();
-		final int columnsNumber = rsmd.getColumnCount();
-
-		// Récupération des en-têtes
-		final String[] header = new String[columnsNumber];
-		for (int i = 1; i <= columnsNumber; i++) {
-			header[i - 1] = rsmd.getColumnName(i);
-		}
-
-		// Récupération des données
-		List<String[]> rows = new ArrayList<>();
-		while (rs.next()) {
-			String[] row = new String[columnsNumber];
-			for (int i = 1; i <= columnsNumber; i++) {
-				String value = rs.getString(i);
-				row[i - 1] = value != null ? value : "NULL";
-			}
-			rows.add(row);
-		}
-
-		Shiny.table()
-				.title("Result of query:")
-				.noDataFound("No data found")
-				.header(header)
-				.rows(rows)
-				.print();
 	}
 
 	private void fancy() {
@@ -189,14 +141,7 @@ public final class JdbcSqlCommand implements ShellCommand {
 		System.out.println(response);
 	}
 
-	private void ping() throws Exception {
-		long startTime = System.nanoTime();
-		JdbcContext.connection.isValid(2);
-		long endTime = System.nanoTime();
-		System.out.println("Ping: " + (endTime - startTime) / 1_000_000.0 + " ms");
-	}
-
-	private void loadModel() throws Exception {
+	private void loadModel() throws SQLException {
 		if (JdbcContext.model == null) {
 			JdbcContext.model = new JdbcModelLoader(JdbcContext.connection).loadModel();
 		}
@@ -222,7 +167,7 @@ public final class JdbcSqlCommand implements ShellCommand {
 		tree.print();
 	}
 
-	private void stats() throws Exception {
+	private void stats() {
 		if (JdbcContext.model == null) {
 			throw new VSystemException("The model must de loaded before analyze");
 		}
@@ -252,7 +197,7 @@ public final class JdbcSqlCommand implements ShellCommand {
 				.print(100);
 	}
 
-	private void listTables() throws Exception {
+	private void listTables() throws SQLException {
 		final DatabaseMetaData metaData = JdbcContext.connection.getMetaData();
 		final List<String[]> rows = new ArrayList<>();
 		try (final ResultSet rs = metaData.getTables(null, null, "%", new String[] { "TABLE" })) {
@@ -268,11 +213,11 @@ public final class JdbcSqlCommand implements ShellCommand {
 				.print();
 	}
 
-	private void cluster() throws Exception {
+	private void cluster() {
 		if (JdbcContext.model == null) {
 			throw new VSystemException("The model must de loaded before analyze");
 		}
-		List<JdbcCluster> clusters = JdbcClusterAnalyzer.analyze(JdbcContext.model, Strategy.BY_DENSITY);
+		List<JdbcCluster> clusters = JdbcModelClusterAnalyzer.analyze(JdbcContext.model, Strategy.BY_DENSITY);
 
 		ShinyTree tree = Shiny.tree("Clusters");
 		for (JdbcCluster cluster : clusters) {
@@ -284,7 +229,7 @@ public final class JdbcSqlCommand implements ShellCommand {
 		tree.print();
 	}
 
-	private void analyzeModel() throws Exception {
+	private void analyzeModel() {
 		if (JdbcContext.model == null) {
 			throw new VSystemException("The model must de loaded before analyze");
 		}
@@ -328,7 +273,7 @@ public final class JdbcSqlCommand implements ShellCommand {
 		});
 	}
 
-	private void describeTable() throws Exception {
+	private void describeTable() throws SQLException {
 		final DatabaseMetaData metaData = JdbcContext.connection.getMetaData();
 		final List<String[]> columns = new ArrayList<>();
 		try (final ResultSet rs = metaData.getColumns(null, null, tableName, "%")) {
@@ -344,7 +289,7 @@ public final class JdbcSqlCommand implements ShellCommand {
 		}
 		Shiny.table()
 				.title("Structure of table " + tableName + ":")
-				.noDataFound("\"Table '\" + tableName + \"' not found or has no columns.\"")
+				.noDataFound("\"Table '\" + tableName + '\' not found or has no columns.\"")
 				.header("Name", "Type", "Size", "Nullable")
 				.rows(columns)
 				.print();

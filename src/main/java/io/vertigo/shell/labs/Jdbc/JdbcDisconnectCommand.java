@@ -2,24 +2,24 @@ package io.vertigo.shell.labs.Jdbc;
 
 import java.sql.SQLException;
 
-import com.beust.jcommander.Parameter;
-import com.beust.jcommander.Parameters;
-
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shell.ShellCommand;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
-@Parameters(commandNames = "jdbc-disconnect", commandDescription = "Disconnects from the JDBC database")
+@Command(name = "disconnect", description = "Disconnects from the JDBC database")
 public final class JdbcDisconnectCommand implements ShellCommand {
-	@Parameter(names = { "--help", "-h" }, description = "Show help for disconnect command", help = true)
+	@Option(names = { "--help", "-h" }, usageHelp = true, description = "Show help for disconnect command")
 	private boolean help;
 
+	@Override
 	public void run() {
 		if (help) {
-			// JCommander will print usage
+			// Picocli will print usage
 			return;
 		}
 		if (JdbcContext.connection == null) {
-			System.out.println("Not connected.");
+			System.err.println("Not connected.");
 			return;
 		}
 		try {

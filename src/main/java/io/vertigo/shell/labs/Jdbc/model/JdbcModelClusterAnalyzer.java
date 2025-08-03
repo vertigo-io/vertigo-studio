@@ -1,4 +1,4 @@
-package io.vertigo.shell.labs.Jdbc;
+package io.vertigo.shell.labs.Jdbc.model;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.Set;
  * - Composants fortement connexes (STRONGLY_CONNECTED_COMPONENTS) — détecte des modules fortement couplés via Tarjan.
  * - Par densité (BY_DENSITY) — heuristique basée sur les degrés de connexion.
  */
-public final class JdbcClusterAnalyzer {
+public final class JdbcModelClusterAnalyzer {
 
 	/**
 	 * Type de stratégie de clustering

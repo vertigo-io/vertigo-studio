@@ -2,18 +2,22 @@ package io.vertigo.shell.labs;
 
 import java.util.List;
 
-import com.beust.jcommander.Parameters;
-
 import io.vertigo.shell.ShellCommand;
+import picocli.CommandLine.Command;
 
-@Parameters(commandNames = "history", commandDescription = "Displays the command history.")
+@Command(name = "history", description = "Displays the command history.")
 public class HistoryCommand implements ShellCommand {
-	private final List<String> history;
+	private List<String> history;
+
+	public HistoryCommand() {
+		//
+	}
 
 	public HistoryCommand(List<String> history) {
 		this.history = history;
 	}
 
+	@Override
 	public void run() {
 		int i = 1;
 		for (String command : history) {

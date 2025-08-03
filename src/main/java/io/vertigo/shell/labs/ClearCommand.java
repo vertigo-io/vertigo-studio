@@ -1,11 +1,11 @@
 package io.vertigo.shell.labs;
 
-import com.beust.jcommander.Parameters;
-
 import io.vertigo.shell.ShellCommand;
+import picocli.CommandLine.Command;
 
-@Parameters(commandNames = "clear", commandDescription = "Clears the console.")
+@Command(name = "clear", description = "Clears the console.")
 public class ClearCommand implements ShellCommand {
+	@Override
 	public void run() {
 		System.out.print("\033[H\033[2J"); // Efface console dans certains terminaux
 		System.out.flush();

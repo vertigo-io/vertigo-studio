@@ -4,33 +4,32 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import com.beust.jcommander.Parameter;
-import com.beust.jcommander.Parameters;
-
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shell.ShellCommand;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
-@Parameters(commandNames = "jdbc-connect", commandDescription = "Connects to a JDBC database")
+@Command(name = "connect", description = "Connects to a JDBC database")
 public final class JdbcConnectCommand implements ShellCommand {
-	@Parameter(names = { "--url", "-u" }, description = "JDBC URL")
+	@Option(names = { "--url", "-u" }, description = "JDBC URL")
 	private String url;
 
-	@Parameter(names = { "--user", "-U" }, description = "Database user")
+	@Option(names = { "--user", "-U" }, description = "Database user")
 	private String user;
 
-	@Parameter(names = { "--password", "-P" }, description = "Database password")
+	@Option(names = { "--password", "-P" }, description = "Database password")
 	private String password;
 
-	@Parameter(names = { "--help", "-h" }, description = "Show help for connect command", help = true)
+	@Option(names = { "--help", "-h" }, usageHelp = true, description = "Show help for connect command")
 	private boolean help;
 
+	@Override
 	public void run() {
 		if (help) {
-			// JCommander will print usage
-			return;
+			// Picocli will print usage
 		}
 		if (JdbcContext.connection != null) {
-			System.out.println("Already connected. Disconnect first.");
+			System.err.println("Already connected. Disconnect first.");
 			return;
 		}
 		try {

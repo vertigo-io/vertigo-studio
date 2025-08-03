@@ -1,4 +1,4 @@
-package io.vertigo.shell.labs.Jdbc;
+package io.vertigo.shell.labs.Jdbc.model;
 
 import java.util.List;
 import java.util.Map;

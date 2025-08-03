@@ -1,17 +1,16 @@
 package io.vertigo.shell.commands;
 
-import com.beust.jcommander.Parameter;
-import com.beust.jcommander.Parameters;
-
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.ShellContext;
 import io.vertigo.studio.tools.VertigoStudioMda;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
-@Parameters(commandNames = "generate", commandDescription = "Generate source files from a configuration file.")
+@Command(name = "generate", description = "Generate source files from a configuration file.")
 public final class GenerateCommand implements ShellCommand {
-	@Parameter(names = { "--help", "-h" }, help = true, description = "Display help information")
+	@Option(names = { "--help", "-h" }, usageHelp = true, description = "Display help information")
 	private boolean help;
-	//    @Parameter(description = "The configuration file (e.g., studio-config.yaml)", required = true)
+	//    @Parameters(description = "The configuration file (e.g., studio-config.yaml)", required = true)
 	//    private String configFile;
 
 	@Override

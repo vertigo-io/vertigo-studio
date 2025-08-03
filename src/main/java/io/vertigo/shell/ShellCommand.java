@@ -1,8 +1,7 @@
 package io.vertigo.shell;
 
-public interface ShellCommand {
+public interface ShellCommand extends Runnable {
 
-	void run() throws Exception;
-
-	void reset();
+	default void reset() {
+	}
 }

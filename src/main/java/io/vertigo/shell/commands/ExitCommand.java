@@ -1,28 +1,16 @@
 package io.vertigo.shell.commands;
 
-import com.beust.jcommander.Parameters;
-
-import io.vertigo.core.lang.Assertion;
-import io.vertigo.shell.Shell;
 import io.vertigo.shell.ShellCommand;
+import picocli.CommandLine.Command;
 
-@Parameters(commandNames = "exit", commandDescription = "Exits the shell.")
+@Command(name = "exit", description = "Exits the shell.")
 public class ExitCommand implements ShellCommand {
 
-	private final Shell shell;
-
-	public ExitCommand(Shell shell) {
-		Assertion.check().isNotNull(shell);
-		//---
-		this.shell = shell;
-	}
-
+	@Override
 	public void run() {
 		System.out.println("Shutting down the shell...");
-		shell.stop();
+		System.out.println("See you soon ;-)");
+		System.exit(0);
 	}
 
-	@Override
-	public void reset() {
-	}
 }

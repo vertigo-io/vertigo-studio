@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.Properties;
 
+import io.vertigo.shell.labs.Jdbc.model.JdbcModel;
+
 public final class JdbcContext {
 	static Connection connection;
 	static JdbcModel model;

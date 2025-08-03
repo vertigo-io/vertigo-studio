@@ -1,4 +1,4 @@
-package io.vertigo.shell.labs.Jdbc;
+package io.vertigo.shell.labs.Jdbc.model;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ public record JdbcModel(List<JdbcSchema> schemas) {
 	}
 
 	// Représente un schéma dans la base de données
-	record JdbcSchema(
+	public record JdbcSchema(
 			String name,
 			List<JdbcTable> tables,
 			List<JdbcSequence> sequences,
@@ -26,7 +26,7 @@ public record JdbcModel(List<JdbcSchema> schemas) {
 	}
 
 	// Représente une table dans la base de données
-	record JdbcTable(
+	public record JdbcTable(
 			String name,
 			String type,
 			List<JdbcColumn> columns,
@@ -45,7 +45,7 @@ public record JdbcModel(List<JdbcSchema> schemas) {
 	}
 
 	// Représente une colonne dans une table
-	record JdbcColumn(
+	public record JdbcColumn(
 			String name,
 			String typeName,
 			int size,
@@ -57,7 +57,7 @@ public record JdbcModel(List<JdbcSchema> schemas) {
 	}
 
 	// Représente un index sur une table
-	record JdbcIndex(
+	public record JdbcIndex(
 			String name,
 			boolean unique,
 			List<String> columnNames) {
@@ -67,7 +67,7 @@ public record JdbcModel(List<JdbcSchema> schemas) {
 	}
 
 	// Représente une relation (clé étrangère) entre tables
-	record JdbcRelation(
+	public record JdbcRelation(
 			String name,
 			String sourceTable,
 			String sourceColumn,
@@ -76,7 +76,7 @@ public record JdbcModel(List<JdbcSchema> schemas) {
 	}
 
 	// Représente un trigger sur une table
-	record JdbcTrigger(
+	public record JdbcTrigger(
 			String name,
 			String event,
 			String timing,
@@ -84,14 +84,14 @@ public record JdbcModel(List<JdbcSchema> schemas) {
 	}
 
 	// Représente une contrainte (CHECK, UNIQUE)
-	record JdbcConstraint(
+	public record JdbcConstraint(
 			String name,
 			String type,
 			String definition) {
 	}
 
 	// Représente une séquence
-	record JdbcSequence(
+	public record JdbcSequence(
 			String name,
 			long startValue,
 			long increment,
@@ -100,7 +100,7 @@ public record JdbcModel(List<JdbcSchema> schemas) {
 	}
 
 	// Représente une vue matérialisée
-	record JdbcMaterializedView(
+	public record JdbcMaterializedView(
 			String name,
 			String definition,
 			List<JdbcColumn> columns) {
@@ -110,14 +110,14 @@ public record JdbcModel(List<JdbcSchema> schemas) {
 	}
 
 	// Représente une fonction ou procédure stockée
-	record JdbcFunction(
+	public record JdbcFunction(
 			String name,
 			String returnType,
 			String definition) {
 	}
 
 	// Représente une permission
-	record JdbcPrivilege(
+	public record JdbcPrivilege(
 			String objectName,
 			String objectType,
 			String grantee,

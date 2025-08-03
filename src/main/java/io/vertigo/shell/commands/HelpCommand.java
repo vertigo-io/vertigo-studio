@@ -1,26 +1,14 @@
 package io.vertigo.shell.commands;
 
-import com.beust.jcommander.JCommander;
-import com.beust.jcommander.Parameters;
-
-import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.ShellCommand;
+import picocli.CommandLine.Command;
 
-@Parameters(commandNames = "help", commandDescription = "Displays help information.")
+@Command(name = "help", description = "Displays help information.", helpCommand = true)
 public class HelpCommand implements ShellCommand {
 
-	private JCommander jc;
-
-	public HelpCommand(JCommander jc) {
-		Assertion.check().isNotNull(jc);
-		//---
-		this.jc = jc;
-	}
-
+	@Override
 	public void run() {
-		jc.usage();
+		//picocli will handle the help command
 	}
 
-	public void reset() {
-	}
 }
