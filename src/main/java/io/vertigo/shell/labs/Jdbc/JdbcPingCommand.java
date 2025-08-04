@@ -21,27 +21,20 @@ public final class JdbcPingCommand implements ShellCommand {
 		}
 
 		// Validate number of calls
-		if (calls <= 0) {
-			System.err.println("Error: Number of calls must be greater than 0.");
+		if (calls <= 0 && calls > 50) {
+			System.err.println("Error: Number of calls must be greater than 0 and lower than 50");
 			return;
 		}
 
 		final List<Double> pingTimes = new ArrayList<>();
 
-		// Perform database calls
 		for (int i = 0; i < calls; i++) {
-			long startTime = System.nanoTime();
+			ping(pingTimes);
 			try {
-				JdbcContext.connection.isValid(2);
-				long endTime = System.nanoTime();
-				double pingTimeMs = (endTime - startTime) / 1_000_000.0;
-				pingTimes.add(pingTimeMs);
-				if (calls == 1) {
-					System.out.println("Ping: " + pingTimeMs + " ms");
-				}
-			} catch (SQLException e) {
-				System.err.println("Unable to ping database: " + e.getMessage());
-				return; // Stop on error
+				//Waiting to avoid DDOS
+				Thread.sleep(30);
+			} catch (InterruptedException e) {
+				//e.printStackTrace();
 			}
 		}
 
@@ -55,6 +48,22 @@ public final class JdbcPingCommand implements ShellCommand {
 			System.out.printf("Min: %.3f ms%n", min);
 			System.out.printf("Max: %.3f ms%n", max);
 			System.out.printf("Average: %.3f ms%n", average);
+		}
+	}
+
+	private void ping(final List<Double> pingTimes) {
+		long startTime = System.nanoTime();
+		try {
+			JdbcContext.connection.isValid(2);
+			long endTime = System.nanoTime();
+			double pingTimeMs = (endTime - startTime) / 1_000_000.0;
+			pingTimes.add(pingTimeMs);
+			if (calls == 1) {
+				System.out.println("Ping: " + pingTimeMs + " ms");
+			}
+		} catch (SQLException e) {
+			System.err.println("Unable to ping database: " + e.getMessage());
+			return;
 		}
 	}
 }
