@@ -1,4 +1,4 @@
-package io.vertigo.shell.shiny;
+package io.vertigo.shell.shiny.tree;
 
 import java.util.ArrayList;
 import java.util.List;

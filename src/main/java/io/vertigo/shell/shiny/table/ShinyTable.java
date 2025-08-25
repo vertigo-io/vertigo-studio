@@ -1,36 +1,31 @@
-package io.vertigo.shell.shiny;
+package io.vertigo.shell.shiny.table;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.shell.shiny.ShinyChars;
+import io.vertigo.shell.shiny.ShinyColors;
 
 /**
  * Represents a table that can be printed in a terminal with colors,
  * borders and formatted numeric values.
- *
- * Features:
- * - Customizable title and header
- * - Optional borders
- * - Automatic detection and formatting of numeric columns
- * - Alternate row coloring for readability
- * - Support for displaying a message when no data is found
  */
 public final class ShinyTable {
 	private final NumberFormat numberFormat;
 	private String title;
 	private String noDataFound;
 	private String[] header;
-	private boolean border = true;
 	private final List<String[]> rows = new ArrayList<>();
+	private final ShinyTableStyle style = new ShinyTableStyle(this);
 
 	/**
 	 * Creates a new ShinyTable.
 	 *
 	 * @param numberFormat the NumberFormat used to format numeric values
 	 */
-	ShinyTable(NumberFormat numberFormat) {
+	public ShinyTable(NumberFormat numberFormat) {
 		Assertion.check().isNotNull(numberFormat);
 		//---
 		this.numberFormat = numberFormat;
@@ -50,30 +45,14 @@ public final class ShinyTable {
 	}
 
 	/**
-	 * Enables borders around the table.
-	 *
-	 * @return this instance for method chaining
+	 * Opens Style.
 	 */
-	public ShinyTable border() {
-		this.border = true;
-		return this;
-	}
-
-	/**
-	 * Disables borders around the table.
-	 *
-	 * @return this instance for method chaining
-	 */
-	public ShinyTable noBorder() {
-		this.border = false;
-		return this;
+	public ShinyTableStyle beginStyle() {
+		return style;
 	}
 
 	/**
 	 * Sets the message to be displayed when no data is found.
-	 *
-	 * @param noDataFound the message to display
-	 * @return this instance for method chaining
 	 */
 	public ShinyTable noDataFound(String noDataFound) {
 		this.noDataFound = noDataFound;
@@ -82,9 +61,6 @@ public final class ShinyTable {
 
 	/**
 	 * Defines the header row of the table.
-	 *
-	 * @param header the column names
-	 * @return this instance for method chaining
 	 */
 	public ShinyTable header(String... header) {
 		this.header = header;
@@ -93,9 +69,6 @@ public final class ShinyTable {
 
 	/**
 	 * Adds multiple rows of data to the table.
-	 *
-	 * @param rows the list of row values
-	 * @return this instance for method chaining
 	 */
 	public ShinyTable rows(List<String[]> rows) {
 		this.rows.addAll(rows);
@@ -111,7 +84,7 @@ public final class ShinyTable {
 				.isNotNull(rows)
 				.when(rows.isEmpty(), () -> Assertion.check().isNotBlank(noDataFound))
 				.isNotNull(header);
-		//---
+
 		if (rows.isEmpty()) {
 			System.out.println(noDataFound);
 			return;
@@ -123,12 +96,10 @@ public final class ShinyTable {
 		List<String[]> formattedRows = new ArrayList<>();
 		boolean[] isNumericColumn = new boolean[columns];
 
-		// Detect numeric columns
 		for (int i = 0; i < columns; i++) {
 			isNumericColumn[i] = isColumnNumeric(rows, i);
 		}
 
-		// Format data
 		for (String[] row : rows) {
 			final String[] formattedRow = new String[columns];
 			for (int colIndex = 0; colIndex < columns; colIndex++) {
@@ -142,7 +113,7 @@ public final class ShinyTable {
 			formattedRows.add(formattedRow);
 		}
 
-		// 2. Compute maximum width per column (header & formatted data)
+		// 2. Compute max width per column
 		int[] widths = new int[columns];
 		for (int i = 0; i < columns; i++) {
 			widths[i] = header[i].length();
@@ -155,37 +126,37 @@ public final class ShinyTable {
 			}
 		}
 
-		// 3. Build format string for each column with proper alignment
+		// 3. Build format string
 		StringBuilder formatBuilder = new StringBuilder();
 		for (int i = 0; i < columns; i++) {
 			formatBuilder
-					.append(border ? ShinyChars.VERTICAL : " ")
-					// Right alignment for numeric columns
-					// Left alignment for text columns
+					.append(style.border ? ShinyChars.VERTICAL : " ")
 					.append(isNumericColumn[i] ? " %" : " %-")
 					.append(widths[i]).append("s ");
 		}
 		formatBuilder
-				.append(border ? ShinyChars.VERTICAL : " ")
+				.append(style.border ? ShinyChars.VERTICAL : " ")
 				.append("\n");
-		String format = formatBuilder.toString();
+		final String format = formatBuilder.toString();
 
-		// 4. Generate horizontal separator
-
-		// 5. Print the table
-		System.out.print(ShinyColors.MAGENTA_BG);
-		System.out.print(ShinyColors.WHITE);
+		// 4. Print
+		System.out.print(style.titleBackgroundColor);
+		System.out.print(style.titleTextColor);
 		System.out.println(title);
 		System.out.print(ShinyColors.RESET);
+
 		printLineSeparator(widths, Position.TOP);
-		System.out.print(ShinyColors.BLUE_BRIGHT_BG);
+
+		System.out.print(style.headerBackgroundColor);
 		System.out.printf(format, (Object[]) header);
 		System.out.print(ShinyColors.RESET);
+
 		printLineSeparator(widths, Position.MIDDLE);
+
 		boolean invert = false;
 		for (String[] formattedRow : formattedRows) {
 			if (invert) {
-				System.out.print(ShinyColors.CYAN_BRIGHT_BG);
+				System.out.print(style.altRowBackgroundColor);
 			}
 			System.out.printf(format, (Object[]) formattedRow);
 			if (invert) {
@@ -201,18 +172,19 @@ public final class ShinyTable {
 	}
 
 	private void printLineSeparator(int[] widths, Position position) {
-		if (border) {
+		System.out.print(style.borderColor);
+		if (style.border) {
 			printLineSeparatorWithBorder(widths, position);
 		} else {
 			printLineSeparatorNoBorder(widths);
 		}
+		System.out.print(ShinyColors.RESET);
 	}
 
-	private static void printLineSeparatorWithBorder(int[] widths, Position position) {
+	private void printLineSeparatorWithBorder(int[] widths, Position position) {
 		boolean first = true;
 		for (int width : widths) {
 			final String left;
-			// Depending on the separator position, we need a corner or a T junction
 			if (first) {
 				left = switch (position) {
 					case TOP -> ShinyChars.TOP_LEFT;
@@ -226,7 +198,6 @@ public final class ShinyTable {
 					case BOTTOM -> ShinyChars.T_TOP;
 					case MIDDLE -> ShinyChars.CROSS;
 				};
-
 			}
 			System.out.print(left);
 			for (int i = 0; i < width + 2; i++)
@@ -240,25 +211,15 @@ public final class ShinyTable {
 		System.out.println(right);
 	}
 
-	private static void printLineSeparatorNoBorder(int[] widths) {
-		System.out.print(ShinyColors.BLUE);
-		//--
+	private void printLineSeparatorNoBorder(int[] widths) {
 		for (int width : widths) {
-			System.out.print(ShinyChars.HORIZONTAL);
+			System.out.print(ShinyChars.HEAVY_HORIZONTAL);
 			for (int i = 0; i < width + 2; i++)
-				System.out.print(ShinyChars.HORIZONTAL);
+				System.out.print(ShinyChars.HEAVY_HORIZONTAL);
 		}
-		System.out.print(ShinyChars.HORIZONTAL);
-		System.out.println(ShinyColors.RESET);
+		System.out.println(ShinyChars.HEAVY_HORIZONTAL);
 	}
 
-	/**
-	 * Determines whether a column contains mostly numeric values.
-	 *
-	 * @param rows        the table rows
-	 * @param columnIndex the column index
-	 * @return true if at least 80% of the values are numeric
-	 */
 	private static boolean isColumnNumeric(List<String[]> rows, int columnIndex) {
 		int numericCount = 0;
 		int totalNonNullValues = 0;
@@ -272,16 +233,9 @@ public final class ShinyTable {
 			}
 		}
 
-		// Consider the column numeric if at least 80% of values are numeric
 		return totalNonNullValues > 0 && (double) numericCount / totalNonNullValues >= 0.8;
 	}
 
-	/**
-	 * Checks if a string represents a number.
-	 *
-	 * @param str the string to test
-	 * @return true if the string is numeric
-	 */
 	private static boolean isNumeric(String str) {
 		if (str == null || str.trim().isEmpty()) {
 			return false;
@@ -289,7 +243,6 @@ public final class ShinyTable {
 
 		String trimmed = str.trim();
 		try {
-			// Handles integers and decimals
 			Double.parseDouble(trimmed.replace(",", ".").replace(" ", ""));
 			return true;
 		} catch (NumberFormatException e) {
@@ -297,14 +250,6 @@ public final class ShinyTable {
 		}
 	}
 
-	/**
-	 * Formats a numeric string using the provided NumberFormat.
-	 * Thousands separators are applied, and integers are displayed without decimals.
-	 *
-	 * @param str          the string representing a number
-	 * @param numberFormat the number format to use
-	 * @return the formatted number, or the original string if parsing fails
-	 */
 	private static String formatNumber(String str, NumberFormat numberFormat) {
 		if (str == null || str.trim().isEmpty()) {
 			return "";
@@ -314,14 +259,14 @@ public final class ShinyTable {
 			String cleaned = str.trim().replace(",", ".").replace(" ", "");
 			double number = Double.parseDouble(cleaned);
 
-			// If it is an integer, display without decimals
 			if (number == Math.floor(number) && !Double.isInfinite(number)) {
 				return numberFormat.format((long) number);
 			} else {
 				return numberFormat.format(number);
 			}
 		} catch (NumberFormatException e) {
-			return str; // Return original value if formatting fails
+			return str;
 		}
 	}
+
 }

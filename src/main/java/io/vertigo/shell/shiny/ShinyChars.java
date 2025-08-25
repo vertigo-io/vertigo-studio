@@ -8,6 +8,7 @@ public final class ShinyChars {
 
 	// Single lines
 	public static final String HORIZONTAL = "─"; // U+2500
+	public static final String HEAVY_HORIZONTAL = "━"; // U+2501
 	public static final String VERTICAL = "│"; // U+2502
 
 	// Single corners

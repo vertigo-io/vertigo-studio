@@ -2,7 +2,7 @@ package io.vertigo.shell.shiny;
 
 import java.util.List;
 
-public class ShinyTest {
+public class ShinyTableTest {
 
 	public static void main(String[] args) {
 
@@ -52,7 +52,13 @@ public class ShinyTest {
 				.title("European Union Countries - Population")
 				.header("Country", "Population")
 				.rows(euCountries)
-				.noBorder()
+				.beginStyle()
+				.titleBackgroundColor(ShinyColors.INVERSE)
+				.headerBackgroundColor(ShinyColors.GREEN_BG)
+				.altRowBackgroundColor(ShinyColors.INVERSE)
+				.borderColor(ShinyColors.RED)
+				//				.border(false)
+				.endStyle()
 				.print();
 
 	}

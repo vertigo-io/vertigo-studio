@@ -3,6 +3,8 @@ package io.vertigo.shell.shiny;
 import java.text.NumberFormat;
 
 import io.vertigo.shell.ShellContext;
+import io.vertigo.shell.shiny.table.ShinyTable;
+import io.vertigo.shell.shiny.tree.ShinyTree;
 
 public final class Shiny {
 	private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance(ShellContext.LOCALE);
