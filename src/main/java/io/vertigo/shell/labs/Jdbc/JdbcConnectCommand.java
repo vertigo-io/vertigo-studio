@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shell.ShellCommand;
+import io.vertigo.shell.shiny.ShinyColors;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
@@ -53,7 +54,7 @@ public final class JdbcConnectCommand implements ShellCommand {
 		} catch (final SQLException e) {
 			throw new VSystemException(e, "Failed to connect to database: {0}", e.getMessage());
 		}
-		System.out.println("Successfully connected.");
+		System.out.println(ShinyColors.GREEN_BRIGHT + "Successfully connected." + ShinyColors.RESET);
 	}
 
 	@Override

@@ -11,7 +11,7 @@ public final class ShinyTable {
 	private String title;
 	private String noDataFound;
 	private String[] header;
-	private List<String[]> rows = new ArrayList<>();
+	private final List<String[]> rows = new ArrayList<>();
 
 	public ShinyTable(NumberFormat numberFormat) {
 		Assertion.check().isNotNull(numberFormat);
@@ -20,6 +20,8 @@ public final class ShinyTable {
 	}
 
 	public ShinyTable title(String title) {
+		Assertion.check().isNotBlank(title);
+		//---
 		this.title = title;
 		return this;
 	}

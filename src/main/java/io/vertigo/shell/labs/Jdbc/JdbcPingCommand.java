@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.vertigo.shell.ShellCommand;
+import io.vertigo.shell.shiny.ShinyProgressBar;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
 @Command(name = "ping", description = "SQL ping database")
 public final class JdbcPingCommand implements ShellCommand {
-	@Option(names = { "--calls", "-c" }, description = "Number of database calls (default: 1)", defaultValue = "1")
+	@Option(names = { "--calls", "-c" }, description = "Number of database calls (default: 1)", defaultValue = "5")
 	private int calls;
 
 	@Override
@@ -28,15 +29,21 @@ public final class JdbcPingCommand implements ShellCommand {
 
 		final List<Double> pingTimes = new ArrayList<>();
 
+		final ShinyProgressBar progressBar = new ShinyProgressBar(calls);
+		System.out.println();
 		for (int i = 0; i < calls; i++) {
 			ping(pingTimes);
+			progressBar.setProgress(i + 1);
+			progressBar.print();
 			try {
 				//Waiting to avoid DDOS
 				Thread.sleep(30);
 			} catch (InterruptedException e) {
 				//e.printStackTrace();
 			}
+
 		}
+		progressBar.finish();
 
 		// Display statistics if calls > 1
 		if (calls > 1) {

@@ -22,17 +22,16 @@ public final class ShinyProgressBar {
 	// Méthode pour afficher la barre de progression
 	public void print() {
 		// Calculer le pourcentage
-		int percentage = (progress * 100) / total;
+		final int percentage = (progress * 100) / total;
 		// Calculer le nombre de carrés à remplir
-		int filled = (progress * barLength) / total;
+		final int filled = (progress * barLength) / total;
 
 		// Construire la barre
-		StringBuilder bar = new StringBuilder("[");
+		final StringBuilder bar = new StringBuilder("[");
 		for (int i = 0; i < barLength; i++) {
-			bar.append(i < filled ? "█" : "▒");
+			bar.append(i < filled ? "\u001B[42m█\u001B[0m" : "\u001B[44m▒\u001B[0m");
 		}
 		bar.append("] ").append(percentage).append("%");
-
 		// Afficher la barre
 		System.out.print("\r" + bar.toString());
 	}
@@ -43,14 +42,14 @@ public final class ShinyProgressBar {
 		//System.out.println("Tâche terminée !");
 	}
 
-	//	// Exemple d'utilisation
-	//	public static void main(String[] args) throws InterruptedException {
-	//		ShinyProgressBar progressBar = new ShinyProgressBar(100);
-	//		for (int i = 0; i <= 100; i++) {
-	//			progressBar.setProgress(i);
-	//			progressBar.print();
-	//			Thread.sleep(100);
-	//		}
-	//		progressBar.finish();
-	//	}
+	// Exemple d'utilisation
+	public static void main(String[] args) throws InterruptedException {
+		ShinyProgressBar progressBar = new ShinyProgressBar(100);
+		for (int i = 0; i <= 100; i++) {
+			progressBar.setProgress(i);
+			progressBar.print();
+			Thread.sleep(100);
+		}
+		progressBar.finish();
+	}
 }

@@ -24,8 +24,8 @@ import io.vertigo.shell.labs.Jdbc.model.JdbcModelClusterAnalyzer.Strategy;
 import io.vertigo.shell.labs.Jdbc.model.JdbcModelLoader;
 import io.vertigo.shell.shiny.Shiny;
 import io.vertigo.shell.shiny.ShinyColors;
-import io.vertigo.shell.shiny.ShinyNode;
 import io.vertigo.shell.shiny.ShinyTree;
+import io.vertigo.shell.shiny.ShinyTreeNode;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
@@ -147,11 +147,11 @@ public final class JdbcSqlCommand implements ShellCommand {
 		}
 		final ShinyTree tree = Shiny.tree("model");
 		for (JdbcSchema schema : JdbcContext.model.schemas()) {
-			final ShinyNode schemaNode = tree.getRoot().addNode("schema : " + schema.name());
-			final ShinyNode tablesNode = schemaNode.addNode("tables (" + schema.tables().size() + ")");
+			final ShinyTreeNode schemaNode = tree.getRoot().addNode("schema : " + schema.name());
+			final ShinyTreeNode tablesNode = schemaNode.addNode("tables (" + schema.tables().size() + ")");
 			for (JdbcTable table : schema.tables()) {
-				final ShinyNode tableNode = tablesNode.addNode(table.name());
-				final ShinyNode columnsNode = tableNode.addNode("columns");
+				final ShinyTreeNode tableNode = tablesNode.addNode(table.name());
+				final ShinyTreeNode columnsNode = tableNode.addNode("columns");
 				for (JdbcColumn column : table.columns()) {
 
 					String info = column.name() + " " + ShinyColors.GREEN_BRIGHT + column.typeName() + ShinyColors.RESET;

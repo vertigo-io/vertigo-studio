@@ -3,13 +3,13 @@ package io.vertigo.shell.shiny;
 import java.util.List;
 
 public final class ShinyTree {
-	private final ShinyNode rootNode;
+	private final ShinyTreeNode rootNode;
 
 	public ShinyTree(String label) {
-		this.rootNode = new ShinyNode(label);
+		this.rootNode = new ShinyTreeNode(label);
 	}
 
-	public ShinyNode getRoot() {
+	public ShinyTreeNode getRoot() {
 		return rootNode;
 	}
 
@@ -18,12 +18,12 @@ public final class ShinyTree {
 		printChildren("", rootNode.getNodes());
 	}
 
-	private void printChildren(String prefix, List<ShinyNode> children) {
+	private void printChildren(String prefix, List<ShinyTreeNode> children) {
 		for (int i = 0; i < children.size(); i++) {
 			boolean isLast = (i == children.size() - 1);
 			String connection = isLast ? "└── " : "├── ";
 			System.out.println(prefix + connection + children.get(i).getLabel());
-			List<ShinyNode> grandChildren = children.get(i).getNodes();
+			List<ShinyTreeNode> grandChildren = children.get(i).getNodes();
 			String childPrefix = prefix + (isLast ? "   " : "│  ");
 			printChildren(childPrefix, grandChildren);
 		}
