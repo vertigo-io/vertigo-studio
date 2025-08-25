@@ -44,9 +44,9 @@ public final class ShinyTable {
 	public void print() {
 		Assertion.check()
 				.isNotBlank(title)
-				.isNotBlank(noDataFound)
-				.isNotNull(header)
-				.isNotNull(rows);
+				.isNotNull(rows)
+				.when(rows.isEmpty(), () -> Assertion.check().isNotBlank(noDataFound))
+				.isNotNull(header);
 		//---
 		if (rows.isEmpty()) {
 			System.out.println(noDataFound);
@@ -106,24 +106,17 @@ public final class ShinyTable {
 		String format = formatBuilder.toString();
 
 		// 4. Génération du séparateur horizontal
-		final StringBuilder separator = new StringBuilder();
-		for (int width : widths) {
-			separator.append("+");
-			for (int i = 0; i < width + 2; i++)
-				separator.append("-");
-		}
-		separator.append("+\n");
 
 		// 5. Affichage de la table
 		System.out.print(ShinyColors.MAGENTA_BG);
 		System.out.print(ShinyColors.WHITE);
 		System.out.println(title);
 		System.out.print(ShinyColors.RESET);
-		System.out.print(separator);
+		printLineSeparator(widths, Position.Up);
 		System.out.print(ShinyColors.BLUE_BRIGHT_BG);
 		System.out.printf(format, (Object[]) header);
 		System.out.print(ShinyColors.RESET);
-		System.out.print(separator);
+		printLineSeparator(widths, Position.Middle);
 		boolean invert = false;
 		for (String[] formattedRow : formattedRows) {
 			if (invert) {
@@ -135,7 +128,21 @@ public final class ShinyTable {
 			}
 			invert = !invert;
 		}
-		System.out.print(separator);
+		printLineSeparator(widths, Position.Bottom);
+	}
+
+	private static enum Position {
+		Up, Middle, Bottom
+	}
+
+	private static void printLineSeparator(int[] widths, Position position) {
+		for (int width : widths) {
+			System.out.print("+");
+			for (int i = 0; i < width + 2; i++)
+				System.out.print("-");
+		}
+		System.out.println("+");
+
 	}
 
 	/**
