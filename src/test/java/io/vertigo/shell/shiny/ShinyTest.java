@@ -44,5 +44,16 @@ public class ShinyTest {
 				.header("Country", "Population")
 				.rows(euCountries)
 				.print();
+
+		System.out.println();
+		System.out.println();
+
+		Shiny.table()
+				.title("European Union Countries - Population")
+				.header("Country", "Population")
+				.rows(euCountries)
+				.noBorder()
+				.print();
+
 	}
 }
