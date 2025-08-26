@@ -8,7 +8,7 @@ public final class VXEntity {
 	public final String name;
 	public final List<VXAttribute> attributes;
 
-	public VXEntity(String name, List<VXAttribute> attributes) {
+	public VXEntity(final String name, final List<VXAttribute> attributes) {
 		Assertion.check()
 				.isNotBlank(name)
 				.isNotNull(attributes);

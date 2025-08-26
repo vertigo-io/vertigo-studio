@@ -19,10 +19,10 @@ package io.vertigo.studio.domain.famille;
 
 import io.vertigo.core.lang.Generated;
 import io.vertigo.datamodel.data.model.Entity;
-import io.vertigo.datastore.impl.entitystore.StoreListVAccessor;
 import io.vertigo.datamodel.data.model.UID;
 import io.vertigo.datamodel.data.stereotype.Field;
 import io.vertigo.datamodel.data.util.DataModelUtil;
+import io.vertigo.datastore.impl.entitystore.StoreListVAccessor;
 
 /**
  * This class is automatically generated.
@@ -68,7 +68,7 @@ public final class Famille implements Entity {
 	public UID<Famille> getUID() {
 		return UID.of(this);
 	}
-	
+
 	/**
 	 * Champ : ID.
 	 * Récupère la valeur de la propriété 'identifiant de la famille'.
@@ -87,7 +87,7 @@ public final class Famille implements Entity {
 	public void setFamId(final Long famId) {
 		this.famId = famId;
 	}
-	
+
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Libelle'.
@@ -106,7 +106,7 @@ public final class Famille implements Entity {
 	public void setLibelle(final String libelle) {
 		this.libelle = libelle;
 	}
-	
+
 	/**
 	 * Champ : COMPUTED.
 	 * Récupère la valeur de la propriété calculée 'Libelle'.
@@ -137,7 +137,7 @@ public final class Famille implements Entity {
 	public StoreListVAccessor<io.vertigo.studio.domain.car.Car> voituresLocation() {
 		return voituresLocationAccessor;
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {

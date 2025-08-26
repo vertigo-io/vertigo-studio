@@ -39,7 +39,7 @@ public final class CommandType implements DtStaticMasterData {
 	public UID<CommandType> getUID() {
 		return UID.of(this);
 	}
-	
+
 	/**
 	 * Champ : ID.
 	 * Récupère la valeur de la propriété 'id'.
@@ -58,7 +58,7 @@ public final class CommandType implements DtStaticMasterData {
 	public void setCtyId(final Long ctyId) {
 		this.ctyId = ctyId;
 	}
-	
+
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Label'.
@@ -77,7 +77,7 @@ public final class CommandType implements DtStaticMasterData {
 	public void setLabel(final String label) {
 		this.label = label;
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {

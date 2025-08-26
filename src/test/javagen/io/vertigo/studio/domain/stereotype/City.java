@@ -40,7 +40,7 @@ public final class City implements DtMasterData {
 	public UID<City> getUID() {
 		return UID.of(this);
 	}
-	
+
 	/**
 	 * Champ : ID.
 	 * Récupère la valeur de la propriété 'id'.
@@ -59,7 +59,7 @@ public final class City implements DtMasterData {
 	public void setCitId(final Long citId) {
 		this.citId = citId;
 	}
-	
+
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Label'.
@@ -78,7 +78,7 @@ public final class City implements DtMasterData {
 	public void setLabel(final String label) {
 		this.label = label;
 	}
-	
+
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Postal code'.
@@ -97,7 +97,7 @@ public final class City implements DtMasterData {
 	public void setPostalCode(final String postalCode) {
 		this.postalCode = postalCode;
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {

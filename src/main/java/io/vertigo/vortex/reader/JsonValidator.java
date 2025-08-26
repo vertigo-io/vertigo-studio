@@ -12,7 +12,7 @@ import io.vertigo.core.lang.Assertion;
 
 final class JsonValidator {
 
-	public static void validate(File schemaFile, File dataFile) throws Exception {
+	public static void validate(final File schemaFile, final File dataFile) throws Exception {
 		Assertion.check()
 				.isNotNull(schemaFile)
 				.isNotNull(dataFile);

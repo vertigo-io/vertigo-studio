@@ -11,8 +11,8 @@ public final class DbModelSaveCommand implements ShellCommand {
 	@Override
 	public void run() {
 		try {
-			DbModelStorage.save(DbContext.model());
-		} catch (Exception e) {
+			DbModelJsonStorage.save(DbContext.model());
+		} catch (final Exception e) {
 			throw new VSystemException(e, "Failed to load model : {0}", e.getMessage());
 
 		}

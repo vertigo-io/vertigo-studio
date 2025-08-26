@@ -19,12 +19,12 @@ public final class JdbcStatsCommand implements ShellCommand {
 
 	@Override
 	public void run() {
-		final List<String> tableNames = new ArrayList<String>();
-		final List<Integer> tableCounts = new ArrayList<Integer>();
+		final List<String> tableNames = new ArrayList<>();
+		final List<Integer> tableCounts = new ArrayList<>();
 
-		for (JdbcSchema schema : DbContext.model().schemas()) {
-			for (JdbcTable table : schema.tables()) {
-				String query = "select count(*) as count from " + table.name();
+		for (final JdbcSchema schema : DbContext.model().schemas()) {
+			for (final JdbcTable table : schema.tables()) {
+				final String query = "select count(*) as count from " + table.name();
 				try (Statement stmt = DbContext.connection().createStatement()) {
 					try (ResultSet rs = stmt.executeQuery(query)) {
 						rs.next();

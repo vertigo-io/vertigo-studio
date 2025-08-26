@@ -6,7 +6,7 @@ public final class VXHeader {
 	public final String description;
 	public final String[] tags;
 
-	public VXHeader(String description, String[] tags) {
+	public VXHeader(final String description, final String[] tags) {
 		Assertion.check()
 				.isNotBlank(description)
 				.isNotNull(tags);

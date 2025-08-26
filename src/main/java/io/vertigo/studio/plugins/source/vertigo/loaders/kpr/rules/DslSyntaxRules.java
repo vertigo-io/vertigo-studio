@@ -17,9 +17,9 @@
  */
 package io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules;
 
-import io.vertigo.commons.peg.rule.PegWordRuleMode;
 import io.vertigo.commons.peg.rule.PegRule;
 import io.vertigo.commons.peg.rule.PegRules;
+import io.vertigo.commons.peg.rule.PegWordRuleMode;
 
 /**
  *

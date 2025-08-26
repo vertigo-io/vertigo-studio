@@ -43,7 +43,7 @@ public final class VxFileInfo implements Entity {
 	public UID<VxFileInfo> getUID() {
 		return UID.of(this);
 	}
-	
+
 	/**
 	 * Champ : ID.
 	 * Récupère la valeur de la propriété 'Identifiant'.
@@ -62,7 +62,7 @@ public final class VxFileInfo implements Entity {
 	public void setFilId(final Long filId) {
 		this.filId = filId;
 	}
-	
+
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Nom'.
@@ -81,7 +81,7 @@ public final class VxFileInfo implements Entity {
 	public void setFileName(final String fileName) {
 		this.fileName = fileName;
 	}
-	
+
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Type mime'.
@@ -100,7 +100,7 @@ public final class VxFileInfo implements Entity {
 	public void setMimeType(final String mimeType) {
 		this.mimeType = mimeType;
 	}
-	
+
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Taille'.
@@ -119,7 +119,7 @@ public final class VxFileInfo implements Entity {
 	public void setLength(final Long length) {
 		this.length = length;
 	}
-	
+
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Date de dernière modification'.
@@ -138,7 +138,7 @@ public final class VxFileInfo implements Entity {
 	public void setLastModified(final java.time.Instant lastModified) {
 		this.lastModified = lastModified;
 	}
-	
+
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'data'.
@@ -157,7 +157,7 @@ public final class VxFileInfo implements Entity {
 	public void setFileData(final io.vertigo.core.lang.DataStream fileData) {
 		this.fileData = fileData;
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {

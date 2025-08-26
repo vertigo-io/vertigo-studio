@@ -16,8 +16,8 @@ public final class ListSourcesCommand implements ShellCommand {
 	public void run() {
 		final List<Source> sources = ShellContext.notebookConfig.sources();
 		final List<String[]> rows = new ArrayList<>();
-		for (Source source : sources) {
-			String[] row = new String[2];
+		for (final Source source : sources) {
+			final String[] row = new String[2];
 			row[0] = source.type();
 			row[1] = source.path();
 			rows.add(row);

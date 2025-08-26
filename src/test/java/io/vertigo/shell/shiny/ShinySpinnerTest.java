@@ -3,7 +3,7 @@ package io.vertigo.shell.shiny;
 import io.vertigo.shell.shiny.spinner.ShinySpinner;
 
 public class ShinySpinnerTest {
-	public static void main(String[] args) throws Exception {
+	public static void main(final String[] args) throws Exception {
 		test();
 	}
 

@@ -43,7 +43,7 @@ public final class DslRawKey {
 
 	@Override
 	public boolean equals(final Object obj) {
-		return (obj instanceof DslRawKey) ? name.equals(((DslRawKey) obj).name) : false;
+		return (obj instanceof DslRawKey d) ? name.equals(d.name) : false;
 	}
 
 	@Override

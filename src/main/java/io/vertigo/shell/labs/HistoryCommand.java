@@ -13,14 +13,14 @@ public class HistoryCommand implements ShellCommand {
 		//
 	}
 
-	public HistoryCommand(List<String> history) {
+	public HistoryCommand(final List<String> history) {
 		this.history = history;
 	}
 
 	@Override
 	public void run() {
 		int i = 1;
-		for (String command : history) {
+		for (final String command : history) {
 			System.out.printf("%2d: %s%n", i++, command);
 		}
 	}

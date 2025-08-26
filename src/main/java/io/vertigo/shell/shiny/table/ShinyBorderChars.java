@@ -5,17 +5,17 @@ import io.vertigo.core.lang.Assertion;
 /**
  * Box-drawing characters for rendering table structures in console output.
 
- * To draw a box we need 11 chars 
- * 
+ * To draw a box we need 11 chars
+ *
  * 	┌────────┬────────┐  ==> TOP
  *  │        │        │
- *  ├────────┼────────┤  ==> INNER 
+ *  ├────────┼────────┤  ==> INNER
  *  │        │        │
  *  └────────┴────────┘  ==> BOTTOM
- * <Left> <Middle> <Right> 
- * 
- * Why 11 ? row(3) x Col(3) + horizontal + vertical 
- * 
+ * <Left> <Middle> <Right>
+ *
+ * Why 11 ? row(3) x Col(3) + horizontal + vertical
+ *
  */
 final class ShinyBorderChars {
 	private static final String HORIZONTAL = "─"; // U+2500
@@ -47,9 +47,9 @@ final class ShinyBorderChars {
 	public static final String ROUNDED_BOTTOM_MIDDLE = "┴"; // U+2534
 	public static final String ROUNDED_BOTTOM_RIGHT = "╯"; // U+256F
 
-	private ShinyBorder border;
+	private final ShinyBorder border;
 
-	ShinyBorderChars(ShinyBorder border) {
+	ShinyBorderChars(final ShinyBorder border) {
 		Assertion.check().isNotNull(border);
 		//---
 		this.border = border;

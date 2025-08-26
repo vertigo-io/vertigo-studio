@@ -219,7 +219,7 @@ public final class TaskGeneratorPlugin implements GeneratorPlugin {
 		final Collection<DtSketch> dtSketchs = notebook.getAll(DtSketch.class);
 		for (final DtSketch dtSketch : dtSketchs) {
 			if (dtSketch.getPackageName().startsWith(generatorConfig.getProjectPackageName())) {
-				taskSketchsMap.put(dtSketch, new ArrayList<TaskSketch>());
+				taskSketchsMap.put(dtSketch, new ArrayList<>());
 			}
 		}
 		//---

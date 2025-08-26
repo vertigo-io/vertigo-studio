@@ -39,7 +39,7 @@ public final class MotorType implements DtStaticMasterData {
 	public UID<MotorType> getUID() {
 		return UID.of(this);
 	}
-	
+
 	/**
 	 * Champ : ID.
 	 * Récupère la valeur de la propriété 'id'.
@@ -58,7 +58,7 @@ public final class MotorType implements DtStaticMasterData {
 	public void setMtyCd(final String mtyCd) {
 		this.mtyCd = mtyCd;
 	}
-	
+
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Label'.
@@ -77,7 +77,7 @@ public final class MotorType implements DtStaticMasterData {
 	public void setLabel(final String label) {
 		this.label = label;
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {

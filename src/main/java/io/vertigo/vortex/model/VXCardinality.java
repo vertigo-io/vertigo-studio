@@ -4,12 +4,12 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.VSystemException;
 
 public enum VXCardinality {
-	/** 
+	/**
 	 * Used for nullable references.
 	 * Symbol: ?
 	 */
 	NULLABLE,
-	/** 
+	/**
 	 * Symbol: 1
 	 */
 	ONE,

@@ -47,11 +47,11 @@ public final class JdbcQueryCommand implements ShellCommand {
 		}
 
 		// Récupération des données
-		List<String[]> rows = new ArrayList<>();
+		final List<String[]> rows = new ArrayList<>();
 		while (rs.next()) {
-			String[] row = new String[columnsNumber];
+			final String[] row = new String[columnsNumber];
 			for (int i = 1; i <= columnsNumber; i++) {
-				String value = rs.getString(i);
+				final String value = rs.getString(i);
 				row[i - 1] = value != null ? value : "NULL";
 			}
 			rows.add(row);

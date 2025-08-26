@@ -28,7 +28,7 @@ import io.vertigo.shell.labs.db.model.DbModel.JdbcTrigger;
 final class DbModelLoader {
 	private final Connection connection;
 
-	DbModelLoader(Connection connection) {
+	DbModelLoader(final Connection connection) {
 		Assertion.check().isNotNull(connection);
 		//---
 		this.connection = connection;
@@ -58,7 +58,7 @@ final class DbModelLoader {
 	}
 
 	// Charge les tables d’un schéma
-	private List<JdbcTable> loadTables(String schema) throws SQLException {
+	private List<JdbcTable> loadTables(final String schema) throws SQLException {
 		final List<JdbcTable> tables = new ArrayList<>();
 		final DatabaseMetaData metaData = connection.getMetaData();
 
@@ -83,7 +83,7 @@ final class DbModelLoader {
 	}
 
 	// Charge les colonnes
-	private List<JdbcColumn> loadColumns(DatabaseMetaData metaData, String tableName, String schema) throws SQLException {
+	private List<JdbcColumn> loadColumns(final DatabaseMetaData metaData, final String tableName, final String schema) throws SQLException {
 		final List<JdbcColumn> columns = new ArrayList<>();
 		try (ResultSet rs = metaData.getColumns(null, schema, tableName, "%")) {
 			while (rs.next()) {
@@ -101,7 +101,7 @@ final class DbModelLoader {
 	}
 
 	// Charge les clés primaires
-	private List<JdbcColumn> loadPrimaryKeys(DatabaseMetaData metaData, String tableName, String schema, List<JdbcColumn> columns) throws SQLException {
+	private List<JdbcColumn> loadPrimaryKeys(final DatabaseMetaData metaData, final String tableName, final String schema, final List<JdbcColumn> columns) throws SQLException {
 		final List<JdbcColumn> updatedColumns = new ArrayList<>();
 		final List<String> primaryKeyColumns = new ArrayList<>();
 		try (ResultSet rs = metaData.getPrimaryKeys(null, schema, tableName)) {
@@ -109,7 +109,7 @@ final class DbModelLoader {
 				primaryKeyColumns.add(rs.getString("COLUMN_NAME"));
 			}
 		}
-		for (JdbcColumn column : columns) {
+		for (final JdbcColumn column : columns) {
 			final boolean isPrimaryKey = primaryKeyColumns.contains(column.name());
 			updatedColumns.add(new JdbcColumn(
 					column.name(), column.typeName(), column.size(), column.nullable(), isPrimaryKey,
@@ -118,15 +118,16 @@ final class DbModelLoader {
 		return updatedColumns;
 	}
 
-	private List<JdbcIndex> loadIndexes(DatabaseMetaData metaData, String tableName, String schema) throws SQLException {
+	private List<JdbcIndex> loadIndexes(final DatabaseMetaData metaData, final String tableName, final String schema) throws SQLException {
 		final Map<String, List<String>> indexColumnsMap = new HashMap<>();
 		final Map<String, Boolean> indexUniquenessMap = new HashMap<>();
 
 		try (ResultSet rs = metaData.getIndexInfo(null, schema, tableName, false, false)) {
 			while (rs.next()) {
 				final String indexName = rs.getString("INDEX_NAME");
-				if (indexName == null)
+				if (indexName == null) {
 					continue;
+				}
 				final boolean nonUnique = rs.getBoolean("NON_UNIQUE");
 				final String columnName = rs.getString("COLUMN_NAME");
 
@@ -136,14 +137,14 @@ final class DbModelLoader {
 		}
 
 		final List<JdbcIndex> indexes = new ArrayList<>();
-		for (String indexName : indexColumnsMap.keySet()) {
+		for (final String indexName : indexColumnsMap.keySet()) {
 			indexes.add(new JdbcIndex(indexName, indexUniquenessMap.get(indexName), indexColumnsMap.get(indexName)));
 		}
 		return indexes;
 	}
 
 	// Charge les relations
-	private List<JdbcRelation> loadRelations(DatabaseMetaData metaData, String tableName, String schema) throws SQLException {
+	private List<JdbcRelation> loadRelations(final DatabaseMetaData metaData, final String tableName, final String schema) throws SQLException {
 		final List<JdbcRelation> relations = new ArrayList<>();
 
 		try (ResultSet rs = metaData.getImportedKeys(null, schema, tableName)) {
@@ -160,7 +161,7 @@ final class DbModelLoader {
 	}
 
 	// Charge les triggers (PostgreSQL)
-	private List<JdbcTrigger> loadTriggers(String tableName, String schema) throws SQLException {
+	private List<JdbcTrigger> loadTriggers(final String tableName, final String schema) throws SQLException {
 		final List<JdbcTrigger> triggers = new ArrayList<>();
 		try (PreparedStatement stmt = connection.prepareStatement(
 				"""
@@ -184,7 +185,7 @@ final class DbModelLoader {
 	}
 
 	// Charge les contraintes (PostgreSQL)
-	private List<JdbcConstraint> loadConstraints(String tableName, String schema) throws SQLException {
+	private List<JdbcConstraint> loadConstraints(final String tableName, final String schema) throws SQLException {
 		final List<JdbcConstraint> constraints = new ArrayList<>();
 		try (PreparedStatement stmt = connection.prepareStatement(
 				"""
@@ -198,7 +199,7 @@ final class DbModelLoader {
 			stmt.setString(2, schema);
 			try (ResultSet rs = stmt.executeQuery()) {
 				while (rs.next()) {
-					String type = switch (rs.getString("constraint_type")) {
+					final String type = switch (rs.getString("constraint_type")) {
 						case "c" -> "CHECK";
 						case "u" -> "UNIQUE";
 						default -> rs.getString("constraint_type");
@@ -214,7 +215,7 @@ final class DbModelLoader {
 	}
 
 	// Charge les séquences (PostgreSQL)
-	private List<JdbcSequence> loadSequences(String schema) throws SQLException {
+	private List<JdbcSequence> loadSequences(final String schema) throws SQLException {
 		final List<JdbcSequence> sequences = new ArrayList<>();
 		try (PreparedStatement stmt = connection.prepareStatement(
 				"""
@@ -238,7 +239,7 @@ final class DbModelLoader {
 	}
 
 	// Charge les vues matérialisées (PostgreSQL)
-	private List<JdbcMaterializedView> loadMaterializedViews(String schema) throws SQLException {
+	private List<JdbcMaterializedView> loadMaterializedViews(final String schema) throws SQLException {
 		final List<JdbcMaterializedView> materializedViews = new ArrayList<>();
 		try (PreparedStatement stmt = connection.prepareStatement(
 				"""
@@ -260,7 +261,7 @@ final class DbModelLoader {
 	}
 
 	// Charge les fonctions (PostgreSQL)
-	private List<JdbcFunction> loadFunctions(String schema) throws SQLException {
+	private List<JdbcFunction> loadFunctions(final String schema) throws SQLException {
 		final List<JdbcFunction> functions = new ArrayList<>();
 		try (PreparedStatement stmt = connection.prepareStatement(
 				"""
@@ -282,7 +283,7 @@ final class DbModelLoader {
 	}
 
 	// Charge les privilèges (PostgreSQL)
-	private List<JdbcPrivilege> loadPrivileges(String schema) throws SQLException {
+	private List<JdbcPrivilege> loadPrivileges(final String schema) throws SQLException {
 		final List<JdbcPrivilege> privileges = new ArrayList<>();
 		try (PreparedStatement stmt = connection.prepareStatement(
 				"""
@@ -307,7 +308,7 @@ final class DbModelLoader {
 	}
 
 	// Charge le commentaire de la table (PostgreSQL)
-	private String loadTableComment(String tableName, String schema) throws SQLException {
+	private String loadTableComment(final String tableName, final String schema) throws SQLException {
 		try (PreparedStatement stmt = connection.prepareStatement(
 				"""
 						SELECT obj_description((SELECT oid FROM pg_class WHERE relname = ? AND relnamespace = (SELECT oid FROM pg_namespace WHERE nspname = ?)), 'pg_class')
@@ -321,7 +322,7 @@ final class DbModelLoader {
 	}
 
 	// Charge le commentaire de la colonne (PostgreSQL)
-	private String loadColumnComment(String tableName, String columnName, String schema) throws SQLException {
+	private String loadColumnComment(final String tableName, final String columnName, final String schema) throws SQLException {
 		try (PreparedStatement stmt = connection.prepareStatement(
 				"""
 						SELECT col_description((SELECT oid FROM pg_class WHERE relname = ? AND relnamespace = (SELECT oid FROM pg_namespace WHERE nspname = ?)),

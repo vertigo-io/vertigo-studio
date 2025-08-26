@@ -8,7 +8,7 @@ import io.vertigo.shell.shiny.Shiny;
 public final class ShinyTree {
 	private final ShinyTreeNode rootNode;
 
-	public ShinyTree(Shiny shiny, String label) {
+	public ShinyTree(final Shiny shiny, final String label) {
 		Assertion.check().isNotNull(shiny);
 		//---
 		this.rootNode = new ShinyTreeNode(label);
@@ -23,7 +23,7 @@ public final class ShinyTree {
 		printChildren("", rootNode.getNodes());
 	}
 
-	private void printChildren(String prefix, List<ShinyTreeNode> children) {
+	private void printChildren(final String prefix, final List<ShinyTreeNode> children) {
 		for (int i = 0; i < children.size(); i++) {
 			final boolean isLast = (i == children.size() - 1);
 			final String connection = isLast
@@ -31,7 +31,7 @@ public final class ShinyTree {
 					: ShinyChars.INNER_LEFT + ShinyChars.HORIZONTAL + ShinyChars.HORIZONTAL;
 			System.out.println(prefix + connection + children.get(i).getLabel());
 			final List<ShinyTreeNode> grandChildren = children.get(i).getNodes();
-			String childPrefix = prefix + (isLast ? "   " : ShinyChars.VERTICAL + "  ");
+			final String childPrefix = prefix + (isLast ? "   " : ShinyChars.VERTICAL + "  ");
 			printChildren(childPrefix, grandChildren);
 		}
 	}

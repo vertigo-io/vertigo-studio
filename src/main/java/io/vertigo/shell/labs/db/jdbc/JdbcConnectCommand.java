@@ -52,7 +52,7 @@ public final class JdbcConnectCommand implements ShellCommand {
 			} else {
 				props.setProperty("password", DbContext.secrets.getProperty("db.password"));
 			}
-			Connection connection = DriverManager.getConnection(url, props);
+			final Connection connection = DriverManager.getConnection(url, props);
 			connection.setReadOnly(true);
 			DbContext.connection(connection);
 		} catch (final SQLException e) {

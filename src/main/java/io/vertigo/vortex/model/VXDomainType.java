@@ -6,7 +6,7 @@ public final class VXDomainType {
 	public final String name;
 	public final VXDataType dataType;
 
-	public VXDomainType(String name, String dataType) {
+	public VXDomainType(final String name, final String dataType) {
 		Assertion.check()
 				.isNotBlank(name)
 				.isNotBlank(dataType);

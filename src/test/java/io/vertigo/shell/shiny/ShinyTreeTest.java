@@ -1,12 +1,12 @@
 package io.vertigo.shell.shiny;
 
 public class ShinyTreeTest {
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		printTree();
 	}
 
 	private static void printTree() {
-		var tree = Shiny.tree("Video Games");
+		final var tree = Shiny.tree("Video Games");
 		tree.getRoot().addNode("RPG")
 				.addNode("Final Fantasy")
 				.addNode("The Elder Scrolls");

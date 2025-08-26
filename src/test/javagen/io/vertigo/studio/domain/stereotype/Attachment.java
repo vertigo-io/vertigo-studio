@@ -20,9 +20,9 @@ package io.vertigo.studio.domain.stereotype;
 import io.vertigo.core.lang.Generated;
 import io.vertigo.datamodel.data.model.Entity;
 import io.vertigo.datamodel.data.model.UID;
-import io.vertigo.datastore.impl.entitystore.StoreVAccessor;
 import io.vertigo.datamodel.data.stereotype.Field;
 import io.vertigo.datamodel.data.util.DataModelUtil;
+import io.vertigo.datastore.impl.entitystore.StoreVAccessor;
 
 /**
  * This class is automatically generated.
@@ -55,7 +55,7 @@ public final class Attachment implements Entity {
 	public UID<Attachment> getUID() {
 		return UID.of(this);
 	}
-	
+
 	/**
 	 * Champ : ID.
 	 * Récupère la valeur de la propriété 'id'.
@@ -74,7 +74,7 @@ public final class Attachment implements Entity {
 	public void setAttId(final Long attId) {
 		this.attId = attId;
 	}
-	
+
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Url'.
@@ -93,7 +93,7 @@ public final class Attachment implements Entity {
 	public void setUrl(final String url) {
 		this.url = url;
 	}
-	
+
 	/**
 	 * Champ : FOREIGN_KEY.
 	 * Récupère la valeur de la propriété 'Command'.
@@ -120,7 +120,7 @@ public final class Attachment implements Entity {
 	public StoreVAccessor<io.vertigo.studio.domain.stereotype.Command> command() {
 		return cmdIdAccessor;
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {

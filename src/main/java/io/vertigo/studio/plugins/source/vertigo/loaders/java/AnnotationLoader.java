@@ -87,8 +87,8 @@ public final class AnnotationLoader implements Loader {
 		} else {
 			//by Iterable of classes
 			final Iterable dtDefinitionsClass = ClassUtil.newInstance(resourcePath, Iterable.class);
-			Iterator<Class> iterator = dtDefinitionsClass.iterator();
-			Set<Class> classes = new HashSet();
+			final Iterator<Class> iterator = dtDefinitionsClass.iterator();
+			final Set<Class> classes = new HashSet();
 			iterator.forEachRemaining(c -> classes.add(c));
 			classSelector = ClassSelector
 					.from(classes);
@@ -233,8 +233,8 @@ public final class AnnotationLoader implements Loader {
 	}
 
 	private static void parseAssociationDefinition(final DslRawRepository rawRepository, final Annotation annotation, final String packageName) {
-		if (annotation instanceof io.vertigo.datamodel.data.stereotype.Association) {
-			final io.vertigo.datamodel.data.stereotype.Association association = (io.vertigo.datamodel.data.stereotype.Association) annotation;
+		if (annotation instanceof final io.vertigo.datamodel.data.stereotype.Association association) {
+			
 			//============================================================
 			//Attention pamc inverse dans oom les déclarations des objets !!
 
@@ -263,8 +263,8 @@ public final class AnnotationLoader implements Loader {
 				//Les associations peuvent être déclarées sur les deux noeuds de l'association.
 				rawRepository.addRaw(associationDefinition);
 			}
-		} else if (annotation instanceof io.vertigo.datamodel.data.stereotype.AssociationNN) {
-			final io.vertigo.datamodel.data.stereotype.AssociationNN association = (io.vertigo.datamodel.data.stereotype.AssociationNN) annotation;
+		} else if (annotation instanceof final io.vertigo.datamodel.data.stereotype.AssociationNN association) {
+			
 			//============================================================
 
 			//Attention pamc inverse dans oom les déclarations des objets !!

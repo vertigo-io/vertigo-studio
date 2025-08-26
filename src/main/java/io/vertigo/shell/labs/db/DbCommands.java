@@ -19,13 +19,13 @@ import picocli.CommandLine.Command;
 		name = "db",
 		description = "Db commands",
 		subcommands = {
-				//--- JDBC requires a connection with the db 
+				//--- JDBC requires a connection with the db
 				JdbcConnectCommand.class,
 				JdbcDisconnectCommand.class,
 				JdbcQueryCommand.class,
 				JdbcPingCommand.class,
 				JdbcStatsCommand.class,
-				//--- Load from db or json. 
+				//--- Load from db or json.
 				//--- Save to json
 				DbModelLoadCommand.class,
 				DbModelSaveCommand.class,

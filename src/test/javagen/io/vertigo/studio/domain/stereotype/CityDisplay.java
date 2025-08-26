@@ -32,7 +32,7 @@ public final class CityDisplay implements DataObject {
 
 	private Long citId;
 	private String label;
-	
+
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'id'.
@@ -52,7 +52,7 @@ public final class CityDisplay implements DataObject {
 	public void setCitId(final Long citId) {
 		this.citId = citId;
 	}
-	
+
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Label'.
@@ -71,7 +71,7 @@ public final class CityDisplay implements DataObject {
 	public void setLabel(final String label) {
 		this.label = label;
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {

@@ -9,7 +9,7 @@ public final class VXModel {
 	public List<VXDomainType> domainTypes;
 	public List<VXEntity> entities;
 
-	public VXModel(VXHeader header, List<VXDomainType> domainTypes, List<VXEntity> entities) {
+	public VXModel(final VXHeader header, final List<VXDomainType> domainTypes, final List<VXEntity> entities) {
 		Assertion.check()
 				.isNotNull(header)
 				.isNotNull(domainTypes)

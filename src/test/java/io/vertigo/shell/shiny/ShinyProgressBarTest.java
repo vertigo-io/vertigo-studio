@@ -3,7 +3,7 @@ package io.vertigo.shell.shiny;
 import io.vertigo.shell.shiny.progressbar.ShinyProgressBar;
 
 public class ShinyProgressBarTest {
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		test();
 	}
 
@@ -15,7 +15,7 @@ public class ShinyProgressBarTest {
 			progressBar.print();
 			try {
 				Thread.sleep(30);
-			} catch (InterruptedException e) {
+			} catch (final InterruptedException e) {
 				//e.printStackTrace();
 			}
 		}

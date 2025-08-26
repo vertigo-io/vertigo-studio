@@ -40,8 +40,7 @@ public final class TypeModelTs {
 	 */
 	public TypeModelTs(final Type type) {
 		String typeValue;
-		if (type instanceof ParameterizedType) {
-			final ParameterizedType genericListType = (ParameterizedType) type;
+		if (type instanceof final ParameterizedType genericListType) {
 			final Class<?> genericClass = (Class<?>) genericListType.getActualTypeArguments()[0];
 			typeValue = genericClass.toString();
 			isList = List.class.getTypeName().equals(genericListType.getTypeName().split("<")[0]);

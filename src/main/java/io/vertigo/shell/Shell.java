@@ -45,7 +45,7 @@ public final class Shell implements Runnable {
 	private final List<String> history = new ArrayList<>();
 	private final CommandLine cmd;
 
-	public Shell(String notebookConfigYaml) {
+	public Shell(final String notebookConfigYaml) {
 		ShellContext.notebookConfig = VertigoStudioMda.loadNotebookConfig(notebookConfigYaml);
 		//---
 		cmd = new CommandLine(this);
@@ -53,7 +53,7 @@ public final class Shell implements Runnable {
 
 	}
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		Assertion.check()
 				.isTrue(args.length == 1, "expected the yam notebookConfig");
 		//--
@@ -68,7 +68,7 @@ public final class Shell implements Runnable {
 
 			while (true) {
 				System.out.print("> ");
-				String line = scanner.nextLine().trim();
+				final String line = scanner.nextLine().trim();
 				if (line.isEmpty()) {
 					continue;
 				}
@@ -83,11 +83,11 @@ public final class Shell implements Runnable {
 		}
 	}
 
-	public static String[] splitArguments(String input) {
-		List<String> result = new ArrayList<>();
+	public static String[] splitArguments(final String input) {
+		final List<String> result = new ArrayList<>();
 		// Pattern pour matcher les chaînes entre guillemets ou les tokens simples
-		Pattern pattern = Pattern.compile("\"([^\"]*)\"|(\\S+)");
-		Matcher matcher = pattern.matcher(input.trim());
+		final Pattern pattern = Pattern.compile("\"([^\"]*)\"|(\\S+)");
+		final Matcher matcher = pattern.matcher(input.trim());
 
 		while (matcher.find()) {
 			if (matcher.group(1) != null) {
@@ -102,22 +102,22 @@ public final class Shell implements Runnable {
 		return result.toArray(new String[0]);
 	}
 
-	private void runFromHistory(String line) {
+	private void runFromHistory(final String line) {
 		try {
-			int index = Integer.parseInt(line.substring(1)) - 1;
+			final int index = Integer.parseInt(line.substring(1)) - 1;
 			if (index >= 0 && index < history.size()) {
-				String historicCmd = history.get(index);
+				final String historicCmd = history.get(index);
 				System.out.println("\u2192 " + historicCmd);
 				handleCommand(historicCmd.split("\\s+"));
 			} else {
 				System.out.println("Invalid history index.");
 			}
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			System.out.println("Invalid format. Use !n to replay command n.");
 		}
 	}
 
-	private void handleCommand(String[] args) {
+	private void handleCommand(final String[] args) {
 		cmd.execute(args);
 	}
 

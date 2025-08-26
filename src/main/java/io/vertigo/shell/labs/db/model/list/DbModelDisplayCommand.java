@@ -17,13 +17,13 @@ public final class DbModelDisplayCommand implements ShellCommand {
 	@Override
 	public void run() {
 		final ShinyTree tree = Shiny.tree("model");
-		for (JdbcSchema schema : DbContext.model().schemas()) {
+		for (final JdbcSchema schema : DbContext.model().schemas()) {
 			final ShinyTreeNode schemaNode = tree.getRoot().addNode("schema : " + schema.name());
 			final ShinyTreeNode tablesNode = schemaNode.addNode("tables (" + schema.tables().size() + ")");
-			for (JdbcTable table : schema.tables()) {
+			for (final JdbcTable table : schema.tables()) {
 				final ShinyTreeNode tableNode = tablesNode.addNode(table.name());
 				final ShinyTreeNode columnsNode = tableNode.addNode("columns");
-				for (JdbcColumn column : table.columns()) {
+				for (final JdbcColumn column : table.columns()) {
 
 					String info = column.name() + " " + ShinyColors.GREEN_BRIGHT + column.typeName() + ShinyColors.RESET;
 

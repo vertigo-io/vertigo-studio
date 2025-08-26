@@ -63,9 +63,9 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 			this.clazz = clazz;
 		}
 
-		/** 
+		/**
 		 * Classe associée.
-		 * @return Class d'implémentation de l'objet 
+		 * @return Class d'implémentation de l'objet
 		 */
 		public Class<?> getDtClass() {
 			return clazz;
@@ -223,7 +223,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 	@Override
 	public Iterator<Class<?>> iterator() {
 		return new Iterator<>() {
-			private Iterator<Definitions> it = Arrays.asList(Definitions.values()).iterator();
+			private final Iterator<Definitions> it = Arrays.asList(Definitions.values()).iterator();
 
 			/** {@inheritDoc} */
 			@Override

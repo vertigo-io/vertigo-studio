@@ -12,24 +12,24 @@ import java.util.Set;
 import io.vertigo.shell.labs.db.model.DbModel;
 import io.vertigo.shell.labs.db.model.DbModel.JdbcTable;
 
-public final class DbModelAnalyzer {
+final class DbModelAnalyzer {
 
-	public static DbModelAnalysisReport analyze(DbModel model) {
-		List<String> tablesWithoutPrimaryKey = new ArrayList<>();
-		List<String> nonNullableColumnsWithoutDefault = new ArrayList<>();
-		List<String> invalidRelations = new ArrayList<>();
-		List<String> redundantIndexes = new ArrayList<>();
-		List<String> trivialCheckConstraints = new ArrayList<>();
-		List<String> undocumentedObjects = new ArrayList<>();
+	static DbModelAnalysisReport analyze(final DbModel model) {
+		final List<String> tablesWithoutPrimaryKey = new ArrayList<>();
+		final List<String> nonNullableColumnsWithoutDefault = new ArrayList<>();
+		final List<String> invalidRelations = new ArrayList<>();
+		final List<String> redundantIndexes = new ArrayList<>();
+		final List<String> trivialCheckConstraints = new ArrayList<>();
+		final List<String> undocumentedObjects = new ArrayList<>();
 
-		Map<String, JdbcTable> tableMap = new HashMap<>();
-		Map<String, Set<String>> directFanIn = new HashMap<>();
-		Map<String, Set<String>> directFanOut = new HashMap<>();
+		final Map<String, JdbcTable> tableMap = new HashMap<>();
+		final Map<String, Set<String>> directFanIn = new HashMap<>();
+		final Map<String, Set<String>> directFanOut = new HashMap<>();
 
 		// Préparer les noms complets de tables
-		for (DbModel.JdbcSchema schema : model.schemas()) {
-			for (JdbcTable table : schema.tables()) {
-				String fullName = schema.name() + "." + table.name();
+		for (final DbModel.JdbcSchema schema : model.schemas()) {
+			for (final JdbcTable table : schema.tables()) {
+				final String fullName = schema.name() + "." + table.name();
 				tableMap.put(fullName, table);
 				directFanIn.put(fullName, new HashSet<>());
 				directFanOut.put(fullName, new HashSet<>());
@@ -37,16 +37,16 @@ public final class DbModelAnalyzer {
 		}
 
 		// Analyse structurelle + dépendances
-		for (DbModel.JdbcSchema schema : model.schemas()) {
-			for (JdbcTable table : schema.tables()) {
-				String tableName = schema.name() + "." + table.name();
+		for (final DbModel.JdbcSchema schema : model.schemas()) {
+			for (final JdbcTable table : schema.tables()) {
+				final String tableName = schema.name() + "." + table.name();
 
 				// Clé primaire
 				if (table.columns().stream().noneMatch(DbModel.JdbcColumn::isPrimaryKey)) {
 					tablesWithoutPrimaryKey.add(tableName);
 				}
 
-				for (DbModel.JdbcColumn column : table.columns()) {
+				for (final DbModel.JdbcColumn column : table.columns()) {
 					if (!column.nullable() && column.defaultValue() == null) {
 						nonNullableColumnsWithoutDefault.add(tableName + "." + column.name());
 					}
@@ -56,12 +56,12 @@ public final class DbModelAnalyzer {
 				}
 
 				// Relations
-				for (DbModel.JdbcRelation relation : table.relations()) {
-					String targetTable = schema.name() + "." + relation.targetTable();
+				for (final DbModel.JdbcRelation relation : table.relations()) {
+					final String targetTable = schema.name() + "." + relation.targetTable();
 					directFanOut.get(tableName).add(targetTable);
 					directFanIn.computeIfAbsent(targetTable, k -> new HashSet<>()).add(tableName);
 
-					JdbcTable tgt = tableMap.get(targetTable);
+					final JdbcTable tgt = tableMap.get(targetTable);
 					if (tgt == null || tgt.columns().stream().noneMatch(c -> c.name().equals(relation.targetColumn()))) {
 						invalidRelations.add("Relation " + relation.name() + " in " + tableName +
 								" -> missing target " + relation.targetTable() + "." + relation.targetColumn());
@@ -69,16 +69,16 @@ public final class DbModelAnalyzer {
 				}
 
 				// Indexes
-				Set<Set<String>> seenIndexes = new HashSet<>();
-				for (DbModel.JdbcIndex index : table.indexes()) {
-					Set<String> cols = new HashSet<>(index.columnNames());
+				final Set<Set<String>> seenIndexes = new HashSet<>();
+				for (final DbModel.JdbcIndex index : table.indexes()) {
+					final Set<String> cols = new HashSet<>(index.columnNames());
 					if (!seenIndexes.add(cols)) {
 						redundantIndexes.add(tableName + "." + index.name());
 					}
 				}
 
 				// Contraintes triviales
-				for (DbModel.JdbcConstraint constraint : table.constraints()) {
+				for (final DbModel.JdbcConstraint constraint : table.constraints()) {
 					if ("CHECK".equalsIgnoreCase(constraint.type()) &&
 							("1=1".equalsIgnoreCase(constraint.definition()) || constraint.definition().isBlank())) {
 						trivialCheckConstraints.add(tableName + "." + constraint.name());
@@ -93,14 +93,14 @@ public final class DbModelAnalyzer {
 		}
 
 		// Fan-in transitif
-		Map<String, Integer> transitiveFanIn = computeTransitiveFanIn(directFanIn);
+		final Map<String, Integer> transitiveFanIn = computeTransitiveFanIn(directFanIn);
 
 		// Construction des stats finales
-		Map<String, DbModelAnalysisReport.TableDependencyStats> dependencyStats = new HashMap<>();
-		for (String tableName : tableMap.keySet()) {
-			int fanIn = directFanIn.getOrDefault(tableName, Set.of()).size();
-			int fanOut = directFanOut.getOrDefault(tableName, Set.of()).size();
-			int fanInTrans = transitiveFanIn.getOrDefault(tableName, 0);
+		final Map<String, DbModelAnalysisReport.TableDependencyStats> dependencyStats = new HashMap<>();
+		for (final String tableName : tableMap.keySet()) {
+			final int fanIn = directFanIn.getOrDefault(tableName, Set.of()).size();
+			final int fanOut = directFanOut.getOrDefault(tableName, Set.of()).size();
+			final int fanInTrans = transitiveFanIn.getOrDefault(tableName, 0);
 			dependencyStats.put(tableName, new DbModelAnalysisReport.TableDependencyStats(fanIn, fanOut, fanInTrans));
 		}
 
@@ -114,13 +114,13 @@ public final class DbModelAnalyzer {
 				dependencyStats);
 	}
 
-	private static Map<String, Integer> computeTransitiveFanIn(Map<String, Set<String>> reverseGraph) {
-		Map<String, Integer> result = new HashMap<>();
-		for (String target : reverseGraph.keySet()) {
-			Set<String> visited = new HashSet<>();
-			Deque<String> stack = new ArrayDeque<>(reverseGraph.getOrDefault(target, Set.of()));
+	private static Map<String, Integer> computeTransitiveFanIn(final Map<String, Set<String>> reverseGraph) {
+		final Map<String, Integer> result = new HashMap<>();
+		for (final String target : reverseGraph.keySet()) {
+			final Set<String> visited = new HashSet<>();
+			final Deque<String> stack = new ArrayDeque<>(reverseGraph.getOrDefault(target, Set.of()));
 			while (!stack.isEmpty()) {
-				String source = stack.pop();
+				final String source = stack.pop();
 				if (visited.add(source)) {
 					stack.addAll(reverseGraph.getOrDefault(source, Set.of()));
 				}

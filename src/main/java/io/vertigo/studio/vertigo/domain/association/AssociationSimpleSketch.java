@@ -36,7 +36,7 @@ public final class AssociationSimpleSketch extends AssociationSketch {
 
 	/**
 	 * Constructor.
-	
+
 	 * @param name the name of the association
 	 * @param fkFieldName the fieldname that represents the foreign key
 	 * @param associationNodeA the A node for this assocation

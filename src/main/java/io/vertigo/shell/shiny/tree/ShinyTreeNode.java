@@ -9,13 +9,13 @@ public final class ShinyTreeNode {
 	private final String label;
 	private final List<ShinyTreeNode> nodes = new ArrayList<>();
 
-	ShinyTreeNode(String label) {
+	ShinyTreeNode(final String label) {
 		Assertion.check().isNotBlank(label);
 		//---
 		this.label = label;
 	}
 
-	public ShinyTreeNode addNode(String childLabel) {
+	public ShinyTreeNode addNode(final String childLabel) {
 		final ShinyTreeNode childNode = new ShinyTreeNode(childLabel);
 		nodes.add(childNode);
 		return childNode;

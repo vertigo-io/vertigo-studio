@@ -16,36 +16,36 @@ public final class ShinyTableStyle {
 	String altRowBackgroundColor = ShinyColors.CYAN_BRIGHT_BG;
 	String borderColor = ShinyColors.BLACK;
 
-	ShinyTableStyle(ShinyTable table) {
+	ShinyTableStyle(final ShinyTable table) {
 		this.table = table;
 	}
 
-	public ShinyTableStyle border(ShinyBorder tableBorder) {
+	public ShinyTableStyle border(final ShinyBorder tableBorder) {
 		this.border = tableBorder;
 		return this;
 	}
 
-	public ShinyTableStyle titleBackgroundColor(String color) {
+	public ShinyTableStyle titleBackgroundColor(final String color) {
 		this.titleBackgroundColor = color;
 		return this;
 	}
 
-	public ShinyTableStyle borderColor(String color) {
+	public ShinyTableStyle borderColor(final String color) {
 		this.borderColor = color;
 		return this;
 	}
 
-	public ShinyTableStyle titleTextColor(String color) {
+	public ShinyTableStyle titleTextColor(final String color) {
 		this.titleTextColor = color;
 		return this;
 	}
 
-	public ShinyTableStyle headerBackgroundColor(String color) {
+	public ShinyTableStyle headerBackgroundColor(final String color) {
 		this.headerBackgroundColor = color;
 		return this;
 	}
 
-	public ShinyTableStyle altRowBackgroundColor(String color) {
+	public ShinyTableStyle altRowBackgroundColor(final String color) {
 		this.altRowBackgroundColor = color;
 		return this;
 	}

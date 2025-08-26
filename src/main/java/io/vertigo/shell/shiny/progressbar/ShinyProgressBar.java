@@ -9,7 +9,7 @@ public final class ShinyProgressBar {
 	private int progress; // Progression actuelle
 
 	// Constructeur
-	public ShinyProgressBar(Shiny shiny) {
+	public ShinyProgressBar(final Shiny shiny) {
 		Assertion.check().isNotNull(shiny);
 		//---
 		this.barLength = 50; // Longueur fixe
@@ -17,15 +17,15 @@ public final class ShinyProgressBar {
 	}
 
 	//  Valeur totale correspondant à 100%
-	public ShinyProgressBar total(int total) {
-		Assertion.check().isTrue(total > 0, "total must be > 0");
+	public ShinyProgressBar total(final int value) {
+		Assertion.check().isTrue(value > 0, "total must be > 0");
 		//---
-		this.total = total;
+		this.total = value;
 		return this;
 	}
 
 	// Méthode pour mettre à jour la progression
-	public void setProgress(int progress) {
+	public void setProgress(final int progress) {
 		if (progress >= 0 && progress <= total) {
 			this.progress = progress;
 		}

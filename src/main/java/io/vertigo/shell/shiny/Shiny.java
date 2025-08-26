@@ -34,7 +34,7 @@ public final class Shiny {
 		return new ShinySpinner(INSTANCE);
 	}
 
-	public static ShinyTree tree(String label) {
+	public static ShinyTree tree(final String label) {
 		return new ShinyTree(INSTANCE, label);
 	}
 

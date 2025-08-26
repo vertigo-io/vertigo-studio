@@ -13,32 +13,32 @@ public final class ShinyBarChart {
 	private int[] row;
 	private ShinySortMode sortMode = ShinySortMode.NO;
 
-	public ShinyBarChart(Shiny shiny) {
+	public ShinyBarChart(final Shiny shiny) {
 		Assertion.check().isNotNull(shiny);
 		//---
 	}
 
-	public ShinyBarChart title(String title) {
-		this.title = title;
+	public ShinyBarChart title(final String text) {
+		this.title = text;
 		return this;
 	}
 
-	public ShinyBarChart header(List<String> header) {
-		this.header = header.toArray(new String[0]);
+	public ShinyBarChart header(final List<String> texts) {
+		this.header = texts.toArray(new String[0]);
 		return this;
 	}
 
-	public ShinyBarChart header(String... header) {
-		this.header = header;
+	public ShinyBarChart header(final String... texts) {
+		this.header = texts;
 		return this;
 	}
 
-	public ShinyBarChart rows(int... values) {
+	public ShinyBarChart rows(final int... values) {
 		this.row = values;
 		return this;
 	}
 
-	public ShinyBarChart rows(List<Integer> values) {
+	public ShinyBarChart rows(final List<Integer> values) {
 		this.row = new int[values.size()];
 		for (int i = 0; i < values.size(); i++) {
 			this.row[i] = values.get(i);
@@ -46,13 +46,13 @@ public final class ShinyBarChart {
 		return this;
 	}
 
-	public ShinyBarChart sort(ShinySortMode mode) {
+	public ShinyBarChart sort(final ShinySortMode mode) {
 		this.sortMode = mode;
 		return this;
 	}
 
 	private void sort() {
-		Integer[] indices = new Integer[header.length];
+		final Integer[] indices = new Integer[header.length];
 		for (int i = 0; i < header.length; i++) {
 			indices[i] = i;
 		}
@@ -77,9 +77,9 @@ public final class ShinyBarChart {
 		reorder(indices);
 	}
 
-	private void reorder(Integer[] indices) {
-		String[] newHeader = new String[header.length];
-		int[] newRow = new int[row.length];
+	private void reorder(final Integer[] indices) {
+		final String[] newHeader = new String[header.length];
+		final int[] newRow = new int[row.length];
 		for (int i = 0; i < indices.length; i++) {
 			newHeader[i] = header[indices[i]];
 			newRow[i] = row[indices[i]];
@@ -93,15 +93,14 @@ public final class ShinyBarChart {
 	 * @param chart Structure contenant le titre, les étiquettes (header) et les valeurs (rows).
 	 * @param maxBarLength Longueur maximale d'une barre en caractères (par défaut : 50).
 	 */
-	public void print(int maxBarLength) {
+	public void print(final int maxBarLength) {
 		sort();
 
 		// Trouver la valeur maximale pour normaliser les barres
-		int maxCount = Arrays.stream(row).max().orElse(1);
-		long total = Arrays.stream(row).sum();
+		final int maxCount = Arrays.stream(row).max().orElse(1);
 
 		// Déterminer la longueur maximale du nom de catégorie pour l'alignement
-		int maxLabelLength = Arrays.stream(header)
+		final int maxLabelLength = Arrays.stream(header)
 				.mapToInt(String::length)
 				.max()
 				.orElse(10);
@@ -112,12 +111,12 @@ public final class ShinyBarChart {
 		System.out.println("----------------------------------------");
 
 		for (int i = 0; i < header.length; i++) {
-			String category = header[i] != null ? header[i] : "Catégorie " + (i + 1);
-			int count = row[i];
+			final String category = header[i] != null ? header[i] : "Catégorie " + (i + 1);
+			final int count = row[i];
 			// Normaliser la longueur de la barre
-			int barLength = (int) ((double) count / maxCount * maxBarLength);
+			final int barLength = (int) ((double) count / maxCount * maxBarLength);
 			final String bar = "█".repeat(Math.max(0, barLength)); // Utiliser le caractère carré plein █
-			String coloredBar = COLORS[i % COLORS.length] + bar + ShinyColors.RESET;
+			final String coloredBar = COLORS[i % COLORS.length] + bar + ShinyColors.RESET;
 			System.out.printf("%-" + maxLabelLength + "s | %-50s (%d)%n", category, coloredBar, count);
 		}
 

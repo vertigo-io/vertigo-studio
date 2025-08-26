@@ -31,9 +31,9 @@ public final class DbModelLoadCommand implements ShellCommand {
 			if (loadSource.db) {
 				model = new DbModelLoader(DbContext.connection()).loadModel();
 			} else if (loadSource.file) {
-				model = DbModelStorage.load();
+				model = DbModelJsonStorage.load();
 			}
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			throw new VSystemException(e, "Failed to load model : {0}", e.getMessage());
 		}
 		DbContext.model(model);

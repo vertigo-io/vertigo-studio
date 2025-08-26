@@ -46,7 +46,7 @@ public final class Record implements KeyConcept {
 	public UID<Record> getUID() {
 		return UID.of(this);
 	}
-	
+
 	/**
 	 * Champ : ID.
 	 * Récupère la valeur de la propriété 'Id'.
@@ -65,7 +65,7 @@ public final class Record implements KeyConcept {
 	public void setDosId(final Long dosId) {
 		this.dosId = dosId;
 	}
-	
+
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Region'.
@@ -84,7 +84,7 @@ public final class Record implements KeyConcept {
 	public void setRegId(final Long regId) {
 		this.regId = regId;
 	}
-	
+
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Departement'.
@@ -103,7 +103,7 @@ public final class Record implements KeyConcept {
 	public void setDepId(final Long depId) {
 		this.depId = depId;
 	}
-	
+
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Commune'.
@@ -122,7 +122,7 @@ public final class Record implements KeyConcept {
 	public void setComId(final Long comId) {
 		this.comId = comId;
 	}
-	
+
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Record type'.
@@ -141,7 +141,7 @@ public final class Record implements KeyConcept {
 	public void setTypId(final Long typId) {
 		this.typId = typId;
 	}
-	
+
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Title'.
@@ -160,7 +160,7 @@ public final class Record implements KeyConcept {
 	public void setTitle(final String title) {
 		this.title = title;
 	}
-	
+
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Amount'.
@@ -179,7 +179,7 @@ public final class Record implements KeyConcept {
 	public void setAmount(final java.math.BigDecimal amount) {
 		this.amount = amount;
 	}
-	
+
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'Owner'.
@@ -198,7 +198,7 @@ public final class Record implements KeyConcept {
 	public void setUtiIdOwner(final Long utiIdOwner) {
 		this.utiIdOwner = utiIdOwner;
 	}
-	
+
 	/**
 	 * Champ : DATA.
 	 * Récupère la valeur de la propriété 'State'.
@@ -217,7 +217,7 @@ public final class Record implements KeyConcept {
 	public void setEtaCd(final String etaCd) {
 		this.etaCd = etaCd;
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {

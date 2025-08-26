@@ -35,7 +35,7 @@ public final class JdbcPingCommand implements ShellCommand {
 			try {
 				//Waiting to avoid DDOS
 				Thread.sleep(30);
-			} catch (InterruptedException e) {
+			} catch (final InterruptedException e) {
 				//e.printStackTrace();
 			}
 
@@ -44,9 +44,9 @@ public final class JdbcPingCommand implements ShellCommand {
 
 		// Display statistics if calls > 1
 		if (calls > 1) {
-			double min = pingTimes.stream().min(Double::compare).orElse(0.0);
-			double max = pingTimes.stream().max(Double::compare).orElse(0.0);
-			double average = pingTimes.stream().mapToDouble(Double::doubleValue).average().orElse(0.0);
+			final double min = pingTimes.stream().min(Double::compare).orElse(0.0);
+			final double max = pingTimes.stream().max(Double::compare).orElse(0.0);
+			final double average = pingTimes.stream().mapToDouble(Double::doubleValue).average().orElse(0.0);
 
 			System.out.println("Number of calls: " + calls);
 			System.out.printf("Min: %.3f ms%n", min);
@@ -56,16 +56,16 @@ public final class JdbcPingCommand implements ShellCommand {
 	}
 
 	private void ping(final List<Double> pingTimes) {
-		long startTime = System.nanoTime();
+		final long startTime = System.nanoTime();
 		try {
 			DbContext.connection().isValid(2);
-			long endTime = System.nanoTime();
-			double pingTimeMs = (endTime - startTime) / 1_000_000.0;
+			final long endTime = System.nanoTime();
+			final double pingTimeMs = (endTime - startTime) / 1_000_000.0;
 			pingTimes.add(pingTimeMs);
 			if (calls == 1) {
 				System.out.println("Ping: " + pingTimeMs + " ms");
 			}
-		} catch (SQLException e) {
+		} catch (final SQLException e) {
 			System.err.println("Unable to ping database: " + e.getMessage());
 			return;
 		}

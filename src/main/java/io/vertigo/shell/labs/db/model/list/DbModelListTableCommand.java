@@ -32,9 +32,9 @@ public final class DbModelListTableCommand implements ShellCommand {
 
 	private void listTables() {
 		final List<String[]> rows = new ArrayList<>();
-		for (JdbcSchema schema : DbContext.model().schemas()) {
-			for (JdbcTable table : schema.tables()) {
-				String[] row = { table.name(), table.columns().size() + "" };
+		for (final JdbcSchema schema : DbContext.model().schemas()) {
+			for (final JdbcTable table : schema.tables()) {
+				final String[] row = { table.name(), table.columns().size() + "" };
 				rows.add(row);
 			}
 		}
@@ -48,8 +48,8 @@ public final class DbModelListTableCommand implements ShellCommand {
 
 	private void describeTable() {
 		JdbcTable table = null;
-		for (JdbcSchema schema : DbContext.model().schemas()) {
-			for (JdbcTable t : schema.tables()) {
+		for (final JdbcSchema schema : DbContext.model().schemas()) {
+			for (final JdbcTable t : schema.tables()) {
 				if (tableName.equalsIgnoreCase(t.name())) {
 					table = t;
 					break;
@@ -58,8 +58,8 @@ public final class DbModelListTableCommand implements ShellCommand {
 
 			final List<String[]> columns = new ArrayList<>();
 			if (table != null) {
-				for (DbModel.JdbcColumn col : table.columns()) {
-					String[] column = {
+				for (final DbModel.JdbcColumn col : table.columns()) {
+					final String[] column = {
 							col.name(),
 							col.typeName(),
 							"" + col.size(),

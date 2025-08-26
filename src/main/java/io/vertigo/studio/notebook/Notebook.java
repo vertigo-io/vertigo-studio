@@ -29,7 +29,7 @@ import io.vertigo.core.lang.Assertion;
 /**
  * A Studio notebook is a space where sketches are shared and modified. (not threadSafe).
  * It's a conceptual representation of a project design that is human readable, storable and comparable
- *, 
+ *,
  * @author mlaroche, pchretien
  */
 public final class Notebook {

@@ -5,8 +5,6 @@ import java.util.List;
 
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.labs.db.DbContext;
-import io.vertigo.shell.labs.db.model.DbModel.JdbcColumn;
-import io.vertigo.shell.labs.db.model.DbModel.JdbcRelation;
 import io.vertigo.shell.labs.db.model.DbModel.JdbcSchema;
 import io.vertigo.shell.labs.db.model.DbModel.JdbcTable;
 import io.vertigo.shell.shiny.Shiny;
@@ -21,19 +19,15 @@ public final class DbModelAnalyzeCommand implements ShellCommand {
 		int columns = 0;
 		int relations = 0;
 
-		for (JdbcSchema schema : DbContext.model().schemas()) {
-			for (JdbcTable table : schema.tables()) {
+		for (final JdbcSchema schema : DbContext.model().schemas()) {
+			for (final JdbcTable table : schema.tables()) {
 				tables++;
-				for (JdbcColumn column : table.columns()) {
-					columns++;
-				}
-				for (JdbcRelation relation : table.relations()) {
-					relations++;
-				}
+				columns += table.columns().size();
+				relations += table.relations().size();
 			}
 		}
-		String[] result = { "" + tables, "" + columns, "" + relations };
-		List<String[]> rows = new ArrayList<>();
+		final String[] result = { "" + tables, "" + columns, "" + relations };
+		final List<String[]> rows = new ArrayList<>();
 		rows.add(result);
 
 		Shiny.table()
@@ -42,14 +36,14 @@ public final class DbModelAnalyzeCommand implements ShellCommand {
 				.header("Table", "Column", "Relations")
 				.rows(rows)
 				.print();
-		//A linear 
-		int complexity = 10 * tables + 1 * columns + relations * 3;
+		//A linear
+		final int complexity = 10 * tables + 1 * columns + relations * 3;
 		System.out.println("Complexity :" + complexity);
 
 		//--------------------------------------------
 		//------ANALYZER------------------------------
 		//--------------------------------------------
-		DbModelAnalysisReport report = DbModelAnalyzer.analyze(DbContext.model());
+		final DbModelAnalysisReport report = DbModelAnalyzer.analyze(DbContext.model());
 		//lister ici toutes les anomalies détectées
 		report.tableDependencyStats().forEach((table, stats) -> {
 			System.out.printf("Table %s: fanIn=%d, fanOut=%d, fanInTransitive=%d%n",

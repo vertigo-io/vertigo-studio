@@ -8,7 +8,7 @@ public final class VXAttribute {
 	public final VXRole role;
 	public final VXCardinality cardinality;
 
-	public VXAttribute(String name, VXDomainType domainType, VXRole role, VXCardinality cardinality) {
+	public VXAttribute(final String name, final VXDomainType domainType, final VXRole role, final VXCardinality cardinality) {
 		Assertion.check()
 				.isNotBlank(name)
 				.isNotNull(domainType)

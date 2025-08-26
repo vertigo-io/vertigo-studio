@@ -17,12 +17,13 @@
  */
 package io.vertigo.studio.dao;
 
+import java.util.Optional;
+
 import javax.inject.Inject;
 
-import java.util.Optional;
-import io.vertigo.core.node.Node;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Generated;
+import io.vertigo.core.node.Node;
 import io.vertigo.datamodel.task.TaskManager;
 import io.vertigo.datamodel.task.definitions.TaskDefinition;
 import io.vertigo.datamodel.task.model.Task;
@@ -51,7 +52,7 @@ public final class DaoPAO implements StoreServices {
 	/**
 	 * Creates a taskBuilder.
 	 * @param name  the name of the task
-	 * @return the builder 
+	 * @return the builder
 	 */
 	private static TaskBuilder createTaskBuilder(final String name) {
 		final TaskDefinition taskDefinition = Node.getNode().getDefinitionSpace().resolve(name, TaskDefinition.class);

@@ -8,7 +8,7 @@ public final class ShinySpinner implements AutoCloseable {
 	private volatile String message;
 	private final SpinnerDrawer drawer;
 
-	public ShinySpinner(Shiny shiny) {
+	public ShinySpinner(final Shiny shiny) {
 		Assertion.check().isNotNull(shiny);
 		//---
 		drawer = new SpinnerDrawer();
@@ -18,11 +18,12 @@ public final class ShinySpinner implements AutoCloseable {
 	/**
 	 * Stops the spinner animation.
 	 */
+	@Override
 	public void close() {
 		running = false;
 		try {
 			drawer.join();
-		} catch (InterruptedException e) {
+		} catch (final InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
 	}
@@ -31,7 +32,7 @@ public final class ShinySpinner implements AutoCloseable {
 	 * Sends a new message to be displayed alongside the spinner.
 	 * @param msg The message to display.
 	 */
-	public void send(String msg) {
+	public void send(final String msg) {
 		message = msg;
 	}
 
@@ -47,7 +48,7 @@ public final class ShinySpinner implements AutoCloseable {
 				draw(i++);
 				try {
 					Thread.sleep(100); // Adjust sleep time for animation speed
-				} catch (InterruptedException e) {
+				} catch (final InterruptedException e) {
 					Thread.currentThread().interrupt();
 					running = false;
 				}
@@ -59,8 +60,8 @@ public final class ShinySpinner implements AutoCloseable {
 		/**
 		 * Draws the current frame of the spinner with the message.
 		 */
-		private void draw(int i) {
-			var frame = ShinySpinnerStyle.FRAMES[i % ShinySpinnerStyle.FRAMES.length];
+		private void draw(final int i) {
+			final var frame = ShinySpinnerStyle.FRAMES[i % ShinySpinnerStyle.FRAMES.length];
 			System.out.print("\r");
 			System.out.print(frame);
 			System.out.print(" " + message);

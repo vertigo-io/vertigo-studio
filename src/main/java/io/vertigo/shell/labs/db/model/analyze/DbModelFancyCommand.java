@@ -25,15 +25,16 @@ public final class DbModelFancyCommand implements ShellCommand {
 	public void run() {
 		final Agent agent = new AgentBuilder().build();
 		JdbcTable tableXX = null;
-		for (DbModel.JdbcSchema schema : DbContext.model().schemas()) {
-			for (JdbcTable table : schema.tables()) {
-				if ("artist".equals(table.name()))
+		for (final DbModel.JdbcSchema schema : DbContext.model().schemas()) {
+			for (final JdbcTable table : schema.tables()) {
+				if ("artist".equals(table.name())) {
 					tableXX = table;
+				}
 			}
 		}
-		StringBuilder info = new StringBuilder()
+		final StringBuilder info = new StringBuilder()
 				.append("table : ").append(tableName);
-		for (JdbcColumn column : tableXX.columns()) {
+		for (final JdbcColumn column : tableXX.columns()) {
 			info
 					.append("{ column ")
 					.append("name : ").append(column.name()).append(", ")
@@ -42,14 +43,14 @@ public final class DbModelFancyCommand implements ShellCommand {
 					.append("type : ").append(column.typeName())
 					.append(" }, ");
 		}
-		String query = """
+		final String query = """
 				Crée un insert SQL pour remplir la table artist
 				dont la structure est la suivants :"
 				""" + info.toString()
 				+ """
 						utilise des noms d'artistes pop connus de tous
 							""";
-		String response = agent.answer(query);
+		final String response = agent.answer(query);
 		System.out.println(response);
 	}
 

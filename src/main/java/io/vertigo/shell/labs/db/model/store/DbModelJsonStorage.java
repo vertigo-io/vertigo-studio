@@ -8,14 +8,14 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import io.vertigo.shell.labs.db.model.DbModel;
 
-final class DbModelStorage {
+final class DbModelJsonStorage {
 	private static final File STORAGE_FILE = new File("c:/Dev/vortex/jdbc-model.json");
 
 	private static final ObjectMapper MAPPER = new ObjectMapper()
 			.enable(SerializationFeature.INDENT_OUTPUT); // JSON lisible
 
 	/** Sauvegarde l'instance en JSON sur disque */
-	static void save(DbModel model) throws IOException {
+	static void save(final DbModel model) throws IOException {
 		MAPPER.writeValue(STORAGE_FILE, model);
 	}
 

@@ -92,7 +92,7 @@ public final class WsTsGeneratorPlugin implements GeneratorPlugin {
 				}
 
 				if (!facadeByPackage.containsKey(packageName)) {
-					facadeByPackage.put(packageName, new ArrayList<WebServiceInitializerModelTs>());
+					facadeByPackage.put(packageName, new ArrayList<>());
 				}
 				facadeByPackage.get(packageName).add(new WebServiceInitializerModelTs(jsFileNameWithoutExtension, simpleClassName));
 

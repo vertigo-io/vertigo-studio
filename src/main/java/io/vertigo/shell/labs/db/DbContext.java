@@ -15,13 +15,13 @@ public final class DbContext {
 	private static DbModel dbModel;
 	public static Properties secrets = buildSecrets();
 
-	public static void model(DbModel model) {
+	public static void model(final DbModel model) {
 		Assertion.check().isNotNull(model);
 		//---
 		dbModel = model;
 	}
 
-	public static void connection(Connection connection) {
+	public static void connection(final Connection connection) {
 		Assertion.check().isNotNull(connection);
 		//---
 		dbConnection = connection;
@@ -42,7 +42,7 @@ public final class DbContext {
 	}
 
 	private static Properties buildSecrets() {
-		var mySecrets = new Properties();
+		final var mySecrets = new Properties();
 		final String userHome = System.getProperty("user.home");
 		final String filePath = userHome + File.separator + "vortex.txt";
 
@@ -50,7 +50,7 @@ public final class DbContext {
 		try (FileInputStream fis = new FileInputStream(filePath)) {
 			mySecrets.load(fis);
 			System.out.println("secrets found :" + mySecrets.size());
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			e.printStackTrace();
 		}
 		return mySecrets;

@@ -24,12 +24,12 @@ import io.vertigo.vortex.raw.RawEntity;
 import io.vertigo.vortex.raw.RawModel;
 
 public final class ModelReader {
-	private Map<String, VXDomainType> domainTypeCatalog = new HashMap<>();
-	private Map<String, VXEntity> entityCatalog = new HashMap<>();
+	private final Map<String, VXDomainType> domainTypeCatalog = new HashMap<>();
+	private final Map<String, VXEntity> entityCatalog = new HashMap<>();
 
 	private final File file;
 
-	public ModelReader(File file) {
+	public ModelReader(final File file) {
 		Assertion.check().isNotNull(file);
 		//---
 		this.file = file;
@@ -42,12 +42,12 @@ public final class ModelReader {
 		//- STEP 2
 		final RawModel rawModel = read();
 
-		//- STEP 3 
+		//- STEP 3
 		return transform(rawModel);
 	}
 
 	private void validate() throws Exception {
-		File schemaFile = new File("C:\\Users\\pchretien\\GitHub\\vertigo-studio\\src\\main\\java\\io\\vertigo\\vortex\\raw\\raw-schema.json");
+		final File schemaFile = new File("C:\\Users\\pchretien\\GitHub\\vertigo-studio\\src\\main\\java\\io\\vertigo\\vortex\\raw\\raw-schema.json");
 		JsonValidator.validate(schemaFile, file);
 	}
 
@@ -58,22 +58,22 @@ public final class ModelReader {
 		return mapper.readValue(file, RawModel.class);
 	}
 
-	private VXModel transform(RawModel rawModel) {
+	private VXModel transform(final RawModel rawModel) {
 		Assertion.check().isNotNull(rawModel);
 		//---
-		var header = new VXHeader(rawModel.rawHeader.description, rawModel.rawHeader.tags);
+		final var header = new VXHeader(rawModel.rawHeader.description, rawModel.rawHeader.tags);
 
-		for (RawDomainType rawDomainType : rawModel.rawDomainTypes) {
-			var domainType = transform(rawDomainType);
+		for (final RawDomainType rawDomainType : rawModel.rawDomainTypes) {
+			final var domainType = transform(rawDomainType);
 			domainTypeCatalog.put(domainType.name, domainType);
 		}
-		for (RawEntity rawEntity : rawModel.rawEntities) {
-			var name = "do-" + rawEntity.name;
+		for (final RawEntity rawEntity : rawModel.rawEntities) {
+			final var name = "do-" + rawEntity.name;
 			domainTypeCatalog.put(name, new VXDomainType(name, "Entity"));
 		}
 
-		for (RawEntity rawEntity : rawModel.rawEntities) {
-			var entity = transform(rawEntity);
+		for (final RawEntity rawEntity : rawModel.rawEntities) {
+			final var entity = transform(rawEntity);
 			entityCatalog.put(entity.name, entity);
 		}
 
@@ -83,9 +83,9 @@ public final class ModelReader {
 				new ArrayList<>(entityCatalog.values()));
 	}
 
-	private VXAttribute transform(RawAttribute rawAttribute) {
+	private VXAttribute transform(final RawAttribute rawAttribute) {
 		//default values
-		VXRole role = rawAttribute.role == null
+		final VXRole role = rawAttribute.role == null
 				? VXRole.DATA
 				: VXRole.valueOf(rawAttribute.role.toUpperCase());
 
@@ -96,8 +96,8 @@ public final class ModelReader {
 				VXCardinality.fromSymbol(rawAttribute.cardinality));
 	}
 
-	private VXEntity transform(RawEntity rawEntity) {
-		List<VXAttribute> attributes = rawEntity.rawAttributes
+	private VXEntity transform(final RawEntity rawEntity) {
+		final List<VXAttribute> attributes = rawEntity.rawAttributes
 				.stream()
 				.map(rawAttribute -> transform(rawAttribute))
 				.collect(Collectors.toList());
@@ -105,7 +105,7 @@ public final class ModelReader {
 		return new VXEntity(rawEntity.name, attributes);
 	}
 
-	private static VXDomainType transform(RawDomainType rawDomainType) {
+	private static VXDomainType transform(final RawDomainType rawDomainType) {
 		return new VXDomainType(rawDomainType.name, rawDomainType.dataType);
 	}
 }

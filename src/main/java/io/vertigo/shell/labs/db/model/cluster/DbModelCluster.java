@@ -23,13 +23,13 @@ final class DbModelCluster {
 	/**
 	 * Représente un cluster de tables.
 	 */
-	public record JdbcCluster(String name, Set<String> tableNames) {
+	record JdbcCluster(String name, Set<String> tableNames) {
 	}
 
 	/**
 	 * Analyse le modèle pour produire des clusters selon la stratégie choisie.
 	 */
-	static List<JdbcCluster> analyze(DbModel model, DbModelClusterStrategy strategy) {
+	static List<JdbcCluster> analyze(final DbModel model, final DbModelClusterStrategy strategy) {
 		return switch (strategy) {
 			case BY_SCHEMA -> clusterBySchema(model);
 			case STRONGLY_CONNECTED_COMPONENTS -> clusterByStronglyConnectedComponents(model);
@@ -37,11 +37,11 @@ final class DbModelCluster {
 		};
 	}
 
-	private static List<JdbcCluster> clusterBySchema(DbModel model) {
+	private static List<JdbcCluster> clusterBySchema(final DbModel model) {
 		final List<JdbcCluster> clusters = new ArrayList<>();
-		for (DbModel.JdbcSchema schema : model.schemas()) {
+		for (final DbModel.JdbcSchema schema : model.schemas()) {
 			final Set<String> tableNames = new HashSet<>();
-			for (DbModel.JdbcTable table : schema.tables()) {
+			for (final DbModel.JdbcTable table : schema.tables()) {
 				tableNames.add(schema.name() + "." + table.name());
 			}
 			clusters.add(new JdbcCluster("schema:" + schema.name(), tableNames));
@@ -49,14 +49,14 @@ final class DbModelCluster {
 		return clusters;
 	}
 
-	private static List<JdbcCluster> clusterByStronglyConnectedComponents(DbModel model) {
+	private static List<JdbcCluster> clusterByStronglyConnectedComponents(final DbModel model) {
 		final Map<String, Set<String>> graph = new HashMap<>();
-		for (DbModel.JdbcSchema schema : model.schemas()) {
-			for (DbModel.JdbcTable table : schema.tables()) {
-				String source = schema.name() + "." + table.name();
+		for (final DbModel.JdbcSchema schema : model.schemas()) {
+			for (final DbModel.JdbcTable table : schema.tables()) {
+				final String source = schema.name() + "." + table.name();
 				graph.putIfAbsent(source, new HashSet<>());
-				for (DbModel.JdbcRelation rel : table.relations()) {
-					String target = schema.name() + "." + rel.targetTable();
+				for (final DbModel.JdbcRelation rel : table.relations()) {
+					final String target = schema.name() + "." + rel.targetTable();
 					graph.get(source).add(target);
 				}
 			}
@@ -64,15 +64,15 @@ final class DbModelCluster {
 		return tarjansAlgorithm(graph);
 	}
 
-	private static List<JdbcCluster> tarjansAlgorithm(Map<String, Set<String>> graph) {
+	private static List<JdbcCluster> tarjansAlgorithm(final Map<String, Set<String>> graph) {
 		final List<JdbcCluster> clusters = new ArrayList<>();
 		final Map<String, Integer> indexMap = new HashMap<>();
 		final Map<String, Integer> lowLinkMap = new HashMap<>();
 		final Deque<String> stack = new ArrayDeque<>();
 		final Set<String> onStack = new HashSet<>();
-		int[] index = { 0 };
+		final int[] index = { 0 };
 
-		for (String node : graph.keySet()) {
+		for (final String node : graph.keySet()) {
 			if (!indexMap.containsKey(node)) {
 				strongConnect(node, graph, indexMap, lowLinkMap, stack, onStack, index, clusters);
 			}
@@ -80,9 +80,9 @@ final class DbModelCluster {
 		return clusters;
 	}
 
-	private static void strongConnect(String v, Map<String, Set<String>> graph,
-			final Map<String, Integer> indexMap, Map<String, Integer> lowLinkMap,
-			final Deque<String> stack, Set<String> onStack, int[] index,
+	private static void strongConnect(final String v, final Map<String, Set<String>> graph,
+			final Map<String, Integer> indexMap, final Map<String, Integer> lowLinkMap,
+			final Deque<String> stack, final Set<String> onStack, final int[] index,
 			final List<JdbcCluster> clusters) {
 		indexMap.put(v, index[0]);
 		lowLinkMap.put(v, index[0]);
@@ -90,7 +90,7 @@ final class DbModelCluster {
 		stack.push(v);
 		onStack.add(v);
 
-		for (String w : graph.getOrDefault(v, Set.of())) {
+		for (final String w : graph.getOrDefault(v, Set.of())) {
 			if (!indexMap.containsKey(w)) {
 				strongConnect(w, graph, indexMap, lowLinkMap, stack, onStack, index, clusters);
 				lowLinkMap.put(v, Math.min(lowLinkMap.get(v), lowLinkMap.get(w)));
@@ -100,7 +100,7 @@ final class DbModelCluster {
 		}
 
 		if (lowLinkMap.get(v).equals(indexMap.get(v))) {
-			Set<String> component = new HashSet<>();
+			final Set<String> component = new HashSet<>();
 			String w;
 			do {
 				w = stack.pop();
@@ -111,24 +111,24 @@ final class DbModelCluster {
 		}
 	}
 
-	private static List<JdbcCluster> clusterByDensity(DbModel model) {
+	private static List<JdbcCluster> clusterByDensity(final DbModel model) {
 		// Heuristique simple : cluster des tables avec fan-in + fan-out > seuil
 		final Map<String, Set<String>> graph = new HashMap<>();
-		for (DbModel.JdbcSchema schema : model.schemas()) {
-			for (DbModel.JdbcTable table : schema.tables()) {
+		for (final DbModel.JdbcSchema schema : model.schemas()) {
+			for (final DbModel.JdbcTable table : schema.tables()) {
 				final String source = schema.name() + "." + table.name();
 				graph.putIfAbsent(source, new HashSet<>());
-				for (DbModel.JdbcRelation rel : table.relations()) {
-					String target = schema.name() + "." + rel.targetTable();
+				for (final DbModel.JdbcRelation rel : table.relations()) {
+					final String target = schema.name() + "." + rel.targetTable();
 					graph.get(source).add(target);
 				}
 			}
 		}
 		// Classement naïf par degré
 		final Map<String, Integer> degree = new HashMap<>();
-		for (Map.Entry<String, Set<String>> entry : graph.entrySet()) {
+		for (final Map.Entry<String, Set<String>> entry : graph.entrySet()) {
 			degree.put(entry.getKey(), entry.getValue().size());
-			for (String tgt : entry.getValue()) {
+			for (final String tgt : entry.getValue()) {
 				degree.put(tgt, degree.getOrDefault(tgt, 0) + 1);
 			}
 		}
@@ -137,12 +137,13 @@ final class DbModelCluster {
 
 		final List<JdbcCluster> clusters = new ArrayList<>();
 		final Set<String> assigned = new HashSet<>();
-		for (String table : sorted) {
-			if (assigned.contains(table))
+		for (final String table : sorted) {
+			if (assigned.contains(table)) {
 				continue;
-			Set<String> cluster = new HashSet<>();
+			}
+			final Set<String> cluster = new HashSet<>();
 			cluster.add(table);
-			for (String neighbor : graph.getOrDefault(table, Set.of())) {
+			for (final String neighbor : graph.getOrDefault(table, Set.of())) {
 				if (!assigned.contains(neighbor)) {
 					cluster.add(neighbor);
 					assigned.add(neighbor);

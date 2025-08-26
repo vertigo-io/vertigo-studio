@@ -37,10 +37,10 @@ public final class ListSketchesCommand implements ShellCommand {
 		final Notebook notebook = VertigoStudioMda.read(ShellContext.notebookConfig);
 		final List<Sketch> sketches = notebook.getAll()
 				.stream()
-				.filter(s -> filter(s))
-				.sorted(Comparator.comparing(s -> s.getClass().getSimpleName()))
+				.filter(sketch -> filter(sketch))
+				.sorted(Comparator.comparing(sketch -> sketch.getClass().getSimpleName()))
 				.collect(Collectors.toList());
-		List<String[]> rows = new ArrayList<>();
+		final List<String[]> rows = new ArrayList<>();
 		for (int i = 0; i < sketches.size(); i++) {
 			final Sketch sketch = sketches.get(i);
 			final String[] row = new String[3];
@@ -57,6 +57,7 @@ public final class ListSketchesCommand implements ShellCommand {
 				.print();
 	}
 
+	@Override
 	public void reset() {
 		a = false;
 		d = false;
@@ -64,15 +65,19 @@ public final class ListSketchesCommand implements ShellCommand {
 		t = false;
 	}
 
-	private boolean filter(Sketch sketch) {
-		if (a || (!d && !s && !t))
+	private boolean filter(final Sketch sketch) {
+		if (a || (!d && !s && !t)) {
 			return true;
-		if (sketch instanceof DtSketch)
+		}
+		if (sketch instanceof DtSketch) {
 			return d;
-		if (sketch instanceof DomainSketch)
+		}
+		if (sketch instanceof DomainSketch) {
 			return s;
-		if (sketch instanceof TaskSketch)
+		}
+		if (sketch instanceof TaskSketch) {
 			return t;
+		}
 		return false;
 	}
 

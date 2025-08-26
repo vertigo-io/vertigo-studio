@@ -15,7 +15,7 @@ public class WhoCommand implements ShellCommand {
 		try {
 			final InetAddress localHost = InetAddress.getLocalHost();
 			System.out.println("IP Address: " + localHost.getHostAddress());
-		} catch (UnknownHostException e) {
+		} catch (final UnknownHostException e) {
 			System.err.println("Unable to obtain the IP address.");
 		}
 	}
