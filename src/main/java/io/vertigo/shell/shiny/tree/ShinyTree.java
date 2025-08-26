@@ -2,8 +2,6 @@ package io.vertigo.shell.shiny.tree;
 
 import java.util.List;
 
-import io.vertigo.shell.shiny.utils.ShinyChars;
-
 public final class ShinyTree {
 	private final ShinyTreeNode rootNode;
 
@@ -25,7 +23,7 @@ public final class ShinyTree {
 			final boolean isLast = (i == children.size() - 1);
 			final String connection = isLast
 					? ShinyChars.BOTTOM_LEFT + ShinyChars.HORIZONTAL + ShinyChars.HORIZONTAL
-					: ShinyChars.T_RIGHT + ShinyChars.HORIZONTAL + ShinyChars.HORIZONTAL;
+					: ShinyChars.INNER_LEFT + ShinyChars.HORIZONTAL + ShinyChars.HORIZONTAL;
 			System.out.println(prefix + connection + children.get(i).getLabel());
 			final List<ShinyTreeNode> grandChildren = children.get(i).getNodes();
 			String childPrefix = prefix + (isLast ? "   " : ShinyChars.VERTICAL + "  ");

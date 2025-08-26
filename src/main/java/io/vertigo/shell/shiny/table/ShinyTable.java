@@ -6,7 +6,6 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
-import io.vertigo.shell.shiny.utils.ShinyChars;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
 /**
@@ -131,12 +130,12 @@ public final class ShinyTable {
 		StringBuilder formatBuilder = new StringBuilder();
 		for (int i = 0; i < columns; i++) {
 			formatBuilder
-					.append(style.border ? ShinyChars.VERTICAL : " ")
+					.append(style.border.chars().vertical())
 					.append(isNumericColumn[i] ? " %" : " %-")
 					.append(widths[i]).append("s ");
 		}
 		formatBuilder
-				.append(style.border ? ShinyChars.VERTICAL : " ")
+				.append(style.border.chars().vertical())
 				.append("\n");
 		final String format = formatBuilder.toString();
 
@@ -152,7 +151,7 @@ public final class ShinyTable {
 		System.out.printf(format, (Object[]) header);
 		System.out.print(ShinyColors.RESET);
 
-		printLineSeparator(widths, Position.MIDDLE);
+		printLineSeparator(widths, Position.INNER);
 
 		boolean invert = false;
 		for (String[] formattedRow : formattedRows) {
@@ -169,56 +168,48 @@ public final class ShinyTable {
 	}
 
 	private static enum Position {
-		TOP, MIDDLE, BOTTOM
+		TOP, INNER, BOTTOM
 	}
 
 	private void printLineSeparator(int[] widths, Position position) {
-		System.out.print(style.borderColor);
-		if (style.border) {
-			printLineSeparatorWithBorder(widths, position);
-		} else {
-			printLineSeparatorNoBorder(widths);
-		}
-		System.out.print(ShinyColors.RESET);
-	}
-
-	private void printLineSeparatorWithBorder(int[] widths, Position position) {
 		boolean first = true;
 		for (int width : widths) {
-			final String left;
 			if (first) {
-				left = switch (position) {
-					case TOP -> ShinyChars.TOP_LEFT;
-					case BOTTOM -> ShinyChars.BOTTOM_LEFT;
-					case MIDDLE -> ShinyChars.T_RIGHT;
+				var left = switch (position) {
+					case TOP -> style.border.chars().topLeft();
+					case INNER -> style.border.chars().innerLeft();
+					case BOTTOM -> style.border.chars().bottomLeft();
 				};
+				System.out.print(left);
+				var h = switch (position) {
+					case TOP -> style.border.chars().topHorizontal();
+					case INNER -> style.border.chars().innerHorizontal();
+					case BOTTOM -> style.border.chars().bottomHorizontal();
+				};
+				System.out.print(h.repeat(width + 2));
 				first = false;
 			} else {
-				left = switch (position) {
-					case TOP -> ShinyChars.T_BOTTOM;
-					case BOTTOM -> ShinyChars.T_TOP;
-					case MIDDLE -> ShinyChars.CROSS;
+				var middle = switch (position) {
+					case TOP -> style.border.chars().topMiddle();
+					case INNER -> style.border.chars().center();
+					case BOTTOM -> style.border.chars().bottomMiddle();
 				};
+				System.out.print(middle);
+				var h = switch (position) {
+					case TOP -> style.border.chars().topHorizontal();
+					case INNER -> style.border.chars().innerHorizontal();
+					case BOTTOM -> style.border.chars().bottomHorizontal();
+				};
+				System.out.print(h.repeat(width + 2));
 			}
-			System.out.print(left);
-			for (int i = 0; i < width + 2; i++)
-				System.out.print(ShinyChars.HORIZONTAL);
+
 		}
 		String right = switch (position) {
-			case TOP -> ShinyChars.TOP_RIGHT;
-			case BOTTOM -> ShinyChars.BOTTOM_RIGHT;
-			case MIDDLE -> ShinyChars.T_LEFT;
+			case TOP -> style.border.chars().topRight();
+			case BOTTOM -> style.border.chars().bottomRight();
+			case INNER -> style.border.chars().innerRight();
 		};
 		System.out.println(right);
-	}
-
-	private void printLineSeparatorNoBorder(int[] widths) {
-		for (int width : widths) {
-			System.out.print(ShinyChars.HEAVY_HORIZONTAL);
-			for (int i = 0; i < width + 2; i++)
-				System.out.print(ShinyChars.HEAVY_HORIZONTAL);
-		}
-		System.out.println(ShinyChars.HEAVY_HORIZONTAL);
 	}
 
 	private static boolean isColumnNumeric(List<String[]> rows, int columnIndex) {

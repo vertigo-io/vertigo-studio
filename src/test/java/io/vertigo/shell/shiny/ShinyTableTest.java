@@ -2,6 +2,7 @@ package io.vertigo.shell.shiny;
 
 import java.util.List;
 
+import io.vertigo.shell.shiny.table.ShinyBorder;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
 public class ShinyTableTest {
@@ -55,6 +56,7 @@ public class ShinyTableTest {
 				.header("Country", "Population")
 				.rows(euCountries)
 				.beginStyle()
+				.border(ShinyBorder.Ascii)
 				.titleBackgroundColor(ShinyColors.INVERSE)
 				.headerBackgroundColor(ShinyColors.GREEN_BG)
 				.altRowBackgroundColor(ShinyColors.INVERSE)

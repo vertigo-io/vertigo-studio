@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.vertigo.shell.ShellCommand;
+import io.vertigo.shell.shiny.Shiny;
 import io.vertigo.shell.shiny.progressbar.ShinyProgressBar;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -29,7 +30,7 @@ public final class JdbcPingCommand implements ShellCommand {
 
 		final List<Double> pingTimes = new ArrayList<>();
 
-		final ShinyProgressBar progressBar = new ShinyProgressBar(calls);
+		final ShinyProgressBar progressBar = Shiny.progressBar().total(calls);
 		System.out.println();
 		for (int i = 0; i < calls; i++) {
 			ping(pingTimes);

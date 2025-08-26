@@ -8,7 +8,7 @@ import io.vertigo.shell.shiny.utils.ShinyColors;
 public final class ShinyTableStyle {
 	private final ShinyTable table;
 
-	boolean border = true;
+	ShinyBorder border = ShinyBorder.Square;
 	// Colors
 	String titleBackgroundColor = ShinyColors.MAGENTA_BG;
 	String titleTextColor = ShinyColors.WHITE;
@@ -20,8 +20,8 @@ public final class ShinyTableStyle {
 		this.table = table;
 	}
 
-	public ShinyTableStyle border(boolean border) {
-		this.border = border;
+	public ShinyTableStyle border(ShinyBorder tableBorder) {
+		this.border = tableBorder;
 		return this;
 	}
 
