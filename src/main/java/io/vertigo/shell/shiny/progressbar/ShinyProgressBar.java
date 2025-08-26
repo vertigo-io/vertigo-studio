@@ -39,11 +39,11 @@ public final class ShinyProgressBar {
 		final int filled = (progress * barLength) / total;
 
 		// Construire la barre
-		final StringBuilder bar = new StringBuilder("[");
-		for (int i = 0; i < barLength; i++) {
-			bar.append(i < filled ? "█" : "▒");
-		}
-		bar.append("] ").append(percentage).append("%");
+		final StringBuilder bar = new StringBuilder("[")
+				.append("█".repeat(filled))
+				.append("▒".repeat(barLength - filled))
+				.append("] ")
+				.append(percentage).append("%");
 		// Afficher la barre
 		System.out.print("\r" + bar.toString());
 	}

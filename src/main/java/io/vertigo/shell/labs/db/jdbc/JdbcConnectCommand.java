@@ -1,11 +1,13 @@
-package io.vertigo.shell.labs.Jdbc;
+package io.vertigo.shell.labs.db.jdbc;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shell.ShellCommand;
+import io.vertigo.shell.labs.db.DbContext;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -29,28 +31,30 @@ public final class JdbcConnectCommand implements ShellCommand {
 		if (help) {
 			// Picocli will print usage
 		}
-		if (JdbcContext.connection != null) {
+		if (DbContext.connection() != null) {
 			System.err.println("Already connected. Disconnect first.");
 			return;
 		}
 		try {
 			if (url == null) {
-				url = JdbcContext.secrets.getProperty("db.url");
+				url = DbContext.secrets.getProperty("db.url");
 			}
 
 			final Properties props = new Properties();
 			if (user != null) {
 				props.setProperty("user", user);
 			} else {
-				props.setProperty("user", JdbcContext.secrets.getProperty("db.user"));
+				props.setProperty("user", DbContext.secrets.getProperty("db.user"));
 			}
 
 			if (password != null) {
 				props.setProperty("password", password);
 			} else {
-				props.setProperty("password", JdbcContext.secrets.getProperty("db.password"));
+				props.setProperty("password", DbContext.secrets.getProperty("db.password"));
 			}
-			JdbcContext.connection = DriverManager.getConnection(url, props);
+			Connection connection = DriverManager.getConnection(url, props);
+			connection.setReadOnly(true);
+			DbContext.connection(connection);
 		} catch (final SQLException e) {
 			throw new VSystemException(e, "Failed to connect to database: {0}", e.getMessage());
 		}

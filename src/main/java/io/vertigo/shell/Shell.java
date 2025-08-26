@@ -13,13 +13,11 @@ import io.vertigo.shell.commands.GenerateCommand;
 import io.vertigo.shell.commands.HelpCommand;
 import io.vertigo.shell.commands.UptimeCommand;
 import io.vertigo.shell.commands.WatchCommand;
-import io.vertigo.shell.labs.ClearCommand;
 import io.vertigo.shell.labs.HistoryCommand;
 import io.vertigo.shell.labs.ListSketchesCommand;
 import io.vertigo.shell.labs.ListSourcesCommand;
 import io.vertigo.shell.labs.WhoCommand;
-import io.vertigo.shell.labs.Jdbc.JdbcCommand;
-import io.vertigo.shell.labs.Jdbc.JdbcSqlCommand;
+import io.vertigo.shell.labs.db.DbCommands;
 import io.vertigo.studio.tools.VertigoStudioMda;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
@@ -36,11 +34,7 @@ import picocli.CommandLine.Command;
 				ExitCommand.class,
 				UptimeCommand.class,
 				HistoryCommand.class,
-				JdbcCommand.class,
-				//				JdbcConnectCommand.class,
-				JdbcSqlCommand.class,
-				//				JdbcDisconnectCommand.class,
-				ClearCommand.class,
+				DbCommands.class,
 				ListSketchesCommand.class,
 				ListSourcesCommand.class,
 				WhoCommand.class,

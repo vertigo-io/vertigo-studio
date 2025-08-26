@@ -116,8 +116,8 @@ public final class ShinyBarChart {
 			int count = row[i];
 			// Normaliser la longueur de la barre
 			int barLength = (int) ((double) count / maxCount * maxBarLength);
-			final String bar = "\u2588".repeat(Math.max(0, barLength)); // Utiliser le caractère carré plein █
-			String coloredBar = ShinyColors.GREEN_BRIGHT + bar + ShinyColors.RESET;
+			final String bar = "█".repeat(Math.max(0, barLength)); // Utiliser le caractère carré plein █
+			String coloredBar = COLORS[i % COLORS.length] + bar + ShinyColors.RESET;
 			System.out.printf("%-" + maxLabelLength + "s | %-50s (%d)%n", category, coloredBar, count);
 		}
 
@@ -125,4 +125,22 @@ public final class ShinyBarChart {
 		System.out.println("Échelle : █ représente environ " + (maxCount / (double) maxBarLength) + " unités.");
 	}
 
+	private static String[] COLORS = {
+			ShinyColors.BLUE,
+			ShinyColors.BLUE_BRIGHT };
+
+	//	private static String[] COLORS = {
+	//			ShinyColors.RED,
+	//			ShinyColors.GREEN,
+	//			ShinyColors.YELLOW,
+	//			ShinyColors.BLUE,
+	//			ShinyColors.MAGENTA,
+	//			ShinyColors.CYAN };
+	//	private static String[] COLORS = {
+	//			ShinyColors.RED_BRIGHT,
+	//			ShinyColors.GREEN_BRIGHT,
+	//			ShinyColors.YELLOW_BRIGHT,
+	//			ShinyColors.BLUE_BRIGHT,
+	//			ShinyColors.MAGENTA_BRIGHT,
+	//			ShinyColors.CYAN_BRIGHT };
 }

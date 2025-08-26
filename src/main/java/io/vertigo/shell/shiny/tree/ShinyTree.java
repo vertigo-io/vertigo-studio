@@ -2,10 +2,15 @@ package io.vertigo.shell.shiny.tree;
 
 import java.util.List;
 
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.shell.shiny.Shiny;
+
 public final class ShinyTree {
 	private final ShinyTreeNode rootNode;
 
-	public ShinyTree(String label) {
+	public ShinyTree(Shiny shiny, String label) {
+		Assertion.check().isNotNull(shiny);
+		//---
 		this.rootNode = new ShinyTreeNode(label);
 	}
 

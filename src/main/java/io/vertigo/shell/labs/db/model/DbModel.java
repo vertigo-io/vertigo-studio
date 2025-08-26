@@ -1,10 +1,10 @@
-package io.vertigo.shell.labs.Jdbc.model;
+package io.vertigo.shell.labs.db.model;
 
 import java.util.List;
 
-public record JdbcModel(List<JdbcSchema> schemas) {
+public record DbModel(List<JdbcSchema> schemas) {
 
-	public JdbcModel {
+	public DbModel {
 		schemas = List.copyOf(schemas);
 	}
 

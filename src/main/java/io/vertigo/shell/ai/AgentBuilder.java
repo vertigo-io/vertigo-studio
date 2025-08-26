@@ -7,7 +7,7 @@ import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.service.AiServices;
-import io.vertigo.shell.labs.Jdbc.JdbcContext;
+import io.vertigo.shell.labs.db.DbContext;
 
 public final class AgentBuilder {
 	private static final double TEMPERATURE = 0.0;
@@ -15,9 +15,9 @@ public final class AgentBuilder {
 	private static ChatLanguageModel buildChatModel() {
 		return OpenAiChatModel
 				.builder()
-				.apiKey(JdbcContext.secrets.getProperty("ai.api-key"))
+				.apiKey(DbContext.secrets.getProperty("ai.api-key"))
 				.timeout(Duration.ofSeconds(300))
-				.modelName(JdbcContext.secrets.getProperty("ai.model-name"))
+				.modelName(DbContext.secrets.getProperty("ai.model-name"))
 				.temperature(TEMPERATURE)
 				.build();
 	}

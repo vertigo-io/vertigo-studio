@@ -1,9 +1,10 @@
-package io.vertigo.shell.labs.Jdbc;
+package io.vertigo.shell.labs.db.jdbc;
 
 import java.sql.SQLException;
 
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shell.ShellCommand;
+import io.vertigo.shell.labs.db.DbContext;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
@@ -18,13 +19,8 @@ public final class JdbcDisconnectCommand implements ShellCommand {
 			// Picocli will print usage
 			return;
 		}
-		if (JdbcContext.connection == null) {
-			System.err.println("Not connected.");
-			return;
-		}
 		try {
-			JdbcContext.connection.close();
-			JdbcContext.connection = null;
+			DbContext.connection().close();
 			System.out.println("Disconnected.");
 		} catch (final SQLException e) {
 			throw new VSystemException(e, "Failed to disconnect from database: {0}", e.getMessage());

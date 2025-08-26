@@ -1,10 +1,11 @@
-package io.vertigo.shell.labs.Jdbc;
+package io.vertigo.shell.labs.db.jdbc;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.vertigo.shell.ShellCommand;
+import io.vertigo.shell.labs.db.DbContext;
 import io.vertigo.shell.shiny.Shiny;
 import io.vertigo.shell.shiny.progressbar.ShinyProgressBar;
 import picocli.CommandLine.Command;
@@ -17,11 +18,6 @@ public final class JdbcPingCommand implements ShellCommand {
 
 	@Override
 	public void run() {
-		if (JdbcContext.connection == null) {
-			System.err.println("Not connected. Use 'connect' first.");
-			return;
-		}
-
 		// Validate number of calls
 		if (calls <= 0 && calls > 50) {
 			System.err.println("Error: Number of calls must be greater than 0 and lower than 50");
@@ -62,7 +58,7 @@ public final class JdbcPingCommand implements ShellCommand {
 	private void ping(final List<Double> pingTimes) {
 		long startTime = System.nanoTime();
 		try {
-			JdbcContext.connection.isValid(2);
+			DbContext.connection().isValid(2);
 			long endTime = System.nanoTime();
 			double pingTimeMs = (endTime - startTime) / 1_000_000.0;
 			pingTimes.add(pingTimeMs);

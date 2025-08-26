@@ -1,4 +1,4 @@
-package io.vertigo.shell.labs.Jdbc;
+package io.vertigo.shell.labs.db.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -9,6 +9,7 @@ import java.util.List;
 
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shell.ShellCommand;
+import io.vertigo.shell.labs.db.DbContext;
 import io.vertigo.shell.shiny.Shiny;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -20,15 +21,7 @@ public final class JdbcQueryCommand implements ShellCommand {
 
 	@Override
 	public void run() {
-		if (JdbcContext.connection == null) {
-			System.err.println("Not connected. Use 'connect' first.");
-			return;
-		}
-		executeQuery();
-	}
-
-	private void executeQuery() {
-		try (Statement stmt = JdbcContext.connection.createStatement()) {
+		try (Statement stmt = DbContext.connection().createStatement()) {
 			if (query.trim().toLowerCase().startsWith("select")) {
 				try (ResultSet rs = stmt.executeQuery(query)) {
 					printResultSet(rs);

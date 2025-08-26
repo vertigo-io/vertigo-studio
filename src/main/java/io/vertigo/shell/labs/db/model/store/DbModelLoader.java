@@ -1,4 +1,4 @@
-package io.vertigo.shell.labs.Jdbc.model;
+package io.vertigo.shell.labs.db.model.store;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -10,29 +10,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcColumn;
-import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcConstraint;
-import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcFunction;
-import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcIndex;
-import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcMaterializedView;
-import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcPrivilege;
-import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcRelation;
-import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcSchema;
-import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcSequence;
-import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcTable;
-import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcTrigger;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.shell.labs.db.model.DbModel;
+import io.vertigo.shell.labs.db.model.DbModel.JdbcColumn;
+import io.vertigo.shell.labs.db.model.DbModel.JdbcConstraint;
+import io.vertigo.shell.labs.db.model.DbModel.JdbcFunction;
+import io.vertigo.shell.labs.db.model.DbModel.JdbcIndex;
+import io.vertigo.shell.labs.db.model.DbModel.JdbcMaterializedView;
+import io.vertigo.shell.labs.db.model.DbModel.JdbcPrivilege;
+import io.vertigo.shell.labs.db.model.DbModel.JdbcRelation;
+import io.vertigo.shell.labs.db.model.DbModel.JdbcSchema;
+import io.vertigo.shell.labs.db.model.DbModel.JdbcSequence;
+import io.vertigo.shell.labs.db.model.DbModel.JdbcTable;
+import io.vertigo.shell.labs.db.model.DbModel.JdbcTrigger;
 
 // Classe pour charger le modèle à partir d’une connexion JDBC
-public class JdbcModelLoader {
+final class DbModelLoader {
 	private final Connection connection;
 
-	public JdbcModelLoader(Connection connection) {
+	DbModelLoader(Connection connection) {
+		Assertion.check().isNotNull(connection);
+		//---
 		this.connection = connection;
 	}
 
 	// Charge tous les schémas
-	public JdbcModel loadModel() throws SQLException {
-		return new JdbcModel(loadSchemas());
+	DbModel loadModel() throws SQLException {
+		return new DbModel(loadSchemas());
 	}
 
 	private List<JdbcSchema> loadSchemas() throws SQLException {
@@ -89,7 +93,7 @@ public class JdbcModelLoader {
 				final boolean nullable = "YES".equalsIgnoreCase(rs.getString("IS_NULLABLE"));
 				final String defaultValue = rs.getString("COLUMN_DEF");
 				final boolean isAutoIncrement = "YES".equalsIgnoreCase(rs.getString("IS_AUTOINCREMENT"));
-				final String comment = loadColumnComment(tableName, columnName, schema);
+				final String comment = 1 == 7 ? loadColumnComment(tableName, columnName, schema) : "";
 				columns.add(new JdbcColumn(columnName, typeName, columnSize, nullable, false, defaultValue, isAutoIncrement, comment));
 			}
 		}

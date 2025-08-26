@@ -1,4 +1,4 @@
-package io.vertigo.shell.labs.Jdbc.model;
+package io.vertigo.shell.labs.db.model.cluster;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -10,22 +10,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import io.vertigo.shell.labs.db.model.DbModel;
+
 /**
  * Analyseur de clusters pour regrouper les tables JDBC selon différents algorithmes.
  * - Par schéma (BY_SCHEMA) — simple et utile pour visualisation.
  * - Composants fortement connexes (STRONGLY_CONNECTED_COMPONENTS) — détecte des modules fortement couplés via Tarjan.
  * - Par densité (BY_DENSITY) — heuristique basée sur les degrés de connexion.
  */
-public final class JdbcModelClusterAnalyzer {
-
-	/**
-	 * Type de stratégie de clustering
-	 */
-	public enum Strategy {
-		BY_SCHEMA,
-		STRONGLY_CONNECTED_COMPONENTS, //SCC
-		BY_DENSITY
-	}
+final class DbModelCluster {
 
 	/**
 	 * Représente un cluster de tables.
@@ -36,7 +29,7 @@ public final class JdbcModelClusterAnalyzer {
 	/**
 	 * Analyse le modèle pour produire des clusters selon la stratégie choisie.
 	 */
-	public static List<JdbcCluster> analyze(JdbcModel model, Strategy strategy) {
+	static List<JdbcCluster> analyze(DbModel model, DbModelClusterStrategy strategy) {
 		return switch (strategy) {
 			case BY_SCHEMA -> clusterBySchema(model);
 			case STRONGLY_CONNECTED_COMPONENTS -> clusterByStronglyConnectedComponents(model);
@@ -44,11 +37,11 @@ public final class JdbcModelClusterAnalyzer {
 		};
 	}
 
-	private static List<JdbcCluster> clusterBySchema(JdbcModel model) {
+	private static List<JdbcCluster> clusterBySchema(DbModel model) {
 		final List<JdbcCluster> clusters = new ArrayList<>();
-		for (JdbcModel.JdbcSchema schema : model.schemas()) {
+		for (DbModel.JdbcSchema schema : model.schemas()) {
 			final Set<String> tableNames = new HashSet<>();
-			for (JdbcModel.JdbcTable table : schema.tables()) {
+			for (DbModel.JdbcTable table : schema.tables()) {
 				tableNames.add(schema.name() + "." + table.name());
 			}
 			clusters.add(new JdbcCluster("schema:" + schema.name(), tableNames));
@@ -56,13 +49,13 @@ public final class JdbcModelClusterAnalyzer {
 		return clusters;
 	}
 
-	private static List<JdbcCluster> clusterByStronglyConnectedComponents(JdbcModel model) {
+	private static List<JdbcCluster> clusterByStronglyConnectedComponents(DbModel model) {
 		final Map<String, Set<String>> graph = new HashMap<>();
-		for (JdbcModel.JdbcSchema schema : model.schemas()) {
-			for (JdbcModel.JdbcTable table : schema.tables()) {
+		for (DbModel.JdbcSchema schema : model.schemas()) {
+			for (DbModel.JdbcTable table : schema.tables()) {
 				String source = schema.name() + "." + table.name();
 				graph.putIfAbsent(source, new HashSet<>());
-				for (JdbcModel.JdbcRelation rel : table.relations()) {
+				for (DbModel.JdbcRelation rel : table.relations()) {
 					String target = schema.name() + "." + rel.targetTable();
 					graph.get(source).add(target);
 				}
@@ -118,14 +111,14 @@ public final class JdbcModelClusterAnalyzer {
 		}
 	}
 
-	private static List<JdbcCluster> clusterByDensity(JdbcModel model) {
+	private static List<JdbcCluster> clusterByDensity(DbModel model) {
 		// Heuristique simple : cluster des tables avec fan-in + fan-out > seuil
 		final Map<String, Set<String>> graph = new HashMap<>();
-		for (JdbcModel.JdbcSchema schema : model.schemas()) {
-			for (JdbcModel.JdbcTable table : schema.tables()) {
+		for (DbModel.JdbcSchema schema : model.schemas()) {
+			for (DbModel.JdbcTable table : schema.tables()) {
 				final String source = schema.name() + "." + table.name();
 				graph.putIfAbsent(source, new HashSet<>());
-				for (JdbcModel.JdbcRelation rel : table.relations()) {
+				for (DbModel.JdbcRelation rel : table.relations()) {
 					String target = schema.name() + "." + rel.targetTable();
 					graph.get(source).add(target);
 				}

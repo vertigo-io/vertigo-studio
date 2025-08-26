@@ -9,7 +9,7 @@ public final class ShinyTreeNode {
 	private final String label;
 	private final List<ShinyTreeNode> nodes = new ArrayList<>();
 
-	public ShinyTreeNode(String label) {
+	ShinyTreeNode(String label) {
 		Assertion.check().isNotBlank(label);
 		//---
 		this.label = label;

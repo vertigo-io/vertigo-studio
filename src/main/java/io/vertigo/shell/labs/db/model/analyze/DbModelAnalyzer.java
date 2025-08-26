@@ -1,4 +1,4 @@
-package io.vertigo.shell.labs.Jdbc.model;
+package io.vertigo.shell.labs.db.model.analyze;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -9,11 +9,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import io.vertigo.shell.labs.Jdbc.model.JdbcModel.JdbcTable;
+import io.vertigo.shell.labs.db.model.DbModel;
+import io.vertigo.shell.labs.db.model.DbModel.JdbcTable;
 
-public final class JdbcModelAnalyzer {
+public final class DbModelAnalyzer {
 
-	public static JdbcModelAnalysisReport analyze(JdbcModel model) {
+	public static DbModelAnalysisReport analyze(DbModel model) {
 		List<String> tablesWithoutPrimaryKey = new ArrayList<>();
 		List<String> nonNullableColumnsWithoutDefault = new ArrayList<>();
 		List<String> invalidRelations = new ArrayList<>();
@@ -26,7 +27,7 @@ public final class JdbcModelAnalyzer {
 		Map<String, Set<String>> directFanOut = new HashMap<>();
 
 		// Préparer les noms complets de tables
-		for (JdbcModel.JdbcSchema schema : model.schemas()) {
+		for (DbModel.JdbcSchema schema : model.schemas()) {
 			for (JdbcTable table : schema.tables()) {
 				String fullName = schema.name() + "." + table.name();
 				tableMap.put(fullName, table);
@@ -36,16 +37,16 @@ public final class JdbcModelAnalyzer {
 		}
 
 		// Analyse structurelle + dépendances
-		for (JdbcModel.JdbcSchema schema : model.schemas()) {
+		for (DbModel.JdbcSchema schema : model.schemas()) {
 			for (JdbcTable table : schema.tables()) {
 				String tableName = schema.name() + "." + table.name();
 
 				// Clé primaire
-				if (table.columns().stream().noneMatch(JdbcModel.JdbcColumn::isPrimaryKey)) {
+				if (table.columns().stream().noneMatch(DbModel.JdbcColumn::isPrimaryKey)) {
 					tablesWithoutPrimaryKey.add(tableName);
 				}
 
-				for (JdbcModel.JdbcColumn column : table.columns()) {
+				for (DbModel.JdbcColumn column : table.columns()) {
 					if (!column.nullable() && column.defaultValue() == null) {
 						nonNullableColumnsWithoutDefault.add(tableName + "." + column.name());
 					}
@@ -55,7 +56,7 @@ public final class JdbcModelAnalyzer {
 				}
 
 				// Relations
-				for (JdbcModel.JdbcRelation relation : table.relations()) {
+				for (DbModel.JdbcRelation relation : table.relations()) {
 					String targetTable = schema.name() + "." + relation.targetTable();
 					directFanOut.get(tableName).add(targetTable);
 					directFanIn.computeIfAbsent(targetTable, k -> new HashSet<>()).add(tableName);
@@ -69,7 +70,7 @@ public final class JdbcModelAnalyzer {
 
 				// Indexes
 				Set<Set<String>> seenIndexes = new HashSet<>();
-				for (JdbcModel.JdbcIndex index : table.indexes()) {
+				for (DbModel.JdbcIndex index : table.indexes()) {
 					Set<String> cols = new HashSet<>(index.columnNames());
 					if (!seenIndexes.add(cols)) {
 						redundantIndexes.add(tableName + "." + index.name());
@@ -77,7 +78,7 @@ public final class JdbcModelAnalyzer {
 				}
 
 				// Contraintes triviales
-				for (JdbcModel.JdbcConstraint constraint : table.constraints()) {
+				for (DbModel.JdbcConstraint constraint : table.constraints()) {
 					if ("CHECK".equalsIgnoreCase(constraint.type()) &&
 							("1=1".equalsIgnoreCase(constraint.definition()) || constraint.definition().isBlank())) {
 						trivialCheckConstraints.add(tableName + "." + constraint.name());
@@ -95,15 +96,15 @@ public final class JdbcModelAnalyzer {
 		Map<String, Integer> transitiveFanIn = computeTransitiveFanIn(directFanIn);
 
 		// Construction des stats finales
-		Map<String, JdbcModelAnalysisReport.TableDependencyStats> dependencyStats = new HashMap<>();
+		Map<String, DbModelAnalysisReport.TableDependencyStats> dependencyStats = new HashMap<>();
 		for (String tableName : tableMap.keySet()) {
 			int fanIn = directFanIn.getOrDefault(tableName, Set.of()).size();
 			int fanOut = directFanOut.getOrDefault(tableName, Set.of()).size();
 			int fanInTrans = transitiveFanIn.getOrDefault(tableName, 0);
-			dependencyStats.put(tableName, new JdbcModelAnalysisReport.TableDependencyStats(fanIn, fanOut, fanInTrans));
+			dependencyStats.put(tableName, new DbModelAnalysisReport.TableDependencyStats(fanIn, fanOut, fanInTrans));
 		}
 
-		return new JdbcModelAnalysisReport(
+		return new DbModelAnalysisReport(
 				tablesWithoutPrimaryKey,
 				nonNullableColumnsWithoutDefault,
 				invalidRelations,
