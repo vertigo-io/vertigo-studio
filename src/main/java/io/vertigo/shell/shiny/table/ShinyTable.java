@@ -130,13 +130,10 @@ public final class ShinyTable {
 		final StringBuilder formatBuilder = new StringBuilder();
 		for (int i = 0; i < columns; i++) {
 			formatBuilder
-					.append(style.border.chars().vertical())
+					.append(i == 0 ? "" : style.border.chars().vertical())
 					.append(isNumericColumn[i] ? " %" : " %-")
 					.append(widths[i]).append("s ");
 		}
-		formatBuilder
-				.append(style.border.chars().vertical())
-				.append("\n");
 		final String format = formatBuilder.toString();
 
 		// 4. Print
@@ -147,14 +144,17 @@ public final class ShinyTable {
 
 		printLineSeparator(widths, Position.TOP);
 
+		System.out.print(style.border.chars().vertical());
 		System.out.print(style.headerBackgroundColor);
 		System.out.printf(format, (Object[]) header);
 		System.out.print(ShinyColors.RESET);
+		System.out.println(style.border.chars().vertical());
 
 		printLineSeparator(widths, Position.INNER);
 
 		boolean invert = false;
 		for (final String[] formattedRow : formattedRows) {
+			System.out.print(style.border.chars().vertical());
 			if (invert) {
 				System.out.print(style.altRowBackgroundColor);
 			}
@@ -162,6 +162,7 @@ public final class ShinyTable {
 			if (invert) {
 				System.out.print(ShinyColors.RESET);
 			}
+			System.out.println(style.border.chars().vertical());
 			invert = !invert;
 		}
 		printLineSeparator(widths, Position.BOTTOM);
@@ -206,8 +207,8 @@ public final class ShinyTable {
 		}
 		final String right = switch (position) {
 			case TOP -> style.border.chars().topRight();
-			case BOTTOM -> style.border.chars().bottomRight();
 			case INNER -> style.border.chars().innerRight();
+			case BOTTOM -> style.border.chars().bottomRight();
 		};
 		System.out.println(right);
 	}
