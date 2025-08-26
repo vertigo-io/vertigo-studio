@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.vertigo.shell.ShellCommand;
-import io.vertigo.shell.shiny.ShinyProgressBar;
+import io.vertigo.shell.shiny.progressbar.ShinyProgressBar;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 

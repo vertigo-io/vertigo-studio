@@ -1,15 +1,27 @@
-package io.vertigo.shell.shiny;
+package io.vertigo.shell.shiny.progressbar;
+
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.shell.shiny.Shiny;
 
 public final class ShinyProgressBar {
-	private final int total; // Valeur totale correspondant à 100%
+	private int total = 0; // Valeur totale correspondant à 100%
 	private final int barLength; // Longueur de la barre en caractères
 	private int progress; // Progression actuelle
 
 	// Constructeur
-	public ShinyProgressBar(int total) {
-		this.total = total;
+	public ShinyProgressBar(Shiny shiny) {
+		Assertion.check().isNotNull(shiny);
+		//---
 		this.barLength = 50; // Longueur fixe
 		this.progress = 0;
+	}
+
+	//  Valeur totale correspondant à 100%
+	public ShinyProgressBar total(int total) {
+		Assertion.check().isTrue(total > 0, "total must be > 0");
+		//---
+		this.total = total;
+		return this;
 	}
 
 	// Méthode pour mettre à jour la progression
@@ -29,7 +41,7 @@ public final class ShinyProgressBar {
 		// Construire la barre
 		final StringBuilder bar = new StringBuilder("[");
 		for (int i = 0; i < barLength; i++) {
-			bar.append(i < filled ? "\u001B[42m█\u001B[0m" : "\u001B[44m▒\u001B[0m");
+			bar.append(i < filled ? "█" : "▒");
 		}
 		bar.append("] ").append(percentage).append("%");
 		// Afficher la barre
@@ -40,16 +52,5 @@ public final class ShinyProgressBar {
 	public void finish() {
 		System.out.println();
 		//System.out.println("Tâche terminée !");
-	}
-
-	// Exemple d'utilisation
-	public static void main(String[] args) throws InterruptedException {
-		ShinyProgressBar progressBar = new ShinyProgressBar(100);
-		for (int i = 0; i <= 100; i++) {
-			progressBar.setProgress(i);
-			progressBar.print();
-			Thread.sleep(100);
-		}
-		progressBar.finish();
 	}
 }

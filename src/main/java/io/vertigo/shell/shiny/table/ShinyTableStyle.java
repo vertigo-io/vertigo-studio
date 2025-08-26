@@ -1,6 +1,6 @@
 package io.vertigo.shell.shiny.table;
 
-import io.vertigo.shell.shiny.ShinyColors;
+import io.vertigo.shell.shiny.utils.ShinyColors;
 
 /**
  * Encapsulates all visual style parameters of the table.

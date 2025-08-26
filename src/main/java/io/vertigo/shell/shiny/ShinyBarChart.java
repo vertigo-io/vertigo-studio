@@ -3,6 +3,8 @@ package io.vertigo.shell.shiny;
 import java.util.Arrays;
 import java.util.List;
 
+import io.vertigo.shell.shiny.utils.ShinyColors;
+
 public final class ShinyBarChart {
 	private String title;
 	private String[] header;

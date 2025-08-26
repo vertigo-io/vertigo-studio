@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shell.shiny.ShinyChars;
-import io.vertigo.shell.shiny.ShinyColors;
+import io.vertigo.shell.shiny.Shiny;
+import io.vertigo.shell.shiny.utils.ShinyChars;
+import io.vertigo.shell.shiny.utils.ShinyColors;
 
 /**
  * Represents a table that can be printed in a terminal with colors,
@@ -25,10 +26,10 @@ public final class ShinyTable {
 	 *
 	 * @param numberFormat the NumberFormat used to format numeric values
 	 */
-	public ShinyTable(NumberFormat numberFormat) {
-		Assertion.check().isNotNull(numberFormat);
+	public ShinyTable(Shiny shiny) {
+		Assertion.check().isNotNull(shiny);
 		//---
-		this.numberFormat = numberFormat;
+		this.numberFormat = shiny.getNumberFormat();
 	}
 
 	/**

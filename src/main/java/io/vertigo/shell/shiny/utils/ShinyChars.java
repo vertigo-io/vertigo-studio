@@ -1,4 +1,4 @@
-package io.vertigo.shell.shiny;
+package io.vertigo.shell.shiny.utils;
 
 /**
  * Box-drawing characters for rendering simple structures

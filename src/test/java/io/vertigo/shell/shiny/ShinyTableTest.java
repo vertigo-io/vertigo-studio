@@ -2,6 +2,8 @@ package io.vertigo.shell.shiny;
 
 import java.util.List;
 
+import io.vertigo.shell.shiny.utils.ShinyColors;
+
 public class ShinyTableTest {
 
 	public static void main(String[] args) {
