@@ -59,7 +59,7 @@ public class ShinyTableTest {
 				.border(ShinyBorder.Ascii)
 				.titleBackgroundColor(ShinyColors.INVERSE)
 				.headerBackgroundColor(ShinyColors.GREEN_BG)
-				.altRowBackgroundColor(ShinyColors.INVERSE)
+				.altRowBackgroundColor(ShinyColors.CYAN_BG)
 				.borderColor(ShinyColors.RED)
 				//				.border(false)
 				.endStyle()

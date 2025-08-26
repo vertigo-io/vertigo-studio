@@ -3,6 +3,7 @@ package io.vertigo.shell.shiny;
 import java.text.NumberFormat;
 
 import io.vertigo.shell.ShellContext;
+import io.vertigo.shell.shiny.barchart.ShinyBarChart;
 import io.vertigo.shell.shiny.progressbar.ShinyProgressBar;
 import io.vertigo.shell.shiny.table.ShinyTable;
 import io.vertigo.shell.shiny.tree.ShinyTree;
@@ -21,7 +22,7 @@ public final class Shiny {
 	}
 
 	public static ShinyBarChart barChart() {
-		return new ShinyBarChart();
+		return new ShinyBarChart(INSTANCE);
 	}
 
 	public static ShinyProgressBar progressBar() {

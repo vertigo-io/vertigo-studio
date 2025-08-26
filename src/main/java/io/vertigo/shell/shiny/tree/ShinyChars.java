@@ -9,20 +9,10 @@ final class ShinyChars {
 	static final String INNER_LEFT = "├"; // U+251C
 	static final String BOTTOM_LEFT = "└"; // U+2514
 
+	//	public static final String FOLDER = "📁"; // U+1F4C1
+	//	public static final String OPEN_FOLDER = "📂"; // U+1F4C2
+
 	private ShinyChars() {
 	}
 
-	//	String horizontal() {
-	//		return HORIZONTAL;
-	//	}
-	//
-	//
-	//	String vertical() {
-	//		return VERTICAL;
-	//	}
-	//
-	//	String bottomLeft() {
-	//		return BOTTOM_LEFT;
-	//	}
-	//
 }
