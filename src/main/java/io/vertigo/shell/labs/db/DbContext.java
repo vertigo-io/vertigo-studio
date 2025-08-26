@@ -36,7 +36,7 @@ public final class DbContext {
 
 	public static DbModel model() {
 		if (DbContext.dbModel == null) {
-			throw new VSystemException("The model must de loaded before save");
+			throw new VSystemException("The model must de loaded before usage");
 		}
 		return dbModel;
 	}
