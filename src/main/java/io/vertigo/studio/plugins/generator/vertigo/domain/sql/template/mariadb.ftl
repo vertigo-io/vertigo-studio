@@ -36,7 +36,7 @@
     (
     <#list dtDefinition.fields as field>
         <#if field.persistent>
-            ${field.constName?right_pad(12)}${"\t"} ${sql(field)?right_pad(12)}${"\t"}<#if field.required && !field.id>not null</#if> <#if field.id>auto_increment primary key</#if> <#if field.display?has_content>comment '${field.display?replace("'", "''")}'</#if><#if field?has_next>,</#if>
+            ${field.constName?right_pad(12)}${"\t"} ${sql(field)?right_pad(12)}${"\t"}<#if field.required && !field.id>not null</#if> <#if field.id><#if !field.typeString>auto_increment</#if> primary key</#if> <#if field.display?has_content>comment '${field.display?replace("'", "''")}'</#if><#if field?has_next>,</#if>
         </#if><#-- field.persistent -->
     </#list><#-- fieldCollection -->
     )<#if tableSpaceData?has_content>
