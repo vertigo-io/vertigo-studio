@@ -7,7 +7,7 @@ import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.service.AiServices;
-import io.vertigo.shell.labs.db.DbContext;
+import io.vertigo.shell.commands.db.DbContext;
 
 public final class AgentBuilder {
 	private static final double TEMPERATURE = 0.0;

@@ -29,11 +29,11 @@ public class TableExample {
                 .header("Country", "Population")
                 .rows(data)
                 .beginStyle()
-                .border(ShinyBorder.Ascii)
-                .titleBackgroundColor(ShinyColors.INVERSE)
-                .headerBackgroundColor(ShinyColors.GREEN_BG)
-                .altRowBackgroundColor(ShinyColors.CYAN_BG)
-                .borderColor(ShinyColors.RED)
+                        .border(ShinyBorder.Ascii)
+                        .titleBackgroundColor(ShinyColors.INVERSE)
+                        .headerBackgroundColor(ShinyColors.GREEN_BG)
+                        .altRowBackgroundColor(ShinyColors.CYAN_BG)
+                        .borderColor(ShinyColors.RED)
                 .endStyle()
                 .print();
     }

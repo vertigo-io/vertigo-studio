@@ -7,17 +7,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shell.commands.CleanCommand;
 import io.vertigo.shell.commands.ExitCommand;
-import io.vertigo.shell.commands.GenerateCommand;
 import io.vertigo.shell.commands.HelpCommand;
+import io.vertigo.shell.commands.HistoryCommand;
 import io.vertigo.shell.commands.UptimeCommand;
-import io.vertigo.shell.commands.WatchCommand;
-import io.vertigo.shell.labs.HistoryCommand;
-import io.vertigo.shell.labs.ListSketchesCommand;
-import io.vertigo.shell.labs.ListSourcesCommand;
-import io.vertigo.shell.labs.WhoCommand;
-import io.vertigo.shell.labs.db.DbCommands;
+import io.vertigo.shell.commands.WhoCommand;
+import io.vertigo.shell.commands.db.DbCommands;
+import io.vertigo.shell.commands.studio.StudioCommands;
 import io.vertigo.studio.tools.VertigoStudioMda;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
@@ -28,17 +24,16 @@ import picocli.CommandLine.Command;
 		version = "Shell 1.0",
 		description = "Vertigo Shell.",
 		subcommands = {
-				CleanCommand.class,
-				GenerateCommand.class,
-				WatchCommand.class,
+				//--- Natives commands 
 				ExitCommand.class,
 				UptimeCommand.class,
 				HistoryCommand.class,
-				DbCommands.class,
-				ListSketchesCommand.class,
-				ListSourcesCommand.class,
 				WhoCommand.class,
-				HelpCommand.class
+				HelpCommand.class,
+				//--- Db commands
+				DbCommands.class,
+				//--- Studio commands 
+				StudioCommands.class,
 		})
 public final class Shell implements Runnable {
 	//	private final Instant startTime = Instant.now();
