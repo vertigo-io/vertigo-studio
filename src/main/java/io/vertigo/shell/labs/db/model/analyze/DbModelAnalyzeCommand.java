@@ -36,14 +36,16 @@ public final class DbModelAnalyzeCommand implements ShellCommand {
 				.header("Table", "Column", "Relations")
 				.rows(rows)
 				.print();
-		//A linear
-		final int complexity = 10 * tables + 1 * columns + relations * 3;
+		//
+		final int complexity = (10 * tables + 1 * columns + relations * 3) / tables;
 		System.out.println("Complexity :" + complexity);
 
 		//--------------------------------------------
 		//------ANALYZER------------------------------
 		//--------------------------------------------
 		final DbModelAnalysisReport report = DbModelAnalyzer.analyze(DbContext.model());
+		System.out.println("tablesWithoutPrimaryKey :" + report.tablesWithoutPrimaryKey());
+		System.out.println("trivialCheckConstraints :" + report.trivialCheckConstraints());
 		//lister ici toutes les anomalies détectées
 		report.tableDependencyStats().forEach((table, stats) -> {
 			System.out.printf("Table %s: fanIn=%d, fanOut=%d, fanInTransitive=%d%n",
