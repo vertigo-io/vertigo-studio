@@ -6,7 +6,7 @@ import io.vertigo.shell.shiny.Shiny;
 public final class ShinyProgressBar {
 	private final Shiny shiny;
 	private int total = 0; // Valeur totale correspondant à 100%
-	private final int barLength; // Longueur de la barre en caractères
+	private int barLength; // Longueur de la barre en caractères
 	private int progress; // Progression actuelle
 
 	// Constructeur
@@ -14,8 +14,13 @@ public final class ShinyProgressBar {
 		Assertion.check().isNotNull(shiny);
 		//---
 		this.shiny = shiny;
-		this.barLength = 50; // Longueur fixe
+		this.barLength = 50;
 		this.progress = 0;
+	}
+
+	public ShinyProgressBar length(final int length) {
+		this.barLength = length;
+		return this;
 	}
 
 	//  Valeur totale correspondant à 100%

@@ -6,6 +6,7 @@ import java.text.NumberFormat;
 
 import io.vertigo.shell.ShellContext;
 import io.vertigo.shell.shiny.barchart.ShinyBarChart;
+import io.vertigo.shell.shiny.gauge.ShinyGauge;
 import io.vertigo.shell.shiny.progressbar.ShinyProgressBar;
 import io.vertigo.shell.shiny.spinner.ShinySpinner;
 import io.vertigo.shell.shiny.table.ShinyTable;
@@ -16,13 +17,12 @@ public final class Shiny {
 
 	private static final Shiny INSTANCE = new Shiny();
 
-	//	private final Terminal terminal;
-	private final PrintWriter writer;
+	private PrintWriter writer;
 
 	private Shiny() {
 		writer = new PrintWriter(System.out, true, StandardCharsets.UTF_8);
 		//		try {
-		//			final Terminal terminal = TerminalBuilder.builder()
+		//			terminal = TerminalBuilder.builder()
 		//					.system(true)
 		//					.build();
 		//			writer = terminal.writer();
@@ -51,6 +51,10 @@ public final class Shiny {
 		return new ShinyTree(INSTANCE, label);
 	}
 
+	public static ShinyGauge gauge() {
+		return new ShinyGauge(INSTANCE);
+	}
+
 	public NumberFormat getNumberFormat() {
 		return numberFormat;
 	}
@@ -59,7 +63,4 @@ public final class Shiny {
 		return writer;
 	}
 
-	//	public Terminal getTerminal() {
-	//		return terminal;
-	//	}
 }

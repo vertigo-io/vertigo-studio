@@ -29,11 +29,11 @@ public class TableExample {
                 .header("Country", "Population")
                 .rows(data)
                 .beginStyle()
-                        .border(ShinyBorder.Ascii)
-                        .titleBackgroundColor(ShinyColors.INVERSE)
-                        .headerBackgroundColor(ShinyColors.GREEN_BG)
-                        .altRowBackgroundColor(ShinyColors.CYAN_BG)
-                        .borderColor(ShinyColors.RED)
+                .border(ShinyBorder.Ascii)
+                .titleBackgroundColor(ShinyColors.INVERSE)
+                .headerBackgroundColor(ShinyColors.GREEN_BG)
+                .altRowBackgroundColor(ShinyColors.CYAN_BG)
+                .borderColor(ShinyColors.RED)
                 .endStyle()
                 .print();
     }
@@ -133,6 +133,45 @@ public class BarChartExample {
                 .rows(9000000, 11700000, 6400000)
                 .sort(ShinySortMode.VALUE_DESC)
                 .print(100);
+    }
+}
+```
+
+### Gauge
+
+The `ShinyGauge` component allows you to display a value as a linear gauge. You can customize the gauge's title, value, max value, length, and color.
+
+**Example:**
+
+```java
+import io.vertigo.shell.shiny.Shiny;
+import io.vertigo.shell.shiny.utils.ShinyColors;
+
+public class GaugeExample {
+    public static void main(String[] args) {
+        Shiny.gauge()
+                .title("CPU Usage")
+                .value(50)
+                .print();
+
+        Shiny.gauge()
+                .title("Memory Usage")
+                .value(75)
+                .color(ShinyColors.YELLOW)
+                .print();
+
+        Shiny.gauge()
+                .title("Disk Usage")
+                .value(90)
+                .color(ShinyColors.RED)
+                .print();
+
+        Shiny.gauge()
+                .title("Download")
+                .value(25)
+                .length(20)
+                .color(ShinyColors.BLUE)
+                .print();
     }
 }
 ```
