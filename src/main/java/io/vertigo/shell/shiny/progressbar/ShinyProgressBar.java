@@ -4,6 +4,7 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
 
 public final class ShinyProgressBar {
+	private final Shiny shiny;
 	private int total = 0; // Valeur totale correspondant à 100%
 	private final int barLength; // Longueur de la barre en caractères
 	private int progress; // Progression actuelle
@@ -12,6 +13,7 @@ public final class ShinyProgressBar {
 	public ShinyProgressBar(final Shiny shiny) {
 		Assertion.check().isNotNull(shiny);
 		//---
+		this.shiny = shiny;
 		this.barLength = 50; // Longueur fixe
 		this.progress = 0;
 	}
@@ -45,12 +47,14 @@ public final class ShinyProgressBar {
 				.append("] ")
 				.append(percentage).append("%");
 		// Afficher la barre
-		System.out.print("\r" + bar.toString());
+		shiny.getWriter().print("\r" + bar);
+		shiny.getWriter().flush(); //On force le flush
 	}
 
 	// Méthode pour finaliser l'affichage
 	public void finish() {
-		System.out.println();
+		shiny.getWriter().println();
+		shiny.getWriter().flush(); //On force le flush
 		//System.out.println("Tâche terminée !");
 	}
 }

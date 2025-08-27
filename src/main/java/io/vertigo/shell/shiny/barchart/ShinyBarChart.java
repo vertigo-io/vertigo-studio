@@ -8,6 +8,7 @@ import io.vertigo.shell.shiny.Shiny;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
 public final class ShinyBarChart {
+	private final Shiny shiny;
 	private String title;
 	private String[] header;
 	private int[] row;
@@ -16,6 +17,7 @@ public final class ShinyBarChart {
 	public ShinyBarChart(final Shiny shiny) {
 		Assertion.check().isNotNull(shiny);
 		//---
+		this.shiny = shiny;
 	}
 
 	public ShinyBarChart title(final String text) {
@@ -106,9 +108,9 @@ public final class ShinyBarChart {
 				.orElse(10);
 
 		// Afficher le diagramme
-		System.out.println(title);
-		//	System.out.println("Total des observations : " + total);
-		System.out.println("----------------------------------------");
+		shiny.getWriter().println(title);
+		//	shiny.getWriter().println("Total des observations : " + total);
+		shiny.getWriter().println("----------------------------------------");
 
 		for (int i = 0; i < header.length; i++) {
 			final String category = header[i] != null ? header[i] : "Catégorie " + (i + 1);
@@ -117,11 +119,11 @@ public final class ShinyBarChart {
 			final int barLength = (int) ((double) count / maxCount * maxBarLength);
 			final String bar = "█".repeat(Math.max(0, barLength)); // Utiliser le caractère carré plein █
 			final String coloredBar = COLORS[i % COLORS.length] + bar + ShinyColors.RESET;
-			System.out.printf("%-" + maxLabelLength + "s | %-50s (%d)%n", category, coloredBar, count);
+			shiny.getWriter().printf("%-" + maxLabelLength + "s | %-50s (%d)%n", category, coloredBar, count);
 		}
 
-		System.out.println("----------------------------------------");
-		System.out.println("Échelle : █ représente environ " + (maxCount / (double) maxBarLength) + " unités.");
+		shiny.getWriter().println("----------------------------------------");
+		shiny.getWriter().println("Échelle : █ représente environ " + (maxCount / (double) maxBarLength) + " unités.");
 	}
 
 	private static String[] COLORS = {

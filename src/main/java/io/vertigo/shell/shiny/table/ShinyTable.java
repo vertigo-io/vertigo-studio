@@ -14,6 +14,7 @@ import io.vertigo.shell.shiny.utils.ShinyColors;
  */
 public final class ShinyTable {
 	private final NumberFormat numberFormat;
+	private final Shiny shiny;
 	private String title;
 	private String noDataFound;
 	private String[] header;
@@ -28,6 +29,7 @@ public final class ShinyTable {
 	public ShinyTable(final Shiny shiny) {
 		Assertion.check().isNotNull(shiny);
 		//---
+		this.shiny = shiny;
 		this.numberFormat = shiny.getNumberFormat();
 	}
 
@@ -86,7 +88,7 @@ public final class ShinyTable {
 				.isNotNull(header);
 
 		if (rows.isEmpty()) {
-			System.out.println(noDataFound);
+			shiny.getWriter().println(noDataFound);
 			return;
 		}
 
@@ -137,32 +139,32 @@ public final class ShinyTable {
 		final String format = formatBuilder.toString();
 
 		// 4. Print
-		System.out.print(style.titleBackgroundColor);
-		System.out.print(style.titleTextColor);
-		System.out.println(title);
-		System.out.print(ShinyColors.RESET);
+		shiny.getWriter().print(style.titleBackgroundColor);
+		shiny.getWriter().print(style.titleTextColor);
+		shiny.getWriter().println(title);
+		shiny.getWriter().print(ShinyColors.RESET);
 
 		printLineSeparator(widths, Position.TOP);
 
-		System.out.print(style.border.chars().vertical());
-		System.out.print(style.headerBackgroundColor);
-		System.out.printf(format, (Object[]) header);
-		System.out.print(ShinyColors.RESET);
-		System.out.println(style.border.chars().vertical());
+		shiny.getWriter().print(style.border.chars().vertical());
+		shiny.getWriter().print(style.headerBackgroundColor);
+		shiny.getWriter().printf(format, (Object[]) header);
+		shiny.getWriter().print(ShinyColors.RESET);
+		shiny.getWriter().println(style.border.chars().vertical());
 
 		printLineSeparator(widths, Position.INNER);
 
 		boolean invert = false;
 		for (final String[] formattedRow : formattedRows) {
-			System.out.print(style.border.chars().vertical());
+			shiny.getWriter().print(style.border.chars().vertical());
 			if (invert) {
-				System.out.print(style.altRowBackgroundColor);
+				shiny.getWriter().print(style.altRowBackgroundColor);
 			}
-			System.out.printf(format, (Object[]) formattedRow);
+			shiny.getWriter().printf(format, (Object[]) formattedRow);
 			if (invert) {
-				System.out.print(ShinyColors.RESET);
+				shiny.getWriter().print(ShinyColors.RESET);
 			}
-			System.out.println(style.border.chars().vertical());
+			shiny.getWriter().println(style.border.chars().vertical());
 			invert = !invert;
 		}
 		printLineSeparator(widths, Position.BOTTOM);
@@ -181,13 +183,13 @@ public final class ShinyTable {
 					case INNER -> style.border.chars().innerLeft();
 					case BOTTOM -> style.border.chars().bottomLeft();
 				};
-				System.out.print(left);
+				shiny.getWriter().print(left);
 				final var h = switch (position) {
 					case TOP -> style.border.chars().topHorizontal();
 					case INNER -> style.border.chars().innerHorizontal();
 					case BOTTOM -> style.border.chars().bottomHorizontal();
 				};
-				System.out.print(h.repeat(width + 2));
+				shiny.getWriter().print(h.repeat(width + 2));
 				first = false;
 			} else {
 				final var middle = switch (position) {
@@ -195,13 +197,13 @@ public final class ShinyTable {
 					case INNER -> style.border.chars().center();
 					case BOTTOM -> style.border.chars().bottomMiddle();
 				};
-				System.out.print(middle);
+				shiny.getWriter().print(middle);
 				final var h = switch (position) {
 					case TOP -> style.border.chars().topHorizontal();
 					case INNER -> style.border.chars().innerHorizontal();
 					case BOTTOM -> style.border.chars().bottomHorizontal();
 				};
-				System.out.print(h.repeat(width + 2));
+				shiny.getWriter().print(h.repeat(width + 2));
 			}
 
 		}
@@ -210,7 +212,7 @@ public final class ShinyTable {
 			case INNER -> style.border.chars().innerRight();
 			case BOTTOM -> style.border.chars().bottomRight();
 		};
-		System.out.println(right);
+		shiny.getWriter().println(right);
 	}
 
 	private static boolean isColumnNumeric(final List<String[]> rows, final int columnIndex) {

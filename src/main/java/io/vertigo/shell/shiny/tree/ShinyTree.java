@@ -6,11 +6,13 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
 
 public final class ShinyTree {
+	private final Shiny shiny;
 	private final ShinyTreeNode rootNode;
 
 	public ShinyTree(final Shiny shiny, final String label) {
 		Assertion.check().isNotNull(shiny);
 		//---
+		this.shiny = shiny;
 		this.rootNode = new ShinyTreeNode(label);
 	}
 
@@ -19,7 +21,7 @@ public final class ShinyTree {
 	}
 
 	public void print() {
-		System.out.println(rootNode.getLabel());
+		shiny.getWriter().println(rootNode.getLabel());
 		printChildren("", rootNode.getNodes());
 	}
 
@@ -29,7 +31,7 @@ public final class ShinyTree {
 			final String connection = isLast
 					? ShinyChars.BOTTOM_LEFT + ShinyChars.HORIZONTAL + ShinyChars.HORIZONTAL
 					: ShinyChars.INNER_LEFT + ShinyChars.HORIZONTAL + ShinyChars.HORIZONTAL;
-			System.out.println(prefix + connection + children.get(i).getLabel());
+			shiny.getWriter().println(prefix + connection + children.get(i).getLabel());
 			final List<ShinyTreeNode> grandChildren = children.get(i).getNodes();
 			final String childPrefix = prefix + (isLast ? "   " : ShinyChars.VERTICAL + "  ");
 			printChildren(childPrefix, grandChildren);

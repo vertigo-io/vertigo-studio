@@ -4,6 +4,7 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
 
 public final class ShinySpinner implements AutoCloseable {
+	private final Shiny shiny;
 	private volatile boolean running = true;
 	private volatile String message;
 	private final SpinnerDrawer drawer;
@@ -11,6 +12,7 @@ public final class ShinySpinner implements AutoCloseable {
 	public ShinySpinner(final Shiny shiny) {
 		Assertion.check().isNotNull(shiny);
 		//---
+		this.shiny = shiny;
 		drawer = new SpinnerDrawer();
 		drawer.start();
 	}
@@ -54,7 +56,7 @@ public final class ShinySpinner implements AutoCloseable {
 				}
 			}
 			// Print a newline to move to the next line after stopping
-			System.out.println();
+			shiny.getWriter().println();
 		}
 
 		/**
@@ -62,9 +64,10 @@ public final class ShinySpinner implements AutoCloseable {
 		 */
 		private void draw(final int i) {
 			final var frame = ShinySpinnerStyle.FRAMES[i % ShinySpinnerStyle.FRAMES.length];
-			System.out.print("\r");
-			System.out.print(frame);
-			System.out.print(" " + message);
+			shiny.getWriter().print("\r");
+			shiny.getWriter().print(frame);
+			shiny.getWriter().print(" " + message);
+			shiny.getWriter().flush(); //On force le flush
 		}
 	}
 

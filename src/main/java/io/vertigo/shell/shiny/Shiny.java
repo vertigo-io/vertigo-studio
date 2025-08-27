@@ -1,5 +1,7 @@
 package io.vertigo.shell.shiny;
 
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 
 import io.vertigo.shell.ShellContext;
@@ -14,8 +16,19 @@ public final class Shiny {
 
 	private static final Shiny INSTANCE = new Shiny();
 
+	//	private final Terminal terminal;
+	private final PrintWriter writer;
+
 	private Shiny() {
-		//To avoid
+		writer = new PrintWriter(System.out, true, StandardCharsets.UTF_8);
+		//		try {
+		//			final Terminal terminal = TerminalBuilder.builder()
+		//					.system(true)
+		//					.build();
+		//			writer = terminal.writer();
+		//		} catch (final IOException e) {
+		//			throw new RuntimeException("Failed to initialize terminal", e);
+		//		}
 	}
 
 	public static ShinyTable table() {
@@ -41,4 +54,12 @@ public final class Shiny {
 	public NumberFormat getNumberFormat() {
 		return numberFormat;
 	}
+
+	public PrintWriter getWriter() {
+		return writer;
+	}
+
+	//	public Terminal getTerminal() {
+	//		return terminal;
+	//	}
 }
