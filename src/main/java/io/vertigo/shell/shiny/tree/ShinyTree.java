@@ -21,7 +21,7 @@ public final class ShinyTree {
 	}
 
 	public void print() {
-		shiny.getWriter().println(rootNode.getLabel());
+		shiny.getWriter().println(rootNode.getIcon().getValue() + " " + rootNode.getLabel());
 		printChildren("", rootNode.getNodes());
 	}
 
@@ -31,8 +31,9 @@ public final class ShinyTree {
 			final String connection = isLast
 					? ShinyChars.BOTTOM_LEFT + ShinyChars.HORIZONTAL + ShinyChars.HORIZONTAL
 					: ShinyChars.INNER_LEFT + ShinyChars.HORIZONTAL + ShinyChars.HORIZONTAL;
-			shiny.getWriter().println(prefix + connection + children.get(i).getLabel());
-			final List<ShinyTreeNode> grandChildren = children.get(i).getNodes();
+			final ShinyTreeNode child = children.get(i);
+			shiny.getWriter().println(prefix + connection + child.getIcon().getValue() + " " + child.getLabel());
+			final List<ShinyTreeNode> grandChildren = child.getNodes();
 			final String childPrefix = prefix + (isLast ? "   " : ShinyChars.VERTICAL + "  ");
 			printChildren(childPrefix, grandChildren);
 		}
