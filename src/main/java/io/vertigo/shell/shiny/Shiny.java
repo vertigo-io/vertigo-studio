@@ -3,9 +3,11 @@ package io.vertigo.shell.shiny;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
+import java.util.Locale;
 
 import io.vertigo.shell.ShellContext;
 import io.vertigo.shell.shiny.barchart.ShinyBarChart;
+import io.vertigo.shell.shiny.calendar.ShinyCalendar;
 import io.vertigo.shell.shiny.figlet.ShinyFiglet;
 import io.vertigo.shell.shiny.gauge.ShinyGauge;
 import io.vertigo.shell.shiny.progressbar.ShinyProgressBar;
@@ -17,10 +19,10 @@ import io.vertigo.shell.shiny.tree.ShinyTree;
 
 public final class Shiny {
 	public final NumberFormat numberFormat = NumberFormat.getNumberInstance(ShellContext.LOCALE);
+	private Locale locale = ShellContext.LOCALE;
 
 	private static final Shiny INSTANCE = new Shiny();
 
-	//	private Terminal terminal;
 	private PrintWriter writer;
 
 	private Shiny() {
@@ -71,15 +73,19 @@ public final class Shiny {
 		return new ShinyFiglet(INSTANCE);
 	}
 
+	public static ShinyCalendar calendar() {
+		return new ShinyCalendar(INSTANCE);
+	}
+
 	public NumberFormat getNumberFormat() {
 		return numberFormat;
+	}
+
+	public Locale getLocale() {
+		return locale;
 	}
 
 	public PrintWriter getWriter() {
 		return writer;
 	}
-
-	//	public Terminal getTerminal() {
-	//		return terminal;
-	//	}
 }

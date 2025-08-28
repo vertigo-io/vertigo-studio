@@ -103,6 +103,7 @@ public final class ShinyTable {
 		}
 
 		for (final String[] row : rows) {
+			Assertion.check().isTrue(row.length == columns, "Header and rows must have the same length");
 			final String[] formattedRow = new String[columns];
 			for (int colIndex = 0; colIndex < columns; colIndex++) {
 				final String value = row[colIndex];
