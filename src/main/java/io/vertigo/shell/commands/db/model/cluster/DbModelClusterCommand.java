@@ -24,9 +24,9 @@ public final class DbModelClusterCommand implements ShellCommand {
 
 		final ShinyTree tree = Shiny.tree("Clusters");
 		for (final JdbcCluster cluster : clusters) {
-			final var node = tree.getRoot().addNode(cluster.name());
+			final var node = tree.getRoot().addChild(cluster.name());
 			for (final String tableName : cluster.tableNames()) {
-				node.addNode(tableName);
+				node.addChild(tableName);
 			}
 		}
 		tree.print();

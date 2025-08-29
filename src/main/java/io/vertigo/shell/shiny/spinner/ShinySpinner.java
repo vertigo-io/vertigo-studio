@@ -64,7 +64,7 @@ public final class ShinySpinner implements AutoCloseable {
 		 */
 		private void draw(final int i) {
 			final var frame = ShinySpinnerStyle.FRAMES[i % ShinySpinnerStyle.FRAMES.length];
-			shiny.getWriter().print("\r\n");
+			shiny.getWriter().println();
 			shiny.getWriter().print(frame);
 			shiny.getWriter().print(" " + message);
 			shiny.getWriter().flush(); //On force le flush

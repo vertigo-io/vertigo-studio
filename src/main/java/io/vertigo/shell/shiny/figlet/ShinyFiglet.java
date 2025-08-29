@@ -40,7 +40,11 @@ public final class ShinyFiglet {
 		try {
 			final FigletRenderer figletRenderer = new FigletRenderer(FigFontResources.loadFigFontResource(font.getFileName()));
 			final String asciiArt = figletRenderer.renderText(text);
-			shiny.getWriter().println(color + asciiArt + ShinyColors.RESET);
+			shiny.getWriter().print(color);
+			for (String line : asciiArt.split("\\r?\\n")) {
+				shiny.getWriter().println(line);
+			}
+			shiny.getWriter().println(ShinyColors.RESET);
 		} catch (final IOException e) {
 			throw new RuntimeException("Failed to generate Figlet text", e);
 		}

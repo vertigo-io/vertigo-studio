@@ -43,11 +43,11 @@ public final class DbModelListCommand implements ShellCommand {
 	private void listAll() {
 		final ShinyTree tree = Shiny.tree("model");
 		for (final JdbcSchema schema : DbContext.model().schemas()) {
-			final ShinyTreeNode schemaNode = tree.getRoot().addNode("schema : " + schema.name());
-			final ShinyTreeNode tablesNode = schemaNode.addNode("tables (" + schema.tables().size() + ")");
+			final ShinyTreeNode schemaNode = tree.getRoot().addChild("schema : " + schema.name());
+			final ShinyTreeNode tablesNode = schemaNode.addChild("tables (" + schema.tables().size() + ")");
 			for (final JdbcTable table : schema.tables()) {
-				final ShinyTreeNode tableNode = tablesNode.addNode(table.name());
-				final ShinyTreeNode columnsNode = tableNode.addNode("columns");
+				final ShinyTreeNode tableNode = tablesNode.addChild(table.name());
+				final ShinyTreeNode columnsNode = tableNode.addChild("columns");
 				for (final JdbcColumn column : table.columns()) {
 
 					String info = column.name() + " " + ShinyColors.GREEN_BRIGHT + column.typeName() + ShinyColors.RESET;
@@ -55,7 +55,7 @@ public final class DbModelListCommand implements ShellCommand {
 					if (column.isPrimaryKey()) {
 						info = ShinyColors.UNDERLINE + info + ShinyColors.RESET;
 					}
-					columnsNode.addNode(info);
+					columnsNode.addChild(info);
 				}
 			}
 		}

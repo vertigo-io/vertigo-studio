@@ -13,7 +13,7 @@ public final class ShinyTree {
 		Assertion.check().isNotNull(shiny);
 		//---
 		this.shiny = shiny;
-		this.rootNode = new ShinyTreeNode(label);
+		this.rootNode = new ShinyTreeNode(null, label);
 	}
 
 	public ShinyTreeNode getRoot() {
