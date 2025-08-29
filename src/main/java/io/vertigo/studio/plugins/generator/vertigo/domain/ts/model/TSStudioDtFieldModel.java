@@ -65,14 +65,14 @@ public final class TSStudioDtFieldModel {
 	 * @return Name of the domain
 	 */
 	public String getDomainName() {
-		return dtField.getDomain().getKey().getName();
+		return dtField.getDomain().getKey().name();
 	}
 
 	/**
 	 * @return Local name of the domain
 	 */
 	public String getDomainDefinitionName() {
-		return dtField.getDomain().getKey().getName();
+		return dtField.getDomain().getKey().name();
 	}
 
 	/**
@@ -129,7 +129,7 @@ public final class TSStudioDtFieldModel {
 		} else if (domainSketch.getScope().isValueObject()) {
 			typescriptType = DomainUtil.getSimpleNameFromCanonicalName(domainSketch.getValueObjectClassName());
 		} else {
-			typescriptType = SketchUtil.getLocalName(domainSketch.getDtSketchKey().getName(), DtSketch.PREFIX);
+			typescriptType = SketchUtil.getLocalName(domainSketch.getDtSketchKey().name(), DtSketch.PREFIX);
 		}
 		return typescriptType + (withArray ? "[]" : "");
 	}

@@ -62,7 +62,7 @@ public final class StudioDtFieldModel {
 		this.dtField = dtField;
 		this.associationSketches = associationSketches;
 		if (dtField.getDomain().getScope().isDataObject()) {
-			dataObjectClassNameOpt = Optional.of(classNameFromDt.apply(dtField.getDomain().getDtSketchKey().getName()));
+			dataObjectClassNameOpt = Optional.of(classNameFromDt.apply(dtField.getDomain().getDtSketchKey().name()));
 		} else {
 			dataObjectClassNameOpt = Optional.empty();
 		}

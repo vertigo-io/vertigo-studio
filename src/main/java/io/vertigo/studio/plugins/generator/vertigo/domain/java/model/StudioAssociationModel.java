@@ -112,7 +112,7 @@ public final class StudioAssociationModel {
 	 * @return Urn de la définition de l'association
 	 */
 	public String getUrn() {
-		return associationSketch.getKey().getName();
+		return associationSketch.getKey().name();
 	}
 
 	/**

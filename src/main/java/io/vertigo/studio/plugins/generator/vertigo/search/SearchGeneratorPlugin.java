@@ -80,7 +80,7 @@ public final class SearchGeneratorPlugin implements GeneratorPlugin {
 				.map(SearchIndexSketch::getIndexDtSketch)
 				.map(DtSketch::getKey)
 				.distinct()
-				.map(dtSketchKey -> notebook.resolve(dtSketchKey.getName(), DtSketch.class))
+				.map(dtSketchKey -> notebook.resolve(dtSketchKey.name(), DtSketch.class))
 				.filter(indexDtSketch -> indexDtSketch.getPackageName().startsWith(generatorConfig.getProjectPackageName()))
 				.forEach(indexDtSketch -> generateSearchAo(notebook, targetSubDir, generatorConfig, generatorResultBuilder, indexDtSketch));
 

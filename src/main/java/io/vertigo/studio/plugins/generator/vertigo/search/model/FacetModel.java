@@ -64,7 +64,7 @@ public final class FacetModel {
 	}
 
 	public String getName() {
-		return facetSketch.getKey().getName();
+		return facetSketch.getKey().name();
 	}
 
 	public String getFieldName() {

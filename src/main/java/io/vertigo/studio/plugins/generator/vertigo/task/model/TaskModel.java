@@ -68,7 +68,7 @@ public final class TaskModel {
 	 * @return Name of taskDefinition
 	 */
 	public String getName() {
-		return taskSketch.getKey().getName();
+		return taskSketch.getKey().name();
 	}
 
 	/**

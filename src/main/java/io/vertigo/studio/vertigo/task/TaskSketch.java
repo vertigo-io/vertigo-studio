@@ -164,6 +164,6 @@ public final class TaskSketch extends AbstractSketch {
 	}
 
 	public String getTaskName() {
-		return getKey().getName();
+		return getKey().name();
 	}
 }

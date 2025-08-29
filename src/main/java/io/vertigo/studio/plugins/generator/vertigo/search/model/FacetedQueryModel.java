@@ -60,7 +60,7 @@ public final class FacetedQueryModel {
 	 * @return Urn de la facetedQueryDefinition
 	 */
 	public String getUrn() {
-		return facetedQuerySketch.getKey().getName();
+		return facetedQuerySketch.getKey().name();
 	}
 
 	public String getQueryName() {

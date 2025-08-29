@@ -196,7 +196,7 @@ public final class TaskGeneratorPlugin implements GeneratorPlugin {
 				//Les taches sont générées dans les pao
 				// - si il n'esxiste pas de définition associées à la tache
 				// - ou si la définition est considérée comme non persistante.
-				final boolean pao = dtSketchKey == null || !notebook.resolve(dtSketchKey.getName(), DtSketch.class).isPersistent();
+				final boolean pao = dtSketchKey == null || !notebook.resolve(dtSketchKey.name(), DtSketch.class).isPersistent();
 				if (pao) {
 					//La tache est liée au package. (PAO)
 					final List<TaskSketch> list = taskSketchsMap
@@ -231,7 +231,7 @@ public final class TaskGeneratorPlugin implements GeneratorPlugin {
 				final boolean dao = dtSketchKey != null;
 				if (dao) {
 					//Dans le cas d'un DTO ou DTC en sortie on considère que la tache est liée au DAO.
-					taskSketchsMap.computeIfPresent(notebook.resolve(dtSketchKey.getName(), DtSketch.class), (sketch, tasks) -> {
+					taskSketchsMap.computeIfPresent(notebook.resolve(dtSketchKey.name(), DtSketch.class), (sketch, tasks) -> {
 						tasks.add(taskSketch);
 						return tasks;
 					});

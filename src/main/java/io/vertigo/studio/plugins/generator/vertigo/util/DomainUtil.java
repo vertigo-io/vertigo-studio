@@ -116,7 +116,7 @@ public final class DomainUtil {
 				className = javaType;
 				break;
 			case DATA_OBJECT:
-				className = classNameFromDt.apply(domainSketch.getDtSketchKey().getName());
+				className = classNameFromDt.apply(domainSketch.getDtSketchKey().name());
 				break;
 			case VALUE_OBJECT:
 				className = domainSketch.getValueObjectClassName();
@@ -142,7 +142,7 @@ public final class DomainUtil {
 				classLabel = domainSketch.getDataType().getJavaClass().getSimpleName();
 				break;
 			case DATA_OBJECT:
-				classLabel = getSimpleNameFromCanonicalName(classNameFromDt.apply(domainSketch.getDtSketchKey().getName()));
+				classLabel = getSimpleNameFromCanonicalName(classNameFromDt.apply(domainSketch.getDtSketchKey().name()));
 				break;
 			case VALUE_OBJECT:
 				classLabel = getSimpleNameFromCanonicalName(domainSketch.getValueObjectClassName());
@@ -180,7 +180,7 @@ public final class DomainUtil {
 	public static List<DtSketch> sortSketchCollection(final Collection<DtSketch> sketchCollection) {
 		return sketchCollection
 				.stream()
-				.sorted(Comparator.comparing(dt -> dt.getKey().getName()))
+				.sorted(Comparator.comparing(dt -> dt.getKey().name()))
 				.toList();
 	}
 
@@ -202,7 +202,7 @@ public final class DomainUtil {
 	private static <A extends AssociationSketch> Collection<A> sortAssociationsCollection(final Collection<A> associationCollection) {
 		return associationCollection
 				.stream()
-				.sorted(Comparator.comparing(dt -> dt.getKey().getName()))
+				.sorted(Comparator.comparing(dt -> dt.getKey().name()))
 				.toList();
 	}
 

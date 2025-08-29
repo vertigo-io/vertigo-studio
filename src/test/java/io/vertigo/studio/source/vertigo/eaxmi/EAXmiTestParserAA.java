@@ -89,11 +89,11 @@ public final class EAXmiTestParserAA {
 	 */
 	private AssociationSimpleSketch getAssociationSimpleSketch(final SketchKey key) {
 		return notebook
-				.resolve(key.getName(), AssociationSimpleSketch.class);
+				.resolve(key.name(), AssociationSimpleSketch.class);
 	}
 
 	private AssociationNNSketch getAssociationNNSketch(final SketchKey key) {
-		return notebook.resolve(key.getName(), AssociationNNSketch.class);
+		return notebook.resolve(key.name(), AssociationNNSketch.class);
 	}
 
 	/**

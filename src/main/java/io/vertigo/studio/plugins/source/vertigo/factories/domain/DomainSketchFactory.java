@@ -181,7 +181,7 @@ public final class DomainSketchFactory implements DslSketchFactory {
 						idField.getLabel().getDisplay(),
 						idField.getDomain(),
 						Cardinality.ONE,
-						from.getKey().getName()));
+						from.getKey().name()));
 
 		return dtDefinition;
 
@@ -419,7 +419,7 @@ public final class DomainSketchFactory implements DslSketchFactory {
 		final String label = primaryAssociationNode.getLabel();
 		final Cardinality fieldCardinality = primaryAssociationNode.isNotNull() ? Cardinality.ONE : Cardinality.OPTIONAL_OR_NULLABLE;
 		dtDefinitionBuilders.get(foreignAssociationNode.getDtSketch().getKey())
-				.addForeignKey(fkFieldName, label, fkDefinition.getIdField().get().getDomain(), fieldCardinality, fkDefinition.getKey().getName());
+				.addForeignKey(fkFieldName, label, fkDefinition.getIdField().get().getDomain(), fieldCardinality, fkDefinition.getKey().name());
 		//On estime qu'une FK n'est ni une colonne de tri ni un champ d'affichage
 
 		return associationSimpleDefinition;

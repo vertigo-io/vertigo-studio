@@ -73,7 +73,7 @@ public final class KspDtFieldModel {
 	}
 
 	public String getDomainName() {
-		return dtField.getDomain().getKey().getName();
+		return dtField.getDomain().getKey().name();
 	}
 
 	public boolean hasSpecificCardinality() {

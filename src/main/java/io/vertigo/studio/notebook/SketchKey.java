@@ -29,8 +29,4 @@ public record SketchKey(String name) {
 		Assertion.check().isNotBlank(name);
 	}
 
-	@Deprecated(forRemoval = true)
-	public String getName() {
-		return name();
-	}
 }

@@ -52,7 +52,7 @@ public final class MermaidDtFieldModel {
 		//-----
 		this.dtField = dtField;
 		if (dtField.getDomain().getScope().isDataObject()) {
-			dataObjectClassNameOpt = Optional.of(classNameFromDt.apply(dtField.getDomain().getDtSketchKey().getName()));
+			dataObjectClassNameOpt = Optional.of(classNameFromDt.apply(dtField.getDomain().getDtSketchKey().name()));
 		} else {
 			dataObjectClassNameOpt = Optional.empty();
 		}

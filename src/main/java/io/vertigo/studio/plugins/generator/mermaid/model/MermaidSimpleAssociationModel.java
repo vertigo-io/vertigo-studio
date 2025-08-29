@@ -116,7 +116,7 @@ public final class MermaidSimpleAssociationModel {
 	 * @return Urn de la définition de l'association
 	 */
 	public String getUrn() {
-		return associationSimpleSketch.getKey().getName();
+		return associationSimpleSketch.getKey().name();
 	}
 
 	/**

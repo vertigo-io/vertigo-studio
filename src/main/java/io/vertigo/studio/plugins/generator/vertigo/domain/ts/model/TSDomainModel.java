@@ -53,14 +53,14 @@ public final class TSDomainModel {
 	 * @return Name of the domain
 	 */
 	public String getDomainName() {
-		return domainSketch.getKey().getName();
+		return domainSketch.getKey().name();
 	}
 
 	/**
 	 * @return Local name of the domain
 	 */
 	public String getDomainDefinitionName() {
-		return SketchUtil.getLocalName(domainSketch.getDtSketchKey().getName(), DtSketch.PREFIX);
+		return SketchUtil.getLocalName(domainSketch.getDtSketchKey().name(), DtSketch.PREFIX);
 	}
 
 	/**
@@ -94,6 +94,6 @@ public final class TSDomainModel {
 		} else if (domainSketch.getScope().isValueObject()) {
 			return DomainUtil.getSimpleNameFromCanonicalName(domainSketch.getValueObjectClassName());
 		}
-		return SketchUtil.getLocalName(domainSketch.getDtSketchKey().getName(), DtSketch.PREFIX) + ((multiple) ? "[]" : "");
+		return SketchUtil.getLocalName(domainSketch.getDtSketchKey().name(), DtSketch.PREFIX) + ((multiple) ? "[]" : "");
 	}
 }

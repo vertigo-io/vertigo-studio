@@ -43,7 +43,7 @@ public final class SqlStudioAssociationSimpleModel {
 	 * @return Association name in CONST_CASE
 	 */
 	public String getName() {
-		return StringUtil.camelToConstCase(associationSketch.getKey().getName());
+		return StringUtil.camelToConstCase(associationSketch.getKey().name());
 	}
 
 	/**
