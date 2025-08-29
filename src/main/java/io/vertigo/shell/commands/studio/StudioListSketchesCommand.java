@@ -44,7 +44,7 @@ public final class StudioListSketchesCommand implements ShellCommand {
 		for (int i = 0; i < sketches.size(); i++) {
 			final Sketch sketch = sketches.get(i);
 			final String[] row = new String[3];
-			row[0] = sketch.getKey().getName();
+			row[0] = sketch.getKey().name();
 			row[1] = sketch.getLocalName();
 			row[2] = sketch.getClass().getSimpleName();
 			rows.add(row);

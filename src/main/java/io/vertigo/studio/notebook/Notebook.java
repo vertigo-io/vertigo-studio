@@ -43,9 +43,9 @@ public final class Notebook {
 	public void register(final Sketch sketch) {
 		Assertion.check()
 				.isNotNull(sketch)
-				.isFalse(contains(sketch.getKey().getName()), "this sketch '{0}' is already registered", sketch);
+				.isFalse(contains(sketch.getKey().name()), "this sketch '{0}' is already registered", sketch);
 		//---
-		sketches.put(sketch.getKey().getName(), sketch);
+		sketches.put(sketch.getKey().name(), sketch);
 	}
 
 	public boolean contains(final String name) {
@@ -84,7 +84,7 @@ public final class Notebook {
 				.stream()
 				.filter(model -> clazz.isAssignableFrom(model.getClass()))
 				.map(clazz::cast)
-				.sorted(Comparator.comparing(s -> s.getKey().getName()))
+				.sorted(Comparator.comparing(s -> s.getKey().name()))
 				.toList();
 	}
 }

@@ -48,7 +48,7 @@ public abstract class AbstractSketch implements Sketch {
 	/** {@inheritDoc} */
 	@Override
 	public final String getLocalName() {
-		return getKey().getName().substring(prefix.length());
+		return getKey().name().substring(prefix.length());
 	}
 
 	/** {@inheritDoc} */
