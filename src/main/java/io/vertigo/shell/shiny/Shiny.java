@@ -18,23 +18,19 @@ import io.vertigo.shell.shiny.table.ShinyTable;
 import io.vertigo.shell.shiny.tree.ShinyTree;
 
 public final class Shiny {
+	//Values by default
 	public final NumberFormat numberFormat = NumberFormat.getNumberInstance(ShellContext.LOCALE);
 	private Locale locale = ShellContext.LOCALE;
+	private PrintWriter writer = new PrintWriter(System.out, true, StandardCharsets.UTF_8);
 
 	private static final Shiny INSTANCE = new Shiny();
 
-	private PrintWriter writer;
+	public static void printWriter(PrintWriter printWriter) {
+		INSTANCE.writer = printWriter;
+	}
 
 	private Shiny() {
 		writer = new PrintWriter(System.out, true, StandardCharsets.UTF_8);
-		//		try {
-		//			terminal = TerminalBuilder.builder()
-		//					.system(true)
-		//					.build();
-		//			writer = terminal.writer();
-		//		} catch (final IOException e) {
-		//			throw new RuntimeException("Failed to initialize terminal", e);
-		//		}
 	}
 
 	public static ShinyTable table() {

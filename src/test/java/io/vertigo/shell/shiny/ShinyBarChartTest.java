@@ -1,13 +1,27 @@
 package io.vertigo.shell.shiny;
 
 import io.vertigo.shell.shiny.barchart.ShinySortMode;
+import io.vertigo.shell.shiny.utils.ShinyColors;
 
 public class ShinyBarChartTest {
 	public static void main(final String[] args) {
-		test();
+		testSimpleBarChart();
+		testEuropeanCountriesPopulation();
+		testBarChartWithDifferentSortModes();
 	}
 
-	private static void test() {
+	private static void testSimpleBarChart() {
+		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Simple Bar Chart ---" + ShinyColors.RESET);
+		Shiny.barChart()
+				.title("Monthly Sales")
+				.header("Jan", "Feb", "Mar", "Apr", "May")
+				.rows(100, 120, 90, 150, 110)
+				.print(50); // Max bar length of 50 characters
+		System.out.println();
+	}
+
+	private static void testEuropeanCountriesPopulation() {
+		System.out.println(ShinyColors.BLUE_BRIGHT + "--- European Countries Population (Sorted Desc) ---" + ShinyColors.RESET);
 		Shiny.barChart()
 				.title("Population in European Countries")
 				.header("Austria", "Belgium", "Bulgaria", "Croatia", "Cyprus",
@@ -22,5 +36,63 @@ public class ShinyBarChartTest {
 						37600000, 10300000, 19000000, 5400000, 2100000, 48000000, 10600000)
 				.sort(ShinySortMode.VALUE_DESC)
 				.print(100);
+		System.out.println();
+	}
+
+	private static void testBarChartWithDifferentSortModes() {
+		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Bar Chart with Different Sort Modes ---" + ShinyColors.RESET);
+		// Original data
+		final String[] headers = {"Apple", "Banana", "Cherry", "Date"};
+		final int[] values = {50, 20, 80, 30};
+
+		// No sort
+		System.out.println(ShinyColors.CYAN + "--- No Sort ---" + ShinyColors.RESET);
+		Shiny.barChart()
+				.title("Fruits (No Sort)")
+				.header(headers)
+				.rows(values)
+				.sort(ShinySortMode.NO)
+				.print(30);
+		System.out.println();
+
+		// Value Ascending
+		System.out.println(ShinyColors.CYAN + "--- Value Ascending ---" + ShinyColors.RESET);
+		Shiny.barChart()
+				.title("Fruits (Value Asc)")
+				.header(headers)
+				.rows(values)
+				.sort(ShinySortMode.VALUE_ASC)
+				.print(30);
+		System.out.println();
+
+		// Value Descending
+		System.out.println(ShinyColors.CYAN + "--- Value Descending ---" + ShinyColors.RESET);
+		Shiny.barChart()
+				.title("Fruits (Value Desc)")
+				.header(headers)
+				.rows(values)
+				.sort(ShinySortMode.VALUE_DESC)
+				.print(30);
+		System.out.println();
+
+		// Header Ascending
+		System.out.println(ShinyColors.CYAN + "--- Header Ascending ---" + ShinyColors.RESET);
+		Shiny.barChart()
+				.title("Fruits (Header Asc)")
+				.header(headers)
+				.rows(values)
+				.sort(ShinySortMode.HEADER_ASC)
+				.print(30);
+		System.out.println();
+
+		// Header Descending
+		System.out.println(ShinyColors.CYAN + "--- Header Descending ---" + ShinyColors.RESET);
+		Shiny.barChart()
+				.title("Fruits (Header Desc)")
+				.header(headers)
+				.rows(values)
+				.sort(ShinySortMode.HEADER_DESC)
+				.print(30);
+		System.out.println();
 	}
 }

@@ -52,7 +52,7 @@ public final class ShinyProgressBar {
 				.append("] ")
 				.append(percentage).append("%");
 		// Afficher la barre
-		shiny.getWriter().print("\r" + bar);
+		shiny.getWriter().print("\r\n" + bar);
 		shiny.getWriter().flush(); //On force le flush
 	}
 

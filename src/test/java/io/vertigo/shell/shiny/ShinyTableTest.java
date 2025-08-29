@@ -9,10 +9,29 @@ public class ShinyTableTest {
 
 	public static void main(final String[] args) {
 
-		printEUCountriesTable();
+		testBasicTable();
+		testEuropeanCountriesTable();
+		testEmptyTable();
+		testTableWithCustomStyles();
 	}
 
-	public static void printEUCountriesTable() {
+	private static void testBasicTable() {
+		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Basic Table ---" + ShinyColors.RESET);
+		final List<String[]> data = List.of(
+				new String[] { "John Doe", "30", "New York" },
+				new String[] { "Jane Smith", "25", "London" },
+				new String[] { "Peter Jones", "35", "Paris" });
+
+		Shiny.table()
+				.title("User Information")
+				.header("Name", "Age", "City")
+				.rows(data)
+				.print();
+		System.out.println();
+	}
+
+	private static void testEuropeanCountriesTable() {
+		System.out.println(ShinyColors.BLUE_BRIGHT + "--- European Union Countries - Population ---" + ShinyColors.RESET);
 		final List<String[]> euCountries = List.of(
 				new String[] { "Austria", "9000000" },
 				new String[] { "Belgium", "11700000" },
@@ -47,23 +66,55 @@ public class ShinyTableTest {
 				.header("Country", "Population")
 				.rows(euCountries)
 				.print();
+		System.out.println();
+	}
 
+	private static void testEmptyTable() {
+		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Empty Table ---" + ShinyColors.RESET);
+		Shiny.table()
+				.title("Empty Data")
+				.header("Col1", "Col2")
+				.rows(List.of()) // Empty data
+				.noDataFound("No data available for this table.")
+				.print();
 		System.out.println();
-		System.out.println();
+	}
+
+	private static void testTableWithCustomStyles() {
+		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Table with Custom Styles ---" + ShinyColors.RESET);
+		final List<String[]> data = List.of(
+				new String[] { "Item A", "100", "Active" },
+				new String[] { "Item B", "250", "Inactive" },
+				new String[] { "Item C", "75", "Active" });
 
 		Shiny.table()
-				.title("European Union Countries - Population")
-				.header("Country", "Population")
-				.rows(euCountries)
+				.title("Product Status")
+				.header("Product", "Quantity", "Status")
+				.rows(data)
 				.beginStyle()
-				.border(ShinyBorder.Ascii)
+				.border(ShinyBorder.Ascii) // ASCII border
 				.titleBackgroundColor(ShinyColors.INVERSE)
 				.headerBackgroundColor(ShinyColors.GREEN_BG)
 				.altRowBackgroundColor(ShinyColors.CYAN_BG)
 				.borderColor(ShinyColors.RED)
-				//				.border(false)
 				.endStyle()
 				.print();
+		System.out.println();
 
+		Shiny.table()
+				.title("Sales Report")
+				.header("Region", "Sales", "Growth")
+				.rows(List.of(
+						new String[] { "North", "12345", "10.5%" },
+						new String[] { "South", "9876", "5.2%" }))
+				.beginStyle()
+				.border(ShinyBorder.Rounded) // Rounded border
+				.titleBackgroundColor(ShinyColors.BLUE_BG)
+				.headerBackgroundColor(ShinyColors.WHITE_BG)
+				.altRowBackgroundColor(ShinyColors.BLACK_BG)
+				.borderColor(ShinyColors.YELLOW)
+				.endStyle()
+				.print();
+		System.out.println();
 	}
 }
