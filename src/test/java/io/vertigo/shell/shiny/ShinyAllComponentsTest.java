@@ -127,9 +127,9 @@ public class ShinyAllComponentsTest {
 		System.out.println("Parameters: messages='Loading...', 'Processing...'");
 		try (var spinner = Shiny.spinner()) {
 			spinner.send("Loading...");
-			Thread.sleep(1500);
+			Thread.sleep(1000);
 			spinner.send("Processing...");
-			Thread.sleep(1500);
+			Thread.sleep(1000);
 		} catch (Exception e) {
 			/* ignore */ }
 		waitForEnter();
@@ -184,7 +184,9 @@ public class ShinyAllComponentsTest {
 	private static void testJson() {
 		System.out.println(ShinyColors.CYAN + "Component: ShinyJson" + ShinyColors.RESET);
 		System.out.println("Parameters: json='{\"name\": \"John Doe\", \"age\": 30, \"isStudent\": true}'");
-		final String json = "{\"name\": \"John Doe\", \"age\": 30, \"isStudent\": true, \"address\": null}";
+		final String json = """
+				{"name": "John Doe", "age": 30, "isStudent": true, "address": null}
+				""";
 		Shiny.json()
 				.json(json)
 				.print();
