@@ -27,6 +27,8 @@ public final class Shiny {
 
 	private static final Shiny INSTANCE = new Shiny();
 
+	private final ShinyTheme theme = new ShinyTheme();
+
 	public static void printWriter(PrintWriter printWriter) {
 		INSTANCE.writer = printWriter;
 	}
@@ -89,6 +91,10 @@ public final class Shiny {
 
 	public Locale getLocale() {
 		return locale;
+	}
+
+	public static ShinyTheme theme() {
+		return INSTANCE.theme;
 	}
 
 	public PrintWriter getWriter() {

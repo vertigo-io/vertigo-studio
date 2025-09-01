@@ -8,7 +8,7 @@ import io.vertigo.shell.shiny.utils.ShinyColors;
 public final class ShinyTableStyle {
 	private final ShinyTable table;
 
-	ShinyBorder border = ShinyBorder.Square;
+	ShinyBorder border = ShinyBorder.Normal;
 	// Colors
 	String titleBackgroundColor = ShinyColors.MAGENTA_BG;
 	String titleTextColor = ShinyColors.WHITE;

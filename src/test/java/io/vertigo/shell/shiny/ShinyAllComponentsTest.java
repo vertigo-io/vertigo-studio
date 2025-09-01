@@ -66,7 +66,7 @@ public class ShinyAllComponentsTest {
 				.month(Month.JULY.getValue())
 				.locale(Locale.FRENCH)
 				.highlight(LocalDate.of(2024, Month.JULY, 14))
-				.border(ShinyBorder.Rounded)
+				.border(ShinyBorder.Normal)
 				.print();
 		waitForEnter();
 	}
@@ -153,7 +153,6 @@ public class ShinyAllComponentsTest {
 				.title("Users")
 				.header("Name", "Age")
 				.rows(List.of(new String[] { "John", "30" }, new String[] { "Jane", "25" }))
-				.beginStyle().border(ShinyBorder.Ascii).endStyle()
 				.print();
 		waitForEnter();
 	}

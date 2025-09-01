@@ -1,12 +1,10 @@
 package io.vertigo.shell.shiny.table;
 
 public enum ShinyBorder {
-	Square,
+	Normal,
 	Horizontal,
 	Simple,
-	SimpleHeavy,
-	Rounded,
-	Ascii;
+	SimpleHeavy;
 
 	private final ShinyBorderChars chars = new ShinyBorderChars(this);
 

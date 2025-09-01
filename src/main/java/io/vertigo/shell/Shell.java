@@ -13,6 +13,7 @@ import io.vertigo.shell.commands.UptimeCommand;
 import io.vertigo.shell.commands.WhoCommand;
 import io.vertigo.shell.commands.db.DbCommands;
 import io.vertigo.shell.commands.studio.StudioCommands;
+import io.vertigo.shell.shiny.ShinyCommands;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
@@ -32,6 +33,8 @@ import picocli.CommandLine.Command;
 				DbCommands.class,
 				//--- Studio commands 
 				StudioCommands.class,
+				//--- Shiny commands
+				ShinyCommands.class
 		})
 public final class Shell implements Runnable {
 	//	private final Instant startTime = Instant.now();

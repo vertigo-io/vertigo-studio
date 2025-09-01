@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.Locale;
 
-import io.vertigo.shell.shiny.table.ShinyBorder;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
 public class ShinyCalendarTest {
@@ -76,7 +75,6 @@ public class ShinyCalendarTest {
 		Shiny.calendar()
 				.year(2024)
 				.month(Month.OCTOBER)
-				.border(ShinyBorder.Square) // Set SQUARE border
 				.highlight(LocalDate.of(2024, Month.OCTOBER, 10))
 				.highlight(LocalDate.of(2024, Month.OCTOBER, 20))
 				//.highlightColor(ShinyColors.MAGENTA_BRIGHT) // Custom highlight color
@@ -87,7 +85,6 @@ public class ShinyCalendarTest {
 		Shiny.calendar()
 				.year(2024)
 				.month(Month.NOVEMBER.getValue())
-				.border(ShinyBorder.Rounded) // Set ROUNDED border
 				.print();
 		System.out.println();
 
@@ -95,7 +92,6 @@ public class ShinyCalendarTest {
 		Shiny.calendar()
 				.year(2025)
 				.month(Month.FEBRUARY.getValue())
-				.border(ShinyBorder.Ascii) // Set ASCII border
 				.print();
 		System.out.println();
 	}

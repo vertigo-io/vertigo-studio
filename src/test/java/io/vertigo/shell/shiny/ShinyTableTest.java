@@ -3,12 +3,12 @@ package io.vertigo.shell.shiny;
 import java.util.List;
 
 import io.vertigo.shell.shiny.table.ShinyBorder;
+import io.vertigo.shell.shiny.table.ShinyTable;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
 public class ShinyTableTest {
 
 	public static void main(final String[] args) {
-
 		testBasicTable();
 		testEuropeanCountriesTable();
 		testEmptyTable();
@@ -92,7 +92,6 @@ public class ShinyTableTest {
 				.header("Product", "Quantity", "Status")
 				.rows(data)
 				.beginStyle()
-				.border(ShinyBorder.Ascii) // ASCII border
 				.titleBackgroundColor(ShinyColors.INVERSE)
 				.headerBackgroundColor(ShinyColors.GREEN_BG)
 				.altRowBackgroundColor(ShinyColors.CYAN_BG)
@@ -101,18 +100,39 @@ public class ShinyTableTest {
 				.print();
 		System.out.println();
 
-		Shiny.table()
+		ShinyTable table = Shiny.table()
 				.title("Sales Report")
 				.header("Region", "Sales", "Growth")
 				.rows(List.of(
 						new String[] { "North", "12345", "10.5%" },
 						new String[] { "South", "9876", "5.2%" }))
 				.beginStyle()
-				.border(ShinyBorder.Rounded) // Rounded border
 				.titleBackgroundColor(ShinyColors.BLUE_BG)
 				.headerBackgroundColor(ShinyColors.WHITE_BG)
-				.altRowBackgroundColor(ShinyColors.BLACK_BG)
+				.altRowBackgroundColor(ShinyColors.INVERSE)
 				.borderColor(ShinyColors.YELLOW)
+				.endStyle();
+
+		table
+				.title("Sales Report - Simple")
+				.beginStyle()
+				.border(ShinyBorder.Simple)
+				.endStyle()
+				.print();
+		System.out.println();
+
+		table
+				.title("Sales Report - SimpleHeavy")
+				.beginStyle()
+				.border(ShinyBorder.SimpleHeavy)
+				.endStyle()
+				.print();
+		System.out.println();
+
+		table
+				.title("Sales Report - Horizontal")
+				.beginStyle()
+				.border(ShinyBorder.Horizontal)
 				.endStyle()
 				.print();
 		System.out.println();

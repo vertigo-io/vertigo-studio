@@ -17,7 +17,7 @@ public final class ShinyCalendar {
 	private final List<LocalDate> highlightedDates = new ArrayList<>();
 	private int year;
 	private int month;
-	private ShinyBorder calendarBorder = ShinyBorder.Rounded;
+	private ShinyBorder calendarBorder = ShinyBorder.Normal;
 
 	public ShinyCalendar(final Shiny shiny) {
 		Assertion.check().isNotNull(shiny);
