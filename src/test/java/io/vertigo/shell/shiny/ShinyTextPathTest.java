@@ -71,8 +71,8 @@ public class ShinyTextPathTest {
 				.print();
 		Shiny.textPath()
 				.path("C:\\Users\\Admin\\Desktop")
-				.separator("\\\\")
-				.separatorColor(ShinyColors.GREEN)
+				.separator("\\")
+				.separatorColor(ShinyColors.BLUE)
 				.print();
 		System.out.println();
 	}

@@ -57,26 +57,35 @@ public final class ShinyTextPath {
 		final StringBuilder coloredPath = new StringBuilder();
 		final String[] parts = path.split(Pattern.quote(separator)); // Modified line
 
-		if (path.startsWith(separator)) {
+		final boolean relative = path.startsWith(separator);
+
+		if (relative) {
 			coloredPath.append(rootColor).append(separator).append(ShinyColors.RESET);
 		}
-
 		for (int i = 0; i < parts.length; i++) {
 			final String part = parts[i];
 			if (part.isEmpty()) { // Handle empty parts from leading/trailing/double separators
 				continue;
 			}
 
+			final String color;
 			if (i == parts.length - 1) { // Leaf
-				coloredPath.append(leafColor).append(part).append(ShinyColors.RESET);
-			} else if (path.startsWith(separator) && i == 0) { // First part after root separator
-				coloredPath.append(nodeColor).append(part).append(ShinyColors.RESET);
-			} else {
-				coloredPath.append(nodeColor).append(part).append(ShinyColors.RESET);
+				color = leafColor;
+			} else if (!relative && i == 0) {// Root
+				color = rootColor;
+			} else { //node
+				color = nodeColor;
 			}
+			coloredPath.append(color).append(part).append(ShinyColors.RESET);
 
 			if (i < parts.length - 1) {
-				coloredPath.append(separatorColor).append(separator).append(ShinyColors.RESET);
+				final String sepColor;
+				if (i == 0 && !relative && i == 0) {
+					sepColor = rootColor;
+				} else {
+					sepColor = separatorColor;
+				}
+				coloredPath.append(sepColor).append(separator).append(ShinyColors.RESET);
 			}
 		}
 		shiny.getWriter().println(coloredPath.toString());
