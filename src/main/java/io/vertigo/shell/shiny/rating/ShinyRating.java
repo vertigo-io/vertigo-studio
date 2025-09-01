@@ -6,59 +6,12 @@ import io.vertigo.shell.shiny.utils.ShinyColors;
 
 public final class ShinyRating {
 
-	public enum RatingStyle {
-		STAR("★", "☆"),
-		CIRCLE("●", "○"),
-		SQUARE("■", "□"),
-		DIAMOND("♦", "♢"),
-		HEART("♥", "♡"),
-		ARROW("▶", "▷"),
-		DOT("●", "·"),
-		PLUS("+", "-"),
-		THUMB("👍", "👎"),
-		FIRE("🔥", "❄"),
-		SMILE("😊", "😐"),
-		BATTERY("🔋", "🪫");
-
-		private final String filledIcon;
-		private final String emptyIcon;
-
-		RatingStyle(final String filledIcon, final String emptyIcon) {
-			this.filledIcon = filledIcon;
-			this.emptyIcon = emptyIcon;
-		}
-
-		public String getFilledIcon() {
-			return filledIcon;
-		}
-
-		public String getEmptyIcon() {
-			return emptyIcon;
-		}
-	}
-
-	public enum RatingScale {
-		SCALE_5(5),
-		SCALE_10(10),
-		SCALE_100(100);
-
-		private final int maxValue;
-
-		RatingScale(final int maxValue) {
-			this.maxValue = maxValue;
-		}
-
-		public int getMaxValue() {
-			return maxValue;
-		}
-	}
-
 	private final Shiny shiny;
 	private String label;
 	private double value = 0;
-	private RatingScale scale = RatingScale.SCALE_5;
+	private ShinyRatingScale scale = ShinyRatingScale.SCALE_5;
 	private int customMaxValue = -1; // -1 means use scale
-	private RatingStyle style = RatingStyle.STAR;
+	private ShinyRatingStyle style = ShinyRatingStyle.STAR;
 	private String filledColor = ShinyColors.YELLOW;
 	private String emptyColor = ShinyColors.WHITE;
 	private boolean showValue = true;
@@ -83,7 +36,7 @@ public final class ShinyRating {
 		return this;
 	}
 
-	public ShinyRating scale(final RatingScale ratingScale) {
+	public ShinyRating scale(final ShinyRatingScale ratingScale) {
 		this.scale = ratingScale;
 		this.customMaxValue = -1; // Reset custom max when using scale
 		return this;
@@ -94,7 +47,7 @@ public final class ShinyRating {
 		return this;
 	}
 
-	public ShinyRating style(final RatingStyle ratingStyle) {
+	public ShinyRating style(final ShinyRatingStyle ratingStyle) {
 		this.style = ratingStyle;
 		return this;
 	}
@@ -146,7 +99,7 @@ public final class ShinyRating {
 		}
 
 		// Build the rating visualization
-		if (scale == RatingScale.SCALE_100 && maxValue == 100) {
+		if (scale == ShinyRatingScale.SCALE_100 && maxValue == 100) {
 			// For scale 100, show as progress bar
 			buildProgressBarRating(rating, clampedValue, maxValue);
 		} else {

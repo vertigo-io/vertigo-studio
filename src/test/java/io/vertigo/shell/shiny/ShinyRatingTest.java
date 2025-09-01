@@ -1,6 +1,7 @@
 package io.vertigo.shell.shiny;
 
-import io.vertigo.shell.shiny.rating.ShinyRating;
+import io.vertigo.shell.shiny.rating.ShinyRatingScale;
+import io.vertigo.shell.shiny.rating.ShinyRatingStyle;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
 public class ShinyRatingTest {
@@ -43,53 +44,53 @@ public class ShinyRatingTest {
 		Shiny.rating()
 				.label("Stars")
 				.value(4)
-				.style(ShinyRating.RatingStyle.STAR)
+				.style(ShinyRatingStyle.STAR)
 				.print();
 
 		Shiny.rating()
 				.label("Hearts")
 				.value(4)
-				.style(ShinyRating.RatingStyle.HEART)
+				.style(ShinyRatingStyle.HEART)
 				.filledColor(ShinyColors.RED)
 				.print();
 
 		Shiny.rating()
 				.label("Circles")
 				.value(3)
-				.style(ShinyRating.RatingStyle.CIRCLE)
+				.style(ShinyRatingStyle.CIRCLE)
 				.filledColor(ShinyColors.BLUE)
 				.print();
 
 		Shiny.rating()
 				.label("Squares")
 				.value(5)
-				.style(ShinyRating.RatingStyle.SQUARE)
+				.style(ShinyRatingStyle.SQUARE)
 				.filledColor(ShinyColors.GREEN)
 				.print();
 
 		Shiny.rating()
 				.label("Diamonds")
 				.value(2)
-				.style(ShinyRating.RatingStyle.DIAMOND)
+				.style(ShinyRatingStyle.DIAMOND)
 				.filledColor(ShinyColors.MAGENTA)
 				.print();
 
 		Shiny.rating()
 				.label("Thumbs")
 				.value(3)
-				.style(ShinyRating.RatingStyle.THUMB)
+				.style(ShinyRatingStyle.THUMB)
 				.print();
 
 		Shiny.rating()
 				.label("Fire")
 				.value(4)
-				.style(ShinyRating.RatingStyle.FIRE)
+				.style(ShinyRatingStyle.FIRE)
 				.print();
 
 		Shiny.rating()
 				.label("Smiles")
 				.value(5)
-				.style(ShinyRating.RatingStyle.SMILE)
+				.style(ShinyRatingStyle.SMILE)
 				.print();
 
 		System.out.println();
@@ -101,21 +102,21 @@ public class ShinyRatingTest {
 		Shiny.rating()
 				.label("5-Star Scale")
 				.value(3.5)
-				.scale(ShinyRating.RatingScale.SCALE_5)
+				.scale(ShinyRatingScale.SCALE_5)
 				.print();
 
 		Shiny.rating()
 				.label("10-Point Scale")
 				.value(8.5)
-				.scale(ShinyRating.RatingScale.SCALE_10)
-				.style(ShinyRating.RatingStyle.CIRCLE)
+				.scale(ShinyRatingScale.SCALE_10)
+				.style(ShinyRatingStyle.CIRCLE)
 				.print();
 
 		Shiny.rating()
 				.label("100-Point Scale")
 				.value(85)
-				.scale(ShinyRating.RatingScale.SCALE_100)
-				.style(ShinyRating.RatingStyle.SQUARE)
+				.scale(ShinyRatingScale.SCALE_100)
+				.style(ShinyRatingStyle.SQUARE)
 				.filledColor(ShinyColors.CYAN)
 				.print();
 
@@ -123,14 +124,14 @@ public class ShinyRatingTest {
 				.label("Custom Scale (7)")
 				.value(5)
 				.maxValue(7)
-				.style(ShinyRating.RatingStyle.DIAMOND)
+				.style(ShinyRatingStyle.DIAMOND)
 				.print();
 
 		Shiny.rating()
 				.label("Custom Scale (3)")
 				.value(2)
 				.maxValue(3)
-				.style(ShinyRating.RatingStyle.HEART)
+				.style(ShinyRatingStyle.HEART)
 				.filledColor(ShinyColors.RED)
 				.print();
 
@@ -151,21 +152,21 @@ public class ShinyRatingTest {
 				.label("With Separators")
 				.value(3)
 				.separator(" | ")
-				.style(ShinyRating.RatingStyle.ARROW)
+				.style(ShinyRatingStyle.ARROW)
 				.print();
 
 		Shiny.rating()
 				.label("No Value Display")
 				.value(4)
 				.showValue(false)
-				.style(ShinyRating.RatingStyle.STAR)
+				.style(ShinyRatingStyle.STAR)
 				.print();
 
 		Shiny.rating()
 				.label("With Percentage")
 				.value(3.5)
 				.showPercentage(true)
-				.style(ShinyRating.RatingStyle.CIRCLE)
+				.style(ShinyRatingStyle.CIRCLE)
 				.print();
 
 		Shiny.rating()
@@ -173,7 +174,7 @@ public class ShinyRatingTest {
 				.value(4.2)
 				.showValue(true)
 				.showPercentage(true)
-				.style(ShinyRating.RatingStyle.HEART)
+				.style(ShinyRatingStyle.HEART)
 				.filledColor(ShinyColors.RED)
 				.print();
 
@@ -181,13 +182,13 @@ public class ShinyRatingTest {
 				.label("Half Ratings")
 				.value(3.5)
 				.allowHalfRating(true)
-				.style(ShinyRating.RatingStyle.STAR)
+				.style(ShinyRatingStyle.STAR)
 				.print();
 
 		Shiny.rating()
 				.label("Boxed Rating")
 				.value(5)
-				.style(ShinyRating.RatingStyle.DIAMOND)
+				.style(ShinyRatingStyle.DIAMOND)
 				.filledColor(ShinyColors.YELLOW)
 				.showBox(true)
 				.print();
@@ -207,7 +208,7 @@ public class ShinyRatingTest {
 	//		movieRatings.put("Sci-Fi", 4.7);
 	//
 	//		ShinyRating.printMultiple(Shiny.getInstance(), movieRatings,
-	//				ShinyRating.RatingStyle.STAR,
+	//				ShinyRatingStyle.STAR,
 	//				ShinyRating.RatingScale.SCALE_5);
 	//		System.out.println();
 	//	}
@@ -225,7 +226,7 @@ public class ShinyRatingTest {
 	//
 	//		ShinyRating.printDashboard(Shiny.getInstance(), "Restaurant Reviews",
 	//				restaurantRatings,
-	//				ShinyRating.RatingStyle.STAR,
+	//				ShinyRatingStyle.STAR,
 	//				ShinyRating.RatingScale.SCALE_5);
 	//
 	//		// Product Features Dashboard (10-point scale)
@@ -238,7 +239,7 @@ public class ShinyRatingTest {
 	//
 	//		ShinyRating.printDashboard(Shiny.getInstance(), "Product Features (10-point)",
 	//				productRatings,
-	//				ShinyRating.RatingStyle.CIRCLE,
+	//				ShinyRatingStyle.CIRCLE,
 	//				ShinyRating.RatingScale.SCALE_10);
 	//
 	//		// Skill Assessment Dashboard (hearts)
@@ -251,7 +252,7 @@ public class ShinyRatingTest {
 	//
 	//		ShinyRating.printDashboard(Shiny.getInstance(), "Programming Skills",
 	//				skillRatings,
-	//				ShinyRating.RatingStyle.HEART,
+	//				ShinyRatingStyle.HEART,
 	//				ShinyRating.RatingScale.SCALE_5);
 	//	}
 
@@ -268,7 +269,7 @@ public class ShinyRatingTest {
 	//
 	//		ShinyRating.printSummary(Shiny.getInstance(), "Customer Satisfaction Survey",
 	//				satisfactionRatings,
-	//				ShinyRating.RatingStyle.THUMB,
+	//				ShinyRatingStyle.THUMB,
 	//				ShinyRating.RatingScale.SCALE_5);
 	//
 	//		// Performance Metrics Summary (100-point scale)
@@ -281,7 +282,7 @@ public class ShinyRatingTest {
 	//
 	//		ShinyRating.printSummary(Shiny.getInstance(), "System Performance",
 	//				performanceMetrics,
-	//				ShinyRating.RatingStyle.SQUARE,
+	//				ShinyRatingStyle.SQUARE,
 	//				ShinyRating.RatingScale.SCALE_100);
 	//	}
 	//
@@ -291,21 +292,21 @@ public class ShinyRatingTest {
 		// Rating without label
 		Shiny.rating()
 				.value(3)
-				.style(ShinyRating.RatingStyle.STAR)
+				.style(ShinyRatingStyle.STAR)
 				.print();
 
 		// Zero rating
 		Shiny.rating()
 				.label("Zero Rating")
 				.value(0)
-				.style(ShinyRating.RatingStyle.STAR)
+				.style(ShinyRatingStyle.STAR)
 				.print();
 
 		// Maximum rating
 		Shiny.rating()
 				.label("Perfect Score")
 				.value(5)
-				.style(ShinyRating.RatingStyle.STAR)
+				.style(ShinyRatingStyle.STAR)
 				.print();
 
 		// Rating exceeding maximum (should be clamped)
@@ -313,7 +314,7 @@ public class ShinyRatingTest {
 				.label("Over Maximum")
 				.value(7)
 				.maxValue(5)
-				.style(ShinyRating.RatingStyle.STAR)
+				.style(ShinyRatingStyle.STAR)
 				.print();
 
 		// Very small custom scale
@@ -321,7 +322,7 @@ public class ShinyRatingTest {
 				.label("Binary Rating")
 				.value(1)
 				.maxValue(2)
-				.style(ShinyRating.RatingStyle.THUMB)
+				.style(ShinyRatingStyle.THUMB)
 				.print();
 
 		// Very large custom scale
@@ -329,14 +330,14 @@ public class ShinyRatingTest {
 				.label("Large Scale")
 				.value(15)
 				.maxValue(20)
-				.style(ShinyRating.RatingStyle.DOT)
+				.style(ShinyRatingStyle.DOT)
 				.separator(" ")
 				.showValue(false)
 				.print();
 
 		// All styles showcase
 		System.out.println("\nAll styles showcase (3/5 rating):");
-		for (ShinyRating.ShinyRatingStyle style : ShinyRating.RatingStyle.values()) {
+		for (ShinyRatingStyle style : ShinyRatingStyle.values()) {
 			Shiny.rating()
 					.label(style.name())
 					.value(3)
@@ -349,22 +350,22 @@ public class ShinyRatingTest {
 		Shiny.rating()
 				.label("SCALE_5")
 				.value(3.5)
-				.scale(ShinyRating.RatingScale.SCALE_5)
-				.style(ShinyRating.RatingStyle.STAR)
+				.scale(ShinyRatingScale.SCALE_5)
+				.style(ShinyRatingStyle.STAR)
 				.print();
 
 		Shiny.rating()
 				.label("SCALE_10")
 				.value(7.2)
-				.scale(ShinyRating.RatingScale.SCALE_10)
-				.style(ShinyRating.RatingStyle.CIRCLE)
+				.scale(ShinyRatingScale.SCALE_10)
+				.style(ShinyRatingStyle.CIRCLE)
 				.print();
 
 		Shiny.rating()
 				.label("SCALE_100")
 				.value(72.5)
-				.scale(ShinyRating.RatingScale.SCALE_100)
-				.style(ShinyRating.RatingStyle.SQUARE)
+				.scale(ShinyRatingScale.SCALE_100)
+				.style(ShinyRatingStyle.SQUARE)
 				.print();
 
 		System.out.println();
