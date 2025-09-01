@@ -11,6 +11,7 @@ import io.vertigo.shell.shiny.calendar.ShinyCalendar;
 import io.vertigo.shell.shiny.figlet.ShinyFiglet;
 import io.vertigo.shell.shiny.gauge.ShinyGauge;
 import io.vertigo.shell.shiny.json.ShinyJson;
+import io.vertigo.shell.shiny.list.ShinyList;
 import io.vertigo.shell.shiny.progressbar.ShinyProgressBar;
 import io.vertigo.shell.shiny.sparkline.ShinySparkline;
 import io.vertigo.shell.shiny.spinner.ShinySpinner;
@@ -83,6 +84,10 @@ public final class Shiny {
 
 	public static ShinyJson json() {
 		return new ShinyJson(INSTANCE);
+	}
+
+	public static ShinyList list() {
+		return new ShinyList(INSTANCE);
 	}
 
 	public NumberFormat getNumberFormat() {
