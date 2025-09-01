@@ -16,10 +16,18 @@ public final class ShinyJson {
 	private String jsonString;
 
 	private String labelColor = ShinyColors.BLUE;
+
 	private String numberColor = ShinyColors.GREEN;
 	private String stringColor = ShinyColors.RED;
-	private String separatorColor = ShinyColors.YELLOW;
-	private String defaultColor = ShinyColors.WHITE; // For brackets, commas, boolean, null
+	private String booleanColor = ShinyColors.BLACK_BRIGHT;
+	private String nullColor = ShinyColors.BLACK_BRIGHT;
+
+	// : 
+	private String colonColor = ShinyColors.YELLOW;
+
+	private String commaColor = ShinyColors.WHITE;
+	private String bracketColor = ShinyColors.WHITE;
+	private String bracesColor = ShinyColors.WHITE;
 
 	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
@@ -49,44 +57,33 @@ public final class ShinyJson {
 		return this;
 	}
 
-	public ShinyJson separatorColor(final String color) {
-		this.separatorColor = color;
+	public ShinyJson colonColor(final String color) {
+		this.colonColor = color;
 		return this;
 	}
 
-	public ShinyJson defaultColor(final String color) {
-		this.defaultColor = color;
-		return this;
-	}
-
-	// New methods for specific color customization
 	public ShinyJson bracesColor(final String color) {
-		this.defaultColor = color; // Braces use defaultColor
+		this.bracesColor = color;
 		return this;
 	}
 
 	public ShinyJson bracketColor(final String color) {
-		this.defaultColor = color; // Brackets use defaultColor
-		return this;
-	}
-
-	public ShinyJson colonColor(final String color) {
-		this.separatorColor = color; // Colon uses separatorColor
+		this.bracketColor = color;
 		return this;
 	}
 
 	public ShinyJson commaColor(final String color) {
-		this.defaultColor = color; // Comma uses defaultColor
+		this.commaColor = color;
 		return this;
 	}
 
 	public ShinyJson booleanColor(final String color) {
-		this.defaultColor = color; // Boolean uses defaultColor
+		this.booleanColor = color;
 		return this;
 	}
 
 	public ShinyJson nullColor(final String color) {
-		this.defaultColor = color; // Null uses defaultColor
+		this.nullColor = color;
 		return this;
 	}
 
@@ -112,49 +109,54 @@ public final class ShinyJson {
 	}
 
 	private void printObject(final JsonNode node, final String indent, final boolean isLast) {
-		shiny.getWriter().println(defaultColor + "{" + ShinyColors.RESET);
+		shiny.getWriter().println(bracesColor + "{" + ShinyColors.RESET);
 		final Iterator<Entry<String, JsonNode>> fields = node.fields();
 		while (fields.hasNext()) {
 			final Entry<String, JsonNode> field = fields.next();
 			final boolean lastField = !fields.hasNext();
-			shiny.getWriter().print(indent + "  " + labelColor + "\"" + field.getKey() + "\"" + ShinyColors.RESET + separatorColor + ":" + ShinyColors.RESET + " ");
+			shiny.getWriter().print(indent + "  " + labelColor + "\"" + field.getKey() + "\"" + ShinyColors.RESET + colonColor + ":" + ShinyColors.RESET + " ");
 			printNode(field.getValue(), indent + "  ", lastField);
 		}
-		shiny.getWriter().print(indent + defaultColor + "}" + ShinyColors.RESET);
+		shiny.getWriter().print(indent + bracesColor + "}" + ShinyColors.RESET);
 		if (!isLast) {
-			shiny.getWriter().print(defaultColor + "," + ShinyColors.RESET);
+			shiny.getWriter().print(commaColor + "," + ShinyColors.RESET);
 		}
 		shiny.getWriter().println();
 	}
 
 	private void printArray(final JsonNode node, final String indent, final boolean isLast) {
-		shiny.getWriter().println(defaultColor + "[" + ShinyColors.RESET);
+		shiny.getWriter().println(bracketColor + "[" + ShinyColors.RESET);
 		for (int i = 0; i < node.size(); i++) {
 			final JsonNode element = node.get(i);
 			final boolean lastElement = (i == node.size() - 1);
 			shiny.getWriter().print(indent + "  ");
 			printNode(element, indent + "  ", lastElement);
 		}
-		shiny.getWriter().print(indent + defaultColor + "]" + ShinyColors.RESET);
+		shiny.getWriter().print(indent + bracketColor + "]" + ShinyColors.RESET);
 		if (!isLast) {
-			shiny.getWriter().print(defaultColor + "," + ShinyColors.RESET);
+			shiny.getWriter().print(commaColor + "," + ShinyColors.RESET);
 		}
 		shiny.getWriter().println();
 	}
 
 	private void printValue(final JsonNode node, final String indent, final boolean isLast) {
 		if (node.isTextual()) {
-			shiny.getWriter().print(stringColor + "\"" + node.asText() + "\"" + ShinyColors.RESET);
+			colorify("\"" + node.asText() + "\"", stringColor);
 		} else if (node.isNumber()) {
-			shiny.getWriter().print(numberColor + node.asText() + ShinyColors.RESET);
+			colorify(node.asText(), numberColor);
 		} else if (node.isBoolean()) {
-			shiny.getWriter().print(defaultColor + node.asText() + ShinyColors.RESET);
+			colorify(node.asText(), booleanColor);
 		} else if (node.isNull()) {
-			shiny.getWriter().print(defaultColor + "null" + ShinyColors.RESET);
+			colorify("null", nullColor);
 		}
 		if (!isLast) {
-			shiny.getWriter().print(defaultColor + "," + ShinyColors.RESET);
+			colorify(",", commaColor);
 		}
 		shiny.getWriter().println();
+	}
+
+	private void colorify(String text, String color) {
+		shiny.getWriter().print(color + text + ShinyColors.RESET);
+
 	}
 }

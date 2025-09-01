@@ -54,8 +54,9 @@ public class ShinyJsonTest {
 				.labelColor(ShinyColors.CYAN)
 				.numberColor(ShinyColors.MAGENTA)
 				.stringColor(ShinyColors.YELLOW)
-				.separatorColor(ShinyColors.GREEN)
-				.defaultColor(ShinyColors.RED)
+				.colonColor(ShinyColors.GREEN)
+				.bracketColor(ShinyColors.RED)
+				.bracesColor(ShinyColors.RED)
 				.print();
 		System.out.println();
 	}
