@@ -27,6 +27,10 @@ public final class DbContext {
 		dbConnection = connection;
 	}
 
+	public static boolean isConnected() {
+		return dbConnection != null;
+	}
+
 	public static Connection connection() {
 		if (dbConnection == null) {
 			throw new VSystemException("Not connected. Use 'connect' first.");

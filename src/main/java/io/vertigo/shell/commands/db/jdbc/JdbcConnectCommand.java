@@ -31,7 +31,7 @@ public final class JdbcConnectCommand implements ShellCommand {
 		if (help) {
 			// Picocli will print usage
 		}
-		if (DbContext.connection() != null) {
+		if (DbContext.isConnected()) {
 			System.err.println("Already connected. Disconnect first.");
 			return;
 		}

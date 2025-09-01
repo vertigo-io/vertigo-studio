@@ -7,6 +7,7 @@ import picocli.CommandLine.Command;
 		name = "studio",
 		description = "Studio commands",
 		subcommands = {
+				StudioLoadCommand.class,
 				StudioCleanCommand.class,
 				StudioGenerateCommand.class,
 				StudioWatchCommand.class,

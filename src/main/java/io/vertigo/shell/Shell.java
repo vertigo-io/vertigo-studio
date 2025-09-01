@@ -6,7 +6,6 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.commands.ExitCommand;
 import io.vertigo.shell.commands.HelpCommand;
 import io.vertigo.shell.commands.HistoryCommand;
@@ -14,7 +13,6 @@ import io.vertigo.shell.commands.UptimeCommand;
 import io.vertigo.shell.commands.WhoCommand;
 import io.vertigo.shell.commands.db.DbCommands;
 import io.vertigo.shell.commands.studio.StudioCommands;
-import io.vertigo.studio.tools.VertigoStudioMda;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
@@ -40,20 +38,13 @@ public final class Shell implements Runnable {
 	private final List<String> history = new ArrayList<>();
 	private final CommandLine cmd;
 
-	public Shell(final String notebookConfigYaml) {
-		ShellContext.notebookConfig = VertigoStudioMda.loadNotebookConfig(notebookConfigYaml);
-		//---
+	public Shell() {
 		cmd = new CommandLine(this);
-		//		cmd.getSubcommands().get("history").setCommand(new HistoryCommand(history));
 
 	}
 
 	public static void main(final String[] args) {
-		Assertion.check()
-				.isTrue(args.length == 1, "expected the yam notebookConfig");
-		//--
-		final String notebookConfigYaml = args[0];
-		new Shell(notebookConfigYaml).run();
+		new Shell().run();
 	}
 
 	@Override

@@ -142,8 +142,8 @@ public final class ShinyTable {
 		// 4. Print
 		shiny.getWriter().print(style.titleBackgroundColor);
 		shiny.getWriter().print(style.titleTextColor);
-		shiny.getWriter().println(title);
-		shiny.getWriter().print(ShinyColors.RESET);
+		shiny.getWriter().print(title);
+		shiny.getWriter().println(ShinyColors.RESET);
 
 		printLineSeparator(widths, Position.TOP);
 
