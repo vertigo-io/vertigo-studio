@@ -15,6 +15,7 @@ import io.vertigo.shell.shiny.sparkline.ShinySparkline;
 import io.vertigo.shell.shiny.spinner.ShinySpinner;
 import io.vertigo.shell.shiny.status.ShinyStatus;
 import io.vertigo.shell.shiny.table.ShinyTable;
+import io.vertigo.shell.shiny.textpath.ShinyTextPath;
 import io.vertigo.shell.shiny.tree.ShinyTree;
 
 public final class Shiny {
@@ -71,6 +72,10 @@ public final class Shiny {
 
 	public static ShinyCalendar calendar() {
 		return new ShinyCalendar(INSTANCE);
+	}
+
+	public static ShinyTextPath textPath() {
+		return new ShinyTextPath(INSTANCE);
 	}
 
 	public NumberFormat getNumberFormat() {

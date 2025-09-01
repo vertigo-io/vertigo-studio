@@ -33,6 +33,7 @@ public class ShinyAllComponentsTest {
 		testStatus();
 		testTable();
 		testTree();
+		testTextPath(); // New test case
 
 		System.out.println(ShinyColors.BLUE_BRIGHT + "--- All Shiny Components Test Finished ---" + ShinyColors.RESET);
 		scanner.close();
@@ -164,6 +165,18 @@ public class ShinyAllComponentsTest {
 				.addChild("main", ShinyIcon.FOLDER_OPEN)
 				.addChild("file.txt", ShinyIcon.FILE);
 		tree.print();
+		waitForEnter();
+	}
+
+	private static void testTextPath() {
+		System.out.println(ShinyColors.CYAN + "Component: ShinyTextPath" + ShinyColors.RESET);
+		System.out.println("Parameters: path='/home/user/documents/report.pdf', custom colors");
+		Shiny.textPath()
+				.path("C:/home/user/documents/report.pdf")
+				.rootColor(ShinyColors.RED)
+				.nodeColor(ShinyColors.YELLOW)
+				.leafColor(ShinyColors.GREEN)
+				.print();
 		waitForEnter();
 	}
 }
