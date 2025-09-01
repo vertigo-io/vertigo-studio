@@ -19,6 +19,7 @@ import io.vertigo.shell.shiny.status.ShinyStatus;
 import io.vertigo.shell.shiny.table.ShinyTable;
 import io.vertigo.shell.shiny.textpath.ShinyTextPath;
 import io.vertigo.shell.shiny.title.ShinyTitle;
+import io.vertigo.shell.shiny.toggle.ShinyToggle;
 import io.vertigo.shell.shiny.tree.ShinyTree;
 
 public final class Shiny {
@@ -91,8 +92,12 @@ public final class Shiny {
 		return new ShinyList(INSTANCE);
 	}
 
-	public static ShinyTitle title(final String text) {
-		return new ShinyTitle(INSTANCE).title(text);
+	public static ShinyTitle title() {
+		return new ShinyTitle(INSTANCE);
+	}
+
+	public static ShinyToggle toggle() {
+		return new ShinyToggle(INSTANCE);
 	}
 
 	public NumberFormat getNumberFormat() {
@@ -111,4 +116,3 @@ public final class Shiny {
 		return writer;
 	}
 }
-

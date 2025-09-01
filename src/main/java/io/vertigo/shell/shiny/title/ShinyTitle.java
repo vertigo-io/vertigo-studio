@@ -15,7 +15,7 @@ public final class ShinyTitle {
 		this.shiny = shiny;
 	}
 
-	public ShinyTitle title(final String text) {
+	public ShinyTitle text(final String text) {
 		this.title = text;
 		return this;
 	}
