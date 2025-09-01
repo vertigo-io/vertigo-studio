@@ -13,6 +13,7 @@ import io.vertigo.shell.shiny.gauge.ShinyGauge;
 import io.vertigo.shell.shiny.json.ShinyJson;
 import io.vertigo.shell.shiny.list.ShinyList;
 import io.vertigo.shell.shiny.progressbar.ShinyProgressBar;
+import io.vertigo.shell.shiny.rating.ShinyRating;
 import io.vertigo.shell.shiny.sparkline.ShinySparkline;
 import io.vertigo.shell.shiny.spinner.ShinySpinner;
 import io.vertigo.shell.shiny.status.ShinyStatus;
@@ -98,6 +99,10 @@ public final class Shiny {
 
 	public static ShinyToggle toggle() {
 		return new ShinyToggle(INSTANCE);
+	}
+
+	public static ShinyRating rating() {
+		return new ShinyRating(INSTANCE);
 	}
 
 	public NumberFormat getNumberFormat() {

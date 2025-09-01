@@ -56,6 +56,7 @@ public final class ShinyColors {
 	public static final String UNDERLINE = "\u001B[4m";
 	public static final String BLINK = "\u001B[5m"; // support variable
 	public static final String INVERSE = "\u001B[7m";
+	public static final String DIM = "\u001B[2m";
 
 	// Réinitialisation
 	public static final String RESET = "\u001B[0m";
