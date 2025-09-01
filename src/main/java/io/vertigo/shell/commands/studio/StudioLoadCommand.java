@@ -14,8 +14,4 @@ public final class StudioLoadCommand implements ShellCommand {
 		final String notebookConfigYaml = DbContext.secrets.getProperty("studio.notebook");
 		ShellContext.notebookConfig = VertigoStudioMda.loadNotebookConfig(notebookConfigYaml);
 	}
-
-	@Override
-	public void reset() {
-	}
 }

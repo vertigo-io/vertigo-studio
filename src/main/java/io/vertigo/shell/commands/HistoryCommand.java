@@ -25,7 +25,4 @@ public class HistoryCommand implements ShellCommand {
 		}
 	}
 
-	@Override
-	public void reset() {
-	}
 }

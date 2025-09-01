@@ -19,10 +19,4 @@ public class WhoCommand implements ShellCommand {
 			System.err.println("Unable to obtain the IP address.");
 		}
 	}
-
-	@Override
-	public void reset() {
-
-	}
-
 }

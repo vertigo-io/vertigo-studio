@@ -18,6 +18,7 @@ import io.vertigo.shell.shiny.spinner.ShinySpinner;
 import io.vertigo.shell.shiny.status.ShinyStatus;
 import io.vertigo.shell.shiny.table.ShinyTable;
 import io.vertigo.shell.shiny.textpath.ShinyTextPath;
+import io.vertigo.shell.shiny.title.ShinyTitle;
 import io.vertigo.shell.shiny.tree.ShinyTree;
 
 public final class Shiny {
@@ -90,6 +91,10 @@ public final class Shiny {
 		return new ShinyList(INSTANCE);
 	}
 
+	public static ShinyTitle title(final String text) {
+		return new ShinyTitle(INSTANCE).title(text);
+	}
+
 	public NumberFormat getNumberFormat() {
 		return numberFormat;
 	}
@@ -106,3 +111,4 @@ public final class Shiny {
 		return writer;
 	}
 }
+
