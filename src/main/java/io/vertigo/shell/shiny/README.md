@@ -408,3 +408,33 @@ public class CalendarExample {
     }
 }
 ```
+
+### Json
+
+The `ShinyJson` component allows you to display JSON data with customizable colors for different elements.
+
+**Example:**
+
+```java
+import io.vertigo.shell.shiny.Shiny;
+import io.vertigo.shell.shiny.utils.ShinyColors;
+
+public class JsonExample {
+    public static void main(String[] args) {
+        String json = "{\"name\": \"John Doe\", \"age\": 30, \"isStudent\": true, \"courses\": [\"Math\", \"Science\"]}";
+        Shiny.json()
+                .json(json)
+                .print();
+
+        String complexJson = "{\n  \"orderId\": \"12345\",\n  \"customer\": {\n    \"id\": 1,\n    \"name\": \"Alice\"\n  },\n  \"items\": [\n    {\n      \"itemId\": 101,\n      \"quantity\": 2\n    },\n    {\n      \"itemId\": 102,\n      \"quantity\": 1\n    }\n  ],\n  \"totalAmount\": 150.75,\n  \"isPaid\": false,\n  \"notes\": null\n}";
+        Shiny.json()
+                .json(complexJson)
+                .labelColor(ShinyColors.CYAN)
+                .stringColor(ShinyColors.YELLOW)
+                .numberColor(ShinyColors.GREEN_BRIGHT)
+                .separatorColor(ShinyColors.MAGENTA)
+                .defaultColor(ShinyColors.WHITE)
+                .print();
+    }
+}
+```

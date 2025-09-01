@@ -33,7 +33,8 @@ public class ShinyAllComponentsTest {
 		testStatus();
 		testTable();
 		testTree();
-		testTextPath(); // New test case
+		testTextPath();
+		testJson();
 
 		System.out.println(ShinyColors.BLUE_BRIGHT + "--- All Shiny Components Test Finished ---" + ShinyColors.RESET);
 		scanner.close();
@@ -176,6 +177,16 @@ public class ShinyAllComponentsTest {
 				.rootColor(ShinyColors.RED)
 				.nodeColor(ShinyColors.YELLOW)
 				.leafColor(ShinyColors.GREEN)
+				.print();
+		waitForEnter();
+	}
+
+	private static void testJson() {
+		System.out.println(ShinyColors.CYAN + "Component: ShinyJson" + ShinyColors.RESET);
+		System.out.println("Parameters: json='{\"name\": \"John Doe\", \"age\": 30, \"isStudent\": true}'");
+		final String json = "{\"name\": \"John Doe\", \"age\": 30, \"isStudent\": true, \"address\": null}";
+		Shiny.json()
+				.json(json)
 				.print();
 		waitForEnter();
 	}
