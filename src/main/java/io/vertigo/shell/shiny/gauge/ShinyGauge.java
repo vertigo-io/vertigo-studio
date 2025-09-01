@@ -10,7 +10,7 @@ public final class ShinyGauge {
 	private String title;
 	private double value;
 	private double max = 100;
-	private int length = 50;
+	private int barLength = 50;
 	private ShinyColor gaugeColor = ShinyColors.GREEN;
 
 	public ShinyGauge(final Shiny shiny) {
@@ -34,8 +34,8 @@ public final class ShinyGauge {
 		return this;
 	}
 
-	public ShinyGauge length(final int barLength) {
-		this.length = barLength;
+	public ShinyGauge length(final int length) {
+		this.barLength = length;
 		return this;
 	}
 
@@ -45,14 +45,21 @@ public final class ShinyGauge {
 	}
 
 	public void print() {
-		final double percentage = value / max;
-		final int filledLength = (int) (length * percentage);
+		final double percentage;
+		if (value >= max) {
+			percentage = 1;
+		} else if (value <= 0) {
+			percentage = 0;
+		} else {
+			percentage = (value / max);
+		}
+		final int filledLength = (int) (barLength * percentage);
 		final String gauge = new StringBuilder()
 				.append(title != null ? title + " " : "")
 				.append("[")
 				.append(gaugeColor)
 				.append("█".repeat(filledLength))
-				.append("▒".repeat(length - filledLength))
+				.append("▒".repeat(barLength - filledLength))
 				.append(ShinyColors.RESET)
 				.append("] ")
 				.append(String.format("%.2f%%", percentage * 100))
