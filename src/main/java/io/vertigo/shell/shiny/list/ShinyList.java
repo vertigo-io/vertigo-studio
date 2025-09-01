@@ -5,14 +5,15 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
+import io.vertigo.shell.shiny.utils.ShinyColor;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
 public final class ShinyList {
 	private final Shiny shiny;
 	private final List<Object> items = new ArrayList<>();
 	private ShinyListStyle style = ShinyListStyle.UNORDERED; // Changed default
-	private String itemColor = ShinyColors.WHITE;
-	private String bulletColor = ShinyColors.CYAN;
+	private ShinyColor itemColor = ShinyColors.WHITE;
+	private ShinyColor bulletColor = ShinyColors.CYAN;
 
 	public ShinyList(final Shiny shiny) {
 		Assertion.check().isNotNull(shiny);
@@ -35,12 +36,12 @@ public final class ShinyList {
 		return this;
 	}
 
-	public ShinyList itemColor(final String color) {
+	public ShinyList itemColor(final ShinyColor color) {
 		this.itemColor = color;
 		return this;
 	}
 
-	public ShinyList bulletColor(final String color) {
+	public ShinyList bulletColor(final ShinyColor color) {
 		this.bulletColor = color;
 		return this;
 	}

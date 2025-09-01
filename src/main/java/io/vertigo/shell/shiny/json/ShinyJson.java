@@ -9,25 +9,26 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
+import io.vertigo.shell.shiny.utils.ShinyColor;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
 public final class ShinyJson {
 	private final Shiny shiny;
 	private String jsonString;
 
-	private String labelColor = ShinyColors.BLUE;
+	private ShinyColor labelColor = ShinyColors.BLUE;
 
-	private String numberColor = ShinyColors.GREEN;
-	private String stringColor = ShinyColors.RED;
-	private String booleanColor = ShinyColors.BLACK_BRIGHT;
-	private String nullColor = ShinyColors.BLACK_BRIGHT;
+	private ShinyColor numberColor = ShinyColors.GREEN;
+	private ShinyColor stringColor = ShinyColors.RED;
+	private ShinyColor booleanColor = ShinyColors.BLACK.bright();
+	private ShinyColor nullColor = ShinyColors.BLACK.bright();
 
 	// : 
-	private String colonColor = ShinyColors.YELLOW;
+	private ShinyColor colonColor = ShinyColors.YELLOW;
 
-	private String commaColor = ShinyColors.WHITE;
-	private String bracketColor = ShinyColors.WHITE;
-	private String bracesColor = ShinyColors.WHITE;
+	private ShinyColor commaColor = ShinyColors.WHITE;
+	private ShinyColor bracketColor = ShinyColors.WHITE;
+	private ShinyColor bracesColor = ShinyColors.WHITE;
 
 	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
@@ -42,47 +43,47 @@ public final class ShinyJson {
 		return this;
 	}
 
-	public ShinyJson labelColor(final String color) {
+	public ShinyJson labelColor(final ShinyColor color) {
 		this.labelColor = color;
 		return this;
 	}
 
-	public ShinyJson numberColor(final String color) {
+	public ShinyJson numberColor(final ShinyColor color) {
 		this.numberColor = color;
 		return this;
 	}
 
-	public ShinyJson stringColor(final String color) {
+	public ShinyJson stringColor(final ShinyColor color) {
 		this.stringColor = color;
 		return this;
 	}
 
-	public ShinyJson colonColor(final String color) {
+	public ShinyJson colonColor(final ShinyColor color) {
 		this.colonColor = color;
 		return this;
 	}
 
-	public ShinyJson bracesColor(final String color) {
+	public ShinyJson bracesColor(final ShinyColor color) {
 		this.bracesColor = color;
 		return this;
 	}
 
-	public ShinyJson bracketColor(final String color) {
+	public ShinyJson bracketColor(final ShinyColor color) {
 		this.bracketColor = color;
 		return this;
 	}
 
-	public ShinyJson commaColor(final String color) {
+	public ShinyJson commaColor(final ShinyColor color) {
 		this.commaColor = color;
 		return this;
 	}
 
-	public ShinyJson booleanColor(final String color) {
+	public ShinyJson booleanColor(final ShinyColor color) {
 		this.booleanColor = color;
 		return this;
 	}
 
-	public ShinyJson nullColor(final String color) {
+	public ShinyJson nullColor(final ShinyColor color) {
 		this.nullColor = color;
 		return this;
 	}
@@ -155,7 +156,7 @@ public final class ShinyJson {
 		shiny.getWriter().println();
 	}
 
-	private void colorify(String text, String color) {
+	private void colorify(String text, ShinyColor color) {
 		shiny.getWriter().print(color + text + ShinyColors.RESET);
 
 	}

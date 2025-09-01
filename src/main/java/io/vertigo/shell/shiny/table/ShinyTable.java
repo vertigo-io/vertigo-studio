@@ -140,7 +140,7 @@ public final class ShinyTable {
 		final String format = formatBuilder.toString();
 
 		// 4. Print
-		shiny.getWriter().print(style.titleBackgroundColor);
+		shiny.getWriter().print(style.titleBackgroundColor.bg());
 		shiny.getWriter().print(style.titleTextColor);
 		shiny.getWriter().print(title);
 		shiny.getWriter().println(ShinyColors.RESET);
@@ -148,7 +148,7 @@ public final class ShinyTable {
 		printLineSeparator(widths, Position.TOP);
 
 		shiny.getWriter().print(style.border.chars().vertical());
-		shiny.getWriter().print(style.headerBackgroundColor);
+		shiny.getWriter().print(style.headerBackgroundColor.bg());
 		shiny.getWriter().printf(format, (Object[]) header);
 		shiny.getWriter().print(ShinyColors.RESET);
 		shiny.getWriter().println(style.border.chars().vertical());
@@ -159,7 +159,7 @@ public final class ShinyTable {
 		for (final String[] formattedRow : formattedRows) {
 			shiny.getWriter().print(style.border.chars().vertical());
 			if (invert) {
-				shiny.getWriter().print(style.altRowBackgroundColor);
+				shiny.getWriter().print(style.altRowBackgroundColor.bg());
 			}
 			shiny.getWriter().printf(format, (Object[]) formattedRow);
 			if (invert) {

@@ -16,7 +16,7 @@ public class ShinyTableTest {
 	}
 
 	private static void testBasicTable() {
-		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Basic Table ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Basic Table ---" + ShinyColors.RESET);
 		final List<String[]> data = List.of(
 				new String[] { "John Doe", "30", "New York" },
 				new String[] { "Jane Smith", "25", "London" },
@@ -31,7 +31,7 @@ public class ShinyTableTest {
 	}
 
 	private static void testEuropeanCountriesTable() {
-		System.out.println(ShinyColors.BLUE_BRIGHT + "--- European Union Countries - Population ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- European Union Countries - Population ---" + ShinyColors.RESET);
 		final List<String[]> euCountries = List.of(
 				new String[] { "Austria", "9000000" },
 				new String[] { "Belgium", "11700000" },
@@ -70,7 +70,7 @@ public class ShinyTableTest {
 	}
 
 	private static void testEmptyTable() {
-		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Empty Table ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Empty Table ---" + ShinyColors.RESET);
 		Shiny.table()
 				.title("Empty Data")
 				.header("Col1", "Col2")
@@ -81,7 +81,7 @@ public class ShinyTableTest {
 	}
 
 	private static void testTableWithCustomStyles() {
-		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Table with Custom Styles ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Table with Custom Styles ---" + ShinyColors.RESET);
 		final List<String[]> data = List.of(
 				new String[] { "Item A", "100", "Active" },
 				new String[] { "Item B", "250", "Inactive" },
@@ -92,9 +92,9 @@ public class ShinyTableTest {
 				.header("Product", "Quantity", "Status")
 				.rows(data)
 				.beginStyle()
-				.titleBackgroundColor(ShinyColors.INVERSE)
-				.headerBackgroundColor(ShinyColors.GREEN_BG)
-				.altRowBackgroundColor(ShinyColors.CYAN_BG)
+				.titleBackgroundColor(ShinyColors.WHITE)
+				.headerBackgroundColor(ShinyColors.GREEN.bright())
+				.altRowBackgroundColor(ShinyColors.CYAN.bright())
 				.borderColor(ShinyColors.RED)
 				.endStyle()
 				.print();
@@ -107,9 +107,9 @@ public class ShinyTableTest {
 						new String[] { "North", "12345", "10.5%" },
 						new String[] { "South", "9876", "5.2%" }))
 				.beginStyle()
-				.titleBackgroundColor(ShinyColors.BLUE_BG)
-				.headerBackgroundColor(ShinyColors.WHITE_BG)
-				.altRowBackgroundColor(ShinyColors.INVERSE)
+				.titleBackgroundColor(ShinyColors.BLUE)
+				.headerBackgroundColor(ShinyColors.WHITE)
+				.altRowBackgroundColor(ShinyColors.CYAN)
 				.borderColor(ShinyColors.YELLOW)
 				.endStyle();
 

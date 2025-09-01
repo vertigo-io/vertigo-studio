@@ -1,5 +1,6 @@
 package io.vertigo.shell.shiny.table;
 
+import io.vertigo.shell.shiny.utils.ShinyColor;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
 /**
@@ -10,11 +11,11 @@ public final class ShinyTableStyle {
 
 	ShinyBorder border = ShinyBorder.Normal;
 	// Colors
-	String titleBackgroundColor = ShinyColors.MAGENTA_BG;
-	String titleTextColor = ShinyColors.WHITE;
-	String headerBackgroundColor = ShinyColors.BLUE_BRIGHT_BG;
-	String altRowBackgroundColor = ShinyColors.CYAN_BRIGHT_BG;
-	String borderColor = ShinyColors.BLACK;
+	ShinyColor titleBackgroundColor = ShinyColors.MAGENTA;
+	ShinyColor titleTextColor = ShinyColors.WHITE;
+	ShinyColor headerBackgroundColor = ShinyColors.BLUE.bright();
+	ShinyColor altRowBackgroundColor = ShinyColors.CYAN.bright();
+	ShinyColor borderColor = ShinyColors.BLACK;
 
 	ShinyTableStyle(final ShinyTable table) {
 		this.table = table;
@@ -25,27 +26,27 @@ public final class ShinyTableStyle {
 		return this;
 	}
 
-	public ShinyTableStyle titleBackgroundColor(final String color) {
+	public ShinyTableStyle titleBackgroundColor(final ShinyColor color) {
 		this.titleBackgroundColor = color;
 		return this;
 	}
 
-	public ShinyTableStyle borderColor(final String color) {
+	public ShinyTableStyle borderColor(final ShinyColor color) {
 		this.borderColor = color;
 		return this;
 	}
 
-	public ShinyTableStyle titleTextColor(final String color) {
+	public ShinyTableStyle titleTextColor(final ShinyColor color) {
 		this.titleTextColor = color;
 		return this;
 	}
 
-	public ShinyTableStyle headerBackgroundColor(final String color) {
+	public ShinyTableStyle headerBackgroundColor(final ShinyColor color) {
 		this.headerBackgroundColor = color;
 		return this;
 	}
 
-	public ShinyTableStyle altRowBackgroundColor(final String color) {
+	public ShinyTableStyle altRowBackgroundColor(final ShinyColor color) {
 		this.altRowBackgroundColor = color;
 		return this;
 	}

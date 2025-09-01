@@ -2,6 +2,7 @@ package io.vertigo.shell.shiny.gauge;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
+import io.vertigo.shell.shiny.utils.ShinyColor;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
 public final class ShinyGauge {
@@ -10,7 +11,7 @@ public final class ShinyGauge {
 	private double value;
 	private double max = 100;
 	private int length = 50;
-	private String color = ShinyColors.GREEN;
+	private ShinyColor gaugeColor = ShinyColors.GREEN;
 
 	public ShinyGauge(final Shiny shiny) {
 		Assertion.check().isNotNull(shiny);
@@ -38,8 +39,8 @@ public final class ShinyGauge {
 		return this;
 	}
 
-	public ShinyGauge color(final String barColor) {
-		this.color = barColor;
+	public ShinyGauge color(final ShinyColor color) {
+		this.gaugeColor = color;
 		return this;
 	}
 
@@ -49,7 +50,7 @@ public final class ShinyGauge {
 		final String gauge = new StringBuilder()
 				.append(title != null ? title + " " : "")
 				.append("[")
-				.append(color)
+				.append(gaugeColor)
 				.append("█".repeat(filledLength))
 				.append("▒".repeat(length - filledLength))
 				.append(ShinyColors.RESET)

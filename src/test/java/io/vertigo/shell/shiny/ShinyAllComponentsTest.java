@@ -3,7 +3,6 @@ package io.vertigo.shell.shiny;
 import static io.vertigo.shell.shiny.tree.ShinyIcon.FILE;
 import static io.vertigo.shell.shiny.tree.ShinyIcon.FOLDER_OPEN;
 import static io.vertigo.shell.shiny.utils.ShinyColors.BLUE;
-import static io.vertigo.shell.shiny.utils.ShinyColors.BLUE_BRIGHT;
 import static io.vertigo.shell.shiny.utils.ShinyColors.CYAN;
 import static io.vertigo.shell.shiny.utils.ShinyColors.GREEN;
 import static io.vertigo.shell.shiny.utils.ShinyColors.MAGENTA;
@@ -28,7 +27,7 @@ public class ShinyAllComponentsTest {
 	private static Scanner scanner = new Scanner(System.in);
 
 	public static void main(final String[] args) {
-		System.out.println(BLUE_BRIGHT + "--- Starting All Shiny Components Test ---" + RESET);
+		System.out.println(BLUE.bright() + "--- Starting All Shiny Components Test ---" + RESET);
 		System.out.println("Press Enter to see the next component.");
 		System.out.println();
 
@@ -45,7 +44,7 @@ public class ShinyAllComponentsTest {
 		testTextPath();
 		testJson();
 
-		System.out.println(BLUE_BRIGHT + "--- All Shiny Components Test Finished ---" + RESET);
+		System.out.println(BLUE.bright() + "--- All Shiny Components Test Finished ---" + RESET);
 		scanner.close();
 	}
 

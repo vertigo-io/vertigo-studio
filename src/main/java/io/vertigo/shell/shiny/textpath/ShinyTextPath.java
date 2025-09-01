@@ -4,16 +4,17 @@ import java.util.regex.Pattern; // New import
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
+import io.vertigo.shell.shiny.utils.ShinyColor;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
 public final class ShinyTextPath {
 	private final Shiny shiny;
 	private String path;
 	private String separator = "/";
-	private String rootColor = ShinyColors.GREEN;
-	private String nodeColor = ShinyColors.YELLOW;
-	private String leafColor = ShinyColors.BLUE_BRIGHT;
-	private String separatorColor = ShinyColors.RED; // Default color
+	private ShinyColor rootColor = ShinyColors.GREEN;
+	private ShinyColor nodeColor = ShinyColors.YELLOW;
+	private ShinyColor leafColor = ShinyColors.BLUE.bright();
+	private ShinyColor separatorColor = ShinyColors.RED; // Default color
 
 	public ShinyTextPath(final Shiny shiny) {
 		Assertion.check().isNotNull(shiny);
@@ -31,22 +32,22 @@ public final class ShinyTextPath {
 		return this;
 	}
 
-	public ShinyTextPath rootColor(final String color) {
+	public ShinyTextPath rootColor(final ShinyColor color) {
 		this.rootColor = color;
 		return this;
 	}
 
-	public ShinyTextPath nodeColor(final String color) {
+	public ShinyTextPath nodeColor(final ShinyColor color) {
 		this.nodeColor = color;
 		return this;
 	}
 
-	public ShinyTextPath leafColor(final String color) {
+	public ShinyTextPath leafColor(final ShinyColor color) {
 		this.leafColor = color;
 		return this;
 	}
 
-	public ShinyTextPath separatorColor(final String color) {
+	public ShinyTextPath separatorColor(final ShinyColor color) {
 		this.separatorColor = color;
 		return this;
 	}
@@ -68,7 +69,7 @@ public final class ShinyTextPath {
 				continue;
 			}
 
-			final String color;
+			final ShinyColor color;
 			if (i == parts.length - 1) { // Leaf
 				color = leafColor;
 			} else if (!relative && i == 0) {// Root
@@ -79,7 +80,7 @@ public final class ShinyTextPath {
 			coloredPath.append(color).append(part).append(ShinyColors.RESET);
 
 			if (i < parts.length - 1) {
-				final String sepColor;
+				final ShinyColor sepColor;
 				if (i == 0 && !relative && i == 0) {
 					sepColor = rootColor;
 				} else {

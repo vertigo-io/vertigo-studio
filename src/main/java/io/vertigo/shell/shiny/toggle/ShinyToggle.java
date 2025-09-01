@@ -2,6 +2,7 @@ package io.vertigo.shell.shiny.toggle;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
+import io.vertigo.shell.shiny.utils.ShinyColor;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
 public final class ShinyToggle {
@@ -10,8 +11,8 @@ public final class ShinyToggle {
 	private String label;
 	private boolean value;
 	private ShinyToggleStyle style = ShinyToggleStyle.TOGGLE;
-	private String onColor = ShinyColors.GREEN;
-	private String offColor = ShinyColors.RED;
+	private ShinyColor onColor = ShinyColors.GREEN;
+	private ShinyColor offColor = ShinyColors.RED;
 	private String onText = "ON";
 	private String offText = "OFF";
 	private boolean showText = true;
@@ -38,12 +39,12 @@ public final class ShinyToggle {
 		return this;
 	}
 
-	public ShinyToggle onColor(final String color) {
+	public ShinyToggle onColor(final ShinyColor color) {
 		this.onColor = color;
 		return this;
 	}
 
-	public ShinyToggle offColor(final String color) {
+	public ShinyToggle offColor(final ShinyColor color) {
 		this.offColor = color;
 		return this;
 	}
@@ -70,7 +71,7 @@ public final class ShinyToggle {
 
 	public void print() {
 		final String icon = value ? style.getOnIcon() : style.getOffIcon();
-		final String color = value ? onColor : offColor;
+		final ShinyColor color = value ? onColor : offColor;
 		final String text = showText ? (value ? onText : offText) : "";
 
 		final StringBuilder toggle = new StringBuilder();

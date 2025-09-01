@@ -1,12 +1,12 @@
 package io.vertigo.shell.shiny;
 
-import static io.vertigo.shell.shiny.utils.ShinyColors.BLUE_BRIGHT;
 import static io.vertigo.shell.shiny.utils.ShinyColors.GREEN;
 import static io.vertigo.shell.shiny.utils.ShinyColors.RED;
 import static io.vertigo.shell.shiny.utils.ShinyColors.RESET;
 
 import io.vertigo.shell.shiny.list.ShinyList;
 import io.vertigo.shell.shiny.list.ShinyListStyle;
+import io.vertigo.shell.shiny.utils.ShinyColors;
 
 public class ShinyListTest {
 
@@ -19,7 +19,7 @@ public class ShinyListTest {
 	}
 
 	private static void testUnorderedList() {
-		System.out.println(BLUE_BRIGHT + "--- Unordered List ---" + RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Unordered List ---" + RESET);
 		Shiny.list()
 				.style(ShinyListStyle.UNORDERED)
 				.addItem("Item 1")
@@ -30,7 +30,7 @@ public class ShinyListTest {
 	}
 
 	private static void testOrderedList() {
-		System.out.println(BLUE_BRIGHT + "--- Ordered List ---" + RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Ordered List ---" + RESET);
 		Shiny.list()
 				.style(ShinyListStyle.ORDERED)
 				.addItem("First item")
@@ -41,7 +41,7 @@ public class ShinyListTest {
 	}
 
 	private static void testDashedList() {
-		System.out.println(BLUE_BRIGHT + "--- Dashed List ---" + RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Dashed List ---" + RESET);
 		Shiny.list()
 				.style(ShinyListStyle.DASHED)
 				.addItem("Task A")
@@ -52,7 +52,7 @@ public class ShinyListTest {
 	}
 
 	private static void testNestedList() {
-		System.out.println(BLUE_BRIGHT + "--- Nested List ---" + RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Nested List ---" + RESET);
 		final ShinyList nested = Shiny.list()
 				.style(ShinyListStyle.UNORDERED)
 				.addItem("Sub-item 1")
@@ -68,7 +68,7 @@ public class ShinyListTest {
 	}
 
 	private static void testColoredList() {
-		System.out.println(BLUE_BRIGHT + "--- Colored List ---" + RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Colored List ---" + RESET);
 		Shiny.list()
 				.style(ShinyListStyle.DASHED)
 				.itemColor(GREEN)

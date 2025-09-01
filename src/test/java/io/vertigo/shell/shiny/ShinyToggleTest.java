@@ -15,7 +15,7 @@ public class ShinyToggleTest {
 	}
 
 	private static void testBasicToggles() {
-		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Basic Toggles ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Basic Toggles ---" + ShinyColors.RESET);
 
 		Shiny.toggle()
 				.label("WiFi Connection")
@@ -36,7 +36,7 @@ public class ShinyToggleTest {
 	}
 
 	private static void testDifferentStyles() {
-		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Different Toggle Styles ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Different Toggle Styles ---" + ShinyColors.RESET);
 
 		Shiny.toggle()
 				.label("Classic Style")
@@ -78,7 +78,7 @@ public class ShinyToggleTest {
 	}
 
 	private static void testCustomization() {
-		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Customized Toggles ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Customized Toggles ---" + ShinyColors.RESET);
 
 		Shiny.toggle()
 				.label("Custom Colors")

@@ -7,13 +7,14 @@ import com.github.dtmo.jfiglet.FigletRenderer;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
+import io.vertigo.shell.shiny.utils.ShinyColor;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
 public final class ShinyFiglet {
 	private final Shiny shiny;
 	private String text;
 	private ShinyFigletFonts font = ShinyFigletFonts.STANDARD; // Default font
-	private String color = ShinyColors.RESET;
+	private ShinyColor figletColor = ShinyColors.BLUE;
 
 	public ShinyFiglet(final Shiny shiny) {
 		Assertion.check().isNotNull(shiny);
@@ -31,8 +32,8 @@ public final class ShinyFiglet {
 		return this;
 	}
 
-	public ShinyFiglet color(final String figletColor) {
-		this.color = figletColor;
+	public ShinyFiglet color(final ShinyColor color) {
+		this.figletColor = color;
 		return this;
 	}
 
@@ -40,7 +41,7 @@ public final class ShinyFiglet {
 		try {
 			final FigletRenderer figletRenderer = new FigletRenderer(FigFontResources.loadFigFontResource(font.getFileName()));
 			final String asciiArt = figletRenderer.renderText(text);
-			shiny.getWriter().print(color);
+			shiny.getWriter().print(figletColor);
 			for (String line : asciiArt.split("\\r?\\n")) {
 				shiny.getWriter().println(line);
 			}

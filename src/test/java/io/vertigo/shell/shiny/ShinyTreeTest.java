@@ -29,7 +29,7 @@ public class ShinyTreeTest {
 	}
 
 	private static void testVideoGamesTree() {
-		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Video Games Tree ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Video Games Tree ---" + ShinyColors.RESET);
 		final var tree = Shiny.tree("Video Games");
 		tree.getRoot()
 				.addChild("RPG", FOLDER_OPEN)
@@ -49,7 +49,7 @@ public class ShinyTreeTest {
 	}
 
 	private static void testIconShowcase() {
-		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Icon Showcase ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Icon Showcase ---" + ShinyColors.RESET);
 		final var tree = Shiny.tree("Icons");
 		tree.getRoot()
 				.addChild("Status Icons", FOLDER_OPEN)
@@ -75,7 +75,7 @@ public class ShinyTreeTest {
 	}
 
 	private static void testComplexTreeStructure() {
-		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Complex Tree Structure ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Complex Tree Structure ---" + ShinyColors.RESET);
 		final var tree = Shiny.tree("Project Structure");
 		final var srcNode = tree.getRoot().addChild("src", FOLDER_CLOSED);
 		var main = srcNode.addChild("main", FOLDER_CLOSED);

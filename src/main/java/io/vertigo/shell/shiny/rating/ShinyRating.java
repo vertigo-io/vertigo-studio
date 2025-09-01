@@ -2,6 +2,7 @@ package io.vertigo.shell.shiny.rating;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
+import io.vertigo.shell.shiny.utils.ShinyColor;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
 public final class ShinyRating {
@@ -12,8 +13,8 @@ public final class ShinyRating {
 	private ShinyRatingScale scale = ShinyRatingScale.SCALE_5;
 	private int customMaxValue = -1; // -1 means use scale
 	private ShinyRatingStyle style = ShinyRatingStyle.STAR;
-	private String filledColor = ShinyColors.YELLOW;
-	private String emptyColor = ShinyColors.WHITE;
+	private ShinyColor filledColor = ShinyColors.YELLOW;
+	private ShinyColor emptyColor = ShinyColors.WHITE;
 	private boolean showValue = true;
 	private boolean showPercentage = false;
 	private boolean showBox = false;
@@ -52,12 +53,12 @@ public final class ShinyRating {
 		return this;
 	}
 
-	public ShinyRating filledColor(final String color) {
+	public ShinyRating filledColor(final ShinyColor color) {
 		this.filledColor = color;
 		return this;
 	}
 
-	public ShinyRating emptyColor(final String color) {
+	public ShinyRating emptyColor(final ShinyColor color) {
 		this.emptyColor = color;
 		return this;
 	}
@@ -140,17 +141,17 @@ public final class ShinyRating {
 			if (allowHalfRating && clampedValue >= i - 0.5 && clampedValue < i) {
 				// Half rating (for now, use filled icon with different color)
 				rating.append(ShinyColors.DIM)
-						.append(filledColor)
+						.append(filledColor.fg())
 						.append(style.getFilledIcon())
 						.append(ShinyColors.RESET);
 			} else if (clampedValue >= i) {
 				// Filled
-				rating.append(filledColor)
+				rating.append(filledColor.fg())
 						.append(style.getFilledIcon())
 						.append(ShinyColors.RESET);
 			} else {
 				// Empty
-				rating.append(emptyColor)
+				rating.append(emptyColor.fg())
 						.append(style.getEmptyIcon())
 						.append(ShinyColors.RESET);
 			}

@@ -11,7 +11,7 @@ public class ShinyBarChartTest {
 	}
 
 	private static void testSimpleBarChart() {
-		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Simple Bar Chart ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Simple Bar Chart ---" + ShinyColors.RESET);
 		Shiny.barChart()
 				.title("Monthly Sales")
 				.header("Jan", "Feb", "Mar", "Apr", "May")
@@ -21,7 +21,7 @@ public class ShinyBarChartTest {
 	}
 
 	private static void testEuropeanCountriesPopulation() {
-		System.out.println(ShinyColors.BLUE_BRIGHT + "--- European Countries Population (Sorted Desc) ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- European Countries Population (Sorted Desc) ---" + ShinyColors.RESET);
 		Shiny.barChart()
 				.title("Population in European Countries")
 				.header("Austria", "Belgium", "Bulgaria", "Croatia", "Cyprus",
@@ -40,10 +40,10 @@ public class ShinyBarChartTest {
 	}
 
 	private static void testBarChartWithDifferentSortModes() {
-		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Bar Chart with Different Sort Modes ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Bar Chart with Different Sort Modes ---" + ShinyColors.RESET);
 		// Original data
-		final String[] headers = {"Apple", "Banana", "Cherry", "Date"};
-		final int[] values = {50, 20, 80, 30};
+		final String[] headers = { "Apple", "Banana", "Cherry", "Date" };
+		final int[] values = { 50, 20, 80, 30 };
 
 		// No sort
 		System.out.println(ShinyColors.CYAN + "--- No Sort ---" + ShinyColors.RESET);

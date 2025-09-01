@@ -11,7 +11,7 @@ public class ShinyFigletTest {
 	}
 
 	private static void testSpecificFonts() {
-		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Testing Specific Figlet Fonts ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Testing Specific Figlet Fonts ---" + ShinyColors.RESET);
 		Shiny.figlet()
 				.text("Vertigo")
 				.print(); // Uses default font (STANDARD)
@@ -37,7 +37,7 @@ public class ShinyFigletTest {
 	}
 
 	private static void testAllFonts() {
-		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Testing All Available Figlet Fonts ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Testing All Available Figlet Fonts ---" + ShinyColors.RESET);
 		for (ShinyFigletFonts font : ShinyFigletFonts.values()) {
 			System.out.println(ShinyColors.CYAN + "Font: " + font.name() + ShinyColors.RESET);
 			Shiny.figlet()

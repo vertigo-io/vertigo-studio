@@ -58,7 +58,7 @@ public final class JdbcConnectCommand implements ShellCommand {
 		} catch (final SQLException e) {
 			throw new VSystemException(e, "Failed to connect to database: {0}", e.getMessage());
 		}
-		System.out.println(ShinyColors.GREEN_BRIGHT + "Successfully connected." + ShinyColors.RESET);
+		System.out.println(ShinyColors.GREEN.bright() + "Successfully connected." + ShinyColors.RESET);
 	}
 
 	@Override

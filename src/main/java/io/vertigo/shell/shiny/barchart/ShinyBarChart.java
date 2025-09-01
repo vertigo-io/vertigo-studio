@@ -5,6 +5,7 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
+import io.vertigo.shell.shiny.utils.ShinyColor;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
 public final class ShinyBarChart {
@@ -127,8 +128,9 @@ public final class ShinyBarChart {
 	}
 
 	private static String[] COLORS = {
+	private static ShinyColor[] COLORS = {
 			ShinyColors.BLUE,
-			ShinyColors.BLUE_BRIGHT };
+			ShinyColors.BLUE.bright() };
 
 	//	private static String[] COLORS = {
 	//			ShinyColors.RED,

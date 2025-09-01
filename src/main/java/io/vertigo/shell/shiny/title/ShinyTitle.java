@@ -58,7 +58,7 @@ public final class ShinyTitle {
 
 	private void printLevel2() {
 		final String line = "-".repeat(title.length() + 4);
-		shiny.getWriter().print(ShinyColors.BLUE_BRIGHT);
+		shiny.getWriter().print(ShinyColors.BLUE.bright());
 		shiny.getWriter().println(line);
 		shiny.getWriter().println("  " + title + "  ");
 		shiny.getWriter().println(line);

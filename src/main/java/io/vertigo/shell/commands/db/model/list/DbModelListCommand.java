@@ -50,7 +50,7 @@ public final class DbModelListCommand implements ShellCommand {
 				final ShinyTreeNode columnsNode = tableNode.addChild("columns");
 				for (final JdbcColumn column : table.columns()) {
 
-					String info = column.name() + " " + ShinyColors.GREEN_BRIGHT + column.typeName() + ShinyColors.RESET;
+					String info = column.name() + " " + ShinyColors.GREEN.bright() + column.typeName() + ShinyColors.RESET;
 
 					if (column.isPrimaryKey()) {
 						info = ShinyColors.UNDERLINE + info + ShinyColors.RESET;

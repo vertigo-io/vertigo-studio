@@ -18,7 +18,7 @@ public class ShinyRatingTest {
 	}
 
 	private static void testBasicRatings() {
-		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Basic Ratings ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Basic Ratings ---" + ShinyColors.RESET);
 
 		Shiny.rating()
 				.label("Movie Rating")
@@ -39,7 +39,7 @@ public class ShinyRatingTest {
 	}
 
 	private static void testDifferentStyles() {
-		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Different Rating Styles ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Different Rating Styles ---" + ShinyColors.RESET);
 
 		Shiny.rating()
 				.label("Stars")
@@ -97,7 +97,7 @@ public class ShinyRatingTest {
 	}
 
 	private static void testDifferentScales() {
-		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Different Rating Scales ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Different Rating Scales ---" + ShinyColors.RESET);
 
 		Shiny.rating()
 				.label("5-Star Scale")
@@ -139,13 +139,13 @@ public class ShinyRatingTest {
 	}
 
 	private static void testCustomization() {
-		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Customized Ratings ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Customized Ratings ---" + ShinyColors.RESET);
 
 		Shiny.rating()
 				.label("Custom Colors")
 				.value(4)
 				.filledColor(ShinyColors.MAGENTA)
-				.emptyColor(ShinyColors.DIM)
+				.emptyColor(ShinyColors.WHITE)
 				.print();
 
 		Shiny.rating()
@@ -287,7 +287,7 @@ public class ShinyRatingTest {
 	//	}
 	//
 	private static void testEdgeCases() {
-		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Rating Edge Cases ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Rating Edge Cases ---" + ShinyColors.RESET);
 
 		// Rating without label
 		Shiny.rating()

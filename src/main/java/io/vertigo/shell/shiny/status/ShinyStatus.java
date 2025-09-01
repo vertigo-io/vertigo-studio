@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
+import io.vertigo.shell.shiny.utils.ShinyColor;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
 public final class ShinyStatus {
@@ -49,13 +50,13 @@ public final class ShinyStatus {
 		INFO(ShinyColors.BLUE),
 		NEUTRAL(ShinyColors.WHITE);
 
-		private final String color;
+		private final ShinyColor color;
 
-		StatusType(final String color) {
+		StatusType(final ShinyColor color) {
 			this.color = color;
 		}
 
-		public String getColor() {
+		public ShinyColor getColor() {
 			return color;
 		}
 	}

@@ -5,13 +5,14 @@ import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
+import io.vertigo.shell.shiny.utils.ShinyColor;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
 public final class ShinySparkline {
 	private final Shiny shiny;
 	private String title;
 	private List<Double> data;
-	private String color = ShinyColors.RESET; // Default color
+	private ShinyColor sparklineColor = ShinyColors.BLUE; // Default color
 
 	public ShinySparkline(final Shiny shiny) {
 		Assertion.check().isNotNull(shiny);
@@ -29,8 +30,8 @@ public final class ShinySparkline {
 		return this;
 	}
 
-	public ShinySparkline color(final String sparklineColor) {
-		this.color = sparklineColor;
+	public ShinySparkline color(final ShinyColor color) {
+		this.sparklineColor = color;
 		return this;
 	}
 
@@ -39,7 +40,8 @@ public final class ShinySparkline {
 				.map(this::getSparklineChar)
 				.collect(Collectors.joining());
 
-		shiny.getWriter().println(title != null ? title + " " + color + sparkline + ShinyColors.RESET : color + sparkline + ShinyColors.RESET);
+		shiny.getWriter().println((title != null ? title + " " : "")
+				+ sparklineColor + sparkline + ShinyColors.RESET);
 	}
 
 	private String getSparklineChar(final double value) {
@@ -48,7 +50,7 @@ public final class ShinySparkline {
 		final double max = data.stream().max(Double::compare).orElse(0.0);
 		final double range = max - min;
 		if (range == 0) {
-		    return String.valueOf(chars[chars.length / 2]);
+			return String.valueOf(chars[chars.length / 2]);
 		}
 		final int index = (int) Math.round(((value - min) / range) * (chars.length - 1));
 		return String.valueOf(chars[index]);

@@ -16,7 +16,7 @@ public class ShinyStatusTest {
 	}
 
 	private static void testMatchResults() {
-		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Last 5 Match Results ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Last 5 Match Results ---" + ShinyColors.RESET);
 		Shiny.status()
 				.title("Last 5 Matches")
 				.statuses(List.of(StatusType.SUCCESS, StatusType.SUCCESS, StatusType.NEUTRAL, StatusType.ERROR, StatusType.SUCCESS))
@@ -26,7 +26,7 @@ public class ShinyStatusTest {
 	}
 
 	private static void testServerStatus() {
-		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Server Status ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Server Status ---" + ShinyColors.RESET);
 		Shiny.status()
 				.title("Server 1")
 				.statuses(List.of(StatusType.SUCCESS))
@@ -46,7 +46,7 @@ public class ShinyStatusTest {
 	}
 
 	private static void testBuildStatus() {
-		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Build Status ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Build Status ---" + ShinyColors.RESET);
 		Shiny.status()
 				.title("Build Pipeline")
 				.statuses(List.of(StatusType.SUCCESS, StatusType.WARNING, StatusType.ERROR, StatusType.INFO, StatusType.NEUTRAL, StatusType.SUCCESS))
@@ -56,7 +56,7 @@ public class ShinyStatusTest {
 	}
 
 	private static void testMixedStatusesAndShapes() {
-		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Mixed Statuses and Shapes ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE.bright() + "--- Mixed Statuses and Shapes ---" + ShinyColors.RESET);
 		Shiny.status()
 				.title("Daily Report")
 				.statuses(List.of(StatusType.SUCCESS, StatusType.SUCCESS, StatusType.WARNING, StatusType.ERROR, StatusType.NEUTRAL))
