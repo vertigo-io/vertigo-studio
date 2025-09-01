@@ -127,7 +127,6 @@ public final class ShinyBarChart {
 		shiny.getWriter().println("Échelle : █ représente environ " + (maxCount / (double) maxBarLength) + " unités.");
 	}
 
-	private static String[] COLORS = {
 	private static ShinyColor[] COLORS = {
 			ShinyColors.BLUE,
 			ShinyColors.BLUE.bright() };
