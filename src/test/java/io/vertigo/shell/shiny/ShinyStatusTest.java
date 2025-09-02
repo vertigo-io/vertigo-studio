@@ -2,9 +2,9 @@ package io.vertigo.shell.shiny;
 
 import java.util.List;
 
-import io.vertigo.shell.shiny.status.ShinyStatus.StatusShape;
-import io.vertigo.shell.shiny.status.ShinyStatus.StatusType;
-import io.vertigo.shell.shiny.utils.ShinyColors;
+import io.vertigo.shell.shiny.color.ShinyColors;
+import io.vertigo.shell.shiny.dataviz.status.ShinyStatus.StatusShape;
+import io.vertigo.shell.shiny.dataviz.status.ShinyStatus.StatusType;
 
 public class ShinyStatusTest {
 

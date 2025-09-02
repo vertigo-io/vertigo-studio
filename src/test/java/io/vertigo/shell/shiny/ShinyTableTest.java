@@ -2,9 +2,9 @@ package io.vertigo.shell.shiny;
 
 import java.util.List;
 
-import io.vertigo.shell.shiny.table.ShinyBorder;
-import io.vertigo.shell.shiny.table.ShinyTable;
-import io.vertigo.shell.shiny.utils.ShinyColors;
+import io.vertigo.shell.shiny.color.ShinyColors;
+import io.vertigo.shell.shiny.data.table.ShinyBorder;
+import io.vertigo.shell.shiny.data.table.ShinyTable;
 
 public class ShinyTableTest {
 

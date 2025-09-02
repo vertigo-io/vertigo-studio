@@ -2,7 +2,7 @@ package io.vertigo.shell.shiny;
 
 import java.util.List;
 
-import io.vertigo.shell.shiny.utils.ShinyColors;
+import io.vertigo.shell.shiny.color.ShinyColors;
 
 public class ShinySparklineTest {
 

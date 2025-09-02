@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.Locale;
 
-import io.vertigo.shell.shiny.utils.ShinyColors;
+import io.vertigo.shell.shiny.color.ShinyColors;
 
 public class ShinyCalendarTest {
 

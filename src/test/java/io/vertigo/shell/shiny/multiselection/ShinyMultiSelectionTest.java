@@ -9,6 +9,7 @@ import java.io.PrintStream;
 import java.util.List;
 
 import io.vertigo.shell.shiny.Shiny;
+import io.vertigo.shell.shiny.input.multiselection.ShinyMultiSelection;
 
 public class ShinyMultiSelectionTest {
 	public static void main(final String[] args) {

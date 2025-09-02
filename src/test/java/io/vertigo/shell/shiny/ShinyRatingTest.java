@@ -1,8 +1,8 @@
 package io.vertigo.shell.shiny;
 
-import io.vertigo.shell.shiny.rating.ShinyRatingScale;
-import io.vertigo.shell.shiny.rating.ShinyRatingStyle;
-import io.vertigo.shell.shiny.utils.ShinyColors;
+import io.vertigo.shell.shiny.color.ShinyColors;
+import io.vertigo.shell.shiny.dataviz.rating.ShinyRatingScale;
+import io.vertigo.shell.shiny.dataviz.rating.ShinyRatingStyle;
 
 public class ShinyRatingTest {
 

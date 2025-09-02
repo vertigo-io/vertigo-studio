@@ -1,7 +1,7 @@
 package io.vertigo.shell.shiny;
 
-import io.vertigo.shell.shiny.figlet.ShinyFigletFonts;
-import io.vertigo.shell.shiny.utils.ShinyColors;
+import io.vertigo.shell.shiny.color.ShinyColors;
+import io.vertigo.shell.shiny.text.figlet.ShinyFigletFonts;
 
 public class ShinyFigletTest {
 

@@ -1,12 +1,12 @@
 package io.vertigo.shell.shiny;
 
-import static io.vertigo.shell.shiny.utils.ShinyColors.GREEN;
-import static io.vertigo.shell.shiny.utils.ShinyColors.RED;
-import static io.vertigo.shell.shiny.utils.ShinyColors.RESET;
+import static io.vertigo.shell.shiny.color.ShinyColors.GREEN;
+import static io.vertigo.shell.shiny.color.ShinyColors.RED;
+import static io.vertigo.shell.shiny.color.ShinyColors.RESET;
 
-import io.vertigo.shell.shiny.list.ShinyList;
-import io.vertigo.shell.shiny.list.ShinyListStyle;
-import io.vertigo.shell.shiny.utils.ShinyColors;
+import io.vertigo.shell.shiny.color.ShinyColors;
+import io.vertigo.shell.shiny.data.list.ShinyList;
+import io.vertigo.shell.shiny.data.list.ShinyListStyle;
 
 public class ShinyListTest {
 

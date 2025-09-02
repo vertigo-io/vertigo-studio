@@ -6,23 +6,23 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 import io.vertigo.shell.ShellContext;
-import io.vertigo.shell.shiny.barchart.ShinyBarChart;
-import io.vertigo.shell.shiny.calendar.ShinyCalendar;
-import io.vertigo.shell.shiny.figlet.ShinyFiglet;
-import io.vertigo.shell.shiny.gauge.ShinyGauge;
-import io.vertigo.shell.shiny.json.ShinyJson;
-import io.vertigo.shell.shiny.list.ShinyList;
-import io.vertigo.shell.shiny.progressbar.ShinyProgressBar;
-import io.vertigo.shell.shiny.rating.ShinyRating;
-import io.vertigo.shell.shiny.sparkline.ShinySparkline;
-import io.vertigo.shell.shiny.spinner.ShinySpinner;
-import io.vertigo.shell.shiny.status.ShinyStatus;
-import io.vertigo.shell.shiny.table.ShinyTable;
-import io.vertigo.shell.shiny.textpath.ShinyTextPath;
-import io.vertigo.shell.shiny.title.ShinyTitle;
-import io.vertigo.shell.shiny.toggle.ShinyToggle;
-import io.vertigo.shell.shiny.tree.ShinyTree;
-import io.vertigo.shell.shiny.multiselection.ShinyMultiSelection;
+import io.vertigo.shell.shiny.data.calendar.ShinyCalendar;
+import io.vertigo.shell.shiny.data.json.ShinyJson;
+import io.vertigo.shell.shiny.data.list.ShinyList;
+import io.vertigo.shell.shiny.data.table.ShinyTable;
+import io.vertigo.shell.shiny.data.tree.ShinyTree;
+import io.vertigo.shell.shiny.dataviz.barchart.ShinyBarChart;
+import io.vertigo.shell.shiny.dataviz.gauge.ShinyGauge;
+import io.vertigo.shell.shiny.dataviz.rating.ShinyRating;
+import io.vertigo.shell.shiny.dataviz.sparkline.ShinySparkline;
+import io.vertigo.shell.shiny.dataviz.status.ShinyStatus;
+import io.vertigo.shell.shiny.input.multiselection.ShinyMultiSelection;
+import io.vertigo.shell.shiny.live.progressbar.ShinyProgressBar;
+import io.vertigo.shell.shiny.live.spinner.ShinySpinner;
+import io.vertigo.shell.shiny.text.figlet.ShinyFiglet;
+import io.vertigo.shell.shiny.text.textpath.ShinyTextPath;
+import io.vertigo.shell.shiny.text.title.ShinyTitle;
+import io.vertigo.shell.shiny.text.toggle.ShinyToggle;
 
 public final class Shiny {
 	//Values by default
