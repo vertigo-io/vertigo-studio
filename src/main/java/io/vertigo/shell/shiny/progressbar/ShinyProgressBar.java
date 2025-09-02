@@ -2,21 +2,21 @@ package io.vertigo.shell.shiny.progressbar;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
-import io.vertigo.shell.shiny.ShinyComponent;
+import io.vertigo.shell.shiny.ShinyLiveComponent;
 
-public final class ShinyProgressBar implements ShinyComponent {
+public final class ShinyProgressBar extends ShinyLiveComponent<ShinyProgressBar> {
 	private final Shiny shiny;
 	private int total = 0; // Valeur totale correspondant à 100%
 	private int barLength; // Longueur de la barre en caractères
-	private int progress; // Progression actuelle
+	private volatile int currentProgress;
 
 	// Constructeur
 	public ShinyProgressBar(final Shiny shiny) {
+		super(shiny);
 		Assertion.check().isNotNull(shiny);
 		//---
 		this.shiny = shiny;
 		this.barLength = 50;
-		this.progress = 0;
 	}
 
 	public ShinyProgressBar length(final int length) {
@@ -33,18 +33,21 @@ public final class ShinyProgressBar implements ShinyComponent {
 	}
 
 	// Méthode pour mettre à jour la progression
-	public void setProgress(final int progress) {
-		if (progress >= 0 && progress <= total) {
-			this.progress = progress;
+	public void liveUpdate(final int progress) {
+		if (progress < 0) {
+			this.currentProgress = 0;
+		} else if (progress > total) {
+			this.currentProgress = 100;
+		} else {
+			this.currentProgress = progress;
 		}
 	}
 
-	// Méthode pour afficher la barre de progression
-	public void print() {
+	synchronized protected void draw() {
 		// Calculer le pourcentage
-		final int percentage = (progress * 100) / total;
+		final int percentage = (currentProgress * 100) / total;
 		// Calculer le nombre de carrés à remplir
-		final int filled = (progress * barLength) / total;
+		final int filled = (currentProgress * barLength) / total;
 
 		// Construire la barre
 		final StringBuilder bar = new StringBuilder("[")
@@ -57,10 +60,4 @@ public final class ShinyProgressBar implements ShinyComponent {
 		shiny.getWriter().flush(); //On force le flush
 	}
 
-	// Méthode pour finaliser l'affichage
-	public void finish() {
-		shiny.getWriter().println();
-		shiny.getWriter().flush(); //On force le flush
-		//System.out.println("Tâche terminée !");
-	}
 }

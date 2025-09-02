@@ -12,8 +12,8 @@ public class ShinySpinnerTest {
 
 	private static void testBasicSpinner() throws Exception {
 		System.out.println(ShinyColors.BLUE.bright() + "--- Basic Spinner ---" + ShinyColors.RESET);
-		try (ShinySpinner spinner = Shiny.spinner()) {
-			spinner.send("Working...");
+		try (ShinySpinner spinner = Shiny.spinner().start()) {
+			spinner.liveSend("Working...");
 			Thread.sleep(3000); // Let it run for 3 seconds
 		}
 		System.out.println("Spinner stopped.");
@@ -22,12 +22,12 @@ public class ShinySpinnerTest {
 
 	private static void testSpinnerWithMultipleMessages() throws Exception {
 		System.out.println(ShinyColors.BLUE.bright() + "--- Spinner with Multiple Messages ---" + ShinyColors.RESET);
-		try (ShinySpinner spinner = Shiny.spinner()) {
-			spinner.send("Loading data...");
+		try (ShinySpinner spinner = Shiny.spinner().start()) {
+			spinner.liveSend("Loading data...");
 			Thread.sleep(2000);
-			spinner.send("Processing files...");
+			spinner.liveSend("Processing files...");
 			Thread.sleep(2000);
-			spinner.send("Saving results...");
+			spinner.liveSend("Saving results...");
 			Thread.sleep(2000);
 		}
 		System.out.println("Spinner with multiple messages stopped.");
@@ -36,8 +36,8 @@ public class ShinySpinnerTest {
 
 	private static void testShortDurationSpinner() throws Exception {
 		System.out.println(ShinyColors.BLUE.bright() + "--- Short Duration Spinner ---" + ShinyColors.RESET);
-		try (ShinySpinner spinner = Shiny.spinner()) {
-			spinner.send("Quick task...");
+		try (ShinySpinner spinner = Shiny.spinner().start()) {
+			spinner.liveSend("Quick task...");
 			Thread.sleep(1000); // Short duration
 		}
 		System.out.println("Short duration spinner stopped.");

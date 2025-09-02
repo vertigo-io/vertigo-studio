@@ -134,17 +134,16 @@ public class ShinyAllComponentsTest {
 	private static void testProgressBar() {
 		System.out.println(CYAN + "Component: ShinyProgressBar" + RESET);
 		System.out.println("Parameters: total=100");
-		final var progressBar = Shiny.progressBar().total(100);
-		for (int i = 0; i <= 100; i += 10) {
-			progressBar.setProgress(i);
-			progressBar.print();
-			try {
-				Thread.sleep(50);
-			} catch (InterruptedException e) {
-				Thread.currentThread().interrupt();
+		try (var progressBar = Shiny.progressBar().total(100).start()) {
+			for (int i = 0; i <= 100; i += 10) {
+				progressBar.liveUpdate(i + 1);
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					Thread.currentThread().interrupt();
+				}
 			}
 		}
-		progressBar.finish();
 		waitForEnter();
 	}
 
@@ -172,10 +171,10 @@ public class ShinyAllComponentsTest {
 	private static void testSpinner() {
 		System.out.println(CYAN + "Component: ShinySpinner" + RESET);
 		System.out.println("Parameters: messages='Loading...', 'Processing...'");
-		try (var spinner = Shiny.spinner()) {
-			spinner.send("Loading...");
+		try (var spinner = Shiny.spinner().start()) {
+			spinner.liveSend("Loading...");
 			Thread.sleep(1000);
-			spinner.send("Processing...");
+			spinner.liveSend("Processing...");
 			Thread.sleep(1000);
 		} catch (Exception e) {
 			/* ignore */ }

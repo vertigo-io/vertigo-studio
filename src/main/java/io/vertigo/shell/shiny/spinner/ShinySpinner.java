@@ -1,74 +1,33 @@
 package io.vertigo.shell.shiny.spinner;
 
-import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
+import io.vertigo.shell.shiny.ShinyLiveComponent;
 
-public final class ShinySpinner implements AutoCloseable {
-	private final Shiny shiny;
-	private volatile boolean running = true;
+public final class ShinySpinner extends ShinyLiveComponent<ShinySpinner> {
 	private volatile String message;
-	private final SpinnerDrawer drawer;
+	private volatile int frameIndex = 0;
 
 	public ShinySpinner(final Shiny shiny) {
-		Assertion.check().isNotNull(shiny);
-		//---
-		this.shiny = shiny;
-		drawer = new SpinnerDrawer();
-		drawer.start();
-	}
-
-	/**
-	 * Stops the spinner animation.
-	 */
-	@Override
-	public void close() {
-		running = false;
-		try {
-			drawer.join();
-		} catch (final InterruptedException e) {
-			Thread.currentThread().interrupt();
-		}
+		super(shiny);
 	}
 
 	/**
 	 * Sends a new message to be displayed alongside the spinner.
 	 * @param msg The message to display.
 	 */
-	public void send(final String msg) {
-		message = msg;
+	public void liveSend(final String msg) {
+		this.message = msg;
 	}
 
 	/**
-	 * Inner class that extends Thread to handle the spinner animation in a loop.
+	 * Draws the current frame of the spinner with the message.
 	 */
-	private class SpinnerDrawer extends Thread {
-
-		@Override
-		public void run() {
-			int i = 0;
-			while (running) {
-				draw(i++);
-				try {
-					Thread.sleep(100); // Adjust sleep time for animation speed
-				} catch (final InterruptedException e) {
-					Thread.currentThread().interrupt();
-					running = false;
-				}
-			}
-			// Print a newline to move to the next line after stopping
-			shiny.getWriter().println();
-		}
-
-		/**
-		 * Draws the current frame of the spinner with the message.
-		 */
-		private void draw(final int i) {
-			final var frame = ShinySpinnerStyle.FRAMES[i % ShinySpinnerStyle.FRAMES.length];
-			shiny.getWriter().print("\r"); //On revient au début de la ligne
-			shiny.getWriter().print(frame);
-			shiny.getWriter().print(" " + message);
-			shiny.getWriter().flush(); //On force le flush
-		}
+	synchronized protected void draw() {
+		final var frame = ShinySpinnerStyle.FRAMES[frameIndex % ShinySpinnerStyle.FRAMES.length];
+		shiny().getWriter().print("\r");
+		shiny().getWriter().print(frame);
+		shiny().getWriter().print(" " + message);
+		shiny().getWriter().flush(); //On force le flush
+		frameIndex++;
 	}
-
 }
