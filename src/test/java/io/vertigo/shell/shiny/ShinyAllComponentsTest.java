@@ -1,14 +1,14 @@
 package io.vertigo.shell.shiny;
 
-import static io.vertigo.shell.shiny.tree.ShinyIcon.FILE;
-import static io.vertigo.shell.shiny.tree.ShinyIcon.FOLDER_OPEN;
-import static io.vertigo.shell.shiny.utils.ShinyColors.BLUE;
-import static io.vertigo.shell.shiny.utils.ShinyColors.CYAN;
-import static io.vertigo.shell.shiny.utils.ShinyColors.GREEN;
-import static io.vertigo.shell.shiny.utils.ShinyColors.MAGENTA;
-import static io.vertigo.shell.shiny.utils.ShinyColors.RED;
-import static io.vertigo.shell.shiny.utils.ShinyColors.RESET;
-import static io.vertigo.shell.shiny.utils.ShinyColors.YELLOW;
+import static io.vertigo.shell.shiny.color.ShinyColors.BLUE;
+import static io.vertigo.shell.shiny.color.ShinyColors.CYAN;
+import static io.vertigo.shell.shiny.color.ShinyColors.GREEN;
+import static io.vertigo.shell.shiny.color.ShinyColors.MAGENTA;
+import static io.vertigo.shell.shiny.color.ShinyColors.RED;
+import static io.vertigo.shell.shiny.color.ShinyColors.RESET;
+import static io.vertigo.shell.shiny.color.ShinyColors.YELLOW;
+import static io.vertigo.shell.shiny.data.tree.ShinyIcon.FILE;
+import static io.vertigo.shell.shiny.data.tree.ShinyIcon.FOLDER_OPEN;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -16,11 +16,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
-import io.vertigo.shell.shiny.barchart.ShinySortMode;
-import io.vertigo.shell.shiny.figlet.ShinyFigletFonts;
-import io.vertigo.shell.shiny.status.ShinyStatus.StatusShape;
-import io.vertigo.shell.shiny.status.ShinyStatus.StatusType;
-import io.vertigo.shell.shiny.table.ShinyBorder;
+import io.vertigo.shell.shiny.data.table.ShinyBorder;
+import io.vertigo.shell.shiny.dataviz.barchart.ShinySortMode;
+import io.vertigo.shell.shiny.dataviz.status.ShinyStatus.StatusShape;
+import io.vertigo.shell.shiny.dataviz.status.ShinyStatus.StatusType;
+import io.vertigo.shell.shiny.text.figlet.ShinyFigletFonts;
 
 public class ShinyAllComponentsTest {
 
@@ -37,6 +37,7 @@ public class ShinyAllComponentsTest {
 		testGauge();
 		testJson();
 		testList();
+		//		testMultiSelection();
 		testProgressBar();
 		testRating();
 		testSparkline();
