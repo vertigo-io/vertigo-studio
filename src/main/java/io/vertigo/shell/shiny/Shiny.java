@@ -22,6 +22,7 @@ import io.vertigo.shell.shiny.textpath.ShinyTextPath;
 import io.vertigo.shell.shiny.title.ShinyTitle;
 import io.vertigo.shell.shiny.toggle.ShinyToggle;
 import io.vertigo.shell.shiny.tree.ShinyTree;
+import io.vertigo.shell.shiny.multiselection.ShinyMultiSelection;
 
 public final class Shiny {
 	//Values by default
@@ -103,6 +104,10 @@ public final class Shiny {
 
 	public static ShinyRating rating() {
 		return new ShinyRating(INSTANCE);
+	}
+
+	public static ShinyMultiSelection multiSelection() {
+		return new ShinyMultiSelection(INSTANCE);
 	}
 
 	public NumberFormat getNumberFormat() {

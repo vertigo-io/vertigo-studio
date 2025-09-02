@@ -26,22 +26,20 @@ public final class JdbcPingCommand implements ShellCommand {
 
 		final List<Double> pingTimes = new ArrayList<>();
 
-		final ShinyProgressBar progressBar = Shiny.progressBar().total(calls);
-		System.out.println();
-		for (int i = 0; i < calls; i++) {
-			ping(pingTimes);
-			progressBar.setProgress(i + 1);
-			progressBar.print();
-			try {
-				//Waiting to avoid DDOS
-				Thread.sleep(30);
-			} catch (final InterruptedException e) {
-				//e.printStackTrace();
+		System.out.println("ping database");
+		try (final ShinyProgressBar progressBar = Shiny.progressBar().total(calls).start()) {
+			for (int i = 0; i < calls; i++) {
+				ping(pingTimes);
+				progressBar.liveUpdate(i + 1);
+				try {
+					//Waiting to avoid DDOS 
+					Thread.sleep(30);
+				} catch (final InterruptedException e) {
+					//e.printStackTrace();
+				}
 			}
-
 		}
-		progressBar.finish();
-
+		System.out.println();
 		// Display statistics if calls > 1
 		if (calls > 1) {
 			final double min = pingTimes.stream().min(Double::compare).orElse(0.0);
@@ -53,6 +51,7 @@ public final class JdbcPingCommand implements ShellCommand {
 			System.out.printf("Max: %.3f ms%n", max);
 			System.out.printf("Average: %.3f ms%n", average);
 		}
+
 	}
 
 	private void ping(final List<Double> pingTimes) {
