@@ -120,8 +120,9 @@ public class ShinyAllComponentsTest {
 
 	private static void testList() {
 		System.out.println(CYAN + "Component: ShinyList" + RESET);
-		System.out.println("Parameters: items=['Task 1', 'Task 2', 'Task 3']");
+		System.out.println("Parameters: title='Tasks', items=['Task 1', 'Task 2', 'Task 3']");
 		Shiny.list()
+				.title("Tasks")
 				.addItem("Task 1")
 				.addItem("Task 2")
 				.addItem("Task 3")
@@ -197,7 +198,9 @@ public class ShinyAllComponentsTest {
 		Shiny.table()
 				.title("Users")
 				.header("Name", "Age")
-				.rows(List.of(new String[] { "John", "30" }, new String[] { "Jane", "25" }))
+				.rows(
+						new String[] { "John", "30" },
+						new String[] { "Jane", "25" })
 				.print();
 		waitForEnter();
 	}

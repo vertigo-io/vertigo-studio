@@ -10,9 +10,9 @@ import io.vertigo.shell.shiny.utils.ShinyColors;
 
 public final class ShinyBarChart {
 	private final Shiny shiny;
-	private String title;
-	private String[] header;
-	private int[] row;
+	private String barChartTitle;
+	private String[] barChartHeader;
+	private int[] barChartRow;
 	private ShinySortMode sortMode = ShinySortMode.NO;
 
 	public ShinyBarChart(final Shiny shiny) {
@@ -21,30 +21,30 @@ public final class ShinyBarChart {
 		this.shiny = shiny;
 	}
 
-	public ShinyBarChart title(final String text) {
-		this.title = text;
+	public ShinyBarChart title(final String title) {
+		this.barChartTitle = title;
 		return this;
 	}
 
-	public ShinyBarChart header(final List<String> texts) {
-		this.header = texts.toArray(new String[0]);
+	public ShinyBarChart header(final String... header) {
+		this.barChartHeader = header;
 		return this;
 	}
 
-	public ShinyBarChart header(final String... texts) {
-		this.header = texts;
+	public ShinyBarChart header(final List<String> header) {
+		this.barChartHeader = header.toArray(new String[0]);
 		return this;
 	}
 
-	public ShinyBarChart rows(final int... values) {
-		this.row = values;
+	public ShinyBarChart rows(final int... rows) {
+		this.barChartRow = rows;
 		return this;
 	}
 
 	public ShinyBarChart rows(final List<Integer> values) {
-		this.row = new int[values.size()];
+		this.barChartRow = new int[values.size()];
 		for (int i = 0; i < values.size(); i++) {
-			this.row[i] = values.get(i);
+			this.barChartRow[i] = values.get(i);
 		}
 		return this;
 	}
@@ -55,8 +55,8 @@ public final class ShinyBarChart {
 	}
 
 	private void sort() {
-		final Integer[] indices = new Integer[header.length];
-		for (int i = 0; i < header.length; i++) {
+		final Integer[] indices = new Integer[barChartHeader.length];
+		for (int i = 0; i < barChartHeader.length; i++) {
 			indices[i] = i;
 		}
 
@@ -64,16 +64,16 @@ public final class ShinyBarChart {
 			case NO:
 				break;
 			case VALUE_ASC:
-				Arrays.sort(indices, (i1, i2) -> Integer.compare(row[i1], row[i2]));
+				Arrays.sort(indices, (i1, i2) -> Integer.compare(barChartRow[i1], barChartRow[i2]));
 				break;
 			case VALUE_DESC:
-				Arrays.sort(indices, (i1, i2) -> Integer.compare(row[i2], row[i1]));
+				Arrays.sort(indices, (i1, i2) -> Integer.compare(barChartRow[i2], barChartRow[i1]));
 				break;
 			case HEADER_ASC:
-				Arrays.sort(indices, (i1, i2) -> header[i1].compareToIgnoreCase(header[i2]));
+				Arrays.sort(indices, (i1, i2) -> barChartHeader[i1].compareToIgnoreCase(barChartHeader[i2]));
 				break;
 			case HEADER_DESC:
-				Arrays.sort(indices, (i1, i2) -> header[i2].compareToIgnoreCase(header[i1]));
+				Arrays.sort(indices, (i1, i2) -> barChartHeader[i2].compareToIgnoreCase(barChartHeader[i1]));
 				break;
 		}
 		// Réappliquer le tri aux deux tableaux
@@ -81,14 +81,14 @@ public final class ShinyBarChart {
 	}
 
 	private void reorder(final Integer[] indices) {
-		final String[] newHeader = new String[header.length];
-		final int[] newRow = new int[row.length];
+		final String[] newHeader = new String[barChartHeader.length];
+		final int[] newRow = new int[barChartRow.length];
 		for (int i = 0; i < indices.length; i++) {
-			newHeader[i] = header[indices[i]];
-			newRow[i] = row[indices[i]];
+			newHeader[i] = barChartHeader[indices[i]];
+			newRow[i] = barChartRow[indices[i]];
 		}
-		this.header = newHeader;
-		this.row = newRow;
+		this.barChartHeader = newHeader;
+		this.barChartRow = newRow;
 	}
 
 	/**
@@ -100,22 +100,22 @@ public final class ShinyBarChart {
 		sort();
 
 		// Trouver la valeur maximale pour normaliser les barres
-		final int maxCount = Arrays.stream(row).max().orElse(1);
+		final int maxCount = Arrays.stream(barChartRow).max().orElse(1);
 
 		// Déterminer la longueur maximale du nom de catégorie pour l'alignement
-		final int maxLabelLength = Arrays.stream(header)
+		final int maxLabelLength = Arrays.stream(barChartHeader)
 				.mapToInt(String::length)
 				.max()
 				.orElse(10);
 
 		// Afficher le diagramme
-		shiny.getWriter().println(title);
+		shiny.getWriter().println(barChartTitle);
 		//	shiny.getWriter().println("Total des observations : " + total);
 		shiny.getWriter().println("----------------------------------------");
 
-		for (int i = 0; i < header.length; i++) {
-			final String category = header[i] != null ? header[i] : "Catégorie " + (i + 1);
-			final int count = row[i];
+		for (int i = 0; i < barChartHeader.length; i++) {
+			final String category = barChartHeader[i] != null ? barChartHeader[i] : "Catégorie " + (i + 1);
+			final int count = barChartRow[i];
 			// Normaliser la longueur de la barre
 			final int barLength = (int) ((double) count / maxCount * maxBarLength);
 			final String bar = "█".repeat(Math.max(0, barLength)); // Utiliser le caractère carré plein █

@@ -15,10 +15,10 @@ import io.vertigo.shell.shiny.utils.ShinyColors;
 public final class ShinyTable {
 	private final NumberFormat numberFormat;
 	private final Shiny shiny;
-	private String title;
+	private String tableTitle;
 	private String noDataFound;
-	private String[] header;
-	private final List<String[]> rows = new ArrayList<>();
+	private String[] tableHeader;
+	private final List<String[]> tableRows = new ArrayList<>();
 	private final ShinyTableStyle style = new ShinyTableStyle(this);
 
 	/**
@@ -36,13 +36,13 @@ public final class ShinyTable {
 	/**
 	 * Sets the title of the table.
 	 *
-	 * @param title the table title
+	 * @param tableTitle the table title
 	 * @return this instance for method chaining
 	 */
-	public ShinyTable title(final String text) {
-		Assertion.check().isNotBlank(text);
+	public ShinyTable title(final String title) {
+		Assertion.check().isNotBlank(title);
 		//---
-		this.title = text;
+		this.tableTitle = title;
 		return this;
 	}
 
@@ -64,16 +64,24 @@ public final class ShinyTable {
 	/**
 	 * Defines the header row of the table.
 	 */
-	public ShinyTable header(final String... texts) {
-		this.header = texts;
+	public ShinyTable header(final String... header) {
+		this.tableHeader = header;
 		return this;
 	}
 
 	/**
 	 * Adds multiple rows of data to the table.
 	 */
-	public ShinyTable rows(final List<String[]> list) {
-		this.rows.addAll(list);
+	public ShinyTable rows(final List<String[]> rows) {
+		this.tableRows.addAll(rows);
+		return this;
+	}
+
+	/**
+	 * Adds multiple rows of data to the table.
+	 */
+	public ShinyTable rows(final String[]... rows) {
+		this.tableRows.addAll(List.of(rows));
 		return this;
 	}
 
@@ -82,27 +90,27 @@ public final class ShinyTable {
 	 */
 	public void print() {
 		Assertion.check()
-				.isNotBlank(title)
-				.isNotNull(rows)
-				.when(rows.isEmpty(), () -> Assertion.check().isNotBlank(noDataFound))
-				.isNotNull(header);
+				.isNotBlank(tableTitle)
+				.isNotNull(tableRows)
+				.when(tableRows.isEmpty(), () -> Assertion.check().isNotBlank(noDataFound))
+				.isNotNull(tableHeader);
 
-		if (rows.isEmpty()) {
+		if (tableRows.isEmpty()) {
 			shiny.getWriter().println(noDataFound);
 			return;
 		}
 
-		final int columns = header.length;
+		final int columns = tableHeader.length;
 
 		// 1. Format data and detect numeric columns
 		final List<String[]> formattedRows = new ArrayList<>();
 		final boolean[] isNumericColumn = new boolean[columns];
 
 		for (int i = 0; i < columns; i++) {
-			isNumericColumn[i] = isColumnNumeric(rows, i);
+			isNumericColumn[i] = isColumnNumeric(tableRows, i);
 		}
 
-		for (final String[] row : rows) {
+		for (final String[] row : tableRows) {
 			Assertion.check().isTrue(row.length == columns, "Header and rows must have the same length");
 			final String[] formattedRow = new String[columns];
 			for (int colIndex = 0; colIndex < columns; colIndex++) {
@@ -119,7 +127,7 @@ public final class ShinyTable {
 		// 2. Compute max width per column
 		final int[] widths = new int[columns];
 		for (int i = 0; i < columns; i++) {
-			widths[i] = header[i].length();
+			widths[i] = tableHeader[i].length();
 		}
 		for (final String[] row : formattedRows) {
 			for (int i = 0; i < columns; i++) {
@@ -142,14 +150,14 @@ public final class ShinyTable {
 		// 4. Print
 		shiny.getWriter().print(style.titleBackgroundColor.bg());
 		shiny.getWriter().print(style.titleTextColor);
-		shiny.getWriter().print(title);
+		shiny.getWriter().print(tableTitle);
 		shiny.getWriter().println(ShinyColors.RESET);
 
 		printLineSeparator(widths, Position.TOP);
 
 		shiny.getWriter().print(style.border.chars().vertical());
 		shiny.getWriter().print(style.headerBackgroundColor.bg());
-		shiny.getWriter().printf(format, (Object[]) header);
+		shiny.getWriter().printf(format, (Object[]) tableHeader);
 		shiny.getWriter().print(ShinyColors.RESET);
 		shiny.getWriter().println(style.border.chars().vertical());
 

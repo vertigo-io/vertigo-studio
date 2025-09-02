@@ -10,6 +10,7 @@ import io.vertigo.shell.shiny.utils.ShinyColors;
 
 public final class ShinyList {
 	private final Shiny shiny;
+	private String title;
 	private final List<Object> items = new ArrayList<>();
 	private ShinyListStyle style = ShinyListStyle.UNORDERED; // Changed default
 	private ShinyColor itemColor = ShinyColors.WHITE;
@@ -19,6 +20,11 @@ public final class ShinyList {
 		Assertion.check().isNotNull(shiny);
 		//---
 		this.shiny = shiny;
+	}
+
+	public ShinyList title(final String text) {
+		this.title = text;
+		return this;
 	}
 
 	public ShinyList addItem(final String item) {
@@ -47,6 +53,9 @@ public final class ShinyList {
 	}
 
 	public void print() {
+		if (title != null) {
+			shiny.getWriter().println(title);
+		}
 		print(0); // Start with no indentation
 	}
 
