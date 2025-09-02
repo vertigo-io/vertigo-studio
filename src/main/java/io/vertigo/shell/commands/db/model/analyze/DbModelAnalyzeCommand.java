@@ -47,10 +47,16 @@ public final class DbModelAnalyzeCommand implements ShellCommand {
 		System.out.println("tablesWithoutPrimaryKey :" + report.tablesWithoutPrimaryKey());
 		System.out.println("trivialCheckConstraints :" + report.trivialCheckConstraints());
 		//lister ici toutes les anomalies détectées
-		report.tableDependencyStats().forEach((table, stats) -> {
-			System.out.printf("Table %s: fanIn=%d, fanOut=%d, fanInTransitive=%d%n",
-					table, stats.fanIn(), stats.fanOut(), stats.transitiveFanIn());
-		});
-	}
 
+		final List<String[]> dependencies = new ArrayList<>();
+		report.tableDependencyStats().forEach((t, stats) -> {
+			dependencies.add(new String[] { t, "" + stats.fanIn(), "" + stats.fanOut(), "" + stats.transitiveFanIn() });
+		});
+
+		Shiny.table()
+				.title("Dependency stats")
+				.header("table", "in", "out", "transitive Fan In")
+				.rows(dependencies)
+				.print();
+	}
 }

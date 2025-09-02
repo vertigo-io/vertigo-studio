@@ -4,6 +4,7 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
+import io.vertigo.shell.shiny.ShinyComponent;
 
 public final class ShinyTree implements ShinyComponent {
 	private final Shiny shiny;

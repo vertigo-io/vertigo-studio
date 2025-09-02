@@ -41,7 +41,8 @@ public final class JdbcStatsCommand implements ShellCommand {
 				.title("Tables Row Count")
 				.header(tableNames)
 				.rows(tableCounts)
-				.print(100);
+				.length(100)
+				.print();
 	}
 
 }

@@ -16,7 +16,8 @@ public class ShinyBarChartTest {
 				.title("Monthly Sales")
 				.header("Jan", "Feb", "Mar", "Apr", "May")
 				.rows(100, 120, 90, 150, 110)
-				.print(50); // Max bar length of 50 characters
+				.length(50)
+				.print(); // Max bar length of 50 characters
 		System.out.println();
 	}
 
@@ -35,7 +36,8 @@ public class ShinyBarChartTest {
 						1800000, 2800000, 660000, 520000, 17800000,
 						37600000, 10300000, 19000000, 5400000, 2100000, 48000000, 10600000)
 				.sort(ShinySortMode.VALUE_DESC)
-				.print(100);
+				.length(100)
+				.print();
 		System.out.println();
 	}
 
@@ -52,7 +54,8 @@ public class ShinyBarChartTest {
 				.header(headers)
 				.rows(values)
 				.sort(ShinySortMode.NO)
-				.print(30);
+				.length(30)
+				.print();
 		System.out.println();
 
 		// Value Ascending
@@ -62,7 +65,8 @@ public class ShinyBarChartTest {
 				.header(headers)
 				.rows(values)
 				.sort(ShinySortMode.VALUE_ASC)
-				.print(30);
+				.length(30)
+				.print();
 		System.out.println();
 
 		// Value Descending
@@ -72,7 +76,8 @@ public class ShinyBarChartTest {
 				.header(headers)
 				.rows(values)
 				.sort(ShinySortMode.VALUE_DESC)
-				.print(30);
+				.length(30)
+				.print();
 		System.out.println();
 
 		// Header Ascending
@@ -82,7 +87,8 @@ public class ShinyBarChartTest {
 				.header(headers)
 				.rows(values)
 				.sort(ShinySortMode.HEADER_ASC)
-				.print(30);
+				.length(30)
+				.print();
 		System.out.println();
 
 		// Header Descending
@@ -92,7 +98,8 @@ public class ShinyBarChartTest {
 				.header(headers)
 				.rows(values)
 				.sort(ShinySortMode.HEADER_DESC)
-				.print(30);
+				.length(30)
+				.print();
 		System.out.println();
 	}
 }

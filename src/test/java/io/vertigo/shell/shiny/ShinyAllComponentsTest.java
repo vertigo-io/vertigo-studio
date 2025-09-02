@@ -66,7 +66,8 @@ public class ShinyAllComponentsTest {
 				.header("Jan", "Feb", "Mar")
 				.rows(100, 120, 90)
 				.sort(ShinySortMode.VALUE_DESC)
-				.print(50);
+				.length(50)
+				.print();
 		waitForEnter();
 	}
 
