@@ -12,7 +12,7 @@ import io.vertigo.shell.shiny.utils.ShinyColors;
  * Represents a table that can be printed in a terminal with colors,
  * borders and formatted numeric values.
  */
-public final class ShinyTable {
+public final class ShinyTable implements ShinyComponent {
 	private final NumberFormat numberFormat;
 	private final Shiny shiny;
 	private String tableTitle;

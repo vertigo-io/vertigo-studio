@@ -5,7 +5,7 @@ import io.vertigo.shell.shiny.Shiny;
 import io.vertigo.shell.shiny.utils.ShinyColor;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
-public final class ShinyToggle {
+public final class ShinyToggle implements ShinyComponent {
 
 	private final Shiny shiny;
 	private String label;

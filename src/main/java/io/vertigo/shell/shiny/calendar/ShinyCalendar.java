@@ -12,7 +12,7 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
 import io.vertigo.shell.shiny.table.ShinyBorder;
 
-public final class ShinyCalendar {
+public final class ShinyCalendar implements ShinyComponent {
 	private Locale calendarLocale;
 	private final List<LocalDate> highlightedDates = new ArrayList<>();
 	private int year;

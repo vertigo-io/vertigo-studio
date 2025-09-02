@@ -10,7 +10,7 @@ import io.vertigo.shell.shiny.Shiny;
 import io.vertigo.shell.shiny.utils.ShinyColor;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
-public final class ShinyFiglet {
+public final class ShinyFiglet implements ShinyComponent {
 	private final Shiny shiny;
 	private String text;
 	private ShinyFigletFonts font = ShinyFigletFonts.STANDARD; // Default font

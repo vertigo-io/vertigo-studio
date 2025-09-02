@@ -12,7 +12,7 @@ import io.vertigo.shell.shiny.Shiny;
 import io.vertigo.shell.shiny.utils.ShinyColor;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
-public final class ShinyJson {
+public final class ShinyJson implements ShinyComponent {
 	private final Shiny shiny;
 	private String jsonString;
 

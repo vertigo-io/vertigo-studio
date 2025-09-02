@@ -4,7 +4,7 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
-public final class ShinyTitle {
+public final class ShinyTitle implements ShinyComponent {
 	private final Shiny shiny;
 	private String title;
 	private int level = 1; // Default to Level 1

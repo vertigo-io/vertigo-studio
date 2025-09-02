@@ -8,7 +8,7 @@ import io.vertigo.shell.shiny.Shiny;
 import io.vertigo.shell.shiny.utils.ShinyColor;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
-public final class ShinySparkline {
+public final class ShinySparkline implements ShinyComponent {
 	private final Shiny shiny;
 	private String title;
 	private List<Double> data;

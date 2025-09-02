@@ -3,7 +3,7 @@ package io.vertigo.shell.shiny.progressbar;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
 
-public final class ShinyProgressBar {
+public final class ShinyProgressBar implements ShinyComponent {
 	private final Shiny shiny;
 	private int total = 0; // Valeur totale correspondant à 100%
 	private int barLength; // Longueur de la barre en caractères

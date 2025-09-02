@@ -8,7 +8,7 @@ import io.vertigo.shell.shiny.Shiny;
 import io.vertigo.shell.shiny.utils.ShinyColor;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
-public final class ShinyBarChart {
+public final class ShinyBarChart implements ShinyComponent {
 	private final Shiny shiny;
 	private String barChartTitle;
 	private String[] barChartHeader;

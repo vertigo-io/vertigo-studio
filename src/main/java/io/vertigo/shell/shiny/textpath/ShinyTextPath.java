@@ -7,7 +7,7 @@ import io.vertigo.shell.shiny.Shiny;
 import io.vertigo.shell.shiny.utils.ShinyColor;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
-public final class ShinyTextPath {
+public final class ShinyTextPath implements ShinyComponent {
 	private final Shiny shiny;
 	private String path;
 	private String separator = "/";

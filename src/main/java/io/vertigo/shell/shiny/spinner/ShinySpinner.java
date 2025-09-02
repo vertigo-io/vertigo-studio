@@ -3,7 +3,7 @@ package io.vertigo.shell.shiny.spinner;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
 
-public final class ShinySpinner implements AutoCloseable {
+public final class ShinySpinner implements AutoCloseable, ShinyComponent {
 	private final Shiny shiny;
 	private volatile boolean running = true;
 	private volatile String message;
