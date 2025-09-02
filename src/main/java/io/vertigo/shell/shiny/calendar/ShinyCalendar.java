@@ -10,6 +10,7 @@ import java.util.Locale;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
+import io.vertigo.shell.shiny.ShinyComponent;
 import io.vertigo.shell.shiny.table.ShinyBorder;
 
 public final class ShinyCalendar implements ShinyComponent {

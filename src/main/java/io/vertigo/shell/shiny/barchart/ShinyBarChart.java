@@ -5,6 +5,7 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
+import io.vertigo.shell.shiny.ShinyComponent;
 import io.vertigo.shell.shiny.utils.ShinyColor;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
@@ -14,6 +15,7 @@ public final class ShinyBarChart implements ShinyComponent {
 	private String[] barChartHeader;
 	private int[] barChartRow;
 	private ShinySortMode sortMode = ShinySortMode.NO;
+	private int maxBarLength; // Longueur de la barre en caractères
 
 	public ShinyBarChart(final Shiny shiny) {
 		Assertion.check().isNotNull(shiny);
@@ -23,6 +25,11 @@ public final class ShinyBarChart implements ShinyComponent {
 
 	public ShinyBarChart title(final String title) {
 		this.barChartTitle = title;
+		return this;
+	}
+
+	public ShinyBarChart length(final int length) {
+		this.maxBarLength = length;
 		return this;
 	}
 
@@ -96,7 +103,7 @@ public final class ShinyBarChart implements ShinyComponent {
 	 * @param chart Structure contenant le titre, les étiquettes (header) et les valeurs (rows).
 	 * @param maxBarLength Longueur maximale d'une barre en caractères (par défaut : 50).
 	 */
-	public void print(final int maxBarLength) {
+	public void print() {
 		sort();
 
 		// Trouver la valeur maximale pour normaliser les barres

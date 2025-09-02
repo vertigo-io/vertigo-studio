@@ -2,6 +2,7 @@ package io.vertigo.shell.shiny.title;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
+import io.vertigo.shell.shiny.ShinyComponent;
 import io.vertigo.shell.shiny.utils.ShinyColors;
 
 public final class ShinyTitle implements ShinyComponent {

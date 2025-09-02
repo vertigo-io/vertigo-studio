@@ -3,7 +3,7 @@ package io.vertigo.shell.shiny.spinner;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
 
-public final class ShinySpinner implements AutoCloseable, ShinyComponent {
+public final class ShinySpinner implements AutoCloseable {
 	private final Shiny shiny;
 	private volatile boolean running = true;
 	private volatile String message;
@@ -64,7 +64,7 @@ public final class ShinySpinner implements AutoCloseable, ShinyComponent {
 		 */
 		private void draw(final int i) {
 			final var frame = ShinySpinnerStyle.FRAMES[i % ShinySpinnerStyle.FRAMES.length];
-			shiny.getWriter().print("\r");
+			shiny.getWriter().print("\r"); //On revient au début de la ligne
 			shiny.getWriter().print(frame);
 			shiny.getWriter().print(" " + message);
 			shiny.getWriter().flush(); //On force le flush

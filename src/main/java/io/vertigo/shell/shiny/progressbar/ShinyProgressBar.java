@@ -2,6 +2,7 @@ package io.vertigo.shell.shiny.progressbar;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.shiny.Shiny;
+import io.vertigo.shell.shiny.ShinyComponent;
 
 public final class ShinyProgressBar implements ShinyComponent {
 	private final Shiny shiny;
