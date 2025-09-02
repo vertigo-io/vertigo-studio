@@ -35,14 +35,18 @@ public class ShinyAllComponentsTest {
 		testCalendar();
 		testFiglet();
 		testGauge();
+		testJson();
+		testList();
 		testProgressBar();
+		testRating();
 		testSparkline();
 		testSpinner();
 		testStatus();
 		testTable();
-		testTree();
 		testTextPath();
-		testJson();
+		testTitle();
+		testToggle();
+		testTree();
 
 		System.out.println(BLUE.bright() + "--- All Shiny Components Test Finished ---" + RESET);
 		scanner.close();
@@ -102,6 +106,29 @@ public class ShinyAllComponentsTest {
 		waitForEnter();
 	}
 
+	private static void testJson() {
+		System.out.println(CYAN + "Component: ShinyJson" + RESET);
+		System.out.println("Parameters: json='{\"name\": \"John Doe\", \"age\": 30, \"isStudent\": true}'");
+		final String json = """
+				{\"name\": \"John Doe\", \"age\": 30, \"isStudent\": true, \"address\": null}
+				""";
+		Shiny.json()
+				.json(json)
+				.print();
+		waitForEnter();
+	}
+
+	private static void testList() {
+		System.out.println(CYAN + "Component: ShinyList" + RESET);
+		System.out.println("Parameters: items=['Task 1', 'Task 2', 'Task 3']");
+		Shiny.list()
+				.addItem("Task 1")
+				.addItem("Task 2")
+				.addItem("Task 3")
+				.print();
+		waitForEnter();
+	}
+
 	private static void testProgressBar() {
 		System.out.println(CYAN + "Component: ShinyProgressBar" + RESET);
 		System.out.println("Parameters: total=100");
@@ -116,6 +143,16 @@ public class ShinyAllComponentsTest {
 			}
 		}
 		progressBar.finish();
+		waitForEnter();
+	}
+
+	private static void testRating() {
+		System.out.println(CYAN + "Component: ShinyRating" + RESET);
+		System.out.println("Parameters: rating=4, max=5");
+		Shiny.rating()
+				.value(4)
+				.maxValue(5)
+				.print();
 		waitForEnter();
 	}
 
@@ -165,17 +202,6 @@ public class ShinyAllComponentsTest {
 		waitForEnter();
 	}
 
-	private static void testTree() {
-		System.out.println(CYAN + "Component: ShinyTree" + RESET);
-		System.out.println("Parameters: label='Files', nodes=['src', 'main', 'file.txt'] with icons");
-		final var tree = Shiny.tree("Files");
-		tree.getRoot().addChild("src", FOLDER_OPEN)
-				.addChild("main", FOLDER_OPEN)
-				.addChild("file.txt", FILE);
-		tree.print();
-		waitForEnter();
-	}
-
 	private static void testTextPath() {
 		System.out.println(CYAN + "Component: ShinyTextPath" + RESET);
 		System.out.println("Parameters: path='/home/user/documents/report.pdf', custom colors");
@@ -188,15 +214,33 @@ public class ShinyAllComponentsTest {
 		waitForEnter();
 	}
 
-	private static void testJson() {
-		System.out.println(CYAN + "Component: ShinyJson" + RESET);
-		System.out.println("Parameters: json='{\"name\": \"John Doe\", \"age\": 30, \"isStudent\": true}'");
-		final String json = """
-				{"name": "John Doe", "age": 30, "isStudent": true, "address": null}
-				""";
-		Shiny.json()
-				.json(json)
+	private static void testTitle() {
+		System.out.println(CYAN + "Component: ShinyTitle" + RESET);
+		System.out.println("text: title='My Awesome Title', color=MAGENTA");
+		Shiny.title()
+				.text("My Awesome Title")
 				.print();
+		waitForEnter();
+	}
+
+	private static void testToggle() {
+		System.out.println(CYAN + "Component: ShinyToggle" + RESET);
+		System.out.println("Parameters: label='Enable Feature', enabled=true");
+		Shiny.toggle()
+				.label("Enable Feature")
+				.value(true)
+				.print();
+		waitForEnter();
+	}
+
+	private static void testTree() {
+		System.out.println(CYAN + "Component: ShinyTree" + RESET);
+		System.out.println("Parameters: label='Files', nodes=['src', 'main', 'file.txt'] with icons");
+		final var tree = Shiny.tree("Files");
+		tree.getRoot().addChild("src", FOLDER_OPEN)
+				.addChild("main", FOLDER_OPEN)
+				.addChild("file.txt", FILE);
+		tree.print();
 		waitForEnter();
 	}
 }
