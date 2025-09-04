@@ -124,6 +124,11 @@
 		    <artifactId>Java-WebSocket</artifactId>
 		    <version>1.5.6</version>
 		</dependency>
+		<dependency>
+        	<groupId>com.github.javaparser</groupId>
+        	<artifactId>javaparser-core</artifactId>
+	    	<version>3.27.0</version>
+    	</dependency>
 	</dependencies>
 	<build>
 		<plugins>
