@@ -39,9 +39,6 @@ final class DbModelScanner {
 	//			Pattern.compile(".*_uuid$", Pattern.CASE_INSENSITIVE) // Generic UUIDs might be sensitive if PII
 	//	);
 
-	// Maximum Levenshtein distance for considering a match (e.g., 2 allows for small variations)
-	private static final int MAX_LEVENSHTEIN_DISTANCE = 2;
-
 	static String sensitive(String columnName) {
 		String lowerCaseColumnName = columnName.toLowerCase();
 
@@ -58,43 +55,6 @@ final class DbModelScanner {
 		//				return "pattern: " + pattern.pattern();
 		//			}
 		//		}
-
-		// Step 3: Check Levenshtein distance for close matches
-		for (String keyword : SENSITIVE_KEYWORDS) {
-			if (keyword.length() >= 3) { // Only check for keywords longer than 2 characters
-				int distance = levenshteinDistance(lowerCaseColumnName, keyword);
-				if (distance <= MAX_LEVENSHTEIN_DISTANCE && distance > 0) {
-					return "levenshtein: " + keyword + " (distance: " + distance + ")";
-				}
-			}
-		}
-
 		return null; // Not sensitive
-	}
-
-	// Implementation of Levenshtein distance algorithm
-	private static int levenshteinDistance(String s1, String s2) {
-		int len1 = s1.length();
-		int len2 = s2.length();
-		int[][] dp = new int[len1 + 1][len2 + 1];
-
-		for (int i = 0; i <= len1; i++) {
-			dp[i][0] = i;
-		}
-		for (int j = 0; j <= len2; j++) {
-			dp[0][j] = j;
-		}
-
-		for (int i = 1; i <= len1; i++) {
-			for (int j = 1; j <= len2; j++) {
-				int cost = (s1.charAt(i - 1) == s2.charAt(j - 1)) ? 0 : 1;
-				dp[i][j] = Math.min(
-						Math.min(dp[i - 1][j] + 1, // Deletion
-								dp[i][j - 1] + 1), // Insertion
-						dp[i - 1][j - 1] + cost); // Substitution
-			}
-		}
-
-		return dp[len1][len2];
 	}
 }

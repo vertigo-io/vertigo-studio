@@ -1,4 +1,4 @@
-package io.vertigo.shell.systems.db.commands.analyze;
+package io.vertigo.shell.systems.db.commands.mermaid;
 
 import java.io.IOException;
 
@@ -10,7 +10,7 @@ import io.vertigo.shiny.mermaid.ShinyMermaidServer;
 import picocli.CommandLine.Command;
 
 @Command(name = "mermaid", description = "Analyze the model")
-public final class DbModelMermaidCommand implements ShellCommand {
+public final class DbMermaidCommand implements ShellCommand {
 	//classDiagram
 	//    Animal <-- Duck
 	//    Animal <-- Fish

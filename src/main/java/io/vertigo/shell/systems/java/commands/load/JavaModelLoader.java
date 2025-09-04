@@ -25,18 +25,17 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import io.vertigo.shell.systems.java.JavaModel;
 import io.vertigo.shell.systems.java.JavaModel.JavaPackage;
 
-public final class JavaModelLoader {
+final class JavaModelLoader {
 	private final JavaParser javaParser;
 
 	JavaModelLoader() {
 		ParserConfiguration configuration = new ParserConfiguration()
 				.setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_17);
-
 		javaParser = new JavaParser(configuration);
 	}
 
 	JavaModel loadModel(Path projectRoot) throws IOException {
-		JavaModel javaModel = new JavaModel();
+		final JavaModel javaModel = new JavaModel();
 		Map<String, JavaPackage> packageMap = new HashMap<>();
 
 		try (Stream<Path> paths = Files.walk(projectRoot)) {
@@ -73,13 +72,13 @@ public final class JavaModelLoader {
 
 		@Override
 		public void visit(ClassOrInterfaceDeclaration n, Void arg) {
-			String type = n.isInterface() ? "interface" : "class";
-			Set<String> modifiers = n.getModifiers().stream().map(Modifier::getKeyword).map(Modifier.Keyword::asString).collect(Collectors.toSet());
-			String superclass = n.getExtendedTypes().stream().findFirst().map(t -> t.getNameAsString()).orElse(null);
-			List<String> implementedInterfaces = n.getImplementedTypes().stream().map(t -> t.getNameAsString()).collect(Collectors.toList());
-			List<JavaModel.JavaMethod> methods = new ArrayList<>();
-			List<JavaModel.JavaField> fields = new ArrayList<>();
-			List<JavaModel.JavaImport> imports = new ArrayList<>();
+			final String type = n.isInterface() ? "interface" : "class";
+			final Set<String> modifiers = n.getModifiers().stream().map(Modifier::getKeyword).map(Modifier.Keyword::asString).collect(Collectors.toSet());
+			final String superclass = n.getExtendedTypes().stream().findFirst().map(t -> t.getNameAsString()).orElse(null);
+			final List<String> implementedInterfaces = n.getImplementedTypes().stream().map(t -> t.getNameAsString()).collect(Collectors.toList());
+			final List<JavaModel.JavaMethod> methods = new ArrayList<>();
+			final List<JavaModel.JavaField> fields = new ArrayList<>();
+			final List<JavaModel.JavaImport> imports = new ArrayList<>();
 
 			// Visit imports
 			n.findCompilationUnit().ifPresent(cu -> {
@@ -96,9 +95,9 @@ public final class JavaModelLoader {
 
 			// Visit methods
 			n.getMethods().forEach(method -> {
-				Set<String> methodModifiers = method.getModifiers().stream().map(Modifier::getKeyword).map(Modifier.Keyword::asString).collect(Collectors.toSet());
-				List<JavaModel.JavaVar> parameters = method.getParameters().stream().map(param -> new JavaModel.JavaVar(param.getNameAsString(), param.getTypeAsString())).collect(Collectors.toList());
-				List<JavaModel.JavaVar> localVariables = new ArrayList<>();
+				final Set<String> methodModifiers = method.getModifiers().stream().map(Modifier::getKeyword).map(Modifier.Keyword::asString).collect(Collectors.toSet());
+				final List<JavaModel.JavaVar> parameters = method.getParameters().stream().map(param -> new JavaModel.JavaVar(param.getNameAsString(), param.getTypeAsString())).collect(Collectors.toList());
+				final List<JavaModel.JavaVar> localVariables = new ArrayList<>();
 
 				// Visit local variables within method body
 				method.getBody().ifPresent(body -> {
@@ -111,7 +110,7 @@ public final class JavaModelLoader {
 				methods.add(new JavaModel.JavaMethod(method.getNameAsString(), method.getTypeAsString(), parameters, methodModifiers, localVariables));
 			});
 
-			JavaModel.JavaClass javaClass = new JavaModel.JavaClass(n.getNameAsString(), type, modifiers, superclass, implementedInterfaces, methods, fields, imports);
+			final JavaModel.JavaClass javaClass = new JavaModel.JavaClass(n.getNameAsString(), type, modifiers, superclass, implementedInterfaces, methods, fields, imports);
 			currentPackage.classes().add(javaClass); // Add to the package's list of classes
 
 			super.visit(n, arg);
@@ -119,10 +118,10 @@ public final class JavaModelLoader {
 
 		@Override
 		public void visit(EnumDeclaration n, Void arg) {
-			Set<String> modifiers = n.getModifiers().stream().map(Modifier::getKeyword).map(Modifier.Keyword::asString).collect(Collectors.toSet());
-			List<JavaModel.JavaMethod> methods = new ArrayList<>();
-			List<JavaModel.JavaField> fields = new ArrayList<>();
-			List<JavaModel.JavaImport> imports = new ArrayList<>();
+			final Set<String> modifiers = n.getModifiers().stream().map(Modifier::getKeyword).map(Modifier.Keyword::asString).collect(Collectors.toSet());
+			final List<JavaModel.JavaMethod> methods = new ArrayList<>();
+			final List<JavaModel.JavaField> fields = new ArrayList<>();
+			final List<JavaModel.JavaImport> imports = new ArrayList<>();
 
 			// Visit imports (enums can have imports)
 			n.findCompilationUnit().ifPresent(cu -> {
@@ -136,9 +135,9 @@ public final class JavaModelLoader {
 
 			// Visit methods (enums can have methods)
 			n.getMethods().forEach(method -> {
-				Set<String> methodModifiers = method.getModifiers().stream().map(Modifier::getKeyword).map(Modifier.Keyword::asString).collect(Collectors.toSet());
-				List<JavaModel.JavaVar> parameters = method.getParameters().stream().map(param -> new JavaModel.JavaVar(param.getNameAsString(), param.getTypeAsString())).collect(Collectors.toList());
-				List<JavaModel.JavaVar> localVariables = new ArrayList<>(); // Enums typically don't have local vars in their methods in the same way as classes
+				final Set<String> methodModifiers = method.getModifiers().stream().map(Modifier::getKeyword).map(Modifier.Keyword::asString).collect(Collectors.toSet());
+				final List<JavaModel.JavaVar> parameters = method.getParameters().stream().map(param -> new JavaModel.JavaVar(param.getNameAsString(), param.getTypeAsString())).collect(Collectors.toList());
+				final List<JavaModel.JavaVar> localVariables = new ArrayList<>(); // Enums typically don't have local vars in their methods in the same way as classes
 
 				method.getBody().ifPresent(body -> {
 					body.findAll(VariableDeclarationExpr.class).forEach(varDecl -> {
@@ -150,7 +149,7 @@ public final class JavaModelLoader {
 				methods.add(new JavaModel.JavaMethod(method.getNameAsString(), method.getTypeAsString(), parameters, methodModifiers, localVariables));
 			});
 
-			JavaModel.JavaClass javaClass = new JavaModel.JavaClass(n.getNameAsString(), "enum", modifiers, null, new ArrayList<>(), methods, fields, imports);
+			final JavaModel.JavaClass javaClass = new JavaModel.JavaClass(n.getNameAsString(), "enum", modifiers, null, new ArrayList<>(), methods, fields, imports);
 			currentPackage.classes().add(javaClass); // Add to the package's list of classes
 
 			super.visit(n, arg);

@@ -2,13 +2,13 @@ package io.vertigo.shell.systems.db.commands;
 
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.db.commands.analyze.DbAnalyzeCommand;
-import io.vertigo.shell.systems.db.commands.analyze.DbModelMermaidCommand;
 import io.vertigo.shell.systems.db.commands.cluster.DbClusterCommand;
 import io.vertigo.shell.systems.db.commands.connect.DbConnectCommand;
 import io.vertigo.shell.systems.db.commands.disconnect.DbDisconnectCommand;
 import io.vertigo.shell.systems.db.commands.labs.DbFancyCommand;
 import io.vertigo.shell.systems.db.commands.list.DbListCommand;
 import io.vertigo.shell.systems.db.commands.load.DbLoadCommand;
+import io.vertigo.shell.systems.db.commands.mermaid.DbMermaidCommand;
 import io.vertigo.shell.systems.db.commands.ping.DbPingCommand;
 import io.vertigo.shell.systems.db.commands.query.DbQueryCommand;
 import io.vertigo.shell.systems.db.commands.save.DbSaveCommand;
@@ -35,7 +35,7 @@ import picocli.CommandLine.Command;
 				//--- Analyzes, clusters...
 				DbClusterCommand.class,
 				DbAnalyzeCommand.class,
-				DbModelMermaidCommand.class,
+				DbMermaidCommand.class,
 				DbScanCommand.class,
 				//--- AI
 				DbFancyCommand.class
