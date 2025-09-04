@@ -19,6 +19,7 @@ import io.vertigo.shell.shiny.dataviz.status.ShinyStatus;
 import io.vertigo.shell.shiny.input.multiselection.ShinyMultiSelection;
 import io.vertigo.shell.shiny.live.progressbar.ShinyProgressBar;
 import io.vertigo.shell.shiny.live.spinner.ShinySpinner;
+import io.vertigo.shell.shiny.mermaid.ShinyMermaidServer;
 import io.vertigo.shell.shiny.text.figlet.ShinyFiglet;
 import io.vertigo.shell.shiny.text.textpath.ShinyTextPath;
 import io.vertigo.shell.shiny.text.title.ShinyTitle;
@@ -124,5 +125,10 @@ public final class Shiny {
 
 	public PrintWriter getWriter() {
 		return writer;
+	}
+
+	//-----
+	public static ShinyMermaidServer mermaid() {
+		return new ShinyMermaidServer(INSTANCE, 5656);
 	}
 }

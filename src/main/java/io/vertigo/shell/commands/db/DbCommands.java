@@ -8,6 +8,7 @@ import io.vertigo.shell.commands.db.jdbc.JdbcQueryCommand;
 import io.vertigo.shell.commands.db.jdbc.JdbcStatsCommand;
 import io.vertigo.shell.commands.db.model.ai.DbModelFancyCommand;
 import io.vertigo.shell.commands.db.model.analyze.DbModelAnalyzeCommand;
+import io.vertigo.shell.commands.db.model.analyze.DbModelMermaidCommand;
 import io.vertigo.shell.commands.db.model.cluster.DbModelClusterCommand;
 import io.vertigo.shell.commands.db.model.list.DbModelListCommand;
 import io.vertigo.shell.commands.db.model.store.DbModelLoadCommand;
@@ -33,6 +34,7 @@ import picocli.CommandLine.Command;
 				//--- Analyzes, clusters...
 				DbModelClusterCommand.class,
 				DbModelAnalyzeCommand.class,
+				DbModelMermaidCommand.class,
 				//--- AI
 				DbModelFancyCommand.class
 		})
