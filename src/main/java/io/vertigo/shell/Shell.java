@@ -14,7 +14,7 @@ import io.vertigo.shell.commands.WhoCommand;
 import io.vertigo.shell.commands.db.DbCommands;
 import io.vertigo.shell.commands.java.model.JavaCommands;
 import io.vertigo.shell.commands.studio.StudioCommands;
-import io.vertigo.shell.shiny.ShinyCommands;
+import io.vertigo.shiny.ShinyCommands;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 

@@ -6,8 +6,8 @@ import java.util.List;
 
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.commands.db.DbContext;
-import io.vertigo.shell.shiny.Shiny;
-import io.vertigo.shell.shiny.live.progressbar.ShinyProgressBar;
+import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.live.progressbar.ShinyProgressBar;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 

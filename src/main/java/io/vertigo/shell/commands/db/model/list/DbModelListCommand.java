@@ -9,10 +9,10 @@ import io.vertigo.shell.commands.db.model.DbModel;
 import io.vertigo.shell.commands.db.model.DbModel.JdbcColumn;
 import io.vertigo.shell.commands.db.model.DbModel.JdbcSchema;
 import io.vertigo.shell.commands.db.model.DbModel.JdbcTable;
-import io.vertigo.shell.shiny.Shiny;
-import io.vertigo.shell.shiny.color.ShinyColors;
-import io.vertigo.shell.shiny.data.tree.ShinyTree;
-import io.vertigo.shell.shiny.data.tree.ShinyTreeNode;
+import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.color.ShinyColors;
+import io.vertigo.shiny.data.tree.ShinyTree;
+import io.vertigo.shiny.data.tree.ShinyTreeNode;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 

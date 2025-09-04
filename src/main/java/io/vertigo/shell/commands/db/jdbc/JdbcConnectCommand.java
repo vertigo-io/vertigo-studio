@@ -8,7 +8,7 @@ import java.util.Properties;
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.commands.db.DbContext;
-import io.vertigo.shell.shiny.color.ShinyColors;
+import io.vertigo.shiny.color.ShinyColors;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 

@@ -5,7 +5,7 @@ import java.util.List;
 
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.ShellContext;
-import io.vertigo.shell.shiny.Shiny;
+import io.vertigo.shiny.Shiny;
 import io.vertigo.studio.source.Source;
 import picocli.CommandLine.Command;
 

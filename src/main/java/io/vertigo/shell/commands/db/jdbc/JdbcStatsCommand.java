@@ -11,7 +11,7 @@ import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.commands.db.DbContext;
 import io.vertigo.shell.commands.db.model.DbModel.JdbcSchema;
 import io.vertigo.shell.commands.db.model.DbModel.JdbcTable;
-import io.vertigo.shell.shiny.Shiny;
+import io.vertigo.shiny.Shiny;
 import picocli.CommandLine.Command;
 
 @Command(name = "stats", description = "List stats")

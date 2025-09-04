@@ -5,8 +5,8 @@ import java.io.IOException;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.commands.db.DbContext;
 import io.vertigo.shell.commands.db.model.DbModel;
-import io.vertigo.shell.shiny.Shiny;
-import io.vertigo.shell.shiny.mermaid.ShinyMermaidServer;
+import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.mermaid.ShinyMermaidServer;
 import picocli.CommandLine.Command;
 
 @Command(name = "mermaid", description = "Analyze the model")
