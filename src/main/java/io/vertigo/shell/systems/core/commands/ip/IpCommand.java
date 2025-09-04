@@ -1,4 +1,4 @@
-package io.vertigo.shell.systems.core.commands.who;
+package io.vertigo.shell.systems.core.commands.ip;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -6,9 +6,9 @@ import java.net.UnknownHostException;
 import io.vertigo.shell.ShellCommand;
 import picocli.CommandLine.Command;
 
-@Command(name = "who", description = "Displays the current user's IP address.")
+@Command(name = "ip", description = "Displays the local host's IP address.")
 
-public class WhoCommand implements ShellCommand {
+public class IpCommand implements ShellCommand {
 
 	@Override
 	public void run() {

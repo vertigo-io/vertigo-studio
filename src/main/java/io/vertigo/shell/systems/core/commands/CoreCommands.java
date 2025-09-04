@@ -4,8 +4,8 @@ import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.core.commands.exit.ExitCommand;
 import io.vertigo.shell.systems.core.commands.help.HelpCommand;
 import io.vertigo.shell.systems.core.commands.history.HistoryCommand;
+import io.vertigo.shell.systems.core.commands.ip.IpCommand;
 import io.vertigo.shell.systems.core.commands.uptime.UptimeCommand;
-import io.vertigo.shell.systems.core.commands.who.WhoCommand;
 import picocli.CommandLine.Command;
 
 @Command(
@@ -15,7 +15,7 @@ import picocli.CommandLine.Command;
 				ExitCommand.class,
 				UptimeCommand.class,
 				HistoryCommand.class,
-				WhoCommand.class,
+				IpCommand.class,
 				HelpCommand.class,
 		})
 
