@@ -6,15 +6,11 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import io.vertigo.shell.commands.ExitCommand;
-import io.vertigo.shell.commands.HelpCommand;
-import io.vertigo.shell.commands.HistoryCommand;
-import io.vertigo.shell.commands.UptimeCommand;
-import io.vertigo.shell.commands.WhoCommand;
-import io.vertigo.shell.commands.db.DbCommands;
-import io.vertigo.shell.commands.java.model.JavaCommands;
-import io.vertigo.shell.commands.studio.StudioCommands;
-import io.vertigo.shiny.ShinyCommands;
+import io.vertigo.shell.systems.core.commands.CoreCommands;
+import io.vertigo.shell.systems.db.commands.DbCommands;
+import io.vertigo.shell.systems.java.commands.JavaCommands;
+import io.vertigo.shell.systems.shiny.commands.ShinyCommands;
+import io.vertigo.shell.systems.studio.commands.StudioCommands;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
@@ -24,12 +20,8 @@ import picocli.CommandLine.Command;
 		version = "Shell 1.0",
 		description = "Vertigo Shell.",
 		subcommands = {
-				//--- Natives commands 
-				ExitCommand.class,
-				UptimeCommand.class,
-				HistoryCommand.class,
-				WhoCommand.class,
-				HelpCommand.class,
+				//--- Core commands 
+				CoreCommands.class,
 				//--- Db commands
 				DbCommands.class,
 				//--- Java commands
