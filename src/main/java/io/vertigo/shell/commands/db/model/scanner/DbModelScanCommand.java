@@ -11,15 +11,10 @@ import picocli.CommandLine.Command;
 
 @Command(name = "scan", description = "Scans DB model for columns potentially containing sensitive data.")
 public class DbModelScanCommand implements ShellCommand {
-	private DbModel mockDbModel;
-
-	// Constructor for Picocli
-	public DbModelScanCommand() {
-		mockDbModel = DbContext.model();
-	}
 
 	@Override
 	public void run() {
+		final DbModel mockDbModel = DbContext.model();
 		final ShinyTree resultsTree = Shiny.tree("Sensitive Data Scan Results");
 		final ShinyTreeNode root = resultsTree.getRoot();
 
@@ -46,7 +41,6 @@ public class DbModelScanCommand implements ShellCommand {
 		if (!sensitiveDataFound) {
 			root.addChild("No sensitive data found based on current patterns.", ShinyIcon.INFO);
 		}
-
 		resultsTree.print();
 	}
 

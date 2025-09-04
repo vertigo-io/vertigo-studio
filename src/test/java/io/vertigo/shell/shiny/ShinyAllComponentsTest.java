@@ -20,6 +20,7 @@ import io.vertigo.shell.shiny.data.table.ShinyBorder;
 import io.vertigo.shell.shiny.dataviz.barchart.ShinySortMode;
 import io.vertigo.shell.shiny.dataviz.status.ShinyStatus.StatusShape;
 import io.vertigo.shell.shiny.dataviz.status.ShinyStatus.StatusType;
+import io.vertigo.shell.shiny.input.multiselection.ShinyMultiSelection;
 import io.vertigo.shell.shiny.text.figlet.ShinyFigletFonts;
 
 public class ShinyAllComponentsTest {
@@ -37,7 +38,7 @@ public class ShinyAllComponentsTest {
 		testGauge();
 		testJson();
 		testList();
-		//		testMultiSelection();
+		testMultiSelection();
 		testProgressBar();
 		testRating();
 		testSparkline();
@@ -57,6 +58,21 @@ public class ShinyAllComponentsTest {
 		System.out.println(YELLOW + "Press Enter to continue..." + RESET);
 		scanner.nextLine();
 		System.out.println();
+	}
+
+	private static void testMultiSelection() {
+		System.out.println(CYAN + "Component: ShinyMultiSelection" + RESET);
+		System.out.println("Parameters: title='Choose your favorite fruits:', options=['Apple', 'Banana', 'Cherry'], rows=[100, 120, 90], sort=VALUE_DESC, maxBarLength=50");
+
+		final ShinyMultiSelection multiSelection = Shiny.multiSelection()
+				.title("Choose your favorite fruits:")
+				.options("Apple", "Banana", "Cherry")
+				.strict();
+
+		multiSelection.print();
+
+		final List<String> selected = multiSelection.getSelectedOptions();
+		System.out.println(selected);
 	}
 
 	private static void testBarChart() {
