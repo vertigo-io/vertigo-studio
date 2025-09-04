@@ -1,10 +1,10 @@
-package io.vertigo.shell.shiny.input.text;
+package io.vertigo.shell.shiny;
 
 import java.util.List;
 import java.util.Scanner;
 
-import io.vertigo.shell.shiny.Shiny;
 import io.vertigo.shell.shiny.color.ShinyColors;
+import io.vertigo.shell.shiny.input.text.ShinyInputText;
 
 public class ShinyInputTextTest {
 
