@@ -1,8 +1,16 @@
 package io.vertigo.shiny;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
+import io.vertigo.shell.ShellContext;
+
 public final class ShinyTheme {
 	private boolean asciiTheme = false; //vs unicode
 	private boolean squareTheme = false; //vs rounded
+	//Values by default
+	public final NumberFormat numberFormat = NumberFormat.getNumberInstance(ShellContext.LOCALE);
+	private Locale locale = ShellContext.LOCALE;
 
 	public ShinyTheme ascii(boolean ascii) {
 		asciiTheme = ascii;
@@ -31,4 +39,13 @@ public final class ShinyTheme {
 	public boolean square() {
 		return squareTheme;
 	}
+
+	public NumberFormat numberFormat() {
+		return numberFormat;
+	}
+
+	public Locale locale() {
+		return locale;
+	}
+
 }

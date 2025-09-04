@@ -2,10 +2,7 @@ package io.vertigo.shiny;
 
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.text.NumberFormat;
-import java.util.Locale;
 
-import io.vertigo.shell.ShellContext;
 import io.vertigo.shiny.data.calendar.ShinyCalendar;
 import io.vertigo.shiny.data.json.ShinyJson;
 import io.vertigo.shiny.data.list.ShinyList;
@@ -27,9 +24,6 @@ import io.vertigo.shiny.text.title.ShinyTitle;
 import io.vertigo.shiny.text.toggle.ShinyToggle;
 
 public final class Shiny {
-	//Values by default
-	public final NumberFormat numberFormat = NumberFormat.getNumberInstance(ShellContext.LOCALE);
-	private Locale locale = ShellContext.LOCALE;
 	private PrintWriter writer = new PrintWriter(System.out, true, StandardCharsets.UTF_8);
 
 	private static final Shiny INSTANCE = new Shiny();
@@ -114,14 +108,6 @@ public final class Shiny {
 
 	public static ShinyInputText inputText() {
 		return new ShinyInputText(INSTANCE);
-	}
-
-	public NumberFormat getNumberFormat() {
-		return numberFormat;
-	}
-
-	public Locale getLocale() {
-		return locale;
 	}
 
 	public static ShinyTheme theme() {

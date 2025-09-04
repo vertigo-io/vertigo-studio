@@ -23,7 +23,7 @@ public final class ShinyCalendar implements ShinyComponent {
 	public ShinyCalendar(final Shiny shiny) {
 		Assertion.check().isNotNull(shiny);
 		//---
-		this.calendarLocale = shiny.getLocale();
+		this.calendarLocale = Shiny.theme().locale();
 		final LocalDate now = LocalDate.now();
 		this.year = now.getYear();
 		this.month = now.getMonthValue();

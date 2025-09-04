@@ -31,7 +31,7 @@ public final class ShinyTable implements ShinyComponent {
 		Assertion.check().isNotNull(shiny);
 		//---
 		this.shiny = shiny;
-		this.numberFormat = shiny.getNumberFormat();
+		this.numberFormat = Shiny.theme().numberFormat();
 	}
 
 	/**
