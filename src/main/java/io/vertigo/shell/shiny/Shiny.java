@@ -17,6 +17,7 @@ import io.vertigo.shell.shiny.dataviz.rating.ShinyRating;
 import io.vertigo.shell.shiny.dataviz.sparkline.ShinySparkline;
 import io.vertigo.shell.shiny.dataviz.status.ShinyStatus;
 import io.vertigo.shell.shiny.input.multiselection.ShinyMultiSelection;
+import io.vertigo.shell.shiny.input.text.ShinyInputText;
 import io.vertigo.shell.shiny.live.progressbar.ShinyProgressBar;
 import io.vertigo.shell.shiny.live.spinner.ShinySpinner;
 import io.vertigo.shell.shiny.mermaid.ShinyMermaidServer;
@@ -109,6 +110,10 @@ public final class Shiny {
 
 	public static ShinyMultiSelection multiSelection() {
 		return new ShinyMultiSelection(INSTANCE);
+	}
+
+	public static ShinyInputText inputText() {
+		return new ShinyInputText(INSTANCE);
 	}
 
 	public NumberFormat getNumberFormat() {

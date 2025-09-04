@@ -36,6 +36,7 @@ public class ShinyAllComponentsTest {
 		testCalendar();
 		testFiglet();
 		testGauge();
+		testInputText();
 		testJson();
 		testList();
 		testMultiSelection();
@@ -261,6 +262,13 @@ public class ShinyAllComponentsTest {
 				.addChild("main", FOLDER_OPEN)
 				.addChild("file.txt", FILE);
 		tree.print();
+		waitForEnter();
+	}
+
+	private static void testInputText() {
+		System.out.println(CYAN + "Component: ShinyInputText" + RESET);
+		System.out.println("Parameters: label='Enter your name'");
+		Shiny.inputText().label("Enter your name").print();
 		waitForEnter();
 	}
 }
