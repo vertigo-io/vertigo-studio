@@ -11,6 +11,7 @@ import io.vertigo.shell.commands.db.model.analyze.DbModelAnalyzeCommand;
 import io.vertigo.shell.commands.db.model.analyze.DbModelMermaidCommand;
 import io.vertigo.shell.commands.db.model.cluster.DbModelClusterCommand;
 import io.vertigo.shell.commands.db.model.list.DbModelListCommand;
+import io.vertigo.shell.commands.db.model.scanner.DbModelScanCommand;
 import io.vertigo.shell.commands.db.model.store.DbModelLoadCommand;
 import io.vertigo.shell.commands.db.model.store.DbModelSaveCommand;
 import picocli.CommandLine.Command;
@@ -35,6 +36,7 @@ import picocli.CommandLine.Command;
 				DbModelClusterCommand.class,
 				DbModelAnalyzeCommand.class,
 				DbModelMermaidCommand.class,
+				DbModelScanCommand.class,
 				//--- AI
 				DbModelFancyCommand.class
 		})
