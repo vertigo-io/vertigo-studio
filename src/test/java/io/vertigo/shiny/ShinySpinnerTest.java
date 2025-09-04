@@ -1,7 +1,7 @@
 package io.vertigo.shiny;
 
 import io.vertigo.shiny.color.ShinyColors;
-import io.vertigo.shiny.live.spinner.ShinySpinner;
+import io.vertigo.shiny.components.live.spinner.ShinySpinner;
 
 public class ShinySpinnerTest {
 	public static void main(final String[] args) throws Exception {

@@ -5,8 +5,8 @@ import io.vertigo.shell.systems.java.JavaContext;
 import io.vertigo.shell.systems.java.JavaModel.JavaClass;
 import io.vertigo.shell.systems.java.JavaModel.JavaPackage;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.data.tree.ShinyTree;
-import io.vertigo.shiny.data.tree.ShinyTreeNode;
+import io.vertigo.shiny.components.data.tree.ShinyTree;
+import io.vertigo.shiny.components.data.tree.ShinyTreeNode;
 import picocli.CommandLine.Command;
 
 @Command(name = "list", description = "Display elements of the model")

@@ -3,8 +3,8 @@ package io.vertigo.shiny;
 import java.util.List;
 
 import io.vertigo.shiny.color.ShinyColors;
-import io.vertigo.shiny.data.table.ShinyBorder;
-import io.vertigo.shiny.data.table.ShinyTable;
+import io.vertigo.shiny.components.data.table.ShinyBorder;
+import io.vertigo.shiny.components.data.table.ShinyTable;
 
 public class ShinyTableTest {
 

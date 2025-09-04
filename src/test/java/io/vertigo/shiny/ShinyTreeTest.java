@@ -1,23 +1,23 @@
 package io.vertigo.shiny;
 
-import static io.vertigo.shiny.data.tree.ShinyIcon.ARROW_DOWN;
-import static io.vertigo.shiny.data.tree.ShinyIcon.ARROW_LEFT;
-import static io.vertigo.shiny.data.tree.ShinyIcon.ARROW_RIGHT;
-import static io.vertigo.shiny.data.tree.ShinyIcon.ARROW_UP;
-import static io.vertigo.shiny.data.tree.ShinyIcon.CLOCK;
-import static io.vertigo.shiny.data.tree.ShinyIcon.DB;
-import static io.vertigo.shiny.data.tree.ShinyIcon.ERROR;
-import static io.vertigo.shiny.data.tree.ShinyIcon.FILE;
-import static io.vertigo.shiny.data.tree.ShinyIcon.FOLDER_CLOSED;
-import static io.vertigo.shiny.data.tree.ShinyIcon.FOLDER_OPEN;
-import static io.vertigo.shiny.data.tree.ShinyIcon.HEART;
-import static io.vertigo.shiny.data.tree.ShinyIcon.INFO;
-import static io.vertigo.shiny.data.tree.ShinyIcon.QUESTION;
-import static io.vertigo.shiny.data.tree.ShinyIcon.SMILEY;
-import static io.vertigo.shiny.data.tree.ShinyIcon.STAR;
-import static io.vertigo.shiny.data.tree.ShinyIcon.SUCCESS;
-import static io.vertigo.shiny.data.tree.ShinyIcon.USER;
-import static io.vertigo.shiny.data.tree.ShinyIcon.WARNING;
+import static io.vertigo.shiny.components.data.tree.ShinyIcon.ARROW_DOWN;
+import static io.vertigo.shiny.components.data.tree.ShinyIcon.ARROW_LEFT;
+import static io.vertigo.shiny.components.data.tree.ShinyIcon.ARROW_RIGHT;
+import static io.vertigo.shiny.components.data.tree.ShinyIcon.ARROW_UP;
+import static io.vertigo.shiny.components.data.tree.ShinyIcon.CLOCK;
+import static io.vertigo.shiny.components.data.tree.ShinyIcon.DB;
+import static io.vertigo.shiny.components.data.tree.ShinyIcon.ERROR;
+import static io.vertigo.shiny.components.data.tree.ShinyIcon.FILE;
+import static io.vertigo.shiny.components.data.tree.ShinyIcon.FOLDER_CLOSED;
+import static io.vertigo.shiny.components.data.tree.ShinyIcon.FOLDER_OPEN;
+import static io.vertigo.shiny.components.data.tree.ShinyIcon.HEART;
+import static io.vertigo.shiny.components.data.tree.ShinyIcon.INFO;
+import static io.vertigo.shiny.components.data.tree.ShinyIcon.QUESTION;
+import static io.vertigo.shiny.components.data.tree.ShinyIcon.SMILEY;
+import static io.vertigo.shiny.components.data.tree.ShinyIcon.STAR;
+import static io.vertigo.shiny.components.data.tree.ShinyIcon.SUCCESS;
+import static io.vertigo.shiny.components.data.tree.ShinyIcon.USER;
+import static io.vertigo.shiny.components.data.tree.ShinyIcon.WARNING;
 
 import io.vertigo.shiny.color.ShinyColors;
 

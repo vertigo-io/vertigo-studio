@@ -4,9 +4,9 @@ import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.db.DbContext;
 import io.vertigo.shell.systems.db.DbModel;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.data.tree.ShinyIcon;
-import io.vertigo.shiny.data.tree.ShinyTree;
-import io.vertigo.shiny.data.tree.ShinyTreeNode;
+import io.vertigo.shiny.components.data.tree.ShinyIcon;
+import io.vertigo.shiny.components.data.tree.ShinyTree;
+import io.vertigo.shiny.components.data.tree.ShinyTreeNode;
 import picocli.CommandLine.Command;
 
 @Command(name = "scan", description = "Scans DB model for columns potentially containing sensitive data.")

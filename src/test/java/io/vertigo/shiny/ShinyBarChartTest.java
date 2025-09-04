@@ -1,7 +1,7 @@
 package io.vertigo.shiny;
 
 import io.vertigo.shiny.color.ShinyColors;
-import io.vertigo.shiny.dataviz.barchart.ShinySortMode;
+import io.vertigo.shiny.components.dataviz.barchart.ShinySortMode;
 
 public class ShinyBarChartTest {
 	public static void main(final String[] args) {

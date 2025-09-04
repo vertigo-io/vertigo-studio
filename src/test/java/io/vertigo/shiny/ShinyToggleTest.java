@@ -1,7 +1,7 @@
 package io.vertigo.shiny;
 
 import io.vertigo.shiny.color.ShinyColors;
-import io.vertigo.shiny.text.toggle.ShinyToggleStyle;
+import io.vertigo.shiny.components.text.toggle.ShinyToggleStyle;
 
 public class ShinyToggleTest {
 

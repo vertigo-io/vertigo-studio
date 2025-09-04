@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import io.vertigo.shiny.color.ShinyColors;
-import io.vertigo.shiny.input.text.ShinyInputText;
+import io.vertigo.shiny.components.input.text.ShinyInputText;
 
 public class ShinyInputTextTest {
 

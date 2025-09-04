@@ -7,8 +7,8 @@ import static io.vertigo.shiny.color.ShinyColors.MAGENTA;
 import static io.vertigo.shiny.color.ShinyColors.RED;
 import static io.vertigo.shiny.color.ShinyColors.RESET;
 import static io.vertigo.shiny.color.ShinyColors.YELLOW;
-import static io.vertigo.shiny.data.tree.ShinyIcon.FILE;
-import static io.vertigo.shiny.data.tree.ShinyIcon.FOLDER_OPEN;
+import static io.vertigo.shiny.components.data.tree.ShinyIcon.FILE;
+import static io.vertigo.shiny.components.data.tree.ShinyIcon.FOLDER_OPEN;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -16,12 +16,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
-import io.vertigo.shiny.data.table.ShinyBorder;
-import io.vertigo.shiny.dataviz.barchart.ShinySortMode;
-import io.vertigo.shiny.dataviz.status.ShinyStatus.StatusShape;
-import io.vertigo.shiny.dataviz.status.ShinyStatus.StatusType;
-import io.vertigo.shiny.input.multiselection.ShinyMultiSelection;
-import io.vertigo.shiny.text.figlet.ShinyFigletFonts;
+import io.vertigo.shiny.components.data.table.ShinyBorder;
+import io.vertigo.shiny.components.dataviz.barchart.ShinySortMode;
+import io.vertigo.shiny.components.dataviz.status.ShinyStatus.StatusShape;
+import io.vertigo.shiny.components.dataviz.status.ShinyStatus.StatusType;
+import io.vertigo.shiny.components.input.multiselection.ShinyMultiSelection;
+import io.vertigo.shiny.components.text.figlet.ShinyFigletFonts;
 
 public class ShinyAllComponentsTest {
 

@@ -6,7 +6,7 @@ import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.db.DbContext;
 import io.vertigo.shell.systems.db.commands.cluster.DbCluster.JdbcCluster;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.data.tree.ShinyTree;
+import io.vertigo.shiny.components.data.tree.ShinyTree;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 

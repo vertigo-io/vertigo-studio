@@ -11,8 +11,8 @@ import io.vertigo.shell.systems.db.DbModel.JdbcSchema;
 import io.vertigo.shell.systems.db.DbModel.JdbcTable;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.color.ShinyColors;
-import io.vertigo.shiny.data.tree.ShinyTree;
-import io.vertigo.shiny.data.tree.ShinyTreeNode;
+import io.vertigo.shiny.components.data.tree.ShinyTree;
+import io.vertigo.shiny.components.data.tree.ShinyTreeNode;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 

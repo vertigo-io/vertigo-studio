@@ -3,8 +3,8 @@ package io.vertigo.shiny;
 import java.util.List;
 
 import io.vertigo.shiny.color.ShinyColors;
-import io.vertigo.shiny.dataviz.status.ShinyStatus.StatusShape;
-import io.vertigo.shiny.dataviz.status.ShinyStatus.StatusType;
+import io.vertigo.shiny.components.dataviz.status.ShinyStatus.StatusShape;
+import io.vertigo.shiny.components.dataviz.status.ShinyStatus.StatusType;
 
 public class ShinyStatusTest {
 

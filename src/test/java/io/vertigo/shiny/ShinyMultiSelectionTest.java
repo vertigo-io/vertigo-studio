@@ -2,7 +2,7 @@ package io.vertigo.shiny;
 
 import java.util.List;
 
-import io.vertigo.shiny.input.multiselection.ShinyMultiSelection;
+import io.vertigo.shiny.components.input.multiselection.ShinyMultiSelection;
 
 public class ShinyMultiSelectionTest {
 	public static void main(final String[] args) {
