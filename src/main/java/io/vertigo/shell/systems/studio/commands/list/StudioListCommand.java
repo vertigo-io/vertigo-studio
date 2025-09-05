@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import io.vertigo.shell.ShellCommand;
-import io.vertigo.shell.ShellContext;
+import io.vertigo.shell.systems.studio.StudioContext;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
@@ -34,7 +34,7 @@ public final class StudioListCommand implements ShellCommand {
 
 	@Override
 	public void run() {
-		final Notebook notebook = VertigoStudioMda.read(ShellContext.notebookConfig);
+		final Notebook notebook = VertigoStudioMda.read(StudioContext.notebookConfig);
 		final List<Sketch> sketches = notebook.getAll()
 				.stream()
 				.filter(sketch -> filter(sketch))

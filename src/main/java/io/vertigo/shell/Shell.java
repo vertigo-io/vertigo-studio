@@ -6,8 +6,15 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import io.vertigo.shell.systems.core.commands.CoreCommands;
+import io.vertigo.shell.systems.core.commands.exit.ExitCommand;
+import io.vertigo.shell.systems.core.commands.help.HelpCommand;
+import io.vertigo.shell.systems.core.commands.history.HistoryCommand;
+import io.vertigo.shell.systems.core.commands.ip.IpCommand;
+import io.vertigo.shell.systems.core.commands.uptime.UptimeCommand;
 import io.vertigo.shell.systems.db.commands.DbCommands;
+import io.vertigo.shell.systems.file.commands.cd.FileCdCommand;
+import io.vertigo.shell.systems.file.commands.ls.FileLsCommand;
+import io.vertigo.shell.systems.file.commands.pwd.FilePwdCommand;
 import io.vertigo.shell.systems.java.commands.JavaCommands;
 import io.vertigo.shell.systems.shiny.commands.ShinyCommands;
 import io.vertigo.shell.systems.studio.commands.StudioCommands;
@@ -20,8 +27,6 @@ import picocli.CommandLine.Command;
 		version = "Shell 1.0",
 		description = "Vertigo Shell.",
 		subcommands = {
-				//--- Core commands 
-				CoreCommands.class,
 				//--- Db commands
 				DbCommands.class,
 				//--- Java commands
@@ -29,7 +34,19 @@ import picocli.CommandLine.Command;
 				//--- Studio commands 
 				StudioCommands.class,
 				//--- Shiny commands
-				ShinyCommands.class
+				ShinyCommands.class,
+				//=================
+				//--- Core commands
+				//=================
+				ExitCommand.class,
+				UptimeCommand.class,
+				HistoryCommand.class,
+				IpCommand.class,
+				HelpCommand.class,
+				//-----File Commands
+				FileCdCommand.class,
+				FileLsCommand.class,
+				FilePwdCommand.class
 		})
 public final class Shell implements Runnable {
 	//	private final Instant startTime = Instant.now();

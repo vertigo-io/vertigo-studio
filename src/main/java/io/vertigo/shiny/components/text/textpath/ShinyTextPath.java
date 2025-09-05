@@ -1,5 +1,6 @@
 package io.vertigo.shiny.components.text.textpath;
 
+import java.nio.file.Path;
 import java.util.regex.Pattern; // New import
 
 import io.vertigo.core.lang.Assertion;
@@ -10,7 +11,7 @@ import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyTextPath implements ShinyComponent {
 	private final Shiny shiny;
-	private String path;
+	private String textPath;
 	private String separator = "/";
 	private ShinyColor rootColor = ShinyColors.GREEN;
 	private ShinyColor nodeColor = ShinyColors.YELLOW;
@@ -23,8 +24,13 @@ public final class ShinyTextPath implements ShinyComponent {
 		this.shiny = shiny;
 	}
 
-	public ShinyTextPath path(final String textPath) {
-		this.path = textPath;
+	public ShinyTextPath path(final Path path) {
+		this.textPath = path.normalize().toString();
+		return this;
+	}
+
+	public ShinyTextPath path(final String path) {
+		this.textPath = path;
 		return this;
 	}
 
@@ -54,12 +60,12 @@ public final class ShinyTextPath implements ShinyComponent {
 	}
 
 	public void print() {
-		Assertion.check().isNotBlank(path, "Path cannot be blank");
+		Assertion.check().isNotBlank(textPath, "Path cannot be blank");
 		//---
 		final StringBuilder coloredPath = new StringBuilder();
-		final String[] parts = path.split(Pattern.quote(separator)); // Modified line
+		final String[] parts = textPath.split(Pattern.quote(separator)); // Modified line
 
-		final boolean relative = path.startsWith(separator);
+		final boolean relative = textPath.startsWith(separator);
 
 		if (relative) {
 			coloredPath.append(rootColor).append(separator).append(ShinyColors.RESET);

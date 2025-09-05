@@ -1,7 +1,7 @@
 package io.vertigo.shell.systems.studio.commands.generate;
 
 import io.vertigo.shell.ShellCommand;
-import io.vertigo.shell.ShellContext;
+import io.vertigo.shell.systems.studio.StudioContext;
 import io.vertigo.studio.tools.VertigoStudioMda;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -18,7 +18,7 @@ public final class StudioGenerateCommand implements ShellCommand {
 		if (help) {
 			System.out.println("Help: Use this command to generate source files.");
 		} else {
-			VertigoStudioMda.generate(ShellContext.notebookConfig);
+			VertigoStudioMda.generate(StudioContext.notebookConfig);
 		}
 	}
 

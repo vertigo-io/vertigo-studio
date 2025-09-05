@@ -1,7 +1,7 @@
 package io.vertigo.shell.systems.studio.commands.clean;
 
 import io.vertigo.shell.ShellCommand;
-import io.vertigo.shell.ShellContext;
+import io.vertigo.shell.systems.studio.StudioContext;
 import io.vertigo.studio.tools.VertigoStudioMda;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -19,7 +19,7 @@ public final class StudioCleanCommand implements ShellCommand {
 		if (help) {
 			System.out.println("Help: Use this command to clean all generated files.");
 		} else {
-			VertigoStudioMda.clean(ShellContext.notebookConfig);
+			VertigoStudioMda.clean(StudioContext.notebookConfig);
 		}
 	}
 

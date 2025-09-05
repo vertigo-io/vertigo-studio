@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.vertigo.shell.ShellCommand;
-import io.vertigo.shell.ShellContext;
+import io.vertigo.shell.systems.studio.StudioContext;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.studio.source.Source;
 import picocli.CommandLine.Command;
@@ -14,7 +14,7 @@ public final class StudioSourcesCommand implements ShellCommand {
 
 	@Override
 	public void run() {
-		final List<Source> sources = ShellContext.notebookConfig.sources();
+		final List<Source> sources = StudioContext.notebookConfig.sources();
 		final List<String[]> rows = new ArrayList<>();
 		for (final Source source : sources) {
 			final String[] row = new String[2];
