@@ -1,7 +1,8 @@
-package io.vertigo.shiny;
+package io.vertigo.shiny.components;
 
-import io.vertigo.shiny.color.ShinyColors;
+import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.text.toggle.ShinyToggleStyle;
+import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyToggleTest {
 
@@ -15,7 +16,7 @@ public class ShinyToggleTest {
 	}
 
 	private static void testBasicToggles() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Basic Toggles ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Basic Toggles ---"));
 
 		Shiny.toggle()
 				.label("WiFi Connection")
@@ -36,7 +37,7 @@ public class ShinyToggleTest {
 	}
 
 	private static void testDifferentStyles() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Different Toggle Styles ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Different Toggle Styles ---"));
 
 		Shiny.toggle()
 				.label("Classic Style")
@@ -78,7 +79,7 @@ public class ShinyToggleTest {
 	}
 
 	private static void testCustomization() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Customized Toggles ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Customized Toggles ---"));
 
 		Shiny.toggle()
 				.label("Custom Colors")
@@ -114,7 +115,7 @@ public class ShinyToggleTest {
 
 	/*	private static void testMultipleToggles() {
 			System.out.println(ShinyColors.BLUE_BRIGHT + "--- Multiple Toggles (Aligned) ---" + ShinyColors.RESET);
-
+	
 			final Map<String, Boolean> settings = new LinkedHashMap<>();
 			settings.put("Auto-save", true);
 			settings.put("Dark Mode", false);
@@ -122,14 +123,14 @@ public class ShinyToggleTest {
 			settings.put("Sound Effects", false);
 			settings.put("Auto-update", true);
 			settings.put("Analytics", false);
-
+	
 			ShinyToggle.printMultiple(Shiny.getInstance(), settings, ShinyToggleStyle.TOGGLE);
 			System.out.println();
 		}
-
+	
 		private static void testDashboards() {
 			System.out.println(ShinyColors.BLUE_BRIGHT + "--- Toggle Dashboards ---" + ShinyColors.RESET);
-
+	
 			// System Status Dashboard
 			final Map<String, Boolean> systemStatus = new LinkedHashMap<>();
 			systemStatus.put("CPU", true);
@@ -138,9 +139,9 @@ public class ShinyToggleTest {
 			systemStatus.put("Network", true);
 			systemStatus.put("Database", false);
 			systemStatus.put("Cache", true);
-
+	
 			ShinyToggle.printDashboard(Shiny.getInstance(), "System Health Monitor", systemStatus, ShinyToggleStyle.STATUS);
-
+	
 			// Feature Flags Dashboard
 			final Map<String, Boolean> featureFlags = new LinkedHashMap<>();
 			featureFlags.put("New UI", true);
@@ -148,9 +149,9 @@ public class ShinyToggleTest {
 			featureFlags.put("A/B Testing", true);
 			featureFlags.put("Debug Mode", false);
 			featureFlags.put("Maintenance", false);
-
+	
 			ShinyToggle.printDashboard(Shiny.getInstance(), "Feature Flags", featureFlags, ShinyToggleStyle.SWITCH);
-
+	
 			// User Preferences Dashboard
 			final Map<String, Boolean> userPrefs = new LinkedHashMap<>();
 			userPrefs.put("Email Notifications", true);
@@ -158,26 +159,26 @@ public class ShinyToggleTest {
 			userPrefs.put("Marketing Emails", false);
 			userPrefs.put("Weekly Reports", true);
 			userPrefs.put("Security Alerts", true);
-
+	
 			ShinyToggle.printDashboard(Shiny.getInstance(), "User Preferences", userPrefs, ShinyToggleStyle.CHECK);
 		}
-
+	
 		private static void testEdgeCases() {
 			System.out.println(ShinyColors.BLUE_BRIGHT + "--- Toggle Edge Cases ---" + ShinyColors.RESET);
-
+	
 			// Toggle without label
 			Shiny.toggle()
 					.value(true)
 					.style(ShinyToggleStyle.CLASSIC)
 					.print();
-
+	
 			// Toggle with empty label
 			Shiny.toggle()
 					.label("")
 					.value(false)
 					.style(ShinyToggleStyle.SWITCH)
 					.print();
-
+	
 			// Toggle with very long label
 			Shiny.toggle()
 					.label("This is a very long label to test text wrapping and alignment")
@@ -185,7 +186,7 @@ public class ShinyToggleTest {
 					.style(ShinyToggleStyle.LIGHT)
 					.showBox(true)
 					.print();
-
+	
 			// Multiple styles in sequence
 			System.out.println("\nAll styles showcase:");
 			for (ShinyToggleStyle style : ShinyToggleStyle.values()) {
@@ -195,7 +196,7 @@ public class ShinyToggleTest {
 						.style(style)
 						.print();
 			}
-
+	
 			System.out.println("\nAll styles OFF:");
 			for (ShinyToggleStyle style : ShinyToggleStyle.values()) {
 				Shiny.toggle()
@@ -204,7 +205,7 @@ public class ShinyToggleTest {
 						.style(style)
 						.print();
 			}
-
+	
 			System.out.println();
 		}
 		*/

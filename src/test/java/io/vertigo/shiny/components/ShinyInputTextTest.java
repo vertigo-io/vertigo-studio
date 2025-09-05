@@ -1,17 +1,18 @@
-package io.vertigo.shiny;
+package io.vertigo.shiny.components;
 
 import java.util.List;
 import java.util.Scanner;
 
-import io.vertigo.shiny.color.ShinyColors;
+import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.input.text.ShinyInputText;
+import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyInputTextTest {
 
 	private static Scanner scanner = new Scanner(System.in);
 
 	public static void main(final String[] args) {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Starting ShinyInputText Component Test ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT + "--- Starting ShinyInputText Component Test ---" + ShinyColors.RESET);
 		System.out.println("Follow the prompts to test different input scenarios.");
 		System.out.println();
 
@@ -22,7 +23,7 @@ public class ShinyInputTextTest {
 		testSuggestions();
 		testSecretInput();
 
-		System.out.println(ShinyColors.BLUE.bright() + "--- ShinyInputText Component Test Finished ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT + "--- ShinyInputText Component Test Finished ---" + ShinyColors.RESET);
 		scanner.close();
 	}
 

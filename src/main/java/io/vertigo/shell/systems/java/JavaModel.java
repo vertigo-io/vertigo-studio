@@ -11,25 +11,43 @@ public record JavaModel(List<JavaPackage> packages) {
 	}
 
 	// Nested records
-	public record JavaPackage(String name, List<JavaClass> classes) {
+	public record JavaPackage(
+			String name,
+			List<JavaClass> classes) {
 		public JavaPackage(String name) {
 			this(name, new ArrayList<>());
 		}
 	}
 
-	public record JavaClass(String name, String type, Set<String> modifiers, String superclass, List<String> implementedInterfaces, List<JavaMethod> methods, List<JavaField> fields, List<JavaImport> imports) {
+	public record JavaClass(
+			String name,
+			String type,
+			Set<String> modifiers,
+			String superclass,
+			List<String> implementedInterfaces,
+			List<JavaMethod> methods,
+			List<JavaField> fields,
+			List<JavaImport> imports) {
 		public JavaClass(String name, String type) {
 			this(name, type, new HashSet<>(), null, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 		}
 	}
 
-	public record JavaMethod(String name, String returnType, List<JavaVar> parameters, Set<String> modifiers, List<JavaVar> localVariables) {
+	public record JavaMethod(
+			String name,
+			String returnType,
+			List<JavaVar> parameters,
+			Set<String> modifiers,
+			List<JavaVar> localVariables) {
 		public JavaMethod(String name, String returnType) {
 			this(name, returnType, new ArrayList<>(), new HashSet<>(), new ArrayList<>());
 		}
 	}
 
-	public record JavaField(String name, String type, Set<String> modifiers) {
+	public record JavaField(
+			String name,
+			String type,
+			Set<String> modifiers) {
 		public JavaField(String name, String type) {
 			this(name, type, new HashSet<>());
 		}

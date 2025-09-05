@@ -1,10 +1,11 @@
-package io.vertigo.shiny;
+package io.vertigo.shiny.components;
 
 import java.util.List;
 
-import io.vertigo.shiny.color.ShinyColors;
+import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.data.table.ShinyBorder;
 import io.vertigo.shiny.components.data.table.ShinyTable;
+import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyTableTest {
 
@@ -16,7 +17,7 @@ public class ShinyTableTest {
 	}
 
 	private static void testBasicTable() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Basic Table ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Basic Table ---"));
 		final List<String[]> data = List.of(
 				new String[] { "John Doe", "30", "New York" },
 				new String[] { "Jane Smith", "25", "London" },
@@ -31,7 +32,7 @@ public class ShinyTableTest {
 	}
 
 	private static void testEuropeanCountriesTable() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- European Union Countries - Population ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- European Union Countries - Population ---"));
 		final List<String[]> euCountries = List.of(
 				new String[] { "Austria", "9000000" },
 				new String[] { "Belgium", "11700000" },
@@ -70,7 +71,7 @@ public class ShinyTableTest {
 	}
 
 	private static void testEmptyTable() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Empty Table ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Empty Table ---"));
 		Shiny.table()
 				.title("Empty Data")
 				.header("Col1", "Col2")
@@ -81,7 +82,7 @@ public class ShinyTableTest {
 	}
 
 	private static void testTableWithCustomStyles() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Table with Custom Styles ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Table with Custom Styles ---"));
 		final List<String[]> data = List.of(
 				new String[] { "Item A", "100", "Active" },
 				new String[] { "Item B", "250", "Inactive" },
@@ -93,8 +94,8 @@ public class ShinyTableTest {
 				.rows(data)
 				.beginStyle()
 				.titleBackgroundColor(ShinyColors.WHITE)
-				.headerBackgroundColor(ShinyColors.GREEN.bright())
-				.altRowBackgroundColor(ShinyColors.CYAN.bright())
+				.headerBackgroundColor(ShinyColors.GREEN_BRIGHT)
+				.altRowBackgroundColor(ShinyColors.CYAN_BRIGHT)
 				.borderColor(ShinyColors.RED)
 				.endStyle()
 				.print();

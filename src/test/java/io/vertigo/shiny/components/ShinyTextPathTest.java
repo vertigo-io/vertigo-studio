@@ -1,6 +1,7 @@
-package io.vertigo.shiny;
+package io.vertigo.shiny.components;
 
-import io.vertigo.shiny.color.ShinyColors;
+import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyTextPathTest {
 
@@ -13,7 +14,7 @@ public class ShinyTextPathTest {
 	}
 
 	private static void testBasicPaths() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Basic Paths ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Basic Paths ---"));
 		Shiny.textPath()
 				.path("/home/user/documents/report.pdf")
 				.print();
@@ -28,7 +29,7 @@ public class ShinyTextPathTest {
 	}
 
 	private static void testCustomColors() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Custom Colors ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Custom Colors ---"));
 		Shiny.textPath()
 				.path("/app/config/settings.json")
 				.rootColor(ShinyColors.RED)
@@ -45,7 +46,7 @@ public class ShinyTextPathTest {
 	}
 
 	private static void testCustomSeparator() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Custom Separator ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Custom Separator ---"));
 		Shiny.textPath()
 				.path("data.csv")
 				.separator(".")
@@ -64,7 +65,7 @@ public class ShinyTextPathTest {
 	}
 
 	private static void testSeparatorColor() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Separator Color ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Separator Color ---"));
 		Shiny.textPath()
 				.path("/path/to/my/file.txt")
 				.separatorColor(ShinyColors.RED)
@@ -78,7 +79,7 @@ public class ShinyTextPathTest {
 	}
 
 	private static void testEdgeCases() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Edge Cases ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Edge Cases ---"));
 		Shiny.textPath()
 				.path("/singlefile.txt")
 				.print(); // Root and leaf

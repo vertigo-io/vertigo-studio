@@ -1,6 +1,7 @@
-package io.vertigo.shiny;
+package io.vertigo.shiny.components;
 
-import io.vertigo.shiny.color.ShinyColors;
+import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyJsonTest {
 
@@ -13,7 +14,7 @@ public class ShinyJsonTest {
 	}
 
 	private static void testBasicJson() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Basic JSON ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Basic JSON ---"));
 		final String json = "{\"name\": \"John Doe\", \"age\": 30, \"isStudent\": false, \"address\": null}";
 		Shiny.json()
 				.json(json)
@@ -22,7 +23,7 @@ public class ShinyJsonTest {
 	}
 
 	private static void testComplexJson() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Complex JSON ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Complex JSON ---"));
 		final String json = """
 							{
 							  "product": {
@@ -43,7 +44,7 @@ public class ShinyJsonTest {
 	}
 
 	private static void testCustomColorsJson() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Custom Colors JSON ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Custom Colors JSON ---"));
 		final String json = """
 				{
 				"city": "New York", "population": 8400000, "landmarks": ["Statue of Liberty", "Empire State Building"]
@@ -62,13 +63,13 @@ public class ShinyJsonTest {
 	}
 
 	private static void testGranularColorsJson() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Granular Colors JSON ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Granular Colors JSON ---"));
 		final String json = "{\"id\": 1, \"name\": \"Test Item\", \"value\": 123.45, \"active\": true, \"tags\": [\"alpha\", \"beta\"], \"details\": null}";
 		Shiny.json()
 				.json(json)
-				.labelColor(ShinyColors.BLUE.bright())
-				.stringColor(ShinyColors.GREEN.bright())
-				.numberColor(ShinyColors.CYAN.bright())
+				.labelColor(ShinyColors.BLUE_BRIGHT)
+				.stringColor(ShinyColors.GREEN_BRIGHT)
+				.numberColor(ShinyColors.CYAN_BRIGHT)
 				.bracesColor(ShinyColors.RED)
 				.bracketColor(ShinyColors.MAGENTA)
 				.colonColor(ShinyColors.YELLOW)
@@ -80,7 +81,7 @@ public class ShinyJsonTest {
 	}
 
 	private static void testErrorJson() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Error JSON ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Error JSON ---"));
 		final String json = "{\"name\": \"John Doe\", \"age\": 30, \"isStudent\": false, \"address\": null"; // Missing closing brace
 		Shiny.json().json(json).print();
 		System.out.println();

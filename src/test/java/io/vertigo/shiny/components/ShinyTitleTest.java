@@ -1,4 +1,6 @@
-package io.vertigo.shiny;
+package io.vertigo.shiny.components;
+
+import io.vertigo.shiny.Shiny;
 
 public class ShinyTitleTest {
 

@@ -1,7 +1,7 @@
 package io.vertigo.shiny.components.data.table;
 
-import io.vertigo.shiny.color.ShinyColor;
-import io.vertigo.shiny.color.ShinyColors;
+import io.vertigo.shiny.style.ShinyColor;
+import io.vertigo.shiny.style.ShinyColors;
 
 /**
  * Encapsulates all visual style parameters of the table.
@@ -13,8 +13,8 @@ public final class ShinyTableStyle {
 	// Colors
 	ShinyColor titleBackgroundColor = ShinyColors.MAGENTA;
 	ShinyColor titleTextColor = ShinyColors.WHITE;
-	ShinyColor headerBackgroundColor = ShinyColors.BLUE.bright();
-	ShinyColor altRowBackgroundColor = ShinyColors.CYAN.bright();
+	ShinyColor headerBackgroundColor = ShinyColors.BLUE_BRIGHT;
+	ShinyColor altRowBackgroundColor = ShinyColors.CYAN_BRIGHT;
 	ShinyColor borderColor = ShinyColors.BLACK;
 
 	ShinyTableStyle(final ShinyTable table) {

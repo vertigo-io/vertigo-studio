@@ -1,10 +1,11 @@
-package io.vertigo.shiny;
+package io.vertigo.shiny.components;
 
 import java.util.List;
 
-import io.vertigo.shiny.color.ShinyColors;
+import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatus.StatusShape;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatus.StatusType;
+import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyStatusTest {
 
@@ -16,7 +17,7 @@ public class ShinyStatusTest {
 	}
 
 	private static void testMatchResults() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Last 5 Match Results ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Last 5 Match Results ---"));
 		Shiny.status()
 				.title("Last 5 Matches")
 				.statuses(List.of(StatusType.SUCCESS, StatusType.SUCCESS, StatusType.NEUTRAL, StatusType.ERROR, StatusType.SUCCESS))
@@ -26,7 +27,7 @@ public class ShinyStatusTest {
 	}
 
 	private static void testServerStatus() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Server Status ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Server Status ---"));
 		Shiny.status()
 				.title("Server 1")
 				.statuses(List.of(StatusType.SUCCESS))
@@ -46,7 +47,7 @@ public class ShinyStatusTest {
 	}
 
 	private static void testBuildStatus() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Build Status ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Build Status ---"));
 		Shiny.status()
 				.title("Build Pipeline")
 				.statuses(List.of(StatusType.SUCCESS, StatusType.WARNING, StatusType.ERROR, StatusType.INFO, StatusType.NEUTRAL, StatusType.SUCCESS))
@@ -56,7 +57,7 @@ public class ShinyStatusTest {
 	}
 
 	private static void testMixedStatusesAndShapes() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Mixed Statuses and Shapes ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Mixed Statuses and Shapes ---"));
 		Shiny.status()
 				.title("Daily Report")
 				.statuses(List.of(StatusType.SUCCESS, StatusType.SUCCESS, StatusType.WARNING, StatusType.ERROR, StatusType.NEUTRAL))

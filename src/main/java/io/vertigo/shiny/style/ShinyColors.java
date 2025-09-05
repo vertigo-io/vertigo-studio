@@ -1,4 +1,4 @@
-package io.vertigo.shiny.color;
+package io.vertigo.shiny.style;
 
 public final class ShinyColors {
 	public static final ShinyColor BLACK = new ShinyColor(30);
@@ -10,12 +10,15 @@ public final class ShinyColors {
 	public static final ShinyColor CYAN = new ShinyColor(36);
 	public static final ShinyColor WHITE = new ShinyColor(37);
 
-	// Styles supplémentaires
-	public static final String UNDERLINE = "\u001B[4m";
-	public static final String BLINK = "\u001B[5m"; // support variable
-	public static final String INVERSE = "\u001B[7m";
-	public static final String DIM = "\u001B[2m";
-
+	// --- Bright variants (90–97)
+	public static final ShinyColor BLACK_BRIGHT = new ShinyColor(90);
+	public static final ShinyColor RED_BRIGHT = new ShinyColor(91);
+	public static final ShinyColor GREEN_BRIGHT = new ShinyColor(92);
+	public static final ShinyColor YELLOW_BRIGHT = new ShinyColor(93);
+	public static final ShinyColor BLUE_BRIGHT = new ShinyColor(94);
+	public static final ShinyColor MAGENTA_BRIGHT = new ShinyColor(95);
+	public static final ShinyColor CYAN_BRIGHT = new ShinyColor(96);
+	public static final ShinyColor WHITE_BRIGHT = new ShinyColor(97);
 	// Réinitialisation
 	public static final String RESET = "\u001B[0m";
 

@@ -1,4 +1,4 @@
-package io.vertigo.shiny;
+package io.vertigo.shiny.components;
 
 import static io.vertigo.shiny.components.data.tree.ShinyIcon.ARROW_DOWN;
 import static io.vertigo.shiny.components.data.tree.ShinyIcon.ARROW_LEFT;
@@ -19,7 +19,8 @@ import static io.vertigo.shiny.components.data.tree.ShinyIcon.SUCCESS;
 import static io.vertigo.shiny.components.data.tree.ShinyIcon.USER;
 import static io.vertigo.shiny.components.data.tree.ShinyIcon.WARNING;
 
-import io.vertigo.shiny.color.ShinyColors;
+import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyTreeTest {
 	public static void main(final String[] args) {
@@ -29,7 +30,7 @@ public class ShinyTreeTest {
 	}
 
 	private static void testVideoGamesTree() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Video Games Tree ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Video Games Tree ---"));
 		final var tree = Shiny.tree("Video Games");
 		tree.getRoot()
 				.addChild("RPG", FOLDER_OPEN)
@@ -49,7 +50,7 @@ public class ShinyTreeTest {
 	}
 
 	private static void testIconShowcase() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Icon Showcase ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Icon Showcase ---"));
 		final var tree = Shiny.tree("Icons");
 		tree.getRoot()
 				.addChild("Status Icons", FOLDER_OPEN)
@@ -75,7 +76,7 @@ public class ShinyTreeTest {
 	}
 
 	private static void testComplexTreeStructure() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Complex Tree Structure ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Complex Tree Structure ---"));
 		final var tree = Shiny.tree("Project Structure");
 		final var srcNode = tree.getRoot().addChild("src", FOLDER_CLOSED);
 		final var main = srcNode.addChild("main", FOLDER_CLOSED);

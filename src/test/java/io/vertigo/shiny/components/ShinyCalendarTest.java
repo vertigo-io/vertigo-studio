@@ -1,10 +1,11 @@
-package io.vertigo.shiny;
+package io.vertigo.shiny.components;
 
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Locale;
 
-import io.vertigo.shiny.color.ShinyColors;
+import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyCalendarTest {
 
@@ -17,21 +18,21 @@ public class ShinyCalendarTest {
 	}
 
 	private static void testCurrentMonth() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Current Month Calendar ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Current Month Calendar ---"));
 		Shiny.calendar()
 				.print();
 		System.out.println();
 	}
 
 	private static void testSpecificMonthAndYear() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Specific Month and Year Calendar (July 2024) ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Specific Month and Year Calendar (July 2024) ---"));
 		Shiny.calendar()
 				.year(2024)
 				.month(Month.JULY)
 				.print();
 		System.out.println();
 
-		System.out.println(ShinyColors.BLUE.bright() + "--- Specific Month and Year Calendar (December 2023) ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Specific Month and Year Calendar (December 2023) ---"));
 		Shiny.calendar()
 				.year(2023)
 				.month(Month.DECEMBER)
@@ -40,7 +41,7 @@ public class ShinyCalendarTest {
 	}
 
 	private static void testHighlightedDates() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Calendar with Highlighted Dates (August 2024) ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Calendar with Highlighted Dates (August 2024) ---"));
 		Shiny.calendar()
 				.year(2024)
 				.month(Month.AUGUST)
@@ -51,7 +52,7 @@ public class ShinyCalendarTest {
 	}
 
 	private static void testDifferentLocales() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Calendar with French Locale (September 2024) ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Calendar with French Locale (September 2024) ---"));
 		Shiny.calendar()
 				.year(2024)
 				.month(Month.SEPTEMBER)
@@ -60,7 +61,7 @@ public class ShinyCalendarTest {
 				.print();
 		System.out.println();
 
-		System.out.println(ShinyColors.BLUE.bright() + "--- Calendar with German Locale (January 2025) ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Calendar with German Locale (January 2025) ---"));
 		Shiny.calendar()
 				.year(2025)
 				.month(Month.JANUARY)
@@ -71,7 +72,7 @@ public class ShinyCalendarTest {
 	}
 
 	private static void testBordersAndHighlightColors() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Calendar with SQUARE Border and Custom Highlight Color (October 2024) ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Calendar with SQUARE Border and Custom Highlight Color (October 2024) ---"));
 		Shiny.calendar()
 				.year(2024)
 				.month(Month.OCTOBER)
@@ -81,14 +82,14 @@ public class ShinyCalendarTest {
 				.print();
 		System.out.println();
 
-		System.out.println(ShinyColors.BLUE.bright() + "--- Calendar with ROUNDED Border (November 2024) ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Calendar with ROUNDED Border (November 2024) ---"));
 		Shiny.calendar()
 				.year(2024)
 				.month(Month.NOVEMBER.getValue())
 				.print();
 		System.out.println();
 
-		System.out.println(ShinyColors.BLUE.bright() + "--- Calendar with ASCII Border (February 2025) ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Calendar with ASCII Border (February 2025) ---"));
 		Shiny.calendar()
 				.year(2025)
 				.month(Month.FEBRUARY.getValue())

@@ -1,5 +1,39 @@
 # Shiny
 
+This module provides a set of console UI components for Vertigo Shell.
+
+## Shiny Components
+
+Here's a categorized list of the available Shiny components:
+
+### Data Visualization
+*   `ShinyBarChart`: Displays a bar chart.
+*   `ShinySparkline`: Displays a sparkline chart.
+*   `ShinyGauge`: Displays a gauge.
+
+### Text & Content
+*   `ShinyFiglet`: Displays text as ASCII art.
+*   `ShinyTitle`: Displays a title.
+*   `ShinyTextPath`: Displays a colorized file path.
+*   `ShinyJson`: Displays a colorized JSON string.
+
+### Indicators
+*   `ShinyProgressBar`: Displays a progress bar.
+*   `ShinySpinner`: Displays a spinner animation.
+*   `ShinyStatus`: Displays a status line.
+
+### Interactive
+*   `ShinyToggle`: Displays a toggle switch.
+*   `ShinyRating`: Displays a rating (stars, hearts, etc.).
+*   `ShinyMultiSelection`: Allows selecting multiple values from a list.
+*   `ShinyInputText`: Allows text input with validation and suggestions.
+
+### Structures
+*   `ShinyTree`: Displays a tree structure.
+*   `ShinyCalendar`: Displays a calendar.
+*   `ShinyList`: Displays a list (ordered, unordered).
+*   `ShinyTable`: Displays data in a tabular format.
+
 Shiny is a library for creating beautiful and interactive command-line interfaces. It provides a set of components for displaying tables, progress bars, spinners, trees, and bar charts.
 
 ## Components

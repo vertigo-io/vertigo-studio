@@ -9,8 +9,8 @@ import java.util.regex.Pattern;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.color.ShinyColors;
 import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyInputText implements ShinyComponent {
 	private final Shiny shiny;

@@ -10,9 +10,10 @@ import io.vertigo.shell.systems.db.DbModel.JdbcColumn;
 import io.vertigo.shell.systems.db.DbModel.JdbcSchema;
 import io.vertigo.shell.systems.db.DbModel.JdbcTable;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.color.ShinyColors;
 import io.vertigo.shiny.components.data.tree.ShinyTree;
 import io.vertigo.shiny.components.data.tree.ShinyTreeNode;
+import io.vertigo.shiny.style.ShinyColors;
+import io.vertigo.shiny.style.ShinyEffects;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
@@ -50,10 +51,10 @@ public final class DbListCommand implements ShellCommand {
 				final ShinyTreeNode columnsNode = tableNode.addChild("columns");
 				for (final JdbcColumn column : table.columns()) {
 
-					String info = column.name() + " " + ShinyColors.GREEN.bright() + column.typeName() + ShinyColors.RESET;
+					String info = column.name() + " " + ShinyColors.GREEN_BRIGHT + column.typeName() + ShinyColors.RESET;
 
 					if (column.isPrimaryKey()) {
-						info = ShinyColors.UNDERLINE + info + ShinyColors.RESET;
+						info = ShinyEffects.UNDERLINE.apply(info);
 					}
 					columnsNode.addChild(info);
 				}

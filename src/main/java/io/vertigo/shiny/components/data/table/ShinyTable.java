@@ -6,7 +6,6 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.color.ShinyColors;
 import io.vertigo.shiny.components.ShinyComponent;
 
 /**
@@ -149,17 +148,13 @@ public final class ShinyTable implements ShinyComponent {
 		final String format = formatBuilder.toString();
 
 		// 4. Print
-		shiny.getWriter().print(style.titleBackgroundColor.bg());
-		shiny.getWriter().print(style.titleTextColor);
-		shiny.getWriter().print(tableTitle);
-		shiny.getWriter().println(ShinyColors.RESET);
+		shiny.getWriter().print(style.titleBackgroundColor.bg(
+				style.titleTextColor + tableTitle));
 
 		printLineSeparator(widths, Position.TOP);
 
 		shiny.getWriter().print(style.border.chars().vertical());
-		shiny.getWriter().print(style.headerBackgroundColor.bg());
-		shiny.getWriter().printf(format, (Object[]) tableHeader);
-		shiny.getWriter().print(ShinyColors.RESET);
+		shiny.getWriter().print(style.headerBackgroundColor.bg(String.format(format, (Object[]) tableHeader)));
 		shiny.getWriter().println(style.border.chars().vertical());
 
 		printLineSeparator(widths, Position.INNER);
@@ -167,12 +162,11 @@ public final class ShinyTable implements ShinyComponent {
 		boolean invert = false;
 		for (final String[] formattedRow : formattedRows) {
 			shiny.getWriter().print(style.border.chars().vertical());
+			final String srow = String.format(format, (Object[]) formattedRow);
 			if (invert) {
-				shiny.getWriter().print(style.altRowBackgroundColor.bg());
-			}
-			shiny.getWriter().printf(format, (Object[]) formattedRow);
-			if (invert) {
-				shiny.getWriter().print(ShinyColors.RESET);
+				shiny.getWriter().print(style.altRowBackgroundColor.bg(srow));
+			} else {
+				shiny.getWriter().print(srow);
 			}
 			shiny.getWriter().println(style.border.chars().vertical());
 			invert = !invert;

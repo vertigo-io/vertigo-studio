@@ -2,8 +2,8 @@ package io.vertigo.shiny.components.text.title;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.color.ShinyColors;
 import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyTitle implements ShinyComponent {
 	private final Shiny shiny;
@@ -59,7 +59,7 @@ public final class ShinyTitle implements ShinyComponent {
 
 	private void printLevel2() {
 		final String line = "-".repeat(title.length() + 4);
-		shiny.getWriter().print(ShinyColors.BLUE.bright());
+		shiny.getWriter().print(ShinyColors.BLUE_BRIGHT);
 		shiny.getWriter().println(line);
 		shiny.getWriter().println("  " + title + "  ");
 		shiny.getWriter().println(line);

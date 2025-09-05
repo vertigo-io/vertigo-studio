@@ -1,7 +1,8 @@
-package io.vertigo.shiny;
+package io.vertigo.shiny.components;
 
-import io.vertigo.shiny.color.ShinyColors;
+import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.dataviz.barchart.ShinySortMode;
+import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyBarChartTest {
 	public static void main(final String[] args) {
@@ -11,7 +12,7 @@ public class ShinyBarChartTest {
 	}
 
 	private static void testSimpleBarChart() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Simple Bar Chart ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Simple Bar Chart ---"));
 		Shiny.barChart()
 				.title("Monthly Sales")
 				.header("Jan", "Feb", "Mar", "Apr", "May")
@@ -22,7 +23,7 @@ public class ShinyBarChartTest {
 	}
 
 	private static void testEuropeanCountriesPopulation() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- European Countries Population (Sorted Desc) ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- European Countries Population (Sorted Desc) ---"));
 		Shiny.barChart()
 				.title("Population in European Countries")
 				.header("Austria", "Belgium", "Bulgaria", "Croatia", "Cyprus",
@@ -42,13 +43,13 @@ public class ShinyBarChartTest {
 	}
 
 	private static void testBarChartWithDifferentSortModes() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Bar Chart with Different Sort Modes ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Bar Chart with Different Sort Modes ---"));
 		// Original data
 		final String[] headers = { "Apple", "Banana", "Cherry", "Date" };
 		final int[] values = { 50, 20, 80, 30 };
 
 		// No sort
-		System.out.println(ShinyColors.CYAN + "--- No Sort ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- No Sort ---"));
 		Shiny.barChart()
 				.title("Fruits (No Sort)")
 				.header(headers)
@@ -59,7 +60,7 @@ public class ShinyBarChartTest {
 		System.out.println();
 
 		// Value Ascending
-		System.out.println(ShinyColors.CYAN + "--- Value Ascending ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Value Ascending ---"));
 		Shiny.barChart()
 				.title("Fruits (Value Asc)")
 				.header(headers)
@@ -70,7 +71,7 @@ public class ShinyBarChartTest {
 		System.out.println();
 
 		// Value Descending
-		System.out.println(ShinyColors.CYAN + "--- Value Descending ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Value Descending ---"));
 		Shiny.barChart()
 				.title("Fruits (Value Desc)")
 				.header(headers)
@@ -81,7 +82,7 @@ public class ShinyBarChartTest {
 		System.out.println();
 
 		// Header Ascending
-		System.out.println(ShinyColors.CYAN + "--- Header Ascending ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Header Ascending ---"));
 		Shiny.barChart()
 				.title("Fruits (Header Asc)")
 				.header(headers)
@@ -92,7 +93,7 @@ public class ShinyBarChartTest {
 		System.out.println();
 
 		// Header Descending
-		System.out.println(ShinyColors.CYAN + "--- Header Descending ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Header Descending ---"));
 		Shiny.barChart()
 				.title("Fruits (Header Desc)")
 				.header(headers)

@@ -1,14 +1,14 @@
 package io.vertigo.shiny;
 
-import static io.vertigo.shiny.color.ShinyColors.BLUE;
-import static io.vertigo.shiny.color.ShinyColors.CYAN;
-import static io.vertigo.shiny.color.ShinyColors.GREEN;
-import static io.vertigo.shiny.color.ShinyColors.MAGENTA;
-import static io.vertigo.shiny.color.ShinyColors.RED;
-import static io.vertigo.shiny.color.ShinyColors.RESET;
-import static io.vertigo.shiny.color.ShinyColors.YELLOW;
 import static io.vertigo.shiny.components.data.tree.ShinyIcon.FILE;
 import static io.vertigo.shiny.components.data.tree.ShinyIcon.FOLDER_OPEN;
+import static io.vertigo.shiny.style.ShinyColors.BLUE;
+import static io.vertigo.shiny.style.ShinyColors.BLUE_BRIGHT;
+import static io.vertigo.shiny.style.ShinyColors.CYAN;
+import static io.vertigo.shiny.style.ShinyColors.GREEN;
+import static io.vertigo.shiny.style.ShinyColors.MAGENTA;
+import static io.vertigo.shiny.style.ShinyColors.RED;
+import static io.vertigo.shiny.style.ShinyColors.YELLOW;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -28,7 +28,7 @@ public class ShinyAllComponentsTest {
 	private static Scanner scanner = new Scanner(System.in);
 
 	public static void main(final String[] args) {
-		System.out.println(BLUE.bright() + "--- Starting All Shiny Components Test ---" + RESET);
+		System.out.println(BLUE_BRIGHT.fg("--- Starting All Shiny Components Test ---"));
 		System.out.println("Press Enter to see the next component.");
 		System.out.println();
 
@@ -51,18 +51,18 @@ public class ShinyAllComponentsTest {
 		testToggle();
 		testTree();
 
-		System.out.println(BLUE.bright() + "--- All Shiny Components Test Finished ---" + RESET);
+		System.out.println(BLUE_BRIGHT.fg("--- All Shiny Components Test Finished ---"));
 		scanner.close();
 	}
 
 	private static void waitForEnter() {
-		System.out.println(YELLOW + "Press Enter to continue..." + RESET);
+		System.out.println(YELLOW.fg("Press Enter to continue..."));
 		scanner.nextLine();
 		System.out.println();
 	}
 
 	private static void testMultiSelection() {
-		System.out.println(CYAN + "Component: ShinyMultiSelection" + RESET);
+		System.out.println(CYAN.fg("Component: ShinyMultiSelection"));
 		System.out.println("Parameters: title='Choose your favorite fruits:', options=['Apple', 'Banana', 'Cherry'], rows=[100, 120, 90], sort=VALUE_DESC, maxBarLength=50");
 
 		final ShinyMultiSelection multiSelection = Shiny.multiSelection()
@@ -77,7 +77,7 @@ public class ShinyAllComponentsTest {
 	}
 
 	private static void testBarChart() {
-		System.out.println(CYAN + "Component: ShinyBarChart" + RESET);
+		System.out.println(CYAN.fg("Component: ShinyBarChart"));
 		System.out.println("Parameters: title='Monthly Sales', header=['Jan', 'Feb', 'Mar'], rows=[100, 120, 90], sort=VALUE_DESC, maxBarLength=50");
 		Shiny.barChart()
 				.title("Monthly Sales")
@@ -90,7 +90,7 @@ public class ShinyAllComponentsTest {
 	}
 
 	private static void testCalendar() {
-		System.out.println(CYAN + "Component: ShinyCalendar" + RESET);
+		System.out.println(CYAN.fg("Component: ShinyCalendar"));
 		System.out.println("Parameters: year=2024, month=JULY, locale=FRENCH, highlight=[2024-07-14], border=ROUNDED");
 		Shiny.calendar()
 				.year(2024)
@@ -103,7 +103,7 @@ public class ShinyAllComponentsTest {
 	}
 
 	private static void testFiglet() {
-		System.out.println(CYAN + "Component: ShinyFiglet" + RESET);
+		System.out.println(CYAN.fg("Component: ShinyFiglet"));
 		System.out.println("Parameters: text='Hello', font=BIG, color=BLUE");
 		Shiny.figlet()
 				.text("Hello")
@@ -114,7 +114,7 @@ public class ShinyAllComponentsTest {
 	}
 
 	private static void testGauge() {
-		System.out.println(CYAN + "Component: ShinyGauge" + RESET);
+		System.out.println(CYAN.fg("Component: ShinyGauge"));
 		System.out.println("Parameters: title='Progress', value=75, max=100, color=GREEN");
 		Shiny.gauge()
 				.title("Progress")
@@ -126,7 +126,7 @@ public class ShinyAllComponentsTest {
 	}
 
 	private static void testJson() {
-		System.out.println(CYAN + "Component: ShinyJson" + RESET);
+		System.out.println(CYAN.fg("Component: ShinyJson"));
 		System.out.println("Parameters: json='{\"name\": \"John Doe\", \"age\": 30, \"isStudent\": true}'");
 		final String json = """
 				{\"name\": \"John Doe\", \"age\": 30, \"isStudent\": true, \"address\": null}
@@ -138,7 +138,7 @@ public class ShinyAllComponentsTest {
 	}
 
 	private static void testList() {
-		System.out.println(CYAN + "Component: ShinyList" + RESET);
+		System.out.println(CYAN.fg("Component: ShinyList"));
 		System.out.println("Parameters: title='Tasks', items=['Task 1', 'Task 2', 'Task 3']");
 		Shiny.list()
 				.title("Tasks")
@@ -150,7 +150,7 @@ public class ShinyAllComponentsTest {
 	}
 
 	private static void testProgressBar() {
-		System.out.println(CYAN + "Component: ShinyProgressBar" + RESET);
+		System.out.println(CYAN.fg("Component: ShinyProgressBar"));
 		System.out.println("Parameters: total=100");
 		try (var progressBar = Shiny.progressBar().total(100).start()) {
 			for (int i = 0; i <= 100; i += 10) {
@@ -166,7 +166,7 @@ public class ShinyAllComponentsTest {
 	}
 
 	private static void testRating() {
-		System.out.println(CYAN + "Component: ShinyRating" + RESET);
+		System.out.println(CYAN.fg("Component: ShinyRating"));
 		System.out.println("Parameters: rating=4, max=5");
 		Shiny.rating()
 				.value(4)
@@ -176,7 +176,7 @@ public class ShinyAllComponentsTest {
 	}
 
 	private static void testSparkline() {
-		System.out.println(CYAN + "Component: ShinySparkline" + RESET);
+		System.out.println(CYAN.fg("Component: ShinySparkline"));
 		System.out.println("Parameters: title='Data Trend', data=[10, 12, 15, 13, 11, 10, 9, 10, 12, 14, 16, 15], color=MAGENTA");
 		Shiny.sparkline()
 				.title("Data Trend")
@@ -187,7 +187,7 @@ public class ShinyAllComponentsTest {
 	}
 
 	private static void testSpinner() {
-		System.out.println(CYAN + "Component: ShinySpinner" + RESET);
+		System.out.println(CYAN.fg("Component: ShinySpinner"));
 		System.out.println("Parameters: messages='Loading...', 'Processing...'");
 		try (var spinner = Shiny.spinner().start()) {
 			spinner.liveSend("Loading...");
@@ -200,7 +200,7 @@ public class ShinyAllComponentsTest {
 	}
 
 	private static void testStatus() {
-		System.out.println(CYAN + "Component: ShinyStatus" + RESET);
+		System.out.println(CYAN.fg("Component: ShinyStatus"));
 		System.out.println("Parameters: title='Build Status', statuses=[SUCCESS, WARNING, ERROR, INFO], shape=SQUARE");
 		Shiny.status()
 				.title("Build Status")
@@ -211,7 +211,7 @@ public class ShinyAllComponentsTest {
 	}
 
 	private static void testTable() {
-		System.out.println(CYAN + "Component: ShinyTable" + RESET);
+		System.out.println(CYAN.fg("Component: ShinyTable"));
 		System.out.println("Parameters: title='Users', header=['Name', 'Age'], rows=[['John', '30'], ['Jane', '25']], border=ASCII");
 		Shiny.table()
 				.title("Users")
@@ -224,7 +224,7 @@ public class ShinyAllComponentsTest {
 	}
 
 	private static void testTextPath() {
-		System.out.println(CYAN + "Component: ShinyTextPath" + RESET);
+		System.out.println(CYAN.fg("Component: ShinyTextPath"));
 		System.out.println("Parameters: path='/home/user/documents/report.pdf', custom colors");
 		Shiny.textPath()
 				.path("C:/home/user/documents/report.pdf")
@@ -236,7 +236,7 @@ public class ShinyAllComponentsTest {
 	}
 
 	private static void testTitle() {
-		System.out.println(CYAN + "Component: ShinyTitle" + RESET);
+		System.out.println(CYAN.fg("Component: ShinyTitle"));
 		System.out.println("text: title='My Awesome Title', color=MAGENTA");
 		Shiny.title()
 				.text("My Awesome Title")
@@ -245,7 +245,7 @@ public class ShinyAllComponentsTest {
 	}
 
 	private static void testToggle() {
-		System.out.println(CYAN + "Component: ShinyToggle" + RESET);
+		System.out.println(CYAN.fg("Component: ShinyToggle"));
 		System.out.println("Parameters: label='Enable Feature', enabled=true");
 		Shiny.toggle()
 				.label("Enable Feature")
@@ -255,7 +255,7 @@ public class ShinyAllComponentsTest {
 	}
 
 	private static void testTree() {
-		System.out.println(CYAN + "Component: ShinyTree" + RESET);
+		System.out.println(CYAN.fg("Component: ShinyTree"));
 		System.out.println("Parameters: label='Files', nodes=['src', 'main', 'file.txt'] with icons");
 		final var tree = Shiny.tree("Files");
 		tree.getRoot().addChild("src", FOLDER_OPEN)
@@ -266,7 +266,7 @@ public class ShinyAllComponentsTest {
 	}
 
 	private static void testInputText() {
-		System.out.println(CYAN + "Component: ShinyInputText" + RESET);
+		System.out.println(CYAN.fg("Component: ShinyInputText"));
 		System.out.println("Parameters: label='Enter your name'");
 		Shiny.inputText().label("Enter your name").print();
 		waitForEnter();

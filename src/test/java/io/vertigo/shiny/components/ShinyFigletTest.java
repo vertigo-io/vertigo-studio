@@ -1,7 +1,8 @@
-package io.vertigo.shiny;
+package io.vertigo.shiny.components;
 
-import io.vertigo.shiny.color.ShinyColors;
+import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.text.figlet.ShinyFigletFonts;
+import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyFigletTest {
 
@@ -11,7 +12,7 @@ public class ShinyFigletTest {
 	}
 
 	private static void testSpecificFonts() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Testing Specific Figlet Fonts ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Testing Specific Figlet Fonts ---"));
 		Shiny.figlet()
 				.text("Vertigo")
 				.print(); // Uses default font (STANDARD)
@@ -37,7 +38,7 @@ public class ShinyFigletTest {
 	}
 
 	private static void testAllFonts() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Testing All Available Figlet Fonts ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Testing All Available Figlet Fonts ---"));
 		for (final ShinyFigletFonts font : ShinyFigletFonts.values()) {
 			System.out.println(ShinyColors.CYAN + "Font: " + font.name() + ShinyColors.RESET);
 			Shiny.figlet()

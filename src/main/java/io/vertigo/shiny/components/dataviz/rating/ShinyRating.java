@@ -2,9 +2,10 @@ package io.vertigo.shiny.components.dataviz.rating;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.color.ShinyColor;
-import io.vertigo.shiny.color.ShinyColors;
 import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.style.ShinyColor;
+import io.vertigo.shiny.style.ShinyColors;
+import io.vertigo.shiny.style.ShinyEffects;
 
 public final class ShinyRating implements ShinyComponent {
 
@@ -141,20 +142,14 @@ public final class ShinyRating implements ShinyComponent {
 
 			if (allowHalfRating && clampedValue >= i - 0.5 && clampedValue < i) {
 				// Half rating (for now, use filled icon with different color)
-				rating.append(ShinyColors.DIM)
-						.append(filledColor.fg())
-						.append(style.getFilledIcon())
-						.append(ShinyColors.RESET);
+				rating.append(ShinyEffects.DIM.apply(
+						filledColor.fg(style.getFilledIcon())));
 			} else if (clampedValue >= i) {
 				// Filled
-				rating.append(filledColor.fg())
-						.append(style.getFilledIcon())
-						.append(ShinyColors.RESET);
+				rating.append(filledColor.fg(style.getFilledIcon()));
 			} else {
 				// Empty
-				rating.append(emptyColor.fg())
-						.append(style.getEmptyIcon())
-						.append(ShinyColors.RESET);
+				rating.append(emptyColor.fg(style.getEmptyIcon()));
 			}
 		}
 	}

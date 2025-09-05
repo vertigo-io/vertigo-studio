@@ -1,8 +1,9 @@
-package io.vertigo.shiny;
+package io.vertigo.shiny.components;
 
-import io.vertigo.shiny.color.ShinyColors;
+import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingScale;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingStyle;
+import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyRatingTest {
 
@@ -18,7 +19,7 @@ public class ShinyRatingTest {
 	}
 
 	private static void testBasicRatings() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Basic Ratings ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Basic Ratings ---"));
 
 		Shiny.rating()
 				.label("Movie Rating")
@@ -39,7 +40,7 @@ public class ShinyRatingTest {
 	}
 
 	private static void testDifferentStyles() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Different Rating Styles ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Different Rating Styles ---"));
 
 		Shiny.rating()
 				.label("Stars")
@@ -97,7 +98,7 @@ public class ShinyRatingTest {
 	}
 
 	private static void testDifferentScales() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Different Rating Scales ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Different Rating Scales ---"));
 
 		Shiny.rating()
 				.label("5-Star Scale")
@@ -139,7 +140,7 @@ public class ShinyRatingTest {
 	}
 
 	private static void testCustomization() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Customized Ratings ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Customized Ratings ---"));
 
 		Shiny.rating()
 				.label("Custom Colors")
@@ -287,7 +288,7 @@ public class ShinyRatingTest {
 	//	}
 	//
 	private static void testEdgeCases() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Rating Edge Cases ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Rating Edge Cases ---"));
 
 		// Rating without label
 		Shiny.rating()

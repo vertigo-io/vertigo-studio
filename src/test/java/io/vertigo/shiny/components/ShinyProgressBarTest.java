@@ -1,7 +1,8 @@
-package io.vertigo.shiny;
+package io.vertigo.shiny.components;
 
-import io.vertigo.shiny.color.ShinyColors;
+import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.live.progressbar.ShinyProgressBar;
+import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyProgressBarTest {
 	public static void main(final String[] args) {
@@ -21,7 +22,7 @@ public class ShinyProgressBarTest {
 	}
 
 	private static void testBasicProgressBar() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Basic Progress Bar ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Basic Progress Bar ---"));
 
 		try (final ShinyProgressBar progressBar = Shiny.progressBar().total(100).start()) {
 			for (int i = 0; i < 100; i++) {
@@ -33,7 +34,7 @@ public class ShinyProgressBarTest {
 	}
 
 	private static void testFastProgressBar() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Fast Progress Bar ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Fast Progress Bar ---"));
 		try (final ShinyProgressBar progressBar = Shiny.progressBar().total(500).start()) {
 			for (int i = 0; i < 500; i++) {
 				progressBar.liveUpdate(i + 1);
@@ -44,7 +45,7 @@ public class ShinyProgressBarTest {
 	}
 
 	private static void testSlowProgressBar() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Slow Progress Bar ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Slow Progress Bar ---"));
 		try (final ShinyProgressBar progressBar = Shiny.progressBar().total(50).start()) {
 			for (int i = 0; i < 50; i++) {
 				progressBar.liveUpdate(i + 1);
@@ -55,7 +56,7 @@ public class ShinyProgressBarTest {
 	}
 
 	private static void testMultipleProgressBars() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Multiple Progress Bars (Sequential) ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Multiple Progress Bars (Sequential) ---"));
 		for (int j = 0; j < 3; j++) {
 			System.out.println("Task " + (j + 1) + ":");
 			try (final ShinyProgressBar progressBar = Shiny.progressBar().total(100).start()) {

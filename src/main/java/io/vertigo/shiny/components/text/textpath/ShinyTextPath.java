@@ -4,9 +4,9 @@ import java.util.regex.Pattern; // New import
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.color.ShinyColor;
-import io.vertigo.shiny.color.ShinyColors;
 import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.style.ShinyColor;
+import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyTextPath implements ShinyComponent {
 	private final Shiny shiny;
@@ -14,7 +14,7 @@ public final class ShinyTextPath implements ShinyComponent {
 	private String separator = "/";
 	private ShinyColor rootColor = ShinyColors.GREEN;
 	private ShinyColor nodeColor = ShinyColors.YELLOW;
-	private ShinyColor leafColor = ShinyColors.BLUE.bright();
+	private ShinyColor leafColor = ShinyColors.BLUE_BRIGHT;
 	private ShinyColor separatorColor = ShinyColors.RED; // Default color
 
 	public ShinyTextPath(final Shiny shiny) {

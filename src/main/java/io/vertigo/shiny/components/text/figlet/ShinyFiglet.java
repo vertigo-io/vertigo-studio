@@ -7,9 +7,9 @@ import com.github.dtmo.jfiglet.FigletRenderer;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.color.ShinyColor;
-import io.vertigo.shiny.color.ShinyColors;
 import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.style.ShinyColor;
+import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyFiglet implements ShinyComponent {
 	private final Shiny shiny;

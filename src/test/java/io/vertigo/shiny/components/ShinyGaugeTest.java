@@ -1,6 +1,7 @@
-package io.vertigo.shiny;
+package io.vertigo.shiny.components;
 
-import io.vertigo.shiny.color.ShinyColors;
+import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyGaugeTest {
 
@@ -12,7 +13,7 @@ public class ShinyGaugeTest {
 	}
 
 	private static void testBasicGauges() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Basic Gauges ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Basic Gauges ---"));
 		Shiny.gauge()
 				.title("CPU Usage")
 				.value(50) // 50% of 100 (default max)
@@ -33,7 +34,7 @@ public class ShinyGaugeTest {
 	}
 
 	private static void testCustomRanges() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Gauges with Custom Ranges ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Gauges with Custom Ranges ---"));
 		Shiny.gauge()
 				.title("Battery Level")
 				.value(85)
@@ -58,7 +59,7 @@ public class ShinyGaugeTest {
 	}
 
 	private static void testDifferentLengths() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Gauges with Different Lengths ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Gauges with Different Lengths ---"));
 		Shiny.gauge()
 				.title("Short Gauge")
 				.value(60)
@@ -76,7 +77,7 @@ public class ShinyGaugeTest {
 	}
 
 	private static void testEdgeCases() {
-		System.out.println(ShinyColors.BLUE.bright() + "--- Gauge Edge Cases ---" + ShinyColors.RESET);
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Gauge Edge Cases ---"));
 		Shiny.gauge()
 				.title("Zero Value")
 				.value(0)

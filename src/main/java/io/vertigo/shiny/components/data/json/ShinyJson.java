@@ -9,9 +9,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.color.ShinyColor;
-import io.vertigo.shiny.color.ShinyColors;
 import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.style.ShinyColor;
+import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyJson implements ShinyComponent {
 	private final Shiny shiny;
@@ -21,8 +21,8 @@ public final class ShinyJson implements ShinyComponent {
 
 	private ShinyColor numberColor = ShinyColors.GREEN;
 	private ShinyColor stringColor = ShinyColors.RED;
-	private ShinyColor booleanColor = ShinyColors.BLACK.bright();
-	private ShinyColor nullColor = ShinyColors.BLACK.bright();
+	private ShinyColor booleanColor = ShinyColors.BLACK_BRIGHT;
+	private ShinyColor nullColor = ShinyColors.BLACK_BRIGHT;
 
 	// : 
 	private ShinyColor colonColor = ShinyColors.YELLOW;
