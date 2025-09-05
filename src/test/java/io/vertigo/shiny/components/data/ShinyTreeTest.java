@@ -1,4 +1,4 @@
-package io.vertigo.shiny.components;
+package io.vertigo.shiny.components.data;
 
 import static io.vertigo.shiny.components.data.tree.ShinyIcon.ARROW_DOWN;
 import static io.vertigo.shiny.components.data.tree.ShinyIcon.ARROW_LEFT;

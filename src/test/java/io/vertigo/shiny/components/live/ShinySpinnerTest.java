@@ -1,4 +1,4 @@
-package io.vertigo.shiny.components;
+package io.vertigo.shiny.components.live;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.live.spinner.ShinySpinner;

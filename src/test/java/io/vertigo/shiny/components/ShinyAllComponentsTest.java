@@ -1,4 +1,4 @@
-package io.vertigo.shiny;
+package io.vertigo.shiny.components;
 
 import static io.vertigo.shiny.components.data.tree.ShinyIcon.FILE;
 import static io.vertigo.shiny.components.data.tree.ShinyIcon.FOLDER_OPEN;
@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
+import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.data.table.ShinyBorder;
 import io.vertigo.shiny.components.dataviz.barchart.ShinySortMode;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatus.StatusShape;

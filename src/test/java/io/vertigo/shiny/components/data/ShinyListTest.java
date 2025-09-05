@@ -1,4 +1,4 @@
-package io.vertigo.shiny.components;
+package io.vertigo.shiny.components.data;
 
 import static io.vertigo.shiny.style.ShinyColors.GREEN;
 import static io.vertigo.shiny.style.ShinyColors.RED;

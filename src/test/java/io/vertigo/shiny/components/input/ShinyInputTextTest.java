@@ -1,4 +1,4 @@
-package io.vertigo.shiny.components;
+package io.vertigo.shiny.components.input;
 
 import java.util.List;
 import java.util.Scanner;
