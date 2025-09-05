@@ -3,6 +3,7 @@ package io.vertigo.shell.systems.java.commands.list;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.java.JavaContext;
 import io.vertigo.shell.systems.java.JavaModel.JavaClass;
+import io.vertigo.shell.systems.java.JavaModel.JavaImport;
 import io.vertigo.shell.systems.java.JavaModel.JavaPackage;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.data.tree.ShinyTree;
@@ -48,7 +49,13 @@ public final class JavaListCommand implements ShellCommand {
 		final ShinyTreeNode packageNode = parent.addChild("package : " + jpackage.name());
 		final ShinyTreeNode ClassesNode = packageNode.addChild("classes (" + jpackage.classes().size() + ")");
 		for (final JavaClass clazz : jpackage.classes()) {
-			/*final ShinyTreeNode classNode = */ClassesNode.addChild(clazz.name());
+			final ShinyTreeNode classNode = ClassesNode.addChild(clazz.name());
+			classNode.addChild(clazz.imports().toString());
+			for (JavaImport javaImport : clazz.imports()) {
+				if (!javaImport.name().startsWith("java.")) {
+					classNode.addChild(javaImport.name());
+				}
+			}
 			//				final ShinyTreeNode columnsNode = tableNode.addChild("columns");
 			//				for (final JdbcColumn column : table.columns()) {
 			//

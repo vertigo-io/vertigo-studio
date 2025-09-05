@@ -1,5 +1,6 @@
 package io.vertigo.shell.systems.java.commands.load;
 
+import java.io.IOException;
 import java.nio.file.Path;
 
 import io.vertigo.core.lang.VSystemException;
@@ -26,10 +27,15 @@ public final class JavaLoadCommand implements ShellCommand {
 	@Override
 	public void run() {
 		try {
-			var model = new JavaModelLoader().loadModel(Path.of("C:\\Users\\pchretien\\GitHub\\vertigo-core"));
-			JavaContext.model(model);
+			load();
 		} catch (final Exception e) {
 			throw new VSystemException(e, "Failed to load model : {0}", e.getMessage());
 		}
+	}
+
+	private void load() throws IOException {
+		var model = new JavaModelLoader().loadModel(Path.of("C:\\Users\\pchretien\\GitHub\\vertigo-core"));
+		JavaContext.model(model);
+		System.out.println("model java loaded : packages (" + model.packages().size() + ")");
 	}
 }
