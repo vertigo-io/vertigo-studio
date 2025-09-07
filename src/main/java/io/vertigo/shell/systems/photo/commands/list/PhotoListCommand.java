@@ -41,17 +41,19 @@ public final class PhotoListCommand implements ShellCommand {
 							? ShinyColors.RED_BRIGHT.fg(photo.path().toString())
 							: photo.path().toString(),
 					photo.size() + "",
+                    photo.exifInfo().tags().getOrDefault("Date/Time", ""),
+                    photo.exifInfo().tags().getOrDefault("Image Width", ""),
+                    photo.exifInfo().tags().getOrDefault("Image Height", ""),
 					photo.md5Hash() + ""
 			};
 			rows.add(row);
 		}
 
-		Shiny
-				.table()
-				.title("Photos")
-				.noDataFound("No photos found.")
-				.header("Path", "Size", "MD5 Hash")
-				.rows(rows)
-				.print();
+		Shiny.table()
+            .title("Photos")
+            .noDataFound("No photos found.")
+            .header("Path", "Size", "Date/Time", "Width", "Height", "MD5 Hash")
+            .rows(rows)
+            .print();
 	}
 }

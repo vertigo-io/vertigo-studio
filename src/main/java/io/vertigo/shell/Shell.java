@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import io.vertigo.shell.systems.core.commands.ctx.CtxCommand;
 import io.vertigo.shell.systems.core.commands.exit.ExitCommand;
 import io.vertigo.shell.systems.core.commands.help.HelpCommand;
 import io.vertigo.shell.systems.core.commands.history.HistoryCommand;
@@ -16,6 +17,7 @@ import io.vertigo.shell.systems.file.commands.cd.FileCdCommand;
 import io.vertigo.shell.systems.file.commands.ls.FileLsCommand;
 import io.vertigo.shell.systems.file.commands.pwd.FilePwdCommand;
 import io.vertigo.shell.systems.java.commands.JavaCommands;
+import io.vertigo.shell.systems.photo.commands.PhotoCommands;
 import io.vertigo.shell.systems.shiny.commands.ShinyCommands;
 import io.vertigo.shell.systems.studio.commands.StudioCommands;
 import picocli.CommandLine;
@@ -35,9 +37,12 @@ import picocli.CommandLine.Command;
 				StudioCommands.class,
 				//--- Shiny commands
 				ShinyCommands.class,
+				//--- Photo commands
+				PhotoCommands.class,
 				//=================
 				//--- Core commands
 				//=================
+				CtxCommand.class,
 				ExitCommand.class,
 				UptimeCommand.class,
 				HistoryCommand.class,

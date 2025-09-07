@@ -8,13 +8,20 @@ import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.metadata.Directory;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.Tag;
+
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.photo.PhotoContext;
+import io.vertigo.shell.systems.photo.PhotoExifInfo;
 import io.vertigo.shell.systems.photo.PhotoInfo;
 import io.vertigo.shell.systems.photo.PhotoType;
 import io.vertigo.shiny.Shiny;
@@ -70,11 +77,27 @@ public final class PhotoLoadCommand implements ShellCommand {
 		try {
 			final long size = Files.size(path);
 			final String md5Hash = calculateMd5(path);
-			return new PhotoInfo(path, size, Collections.emptyMap(), md5Hash);
+			final PhotoExifInfo exifInfo = extractExifInfo(path);
+			return new PhotoInfo(path, size, exifInfo, md5Hash);
 		} catch (IOException | NoSuchAlgorithmException e) {
 			System.out.println("\nError processing file " + path + ": " + e.getMessage());
 			return null;
 		}
+	}
+
+	private PhotoExifInfo extractExifInfo(final Path path) {
+		final Map<String, String> tags = new HashMap<>();
+		try {
+			final Metadata metadata = ImageMetadataReader.readMetadata(path.toFile());
+			for (final Directory directory : metadata.getDirectories()) {
+				for (final Tag tag : directory.getTags()) {
+					tags.put(tag.getTagName(), tag.getDescription());
+				}
+			}
+		} catch (final Exception e) {
+			// Ignore exceptions
+		}
+		return new PhotoExifInfo(tags);
 	}
 
 	private String calculateMd5(final Path path) throws IOException, NoSuchAlgorithmException {
