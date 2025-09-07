@@ -86,18 +86,24 @@ public class ShinyStyleTest {
 		System.out.println("combos    >");
 
 		// Color + effect
-		System.out.println(ShinyEffects.BOLD.apply(ShinyColors.RED.fg(" bold red text")));
-		System.out.println(ShinyEffects.UNDERLINE.apply(ShinyColors.BLUE.fg(" underlined blue text")));
-		System.out.println(ShinyEffects.ITALIC.apply(ShinyColors.GREEN.fg(" italic green text")));
+		System.out.println(ShinyEffects.BOLD.apply(ShinyColors.RED.fg(" bold red text")) + " and no effect");
+		System.out.println(ShinyEffects.UNDERLINE.apply(ShinyColors.BLUE.fg(" underlined blue text")) + " and no effect");
+		System.out.println(ShinyEffects.ITALIC.apply(ShinyColors.GREEN.fg(" italic green text")) + " and no effect");
+
+		// Foreground 
+		System.out.println("this is a " + ShinyColors.YELLOW.fg("yellow") + " text with " + ShinyColors.RED.fg("red") + " and no effect");
 
 		// Foreground + background
-		System.out.println(ShinyColors.YELLOW.fg(ShinyColors.BLUE.bg(" yellow on blue")));
-		System.out.println(ShinyColors.CYAN_BRIGHT.fg(ShinyColors.RED.bg(" bright cyan on red")));
+		System.out.println(ShinyColors.YELLOW.fg(ShinyColors.BLUE.bg(" yellow on blue")) + " and no effect");
+		System.out.println(ShinyColors.CYAN_BRIGHT.fg(ShinyColors.RED.bg(" bright cyan on red")) + " and no effect");
+
+		System.out.println(ShinyColors.GREEN.fg(ShinyColors.WHITE.bg(" green on white") + " and green without bg") + " and no effect");
+		System.out.println(ShinyColors.CYAN_BRIGHT.fg(ShinyColors.RED.bg(" bright cyan on red")) + " and no effect");
 
 		// Multiple effects
 		String combo = ShinyEffects.BOLD.apply(
 				ShinyEffects.UNDERLINE.apply(
-						ShinyColors.MAGENTA_BRIGHT.fg(" bold underlined bright magenta")));
+						ShinyColors.MAGENTA_BRIGHT.fg(" bold underlined bright magenta")) + " and no effect");
 		System.out.println(combo);
 
 		System.out.println();
@@ -107,17 +113,17 @@ public class ShinyStyleTest {
 		String text;
 		// --- Standard foreground + background
 		System.out.print("[fg= yellow, bg=red] ");
-		text = ShinyColors.RED.bg(ShinyColors.YELLOW.fg("this is a beautiful text"));
+		text = ShinyColors.RED.bg(ShinyColors.YELLOW.fg("this is a beautiful text")) + " and no effect";
 		System.out.println(text);
 
 		// --- Foreground + effect
 		System.out.print("[fg= blue, effect=inverse] ");
-		text = ShinyEffects.INVERSE.apply(ShinyColors.BLUE.fg("this is a beautiful text"));
+		text = ShinyEffects.INVERSE.apply(ShinyColors.BLUE.fg("this is a beautiful text")) + " and no effect";
 		System.out.println(text);
 
 		// --- Foreground + background + effect
 		System.out.print("[fg= white bright, bg=green, effect=bold] ");
-		text = ShinyEffects.BOLD.apply(ShinyColors.GREEN.bg(ShinyColors.WHITE_BRIGHT.fg("shiny combo")));
+		text = ShinyEffects.BOLD.apply(ShinyColors.GREEN.bg(ShinyColors.WHITE_BRIGHT.fg("shiny combo")) + " and no effect");
 		System.out.println(text);
 
 		System.out.println();

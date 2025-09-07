@@ -19,10 +19,6 @@ public final class ShinyColor {
 		return String.format("\u001B[%sm", color);
 	}
 
-	public String fg(String s) {
-		return fg() + s + ShinyColors.RESET;
-	}
-
 	/**
 	 * Returns the ANSI escape sequence for the background color.
 	 * Example: 31 → "\u001B[41m" (red background).
@@ -31,8 +27,12 @@ public final class ShinyColor {
 		return String.format("\u001B[%sm", color + 10);
 	}
 
+	public String fg(String s) {
+		return fg() + s + ShinyReset.FG_DEFAULT;
+	}
+
 	public String bg(String s) {
-		return bg() + s + ShinyColors.RESET;
+		return bg() + s + ShinyReset.BG_DEFAULT;
 	}
 
 	@Override
