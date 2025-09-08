@@ -19,15 +19,15 @@ public class ShinyMarkDownTest {
 
 	private static void testPrintTitle() {
 		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Testing Title ---"));
-		Shiny.markdown().fromText("# Title 1").print();
-		Shiny.markdown().fromText("## Title 2").print();
-		Shiny.markdown().fromText("### Title 3").print();
+		Shiny.markdown().fromText("# Title 1").render();
+		Shiny.markdown().fromText("## Title 2").render();
+		Shiny.markdown().fromText("### Title 3").render();
 	}
 
 	private static void testPrintParagraph() {
 		System.out.println("--- Testing Paragraph ---");
-		Shiny.markdown().fromText("This is a paragraph.").print();
-		Shiny.markdown().fromText("This is a paragraph " + ShinyColors.BLUE.fg("with blue words")).print();
+		Shiny.markdown().fromText("This is a paragraph.").render();
+		Shiny.markdown().fromText("This is a paragraph " + ShinyColors.BLUE.fg("with blue words")).render();
 	}
 
 	private static void testPrintList() {
@@ -39,18 +39,18 @@ public class ShinyMarkDownTest {
 						* Item
 							* Sub-item 3a
 							* Sub-item 3b
-						""").print();
+						""").render();
 
 		System.out.println("--- Testing Ordered List ---");
 		Shiny.markdown().fromText("""
 				1. item 1
 				2. item 2
-				""").print();
+				""").render();
 	}
 
 	private static void testPrintTable() {
 		System.out.println("--- Testing Table ---");
-		Shiny.markdown().fromText("| h1 | h2 |\n|---|---|\n| c1 | c2 |").print();
+		Shiny.markdown().fromText("| h1 | h2 |\n|---|---|\n| c1 | c2 |").render();
 	}
 
 	private static void testFromFile() throws IOException {
@@ -58,7 +58,7 @@ public class ShinyMarkDownTest {
 		final Path tempFile = Files.createTempFile("test", ".md");
 		Files.writeString(tempFile, "# Title from file");
 
-		Shiny.markdown().fromFile(tempFile.toString()).print();
+		Shiny.markdown().fromFile(tempFile.toString()).render();
 
 		Files.delete(tempFile);
 	}

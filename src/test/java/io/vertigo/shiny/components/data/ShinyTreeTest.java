@@ -20,17 +20,19 @@ import static io.vertigo.shiny.components.data.tree.ShinyIcon.USER;
 import static io.vertigo.shiny.components.data.tree.ShinyIcon.WARNING;
 
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyTreeTest {
 	public static void main(final String[] args) {
-		testVideoGamesTree();
-		testIconShowcase();
-		testComplexTreeStructure();
+		final ShinyWriter writer = Shiny.writer();
+		testVideoGamesTree(writer);
+		testIconShowcase(writer);
+		testComplexTreeStructure(writer);
 	}
 
-	private static void testVideoGamesTree() {
-		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Video Games Tree ---"));
+	private static void testVideoGamesTree(final ShinyWriter writer) {
+		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Video Games Tree ---"));
 		final var tree = Shiny.tree("Video Games");
 		tree.getRoot()
 				.addChild("RPG", FOLDER_OPEN)
@@ -45,12 +47,12 @@ public class ShinyTreeTest {
 				.addChild("The Legend of Zelda", FILE).up()
 				.addChild("Uncharted", FILE);
 
-		tree.print();
-		System.out.println();
+		tree.render(writer);
+		writer.println();
 	}
 
-	private static void testIconShowcase() {
-		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Icon Showcase ---"));
+	private static void testIconShowcase(final ShinyWriter writer) {
+		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Icon Showcase ---"));
 		final var tree = Shiny.tree("Icons");
 		tree.getRoot()
 				.addChild("Status Icons", FOLDER_OPEN)
@@ -71,12 +73,12 @@ public class ShinyTreeTest {
 				.addChild("Star", STAR).up()
 				.addChild("Heart", HEART).up()
 				.addChild("Smiley", SMILEY).up();
-		tree.print();
-		System.out.println();
+		tree.render(writer);
+		writer.println();
 	}
 
-	private static void testComplexTreeStructure() {
-		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Complex Tree Structure ---"));
+	private static void testComplexTreeStructure(final ShinyWriter writer) {
+		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Complex Tree Structure ---"));
 		final var tree = Shiny.tree("Project Structure");
 		final var srcNode = tree.getRoot().addChild("src", FOLDER_CLOSED);
 		final var main = srcNode.addChild("main", FOLDER_CLOSED);
@@ -94,7 +96,7 @@ public class ShinyTreeTest {
 		tree.getRoot().addChild("database", DB);
 		tree.getRoot().addChild("admin", USER);
 
-		tree.print();
-		System.out.println();
+		tree.render(writer);
+		writer.println();
 	}
 }

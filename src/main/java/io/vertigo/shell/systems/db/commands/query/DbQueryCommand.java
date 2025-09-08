@@ -11,6 +11,7 @@ import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.db.DbContext;
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
@@ -21,10 +22,11 @@ public final class DbQueryCommand implements ShellCommand {
 
 	@Override
 	public void run() {
+		final ShinyWriter writer = Shiny.writer();
 		try (Statement stmt = DbContext.connection().createStatement()) {
 			if (query.trim().toLowerCase().startsWith("select")) {
 				try (ResultSet rs = stmt.executeQuery(query)) {
-					printResultSet(rs);
+					printResultSet(writer, rs);
 				}
 			} else {
 				final int rowsAffected = stmt.executeUpdate(query);
@@ -36,7 +38,7 @@ public final class DbQueryCommand implements ShellCommand {
 		}
 	}
 
-	private void printResultSet(final ResultSet rs) throws SQLException {
+	private void printResultSet(final ShinyWriter writer, final ResultSet rs) throws SQLException {
 		final ResultSetMetaData rsmd = rs.getMetaData();
 		final int columnsNumber = rsmd.getColumnCount();
 
@@ -62,7 +64,7 @@ public final class DbQueryCommand implements ShellCommand {
 				.noDataFound("No data found")
 				.header(header)
 				.rows(rows)
-				.print();
+				.render(writer);
 	}
 
 	@Override

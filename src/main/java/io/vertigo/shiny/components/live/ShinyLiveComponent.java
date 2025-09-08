@@ -1,41 +1,34 @@
 package io.vertigo.shiny.components.live;
 
-import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 
 public abstract class ShinyLiveComponent<S extends ShinyLiveComponent<S>> implements AutoCloseable {
 	private final ShinyLiveDrawer drawer;
-	private final Shiny shiny;
+	private ShinyWriter shinyWriter;
 
 	// Constructeur
-	public ShinyLiveComponent(Shiny shiny) {
-		Assertion.check().isNotNull(shiny);
-		//---
+	public ShinyLiveComponent() {
 		drawer = new ShinyLiveDrawer();
-		this.shiny = shiny;
 	}
 
-	protected final Shiny shiny() {
-		return shiny;
-	}
-
-	public final S start() {
+	public final S start(ShinyWriter writer) {
+		this.shinyWriter = writer;
 		drawer.start();
 		return (S) this;
 	}
 
-	protected abstract void draw();
+	protected abstract void draw(ShinyWriter writer);
 
 	public final void close() {
 		drawer.running = false;
-		draw();
+		draw(this.shinyWriter);
 		try {
 			drawer.join();
 		} catch (final InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
-		shiny.getWriter().println(); // Final newline
-		shiny.getWriter().flush();
+		this.shinyWriter.println() // Final newline
+				.flush();
 	}
 
 	/**
@@ -47,7 +40,7 @@ public abstract class ShinyLiveComponent<S extends ShinyLiveComponent<S>> implem
 		@Override
 		public void run() {
 			while (running) {
-				draw();
+				draw(shinyWriter);
 				try {
 					Thread.sleep(100); // Adjust sleep time for animation speed
 				} catch (final InterruptedException e) {

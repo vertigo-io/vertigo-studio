@@ -1,7 +1,6 @@
 package io.vertigo.shiny.components.dataviz.rating;
 
-import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColor;
 import io.vertigo.shiny.style.ShinyColors;
@@ -9,7 +8,6 @@ import io.vertigo.shiny.style.ShinyEffects;
 
 public final class ShinyRating implements ShinyComponent {
 
-	private final Shiny shiny;
 	private String label;
 	private double value = 0;
 	private ShinyRatingScale scale = ShinyRatingScale.SCALE_5;
@@ -23,10 +21,7 @@ public final class ShinyRating implements ShinyComponent {
 	private String separator = "";
 	private boolean allowHalfRating = false;
 
-	public ShinyRating(final Shiny shiny) {
-		Assertion.check().isNotNull(shiny);
-		//---
-		this.shiny = shiny;
+	public ShinyRating() {
 	}
 
 	public ShinyRating label(final String text) {
@@ -90,7 +85,7 @@ public final class ShinyRating implements ShinyComponent {
 		return this;
 	}
 
-	public void print() {
+	public void render(final ShinyWriter writer) {
 		final int maxValue = getEffectiveMaxValue();
 		final double clampedValue = Math.min(value, maxValue);
 
@@ -128,9 +123,9 @@ public final class ShinyRating implements ShinyComponent {
 		final String result = rating.toString();
 
 		if (showBox) {
-			printWithBox(result);
+			printWithBox(writer, result);
 		} else {
-			shiny.getWriter().println(result);
+			writer.println(result);
 		}
 	}
 
@@ -169,7 +164,7 @@ public final class ShinyRating implements ShinyComponent {
 		return customMaxValue > 0 ? customMaxValue : scale.getMaxValue();
 	}
 
-	private void printWithBox(final String content) {
+	private void printWithBox(final ShinyWriter writer, final String content) {
 		// Calculate length without color codes for the box
 		final String cleanContent = content.replaceAll("\\u001B\\[[;\\d]*m", "");
 		final int contentLength = cleanContent.length();
@@ -179,9 +174,10 @@ public final class ShinyRating implements ShinyComponent {
 		final String bottomBorder = "└" + "─".repeat(boxWidth) + "┘";
 		final String contentLine = "│ " + content + " │";
 
-		shiny.getWriter().println(topBorder);
-		shiny.getWriter().println(contentLine);
-		shiny.getWriter().println(bottomBorder);
+		writer
+				.println(topBorder)
+				.println(contentLine)
+				.println(bottomBorder);
 	}
 	//
 	//	// Utility method to display multiple ratings aligned

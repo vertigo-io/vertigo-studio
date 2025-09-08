@@ -8,6 +8,7 @@ import io.vertigo.shell.systems.db.DbContext;
 import io.vertigo.shell.systems.db.DbModel.JdbcSchema;
 import io.vertigo.shell.systems.db.DbModel.JdbcTable;
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import picocli.CommandLine.Command;
 
 @Command(name = "analyze", description = "Analyze the model")
@@ -15,6 +16,7 @@ public final class DbAnalyzeCommand implements ShellCommand {
 
 	@Override
 	public void run() {
+		final ShinyWriter writer = Shiny.writer();
 		int tables = 0;
 		int columns = 0;
 		int relations = 0;
@@ -35,7 +37,7 @@ public final class DbAnalyzeCommand implements ShellCommand {
 				.noDataFound("No object found in the database.")
 				.header("Table", "Column", "Relations")
 				.rows(rows)
-				.print();
+				.render(writer);
 		//
 		final int complexity = (10 * tables + 1 * columns + relations * 3) / tables;
 		System.out.println("Complexity :" + complexity);
@@ -57,6 +59,6 @@ public final class DbAnalyzeCommand implements ShellCommand {
 				.title("Dependency stats")
 				.header("table", "in", "out", "transitive Fan In")
 				.rows(dependencies)
-				.print();
+				.render(writer);
 	}
 }

@@ -3,6 +3,7 @@ package io.vertigo.shiny.components.data;
 import java.util.List;
 
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.data.table.ShinyBorder;
 import io.vertigo.shiny.components.data.table.ShinyTable;
 import io.vertigo.shiny.style.ShinyColors;
@@ -10,14 +11,15 @@ import io.vertigo.shiny.style.ShinyColors;
 public class ShinyTableTest {
 
 	public static void main(final String[] args) {
-		testBasicTable();
-		testEuropeanCountriesTable();
-		testEmptyTable();
-		testTableWithCustomStyles();
+		final ShinyWriter writer = Shiny.writer();
+		testBasicTable(writer);
+		testEuropeanCountriesTable(writer);
+		testEmptyTable(writer);
+		testTableWithCustomStyles(writer);
 	}
 
-	private static void testBasicTable() {
-		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Basic Table ---"));
+	private static void testBasicTable(final ShinyWriter writer) {
+		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Basic Table ---"));
 		final List<String[]> data = List.of(
 				new String[] { "John Doe", "30", "New York" },
 				new String[] { "Jane Smith", "25", "London" },
@@ -27,12 +29,12 @@ public class ShinyTableTest {
 				.title("User Information")
 				.header("Name", "Age", "City")
 				.rows(data)
-				.print();
-		System.out.println();
+				.render(writer);
+		writer.println();
 	}
 
-	private static void testEuropeanCountriesTable() {
-		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- European Union Countries - Population ---"));
+	private static void testEuropeanCountriesTable(final ShinyWriter writer) {
+		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- European Union Countries - Population ---"));
 		final List<String[]> euCountries = List.of(
 				new String[] { "Austria", "9000000" },
 				new String[] { "Belgium", "11700000" },
@@ -66,23 +68,23 @@ public class ShinyTableTest {
 				.title("European Union Countries - Population")
 				.header("Country", "Population")
 				.rows(euCountries)
-				.print();
-		System.out.println();
+				.render(writer);
+		writer.println();
 	}
 
-	private static void testEmptyTable() {
-		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Empty Table ---"));
+	private static void testEmptyTable(final ShinyWriter writer) {
+		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Empty Table ---"));
 		Shiny.table()
 				.title("Empty Data")
 				.header("Col1", "Col2")
 				.rows(List.of()) // Empty data
 				.noDataFound("No data available for this table.")
-				.print();
-		System.out.println();
+				.render(writer);
+		writer.println();
 	}
 
-	private static void testTableWithCustomStyles() {
-		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Table with Custom Styles ---"));
+	private static void testTableWithCustomStyles(final ShinyWriter writer) {
+		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Table with Custom Styles ---"));
 		final List<String[]> data = List.of(
 				new String[] { "Item A", "100", "Active" },
 				new String[] { "Item B", "250", "Inactive" },
@@ -98,8 +100,8 @@ public class ShinyTableTest {
 				.altRowBackgroundColor(ShinyColors.CYAN_BRIGHT)
 				.borderColor(ShinyColors.RED)
 				.endStyle()
-				.print();
-		System.out.println();
+				.render(writer);
+		writer.println();
 
 		final ShinyTable table = Shiny.table()
 				.title("Sales Report")
@@ -119,23 +121,23 @@ public class ShinyTableTest {
 				.beginStyle()
 				.border(ShinyBorder.Simple)
 				.endStyle()
-				.print();
-		System.out.println();
+				.render(writer);
+		writer.println();
 
 		table
 				.title("Sales Report - SimpleHeavy")
 				.beginStyle()
 				.border(ShinyBorder.SimpleHeavy)
 				.endStyle()
-				.print();
-		System.out.println();
+				.render(writer);
+		writer.println();
 
 		table
 				.title("Sales Report - Horizontal")
 				.beginStyle()
 				.border(ShinyBorder.Horizontal)
 				.endStyle()
-				.print();
-		System.out.println();
+				.render(writer);
+		writer.println();
 	}
 }

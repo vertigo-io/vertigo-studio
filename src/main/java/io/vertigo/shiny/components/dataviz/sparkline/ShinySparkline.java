@@ -3,22 +3,17 @@ package io.vertigo.shiny.components.dataviz.sparkline;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColor;
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinySparkline implements ShinyComponent {
-	private final Shiny shiny;
 	private String title;
 	private List<Double> data;
 	private ShinyColor sparklineColor = ShinyColors.BLUE; // Default color
 
-	public ShinySparkline(final Shiny shiny) {
-		Assertion.check().isNotNull(shiny);
-		//---
-		this.shiny = shiny;
+	public ShinySparkline() {
 	}
 
 	public ShinySparkline title(final String text) {
@@ -36,12 +31,12 @@ public final class ShinySparkline implements ShinyComponent {
 		return this;
 	}
 
-	public void print() {
+	public void render(final ShinyWriter writer) {
 		final String sparkline = data.stream()
 				.map(this::getSparklineChar)
 				.collect(Collectors.joining());
 
-		shiny.getWriter().println((title != null ? title + " " : "")
+		writer.println((title != null ? title + " " : "")
 				+ sparklineColor.fg(sparkline));
 	}
 

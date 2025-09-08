@@ -1,14 +1,11 @@
 package io.vertigo.shiny.components.text.toggle;
 
-import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColor;
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyToggle implements ShinyComponent {
-
-	private final Shiny shiny;
 	private String label;
 	private boolean value;
 	private ShinyToggleStyle style = ShinyToggleStyle.TOGGLE;
@@ -19,10 +16,7 @@ public final class ShinyToggle implements ShinyComponent {
 	private boolean showText = true;
 	//	private boolean showBox = false;
 
-	public ShinyToggle(final Shiny shiny) {
-		Assertion.check().isNotNull(shiny);
-		//---
-		this.shiny = shiny;
+	public ShinyToggle() {
 	}
 
 	public ShinyToggle label(final String text) {
@@ -70,7 +64,7 @@ public final class ShinyToggle implements ShinyComponent {
 	//		return this;
 	//	}
 
-	public void print() {
+	public void render(final ShinyWriter writer) {
 		final String icon = value ? style.getOnIcon() : style.getOffIcon();
 		final ShinyColor color = value ? onColor : offColor;
 		final String text = showText ? (value ? onText : offText) : "";
@@ -93,7 +87,7 @@ public final class ShinyToggle implements ShinyComponent {
 		//		if (showBox) {
 		//			printWithBox(result);
 		//		} else {
-		shiny.getWriter().println(result);
+		writer.println(result);
 		//		}
 	}
 

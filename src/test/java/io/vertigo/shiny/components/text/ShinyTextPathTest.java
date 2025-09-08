@@ -1,97 +1,99 @@
 package io.vertigo.shiny.components.text;
 
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyTextPathTest {
 
 	public static void main(final String[] args) {
-		testBasicPaths();
-		testCustomColors();
-		testCustomSeparator();
-		testSeparatorColor(); // New test case
-		testEdgeCases();
+		final ShinyWriter writer = Shiny.writer();
+		testBasicPaths(writer);
+		testCustomColors(writer);
+		testCustomSeparator(writer);
+		testSeparatorColor(writer); // New test case
+		testEdgeCases(writer);
 	}
 
-	private static void testBasicPaths() {
-		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Basic Paths ---"));
+	private static void testBasicPaths(final ShinyWriter writer) {
+		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Basic Paths ---"));
 		Shiny.textPath()
 				.path("/home/user/documents/report.pdf")
-				.print();
+				.render(writer);
 		Shiny.textPath()
 				.path("C:\\Program Files\\Java\\jdk-17\\bin")
 				.separator("\\")
-				.print();
+				.render(writer);
 		Shiny.textPath()
 				.path("folder/subfolder/file.txt")
-				.print();
-		System.out.println();
+				.render(writer);
+		writer.println();
 	}
 
-	private static void testCustomColors() {
-		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Custom Colors ---"));
+	private static void testCustomColors(final ShinyWriter writer) {
+		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Custom Colors ---"));
 		Shiny.textPath()
 				.path("/app/config/settings.json")
 				.rootColor(ShinyColors.RED)
 				.nodeColor(ShinyColors.YELLOW)
 				.leafColor(ShinyColors.GREEN)
-				.print();
+				.render(writer);
 		Shiny.textPath()
 				.path("/var/log/syslog")
 				.rootColor(ShinyColors.MAGENTA)
 				.nodeColor(ShinyColors.CYAN)
 				.leafColor(ShinyColors.WHITE)
-				.print();
-		System.out.println();
+				.render(writer);
+		writer.println();
 	}
 
-	private static void testCustomSeparator() {
-		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Custom Separator ---"));
+	private static void testCustomSeparator(final ShinyWriter writer) {
+		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Custom Separator ---"));
 		Shiny.textPath()
 				.path("data.csv")
 				.separator(".")
 				.rootColor(ShinyColors.WHITE)
 				.nodeColor(ShinyColors.BLUE)
 				.leafColor(ShinyColors.RED)
-				.print();
+				.render(writer);
 		Shiny.textPath()
 				.path("item1->item2->item3")
 				.separator("->")
 				.rootColor(ShinyColors.WHITE)
 				.nodeColor(ShinyColors.GREEN)
 				.leafColor(ShinyColors.YELLOW)
-				.print();
-		System.out.println();
+				.render(writer);
+		writer.println();
 	}
 
-	private static void testSeparatorColor() {
-		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Separator Color ---"));
+	private static void testSeparatorColor(final ShinyWriter writer) {
+		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Separator Color ---"));
 		Shiny.textPath()
 				.path("/path/to/my/file.txt")
 				.separatorColor(ShinyColors.RED)
-				.print();
+				.render(writer);
 		Shiny.textPath()
 				.path("C:\\Users\\Admin\\Desktop")
 				.separator("\\")
 				.separatorColor(ShinyColors.BLUE)
-				.print();
-		System.out.println();
+				.render(writer);
+		writer.println();
 	}
 
-	private static void testEdgeCases() {
-		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Edge Cases ---"));
+	private static void testEdgeCases(final ShinyWriter writer) {
+		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Edge Cases ---"));
 		Shiny.textPath()
 				.path("/singlefile.txt")
-				.print(); // Root and leaf
+				.render(writer); // Root and leaf
 		Shiny.textPath()
 				.path("justfile.txt")
-				.print(); // Just leaf
+				.render(writer); // Just leaf
 		Shiny.textPath()
 				.path("/")
-				.print(); // Just root
+				.render(writer); // Just root
 		Shiny.textPath()
 				.path("///a/b///c.txt")
-				.print(); // Multiple separators
-		System.out.println();
+				.render(writer); // Multiple separators
+		writer.println();
 	}
 }

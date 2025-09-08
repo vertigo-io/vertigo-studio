@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.file.FileContext;
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
@@ -17,14 +18,15 @@ public final class FileCdCommand implements ShellCommand {
 
 	@Override
 	public void run() {
+		final ShinyWriter writer = Shiny.writer();
 		try {
-			changeDirectory();
+			changeDirectory(writer);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void changeDirectory() throws IOException {
+	private void changeDirectory(final ShinyWriter writer) throws IOException {
 		final FileContext fileContext = FileContext.get();
 
 		final Path newPath = Path.of(newDirectory);
@@ -34,7 +36,7 @@ public final class FileCdCommand implements ShellCommand {
 			Shiny.textPath()
 					.path(fileContext.getCurrentAbsolutePath().toString())
 					.separator("/")
-					.print();
+					.render(writer);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}

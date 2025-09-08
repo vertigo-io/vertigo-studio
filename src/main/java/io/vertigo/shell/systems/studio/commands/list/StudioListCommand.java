@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.studio.StudioContext;
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
 import io.vertigo.studio.tools.VertigoStudioMda;
@@ -34,6 +35,8 @@ public final class StudioListCommand implements ShellCommand {
 
 	@Override
 	public void run() {
+		final ShinyWriter writer = Shiny.writer();
+
 		final Notebook notebook = VertigoStudioMda.read(StudioContext.notebookConfig);
 		final List<Sketch> sketches = notebook.getAll()
 				.stream()
@@ -54,7 +57,7 @@ public final class StudioListCommand implements ShellCommand {
 				.noDataFound("No sketch found")
 				.header("Key", "Name", "type")
 				.rows(rows)
-				.print();
+				.render(writer);
 	}
 
 	@Override

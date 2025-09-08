@@ -1,92 +1,94 @@
 package io.vertigo.shiny.components.text;
 
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.text.toggle.ShinyToggleStyle;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyToggleTest {
 
 	public static void main(final String[] args) {
-		testBasicToggles();
-		testDifferentStyles();
-		testCustomization();
+		final ShinyWriter writer = Shiny.writer();
+		testBasicToggles(writer);
+		testDifferentStyles(writer);
+		testCustomization(writer);
 		//testMultipleToggles();
 		//testDashboards();
 		//testEdgeCases();
 	}
 
-	private static void testBasicToggles() {
-		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Basic Toggles ---"));
+	private static void testBasicToggles(final ShinyWriter writer) {
+		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Basic Toggles ---"));
 
 		Shiny.toggle()
 				.label("WiFi Connection")
 				.value(true)
-				.print();
+				.render(writer);
 
 		Shiny.toggle()
 				.label("Bluetooth")
 				.value(false)
-				.print();
+				.render(writer);
 
 		Shiny.toggle()
 				.label("Auto-save")
 				.value(true)
-				.print();
+				.render(writer);
 
-		System.out.println();
+		writer.println();
 	}
 
-	private static void testDifferentStyles() {
-		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Different Toggle Styles ---"));
+	private static void testDifferentStyles(final ShinyWriter writer) {
+		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Different Toggle Styles ---"));
 
 		Shiny.toggle()
 				.label("Classic Style")
 				.value(true)
 				.style(ShinyToggleStyle.CLASSIC)
-				.print();
+				.render(writer);
 
 		Shiny.toggle()
 				.label("Switch Style")
 				.value(false)
 				.style(ShinyToggleStyle.SWITCH)
-				.print();
+				.render(writer);
 
 		Shiny.toggle()
 				.label("Light Bulb")
 				.value(true)
 				.style(ShinyToggleStyle.LIGHT)
-				.print();
+				.render(writer);
 
 		Shiny.toggle()
 				.label("Battery Level")
 				.value(false)
 				.style(ShinyToggleStyle.BATTERY)
-				.print();
+				.render(writer);
 
 		Shiny.toggle()
 				.label("Server Status")
 				.value(true)
 				.style(ShinyToggleStyle.STATUS)
-				.print();
+				.render(writer);
 
 		Shiny.toggle()
 				.label("User Rating")
 				.value(false)
 				.style(ShinyToggleStyle.THUMBS)
-				.print();
+				.render(writer);
 
-		System.out.println();
+		writer.println();
 	}
 
-	private static void testCustomization() {
-		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Customized Toggles ---"));
+	private static void testCustomization(final ShinyWriter writer) {
+		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Customized Toggles ---"));
 
 		Shiny.toggle()
 				.label("Custom Colors")
 				.value(true)
 				.onColor(ShinyColors.CYAN)
 				.offColor(ShinyColors.MAGENTA)
-				.print();
+				.render(writer);
 
 		Shiny.toggle()
 				.label("Custom Text")
@@ -94,27 +96,27 @@ public class ShinyToggleTest {
 				.onText("ENABLED")
 				.offText("DISABLED")
 				.style(ShinyToggleStyle.ARROW)
-				.print();
+				.render(writer);
 
 		Shiny.toggle()
 				.label("No Text")
 				.value(true)
 				.showText(false)
 				.style(ShinyToggleStyle.CHECK)
-				.print();
+				.render(writer);
 
 		Shiny.toggle()
 				.label("With Box")
 				.value(true)
 				.style(ShinyToggleStyle.STAR)
 				//			.showBox(true)
-				.print();
+				.render(writer);
 
-		System.out.println();
+		writer.println();
 	}
 
 	/*	private static void testMultipleToggles() {
-			System.out.println(ShinyColors.BLUE_BRIGHT + "--- Multiple Toggles (Aligned) ---" + ShinyColors.RESET);
+			writer.println(ShinyColors.BLUE_BRIGHT + "--- Multiple Toggles (Aligned) ---" + ShinyColors.RESET);
 	
 			final Map<String, Boolean> settings = new LinkedHashMap<>();
 			settings.put("Auto-save", true);
@@ -125,11 +127,11 @@ public class ShinyToggleTest {
 			settings.put("Analytics", false);
 	
 			ShinyToggle.printMultiple(Shiny.getInstance(), settings, ShinyToggleStyle.TOGGLE);
-			System.out.println();
+			writer.println();
 		}
 	
 		private static void testDashboards() {
-			System.out.println(ShinyColors.BLUE_BRIGHT + "--- Toggle Dashboards ---" + ShinyColors.RESET);
+			writer.println(ShinyColors.BLUE_BRIGHT + "--- Toggle Dashboards ---" + ShinyColors.RESET);
 	
 			// System Status Dashboard
 			final Map<String, Boolean> systemStatus = new LinkedHashMap<>();
@@ -164,7 +166,7 @@ public class ShinyToggleTest {
 		}
 	
 		private static void testEdgeCases() {
-			System.out.println(ShinyColors.BLUE_BRIGHT + "--- Toggle Edge Cases ---" + ShinyColors.RESET);
+			writer.println(ShinyColors.BLUE_BRIGHT + "--- Toggle Edge Cases ---" + ShinyColors.RESET);
 	
 			// Toggle without label
 			Shiny.toggle()
@@ -188,7 +190,7 @@ public class ShinyToggleTest {
 					.print();
 	
 			// Multiple styles in sequence
-			System.out.println("\nAll styles showcase:");
+			writer.println("\nAll styles showcase:");
 			for (ShinyToggleStyle style : ShinyToggleStyle.values()) {
 				Shiny.toggle()
 						.label(style.name())
@@ -197,7 +199,7 @@ public class ShinyToggleTest {
 						.print();
 			}
 	
-			System.out.println("\nAll styles OFF:");
+			writer.println("\nAll styles OFF:");
 			for (ShinyToggleStyle style : ShinyToggleStyle.values()) {
 				Shiny.toggle()
 						.label(style.name())
@@ -206,7 +208,7 @@ public class ShinyToggleTest {
 						.print();
 			}
 	
-			System.out.println();
+			writer.println();
 		}
 		*/
 }

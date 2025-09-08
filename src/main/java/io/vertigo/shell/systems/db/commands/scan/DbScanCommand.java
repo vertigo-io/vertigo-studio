@@ -4,6 +4,7 @@ import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.db.DbContext;
 import io.vertigo.shell.systems.db.DbModel;
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.data.tree.ShinyIcon;
 import io.vertigo.shiny.components.data.tree.ShinyTree;
 import io.vertigo.shiny.components.data.tree.ShinyTreeNode;
@@ -14,6 +15,8 @@ public class DbScanCommand implements ShellCommand {
 
 	@Override
 	public void run() {
+		final ShinyWriter writer = Shiny.writer();
+
 		final DbModel mockDbModel = DbContext.model();
 		final ShinyTree resultsTree = Shiny.tree("Sensitive Data Scan Results");
 		final ShinyTreeNode root = resultsTree.getRoot();
@@ -41,7 +44,7 @@ public class DbScanCommand implements ShellCommand {
 		if (!sensitiveDataFound) {
 			root.addChild("No sensitive data found based on current patterns.", ShinyIcon.INFO);
 		}
-		resultsTree.print();
+		resultsTree.render(writer);
 	}
 
 }

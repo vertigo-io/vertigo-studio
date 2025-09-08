@@ -6,6 +6,7 @@ import io.vertigo.shell.systems.java.JavaModel.JavaClass;
 import io.vertigo.shell.systems.java.JavaModel.JavaImport;
 import io.vertigo.shell.systems.java.JavaModel.JavaPackage;
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.data.tree.ShinyTree;
 import io.vertigo.shiny.components.data.tree.ShinyTreeNode;
 import picocli.CommandLine.Command;
@@ -23,8 +24,9 @@ public final class JavaListCommand implements ShellCommand {
 
 	@Override
 	public void run() {
+		final ShinyWriter writer = Shiny.writer();
 		//		if (all) {
-		listAll();
+		listAll(writer);
 		//		}
 		//		if (tableName != null) {
 		//			describeTable();
@@ -34,7 +36,7 @@ public final class JavaListCommand implements ShellCommand {
 		//		}
 	}
 
-	private void listAll() {
+	private void listAll(final ShinyWriter writer) {
 		//To avoid java keyword
 		//Class => clazz
 		//package => jpackage
@@ -42,7 +44,7 @@ public final class JavaListCommand implements ShellCommand {
 		for (final JavaPackage jpackage : JavaContext.model().packages()) {
 			parse(jpackage, tree.getRoot());
 		}
-		tree.print();
+		tree.render(writer);
 	}
 
 	private void parse(JavaPackage jpackage, ShinyTreeNode parent) {

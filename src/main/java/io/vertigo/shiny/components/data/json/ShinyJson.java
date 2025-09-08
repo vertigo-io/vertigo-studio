@@ -8,13 +8,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColor;
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyJson implements ShinyComponent {
-	private final Shiny shiny;
+	//	private final Shiny shiny;
 	private String jsonString;
 
 	private ShinyColor labelColor = ShinyColors.BLUE;
@@ -33,10 +33,7 @@ public final class ShinyJson implements ShinyComponent {
 
 	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-	public ShinyJson(final Shiny shiny) {
-		Assertion.check().isNotNull(shiny);
-		//---
-		this.shiny = shiny;
+	public ShinyJson() {
 	}
 
 	public ShinyJson json(final String json) {
@@ -89,61 +86,61 @@ public final class ShinyJson implements ShinyComponent {
 		return this;
 	}
 
-	public void print() {
+	public void render(ShinyWriter writer) {
 		Assertion.check().isNotBlank(jsonString, "JSON string cannot be blank");
 		//---
 		try {
 			final JsonNode rootNode = OBJECT_MAPPER.readTree(jsonString);
-			printNode(rootNode, "", true);
+			printNode(writer, rootNode, "", true);
 		} catch (final IOException e) {
-			shiny.getWriter().println(ShinyColors.RED.fg("Error parsing JSON: " + e.getMessage()));
+			writer.println(ShinyColors.RED.fg("Error parsing JSON: " + e.getMessage()));
 		}
 	}
 
-	private void printNode(final JsonNode node, final String indent, final boolean isLast) {
+	private void printNode(final ShinyWriter writer, final JsonNode node, final String indent, final boolean isLast) {
 		if (node.isObject()) {
-			printObject(node, indent, isLast);
+			printObject(writer, node, indent, isLast);
 		} else if (node.isArray()) {
-			printArray(node, indent, isLast);
+			printArray(writer, node, indent, isLast);
 		} else {
-			printValue(node, indent, isLast);
+			printValue(writer, node, indent, isLast);
 		}
 	}
 
-	private void printObject(final JsonNode node, final String indent, final boolean isLast) {
-		shiny.getWriter().println(bracesColor.fg("{"));
+	private void printObject(final ShinyWriter writer, final JsonNode node, final String indent, final boolean isLast) {
+		writer.println(bracesColor.fg("{"));
 		final Iterator<Entry<String, JsonNode>> fields = node.fields();
 		while (fields.hasNext()) {
 			final Entry<String, JsonNode> field = fields.next();
 			final boolean lastField = !fields.hasNext();
-			shiny.getWriter().print(indent + "  "
+			writer.print(indent + "  "
 					+ labelColor.fg("\"" + field.getKey() + "\"")
 					+ colonColor.fg(":") + " ");
-			printNode(field.getValue(), indent + "  ", lastField);
+			printNode(writer, field.getValue(), indent + "  ", lastField);
 		}
-		shiny.getWriter().print(indent + bracesColor.fg("}"));
+		writer.print(indent + bracesColor.fg("}"));
 		if (!isLast) {
-			shiny.getWriter().print(commaColor.fg(","));
+			writer.print(commaColor.fg(","));
 		}
-		shiny.getWriter().println();
+		writer.println();
 	}
 
-	private void printArray(final JsonNode node, final String indent, final boolean isLast) {
-		shiny.getWriter().println(bracketColor.fg("["));
+	private void printArray(final ShinyWriter writer, JsonNode node, final String indent, final boolean isLast) {
+		writer.println(bracketColor.fg("["));
 		for (int i = 0; i < node.size(); i++) {
 			final JsonNode element = node.get(i);
 			final boolean lastElement = (i == node.size() - 1);
-			shiny.getWriter().print(indent + "  ");
-			printNode(element, indent + "  ", lastElement);
+			writer.print(indent + "  ");
+			printNode(writer, element, indent + "  ", lastElement);
 		}
-		shiny.getWriter().print(indent + bracketColor.fg("]"));
+		writer.print(indent + bracketColor.fg("]"));
 		if (!isLast) {
-			shiny.getWriter().print(commaColor.fg(","));
+			writer.print(commaColor.fg(","));
 		}
-		shiny.getWriter().println();
+		writer.println();
 	}
 
-	private void printValue(final JsonNode node, final String indent, final boolean isLast) {
+	private void printValue(final ShinyWriter writer, final JsonNode node, final String indent, final boolean isLast) {
 		final String display;
 		if (node.isTextual()) {
 			display = stringColor.fg("\"" + node.asText() + "\"");
@@ -156,11 +153,11 @@ public final class ShinyJson implements ShinyComponent {
 		} else {
 			display = ShinyColors.RED.bg("UNKNOW");
 		}
-		shiny.getWriter().print(display);
+		writer.print(display);
 		if (!isLast) {
-			shiny.getWriter().print(commaColor.fg(","));
+			writer.print(commaColor.fg(","));
 		}
-		shiny.getWriter().println();
+		writer.println();
 	}
 
 }

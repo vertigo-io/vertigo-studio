@@ -22,11 +22,12 @@ import com.drew.metadata.Tag;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.env.Env;
 import io.vertigo.shell.systems.photo.PhotoContext;
-import io.vertigo.shell.systems.photo.PhotoVar;
 import io.vertigo.shell.systems.photo.PhotoExifInfo;
 import io.vertigo.shell.systems.photo.PhotoInfo;
 import io.vertigo.shell.systems.photo.PhotoType;
+import io.vertigo.shell.systems.photo.PhotoVar;
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.live.progressbar.ShinyProgressBar;
 import picocli.CommandLine.Command;
 
@@ -35,6 +36,8 @@ public final class PhotoLoadCommand implements ShellCommand {
 
 	@Override
 	public void run() {
+		final ShinyWriter writer = Shiny.writer();
+
 		final Path rootPath = Path.of(Env.get(PhotoVar.ROOT_PATH));
 
 		if (rootPath == null) {
@@ -62,7 +65,7 @@ public final class PhotoLoadCommand implements ShellCommand {
 		int processedCount = 0;
 		try (final ShinyProgressBar progressBar = Shiny.progressBar()
 				//.title("Processing photos")
-				.total(photoPaths.size()).start()) {
+				.total(photoPaths.size()).start(writer)) {
 			for (final Path path : photoPaths) {
 				final PhotoInfo photoInfo = extract(path);
 				if (photoInfo != null) {

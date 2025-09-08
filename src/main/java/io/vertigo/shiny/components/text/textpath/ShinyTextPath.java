@@ -4,13 +4,12 @@ import java.nio.file.Path;
 import java.util.regex.Pattern; // New import
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColor;
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyTextPath implements ShinyComponent {
-	private final Shiny shiny;
 	private String textPath;
 	private String separator = "/";
 	private ShinyColor rootColor = ShinyColors.GREEN;
@@ -18,10 +17,7 @@ public final class ShinyTextPath implements ShinyComponent {
 	private ShinyColor leafColor = ShinyColors.BLUE_BRIGHT;
 	private ShinyColor separatorColor = ShinyColors.RED; // Default color
 
-	public ShinyTextPath(final Shiny shiny) {
-		Assertion.check().isNotNull(shiny);
-		//---
-		this.shiny = shiny;
+	public ShinyTextPath() {
 	}
 
 	public ShinyTextPath path(final Path path) {
@@ -59,7 +55,7 @@ public final class ShinyTextPath implements ShinyComponent {
 		return this;
 	}
 
-	public void print() {
+	public void render(final ShinyWriter writer) {
 		Assertion.check().isNotBlank(textPath, "Path cannot be blank");
 		//---
 		final StringBuilder coloredPath = new StringBuilder();
@@ -96,6 +92,6 @@ public final class ShinyTextPath implements ShinyComponent {
 				coloredPath.append(sepColor.fg(separator));
 			}
 		}
-		shiny.getWriter().println(coloredPath.toString());
+		writer.println(coloredPath.toString());
 	}
 }

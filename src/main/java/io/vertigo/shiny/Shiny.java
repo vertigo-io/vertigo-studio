@@ -36,40 +36,44 @@ public final class Shiny {
 		INSTANCE.writer = printWriter;
 	}
 
+	public static ShinyWriter writer() {
+		return new ShinyWriter(INSTANCE.writer);
+	}
+
 	private Shiny() {
 		writer = new PrintWriter(System.out, true, StandardCharsets.UTF_8);
 	}
 
 	public static ShinyTable table() {
-		return new ShinyTable(INSTANCE);
+		return new ShinyTable();
 	}
 
 	public static ShinyBarChart barChart() {
-		return new ShinyBarChart(INSTANCE);
+		return new ShinyBarChart();
 	}
 
 	public static ShinyProgressBar progressBar() {
-		return new ShinyProgressBar(INSTANCE);
+		return new ShinyProgressBar();
 	}
 
 	public static ShinySpinner spinner() {
-		return new ShinySpinner(INSTANCE);
+		return new ShinySpinner();
 	}
 
 	public static ShinyTree tree(final String label) {
-		return new ShinyTree(INSTANCE, label);
+		return new ShinyTree(label);
 	}
 
 	public static ShinyGauge gauge() {
-		return new ShinyGauge(INSTANCE);
+		return new ShinyGauge();
 	}
 
 	public static ShinySparkline sparkline() {
-		return new ShinySparkline(INSTANCE);
+		return new ShinySparkline();
 	}
 
 	public static ShinyStatus status() {
-		return new ShinyStatus(INSTANCE);
+		return new ShinyStatus();
 	}
 
 	public static ShinyFiglet figlet() {
@@ -81,15 +85,15 @@ public final class Shiny {
 	}
 
 	public static ShinyTextPath textPath() {
-		return new ShinyTextPath(INSTANCE);
+		return new ShinyTextPath();
 	}
 
 	public static ShinyJson json() {
-		return new ShinyJson(INSTANCE);
+		return new ShinyJson();
 	}
 
 	public static ShinyList list() {
-		return new ShinyList(INSTANCE);
+		return new ShinyList();
 	}
 
 	public static ShinyTitle title() {
@@ -105,11 +109,11 @@ public final class Shiny {
 	}
 
 	public static ShinyToggle toggle() {
-		return new ShinyToggle(INSTANCE);
+		return new ShinyToggle();
 	}
 
 	public static ShinyRating rating() {
-		return new ShinyRating(INSTANCE);
+		return new ShinyRating();
 	}
 
 	public static ShinyMultiSelection multiSelection() {
@@ -117,7 +121,7 @@ public final class Shiny {
 	}
 
 	public static ShinyInputText inputText() {
-		return new ShinyInputText(INSTANCE);
+		return new ShinyInputText();
 	}
 
 	public static ShinyTheme theme() {

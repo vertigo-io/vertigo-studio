@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.input.text.ShinyInputText;
 import io.vertigo.shiny.style.ShinyColors;
 
@@ -12,16 +13,18 @@ public class ShinyInputTextTest {
 	private static Scanner scanner = new Scanner(System.in);
 
 	public static void main(final String[] args) {
+		final ShinyWriter writer = Shiny.writer();
+
 		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Starting ShinyInputText Component Test ---"));
 		System.out.println("Follow the prompts to test different input scenarios.");
 		System.out.println();
 
-		testBasicInput();
-		testRequiredInput();
-		testPatternValidation();
-		testDefaultValue();
-		testSuggestions();
-		testSecretInput();
+		testBasicInput(writer);
+		testRequiredInput(writer);
+		testPatternValidation(writer);
+		testDefaultValue(writer);
+		testSuggestions(writer);
+		testSecretInput(writer);
 
 		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- ShinyInputText Component Test Finished ---"));
 		scanner.close();
@@ -33,61 +36,61 @@ public class ShinyInputTextTest {
 		System.out.println();
 	}
 
-	private static void testBasicInput() {
+	private static void testBasicInput(final ShinyWriter writer) {
 		System.out.println(ShinyColors.CYAN.fg("Scenario: Basic Input"));
 		System.out.println("Parameters: label='Enter your name'");
 		final ShinyInputText inputText = Shiny.inputText().label("Enter your name");
-		inputText.print();
+		inputText.render(writer);
 		System.out.println("You entered: " + inputText.getValue());
 		waitForEnter();
 	}
 
-	private static void testRequiredInput() {
+	private static void testRequiredInput(final ShinyWriter writer) {
 		System.out.println(ShinyColors.CYAN.fg("Scenario: Required Input"));
 		System.out.println("Parameters: label='Enter a value (required)'");
 		System.out.println("Try leaving it empty first, then enter a value.");
 		final ShinyInputText inputText = Shiny.inputText().label("Enter a value").required(true);
-		inputText.print();
+		inputText.render(writer);
 		System.out.println("You entered: " + inputText.getValue());
 		waitForEnter();
 	}
 
-	private static void testPatternValidation() {
+	private static void testPatternValidation(final ShinyWriter writer) {
 		System.out.println(ShinyColors.CYAN.fg("Scenario: Pattern Validation (5 lowercase letters)"));
 		System.out.println("Parameters: label='Enter 5 lowercase letters', pattern='[a-z]{5}'");
 		System.out.println("Try invalid input (e.g., '12345', 'abc'), then valid (e.g., 'hello').");
 		final ShinyInputText inputText = Shiny.inputText().label("Enter 5 lowercase letters").pattern("[a-z]{5}");
-		inputText.print();
+		inputText.render(writer);
 		System.out.println("You entered: " + inputText.getValue());
 		waitForEnter();
 	}
 
-	private static void testDefaultValue() {
+	private static void testDefaultValue(final ShinyWriter writer) {
 		System.out.println(ShinyColors.CYAN.fg("Scenario: Default Value"));
 		System.out.println("Parameters: label='Enter your age', defaultValue='30'");
 		System.out.println("Press Enter without typing to use the default value.");
 		final ShinyInputText inputText = Shiny.inputText().label("Enter your age").defaultValue("30");
-		inputText.print();
+		inputText.render(writer);
 		System.out.println("You entered: " + inputText.getValue());
 		waitForEnter();
 	}
 
-	private static void testSuggestions() {
+	private static void testSuggestions(final ShinyWriter writer) {
 		System.out.println(ShinyColors.CYAN.fg("Scenario: Suggestions"));
 		System.out.println("Parameters: label='Choose your favorite color', suggestions=['red', 'green', 'blue']");
 		System.out.println("Type anything, the suggestions are just visual hints.");
 		final ShinyInputText inputText = Shiny.inputText().label("Choose your favorite color").suggestions(List.of("red", "green", "blue"));
-		inputText.print();
+		inputText.render(writer);
 		System.out.println("You entered: " + inputText.getValue());
 		waitForEnter();
 	}
 
-	private static void testSecretInput() {
+	private static void testSecretInput(final ShinyWriter writer) {
 		System.out.println(ShinyColors.CYAN.fg("Scenario: Secret Input"));
 		System.out.println("Parameters: label='Enter your password', secret=true");
 		System.out.println("Note: Input will be echoed in this basic console, but conceptually it's masked.");
 		final ShinyInputText inputText = Shiny.inputText().label("Enter your password").secret(true);
-		inputText.print();
+		inputText.render(writer);
 		System.out.println("You entered: " + inputText.getValue());
 		waitForEnter();
 	}

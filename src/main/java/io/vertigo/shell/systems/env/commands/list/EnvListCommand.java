@@ -10,6 +10,7 @@ import io.vertigo.shell.systems.file.FileContext;
 import io.vertigo.shell.systems.java.JavaVar;
 import io.vertigo.shell.systems.photo.PhotoVar;
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import picocli.CommandLine.Command;
 
 @Command(name = "list", description = "Display env properties.")
@@ -17,6 +18,8 @@ public final class EnvListCommand implements ShellCommand {
 
 	@Override
 	public void run() {
+		final ShinyWriter writer = Shiny.writer();
+
 		final List<String[]> rows = new ArrayList<>();
 
 		// File Context
@@ -43,6 +46,6 @@ public final class EnvListCommand implements ShellCommand {
 				.title("Systems Properties")
 				.header("System", "properties", "Value")
 				.rows(rows)
-				.print();
+				.render(writer);
 	}
 }

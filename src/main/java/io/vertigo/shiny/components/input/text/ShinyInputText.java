@@ -8,12 +8,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyInputText implements ShinyComponent {
-	private final Shiny shiny;
 	private String inputTextLabel;
 	private boolean inputTextRequired = false;
 	private Pattern inputTextValidationPattern;
@@ -22,9 +21,7 @@ public final class ShinyInputText implements ShinyComponent {
 	private boolean inputTextSecret = false; // For masking input
 	private String inputTextValue; // Stores the entered value
 
-	public ShinyInputText(final Shiny shiny) {
-		Assertion.check().isNotNull(shiny);
-		this.shiny = shiny;
+	public ShinyInputText() {
 	}
 
 	public ShinyInputText label(final String label) {
@@ -64,7 +61,7 @@ public final class ShinyInputText implements ShinyComponent {
 	}
 
 	@Override
-	public void print() {
+	public void render(final ShinyWriter writer) {
 		String prompt = inputTextLabel;
 		if (inputTextRequired) {
 			prompt += ShinyColors.RED.fg(" (required)");
@@ -80,8 +77,8 @@ public final class ShinyInputText implements ShinyComponent {
 		final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		boolean validInput = false;
 		while (!validInput) {
-			shiny.getWriter().print(prompt);
-			shiny.getWriter().flush();
+			writer.print(prompt)
+					.flush();
 
 			try {
 				String inputLine;
@@ -89,7 +86,7 @@ public final class ShinyInputText implements ShinyComponent {
 					// For actual secret input, Console.readPassword() would be ideal,
 					// but it's not always available and hard to test.
 					// For now, we'll just read normally but note the masking intent.
-					shiny.getWriter().println(ShinyColors.YELLOW.fg("(Input will be masked, but not truly hidden in this basic console)"));
+					writer.println(ShinyColors.YELLOW.fg("(Input will be masked, but not truly hidden in this basic console)"));
 					inputLine = reader.readLine(); // Cannot mask directly with BufferedReader
 				} else {
 					inputLine = reader.readLine();
@@ -106,11 +103,11 @@ public final class ShinyInputText implements ShinyComponent {
 					}
 
 					if (inputTextRequired && inputTextValue.isEmpty()) {
-						shiny.getWriter().println(ShinyColors.RED.fg("Input is required."));
+						writer.println(ShinyColors.RED.fg("Input is required."));
 					} else if (inputTextValidationPattern != null && !inputTextValue.isEmpty()) {
 						Matcher matcher = inputTextValidationPattern.matcher(inputTextValue);
 						if (!matcher.matches()) {
-							shiny.getWriter().println(ShinyColors.RED.fg("Input does not match the required pattern."));
+							writer.println(ShinyColors.RED.fg("Input does not match the required pattern."));
 						} else {
 							validInput = true;
 						}
@@ -119,7 +116,7 @@ public final class ShinyInputText implements ShinyComponent {
 					}
 				}
 			} catch (IOException e) {
-				shiny.getWriter().println(ShinyColors.RED + "Error reading input: " + e.getMessage() + ShinyColors.RESET);
+				writer.println(ShinyColors.RED.fg("Error reading input: " + e.getMessage()));
 				inputTextValue = null;
 				validInput = true; // Exit loop on error
 			}

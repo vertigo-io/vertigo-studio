@@ -12,6 +12,7 @@ import io.vertigo.shell.systems.db.DbContext;
 import io.vertigo.shell.systems.db.DbModel.JdbcSchema;
 import io.vertigo.shell.systems.db.DbModel.JdbcTable;
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import picocli.CommandLine.Command;
 
 @Command(name = "stats", description = "List stats")
@@ -19,6 +20,8 @@ public final class DbStatsCommand implements ShellCommand {
 
 	@Override
 	public void run() {
+		final ShinyWriter writer = Shiny.writer();
+
 		final List<String> tableNames = new ArrayList<>();
 		final List<Integer> tableCounts = new ArrayList<>();
 
@@ -42,7 +45,7 @@ public final class DbStatsCommand implements ShellCommand {
 				.header(tableNames)
 				.rows(tableCounts)
 				.length(100)
-				.print();
+				.render(writer);
 	}
 
 }

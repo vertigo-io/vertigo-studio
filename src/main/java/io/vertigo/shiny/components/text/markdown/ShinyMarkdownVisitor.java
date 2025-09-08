@@ -25,13 +25,13 @@ class ShinyMarkdownVisitor extends AbstractVisitor {
 	@Override
 	public void visit(final Heading heading) {
 		final String title = textContentRenderer.render(heading);
-		Shiny.title().level(heading.getLevel()).text(title).print();
+		Shiny.title().level(heading.getLevel()).text(title).render();
 	}
 
 	@Override
 	public void visit(final Paragraph paragraph) {
 		final String text = textContentRenderer.render(paragraph);
-		Shiny.paragraph(text).print();
+		Shiny.paragraph(text).render();
 	}
 
 	@Override
@@ -45,7 +45,7 @@ class ShinyMarkdownVisitor extends AbstractVisitor {
 		Shiny
 				.list()
 				.items(items)
-				.print();
+				.render();
 	}
 
 	@Override
@@ -59,7 +59,7 @@ class ShinyMarkdownVisitor extends AbstractVisitor {
 		Shiny.list()
 				.ordered()
 				.items(items)
-				.print();
+				.render();
 	}
 
 	@Override
@@ -94,6 +94,6 @@ class ShinyMarkdownVisitor extends AbstractVisitor {
 		Shiny.table()
 				.header(headers.toArray(new String[0]))
 				.rows(rows)
-				.print();
+				.render();
 	}
 }

@@ -3,22 +3,17 @@ package io.vertigo.shiny.components.dataviz.status;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColor;
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyStatus implements ShinyComponent {
-	private final Shiny shiny;
 	private String title;
 	private List<StatusType> statuses;
 	private StatusShape shape = StatusShape.SQUARE;
 
-	public ShinyStatus(final Shiny shiny) {
-		Assertion.check().isNotNull(shiny);
-		//---
-		this.shiny = shiny;
+	public ShinyStatus() {
 	}
 
 	public ShinyStatus title(final String text) {
@@ -36,12 +31,12 @@ public final class ShinyStatus implements ShinyComponent {
 		return this;
 	}
 
-	public void print() {
+	public void render(final ShinyWriter writer) {
 		final String statusLine = statuses.stream()
 				.map(status -> status.getColor().fg(shape.getCharacter()))
 				.collect(Collectors.joining(" "));
 
-		shiny.getWriter().println(title != null ? title + " " + statusLine : statusLine);
+		writer.println(title != null ? title + " " + statusLine : statusLine);
 	}
 
 	public enum StatusType {

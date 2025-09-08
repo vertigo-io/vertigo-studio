@@ -1,6 +1,6 @@
 package io.vertigo.shiny.components.live.spinner;
 
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.live.ShinyLiveComponent;
 
 /**
@@ -10,8 +10,8 @@ public final class ShinySpinner extends ShinyLiveComponent<ShinySpinner> {
 	private volatile String message;
 	private volatile int frameIndex = 0;
 
-	public ShinySpinner(final Shiny shiny) {
-		super(shiny);
+	public ShinySpinner() {
+		super();
 	}
 
 	/**
@@ -25,12 +25,12 @@ public final class ShinySpinner extends ShinyLiveComponent<ShinySpinner> {
 	/**
 	 * Draws the current frame of the spinner with the message.
 	 */
-	synchronized protected void draw() {
+	synchronized protected void draw(ShinyWriter writer) {
 		final var frame = ShinySpinnerStyle.FRAMES[frameIndex % ShinySpinnerStyle.FRAMES.length];
-		shiny().getWriter().print("\r");
-		shiny().getWriter().print(frame);
-		shiny().getWriter().print(" " + message);
-		shiny().getWriter().flush(); //On force le flush
+		writer.print("\r")
+				.print(frame)
+				.print(" " + message)
+				.flush(); //On force le flush
 		frameIndex++;
 	}
 }

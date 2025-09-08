@@ -10,19 +10,17 @@ import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyMultiSelection implements ShinyComponent {
-	private final Shiny shiny;
 	private String multiselectionTitle;
 	private final List<String> multiselectionOptions;
 	private Set<Integer> selectedIndices;
 	private boolean strictMode = false; // Fallback for non-cursor consoles
 
 	public ShinyMultiSelection(final Shiny shiny) {
-		Assertion.check().isNotNull(shiny);
-		this.shiny = shiny;
 		this.multiselectionOptions = new ArrayList<>();
 		this.selectedIndices = new HashSet<>();
 	}
@@ -62,25 +60,25 @@ public final class ShinyMultiSelection implements ShinyComponent {
 	}
 
 	@Override
-	public void print() {
+	public void render(ShinyWriter writer) {
 		if (multiselectionTitle != null) {
-			shiny.getWriter().println(multiselectionTitle);
+			writer.println(multiselectionTitle);
 		}
 		if (strictMode) {
-			handleStrictMode();
+			handleStrictMode(writer);
 		} else {
-			handleInteractiveMode();
+			handleInteractiveMode(writer);
 		}
 	}
 
-	private void handleStrictMode() {
-		shiny.getWriter().println("Please enter the numbers of the options you want to select, separated by commas (e.g., 1,3,5):");
+	private void handleStrictMode(ShinyWriter writer) {
+		writer.println("Please enter the numbers of the options you want to select, separated by commas (e.g., 1,3,5):");
 		for (int i = 0; i < multiselectionOptions.size(); i++) {
 			final String prefix = selectedIndices.contains(i) ? "[X] " : "[ ] ";
-			shiny.getWriter().printf("%s%d. %s%n", prefix, (i + 1), multiselectionOptions.get(i));
+			writer.printf("%s%d. %s%n", prefix, (i + 1), multiselectionOptions.get(i));
 		}
-		shiny.getWriter().print("> ");
-		shiny.getWriter().flush();
+		writer.print("> ");
+		writer.flush();
 
 		final var reader = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
 		try {
@@ -98,15 +96,15 @@ public final class ShinyMultiSelection implements ShinyComponent {
 						});
 			}
 		} catch (final IOException | NumberFormatException e) {
-			shiny.getWriter().println(ShinyColors.RED + "Invalid input. Please try again." + ShinyColors.RESET);
+			writer.println(ShinyColors.RED.fg("Invalid input. Please try again."));
 			selectedIndices.clear(); // Clear selection on error
 		}
 	}
 
-	private void handleInteractiveMode() {
-		shiny.getWriter().println(ShinyColors.YELLOW + "Interactive mode not fully implemented yet. Using strict mode fallback." + ShinyColors.RESET);
+	private void handleInteractiveMode(ShinyWriter writer) {
+		writer.println(ShinyColors.YELLOW.fg("Interactive mode not fully implemented yet. Using strict mode fallback."));
 		strictMode = true; // Fallback to strict mode
-		handleStrictMode();
+		handleStrictMode(writer);
 	}
 
 	public List<String> getSelectedOptions() {

@@ -10,6 +10,7 @@ import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.photo.PhotoContext;
 import io.vertigo.shell.systems.photo.PhotoInfo;
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.style.ShinyColors;
 import picocli.CommandLine.Command;
 
@@ -18,6 +19,8 @@ public final class PhotoListCommand implements ShellCommand {
 
 	@Override
 	public void run() {
+		final ShinyWriter writer = Shiny.writer();
+
 		final List<PhotoInfo> photos = PhotoContext.getPhotos();
 
 		if (photos.isEmpty()) {
@@ -41,19 +44,19 @@ public final class PhotoListCommand implements ShellCommand {
 							? ShinyColors.RED_BRIGHT.fg(photo.path().toString())
 							: photo.path().toString(),
 					photo.size() + "",
-                    photo.exifInfo().tags().getOrDefault("Date/Time", ""),
-                    photo.exifInfo().tags().getOrDefault("Image Width", ""),
-                    photo.exifInfo().tags().getOrDefault("Image Height", ""),
+					photo.exifInfo().tags().getOrDefault("Date/Time", ""),
+					photo.exifInfo().tags().getOrDefault("Image Width", ""),
+					photo.exifInfo().tags().getOrDefault("Image Height", ""),
 					photo.md5Hash() + ""
 			};
 			rows.add(row);
 		}
 
 		Shiny.table()
-            .title("Photos")
-            .noDataFound("No photos found.")
-            .header("Path", "Size", "Date/Time", "Width", "Height", "MD5 Hash")
-            .rows(rows)
-            .print();
+				.title("Photos")
+				.noDataFound("No photos found.")
+				.header("Path", "Size", "Date/Time", "Width", "Height", "MD5 Hash")
+				.rows(rows)
+				.render(writer);
 	}
 }

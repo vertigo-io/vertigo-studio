@@ -1,23 +1,18 @@
 package io.vertigo.shiny.components.dataviz.gauge;
 
-import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColor;
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyGauge implements ShinyComponent {
-	private final Shiny shiny;
 	private String title;
 	private double value;
 	private double max = 100;
 	private int barLength = 50;
 	private ShinyColor gaugeColor = ShinyColors.GREEN;
 
-	public ShinyGauge(final Shiny shiny) {
-		Assertion.check().isNotNull(shiny);
-		//---
-		this.shiny = shiny;
+	public ShinyGauge() {
 	}
 
 	public ShinyGauge title(final String text) {
@@ -45,7 +40,7 @@ public final class ShinyGauge implements ShinyComponent {
 		return this;
 	}
 
-	public void print() {
+	public void render(ShinyWriter writer) {
 		final double percentage;
 		if (value >= max) {
 			percentage = 1;
@@ -62,6 +57,6 @@ public final class ShinyGauge implements ShinyComponent {
 				.append("] ")
 				.append(String.format("%.2f%%", percentage * 100))
 				.toString();
-		shiny.getWriter().println(gauge);
+		writer.println(gauge);
 	}
 }

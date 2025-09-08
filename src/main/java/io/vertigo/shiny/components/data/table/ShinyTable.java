@@ -6,6 +6,7 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 
 /**
@@ -14,7 +15,6 @@ import io.vertigo.shiny.components.ShinyComponent;
  */
 public final class ShinyTable implements ShinyComponent {
 	private final NumberFormat numberFormat;
-	private final Shiny shiny;
 	private String tableTitle;
 	private String noDataFound;
 	private String[] tableHeader;
@@ -26,10 +26,7 @@ public final class ShinyTable implements ShinyComponent {
 	 *
 	 * @param numberFormat the NumberFormat used to format numeric values
 	 */
-	public ShinyTable(final Shiny shiny) {
-		Assertion.check().isNotNull(shiny);
-		//---
-		this.shiny = shiny;
+	public ShinyTable() {
 		this.numberFormat = Shiny.theme().numberFormat();
 	}
 
@@ -88,7 +85,7 @@ public final class ShinyTable implements ShinyComponent {
 	/**
 	 * Prints the table to the console with the configured formatting.
 	 */
-	public void print() {
+	public void render(ShinyWriter writer) {
 		Assertion.check()
 				//				.isNotBlank(tableTitle)
 				.isNotNull(tableRows)
@@ -96,7 +93,7 @@ public final class ShinyTable implements ShinyComponent {
 				.isNotNull(tableHeader);
 
 		if (tableRows.isEmpty()) {
-			shiny.getWriter().println(noDataFound);
+			writer.println(noDataFound);
 			return;
 		}
 
@@ -149,37 +146,37 @@ public final class ShinyTable implements ShinyComponent {
 
 		// 4. Print
 		if (tableTitle != null) {
-			shiny.getWriter().println(style.titleBackgroundColor.bg(
+			writer.println(style.titleBackgroundColor.bg(
 					style.titleTextColor.fg(tableTitle)));
 		}
-		printLineSeparator(widths, Position.TOP);
+		printLineSeparator(writer, widths, Position.TOP);
 
-		shiny.getWriter().print(style.border.chars().vertical());
-		shiny.getWriter().print(style.headerBackgroundColor.bg(String.format(format, (Object[]) tableHeader)));
-		shiny.getWriter().println(style.border.chars().vertical());
+		writer.print(style.border.chars().vertical())
+				.print(style.headerBackgroundColor.bg(String.format(format, (Object[]) tableHeader)))
+				.println(style.border.chars().vertical());
 
-		printLineSeparator(widths, Position.INNER);
+		printLineSeparator(writer, widths, Position.INNER);
 
 		boolean invert = false;
 		for (final String[] formattedRow : formattedRows) {
-			shiny.getWriter().print(style.border.chars().vertical());
+			writer.print(style.border.chars().vertical());
 			final String srow = String.format(format, (Object[]) formattedRow);
 			if (invert) {
-				shiny.getWriter().print(style.altRowBackgroundColor.bg(srow));
+				writer.print(style.altRowBackgroundColor.bg(srow));
 			} else {
-				shiny.getWriter().print(srow);
+				writer.print(srow);
 			}
-			shiny.getWriter().println(style.border.chars().vertical());
+			writer.println(style.border.chars().vertical());
 			invert = !invert;
 		}
-		printLineSeparator(widths, Position.BOTTOM);
+		printLineSeparator(writer, widths, Position.BOTTOM);
 	}
 
 	private static enum Position {
 		TOP, INNER, BOTTOM
 	}
 
-	private void printLineSeparator(final int[] widths, final Position position) {
+	private void printLineSeparator(final ShinyWriter writer, final int[] widths, final Position position) {
 		boolean first = true;
 		for (final int width : widths) {
 			if (first) {
@@ -188,13 +185,13 @@ public final class ShinyTable implements ShinyComponent {
 					case INNER -> style.border.chars().innerLeft();
 					case BOTTOM -> style.border.chars().bottomLeft();
 				};
-				shiny.getWriter().print(left);
+				writer.print(left);
 				final var h = switch (position) {
 					case TOP -> style.border.chars().topHorizontal();
 					case INNER -> style.border.chars().innerHorizontal();
 					case BOTTOM -> style.border.chars().bottomHorizontal();
 				};
-				shiny.getWriter().print(h.repeat(width + 2));
+				writer.print(h.repeat(width + 2));
 				first = false;
 			} else {
 				final var middle = switch (position) {
@@ -202,13 +199,13 @@ public final class ShinyTable implements ShinyComponent {
 					case INNER -> style.border.chars().center();
 					case BOTTOM -> style.border.chars().bottomMiddle();
 				};
-				shiny.getWriter().print(middle);
+				writer.print(middle);
 				final var h = switch (position) {
 					case TOP -> style.border.chars().topHorizontal();
 					case INNER -> style.border.chars().innerHorizontal();
 					case BOTTOM -> style.border.chars().bottomHorizontal();
 				};
-				shiny.getWriter().print(h.repeat(width + 2));
+				writer.print(h.repeat(width + 2));
 			}
 
 		}
@@ -217,7 +214,7 @@ public final class ShinyTable implements ShinyComponent {
 			case INNER -> style.border.chars().innerRight();
 			case BOTTOM -> style.border.chars().bottomRight();
 		};
-		shiny.getWriter().println(right);
+		writer.println(right);
 	}
 
 	private static boolean isColumnNumeric(final List<String[]> rows, final int columnIndex) {

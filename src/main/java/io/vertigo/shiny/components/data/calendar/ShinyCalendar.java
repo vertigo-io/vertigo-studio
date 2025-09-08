@@ -10,6 +10,7 @@ import java.util.Locale;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.components.data.table.ShinyBorder;
 
@@ -59,7 +60,7 @@ public final class ShinyCalendar implements ShinyComponent {
 		return this;
 	}
 
-	public void print() {
+	public void render(ShinyWriter writer) {
 		final LocalDate firstDayOfMonth = LocalDate.of(year, month, 1);
 		final LocalDate lastDayOfMonth = firstDayOfMonth.plusMonths(1).minusDays(1);
 
@@ -99,6 +100,6 @@ public final class ShinyCalendar implements ShinyComponent {
 				.border(calendarBorder)
 				.endStyle()
 				.rows(rows)
-				.print();
+				.render(writer);
 	}
 }

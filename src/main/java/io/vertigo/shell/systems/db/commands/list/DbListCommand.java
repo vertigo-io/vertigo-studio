@@ -10,6 +10,7 @@ import io.vertigo.shell.systems.db.DbModel.JdbcColumn;
 import io.vertigo.shell.systems.db.DbModel.JdbcSchema;
 import io.vertigo.shell.systems.db.DbModel.JdbcTable;
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.data.tree.ShinyTree;
 import io.vertigo.shiny.components.data.tree.ShinyTreeNode;
 import io.vertigo.shiny.style.ShinyColors;
@@ -30,18 +31,19 @@ public final class DbListCommand implements ShellCommand {
 
 	@Override
 	public void run() {
+		final ShinyWriter writer = Shiny.writer();
 		if (all) {
-			listAll();
+			listAll(writer);
 		}
 		if (tableName != null) {
-			describeTable();
+			describeTable(writer);
 		}
 		if (tables) {
-			listTables();
+			listTables(writer);
 		}
 	}
 
-	private void listAll() {
+	private void listAll(ShinyWriter writer) {
 		final ShinyTree tree = Shiny.tree("model");
 		for (final JdbcSchema schema : DbContext.model().schemas()) {
 			final ShinyTreeNode schemaNode = tree.getRoot().addChild("schema : " + schema.name());
@@ -51,7 +53,7 @@ public final class DbListCommand implements ShellCommand {
 				final ShinyTreeNode columnsNode = tableNode.addChild("columns");
 				for (final JdbcColumn column : table.columns()) {
 
-					String info = column.name() + " " + ShinyColors.GREEN_BRIGHT + column.typeName() + ShinyColors.RESET;
+					String info = column.name() + " " + ShinyColors.GREEN_BRIGHT.fg(column.typeName());
 
 					if (column.isPrimaryKey()) {
 						info = ShinyEffects.UNDERLINE.apply(info);
@@ -61,10 +63,10 @@ public final class DbListCommand implements ShellCommand {
 			}
 		}
 
-		tree.print();
+		tree.render(writer);
 	}
 
-	private void listTables() {
+	private void listTables(ShinyWriter writer) {
 		final List<String[]> rows = new ArrayList<>();
 		for (final JdbcSchema schema : DbContext.model().schemas()) {
 			for (final JdbcTable table : schema.tables()) {
@@ -77,10 +79,10 @@ public final class DbListCommand implements ShellCommand {
 				.noDataFound("No tables found in the database.")
 				.header("TABLE_NAME", "COLUMNS")
 				.rows(rows)
-				.print();
+				.render(writer);
 	}
 
-	private void describeTable() {
+	private void describeTable(ShinyWriter writer) {
 		JdbcTable table = null;
 		for (final JdbcSchema schema : DbContext.model().schemas()) {
 			for (final JdbcTable t : schema.tables()) {
@@ -107,7 +109,7 @@ public final class DbListCommand implements ShellCommand {
 					.noDataFound("\"Table '\" + tableName + '\' not found or has no columns.\"")
 					.header("Name", "Type", "Size", "Nullable")
 					.rows(columns)
-					.print();
+					.render(writer);
 		}
 	}
 

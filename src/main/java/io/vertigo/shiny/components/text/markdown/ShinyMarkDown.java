@@ -38,7 +38,7 @@ public final class ShinyMarkDown implements ShinyComponent {
 	}
 
 	@Override
-	public void print() {
+	public void render() {
 		Assertion.check().isNotNull(markdownText, "Markdown text not set. Use fromFile() or fromText().");
 		//---
 		final Parser parser = Parser.builder()

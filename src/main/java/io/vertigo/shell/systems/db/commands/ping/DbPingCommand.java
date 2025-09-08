@@ -7,6 +7,7 @@ import java.util.List;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.db.DbContext;
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.live.progressbar.ShinyProgressBar;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -18,6 +19,7 @@ public final class DbPingCommand implements ShellCommand {
 
 	@Override
 	public void run() {
+		final ShinyWriter writer = Shiny.writer();
 		// Validate number of calls
 		if (calls <= 0 && calls > 50) {
 			System.err.println("Error: Number of calls must be greater than 0 and lower than 50");
@@ -27,7 +29,7 @@ public final class DbPingCommand implements ShellCommand {
 		final List<Double> pingTimes = new ArrayList<>();
 
 		System.out.println("ping database");
-		try (final ShinyProgressBar progressBar = Shiny.progressBar().total(calls).start()) {
+		try (final ShinyProgressBar progressBar = Shiny.progressBar().total(calls).start(writer)) {
 			for (int i = 0; i < calls; i++) {
 				ping(pingTimes);
 				progressBar.liveUpdate(i + 1);
