@@ -12,7 +12,7 @@ import io.vertigo.shiny.style.ShinyColors;
 public final class ShinyList implements ShinyComponent {
 	private final Shiny shiny;
 	private String title;
-	private final List<Object> items = new ArrayList<>();
+	private final List<Object> listItems = new ArrayList<>();
 	private ShinyListStyle style = ShinyListStyle.UNORDERED; // Changed default
 	private ShinyColor itemColor = ShinyColors.BLUE_BRIGHT;
 	private ShinyColor bulletColor = ShinyColors.CYAN;
@@ -29,17 +29,27 @@ public final class ShinyList implements ShinyComponent {
 	}
 
 	public ShinyList addItem(final String item) {
-		items.add(item);
+		listItems.add(item);
+		return this;
+	}
+
+	public ShinyList items(final List<String> items) {
+		this.listItems.addAll(items);
 		return this;
 	}
 
 	public ShinyList addList(final ShinyList nestedList) {
-		items.add(nestedList);
+		listItems.add(nestedList);
 		return this;
 	}
 
 	public ShinyList style(final ShinyListStyle listStyle) {
 		this.style = listStyle;
+		return this;
+	}
+
+	public ShinyList ordered() {
+		this.style = ShinyListStyle.ORDERED;
 		return this;
 	}
 
@@ -63,7 +73,7 @@ public final class ShinyList implements ShinyComponent {
 	private void print(final int indentLevel) {
 		final String indent = "  ".repeat(indentLevel);
 		int number = 1;
-		for (final Object item : items) {
+		for (final Object item : listItems) {
 			if (item instanceof String s) {
 				final String prefix = getPrefix(number);
 				shiny.getWriter().println(indent + bulletColor.fg(prefix) + itemColor.fg(s));

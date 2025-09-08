@@ -90,7 +90,7 @@ public final class ShinyTable implements ShinyComponent {
 	 */
 	public void print() {
 		Assertion.check()
-				.isNotBlank(tableTitle)
+				//				.isNotBlank(tableTitle)
 				.isNotNull(tableRows)
 				.when(tableRows.isEmpty(), () -> Assertion.check().isNotBlank(noDataFound))
 				.isNotNull(tableHeader);
@@ -148,9 +148,10 @@ public final class ShinyTable implements ShinyComponent {
 		final String format = formatBuilder.toString();
 
 		// 4. Print
-		shiny.getWriter().println(style.titleBackgroundColor.bg(
-				style.titleTextColor.fg(tableTitle)));
-
+		if (tableTitle != null) {
+			shiny.getWriter().println(style.titleBackgroundColor.bg(
+					style.titleTextColor.fg(tableTitle)));
+		}
 		printLineSeparator(widths, Position.TOP);
 
 		shiny.getWriter().print(style.border.chars().vertical());
