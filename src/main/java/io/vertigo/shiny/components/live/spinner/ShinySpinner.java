@@ -3,6 +3,9 @@ package io.vertigo.shiny.components.live.spinner;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.live.ShinyLiveComponent;
 
+/**
+ * This component doesn't accept color. 
+ */
 public final class ShinySpinner extends ShinyLiveComponent<ShinySpinner> {
 	private volatile String message;
 	private volatile int frameIndex = 0;

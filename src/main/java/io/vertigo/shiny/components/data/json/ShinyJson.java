@@ -96,7 +96,7 @@ public final class ShinyJson implements ShinyComponent {
 			final JsonNode rootNode = OBJECT_MAPPER.readTree(jsonString);
 			printNode(rootNode, "", true);
 		} catch (final IOException e) {
-			shiny.getWriter().println(ShinyColors.RED + "Error parsing JSON: " + e.getMessage() + ShinyColors.RESET);
+			shiny.getWriter().println(ShinyColors.RED.fg("Error parsing JSON: " + e.getMessage()));
 		}
 	}
 
@@ -129,16 +129,16 @@ public final class ShinyJson implements ShinyComponent {
 	}
 
 	private void printArray(final JsonNode node, final String indent, final boolean isLast) {
-		shiny.getWriter().println(bracketColor + "[" + ShinyColors.RESET);
+		shiny.getWriter().println(bracketColor.fg("["));
 		for (int i = 0; i < node.size(); i++) {
 			final JsonNode element = node.get(i);
 			final boolean lastElement = (i == node.size() - 1);
 			shiny.getWriter().print(indent + "  ");
 			printNode(element, indent + "  ", lastElement);
 		}
-		shiny.getWriter().print(indent + bracketColor + "]" + ShinyColors.RESET);
+		shiny.getWriter().print(indent + bracketColor.fg("]"));
 		if (!isLast) {
-			shiny.getWriter().print(commaColor + "," + ShinyColors.RESET);
+			shiny.getWriter().print(commaColor.fg(","));
 		}
 		shiny.getWriter().println();
 	}

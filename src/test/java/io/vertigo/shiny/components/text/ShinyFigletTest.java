@@ -40,7 +40,7 @@ public class ShinyFigletTest {
 	private static void testAllFonts() {
 		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Testing All Available Figlet Fonts ---"));
 		for (final ShinyFigletFonts font : ShinyFigletFonts.values()) {
-			System.out.println(ShinyColors.CYAN + "Font: " + font.name() + ShinyColors.RESET);
+			System.out.println(ShinyColors.CYAN.fg("Font: " + font.name()));
 			Shiny.figlet()
 					.text(font.name()) // Print the font name using the font itself
 					.font(font)

@@ -160,11 +160,8 @@ public final class ShinyRating implements ShinyComponent {
 		final int filledLength = (int) (barLength * percentage);
 
 		rating.append("[")
-				.append(filledColor)
-				.append(style.getFilledIcon().repeat(filledLength))
-				.append(emptyColor)
-				.append(style.getEmptyIcon().repeat(barLength - filledLength))
-				.append(ShinyColors.RESET)
+				.append(filledColor.fg(style.getFilledIcon().repeat(filledLength)))
+				.append(emptyColor.fg(style.getEmptyIcon().repeat(barLength - filledLength)))
 				.append("]");
 	}
 

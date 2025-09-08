@@ -67,13 +67,13 @@ public final class ShinyInputText implements ShinyComponent {
 	public void print() {
 		String prompt = inputTextLabel;
 		if (inputTextRequired) {
-			prompt += ShinyColors.RED + " (required)" + ShinyColors.RESET;
+			prompt += ShinyColors.RED.fg(" (required)");
 		}
 		if (inputTextSuggestions != null && !inputTextSuggestions.isEmpty()) {
-			prompt += " " + ShinyColors.CYAN + inputTextSuggestions.toString() + ShinyColors.RESET;
+			prompt += " " + ShinyColors.CYAN.fg(inputTextSuggestions.toString());
 		}
 		if (inputTextDefaultValue != null) {
-			prompt += " " + ShinyColors.YELLOW + "[" + inputTextDefaultValue + "]" + ShinyColors.RESET;
+			prompt += " " + ShinyColors.YELLOW.fg("[" + inputTextDefaultValue + "]");
 		}
 		prompt += ": ";
 
@@ -89,7 +89,7 @@ public final class ShinyInputText implements ShinyComponent {
 					// For actual secret input, Console.readPassword() would be ideal,
 					// but it's not always available and hard to test.
 					// For now, we'll just read normally but note the masking intent.
-					shiny.getWriter().println(ShinyColors.YELLOW + "(Input will be masked, but not truly hidden in this basic console)" + ShinyColors.RESET);
+					shiny.getWriter().println(ShinyColors.YELLOW.fg("(Input will be masked, but not truly hidden in this basic console)"));
 					inputLine = reader.readLine(); // Cannot mask directly with BufferedReader
 				} else {
 					inputLine = reader.readLine();
@@ -106,11 +106,11 @@ public final class ShinyInputText implements ShinyComponent {
 					}
 
 					if (inputTextRequired && inputTextValue.isEmpty()) {
-						shiny.getWriter().println(ShinyColors.RED + "Input is required." + ShinyColors.RESET);
+						shiny.getWriter().println(ShinyColors.RED.fg("Input is required."));
 					} else if (inputTextValidationPattern != null && !inputTextValue.isEmpty()) {
 						Matcher matcher = inputTextValidationPattern.matcher(inputTextValue);
 						if (!matcher.matches()) {
-							shiny.getWriter().println(ShinyColors.RED + "Input does not match the required pattern." + ShinyColors.RESET);
+							shiny.getWriter().println(ShinyColors.RED.fg("Input does not match the required pattern."));
 						} else {
 							validInput = true;
 						}
