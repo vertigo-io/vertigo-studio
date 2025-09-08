@@ -21,7 +21,7 @@ public final class DbDisconnectCommand implements ShellCommand {
 		}
 		try {
 			DbContext.connection().close();
-			System.out.println("Disconnected.");
+			writer().println("Disconnected.");
 		} catch (final SQLException e) {
 			throw new VSystemException(e, "Failed to disconnect from database: {0}", e.getMessage());
 		}

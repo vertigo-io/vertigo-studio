@@ -51,7 +51,7 @@ public final class DbFancyCommand implements ShellCommand {
 						utilise des noms d'artistes pop connus de tous
 							""";
 		final String response = agent.answer(query);
-		System.out.println(response);
+		writer().println(response);
 	}
 
 }

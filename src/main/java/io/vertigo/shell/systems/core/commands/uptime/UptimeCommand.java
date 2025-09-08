@@ -13,7 +13,7 @@ public class UptimeCommand implements ShellCommand {
 	@Override
 	public void run() {
 		final Duration uptime = Duration.between(ShellContext.startTime, Instant.now());
-		System.out.printf("Uptime: %d minutes, %d seconds%n",
+		writer().printf("Uptime: %d minutes, %d seconds%n",
 				uptime.toMinutes(),
 				uptime.toSecondsPart());
 	}

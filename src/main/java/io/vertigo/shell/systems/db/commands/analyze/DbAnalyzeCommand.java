@@ -40,14 +40,14 @@ public final class DbAnalyzeCommand implements ShellCommand {
 				.render(writer);
 		//
 		final int complexity = (10 * tables + 1 * columns + relations * 3) / tables;
-		System.out.println("Complexity :" + complexity);
+		writer.println("Complexity :" + complexity);
 
 		//--------------------------------------------
 		//------ANALYZER------------------------------
 		//--------------------------------------------
 		final DbModelAnalysisReport report = DbModelAnalyzer.analyze(DbContext.model());
-		System.out.println("tablesWithoutPrimaryKey :" + report.tablesWithoutPrimaryKey());
-		System.out.println("trivialCheckConstraints :" + report.trivialCheckConstraints());
+		writer.println("tablesWithoutPrimaryKey :" + report.tablesWithoutPrimaryKey());
+		writer.println("trivialCheckConstraints :" + report.trivialCheckConstraints());
 		//lister ici toutes les anomalies détectées
 
 		final List<String[]> dependencies = new ArrayList<>();

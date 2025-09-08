@@ -21,7 +21,7 @@ public class HistoryCommand implements ShellCommand {
 	public void run() {
 		int i = 1;
 		for (final String command : history) {
-			System.out.printf("%2d: %s%n", i++, command);
+			writer().printf("%2d: %s%n", i++, command);
 		}
 	}
 

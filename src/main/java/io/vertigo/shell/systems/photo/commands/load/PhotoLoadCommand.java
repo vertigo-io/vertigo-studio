@@ -41,12 +41,12 @@ public final class PhotoLoadCommand implements ShellCommand {
 		final Path rootPath = Path.of(Env.get(PhotoVar.ROOT_PATH));
 
 		if (rootPath == null) {
-			System.out.println("Error: rootPath is not set. Use 'photo set rootPath <directory>' first.");
+			writer.println("Error: rootPath is not set. Use 'photo set rootPath <directory>' first.");
 			return;
 		}
 
 		PhotoContext.clearPhotos();
-		System.out.println("Phase 1: Scanning directory: " + rootPath);
+		writer.println("Phase 1: Scanning directory: " + rootPath);
 
 		final List<Path> photoPaths;
 		try (Stream<Path> paths = Files.walk(rootPath)) {
@@ -55,19 +55,19 @@ public final class PhotoLoadCommand implements ShellCommand {
 					.filter(path -> PhotoType.isPhoto(path.getFileName().toString()))
 					.collect(Collectors.toList());
 		} catch (final IOException e) {
-			System.out.println("Error walking directory: " + e.getMessage());
+			writer.println("Error walking directory: " + e.getMessage());
 			return;
 		}
 
-		System.out.println("Found " + photoPaths.size() + " photos.");
-		System.out.println("Phase 2: Processing photos...");
+		writer.println("Found " + photoPaths.size() + " photos.");
+		writer.println("Phase 2: Processing photos...");
 
 		int processedCount = 0;
 		try (final ShinyProgressBar progressBar = Shiny.progressBar()
 				//.title("Processing photos")
 				.total(photoPaths.size()).start(writer)) {
 			for (final Path path : photoPaths) {
-				final PhotoInfo photoInfo = extract(path);
+				final PhotoInfo photoInfo = extract(writer, path);
 				if (photoInfo != null) {
 					PhotoContext.addPhoto(photoInfo);
 				}
@@ -75,17 +75,17 @@ public final class PhotoLoadCommand implements ShellCommand {
 				progressBar.liveUpdate(processedCount);
 			}
 		}
-		System.out.println("Done.");
+		writer.println("Done.");
 	}
 
-	private PhotoInfo extract(final Path path) {
+	private PhotoInfo extract(final ShinyWriter writer, final Path path) {
 		try {
 			final long size = Files.size(path);
 			final String md5Hash = calculateMd5(path);
 			final PhotoExifInfo exifInfo = extractExifInfo(path);
 			return new PhotoInfo(path, size, exifInfo, md5Hash);
 		} catch (IOException | NoSuchAlgorithmException e) {
-			System.out.println("\nError processing file " + path + ": " + e.getMessage());
+			writer.println("\nError processing file " + path + ": " + e.getMessage());
 			return null;
 		}
 	}

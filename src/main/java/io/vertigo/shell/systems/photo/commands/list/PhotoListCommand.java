@@ -24,7 +24,7 @@ public final class PhotoListCommand implements ShellCommand {
 		final List<PhotoInfo> photos = PhotoContext.getPhotos();
 
 		if (photos.isEmpty()) {
-			System.out.println("No photos loaded. Use 'load' command first.");
+			writer.println("No photos loaded. Use 'load' command first.");
 			return;
 		}
 

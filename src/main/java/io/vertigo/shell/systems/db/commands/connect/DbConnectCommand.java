@@ -60,7 +60,7 @@ public final class DbConnectCommand implements ShellCommand {
 		} catch (final SQLException e) {
 			throw new VSystemException(e, "Failed to connect to database: {0}", e.getMessage());
 		}
-		System.out.println(ShinyColors.GREEN_BRIGHT.fg("Successfully connected."));
+		writer().println(ShinyColors.GREEN_BRIGHT.fg("Successfully connected."));
 	}
 
 	@Override

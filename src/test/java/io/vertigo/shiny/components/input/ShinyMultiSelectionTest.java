@@ -21,7 +21,7 @@ public class ShinyMultiSelectionTest {
 		multiSelection.render(writer);
 
 		final List<String> selected = multiSelection.getSelectedOptions();
-		System.out.println("You have selected " + selected);
+		writer.println("You have selected " + selected);
 	}
 
 	private static void testInitialSelectedMultiSelectionStrict(final ShinyWriter writer) {
@@ -33,7 +33,7 @@ public class ShinyMultiSelectionTest {
 		multiSelection.render(writer);
 
 		final List<String> selected = multiSelection.getSelectedOptions();
-		System.out.println(selected);
+		writer.println(selected.toString());
 	}
 
 }

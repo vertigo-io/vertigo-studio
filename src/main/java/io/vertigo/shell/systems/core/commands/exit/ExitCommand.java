@@ -8,8 +8,8 @@ public class ExitCommand implements ShellCommand {
 
 	@Override
 	public void run() {
-		System.out.println("Shutting down the shell...");
-		System.out.println("See you soon ;-)");
+		writer().println("Shutting down the shell...");
+		writer().println("See you soon ;-)");
 		System.exit(0);
 	}
 

@@ -14,7 +14,7 @@ public class IpCommand implements ShellCommand {
 	public void run() {
 		try {
 			final InetAddress localHost = InetAddress.getLocalHost();
-			System.out.println("IP Address: " + localHost.getHostAddress());
+			writer().println("IP Address: " + localHost.getHostAddress());
 		} catch (final UnknownHostException e) {
 			System.err.println("Unable to obtain the IP address.");
 		}
