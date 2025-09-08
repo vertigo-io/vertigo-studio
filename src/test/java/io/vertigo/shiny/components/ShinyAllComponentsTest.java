@@ -213,13 +213,13 @@ public class ShinyAllComponentsTest {
 
 	private static void testTable() {
 		System.out.println(CYAN.fg("Component: ShinyTable"));
-		System.out.println("Parameters: title='Users', header=['Name', 'Age'], rows=[['John', '30'], ['Jane', '25']], border=ASCII");
+		System.out.println("Parameters: title='Users', header=['firstName', 'lastName', 'Age'], rows=[['John', 'doe', '30'], ['Jane', 'doe', '25']], border=ASCII");
 		Shiny.table()
 				.title("Users")
-				.header("Name", "Age")
+				.header("FirstName", "LastName", "Age")
 				.rows(
-						new String[] { "John", "30" },
-						new String[] { "Jane", "25" })
+						new String[] { "John", "doe", "30" },
+						new String[] { "Jane", "doe", "25" })
 				.print();
 		waitForEnter();
 	}
