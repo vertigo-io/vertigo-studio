@@ -19,7 +19,7 @@ public class ShinyMultiSelectionTest {
 		multiSelection.print();
 
 		final List<String> selected = multiSelection.getSelectedOptions();
-		System.out.println(selected);
+		System.out.println("You have selected " + selected);
 	}
 
 	private static void testInitialSelectedMultiSelectionStrict() {
