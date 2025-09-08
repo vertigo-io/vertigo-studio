@@ -47,30 +47,25 @@ public final class ShinyTitle implements ShinyComponent {
 		}
 	}
 
+	private static String CRLF = "\r\n";
+
 	private void printLevel1() {
 		final String line = "=".repeat(title.length() + 4);
-		shiny.getWriter().print(ShinyColors.BLUE);
-		shiny.getWriter().println(line);
-		shiny.getWriter().println("= " + title + " =");
-		shiny.getWriter().println(line);
-		shiny.getWriter().print(ShinyColors.RESET);
-		shiny.getWriter().println();
+		shiny.getWriter().println(ShinyColors.BLUE.fg(
+				line + CRLF
+						+ "= " + title + " =" + CRLF
+						+ line));
 	}
 
 	private void printLevel2() {
 		final String line = "-".repeat(title.length() + 4);
-		shiny.getWriter().print(ShinyColors.BLUE_BRIGHT);
-		shiny.getWriter().println(line);
-		shiny.getWriter().println("  " + title + "  ");
-		shiny.getWriter().println(line);
-		shiny.getWriter().print(ShinyColors.RESET);
-		shiny.getWriter().println();
+		shiny.getWriter().println(ShinyColors.BLUE_BRIGHT.fg(
+				line + CRLF
+						+ "  " + title + "  " + CRLF
+						+ line));
 	}
 
 	private void printLevel3() {
-		shiny.getWriter().print(ShinyColors.CYAN);
-		shiny.getWriter().println(">> " + title + " <<");
-		shiny.getWriter().print(ShinyColors.RESET);
-		shiny.getWriter().println();
+		shiny.getWriter().println(ShinyColors.CYAN.fg(">> " + title + " <<"));
 	}
 }

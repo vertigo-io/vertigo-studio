@@ -14,7 +14,7 @@ public final class ShinyList implements ShinyComponent {
 	private String title;
 	private final List<Object> items = new ArrayList<>();
 	private ShinyListStyle style = ShinyListStyle.UNORDERED; // Changed default
-	private ShinyColor itemColor = ShinyColors.WHITE;
+	private ShinyColor itemColor = ShinyColors.BLUE_BRIGHT;
 	private ShinyColor bulletColor = ShinyColors.CYAN;
 
 	public ShinyList(final Shiny shiny) {

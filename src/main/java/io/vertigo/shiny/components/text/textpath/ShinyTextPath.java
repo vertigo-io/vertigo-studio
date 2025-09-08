@@ -68,7 +68,7 @@ public final class ShinyTextPath implements ShinyComponent {
 		final boolean relative = textPath.startsWith(separator);
 
 		if (relative) {
-			coloredPath.append(rootColor).append(separator).append(ShinyColors.RESET);
+			coloredPath.append(rootColor.fg(separator));
 		}
 		for (int i = 0; i < parts.length; i++) {
 			final String part = parts[i];
@@ -84,7 +84,7 @@ public final class ShinyTextPath implements ShinyComponent {
 			} else { //node
 				color = nodeColor;
 			}
-			coloredPath.append(color).append(part).append(ShinyColors.RESET);
+			coloredPath.append(color.fg(part));
 
 			if (i < parts.length - 1) {
 				final ShinyColor sepColor;
@@ -93,7 +93,7 @@ public final class ShinyTextPath implements ShinyComponent {
 				} else {
 					sepColor = separatorColor;
 				}
-				coloredPath.append(sepColor).append(separator).append(ShinyColors.RESET);
+				coloredPath.append(sepColor.fg(separator));
 			}
 		}
 		shiny.getWriter().println(coloredPath.toString());

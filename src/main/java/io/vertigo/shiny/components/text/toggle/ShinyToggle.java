@@ -83,14 +83,10 @@ public final class ShinyToggle implements ShinyComponent {
 		}
 
 		// Construire la représentation du toggle
-		toggle.append(color)
-				.append(icon);
-
-		if (showText && !text.isEmpty()) {
-			toggle.append(" ").append(text);
-		}
-
-		toggle.append(ShinyColors.RESET);
+		toggle.append(color.fg(icon
+				+ ((showText && !text.isEmpty())
+						? " " + text
+						: "")));
 
 		final String result = toggle.toString();
 		//

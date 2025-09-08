@@ -42,7 +42,7 @@ public final class ShinySparkline implements ShinyComponent {
 				.collect(Collectors.joining());
 
 		shiny.getWriter().println((title != null ? title + " " : "")
-				+ sparklineColor + sparkline + ShinyColors.RESET);
+				+ sparklineColor.fg(sparkline));
 	}
 
 	private String getSparklineChar(final double value) {

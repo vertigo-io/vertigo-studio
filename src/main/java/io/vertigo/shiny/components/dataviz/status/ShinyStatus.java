@@ -38,7 +38,7 @@ public final class ShinyStatus implements ShinyComponent {
 
 	public void print() {
 		final String statusLine = statuses.stream()
-				.map(status -> status.getColor() + shape.getCharacter() + ShinyColors.RESET)
+				.map(status -> status.getColor().fg(shape.getCharacter()))
 				.collect(Collectors.joining(" "));
 
 		shiny.getWriter().println(title != null ? title + " " + statusLine : statusLine);

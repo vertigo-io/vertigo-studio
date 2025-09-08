@@ -144,23 +144,23 @@ public final class ShinyJson implements ShinyComponent {
 	}
 
 	private void printValue(final JsonNode node, final String indent, final boolean isLast) {
+		final String display;
 		if (node.isTextual()) {
-			stringColor.fg("\"" + node.asText() + "\"");
+			display = stringColor.fg("\"" + node.asText() + "\"");
 		} else if (node.isNumber()) {
-			numberColor.fg(node.asText());
+			display = numberColor.fg(node.asText());
 		} else if (node.isBoolean()) {
-			booleanColor.fg(node.asText());
+			display = booleanColor.fg(node.asText());
 		} else if (node.isNull()) {
-			nullColor.fg("null");
+			display = nullColor.fg("null");
+		} else {
+			display = ShinyColors.RED.bg("UNKNOW");
 		}
+		shiny.getWriter().print(display);
 		if (!isLast) {
-			colorify(",", commaColor);
+			shiny.getWriter().print(commaColor.fg(","));
 		}
 		shiny.getWriter().println();
 	}
 
-	private void colorify(String text, ShinyColor color) {
-		shiny.getWriter().print(color.fg(text));
-
-	}
 }
