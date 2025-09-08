@@ -51,6 +51,8 @@ public class ShinyAllComponentsTest {
 		testTitle();
 		testToggle();
 		testTree();
+		testShinyParagraph();
+		testShinyMarkDown();
 
 		System.out.println(BLUE_BRIGHT.fg("--- All Shiny Components Test Finished ---"));
 		scanner.close();
@@ -267,9 +269,24 @@ public class ShinyAllComponentsTest {
 	}
 
 	private static void testInputText() {
-		System.out.println(CYAN.fg("Component: ShinyInputText"));
-		System.out.println("Parameters: label='Enter your name'");
-		Shiny.inputText().label("Enter your name").print();
-		waitForEnter();
-	}
+        System.out.println(CYAN.fg("Component: ShinyInputText"));
+        System.out.println("Parameters: label='Enter your name'");
+        Shiny.inputText().label("Enter your name").print();
+        waitForEnter();
+    }
+
+    private static void testShinyParagraph() {
+        System.out.println(CYAN.fg("Component: ShinyParagraph"));
+        System.out.println("Parameters: text='This is a simple paragraph.'");
+        Shiny.paragraph("This is a simple paragraph.").print();
+        waitForEnter();
+    }
+
+    private static void testShinyMarkDown() {
+        System.out.println(CYAN.fg("Component: ShinyMarkDown"));
+        System.out.println("Parameters: markdown text with title, list, and table");
+        final String markdown = "# Title\n* item 1\n* item 2\n| h1 | h2 |\n|---|---|\n| c1 | c2 |";
+        Shiny.markdown().fromText(markdown).print();
+        waitForEnter();
+    }
 }

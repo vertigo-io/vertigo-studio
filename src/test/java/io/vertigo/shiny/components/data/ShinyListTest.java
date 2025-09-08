@@ -41,7 +41,7 @@ public class ShinyListTest {
 	}
 
 	private static void testDashedList() {
-		System.out.println(ShinyColors.BLUE.fg("--- Dashed List ---"));
+		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Dashed List ---"));
 		Shiny.list()
 				.style(ShinyListStyle.DASHED)
 				.addItem("Task A")
