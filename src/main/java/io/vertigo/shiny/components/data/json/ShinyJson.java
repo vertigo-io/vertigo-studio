@@ -111,17 +111,19 @@ public final class ShinyJson implements ShinyComponent {
 	}
 
 	private void printObject(final JsonNode node, final String indent, final boolean isLast) {
-		shiny.getWriter().println(bracesColor + "{" + ShinyColors.RESET);
+		shiny.getWriter().println(bracesColor.fg("{"));
 		final Iterator<Entry<String, JsonNode>> fields = node.fields();
 		while (fields.hasNext()) {
 			final Entry<String, JsonNode> field = fields.next();
 			final boolean lastField = !fields.hasNext();
-			shiny.getWriter().print(indent + "  " + labelColor + "\"" + field.getKey() + "\"" + ShinyColors.RESET + colonColor + ":" + ShinyColors.RESET + " ");
+			shiny.getWriter().print(indent + "  "
+					+ labelColor.fg("\"" + field.getKey() + "\"")
+					+ colonColor.fg(":") + " ");
 			printNode(field.getValue(), indent + "  ", lastField);
 		}
-		shiny.getWriter().print(indent + bracesColor + "}" + ShinyColors.RESET);
+		shiny.getWriter().print(indent + bracesColor.fg("}"));
 		if (!isLast) {
-			shiny.getWriter().print(commaColor + "," + ShinyColors.RESET);
+			shiny.getWriter().print(commaColor.fg(","));
 		}
 		shiny.getWriter().println();
 	}
@@ -143,13 +145,13 @@ public final class ShinyJson implements ShinyComponent {
 
 	private void printValue(final JsonNode node, final String indent, final boolean isLast) {
 		if (node.isTextual()) {
-			colorify("\"" + node.asText() + "\"", stringColor);
+			stringColor.fg("\"" + node.asText() + "\"");
 		} else if (node.isNumber()) {
-			colorify(node.asText(), numberColor);
+			numberColor.fg(node.asText());
 		} else if (node.isBoolean()) {
-			colorify(node.asText(), booleanColor);
+			booleanColor.fg(node.asText());
 		} else if (node.isNull()) {
-			colorify("null", nullColor);
+			nullColor.fg("null");
 		}
 		if (!isLast) {
 			colorify(",", commaColor);
@@ -158,7 +160,7 @@ public final class ShinyJson implements ShinyComponent {
 	}
 
 	private void colorify(String text, ShinyColor color) {
-		shiny.getWriter().print(color + text + ShinyColors.RESET);
+		shiny.getWriter().print(color.fg(text));
 
 	}
 }

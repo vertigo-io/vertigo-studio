@@ -37,6 +37,6 @@ public final class ShinyColor {
 
 	@Override
 	public String toString() {
-		return fg();
+		throw new RuntimeException("you must use fg(s) or bg (s)");
 	}
 }

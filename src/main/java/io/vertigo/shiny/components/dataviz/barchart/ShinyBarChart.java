@@ -126,7 +126,7 @@ public final class ShinyBarChart implements ShinyComponent {
 			// Normaliser la longueur de la barre
 			final int barLength = (int) ((double) count / maxCount * maxBarLength);
 			final String bar = "█".repeat(Math.max(0, barLength)); // Utiliser le caractère carré plein █
-			final String coloredBar = COLORS[i % COLORS.length] + bar + ShinyColors.RESET;
+			final String coloredBar = COLORS[i % COLORS.length].fg(bar);
 			shiny.getWriter().printf("%-" + maxLabelLength + "s | %-50s (%d)%n", category, coloredBar, count);
 		}
 

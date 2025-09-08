@@ -64,16 +64,16 @@ public final class ShinyList implements ShinyComponent {
 		final String indent = "  ".repeat(indentLevel);
 		int number = 1;
 		for (final Object item : items) {
-			if (item instanceof String) {
+			if (item instanceof String s) {
 				final String prefix = getPrefix(number);
-				shiny.getWriter().println(indent + bulletColor + prefix + ShinyColors.RESET + itemColor + item + ShinyColors.RESET);
+				shiny.getWriter().println(indent + bulletColor.fg(prefix) + itemColor.fg(s));
 				if (style == ShinyListStyle.ORDERED) { // Changed from NUMBERED
 					number++;
 				}
-			} else if (item instanceof ShinyList) {
+			} else if (item instanceof ShinyList list) {
 				final String prefix = getPrefix(number);
-				shiny.getWriter().println(indent + bulletColor + prefix + ShinyColors.RESET + itemColor + "Nested List:" + ShinyColors.RESET);
-				((ShinyList) item).print(indentLevel + 1); // Recursive call for nested lists
+				shiny.getWriter().println(indent + bulletColor.fg(prefix) + itemColor.fg("Nested List:"));
+				list.print(indentLevel + 1); // Recursive call for nested lists
 				if (style == ShinyListStyle.ORDERED) { // Changed from NUMBERED
 					number++;
 				}

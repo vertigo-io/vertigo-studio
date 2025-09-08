@@ -41,12 +41,11 @@ public final class ShinyFiglet implements ShinyComponent {
 	public void print() {
 		try {
 			final FigletRenderer figletRenderer = new FigletRenderer(FigFontResources.loadFigFontResource(font.getFileName()));
-			final String asciiArt = figletRenderer.renderText(text);
-			shiny.getWriter().print(figletColor);
+			final String asciiArt = figletColor.fg(figletRenderer.renderText(text));
+			//We prefer use println instead of print a text with \n inside
 			for (String line : asciiArt.split("\\r?\\n")) {
 				shiny.getWriter().println(line);
 			}
-			shiny.getWriter().println(ShinyColors.RESET);
 		} catch (final IOException e) {
 			throw new RuntimeException("Failed to generate Figlet text", e);
 		}

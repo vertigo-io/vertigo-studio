@@ -149,7 +149,7 @@ public final class ShinyTable implements ShinyComponent {
 
 		// 4. Print
 		shiny.getWriter().println(style.titleBackgroundColor.bg(
-				style.titleTextColor + tableTitle));
+				style.titleTextColor.fg(tableTitle)));
 
 		printLineSeparator(widths, Position.TOP);
 

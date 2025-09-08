@@ -58,10 +58,7 @@ public final class ShinyGauge implements ShinyComponent {
 		final String gauge = new StringBuilder()
 				.append(title != null ? title + " " : "")
 				.append("[")
-				.append(gaugeColor)
-				.append("█".repeat(filledLength))
-				.append("▒".repeat(barLength - filledLength))
-				.append(ShinyColors.RESET)
+				.append(gaugeColor.fg("█".repeat(filledLength) + "▒".repeat(barLength - filledLength)))
 				.append("] ")
 				.append(String.format("%.2f%%", percentage * 100))
 				.toString();
