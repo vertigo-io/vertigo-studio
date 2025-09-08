@@ -18,6 +18,7 @@ import io.vertigo.shiny.components.input.text.ShinyInputText;
 import io.vertigo.shiny.components.live.progressbar.ShinyProgressBar;
 import io.vertigo.shiny.components.live.spinner.ShinySpinner;
 import io.vertigo.shiny.components.text.figlet.ShinyFiglet;
+import io.vertigo.shiny.components.text.markdown.ShinyMarkDown;
 import io.vertigo.shiny.components.text.textpath.ShinyTextPath;
 import io.vertigo.shiny.components.text.title.ShinyTitle;
 import io.vertigo.shiny.components.text.toggle.ShinyToggle;
@@ -92,6 +93,10 @@ public final class Shiny {
 
 	public static ShinyTitle title() {
 		return new ShinyTitle(INSTANCE);
+	}
+
+	public static ShinyMarkDown markdown() {
+		return new ShinyMarkDown(INSTANCE);
 	}
 
 	public static ShinyToggle toggle() {

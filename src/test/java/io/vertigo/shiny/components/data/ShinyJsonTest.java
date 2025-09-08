@@ -64,25 +64,29 @@ public class ShinyJsonTest {
 
 	private static void testGranularColorsJson() {
 		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Granular Colors JSON ---"));
-		final String json = "{\"id\": 1, \"name\": \"Test Item\", \"value\": 123.45, \"active\": true, \"tags\": [\"alpha\", \"beta\"], \"details\": null}";
-		Shiny.json()
-				.json(json)
-				.labelColor(ShinyColors.BLUE_BRIGHT)
-				.stringColor(ShinyColors.GREEN_BRIGHT)
-				.numberColor(ShinyColors.CYAN_BRIGHT)
-				.bracesColor(ShinyColors.RED)
-				.bracketColor(ShinyColors.MAGENTA)
-				.colonColor(ShinyColors.YELLOW)
-				.commaColor(ShinyColors.WHITE)
-				.booleanColor(ShinyColors.GREEN)
-				.nullColor(ShinyColors.RED)
-				.print();
+		final String json = """
+					{
+							"id": 1,
+							"name": "Test Item",
+							"value": 123.45,
+							"active": true,
+							"tags": ["alpha", "beta"],
+							"details": null
+					}
+				""";
+		Shiny.json().json(json).labelColor(ShinyColors.BLUE_BRIGHT).stringColor(ShinyColors.GREEN_BRIGHT).numberColor(ShinyColors.CYAN_BRIGHT).bracesColor(ShinyColors.RED).bracketColor(ShinyColors.MAGENTA).colonColor(ShinyColors.YELLOW).commaColor(ShinyColors.WHITE).booleanColor(ShinyColors.GREEN).nullColor(ShinyColors.RED).print();
 		System.out.println();
 	}
 
 	private static void testErrorJson() {
 		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Error JSON ---"));
-		final String json = "{\"name\": \"John Doe\", \"age\": 30, \"isStudent\": false, \"address\": null"; // Missing closing brace
+		final String json = """
+					{
+				"name": "John Doe",
+				"age": 30,
+				"isStudent": false,
+				"address": null
+				"""; // Missing closing brace
 		Shiny.json().json(json).print();
 		System.out.println();
 	}
