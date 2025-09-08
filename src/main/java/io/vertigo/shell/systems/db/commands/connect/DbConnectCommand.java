@@ -8,6 +8,8 @@ import java.util.Properties;
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.db.DbContext;
+import io.vertigo.shell.systems.db.DbVar;
+import io.vertigo.shell.systems.env.Env;
 import io.vertigo.shiny.style.ShinyColors;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -37,20 +39,20 @@ public final class DbConnectCommand implements ShellCommand {
 		}
 		try {
 			if (url == null) {
-				url = DbContext.secrets.getProperty("db.url");
+				url = Env.get(DbVar.URL);
 			}
 
 			final Properties props = new Properties();
 			if (user != null) {
 				props.setProperty("user", user);
 			} else {
-				props.setProperty("user", DbContext.secrets.getProperty("db.user"));
+				props.setProperty("user", Env.get(DbVar.USER));
 			}
 
 			if (password != null) {
 				props.setProperty("password", password);
 			} else {
-				props.setProperty("password", DbContext.secrets.getProperty("db.password"));
+				props.setProperty("password", Env.get(DbVar.PASSWORD));
 			}
 			final Connection connection = DriverManager.getConnection(url, props);
 			connection.setReadOnly(true);

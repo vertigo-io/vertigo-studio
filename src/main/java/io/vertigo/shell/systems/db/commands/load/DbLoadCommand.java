@@ -1,5 +1,6 @@
 package io.vertigo.shell.systems.db.commands.load;
 
+import java.io.File;
 import java.io.IOException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,6 +10,8 @@ import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.db.DbContext;
 import io.vertigo.shell.systems.db.DbModel;
+import io.vertigo.shell.systems.db.DbVar;
+import io.vertigo.shell.systems.env.Env;
 import picocli.CommandLine.ArgGroup;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -21,7 +24,8 @@ public final class DbLoadCommand implements ShellCommand {
 
 	/** Recharge une instance depuis le fichier JSON */
 	private static DbModel load() throws IOException {
-		return MAPPER.readValue(DbContext.STORAGE_FILE, DbModel.class);
+		final String storage = Env.get(DbVar.STORAGE);
+		return MAPPER.readValue(new File(storage), DbModel.class);
 	}
 
 	// Définition du groupe d'options mutuellement exclusives

@@ -1,5 +1,6 @@
 package io.vertigo.shell.systems.db.commands.save;
 
+import java.io.File;
 import java.io.IOException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,6 +10,8 @@ import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.db.DbContext;
 import io.vertigo.shell.systems.db.DbModel;
+import io.vertigo.shell.systems.db.DbVar;
+import io.vertigo.shell.systems.env.Env;
 import picocli.CommandLine.Command;
 
 @Command(name = "save", description = "Save the model")
@@ -19,7 +22,8 @@ public final class DbSaveCommand implements ShellCommand {
 
 	/** Sauvegarde l'instance en JSON sur disque */
 	private static void save(final DbModel model) throws IOException {
-		MAPPER.writeValue(DbContext.STORAGE_FILE, model);
+		final String storage = Env.get(DbVar.STORAGE);
+		MAPPER.writeValue(new File(storage), model);
 	}
 
 	@Override

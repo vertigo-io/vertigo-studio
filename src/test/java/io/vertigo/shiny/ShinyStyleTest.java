@@ -70,14 +70,14 @@ public class ShinyStyleTest {
 
 	private static void testEffects() {
 		System.out.print("effects   >");
-		System.out.print(ShinyEffects.BLINK.apply(" blink"));
-		System.out.print(ShinyEffects.BOLD.apply(" bold"));
-		System.out.print(ShinyEffects.DIM.apply(" dim"));
-		System.out.print(ShinyEffects.HIDDEN.apply(" hidden"));
-		System.out.print(ShinyEffects.INVERSE.apply(" inverse"));
-		System.out.print(ShinyEffects.ITALIC.apply(" italic"));
-		System.out.print(ShinyEffects.STRIKETHROUGH.apply(" strike through"));
-		System.out.print(ShinyEffects.UNDERLINE.apply(" underline"));
+		System.out.println(ShinyEffects.BLINK.apply(" blink") + " no effect");
+		System.out.println(ShinyEffects.BOLD.apply(" bold") + " no effect");
+		System.out.println(ShinyEffects.DIM.apply(" dim") + " no effect");
+		System.out.println(ShinyEffects.HIDDEN.apply(" hidden") + " no effect");
+		System.out.println(ShinyEffects.INVERSE.apply(" inverse") + " no effect");
+		System.out.println(ShinyEffects.ITALIC.apply(" italic") + " no effect");
+		System.out.println(ShinyEffects.STRIKETHROUGH.apply(" strike through") + " no effect");
+		System.out.println(ShinyEffects.UNDERLINE.apply(" underline") + " no effect");
 		System.out.println();
 		System.out.println();
 	}

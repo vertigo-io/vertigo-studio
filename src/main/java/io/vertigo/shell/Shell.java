@@ -6,13 +6,13 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import io.vertigo.shell.systems.core.commands.ctx.CtxCommand;
 import io.vertigo.shell.systems.core.commands.exit.ExitCommand;
 import io.vertigo.shell.systems.core.commands.help.HelpCommand;
 import io.vertigo.shell.systems.core.commands.history.HistoryCommand;
 import io.vertigo.shell.systems.core.commands.ip.IpCommand;
 import io.vertigo.shell.systems.core.commands.uptime.UptimeCommand;
 import io.vertigo.shell.systems.db.commands.DbCommands;
+import io.vertigo.shell.systems.env.commands.EnvCommands;
 import io.vertigo.shell.systems.file.commands.cd.FileCdCommand;
 import io.vertigo.shell.systems.file.commands.ls.FileLsCommand;
 import io.vertigo.shell.systems.file.commands.pwd.FilePwdCommand;
@@ -42,7 +42,9 @@ import picocli.CommandLine.Command;
 				//=================
 				//--- Core commands
 				//=================
-				CtxCommand.class,
+				//--- Env commands
+				EnvCommands.class,
+				//--- Simple commands
 				ExitCommand.class,
 				UptimeCommand.class,
 				HistoryCommand.class,

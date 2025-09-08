@@ -20,7 +20,9 @@ import com.drew.metadata.Metadata;
 import com.drew.metadata.Tag;
 
 import io.vertigo.shell.ShellCommand;
+import io.vertigo.shell.systems.env.Env;
 import io.vertigo.shell.systems.photo.PhotoContext;
+import io.vertigo.shell.systems.photo.PhotoVar;
 import io.vertigo.shell.systems.photo.PhotoExifInfo;
 import io.vertigo.shell.systems.photo.PhotoInfo;
 import io.vertigo.shell.systems.photo.PhotoType;
@@ -33,7 +35,7 @@ public final class PhotoLoadCommand implements ShellCommand {
 
 	@Override
 	public void run() {
-		final Path rootPath = PhotoContext.getRootPath();
+		final Path rootPath = Path.of(Env.get(PhotoVar.ROOT_PATH));
 
 		if (rootPath == null) {
 			System.out.println("Error: rootPath is not set. Use 'photo set rootPath <directory>' first.");

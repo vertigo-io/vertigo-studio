@@ -1,4 +1,4 @@
-package io.vertigo.shell.systems.photo.commands;
+package io.vertigo.shell.systems.env;
 
 import picocli.CommandLine.Command;
 import io.vertigo.shell.systems.env.commands.set.EnvSetCommand;
