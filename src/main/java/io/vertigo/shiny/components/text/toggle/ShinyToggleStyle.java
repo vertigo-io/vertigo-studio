@@ -5,8 +5,8 @@ import io.vertigo.shiny.style.ShinyColor;
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyToggleStyle {
-	public ShinyColor onColor = ShinyColors.GREEN;
-	public ShinyColor offColor = ShinyColors.RED;
+	private ShinyColor onColor = ShinyColors.GREEN;
+	private ShinyColor offColor = ShinyColors.RED;
 
 	public ShinyToggleStyle onColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
@@ -20,5 +20,13 @@ public final class ShinyToggleStyle {
 		//---
 		this.offColor = color;
 		return this;
+	}
+
+	ShinyColor onColor() {
+		return this.onColor;
+	}
+
+	ShinyColor offColor() {
+		return this.offColor;
 	}
 }

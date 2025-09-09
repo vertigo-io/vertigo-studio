@@ -1,6 +1,6 @@
 package io.vertigo.shiny.components.text.figlet;
 
-public enum ShinyFigletFonts {
+public enum ShinyFigletFont {
 	BANNER("banner.flf"),
 	BIG("big.flf"),
 	BLOCK("block.flf"),
@@ -22,7 +22,7 @@ public enum ShinyFigletFonts {
 
 	private final String fileName;
 
-	ShinyFigletFonts(final String fileName) {
+	ShinyFigletFont(final String fileName) {
 		this.fileName = fileName;
 	}
 

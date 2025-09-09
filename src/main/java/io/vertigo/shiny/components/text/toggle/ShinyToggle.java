@@ -59,8 +59,8 @@ public final class ShinyToggle implements ShinyComponent {
 	public void render(final ShinyWriter writer) {
 		final String icon = toggleValue ? toggleType.getOnIcon() : toggleType.getOffIcon();
 		final ShinyColor color = toggleValue
-				? toggleStyle.onColor
-				: toggleStyle.offColor;
+				? toggleStyle.onColor()
+				: toggleStyle.offColor();
 		final String text = showText ? (toggleValue ? onText : offText) : "";
 
 		// Ajouter le toggleLabel si présent

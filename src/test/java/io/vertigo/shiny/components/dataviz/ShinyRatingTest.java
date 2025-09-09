@@ -50,7 +50,7 @@ public class ShinyRatingTest {
 				.render(writer);
 
 		Shiny.rating()
-				.label("Hearts")
+				.label("Red Hearts")
 				.value(4)
 				.style(new ShinyRatingStyle()
 						.type(ShinyRatingType.HEART)
@@ -58,7 +58,7 @@ public class ShinyRatingTest {
 				.render(writer);
 
 		Shiny.rating()
-				.label("Circles")
+				.label("Blue Circles")
 				.value(3)
 				.style(new ShinyRatingStyle()
 						.type(ShinyRatingType.CIRCLE)
@@ -66,7 +66,7 @@ public class ShinyRatingTest {
 				.render(writer);
 
 		Shiny.rating()
-				.label("Squares")
+				.label("Green Squares")
 				.value(5)
 				.style(new ShinyRatingStyle()
 						.type(ShinyRatingType.SQUARE)
@@ -74,7 +74,7 @@ public class ShinyRatingTest {
 				.render(writer);
 
 		Shiny.rating()
-				.label("Diamonds")
+				.label("Magenta Diamonds")
 				.value(2)
 				.style(new ShinyRatingStyle()
 						.type(ShinyRatingType.DIAMOND)

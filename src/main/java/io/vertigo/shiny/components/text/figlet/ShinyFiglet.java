@@ -32,8 +32,8 @@ public final class ShinyFiglet implements ShinyComponent {
 
 	public void render(final ShinyWriter writer) {
 		try {
-			final FigletRenderer figletRenderer = new FigletRenderer(FigFontResources.loadFigFontResource(figletStyle.figletFont.getFileName()));
-			final String asciiArt = figletStyle.figletColor.fg(figletRenderer.renderText(figletText));
+			final FigletRenderer figletRenderer = new FigletRenderer(FigFontResources.loadFigFontResource(figletStyle.font().getFileName()));
+			final String asciiArt = figletStyle.color().fg(figletRenderer.renderText(figletText));
 			//We prefer use println instead of print a figletText with \n inside
 			for (String line : asciiArt.split("\\r?\\n")) {
 				writer.println(line);

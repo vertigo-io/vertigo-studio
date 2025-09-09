@@ -86,7 +86,7 @@ public final class ShinyRating implements ShinyComponent {
 
 		// Add label if present
 		if (label != null && !label.isEmpty()) {
-			rating.append(label).append(": ");
+			writer.print(label).print(": ");
 		}
 
 		// Build the rating visualization
