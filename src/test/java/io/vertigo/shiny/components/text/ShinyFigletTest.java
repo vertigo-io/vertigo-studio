@@ -3,6 +3,7 @@ package io.vertigo.shiny.components.text;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.text.figlet.ShinyFigletFonts;
+import io.vertigo.shiny.components.text.figlet.ShinyFigletStyle;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyFigletTest {
@@ -21,20 +22,23 @@ public class ShinyFigletTest {
 
 		Shiny.figlet()
 				.text("Hello")
-				.font(ShinyFigletFonts.BIG) // Use BIG font
-				.color(ShinyColors.BLUE)
+				.style(new ShinyFigletStyle()
+						.font(ShinyFigletFonts.BIG) // Use BIG font
+						.color(ShinyColors.BLUE))
 				.render(writer);
 
 		Shiny.figlet()
 				.text("World")
-				.font(ShinyFigletFonts.SLANT) // Use SLANT font
-				.color(ShinyColors.RED)
+				.style(new ShinyFigletStyle()
+						.font(ShinyFigletFonts.SLANT) // Use SLANT font
+						.color(ShinyColors.RED))
 				.render(writer);
 
 		Shiny.figlet()
 				.text("Figlet")
-				.font(ShinyFigletFonts.STANDARD) // Use STANDARD font
-				.color(ShinyColors.GREEN)
+				.style(new ShinyFigletStyle()
+						.font(ShinyFigletFonts.STANDARD) // Use STANDARD font
+						.color(ShinyColors.GREEN))
 				.render(writer);
 		writer.println();
 	}
@@ -45,8 +49,9 @@ public class ShinyFigletTest {
 			writer.println(ShinyColors.CYAN.fg("Font: " + font.name()));
 			Shiny.figlet()
 					.text(font.name()) // Print the font name using the font itself
-					.font(font)
-					.color(ShinyColors.GREEN)
+					.style(new ShinyFigletStyle()
+							.font(font)
+							.color(ShinyColors.GREEN))
 					.render(writer);
 			writer.println();
 		}

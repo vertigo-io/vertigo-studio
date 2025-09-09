@@ -5,8 +5,10 @@ import java.util.Locale;
 
 import io.vertigo.shell.ShellContext;
 import io.vertigo.shiny.components.data.json.ShinyJsonStyle;
+import io.vertigo.shiny.components.data.table.ShinyTableStyle;
 import io.vertigo.shiny.components.dataviz.barchart.ShinyBarChartStyle;
 import io.vertigo.shiny.components.dataviz.gauge.ShinyGaugeStyle;
+import io.vertigo.shiny.components.text.figlet.ShinyFigletStyle;
 
 public final class ShinyTheme {
 	private boolean asciiTheme = false; //vs unicode
@@ -55,24 +57,19 @@ public final class ShinyTheme {
 		return locale;
 	}
 
-	//	private final ShinyTableStyle tableStyle = new ShinyTableStyle();
+	private final ShinyTableStyle tableStyle = new ShinyTableStyle();
 	private final ShinyBarChartStyle barChartStyle = new ShinyBarChartStyle();
-	//	private final ShinySparklineStyle sparklineStyle = new ShinySparklineStyle();
 	private final ShinyJsonStyle jsonStyle = new ShinyJsonStyle();
 	private final ShinyGaugeStyle gaugeStyle = new ShinyGaugeStyle();
+	private final ShinyFigletStyle figletStyle = new ShinyFigletStyle();
 
-	//
-	//	public ShinyTableStyle tableStyle() {
-	//		return tableStyle;
-	//	}
-	//
+	public ShinyTableStyle tableStyle() {
+		return tableStyle;
+	}
+
 	public ShinyBarChartStyle barChartStyle() {
 		return barChartStyle;
 	}
-
-	//	public ShinySparklineStyle sparklineStyle() {
-	//		return sparklineStyle;
-	//	}
 
 	public ShinyJsonStyle jsonStyle() {
 		return jsonStyle;
@@ -80,5 +77,9 @@ public final class ShinyTheme {
 
 	public ShinyGaugeStyle gaugeStyle() {
 		return gaugeStyle;
+	}
+
+	public ShinyFigletStyle figletStyle() {
+		return figletStyle;
 	}
 }
