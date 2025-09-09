@@ -7,6 +7,9 @@ import io.vertigo.shiny.components.ShinyComponent;
 public final class ShinyParagraph implements ShinyComponent {
 	private String paragraphText;
 
+	public ShinyParagraph() {
+	}
+
 	public ShinyParagraph text(final String text) {
 		this.paragraphText = text;
 		return this;

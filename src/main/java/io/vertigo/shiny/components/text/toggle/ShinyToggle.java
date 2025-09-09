@@ -6,31 +6,30 @@ import io.vertigo.shiny.style.ShinyColor;
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyToggle implements ShinyComponent {
-	private String label;
-	private boolean value;
-	private ShinyToggleStyle style = ShinyToggleStyle.TOGGLE;
+	private String toggleLabel;
+	private boolean toggleValue;
+	private ShinyToggleStyle toggleStyle = ShinyToggleStyle.TOGGLE;
 	private ShinyColor onColor = ShinyColors.GREEN;
 	private ShinyColor offColor = ShinyColors.RED;
 	private String onText = "ON";
 	private String offText = "OFF";
 	private boolean showText = true;
-	//	private boolean showBox = false;
 
 	public ShinyToggle() {
 	}
 
-	public ShinyToggle label(final String text) {
-		this.label = text;
+	public ShinyToggle label(final String label) {
+		this.toggleLabel = label;
 		return this;
 	}
 
-	public ShinyToggle value(final boolean currentValue) {
-		this.value = currentValue;
+	public ShinyToggle value(final boolean value) {
+		this.toggleValue = value;
 		return this;
 	}
 
-	public ShinyToggle style(final ShinyToggleStyle toggleStyle) {
-		this.style = toggleStyle;
+	public ShinyToggle style(final ShinyToggleStyle style) {
+		this.toggleStyle = style;
 		return this;
 	}
 
@@ -59,21 +58,16 @@ public final class ShinyToggle implements ShinyComponent {
 		return this;
 	}
 
-	//	public ShinyToggle showBox(final boolean show) {
-	//		this.showBox = show;
-	//		return this;
-	//	}
-
 	public void render(final ShinyWriter writer) {
-		final String icon = value ? style.getOnIcon() : style.getOffIcon();
-		final ShinyColor color = value ? onColor : offColor;
-		final String text = showText ? (value ? onText : offText) : "";
+		final String icon = toggleValue ? toggleStyle.getOnIcon() : toggleStyle.getOffIcon();
+		final ShinyColor color = toggleValue ? onColor : offColor;
+		final String text = showText ? (toggleValue ? onText : offText) : "";
 
 		final StringBuilder toggle = new StringBuilder();
 
-		// Ajouter le label si présent
-		if (label != null && !label.isEmpty()) {
-			toggle.append(label).append(": ");
+		// Ajouter le toggleLabel si présent
+		if (toggleLabel != null && !toggleLabel.isEmpty()) {
+			toggle.append(toggleLabel).append(": ");
 		}
 
 		// Construire la représentation du toggle
@@ -113,7 +107,7 @@ public final class ShinyToggle implements ShinyComponent {
 	//	}
 	//
 	//	// Méthode utilitaire pour afficher plusieurs toggles alignés
-	//	public static void printMultiple(final java.util.Map<String, Boolean> toggles, final ToggleStyle style) {
+	//	public static void printMultiple(final java.util.Map<String, Boolean> toggles, final ToggleStyle toggleStyle) {
 	//		Assertion.check().isNotNull(toggles);
 	//		//---
 	//
@@ -129,12 +123,12 @@ public final class ShinyToggle implements ShinyComponent {
 	//				.orElse(0);
 	//
 	//		// Afficher chaque toggle aligné
-	//		toggles.forEach((label, value) -> {
-	//			final String paddedLabel = String.format("%-" + maxLabelLength + "s", label);
+	//		toggles.forEach((toggleLabel, toggleValue) -> {
+	//			final String paddedLabel = String.format("%-" + maxLabelLength + "s", toggleLabel);
 	//			new ShinyToggle(shiny)
 	//					.label(paddedLabel)
-	//					.value(value)
-	//					.style(style)
+	//					.value(toggleValue)
+	//					.style(toggleStyle)
 	//					.print();
 	//		});
 	//	}
