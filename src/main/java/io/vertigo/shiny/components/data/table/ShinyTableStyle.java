@@ -7,7 +7,6 @@ import io.vertigo.shiny.style.ShinyColors;
  * Encapsulates all visual style parameters of the table.
  */
 public final class ShinyTableStyle {
-	private final ShinyTable table;
 
 	ShinyBorder border = ShinyBorder.Normal;
 	// Colors
@@ -16,10 +15,6 @@ public final class ShinyTableStyle {
 	ShinyColor headerBackgroundColor = ShinyColors.BLUE_BRIGHT;
 	ShinyColor altRowBackgroundColor = ShinyColors.CYAN_BRIGHT;
 	ShinyColor borderColor = ShinyColors.BLACK;
-
-	ShinyTableStyle(final ShinyTable table) {
-		this.table = table;
-	}
 
 	public ShinyTableStyle border(final ShinyBorder tableBorder) {
 		this.border = tableBorder;
@@ -49,9 +44,5 @@ public final class ShinyTableStyle {
 	public ShinyTableStyle altRowBackgroundColor(final ShinyColor color) {
 		this.altRowBackgroundColor = color;
 		return this;
-	}
-
-	public ShinyTable endStyle() {
-		return table;
 	}
 }

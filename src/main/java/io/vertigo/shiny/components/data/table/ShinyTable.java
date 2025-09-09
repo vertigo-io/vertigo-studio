@@ -19,7 +19,7 @@ public final class ShinyTable implements ShinyComponent {
 	private String noDataFound;
 	private String[] tableHeader;
 	private final List<String[]> tableRows = new ArrayList<>();
-	private final ShinyTableStyle style = new ShinyTableStyle(this);
+	private ShinyTableStyle tableStyle;
 
 	/**
 	 * Creates a new ShinyTable.
@@ -27,6 +27,7 @@ public final class ShinyTable implements ShinyComponent {
 	 * @param numberFormat the NumberFormat used to format numeric values
 	 */
 	public ShinyTable() {
+		this.tableStyle = new ShinyTableStyle();
 		this.numberFormat = Shiny.theme().numberFormat();
 	}
 
@@ -46,8 +47,11 @@ public final class ShinyTable implements ShinyComponent {
 	/**
 	 * Opens Style.
 	 */
-	public ShinyTableStyle beginStyle() {
-		return style;
+	public ShinyTable style(ShinyTableStyle style) {
+		Assertion.check().isNotNull(style);
+		//---
+		this.tableStyle = style;
+		return this;
 	}
 
 	/**
@@ -138,7 +142,7 @@ public final class ShinyTable implements ShinyComponent {
 		final StringBuilder formatBuilder = new StringBuilder();
 		for (int i = 0; i < columns; i++) {
 			formatBuilder
-					.append(i == 0 ? "" : style.border.chars().vertical())
+					.append(i == 0 ? "" : tableStyle.border.chars().vertical())
 					.append(isNumericColumn[i] ? " %" : " %-")
 					.append(widths[i]).append("s ");
 		}
@@ -146,27 +150,27 @@ public final class ShinyTable implements ShinyComponent {
 
 		// 4. Print
 		if (tableTitle != null) {
-			writer.println(style.titleBackgroundColor.bg(
-					style.titleTextColor.fg(tableTitle)));
+			writer.println(tableStyle.titleBackgroundColor.bg(
+					tableStyle.titleTextColor.fg(tableTitle)));
 		}
 		printLineSeparator(writer, widths, Position.TOP);
 
-		writer.print(style.border.chars().vertical())
-				.print(style.headerBackgroundColor.bg(String.format(format, (Object[]) tableHeader)))
-				.println(style.border.chars().vertical());
+		writer.print(tableStyle.border.chars().vertical())
+				.print(tableStyle.headerBackgroundColor.bg(String.format(format, (Object[]) tableHeader)))
+				.println(tableStyle.border.chars().vertical());
 
 		printLineSeparator(writer, widths, Position.INNER);
 
 		boolean invert = false;
 		for (final String[] formattedRow : formattedRows) {
-			writer.print(style.border.chars().vertical());
+			writer.print(tableStyle.border.chars().vertical());
 			final String srow = String.format(format, (Object[]) formattedRow);
 			if (invert) {
-				writer.print(style.altRowBackgroundColor.bg(srow));
+				writer.print(tableStyle.altRowBackgroundColor.bg(srow));
 			} else {
 				writer.print(srow);
 			}
-			writer.println(style.border.chars().vertical());
+			writer.println(tableStyle.border.chars().vertical());
 			invert = !invert;
 		}
 		printLineSeparator(writer, widths, Position.BOTTOM);
@@ -181,38 +185,38 @@ public final class ShinyTable implements ShinyComponent {
 		for (final int width : widths) {
 			if (first) {
 				final var left = switch (position) {
-					case TOP -> style.border.chars().topLeft();
-					case INNER -> style.border.chars().innerLeft();
-					case BOTTOM -> style.border.chars().bottomLeft();
+					case TOP -> tableStyle.border.chars().topLeft();
+					case INNER -> tableStyle.border.chars().innerLeft();
+					case BOTTOM -> tableStyle.border.chars().bottomLeft();
 				};
 				writer.print(left);
 				final var h = switch (position) {
-					case TOP -> style.border.chars().topHorizontal();
-					case INNER -> style.border.chars().innerHorizontal();
-					case BOTTOM -> style.border.chars().bottomHorizontal();
+					case TOP -> tableStyle.border.chars().topHorizontal();
+					case INNER -> tableStyle.border.chars().innerHorizontal();
+					case BOTTOM -> tableStyle.border.chars().bottomHorizontal();
 				};
 				writer.print(h.repeat(width + 2));
 				first = false;
 			} else {
 				final var middle = switch (position) {
-					case TOP -> style.border.chars().topMiddle();
-					case INNER -> style.border.chars().center();
-					case BOTTOM -> style.border.chars().bottomMiddle();
+					case TOP -> tableStyle.border.chars().topMiddle();
+					case INNER -> tableStyle.border.chars().center();
+					case BOTTOM -> tableStyle.border.chars().bottomMiddle();
 				};
 				writer.print(middle);
 				final var h = switch (position) {
-					case TOP -> style.border.chars().topHorizontal();
-					case INNER -> style.border.chars().innerHorizontal();
-					case BOTTOM -> style.border.chars().bottomHorizontal();
+					case TOP -> tableStyle.border.chars().topHorizontal();
+					case INNER -> tableStyle.border.chars().innerHorizontal();
+					case BOTTOM -> tableStyle.border.chars().bottomHorizontal();
 				};
 				writer.print(h.repeat(width + 2));
 			}
 
 		}
 		final String right = switch (position) {
-			case TOP -> style.border.chars().topRight();
-			case INNER -> style.border.chars().innerRight();
-			case BOTTOM -> style.border.chars().bottomRight();
+			case TOP -> tableStyle.border.chars().topRight();
+			case INNER -> tableStyle.border.chars().innerRight();
+			case BOTTOM -> tableStyle.border.chars().bottomRight();
 		};
 		writer.println(right);
 	}

@@ -6,6 +6,7 @@ import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.data.table.ShinyBorder;
 import io.vertigo.shiny.components.data.table.ShinyTable;
+import io.vertigo.shiny.components.data.table.ShinyTableStyle;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyTableTest {
@@ -94,12 +95,11 @@ public class ShinyTableTest {
 				.title("Product Status")
 				.header("Product", "Quantity", "Status")
 				.rows(data)
-				.beginStyle()
-				.titleBackgroundColor(ShinyColors.WHITE)
-				.headerBackgroundColor(ShinyColors.GREEN_BRIGHT)
-				.altRowBackgroundColor(ShinyColors.CYAN_BRIGHT)
-				.borderColor(ShinyColors.RED)
-				.endStyle()
+				.style(new ShinyTableStyle()
+						.titleBackgroundColor(ShinyColors.WHITE)
+						.headerBackgroundColor(ShinyColors.GREEN_BRIGHT)
+						.altRowBackgroundColor(ShinyColors.CYAN_BRIGHT)
+						.borderColor(ShinyColors.RED))
 				.render(writer);
 		writer.println();
 
@@ -109,34 +109,30 @@ public class ShinyTableTest {
 				.rows(List.of(
 						new String[] { "North", "12345", "10.5%" },
 						new String[] { "South", "9876", "5.2%" }))
-				.beginStyle()
-				.titleBackgroundColor(ShinyColors.BLUE)
-				.headerBackgroundColor(ShinyColors.WHITE)
-				.altRowBackgroundColor(ShinyColors.CYAN)
-				.borderColor(ShinyColors.YELLOW)
-				.endStyle();
+				.style(new ShinyTableStyle()
+						.titleBackgroundColor(ShinyColors.BLUE)
+						.headerBackgroundColor(ShinyColors.WHITE)
+						.altRowBackgroundColor(ShinyColors.CYAN)
+						.borderColor(ShinyColors.YELLOW));
 
 		table
 				.title("Sales Report - Simple")
-				.beginStyle()
-				.border(ShinyBorder.Simple)
-				.endStyle()
+				.style(new ShinyTableStyle()
+						.border(ShinyBorder.Simple))
 				.render(writer);
 		writer.println();
 
 		table
 				.title("Sales Report - SimpleHeavy")
-				.beginStyle()
-				.border(ShinyBorder.SimpleHeavy)
-				.endStyle()
+				.style(new ShinyTableStyle()
+						.border(ShinyBorder.SimpleHeavy))
 				.render(writer);
 		writer.println();
 
 		table
 				.title("Sales Report - Horizontal")
-				.beginStyle()
-				.border(ShinyBorder.Horizontal)
-				.endStyle()
+				.style(new ShinyTableStyle()
+						.border(ShinyBorder.Horizontal))
 				.render(writer);
 		writer.println();
 	}
