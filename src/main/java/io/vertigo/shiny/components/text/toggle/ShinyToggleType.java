@@ -9,7 +9,7 @@ public enum ShinyToggleType {
 	STATUS("🟢", "🔴"),
 	THUMBS("👍", "👎"),
 	ARROW("▶", "⏸"),
-	STAR("⭐", "☆"),
+	STAR("★", "☆"),
 	CLASSIC("✅", "❌");
 
 	private final String onIcon;

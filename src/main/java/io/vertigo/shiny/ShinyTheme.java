@@ -11,6 +11,7 @@ import io.vertigo.shiny.components.dataviz.gauge.ShinyGaugeStyle;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatusStyle;
 import io.vertigo.shiny.components.text.figlet.ShinyFigletStyle;
 import io.vertigo.shiny.components.text.textpath.ShinyTextPathStyle;
+import io.vertigo.shiny.components.text.toggle.ShinyToggleStyle;
 
 public final class ShinyTheme {
 	private boolean asciiTheme = false; //vs unicode
@@ -98,5 +99,11 @@ public final class ShinyTheme {
 
 	public ShinyTextPathStyle textPathStyle() {
 		return textPathStyle;
+	}
+
+	private final ShinyToggleStyle toggleStyle = new ShinyToggleStyle();
+
+	public ShinyToggleStyle toggleStyle() {
+		return toggleStyle;
 	}
 }
