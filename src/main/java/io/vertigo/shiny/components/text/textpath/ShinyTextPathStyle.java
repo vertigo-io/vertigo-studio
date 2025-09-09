@@ -1,5 +1,6 @@
 package io.vertigo.shiny.components.text.textpath;
 
+import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.style.ShinyColor;
 import io.vertigo.shiny.style.ShinyColors;
 
@@ -10,21 +11,29 @@ public final class ShinyTextPathStyle {
 	public ShinyColor separatorColor = ShinyColors.RED;
 
 	public ShinyTextPathStyle rootColor(final ShinyColor color) {
+		Assertion.check().isNotNull(color);
+		//---
 		this.rootColor = color;
 		return this;
 	}
 
 	public ShinyTextPathStyle nodeColor(final ShinyColor color) {
+		Assertion.check().isNotNull(color);
+		//---
 		this.nodeColor = color;
 		return this;
 	}
 
 	public ShinyTextPathStyle leafColor(final ShinyColor color) {
+		Assertion.check().isNotNull(color);
+		//---
 		this.leafColor = color;
 		return this;
 	}
 
 	public ShinyTextPathStyle separatorColor(final ShinyColor color) {
+		Assertion.check().isNotNull(color);
+		//---
 		this.separatorColor = color;
 		return this;
 	}

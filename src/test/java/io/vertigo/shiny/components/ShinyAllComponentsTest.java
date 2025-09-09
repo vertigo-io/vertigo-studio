@@ -4,7 +4,6 @@ import static io.vertigo.shiny.components.data.tree.ShinyIcon.FILE;
 import static io.vertigo.shiny.components.data.tree.ShinyIcon.FOLDER_OPEN;
 import static io.vertigo.shiny.style.ShinyColors.BLUE_BRIGHT;
 import static io.vertigo.shiny.style.ShinyColors.CYAN;
-import static io.vertigo.shiny.style.ShinyColors.MAGENTA;
 import static io.vertigo.shiny.style.ShinyColors.YELLOW;
 
 import java.time.LocalDate;
@@ -91,7 +90,7 @@ public class ShinyAllComponentsTest {
 
 	private static void testCalendar(final ShinyWriter writer) {
 		writer.println(CYAN.fg("Component: ShinyCalendar"))
-				.println("Parameters: year=2024, month=JULY, locale=FRENCH, highlight=[2024-07-14], border=ROUNDED");
+				.println("Parameters: year=2024, month=JULY, locale=FRENCH, highlight=[2024-07-14], tableBorder=ROUNDED");
 		//---
 		Shiny.calendar()
 				.year(2024)
@@ -185,7 +184,6 @@ public class ShinyAllComponentsTest {
 		Shiny.sparkline()
 				.title("Data Trend")
 				.data(List.of(10.0, 12.0, 15.0, 13.0, 11.0, 10.0, 9.0, 10.0, 12.0, 14.0, 16.0, 15.0))
-				.color(MAGENTA)
 				.render(writer);
 		waitForEnter(writer);
 	}
@@ -221,7 +219,7 @@ public class ShinyAllComponentsTest {
 
 	private static void testTable(final ShinyWriter writer) {
 		writer.println(CYAN.fg("Component: ShinyTable"))
-				.println("Parameters: title='Users', header=['firstName', 'lastName', 'Age'], rows=[['John', 'doe', '30'], ['Jane', 'doe', '25']], border=ASCII");
+				.println("Parameters: title='Users', header=['firstName', 'lastName', 'Age'], rows=[['John', 'doe', '30'], ['Jane', 'doe', '25']], tableBorder=ASCII");
 		//---
 		Shiny.table()
 				.title("Users")

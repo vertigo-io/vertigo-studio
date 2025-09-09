@@ -1,5 +1,6 @@
 package io.vertigo.shiny.components.text.toggle;
 
+import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.style.ShinyColor;
 import io.vertigo.shiny.style.ShinyColors;
 
@@ -8,11 +9,15 @@ public final class ShinyToggleStyle {
 	public ShinyColor offColor = ShinyColors.RED;
 
 	public ShinyToggleStyle onColor(final ShinyColor color) {
+		Assertion.check().isNotNull(color);
+		//---
 		this.onColor = color;
 		return this;
 	}
 
 	public ShinyToggleStyle offColor(final ShinyColor color) {
+		Assertion.check().isNotNull(color);
+		//---
 		this.offColor = color;
 		return this;
 	}

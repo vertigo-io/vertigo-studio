@@ -1,9 +1,9 @@
 package io.vertigo.shiny.components.dataviz.rating;
 
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
-import io.vertigo.shiny.style.ShinyColor;
-import io.vertigo.shiny.style.ShinyColors;
 import io.vertigo.shiny.style.ShinyEffects;
 
 public final class ShinyRating implements ShinyComponent {
@@ -12,9 +12,7 @@ public final class ShinyRating implements ShinyComponent {
 	private double value = 0;
 	private ShinyRatingScale scale = ShinyRatingScale.SCALE_5;
 	private int customMaxValue = -1; // -1 means use scale
-	private ShinyRatingType ratingType = ShinyRatingType.STAR;
-	private ShinyColor filledColor = ShinyColors.YELLOW;
-	private ShinyColor emptyColor = ShinyColors.WHITE;
+	private ShinyRatingStyle ratingStyle;
 	private boolean showValue = true;
 	private boolean showPercentage = false;
 	private boolean showBox = false;
@@ -22,6 +20,14 @@ public final class ShinyRating implements ShinyComponent {
 	private boolean allowHalfRating = false;
 
 	public ShinyRating() {
+		this.ratingStyle = Shiny.theme().ratingStyle();
+	}
+
+	public ShinyRating style(final ShinyRatingStyle style) {
+		Assertion.check().isNotNull(style);
+		//---
+		this.ratingStyle = style;
+		return this;
 	}
 
 	public ShinyRating label(final String text) {
@@ -45,21 +51,6 @@ public final class ShinyRating implements ShinyComponent {
 		return this;
 	}
 
-	public ShinyRating type(final ShinyRatingType type) {
-		this.ratingType = type;
-		return this;
-	}
-
-	public ShinyRating filledColor(final ShinyColor color) {
-		this.filledColor = color;
-		return this;
-	}
-
-	public ShinyRating emptyColor(final ShinyColor color) {
-		this.emptyColor = color;
-		return this;
-	}
-
 	public ShinyRating showValue(final boolean show) {
 		this.showValue = show;
 		return this;
@@ -76,7 +67,9 @@ public final class ShinyRating implements ShinyComponent {
 	}
 
 	public ShinyRating separator(final String sep) {
-		this.separator = sep != null ? sep : "";
+		Assertion.check().isNotNull(sep);
+		//---
+		this.separator = sep;
 		return this;
 	}
 
@@ -138,13 +131,13 @@ public final class ShinyRating implements ShinyComponent {
 			if (allowHalfRating && clampedValue >= i - 0.5 && clampedValue < i) {
 				// Half rating (for now, use filled icon with different color)
 				rating.append(ShinyEffects.DIM.apply(
-						filledColor.fg(ratingType.getFilledIcon())));
+						ratingStyle.filledColor.fg(ratingStyle.ratingType.getFilledIcon())));
 			} else if (clampedValue >= i) {
 				// Filled
-				rating.append(filledColor.fg(ratingType.getFilledIcon()));
+				rating.append(ratingStyle.filledColor.fg(ratingStyle.ratingType.getFilledIcon()));
 			} else {
 				// Empty
-				rating.append(emptyColor.fg(ratingType.getEmptyIcon()));
+				rating.append(ratingStyle.emptyColor.fg(ratingStyle.ratingType.getEmptyIcon()));
 			}
 		}
 	}
@@ -155,8 +148,8 @@ public final class ShinyRating implements ShinyComponent {
 		final int filledLength = (int) (barLength * percentage);
 
 		rating.append("[")
-				.append(filledColor.fg(ratingType.getFilledIcon().repeat(filledLength)))
-				.append(emptyColor.fg(ratingType.getEmptyIcon().repeat(barLength - filledLength)))
+				.append(ratingStyle.filledColor.fg(ratingStyle.ratingType.getFilledIcon().repeat(filledLength)))
+				.append(ratingStyle.emptyColor.fg(ratingStyle.ratingType.getEmptyIcon().repeat(barLength - filledLength)))
 				.append("]");
 	}
 
@@ -170,95 +163,8 @@ public final class ShinyRating implements ShinyComponent {
 		final int contentLength = cleanContent.length();
 		final int boxWidth = contentLength + 2;
 
-		final String topBorder = "┌" + "─".repeat(boxWidth) + "┐";
-		final String bottomBorder = "└" + "─".repeat(boxWidth) + "┘";
-		final String contentLine = "│ " + content + " │";
-
-		writer
-				.println(topBorder)
-				.println(contentLine)
-				.println(bottomBorder);
+		writer.println("┌" + "─".repeat(boxWidth) + "┐") //Top Border
+				.println("│ " + content + " │") // Content Line
+				.println("└" + "─".repeat(boxWidth) + "┘");// Bottom Border
 	}
-	//
-	//	// Utility method to display multiple ratings aligned
-	//	public static void printMultiple(final Shiny shiny, final java.util.Map<String, Double> ratings,
-	//			final RatingStyle ratingType, final RatingScale scale) {
-	//		Assertion.check().isNotNull(shiny);
-	//		Assertion.check().isNotNull(ratings);
-	//		//---
-	//
-	//		if (ratings.isEmpty()) {
-	//			shiny.getWriter().println("No ratings to display");
-	//			return;
-	//		}
-	//
-	//		// Find maximum label length
-	//		final int maxLabelLength = ratings.keySet().stream()
-	//				.mapToInt(String::length)
-	//				.max()
-	//				.orElse(0);
-	//
-	//		// Display each rating aligned
-	//		ratings.forEach((label, value) -> {
-	//			final String paddedLabel = String.format("%-" + maxLabelLength + "s", label);
-	//			new ShinyRating(shiny)
-	//					.label(paddedLabel)
-	//					.value(value)
-	//					.style(ratingType)
-	//					.scale(scale)
-	//					.print();
-	//		});
-	//	}
-	//
-	//	// Utility method to create a rating dashboard
-	//	public static void printDashboard(final Shiny shiny, final String title,
-	//			final java.util.Map<String, Double> ratings,
-	//			final RatingStyle ratingType, final RatingScale scale) {
-	//		Assertion.check().isNotNull(shiny);
-	//		Assertion.check().isNotNull(ratings);
-	//		//---
-	//
-	//		if (title != null && !title.isEmpty()) {
-	//			shiny.getWriter().println(ShinyColors.BOLD + title + ShinyColors.RESET);
-	//			shiny.getWriter().println("─".repeat(title.length()));
-	//		}
-	//
-	//		printMultiple(shiny, ratings, ratingType, scale);
-	//		shiny.getWriter().println();
-	//	}
-	//
-	//	// Utility method to create a summary rating
-	//	public static void printSummary(final Shiny shiny, final String title,
-	//			final java.util.Map<String, Double> ratings,
-	//			final RatingStyle ratingType, final RatingScale scale) {
-	//		Assertion.check().isNotNull(shiny);
-	//		Assertion.check().isNotNull(ratings);
-	//		//---
-	//
-	//		if (ratings.isEmpty()) {
-	//			shiny.getWriter().println("No ratings to summarize");
-	//			return;
-	//		}
-	//
-	//		// Calculate average
-	//		final double average = ratings.values().stream()
-	//				.mapToDouble(Double::doubleValue)
-	//				.average()
-	//				.orElse(0.0);
-	//
-	//		// Print individual ratings
-	//		printDashboard(shiny, title, ratings, ratingType, scale);
-	//
-	//		// Print average
-	//		shiny.getWriter().println(ShinyColors.BOLD + "Average Rating:" + ShinyColors.RESET);
-	//		new ShinyRating(shiny)
-	//				.value(average)
-	//				.style(ratingType)
-	//				.scale(scale)
-	//				.showValue(true)
-	//				.showPercentage(true)
-	//				.showBox(true)
-	//				.print();
-	//		shiny.getWriter().println();
-	//	}
 }
