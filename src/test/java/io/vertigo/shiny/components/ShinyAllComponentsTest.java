@@ -28,9 +28,8 @@ public class ShinyAllComponentsTest {
 	public static void main(final String[] args) {
 		final ShinyWriter writer = Shiny.writer();
 
-		writer.println(BLUE_BRIGHT.fg("--- Starting All Shiny Components Test ---"))
-				.println("Press Enter to see the next component.")
-				.println();
+		writer.println(BLUE_BRIGHT.fg("--- Starting All Shiny Components with their default style---"));
+		waitForEnter(writer);
 
 		testBarChart(writer);
 		testCalendar(writer);
