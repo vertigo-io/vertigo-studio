@@ -6,6 +6,7 @@ import static io.vertigo.shiny.style.ShinyColors.RED;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.data.list.ShinyList;
+import io.vertigo.shiny.components.data.list.ShinyListStyle;
 import io.vertigo.shiny.components.data.list.ShinyListType;
 import io.vertigo.shiny.style.ShinyColors;
 
@@ -73,11 +74,13 @@ public class ShinyListTest {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Colored List ---"));
 		Shiny.list()
 				.type(ShinyListType.DASHED)
-				.itemColor(GREEN)
+				.style(new ShinyListStyle()
+						// Color the bullets/numbers/dashes
+						.itemColor(GREEN)
+						.bulletColor(RED))
 				.addItem("Uranus")
 				.addItem("Saturn")
 				.addItem("Venus")
-				.bulletColor(RED) // Color the bullets/numbers/dashes
 				.render(writer);
 		writer.println();
 	}

@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import io.vertigo.shell.ShellContext;
 import io.vertigo.shiny.components.data.json.ShinyJsonStyle;
+import io.vertigo.shiny.components.data.list.ShinyListStyle;
 import io.vertigo.shiny.components.data.table.ShinyTableStyle;
 import io.vertigo.shiny.components.dataviz.barchart.ShinyBarChartStyle;
 import io.vertigo.shiny.components.dataviz.gauge.ShinyGaugeStyle;
@@ -102,8 +103,14 @@ public final class ShinyTheme {
 	}
 
 	private final ShinyToggleStyle toggleStyle = new ShinyToggleStyle();
+	private final ShinyListStyle listStyle = new ShinyListStyle();
 
 	public ShinyToggleStyle toggleStyle() {
 		return toggleStyle;
 	}
+
+	public ShinyListStyle listStyle() {
+		return listStyle;
+	}
+
 }

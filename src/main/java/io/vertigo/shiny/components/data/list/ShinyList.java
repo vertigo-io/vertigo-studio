@@ -3,19 +3,26 @@ package io.vertigo.shiny.components.data.list;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
-import io.vertigo.shiny.style.ShinyColor;
-import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyList implements ShinyComponent {
 	private String title;
 	private final List<Object> listItems = new ArrayList<>();
 	private ShinyListType listType = ShinyListType.UNORDERED; // Changed default
-	private ShinyColor itemColor = ShinyColors.BLUE_BRIGHT;
-	private ShinyColor bulletColor = ShinyColors.CYAN;
+	private ShinyListStyle listStyle;
 
 	public ShinyList() {
+		this.listStyle = Shiny.theme().listStyle();
+	}
+
+	public ShinyList style(final ShinyListStyle style) {
+		Assertion.check().isNotNull(style);
+		//---
+		this.listStyle = style;
+		return this;
 	}
 
 	public ShinyList title(final String text) {
@@ -43,16 +50,6 @@ public final class ShinyList implements ShinyComponent {
 		return this;
 	}
 
-	public ShinyList itemColor(final ShinyColor color) {
-		this.itemColor = color;
-		return this;
-	}
-
-	public ShinyList bulletColor(final ShinyColor color) {
-		this.bulletColor = color;
-		return this;
-	}
-
 	public void render(ShinyWriter writer) {
 		if (title != null) {
 			writer.println(title);
@@ -66,13 +63,13 @@ public final class ShinyList implements ShinyComponent {
 		for (final Object item : listItems) {
 			if (item instanceof String s) {
 				final String prefix = getPrefix(number);
-				writer.println(indent + bulletColor.fg(prefix) + itemColor.fg(s));
+				writer.println(indent + listStyle.bulletColor.fg(prefix) + listStyle.itemColor.fg(s));
 				if (listType == ShinyListType.ORDERED) { // Changed from NUMBERED
 					number++;
 				}
 			} else if (item instanceof ShinyList list) {
 				final String prefix = getPrefix(number);
-				writer.println(indent + bulletColor.fg(prefix) + itemColor.fg("Nested List:"));
+				writer.println(indent + listStyle.bulletColor.fg(prefix) + listStyle.itemColor.fg("Nested List:"));
 				list.print(writer, indentLevel + 1); // Recursive call for nested lists
 				if (listType == ShinyListType.ORDERED) { // Changed from NUMBERED
 					number++;
@@ -88,5 +85,4 @@ public final class ShinyList implements ShinyComponent {
 			case DASHED -> "- ";
 		};
 	}
-
 }
