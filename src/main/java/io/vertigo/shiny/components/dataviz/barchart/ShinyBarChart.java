@@ -3,20 +3,20 @@ package io.vertigo.shiny.components.dataviz.barchart;
 import java.util.Arrays;
 import java.util.List;
 
+import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
-import io.vertigo.shiny.style.ShinyColor;
-import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyBarChart implements ShinyComponent {
-	//	private final Shiny shiny;
 	private String barChartTitle;
 	private String[] barChartHeader;
 	private int[] barChartRow;
 	private ShinySortMode sortMode = ShinySortMode.NO;
 	private int maxBarLength; // Longueur de la barre en caractères
+	private ShinyBarChartStyle barChartStyle;
 
 	public ShinyBarChart() {
+		barChartStyle = Shiny.theme().barChartStyle();
 	}
 
 	public ShinyBarChart title(final String title) {
@@ -57,6 +57,11 @@ public final class ShinyBarChart implements ShinyComponent {
 		return this;
 	}
 
+	public ShinyBarChart style(final ShinyBarChartStyle style) {
+		this.barChartStyle = style;
+		return this;
+	}
+
 	private void sort() {
 		final Integer[] indices = new Integer[barChartHeader.length];
 		for (int i = 0; i < barChartHeader.length; i++) {
@@ -94,11 +99,6 @@ public final class ShinyBarChart implements ShinyComponent {
 		this.barChartRow = newRow;
 	}
 
-	/**
-	 * Affiche un diagramme en barres en console avec des carrés pleins pour la structure BarChart.
-	 * @param chart Structure contenant le titre, les étiquettes (header) et les valeurs (rows).
-	 * @param maxBarLength Longueur maximale d'une barre en caractères (par défaut : 50).
-	 */
 	public void render(final ShinyWriter writer) {
 		sort();
 
@@ -122,7 +122,7 @@ public final class ShinyBarChart implements ShinyComponent {
 			// Normaliser la longueur de la barre
 			final int barLength = (int) ((double) count / maxCount * maxBarLength);
 			final String bar = "█".repeat(Math.max(0, barLength)); // Utiliser le caractère carré plein █
-			final String coloredBar = COLORS[i % COLORS.length].fg(bar);
+			final String coloredBar = barChartStyle.barColors[i % barChartStyle.barColors.length].fg(bar);
 			String content = "%-" + maxLabelLength + "s | %-50s (%d)%n";
 			writer.print(String.format(content, category, coloredBar, count));
 		}
@@ -131,23 +131,4 @@ public final class ShinyBarChart implements ShinyComponent {
 				.println("----------------------------------------")
 				.println("Échelle : █ représente environ " + (maxCount / (double) maxBarLength) + " unités.");
 	}
-
-	private static ShinyColor[] COLORS = {
-			ShinyColors.BLUE,
-			ShinyColors.BLUE_BRIGHT };
-
-	//	private static String[] COLORS = {
-	//			ShinyColors.RED,
-	//			ShinyColors.GREEN,
-	//			ShinyColors.YELLOW,
-	//			ShinyColors.BLUE,
-	//			ShinyColors.MAGENTA,
-	//			ShinyColors.CYAN };
-	//	private static String[] COLORS = {
-	//			ShinyColors.RED_BRIGHT,
-	//			ShinyColors.GREEN_BRIGHT,
-	//			ShinyColors.YELLOW_BRIGHT,
-	//			ShinyColors.BLUE_BRIGHT,
-	//			ShinyColors.MAGENTA_BRIGHT,
-	//			ShinyColors.CYAN_BRIGHT };
 }

@@ -2,6 +2,7 @@ package io.vertigo.shiny.components.data;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
+import io.vertigo.shiny.components.data.json.ShinyJsonStyle;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyJsonTest {
@@ -55,12 +56,13 @@ public class ShinyJsonTest {
 				""";
 		Shiny.json()
 				.json(json)
-				.labelColor(ShinyColors.CYAN)
-				.numberColor(ShinyColors.MAGENTA)
-				.stringColor(ShinyColors.YELLOW)
-				.colonColor(ShinyColors.GREEN)
-				.bracketColor(ShinyColors.RED)
-				.bracesColor(ShinyColors.RED)
+				.style(new ShinyJsonStyle()
+						.labelColor(ShinyColors.CYAN)
+						.numberColor(ShinyColors.MAGENTA)
+						.stringColor(ShinyColors.YELLOW)
+						.colonColor(ShinyColors.GREEN)
+						.bracketColor(ShinyColors.RED)
+						.bracesColor(ShinyColors.RED))
 				.render(writer);
 		writer.println();
 	}
@@ -79,15 +81,16 @@ public class ShinyJsonTest {
 				""";
 		Shiny.json()
 				.json(json)
-				.labelColor(ShinyColors.BLUE_BRIGHT)
-				.stringColor(ShinyColors.GREEN_BRIGHT)
-				.numberColor(ShinyColors.CYAN_BRIGHT)
-				.bracesColor(ShinyColors.RED)
-				.bracketColor(ShinyColors.MAGENTA)
-				.colonColor(ShinyColors.YELLOW)
-				.commaColor(ShinyColors.WHITE)
-				.booleanColor(ShinyColors.GREEN)
-				.nullColor(ShinyColors.RED)
+				.style(new ShinyJsonStyle()
+						.labelColor(ShinyColors.BLUE_BRIGHT)
+						.stringColor(ShinyColors.GREEN_BRIGHT)
+						.numberColor(ShinyColors.CYAN_BRIGHT)
+						.bracesColor(ShinyColors.RED)
+						.bracketColor(ShinyColors.MAGENTA)
+						.colonColor(ShinyColors.YELLOW)
+						.commaColor(ShinyColors.WHITE)
+						.booleanColor(ShinyColors.GREEN)
+						.nullColor(ShinyColors.RED))
 				.render(writer);
 		writer.println();
 	}

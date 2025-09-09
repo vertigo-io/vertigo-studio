@@ -1,18 +1,26 @@
 package io.vertigo.shiny.components.dataviz.gauge;
 
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
-import io.vertigo.shiny.style.ShinyColor;
-import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyGauge implements ShinyComponent {
 	private String title;
 	private double value;
 	private double max = 100;
 	private int barLength = 50;
-	private ShinyColor gaugeColor = ShinyColors.GREEN;
+	private ShinyGaugeStyle gaugeStyle;
 
 	public ShinyGauge() {
+		this.gaugeStyle = Shiny.theme().gaugeStyle();
+	}
+
+	public ShinyGauge style(final ShinyGaugeStyle style) {
+		Assertion.check().isNotNull(style);
+		//---
+		this.gaugeStyle = style;
+		return this;
 	}
 
 	public ShinyGauge title(final String text) {
@@ -35,11 +43,6 @@ public final class ShinyGauge implements ShinyComponent {
 		return this;
 	}
 
-	public ShinyGauge color(final ShinyColor color) {
-		this.gaugeColor = color;
-		return this;
-	}
-
 	public void render(ShinyWriter writer) {
 		final double percentage;
 		if (value >= max) {
@@ -53,7 +56,7 @@ public final class ShinyGauge implements ShinyComponent {
 		final String gauge = new StringBuilder()
 				.append(title != null ? title + " " : "")
 				.append("[")
-				.append(gaugeColor.fg("█".repeat(filledLength) + "▒".repeat(barLength - filledLength)))
+				.append(gaugeStyle.gaugeColor.fg("█".repeat(filledLength) + "▒".repeat(barLength - filledLength)))
 				.append("] ")
 				.append(String.format("%.2f%%", percentage * 100))
 				.toString();

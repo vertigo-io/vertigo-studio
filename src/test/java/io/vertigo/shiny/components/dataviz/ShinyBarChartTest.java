@@ -2,6 +2,7 @@ package io.vertigo.shiny.components.dataviz;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
+import io.vertigo.shiny.components.dataviz.barchart.ShinyBarChartStyle;
 import io.vertigo.shiny.components.dataviz.barchart.ShinySortMode;
 import io.vertigo.shiny.style.ShinyColors;
 
@@ -102,6 +103,7 @@ public class ShinyBarChartTest {
 				.rows(values)
 				.sort(ShinySortMode.HEADER_DESC)
 				.length(30)
+				.style(new ShinyBarChartStyle().barColors(ShinyColors.MAGENTA, ShinyColors.MAGENTA_BRIGHT))
 				.render(writer);
 		writer.println();
 	}

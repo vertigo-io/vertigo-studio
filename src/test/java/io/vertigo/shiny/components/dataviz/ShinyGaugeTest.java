@@ -2,6 +2,7 @@ package io.vertigo.shiny.components.dataviz;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
+import io.vertigo.shiny.components.dataviz.gauge.ShinyGaugeStyle;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyGaugeTest {
@@ -24,13 +25,15 @@ public class ShinyGaugeTest {
 		Shiny.gauge()
 				.title("Memory Usage")
 				.value(75)
-				.color(ShinyColors.YELLOW)
+				.style(new ShinyGaugeStyle()
+						.color(ShinyColors.YELLOW))
 				.render(writer);
 
 		Shiny.gauge()
 				.title("Disk Usage")
 				.value(90)
-				.color(ShinyColors.RED)
+				.style(new ShinyGaugeStyle()
+						.color(ShinyColors.RED))
 				.render(writer);
 		writer.println();
 	}
@@ -41,21 +44,24 @@ public class ShinyGaugeTest {
 				.title("Battery Level")
 				.value(85)
 				.max(100)
-				.color(ShinyColors.GREEN)
+				.style(new ShinyGaugeStyle()
+						.color(ShinyColors.GREEN))
 				.render(writer);
 
 		Shiny.gauge()
 				.title("Progress (0-200)")
 				.value(120)
 				.max(200)
-				.color(ShinyColors.CYAN)
+				.style(new ShinyGaugeStyle()
+						.color(ShinyColors.CYAN))
 				.render(writer);
 
 		Shiny.gauge()
 				.title("Temperature (°C)")
 				.value(25)
 				.max(40)
-				.color(ShinyColors.MAGENTA)
+				.style(new ShinyGaugeStyle()
+						.color(ShinyColors.MAGENTA))
 				.render(writer);
 		writer.println();
 	}
@@ -66,14 +72,16 @@ public class ShinyGaugeTest {
 				.title("Short Gauge")
 				.value(60)
 				.length(20) // Shorter bar
-				.color(ShinyColors.BLUE)
+				.style(new ShinyGaugeStyle()
+						.color(ShinyColors.BLUE))
 				.render(writer);
 
 		Shiny.gauge()
 				.title("Long Gauge")
 				.value(40)
 				.length(80) // Longer bar
-				.color(ShinyColors.WHITE)
+				.style(new ShinyGaugeStyle()
+						.color(ShinyColors.WHITE))
 				.render(writer);
 		writer.println();
 	}
@@ -94,7 +102,8 @@ public class ShinyGaugeTest {
 				.title("Value > Max")
 				.value(120)
 				.max(100)
-				.color(ShinyColors.RED)
+				.style(new ShinyGaugeStyle()
+						.color(ShinyColors.RED))
 				.render(writer); // Should show full bar (capped at max)
 
 		Shiny.gauge()

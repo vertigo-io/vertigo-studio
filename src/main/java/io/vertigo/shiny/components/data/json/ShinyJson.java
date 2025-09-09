@@ -8,32 +8,19 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
-import io.vertigo.shiny.style.ShinyColor;
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyJson implements ShinyComponent {
-	//	private final Shiny shiny;
 	private String jsonString;
-
-	private ShinyColor labelColor = ShinyColors.BLUE;
-
-	private ShinyColor numberColor = ShinyColors.GREEN;
-	private ShinyColor stringColor = ShinyColors.RED;
-	private ShinyColor booleanColor = ShinyColors.BLACK_BRIGHT;
-	private ShinyColor nullColor = ShinyColors.BLACK_BRIGHT;
-
-	// : 
-	private ShinyColor colonColor = ShinyColors.YELLOW;
-
-	private ShinyColor commaColor = ShinyColors.WHITE;
-	private ShinyColor bracketColor = ShinyColors.WHITE;
-	private ShinyColor bracesColor = ShinyColors.WHITE;
+	private ShinyJsonStyle jsonStyle;
 
 	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
 	public ShinyJson() {
+		jsonStyle = Shiny.theme().jsonStyle();
 	}
 
 	public ShinyJson json(final String json) {
@@ -41,48 +28,10 @@ public final class ShinyJson implements ShinyComponent {
 		return this;
 	}
 
-	public ShinyJson labelColor(final ShinyColor color) {
-		this.labelColor = color;
-		return this;
-	}
-
-	public ShinyJson numberColor(final ShinyColor color) {
-		this.numberColor = color;
-		return this;
-	}
-
-	public ShinyJson stringColor(final ShinyColor color) {
-		this.stringColor = color;
-		return this;
-	}
-
-	public ShinyJson colonColor(final ShinyColor color) {
-		this.colonColor = color;
-		return this;
-	}
-
-	public ShinyJson bracesColor(final ShinyColor color) {
-		this.bracesColor = color;
-		return this;
-	}
-
-	public ShinyJson bracketColor(final ShinyColor color) {
-		this.bracketColor = color;
-		return this;
-	}
-
-	public ShinyJson commaColor(final ShinyColor color) {
-		this.commaColor = color;
-		return this;
-	}
-
-	public ShinyJson booleanColor(final ShinyColor color) {
-		this.booleanColor = color;
-		return this;
-	}
-
-	public ShinyJson nullColor(final ShinyColor color) {
-		this.nullColor = color;
+	public ShinyJson style(final ShinyJsonStyle style) {
+		Assertion.check().isNotNull(style);
+		//---
+		this.jsonStyle = style;
 		return this;
 	}
 
@@ -108,34 +57,34 @@ public final class ShinyJson implements ShinyComponent {
 	}
 
 	private void printObject(final ShinyWriter writer, final JsonNode node, final String indent, final boolean isLast) {
-		writer.println(bracesColor.fg("{"));
+		writer.println(jsonStyle.bracesColor.fg("{"));
 		final Iterator<Entry<String, JsonNode>> fields = node.fields();
 		while (fields.hasNext()) {
 			final Entry<String, JsonNode> field = fields.next();
 			final boolean lastField = !fields.hasNext();
 			writer.print(indent + "  "
-					+ labelColor.fg("\"" + field.getKey() + "\"")
-					+ colonColor.fg(":") + " ");
+					+ jsonStyle.labelColor.fg("\"" + field.getKey() + "\"")
+					+ jsonStyle.colonColor.fg(":") + " ");
 			printNode(writer, field.getValue(), indent + "  ", lastField);
 		}
-		writer.print(indent + bracesColor.fg("}"));
+		writer.print(indent + jsonStyle.bracesColor.fg("}"));
 		if (!isLast) {
-			writer.print(commaColor.fg(","));
+			writer.print(jsonStyle.commaColor.fg(","));
 		}
 		writer.println();
 	}
 
 	private void printArray(final ShinyWriter writer, JsonNode node, final String indent, final boolean isLast) {
-		writer.println(bracketColor.fg("["));
+		writer.println(jsonStyle.bracketColor.fg("["));
 		for (int i = 0; i < node.size(); i++) {
 			final JsonNode element = node.get(i);
 			final boolean lastElement = (i == node.size() - 1);
 			writer.print(indent + "  ");
 			printNode(writer, element, indent + "  ", lastElement);
 		}
-		writer.print(indent + bracketColor.fg("]"));
+		writer.print(indent + jsonStyle.bracketColor.fg("]"));
 		if (!isLast) {
-			writer.print(commaColor.fg(","));
+			writer.print(jsonStyle.commaColor.fg(","));
 		}
 		writer.println();
 	}
@@ -143,19 +92,19 @@ public final class ShinyJson implements ShinyComponent {
 	private void printValue(final ShinyWriter writer, final JsonNode node, final String indent, final boolean isLast) {
 		final String display;
 		if (node.isTextual()) {
-			display = stringColor.fg("\"" + node.asText() + "\"");
+			display = jsonStyle.stringColor.fg("\"" + node.asText() + "\"");
 		} else if (node.isNumber()) {
-			display = numberColor.fg(node.asText());
+			display = jsonStyle.numberColor.fg(node.asText());
 		} else if (node.isBoolean()) {
-			display = booleanColor.fg(node.asText());
+			display = jsonStyle.booleanColor.fg(node.asText());
 		} else if (node.isNull()) {
-			display = nullColor.fg("null");
+			display = jsonStyle.nullColor.fg("null");
 		} else {
 			display = ShinyColors.RED.bg("UNKNOW");
 		}
 		writer.print(display);
 		if (!isLast) {
-			writer.print(commaColor.fg(","));
+			writer.print(jsonStyle.commaColor.fg(","));
 		}
 		writer.println();
 	}

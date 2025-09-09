@@ -101,7 +101,7 @@ public final class Shiny {
 	}
 
 	public static ShinyMarkDown markdown() {
-		return new ShinyMarkDown(INSTANCE);
+		return new ShinyMarkDown();
 	}
 
 	public static ShinyParagraph paragraph() {
