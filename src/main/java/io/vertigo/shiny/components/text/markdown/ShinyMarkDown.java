@@ -10,22 +10,18 @@ import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 
 public final class ShinyMarkDown implements ShinyComponent {
-	//private final Shiny shiny;
-	private String markdownText;
+	private String _markdownText;
 
-	public ShinyMarkDown(final Shiny shiny) {
-		Assertion.check().isNotNull(shiny);
-		//---
-		//this.shiny = shiny;
+	public ShinyMarkDown() {
 	}
 
 	public ShinyMarkDown fromFile(final String path) {
 		try {
-			this.markdownText = Files.readString(Path.of(path));
+			this._markdownText = Files.readString(Path.of(path));
 		} catch (final IOException e) {
 			throw new RuntimeException("Error reading file: " + path, e);
 		}
@@ -33,19 +29,19 @@ public final class ShinyMarkDown implements ShinyComponent {
 	}
 
 	public ShinyMarkDown fromText(final String text) {
-		this.markdownText = text;
+		this._markdownText = text;
 		return this;
 	}
 
 	@Override
-	public void render() {
-		Assertion.check().isNotNull(markdownText, "Markdown text not set. Use fromFile() or fromText().");
+	public void render(final ShinyWriter writer) {
+		Assertion.check().isNotNull(_markdownText, "Markdown text not set. Use fromFile() or fromText().");
 		//---
 		final Parser parser = Parser.builder()
 				.extensions(Collections.singletonList(TablesExtension.create()))
 				.build();
-		final Node document = parser.parse(markdownText);
-		document.accept(new ShinyMarkdownVisitor());
+		final Node document = parser.parse(_markdownText);
+		document.accept(new ShinyMarkdownVisitor(writer));
 	}
 
 }
