@@ -8,7 +8,7 @@ import io.vertigo.shiny.style.ShinyColors;
 public final class ShinyToggle implements ShinyComponent {
 	private String toggleLabel;
 	private boolean toggleValue;
-	private ShinyToggleStyle toggleStyle = ShinyToggleStyle.TOGGLE;
+	private ShinyToggleType toggleType = ShinyToggleType.TOGGLE;
 	private ShinyColor onColor = ShinyColors.GREEN;
 	private ShinyColor offColor = ShinyColors.RED;
 	private String onText = "ON";
@@ -28,8 +28,8 @@ public final class ShinyToggle implements ShinyComponent {
 		return this;
 	}
 
-	public ShinyToggle style(final ShinyToggleStyle style) {
-		this.toggleStyle = style;
+	public ShinyToggle type(final ShinyToggleType type) {
+		this.toggleType = type;
 		return this;
 	}
 
@@ -59,7 +59,7 @@ public final class ShinyToggle implements ShinyComponent {
 	}
 
 	public void render(final ShinyWriter writer) {
-		final String icon = toggleValue ? toggleStyle.getOnIcon() : toggleStyle.getOffIcon();
+		final String icon = toggleValue ? toggleType.getOnIcon() : toggleType.getOffIcon();
 		final ShinyColor color = toggleValue ? onColor : offColor;
 		final String text = showText ? (toggleValue ? onText : offText) : "";
 
@@ -107,7 +107,7 @@ public final class ShinyToggle implements ShinyComponent {
 	//	}
 	//
 	//	// Méthode utilitaire pour afficher plusieurs toggles alignés
-	//	public static void printMultiple(final java.util.Map<String, Boolean> toggles, final ToggleStyle toggleStyle) {
+	//	public static void printMultiple(final java.util.Map<String, Boolean> toggles, final ToggleStyle toggleType) {
 	//		Assertion.check().isNotNull(toggles);
 	//		//---
 	//
@@ -128,7 +128,7 @@ public final class ShinyToggle implements ShinyComponent {
 	//			new ShinyToggle(shiny)
 	//					.label(paddedLabel)
 	//					.value(toggleValue)
-	//					.style(toggleStyle)
+	//					.style(toggleType)
 	//					.print();
 	//		});
 	//	}

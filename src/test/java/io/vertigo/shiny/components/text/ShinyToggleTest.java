@@ -2,7 +2,7 @@ package io.vertigo.shiny.components.text;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.text.toggle.ShinyToggleStyle;
+import io.vertigo.shiny.components.text.toggle.ShinyToggleType;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyToggleTest {
@@ -44,37 +44,37 @@ public class ShinyToggleTest {
 		Shiny.toggle()
 				.label("Classic Style")
 				.value(true)
-				.style(ShinyToggleStyle.CLASSIC)
+				.type(ShinyToggleType.CLASSIC)
 				.render(writer);
 
 		Shiny.toggle()
 				.label("Switch Style")
 				.value(false)
-				.style(ShinyToggleStyle.SWITCH)
+				.type(ShinyToggleType.SWITCH)
 				.render(writer);
 
 		Shiny.toggle()
 				.label("Light Bulb")
 				.value(true)
-				.style(ShinyToggleStyle.LIGHT)
+				.type(ShinyToggleType.LIGHT)
 				.render(writer);
 
 		Shiny.toggle()
 				.label("Battery Level")
 				.value(false)
-				.style(ShinyToggleStyle.BATTERY)
+				.type(ShinyToggleType.BATTERY)
 				.render(writer);
 
 		Shiny.toggle()
 				.label("Server Status")
 				.value(true)
-				.style(ShinyToggleStyle.STATUS)
+				.type(ShinyToggleType.STATUS)
 				.render(writer);
 
 		Shiny.toggle()
 				.label("User Rating")
 				.value(false)
-				.style(ShinyToggleStyle.THUMBS)
+				.type(ShinyToggleType.THUMBS)
 				.render(writer);
 
 		writer.println();
@@ -95,20 +95,20 @@ public class ShinyToggleTest {
 				.value(false)
 				.onText("ENABLED")
 				.offText("DISABLED")
-				.style(ShinyToggleStyle.ARROW)
+				.type(ShinyToggleType.ARROW)
 				.render(writer);
 
 		Shiny.toggle()
 				.label("No Text")
 				.value(true)
 				.showText(false)
-				.style(ShinyToggleStyle.CHECK)
+				.type(ShinyToggleType.CHECK)
 				.render(writer);
 
 		Shiny.toggle()
 				.label("With Box")
 				.value(true)
-				.style(ShinyToggleStyle.STAR)
+				.type(ShinyToggleType.STAR)
 				//			.showBox(true)
 				.render(writer);
 
@@ -126,7 +126,7 @@ public class ShinyToggleTest {
 			settings.put("Auto-update", true);
 			settings.put("Analytics", false);
 	
-			ShinyToggle.printMultiple(Shiny.getInstance(), settings, ShinyToggleStyle.TOGGLE);
+			ShinyToggle.printMultiple(Shiny.getInstance(), settings, ShinyToggleType.TOGGLE);
 			writer.println();
 		}
 	
@@ -142,7 +142,7 @@ public class ShinyToggleTest {
 			systemStatus.put("Database", false);
 			systemStatus.put("Cache", true);
 	
-			ShinyToggle.printDashboard(Shiny.getInstance(), "System Health Monitor", systemStatus, ShinyToggleStyle.STATUS);
+			ShinyToggle.printDashboard(Shiny.getInstance(), "System Health Monitor", systemStatus, ShinyToggleType.STATUS);
 	
 			// Feature Flags Dashboard
 			final Map<String, Boolean> featureFlags = new LinkedHashMap<>();
@@ -152,7 +152,7 @@ public class ShinyToggleTest {
 			featureFlags.put("Debug Mode", false);
 			featureFlags.put("Maintenance", false);
 	
-			ShinyToggle.printDashboard(Shiny.getInstance(), "Feature Flags", featureFlags, ShinyToggleStyle.SWITCH);
+			ShinyToggle.printDashboard(Shiny.getInstance(), "Feature Flags", featureFlags, ShinyToggleType.SWITCH);
 	
 			// User Preferences Dashboard
 			final Map<String, Boolean> userPrefs = new LinkedHashMap<>();
@@ -162,7 +162,7 @@ public class ShinyToggleTest {
 			userPrefs.put("Weekly Reports", true);
 			userPrefs.put("Security Alerts", true);
 	
-			ShinyToggle.printDashboard(Shiny.getInstance(), "User Preferences", userPrefs, ShinyToggleStyle.CHECK);
+			ShinyToggle.printDashboard(Shiny.getInstance(), "User Preferences", userPrefs, ShinyToggleType.CHECK);
 		}
 	
 		private static void testEdgeCases() {
@@ -171,27 +171,27 @@ public class ShinyToggleTest {
 			// Toggle without label
 			Shiny.toggle()
 					.value(true)
-					.style(ShinyToggleStyle.CLASSIC)
+					.style(ShinyToggleType.CLASSIC)
 					.print();
 	
 			// Toggle with empty label
 			Shiny.toggle()
 					.label("")
 					.value(false)
-					.style(ShinyToggleStyle.SWITCH)
+					.style(ShinyToggleType.SWITCH)
 					.print();
 	
 			// Toggle with very long label
 			Shiny.toggle()
 					.label("This is a very long label to test text wrapping and alignment")
 					.value(true)
-					.style(ShinyToggleStyle.LIGHT)
+					.style(ShinyToggleType.LIGHT)
 					.showBox(true)
 					.print();
 	
 			// Multiple styles in sequence
 			writer.println("\nAll styles showcase:");
-			for (ShinyToggleStyle style : ShinyToggleStyle.values()) {
+			for (ShinyToggleType style : ShinyToggleType.values()) {
 				Shiny.toggle()
 						.label(style.name())
 						.value(true)
@@ -200,7 +200,7 @@ public class ShinyToggleTest {
 			}
 	
 			writer.println("\nAll styles OFF:");
-			for (ShinyToggleStyle style : ShinyToggleStyle.values()) {
+			for (ShinyToggleType style : ShinyToggleType.values()) {
 				Shiny.toggle()
 						.label(style.name())
 						.value(false)

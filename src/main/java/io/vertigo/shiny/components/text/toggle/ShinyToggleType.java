@@ -1,6 +1,6 @@
 package io.vertigo.shiny.components.text.toggle;
 
-public enum ShinyToggleStyle {
+public enum ShinyToggleType {
 	TOGGLE("◉", "○"),
 	CHECK("☑", "☐"),
 	SWITCH("🔛", "🔴"),
@@ -15,7 +15,7 @@ public enum ShinyToggleStyle {
 	private final String onIcon;
 	private final String offIcon;
 
-	ShinyToggleStyle(final String onIcon, final String offIcon) {
+	ShinyToggleType(final String onIcon, final String offIcon) {
 		this.onIcon = onIcon;
 		this.offIcon = offIcon;
 	}

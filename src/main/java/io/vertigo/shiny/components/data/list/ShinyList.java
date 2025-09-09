@@ -11,7 +11,7 @@ import io.vertigo.shiny.style.ShinyColors;
 public final class ShinyList implements ShinyComponent {
 	private String title;
 	private final List<Object> listItems = new ArrayList<>();
-	private ShinyListStyle style = ShinyListStyle.UNORDERED; // Changed default
+	private ShinyListType listType = ShinyListType.UNORDERED; // Changed default
 	private ShinyColor itemColor = ShinyColors.BLUE_BRIGHT;
 	private ShinyColor bulletColor = ShinyColors.CYAN;
 
@@ -38,13 +38,8 @@ public final class ShinyList implements ShinyComponent {
 		return this;
 	}
 
-	public ShinyList style(final ShinyListStyle listStyle) {
-		this.style = listStyle;
-		return this;
-	}
-
-	public ShinyList ordered() {
-		this.style = ShinyListStyle.ORDERED;
+	public ShinyList type(final ShinyListType type) {
+		this.listType = type;
 		return this;
 	}
 
@@ -72,14 +67,14 @@ public final class ShinyList implements ShinyComponent {
 			if (item instanceof String s) {
 				final String prefix = getPrefix(number);
 				writer.println(indent + bulletColor.fg(prefix) + itemColor.fg(s));
-				if (style == ShinyListStyle.ORDERED) { // Changed from NUMBERED
+				if (listType == ShinyListType.ORDERED) { // Changed from NUMBERED
 					number++;
 				}
 			} else if (item instanceof ShinyList list) {
 				final String prefix = getPrefix(number);
 				writer.println(indent + bulletColor.fg(prefix) + itemColor.fg("Nested List:"));
 				list.print(writer, indentLevel + 1); // Recursive call for nested lists
-				if (style == ShinyListStyle.ORDERED) { // Changed from NUMBERED
+				if (listType == ShinyListType.ORDERED) { // Changed from NUMBERED
 					number++;
 				}
 			}
@@ -87,7 +82,7 @@ public final class ShinyList implements ShinyComponent {
 	}
 
 	private String getPrefix(final int number) {
-		return switch (style) {
+		return switch (listType) {
 			case UNORDERED -> "• ";
 			case ORDERED -> number + ". ";
 			case DASHED -> "- ";

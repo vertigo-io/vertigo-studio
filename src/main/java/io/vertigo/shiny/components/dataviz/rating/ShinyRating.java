@@ -12,7 +12,7 @@ public final class ShinyRating implements ShinyComponent {
 	private double value = 0;
 	private ShinyRatingScale scale = ShinyRatingScale.SCALE_5;
 	private int customMaxValue = -1; // -1 means use scale
-	private ShinyRatingStyle style = ShinyRatingStyle.STAR;
+	private ShinyRatingType ratingType = ShinyRatingType.STAR;
 	private ShinyColor filledColor = ShinyColors.YELLOW;
 	private ShinyColor emptyColor = ShinyColors.WHITE;
 	private boolean showValue = true;
@@ -45,8 +45,8 @@ public final class ShinyRating implements ShinyComponent {
 		return this;
 	}
 
-	public ShinyRating style(final ShinyRatingStyle ratingStyle) {
-		this.style = ratingStyle;
+	public ShinyRating type(final ShinyRatingType type) {
+		this.ratingType = type;
 		return this;
 	}
 
@@ -138,13 +138,13 @@ public final class ShinyRating implements ShinyComponent {
 			if (allowHalfRating && clampedValue >= i - 0.5 && clampedValue < i) {
 				// Half rating (for now, use filled icon with different color)
 				rating.append(ShinyEffects.DIM.apply(
-						filledColor.fg(style.getFilledIcon())));
+						filledColor.fg(ratingType.getFilledIcon())));
 			} else if (clampedValue >= i) {
 				// Filled
-				rating.append(filledColor.fg(style.getFilledIcon()));
+				rating.append(filledColor.fg(ratingType.getFilledIcon()));
 			} else {
 				// Empty
-				rating.append(emptyColor.fg(style.getEmptyIcon()));
+				rating.append(emptyColor.fg(ratingType.getEmptyIcon()));
 			}
 		}
 	}
@@ -155,8 +155,8 @@ public final class ShinyRating implements ShinyComponent {
 		final int filledLength = (int) (barLength * percentage);
 
 		rating.append("[")
-				.append(filledColor.fg(style.getFilledIcon().repeat(filledLength)))
-				.append(emptyColor.fg(style.getEmptyIcon().repeat(barLength - filledLength)))
+				.append(filledColor.fg(ratingType.getFilledIcon().repeat(filledLength)))
+				.append(emptyColor.fg(ratingType.getEmptyIcon().repeat(barLength - filledLength)))
 				.append("]");
 	}
 
@@ -182,7 +182,7 @@ public final class ShinyRating implements ShinyComponent {
 	//
 	//	// Utility method to display multiple ratings aligned
 	//	public static void printMultiple(final Shiny shiny, final java.util.Map<String, Double> ratings,
-	//			final RatingStyle style, final RatingScale scale) {
+	//			final RatingStyle ratingType, final RatingScale scale) {
 	//		Assertion.check().isNotNull(shiny);
 	//		Assertion.check().isNotNull(ratings);
 	//		//---
@@ -204,7 +204,7 @@ public final class ShinyRating implements ShinyComponent {
 	//			new ShinyRating(shiny)
 	//					.label(paddedLabel)
 	//					.value(value)
-	//					.style(style)
+	//					.style(ratingType)
 	//					.scale(scale)
 	//					.print();
 	//		});
@@ -213,7 +213,7 @@ public final class ShinyRating implements ShinyComponent {
 	//	// Utility method to create a rating dashboard
 	//	public static void printDashboard(final Shiny shiny, final String title,
 	//			final java.util.Map<String, Double> ratings,
-	//			final RatingStyle style, final RatingScale scale) {
+	//			final RatingStyle ratingType, final RatingScale scale) {
 	//		Assertion.check().isNotNull(shiny);
 	//		Assertion.check().isNotNull(ratings);
 	//		//---
@@ -223,14 +223,14 @@ public final class ShinyRating implements ShinyComponent {
 	//			shiny.getWriter().println("─".repeat(title.length()));
 	//		}
 	//
-	//		printMultiple(shiny, ratings, style, scale);
+	//		printMultiple(shiny, ratings, ratingType, scale);
 	//		shiny.getWriter().println();
 	//	}
 	//
 	//	// Utility method to create a summary rating
 	//	public static void printSummary(final Shiny shiny, final String title,
 	//			final java.util.Map<String, Double> ratings,
-	//			final RatingStyle style, final RatingScale scale) {
+	//			final RatingStyle ratingType, final RatingScale scale) {
 	//		Assertion.check().isNotNull(shiny);
 	//		Assertion.check().isNotNull(ratings);
 	//		//---
@@ -247,13 +247,13 @@ public final class ShinyRating implements ShinyComponent {
 	//				.orElse(0.0);
 	//
 	//		// Print individual ratings
-	//		printDashboard(shiny, title, ratings, style, scale);
+	//		printDashboard(shiny, title, ratings, ratingType, scale);
 	//
 	//		// Print average
 	//		shiny.getWriter().println(ShinyColors.BOLD + "Average Rating:" + ShinyColors.RESET);
 	//		new ShinyRating(shiny)
 	//				.value(average)
-	//				.style(style)
+	//				.style(ratingType)
 	//				.scale(scale)
 	//				.showValue(true)
 	//				.showPercentage(true)

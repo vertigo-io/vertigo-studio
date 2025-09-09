@@ -1,6 +1,6 @@
 package io.vertigo.shiny.components.data.list;
 
-public enum ShinyListStyle {
+public enum ShinyListType {
 	UNORDERED,
 	ORDERED,
 	DASHED

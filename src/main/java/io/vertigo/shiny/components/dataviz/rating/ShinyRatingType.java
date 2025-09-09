@@ -1,6 +1,6 @@
 package io.vertigo.shiny.components.dataviz.rating;
 
-public enum ShinyRatingStyle {
+public enum ShinyRatingType {
 	STAR("★", "☆"),
 	CIRCLE("●", "○"),
 	SQUARE("■", "□"),
@@ -17,7 +17,7 @@ public enum ShinyRatingStyle {
 	private final String filledIcon;
 	private final String emptyIcon;
 
-	ShinyRatingStyle(final String filledIcon, final String emptyIcon) {
+	ShinyRatingType(final String filledIcon, final String emptyIcon) {
 		this.filledIcon = filledIcon;
 		this.emptyIcon = emptyIcon;
 	}
