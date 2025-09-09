@@ -17,7 +17,6 @@ import java.util.Scanner;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.data.table.ShinyBorder;
 import io.vertigo.shiny.components.dataviz.barchart.ShinySortMode;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatus.StatusType;
 import io.vertigo.shiny.components.input.multiselection.ShinyMultiSelection;
@@ -102,7 +101,6 @@ public class ShinyAllComponentsTest {
 				.month(Month.JULY.getValue())
 				.locale(Locale.FRENCH)
 				.highlight(LocalDate.of(2024, Month.JULY, 14))
-				.border(ShinyBorder.Normal)
 				.render(writer);
 		waitForEnter(writer);
 	}

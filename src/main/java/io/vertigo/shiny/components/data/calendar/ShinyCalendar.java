@@ -8,23 +8,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
-import io.vertigo.shiny.components.data.table.ShinyBorder;
+import io.vertigo.shiny.components.data.table.ShinyTableStyle;
 
 public final class ShinyCalendar implements ShinyComponent {
 	private Locale calendarLocale;
 	private final List<LocalDate> highlightedDates = new ArrayList<>();
 	private int year;
 	private int month;
-	private ShinyBorder calendarBorder = ShinyBorder.Normal;
+	private ShinyTableStyle calendarStyle;
 
 	public ShinyCalendar() {
+		this.calendarStyle = Shiny.theme().calendarStyle();
 		this.calendarLocale = Shiny.theme().locale();
 		final LocalDate now = LocalDate.now();
 		this.year = now.getYear();
 		this.month = now.getMonthValue();
+	}
+
+	public ShinyCalendar style(final ShinyTableStyle style) {
+		Assertion.check().isNotNull(style);
+		//---
+		this.calendarStyle = style;
+		return this;
 	}
 
 	public ShinyCalendar year(final int calendarYear) {
@@ -34,11 +43,6 @@ public final class ShinyCalendar implements ShinyComponent {
 
 	public ShinyCalendar locale(final Locale locale) {
 		this.calendarLocale = locale;
-		return this;
-	}
-
-	public ShinyCalendar border(final ShinyBorder border) {
-		this.calendarBorder = border;
 		return this;
 	}
 
@@ -93,9 +97,7 @@ public final class ShinyCalendar implements ShinyComponent {
 		Shiny.table()
 				.title(String.format("%s %d", monthName, year))
 				.header(days)
-				.beginStyle()
-				.border(calendarBorder)
-				.endStyle()
+				.style(calendarStyle)
 				.rows(rows)
 				.render(writer);
 	}

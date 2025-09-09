@@ -59,6 +59,7 @@ public final class ShinyTheme {
 	}
 
 	private final ShinyTableStyle tableStyle = new ShinyTableStyle();
+	private final ShinyTableStyle calendarStyle = new ShinyTableStyle();
 	private final ShinyBarChartStyle barChartStyle = new ShinyBarChartStyle();
 	private final ShinyJsonStyle jsonStyle = new ShinyJsonStyle();
 	private final ShinyGaugeStyle gaugeStyle = new ShinyGaugeStyle();
@@ -87,5 +88,9 @@ public final class ShinyTheme {
 
 	public ShinyStatusStyle statusStyle() {
 		return statusStyle;
+	}
+
+	public ShinyTableStyle calendarStyle() {
+		return calendarStyle;
 	}
 }
