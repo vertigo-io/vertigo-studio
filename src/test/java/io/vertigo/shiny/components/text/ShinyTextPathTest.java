@@ -2,6 +2,7 @@ package io.vertigo.shiny.components.text;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
+import io.vertigo.shiny.components.text.textpath.ShinyTextPathStyle;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyTextPathTest {
@@ -34,15 +35,17 @@ public class ShinyTextPathTest {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Custom Colors ---"));
 		Shiny.textPath()
 				.path("/app/config/settings.json")
-				.rootColor(ShinyColors.RED)
-				.nodeColor(ShinyColors.YELLOW)
-				.leafColor(ShinyColors.GREEN)
+				.style(new ShinyTextPathStyle()
+						.rootColor(ShinyColors.RED)
+						.nodeColor(ShinyColors.YELLOW)
+						.leafColor(ShinyColors.GREEN))
 				.render(writer);
 		Shiny.textPath()
 				.path("/var/log/syslog")
-				.rootColor(ShinyColors.MAGENTA)
-				.nodeColor(ShinyColors.CYAN)
-				.leafColor(ShinyColors.WHITE)
+				.style(new ShinyTextPathStyle()
+						.rootColor(ShinyColors.MAGENTA)
+						.nodeColor(ShinyColors.CYAN)
+						.leafColor(ShinyColors.WHITE))
 				.render(writer);
 		writer.println();
 	}
@@ -52,16 +55,18 @@ public class ShinyTextPathTest {
 		Shiny.textPath()
 				.path("data.csv")
 				.separator(".")
-				.rootColor(ShinyColors.WHITE)
-				.nodeColor(ShinyColors.BLUE)
-				.leafColor(ShinyColors.RED)
+				.style(new ShinyTextPathStyle()
+						.rootColor(ShinyColors.WHITE)
+						.nodeColor(ShinyColors.BLUE)
+						.leafColor(ShinyColors.RED))
 				.render(writer);
 		Shiny.textPath()
 				.path("item1->item2->item3")
 				.separator("->")
-				.rootColor(ShinyColors.WHITE)
-				.nodeColor(ShinyColors.GREEN)
-				.leafColor(ShinyColors.YELLOW)
+				.style(new ShinyTextPathStyle()
+						.rootColor(ShinyColors.WHITE)
+						.nodeColor(ShinyColors.GREEN)
+						.leafColor(ShinyColors.YELLOW))
 				.render(writer);
 		writer.println();
 	}
@@ -70,12 +75,14 @@ public class ShinyTextPathTest {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Separator Color ---"));
 		Shiny.textPath()
 				.path("/path/to/my/file.txt")
-				.separatorColor(ShinyColors.RED)
+				.style(new ShinyTextPathStyle()
+						.separatorColor(ShinyColors.RED))
 				.render(writer);
 		Shiny.textPath()
 				.path("C:\\Users\\Admin\\Desktop")
 				.separator("\\")
-				.separatorColor(ShinyColors.BLUE)
+				.style(new ShinyTextPathStyle()
+						.separatorColor(ShinyColors.BLUE))
 				.render(writer);
 		writer.println();
 	}

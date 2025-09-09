@@ -4,9 +4,7 @@ import static io.vertigo.shiny.components.data.tree.ShinyIcon.FILE;
 import static io.vertigo.shiny.components.data.tree.ShinyIcon.FOLDER_OPEN;
 import static io.vertigo.shiny.style.ShinyColors.BLUE_BRIGHT;
 import static io.vertigo.shiny.style.ShinyColors.CYAN;
-import static io.vertigo.shiny.style.ShinyColors.GREEN;
 import static io.vertigo.shiny.style.ShinyColors.MAGENTA;
-import static io.vertigo.shiny.style.ShinyColors.RED;
 import static io.vertigo.shiny.style.ShinyColors.YELLOW;
 
 import java.time.LocalDate;
@@ -241,9 +239,6 @@ public class ShinyAllComponentsTest {
 		//---
 		Shiny.textPath()
 				.path("C:/home/user/documents/report.pdf")
-				.rootColor(RED)
-				.nodeColor(YELLOW)
-				.leafColor(GREEN)
 				.render(writer);
 		waitForEnter(writer);
 	}

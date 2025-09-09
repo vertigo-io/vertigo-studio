@@ -10,6 +10,7 @@ import io.vertigo.shiny.components.dataviz.barchart.ShinyBarChartStyle;
 import io.vertigo.shiny.components.dataviz.gauge.ShinyGaugeStyle;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatusStyle;
 import io.vertigo.shiny.components.text.figlet.ShinyFigletStyle;
+import io.vertigo.shiny.components.text.textpath.ShinyTextPathStyle;
 
 public final class ShinyTheme {
 	private boolean asciiTheme = false; //vs unicode
@@ -65,6 +66,7 @@ public final class ShinyTheme {
 	private final ShinyGaugeStyle gaugeStyle = new ShinyGaugeStyle();
 	private final ShinyFigletStyle figletStyle = new ShinyFigletStyle();
 	private final ShinyStatusStyle statusStyle = new ShinyStatusStyle();
+	private final ShinyTextPathStyle textPathStyle = new ShinyTextPathStyle();
 
 	public ShinyTableStyle tableStyle() {
 		return tableStyle;
@@ -92,5 +94,9 @@ public final class ShinyTheme {
 
 	public ShinyTableStyle calendarStyle() {
 		return calendarStyle;
+	}
+
+	public ShinyTextPathStyle textPathStyle() {
+		return textPathStyle;
 	}
 }

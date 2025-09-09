@@ -4,20 +4,25 @@ import java.nio.file.Path;
 import java.util.regex.Pattern; // New import
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColor;
-import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyTextPath implements ShinyComponent {
 	private String textPath;
 	private String separator = "/";
-	private ShinyColor rootColor = ShinyColors.GREEN;
-	private ShinyColor nodeColor = ShinyColors.YELLOW;
-	private ShinyColor leafColor = ShinyColors.BLUE_BRIGHT;
-	private ShinyColor separatorColor = ShinyColors.RED; // Default color
+	private ShinyTextPathStyle textPathStyle;
 
 	public ShinyTextPath() {
+		textPathStyle = Shiny.theme().textPathStyle();
+	}
+
+	public ShinyTextPath style(final ShinyTextPathStyle style) {
+		Assertion.check().isNotNull(style);
+		//---
+		this.textPathStyle = style;
+		return this;
 	}
 
 	public ShinyTextPath path(final Path path) {
@@ -35,26 +40,6 @@ public final class ShinyTextPath implements ShinyComponent {
 		return this;
 	}
 
-	public ShinyTextPath rootColor(final ShinyColor color) {
-		this.rootColor = color;
-		return this;
-	}
-
-	public ShinyTextPath nodeColor(final ShinyColor color) {
-		this.nodeColor = color;
-		return this;
-	}
-
-	public ShinyTextPath leafColor(final ShinyColor color) {
-		this.leafColor = color;
-		return this;
-	}
-
-	public ShinyTextPath separatorColor(final ShinyColor color) {
-		this.separatorColor = color;
-		return this;
-	}
-
 	public void render(final ShinyWriter writer) {
 		Assertion.check().isNotBlank(textPath, "Path cannot be blank");
 		//---
@@ -64,7 +49,7 @@ public final class ShinyTextPath implements ShinyComponent {
 		final boolean relative = textPath.startsWith(separator);
 
 		if (relative) {
-			coloredPath.append(rootColor.fg(separator));
+			coloredPath.append(textPathStyle.rootColor.fg(separator));
 		}
 		for (int i = 0; i < parts.length; i++) {
 			final String part = parts[i];
@@ -74,20 +59,20 @@ public final class ShinyTextPath implements ShinyComponent {
 
 			final ShinyColor color;
 			if (i == parts.length - 1) { // Leaf
-				color = leafColor;
+				color = textPathStyle.leafColor;
 			} else if (!relative && i == 0) {// Root
-				color = rootColor;
+				color = textPathStyle.rootColor;
 			} else { //node
-				color = nodeColor;
+				color = textPathStyle.nodeColor;
 			}
 			coloredPath.append(color.fg(part));
 
 			if (i < parts.length - 1) {
 				final ShinyColor sepColor;
 				if (i == 0 && !relative && i == 0) {
-					sepColor = rootColor;
+					sepColor = textPathStyle.rootColor;
 				} else {
-					sepColor = separatorColor;
+					sepColor = textPathStyle.separatorColor;
 				}
 				coloredPath.append(sepColor.fg(separator));
 			}
