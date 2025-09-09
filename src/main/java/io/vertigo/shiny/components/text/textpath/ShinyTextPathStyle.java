@@ -5,10 +5,10 @@ import io.vertigo.shiny.style.ShinyColor;
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyTextPathStyle {
-	public ShinyColor rootColor = ShinyColors.GREEN;
-	public ShinyColor nodeColor = ShinyColors.YELLOW;
-	public ShinyColor leafColor = ShinyColors.BLUE_BRIGHT;
-	public ShinyColor separatorColor = ShinyColors.RED;
+	private ShinyColor rootColor = ShinyColors.GREEN;
+	private ShinyColor nodeColor = ShinyColors.YELLOW;
+	private ShinyColor leafColor = ShinyColors.BLUE_BRIGHT;
+	private ShinyColor separatorColor = ShinyColors.RED;
 
 	public ShinyTextPathStyle rootColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
@@ -37,4 +37,21 @@ public final class ShinyTextPathStyle {
 		this.separatorColor = color;
 		return this;
 	}
+
+	ShinyColor rootColor() {
+		return this.rootColor;
+	}
+
+	ShinyColor nodeColor() {
+		return this.nodeColor;
+	}
+
+	ShinyColor leafColor() {
+		return this.leafColor;
+	}
+
+	ShinyColor separatorColor() {
+		return this.separatorColor;
+	}
+
 }

@@ -10,6 +10,7 @@ import io.vertigo.shiny.components.data.table.ShinyTableStyle;
 import io.vertigo.shiny.components.dataviz.barchart.ShinyBarChartStyle;
 import io.vertigo.shiny.components.dataviz.gauge.ShinyGaugeStyle;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingStyle;
+import io.vertigo.shiny.components.dataviz.sparkline.ShinySparklineStyle;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatusStyle;
 import io.vertigo.shiny.components.text.figlet.ShinyFigletStyle;
 import io.vertigo.shiny.components.text.textpath.ShinyTextPathStyle;
@@ -73,6 +74,7 @@ public final class ShinyTheme {
 	private final ShinyToggleStyle toggleStyle = new ShinyToggleStyle();
 	private final ShinyListStyle listStyle = new ShinyListStyle();
 	private final ShinyRatingStyle ratingStyle = new ShinyRatingStyle();
+	private final ShinySparklineStyle sparklineStyle = new ShinySparklineStyle();
 
 	public ShinyTableStyle tableStyle() {
 		return tableStyle;
@@ -116,5 +118,9 @@ public final class ShinyTheme {
 
 	public ShinyRatingStyle ratingStyle() {
 		return ratingStyle;
+	}
+
+	public ShinySparklineStyle sparklineStyle() {
+		return sparklineStyle;
 	}
 }
