@@ -12,9 +12,11 @@ public class ShinyParagraphTest {
 	}
 
 	private static void testParagraph(final ShinyWriter writer) {
-		Shiny.paragraph("This is a paragraph.")
+		Shiny.paragraph()
+				.text("This is a paragraph.")
 				.render(writer);
-		Shiny.paragraph("This is a paragraph with " + ShinyColors.BLUE.fg("blue fg") + " and " + ShinyColors.GREEN.bg("green bg"))
+		Shiny.paragraph()
+				.text("This is a paragraph with " + ShinyColors.BLUE.fg("blue fg") + " and " + ShinyColors.GREEN.bg("green bg"))
 				.render(writer);
 	}
 

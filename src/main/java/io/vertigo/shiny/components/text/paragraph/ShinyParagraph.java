@@ -1,22 +1,22 @@
 package io.vertigo.shiny.components.text.paragraph;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 
 public final class ShinyParagraph implements ShinyComponent {
-	private final String text;
+	private String paragraphText;
 
-	public ShinyParagraph(final Shiny shiny, final String text) {
-		Assertion.check().isNotNull(text);
-		//---
-		this.text = text;
+	public ShinyParagraph text(final String text) {
+		this.paragraphText = text;
+		return this;
 	}
 
 	@Override
 	public void render(final ShinyWriter writer) {
-		writer.println(text)
-				.println(); // Add a blank line after the paragraph
+		Assertion.check().isNotNull(paragraphText, "Text cannot be null");
+		//---
+		writer.println(paragraphText);
+		writer.println(); // Add a blank line after the paragraph
 	}
 }

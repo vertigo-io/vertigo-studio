@@ -6,7 +6,6 @@ import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 
 public final class ShinyTree implements ShinyComponent {
-	//	private final Shiny shiny;
 	private final ShinyTreeNode rootNode;
 
 	public ShinyTree(final String label) {

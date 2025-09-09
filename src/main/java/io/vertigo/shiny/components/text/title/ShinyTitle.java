@@ -1,7 +1,6 @@
 package io.vertigo.shiny.components.text.title;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColors;
@@ -10,7 +9,7 @@ public final class ShinyTitle implements ShinyComponent {
 	private String title;
 	private int level = 1; // Default to Level 1
 
-	public ShinyTitle(final Shiny shiny) {
+	public ShinyTitle() {
 	}
 
 	public ShinyTitle text(final String text) {

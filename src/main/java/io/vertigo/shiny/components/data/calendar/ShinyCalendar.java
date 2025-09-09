@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
@@ -21,9 +20,7 @@ public final class ShinyCalendar implements ShinyComponent {
 	private int month;
 	private ShinyBorder calendarBorder = ShinyBorder.Normal;
 
-	public ShinyCalendar(final Shiny shiny) {
-		Assertion.check().isNotNull(shiny);
-		//---
+	public ShinyCalendar() {
 		this.calendarLocale = Shiny.theme().locale();
 		final LocalDate now = LocalDate.now();
 		this.year = now.getYear();

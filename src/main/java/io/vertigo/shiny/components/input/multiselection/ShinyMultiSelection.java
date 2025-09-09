@@ -9,7 +9,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColors;
@@ -20,7 +19,7 @@ public final class ShinyMultiSelection implements ShinyComponent {
 	private Set<Integer> selectedIndices;
 	private boolean strictMode = false; // Fallback for non-cursor consoles
 
-	public ShinyMultiSelection(final Shiny shiny) {
+	public ShinyMultiSelection() {
 		this.multiselectionOptions = new ArrayList<>();
 		this.selectedIndices = new HashSet<>();
 	}

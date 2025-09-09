@@ -77,11 +77,11 @@ public final class Shiny {
 	}
 
 	public static ShinyFiglet figlet() {
-		return new ShinyFiglet(INSTANCE);
+		return new ShinyFiglet();
 	}
 
 	public static ShinyCalendar calendar() {
-		return new ShinyCalendar(INSTANCE);
+		return new ShinyCalendar();
 	}
 
 	public static ShinyTextPath textPath() {
@@ -97,15 +97,15 @@ public final class Shiny {
 	}
 
 	public static ShinyTitle title() {
-		return new ShinyTitle(INSTANCE);
+		return new ShinyTitle();
 	}
 
 	public static ShinyMarkDown markdown() {
 		return new ShinyMarkDown(INSTANCE);
 	}
 
-	public static ShinyParagraph paragraph(final String text) {
-		return new ShinyParagraph(INSTANCE, text);
+	public static ShinyParagraph paragraph() {
+		return new ShinyParagraph();
 	}
 
 	public static ShinyToggle toggle() {
@@ -117,7 +117,7 @@ public final class Shiny {
 	}
 
 	public static ShinyMultiSelection multiSelection() {
-		return new ShinyMultiSelection(INSTANCE);
+		return new ShinyMultiSelection();
 	}
 
 	public static ShinyInputText inputText() {

@@ -283,7 +283,8 @@ public class ShinyAllComponentsTest {
 	private static void testShinyParagraph(final ShinyWriter writer) {
 		writer.println(CYAN.fg("Component: ShinyParagraph"));
 		writer.println("Parameters: text='This is a simple paragraph.'");
-		Shiny.paragraph("This is a simple paragraph.")
+		Shiny.paragraph()
+				.text("This is a simple paragraph.")
 				.render(writer);
 		waitForEnter(writer);
 	}

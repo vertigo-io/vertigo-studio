@@ -5,7 +5,6 @@ import java.io.IOException;
 import com.github.dtmo.jfiglet.FigFontResources;
 import com.github.dtmo.jfiglet.FigletRenderer;
 
-import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColor;
@@ -16,7 +15,7 @@ public final class ShinyFiglet implements ShinyComponent {
 	private ShinyFigletFonts font = ShinyFigletFonts.STANDARD; // Default font
 	private ShinyColor figletColor = ShinyColors.BLUE;
 
-	public ShinyFiglet(final Shiny shiny) {
+	public ShinyFiglet() {
 	}
 
 	public ShinyFiglet text(final String figletText) {
