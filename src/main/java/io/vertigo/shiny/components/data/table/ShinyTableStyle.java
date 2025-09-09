@@ -8,14 +8,13 @@ import io.vertigo.shiny.style.ShinyColors;
  * Encapsulates all visual style parameters of the table.
  */
 public final class ShinyTableStyle {
-
-	ShinyBorder tableBorder = ShinyBorder.Normal;
+	private ShinyBorder tableBorder = ShinyBorder.Normal;
 	// Colors
-	ShinyColor titleBackgroundColor = ShinyColors.MAGENTA;
-	ShinyColor titleTextColor = ShinyColors.WHITE;
-	ShinyColor headerBackgroundColor = ShinyColors.BLUE_BRIGHT;
-	ShinyColor altRowBackgroundColor = ShinyColors.CYAN_BRIGHT;
-	ShinyColor borderColor = ShinyColors.BLACK;
+	private ShinyColor titleBackgroundColor = ShinyColors.MAGENTA;
+	private ShinyColor titleTextColor = ShinyColors.WHITE;
+	private ShinyColor headerBackgroundColor = ShinyColors.BLUE_BRIGHT;
+	private ShinyColor altRowBackgroundColor = ShinyColors.CYAN_BRIGHT;
+	private ShinyColor borderColor = ShinyColors.BLACK;
 
 	public ShinyTableStyle border(final ShinyBorder border) {
 		Assertion.check().isNotNull(border);
@@ -58,4 +57,29 @@ public final class ShinyTableStyle {
 		this.altRowBackgroundColor = color;
 		return this;
 	}
+
+	ShinyBorder border() {
+		return this.tableBorder;
+	}
+
+	ShinyColor titleBackgroundColor() {
+		return this.titleBackgroundColor;
+	}
+
+	ShinyColor borderColor() {
+		return this.borderColor;
+	}
+
+	ShinyColor titleTextColor() {
+		return this.titleTextColor;
+	}
+
+	ShinyColor headerBackgroundColor() {
+		return this.headerBackgroundColor;
+	}
+
+	ShinyColor altRowBackgroundColor() {
+		return this.altRowBackgroundColor;
+	}
+
 }

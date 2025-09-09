@@ -142,7 +142,7 @@ public final class ShinyTable implements ShinyComponent {
 		final StringBuilder formatBuilder = new StringBuilder();
 		for (int i = 0; i < columns; i++) {
 			formatBuilder
-					.append(i == 0 ? "" : tableStyle.tableBorder.chars().vertical())
+					.append(i == 0 ? "" : tableStyle.border().chars().vertical())
 					.append(isNumericColumn[i] ? " %" : " %-")
 					.append(widths[i]).append("s ");
 		}
@@ -150,27 +150,27 @@ public final class ShinyTable implements ShinyComponent {
 
 		// 4. Print
 		if (tableTitle != null) {
-			writer.println(tableStyle.titleBackgroundColor.bg(
-					tableStyle.titleTextColor.fg(tableTitle)));
+			writer.println(tableStyle.titleBackgroundColor().bg(
+					tableStyle.titleTextColor().fg(tableTitle)));
 		}
 		printLineSeparator(writer, widths, Position.TOP);
 
-		writer.print(tableStyle.tableBorder.chars().vertical())
-				.print(tableStyle.headerBackgroundColor.bg(String.format(format, (Object[]) tableHeader)))
-				.println(tableStyle.tableBorder.chars().vertical());
+		writer.print(tableStyle.border().chars().vertical())
+				.print(tableStyle.headerBackgroundColor().bg(String.format(format, (Object[]) tableHeader)))
+				.println(tableStyle.border().chars().vertical());
 
 		printLineSeparator(writer, widths, Position.INNER);
 
 		boolean invert = false;
 		for (final String[] formattedRow : formattedRows) {
-			writer.print(tableStyle.tableBorder.chars().vertical());
+			writer.print(tableStyle.border().chars().vertical());
 			final String srow = String.format(format, (Object[]) formattedRow);
 			if (invert) {
-				writer.print(tableStyle.altRowBackgroundColor.bg(srow));
+				writer.print(tableStyle.altRowBackgroundColor().bg(srow));
 			} else {
 				writer.print(srow);
 			}
-			writer.println(tableStyle.tableBorder.chars().vertical());
+			writer.println(tableStyle.border().chars().vertical());
 			invert = !invert;
 		}
 		printLineSeparator(writer, widths, Position.BOTTOM);
@@ -185,38 +185,38 @@ public final class ShinyTable implements ShinyComponent {
 		for (final int width : widths) {
 			if (first) {
 				final var left = switch (position) {
-					case TOP -> tableStyle.tableBorder.chars().topLeft();
-					case INNER -> tableStyle.tableBorder.chars().innerLeft();
-					case BOTTOM -> tableStyle.tableBorder.chars().bottomLeft();
+					case TOP -> tableStyle.border().chars().topLeft();
+					case INNER -> tableStyle.border().chars().innerLeft();
+					case BOTTOM -> tableStyle.border().chars().bottomLeft();
 				};
 				writer.print(left);
 				final var h = switch (position) {
-					case TOP -> tableStyle.tableBorder.chars().topHorizontal();
-					case INNER -> tableStyle.tableBorder.chars().innerHorizontal();
-					case BOTTOM -> tableStyle.tableBorder.chars().bottomHorizontal();
+					case TOP -> tableStyle.border().chars().topHorizontal();
+					case INNER -> tableStyle.border().chars().innerHorizontal();
+					case BOTTOM -> tableStyle.border().chars().bottomHorizontal();
 				};
 				writer.print(h.repeat(width + 2));
 				first = false;
 			} else {
 				final var middle = switch (position) {
-					case TOP -> tableStyle.tableBorder.chars().topMiddle();
-					case INNER -> tableStyle.tableBorder.chars().center();
-					case BOTTOM -> tableStyle.tableBorder.chars().bottomMiddle();
+					case TOP -> tableStyle.border().chars().topMiddle();
+					case INNER -> tableStyle.border().chars().center();
+					case BOTTOM -> tableStyle.border().chars().bottomMiddle();
 				};
 				writer.print(middle);
 				final var h = switch (position) {
-					case TOP -> tableStyle.tableBorder.chars().topHorizontal();
-					case INNER -> tableStyle.tableBorder.chars().innerHorizontal();
-					case BOTTOM -> tableStyle.tableBorder.chars().bottomHorizontal();
+					case TOP -> tableStyle.border().chars().topHorizontal();
+					case INNER -> tableStyle.border().chars().innerHorizontal();
+					case BOTTOM -> tableStyle.border().chars().bottomHorizontal();
 				};
 				writer.print(h.repeat(width + 2));
 			}
 
 		}
 		final String right = switch (position) {
-			case TOP -> tableStyle.tableBorder.chars().topRight();
-			case INNER -> tableStyle.tableBorder.chars().innerRight();
-			case BOTTOM -> tableStyle.tableBorder.chars().bottomRight();
+			case TOP -> tableStyle.border().chars().topRight();
+			case INNER -> tableStyle.border().chars().innerRight();
+			case BOTTOM -> tableStyle.border().chars().bottomRight();
 		};
 		writer.println(right);
 	}

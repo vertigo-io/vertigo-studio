@@ -5,8 +5,8 @@ import io.vertigo.shiny.style.ShinyColor;
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyFigletStyle {
-	public ShinyColor figletColor = ShinyColors.BLUE;
-	public ShinyFigletFonts figletFont = ShinyFigletFonts.STANDARD; // Default figletFont
+	private ShinyColor figletColor = ShinyColors.BLUE;
+	private ShinyFigletFont figletFont = ShinyFigletFont.STANDARD; // Default figletFont
 
 	public ShinyFigletStyle color(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
@@ -15,10 +15,18 @@ public final class ShinyFigletStyle {
 		return this;
 	}
 
-	public ShinyFigletStyle font(final ShinyFigletFonts font) {
+	public ShinyFigletStyle font(final ShinyFigletFont font) {
 		Assertion.check().isNotNull(font);
 		//---
 		this.figletFont = font;
 		return this;
+	}
+
+	ShinyColor color() {
+		return this.figletColor;
+	}
+
+	ShinyFigletFont font() {
+		return this.figletFont;
 	}
 }
