@@ -3,6 +3,8 @@ package io.vertigo.shiny.components.dataviz.status;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColor;
@@ -10,10 +12,18 @@ import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyStatus implements ShinyComponent {
 	private String title;
-	private List<StatusType> statuses;
-	private StatusShape shape = StatusShape.SQUARE;
+	private List<StatusType> statusTypes;
+	private ShinyStatusStyle statusStyle;
 
 	public ShinyStatus() {
+		this.statusStyle = Shiny.theme().statusStyle();
+	}
+
+	public ShinyStatus style(final ShinyStatusStyle style) {
+		Assertion.check().isNotNull(style);
+		//---
+		this.statusStyle = style;
+		return this;
 	}
 
 	public ShinyStatus title(final String text) {
@@ -21,19 +31,16 @@ public final class ShinyStatus implements ShinyComponent {
 		return this;
 	}
 
+	public ShinyStatus statuses(final Status... statusList) {
+
 	public ShinyStatus statuses(final List<StatusType> statusList) {
 		this.statuses = statusList;
 		return this;
 	}
 
-	public ShinyStatus shape(final StatusShape statusShape) {
-		this.shape = statusShape;
-		return this;
-	}
-
 	public void render(final ShinyWriter writer) {
 		final String statusLine = statuses.stream()
-				.map(status -> status.getColor().fg(shape.getCharacter()))
+				.map(status -> status.getColor().fg(statusStyle.statusShape.getCharacter()))
 				.collect(Collectors.joining(" "));
 
 		writer.println(title != null ? title + " " + statusLine : statusLine);

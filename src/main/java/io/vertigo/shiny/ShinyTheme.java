@@ -8,6 +8,7 @@ import io.vertigo.shiny.components.data.json.ShinyJsonStyle;
 import io.vertigo.shiny.components.data.table.ShinyTableStyle;
 import io.vertigo.shiny.components.dataviz.barchart.ShinyBarChartStyle;
 import io.vertigo.shiny.components.dataviz.gauge.ShinyGaugeStyle;
+import io.vertigo.shiny.components.dataviz.status.ShinyStatusStyle;
 import io.vertigo.shiny.components.text.figlet.ShinyFigletStyle;
 
 public final class ShinyTheme {
@@ -62,6 +63,7 @@ public final class ShinyTheme {
 	private final ShinyJsonStyle jsonStyle = new ShinyJsonStyle();
 	private final ShinyGaugeStyle gaugeStyle = new ShinyGaugeStyle();
 	private final ShinyFigletStyle figletStyle = new ShinyFigletStyle();
+	private final ShinyStatusStyle statusStyle = new ShinyStatusStyle();
 
 	public ShinyTableStyle tableStyle() {
 		return tableStyle;
@@ -81,5 +83,9 @@ public final class ShinyTheme {
 
 	public ShinyFigletStyle figletStyle() {
 		return figletStyle;
+	}
+
+	public ShinyStatusStyle statusStyle() {
+		return statusStyle;
 	}
 }
