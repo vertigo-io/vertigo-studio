@@ -5,12 +5,16 @@ import io.vertigo.shiny.style.ShinyColor;
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyGaugeStyle {
-	public ShinyColor gaugeColor = ShinyColors.GREEN;
+	private ShinyColor gaugeColor = ShinyColors.GREEN;
 
 	public ShinyGaugeStyle color(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.gaugeColor = color;
 		return this;
+	}
+
+	ShinyColor color() {
+		return gaugeColor;
 	}
 }

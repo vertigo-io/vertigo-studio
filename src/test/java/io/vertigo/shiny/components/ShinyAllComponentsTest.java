@@ -15,7 +15,7 @@ import java.util.Scanner;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.dataviz.barchart.ShinySortMode;
-import io.vertigo.shiny.components.dataviz.status.ShinyStatus.StatusType;
+import io.vertigo.shiny.components.dataviz.status.ShinyStatus.ShinyStatusType;
 import io.vertigo.shiny.components.input.multiselection.ShinyMultiSelection;
 
 public class ShinyAllComponentsTest {
@@ -209,10 +209,10 @@ public class ShinyAllComponentsTest {
 		Shiny.status()
 				.title("Build Status")
 				.types(
-						StatusType.SUCCESS,
-						StatusType.WARNING,
-						StatusType.ERROR,
-						StatusType.INFO)
+						ShinyStatusType.SUCCESS,
+						ShinyStatusType.WARNING,
+						ShinyStatusType.ERROR,
+						ShinyStatusType.INFO)
 				.render(writer);
 		waitForEnter(writer);
 	}

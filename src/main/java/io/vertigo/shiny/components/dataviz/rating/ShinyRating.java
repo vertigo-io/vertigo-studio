@@ -131,13 +131,13 @@ public final class ShinyRating implements ShinyComponent {
 			if (allowHalfRating && clampedValue >= i - 0.5 && clampedValue < i) {
 				// Half rating (for now, use filled icon with different color)
 				rating.append(ShinyEffects.DIM.apply(
-						ratingStyle.filledColor.fg(ratingStyle.ratingType.getFilledIcon())));
+						ratingStyle.filledColor().fg(ratingStyle.type().getFilledIcon())));
 			} else if (clampedValue >= i) {
 				// Filled
-				rating.append(ratingStyle.filledColor.fg(ratingStyle.ratingType.getFilledIcon()));
+				rating.append(ratingStyle.filledColor().fg(ratingStyle.type().getFilledIcon()));
 			} else {
 				// Empty
-				rating.append(ratingStyle.emptyColor.fg(ratingStyle.ratingType.getEmptyIcon()));
+				rating.append(ratingStyle.emptyColor().fg(ratingStyle.type().getEmptyIcon()));
 			}
 		}
 	}
@@ -148,8 +148,8 @@ public final class ShinyRating implements ShinyComponent {
 		final int filledLength = (int) (barLength * percentage);
 
 		rating.append("[")
-				.append(ratingStyle.filledColor.fg(ratingStyle.ratingType.getFilledIcon().repeat(filledLength)))
-				.append(ratingStyle.emptyColor.fg(ratingStyle.ratingType.getEmptyIcon().repeat(barLength - filledLength)))
+				.append(ratingStyle.filledColor().fg(ratingStyle.type().getFilledIcon().repeat(filledLength)))
+				.append(ratingStyle.emptyColor().fg(ratingStyle.type().getEmptyIcon().repeat(barLength - filledLength)))
 				.append("]");
 	}
 

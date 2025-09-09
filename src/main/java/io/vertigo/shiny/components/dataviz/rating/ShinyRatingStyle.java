@@ -5,9 +5,9 @@ import io.vertigo.shiny.style.ShinyColor;
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyRatingStyle {
-	public ShinyColor filledColor = ShinyColors.YELLOW;
-	public ShinyColor emptyColor = ShinyColors.WHITE;
-	public ShinyRatingType ratingType = ShinyRatingType.STAR;
+	private ShinyColor filledColor = ShinyColors.YELLOW;
+	private ShinyColor emptyColor = ShinyColors.WHITE;
+	private ShinyRatingType ratingType = ShinyRatingType.STAR;
 
 	public ShinyRatingStyle type(final ShinyRatingType type) {
 		Assertion.check().isNotNull(type);
@@ -30,15 +30,15 @@ public final class ShinyRatingStyle {
 		return this;
 	}
 
-	public ShinyRatingType type() {
+	ShinyRatingType type() {
 		return this.ratingType;
 	}
 
-	public ShinyColor filledColor() {
+	ShinyColor filledColor() {
 		return this.filledColor;
 	}
 
-	public ShinyColor emptyColor() {
+	ShinyColor emptyColor() {
 		return this.emptyColor;
 	}
 

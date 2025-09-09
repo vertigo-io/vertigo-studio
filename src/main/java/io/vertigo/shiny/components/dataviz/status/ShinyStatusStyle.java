@@ -3,12 +3,16 @@ package io.vertigo.shiny.components.dataviz.status;
 import io.vertigo.core.lang.Assertion;
 
 public final class ShinyStatusStyle {
-	public ShinyStatus.StatusShape statusShape = ShinyStatus.StatusShape.SQUARE;
+	private ShinyStatusShape statusShape = ShinyStatusShape.SQUARE;
 
-	public ShinyStatusStyle shape(final ShinyStatus.StatusShape shape) {
+	public ShinyStatusStyle shape(final ShinyStatusShape shape) {
 		Assertion.check().isNotNull(shape);
 		//---
 		this.statusShape = shape;
 		return this;
+	}
+
+	ShinyStatusShape shape() {
+		return statusShape;
 	}
 }

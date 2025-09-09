@@ -8,12 +8,10 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
-import io.vertigo.shiny.style.ShinyColor;
-import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyStatus implements ShinyComponent {
 	private String title;
-	private final List<StatusType> statusTypes = new ArrayList<>();
+	private final List<ShinyStatusType> statusTypes = new ArrayList<>();
 	private ShinyStatusStyle statusStyle;
 
 	public ShinyStatus() {
@@ -32,53 +30,20 @@ public final class ShinyStatus implements ShinyComponent {
 		return this;
 	}
 
-	public ShinyStatus types(final List<StatusType> types) {
+	public ShinyStatus types(final List<ShinyStatusType> types) {
 		this.statusTypes.addAll(types);
 		return this;
 	}
 
-	public ShinyStatus types(final StatusType... types) {
+	public ShinyStatus types(final ShinyStatusType... types) {
 		return types(List.of(types));
 	}
 
 	public void render(final ShinyWriter writer) {
 		final String statusLine = statusTypes.stream()
-				.map(status -> status.getColor().fg(statusStyle.statusShape.getCharacter()))
+				.map(status -> status.color().fg(statusStyle.shape().getCharacter()))
 				.collect(Collectors.joining(" "));
 
 		writer.println(title != null ? title + " " + statusLine : statusLine);
-	}
-
-	public enum StatusType {
-		SUCCESS(ShinyColors.GREEN),
-		ERROR(ShinyColors.RED),
-		WARNING(ShinyColors.YELLOW),
-		INFO(ShinyColors.BLUE),
-		NEUTRAL(ShinyColors.WHITE);
-
-		private final ShinyColor color;
-
-		StatusType(final ShinyColor color) {
-			this.color = color;
-		}
-
-		public ShinyColor getColor() {
-			return color;
-		}
-	}
-
-	public enum StatusShape {
-		SQUARE("■"),
-		CIRCLE("●");
-
-		private final String character;
-
-		StatusShape(final String character) {
-			this.character = character;
-		}
-
-		public String getCharacter() {
-			return character;
-		}
 	}
 }

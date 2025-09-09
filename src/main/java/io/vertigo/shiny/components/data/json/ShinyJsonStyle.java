@@ -5,18 +5,18 @@ import io.vertigo.shiny.style.ShinyColor;
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyJsonStyle {
-	public ShinyColor labelColor = ShinyColors.BLUE;
+	private ShinyColor labelColor = ShinyColors.BLUE;
 
-	public ShinyColor numberColor = ShinyColors.GREEN;
-	public ShinyColor stringColor = ShinyColors.RED;
-	public ShinyColor booleanColor = ShinyColors.BLACK_BRIGHT;
-	public ShinyColor nullColor = ShinyColors.BLACK_BRIGHT;
+	private ShinyColor numberColor = ShinyColors.GREEN;
+	private ShinyColor stringColor = ShinyColors.RED;
+	private ShinyColor booleanColor = ShinyColors.BLACK_BRIGHT;
+	private ShinyColor nullColor = ShinyColors.BLACK_BRIGHT;
 
-	public ShinyColor colonColor = ShinyColors.YELLOW;
+	private ShinyColor colonColor = ShinyColors.YELLOW;
 
-	public ShinyColor commaColor = ShinyColors.WHITE;
-	public ShinyColor bracketColor = ShinyColors.WHITE;
-	public ShinyColor bracesColor = ShinyColors.WHITE;
+	private ShinyColor commaColor = ShinyColors.WHITE;
+	private ShinyColor bracketColor = ShinyColors.WHITE;
+	private ShinyColor bracesColor = ShinyColors.WHITE;
 
 	public ShinyJsonStyle labelColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
@@ -79,5 +79,41 @@ public final class ShinyJsonStyle {
 		//---
 		this.bracesColor = color;
 		return this;
+	}
+
+	ShinyColor labelColor() {
+		return this.labelColor;
+	}
+
+	ShinyColor numberColor() {
+		return this.numberColor;
+	}
+
+	ShinyColor stringColor() {
+		return this.stringColor;
+	}
+
+	ShinyColor booleanColor() {
+		return this.booleanColor;
+	}
+
+	ShinyColor nullColor() {
+		return this.nullColor;
+	}
+
+	ShinyColor colonColor() {
+		return this.colonColor;
+	}
+
+	ShinyColor commaColor() {
+		return this.commaColor;
+	}
+
+	ShinyColor bracketColor() {
+		return this.bracketColor;
+	}
+
+	ShinyColor bracesColor() {
+		return this.bracesColor;
 	}
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatus.StatusShape;
-import io.vertigo.shiny.components.dataviz.status.ShinyStatus.StatusType;
+import io.vertigo.shiny.components.dataviz.status.ShinyStatus.ShinyStatusType;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatusStyle;
 import io.vertigo.shiny.style.ShinyColors;
 
@@ -23,9 +23,9 @@ public class ShinyStatusTest {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Last 5 Match Results ---"));
 		Shiny.status()
 				.title("Last 5 Matches")
-				.types(StatusType.SUCCESS, StatusType.SUCCESS, StatusType.NEUTRAL, StatusType.ERROR, StatusType.SUCCESS)
+				.types(ShinyStatusType.SUCCESS, ShinyStatusType.SUCCESS, ShinyStatusType.NEUTRAL, ShinyStatusType.ERROR, ShinyStatusType.SUCCESS)
 				.style(new ShinyStatusStyle()
-						.shape(StatusShape.SQUARE))
+						.shape(ShinyStatusShape.SQUARE))
 				.render(writer);
 		writer.println();
 	}
@@ -34,21 +34,21 @@ public class ShinyStatusTest {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Server Status ---"));
 		Shiny.status()
 				.title("Server (success)")
-				.types(StatusType.SUCCESS)
+				.types(ShinyStatusType.SUCCESS)
 				.style(new ShinyStatusStyle()
-						.shape(StatusShape.CIRCLE))
+						.shape(ShinyStatusShape.CIRCLE))
 				.render(writer);
 		Shiny.status()
 				.title("Server (error)")
-				.types(List.of(StatusType.ERROR))
+				.types(List.of(ShinyStatusType.ERROR))
 				.style(new ShinyStatusStyle()
-						.shape(StatusShape.CIRCLE))
+						.shape(ShinyStatusShape.CIRCLE))
 				.render(writer);
 		Shiny.status()
 				.title("Server (success, success, error, success, success")
-				.types(StatusType.SUCCESS, StatusType.SUCCESS, StatusType.ERROR, StatusType.SUCCESS, StatusType.SUCCESS)
+				.types(ShinyStatusType.SUCCESS, ShinyStatusType.SUCCESS, ShinyStatusType.ERROR, ShinyStatusType.SUCCESS, ShinyStatusType.SUCCESS)
 				.style(new ShinyStatusStyle()
-						.shape(StatusShape.CIRCLE))
+						.shape(ShinyStatusShape.CIRCLE))
 				.render(writer);
 		writer.println();
 	}
@@ -58,14 +58,14 @@ public class ShinyStatusTest {
 		Shiny.status()
 				.title("Build Pipeline")
 				.types(
-						StatusType.SUCCESS,
-						StatusType.WARNING,
-						StatusType.ERROR,
-						StatusType.INFO,
-						StatusType.NEUTRAL,
-						StatusType.SUCCESS)
+						ShinyStatusType.SUCCESS,
+						ShinyStatusType.WARNING,
+						ShinyStatusType.ERROR,
+						ShinyStatusType.INFO,
+						ShinyStatusType.NEUTRAL,
+						ShinyStatusType.SUCCESS)
 				.style(new ShinyStatusStyle()
-						.shape(StatusShape.SQUARE))
+						.shape(ShinyStatusShape.SQUARE))
 				.render(writer);
 		writer.println();
 	}
@@ -74,13 +74,13 @@ public class ShinyStatusTest {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Mixed Statuses and Shapes ---"));
 		Shiny.status()
 				.title("Daily Report")
-				.types(List.of(StatusType.SUCCESS, StatusType.SUCCESS, StatusType.WARNING, StatusType.ERROR, StatusType.NEUTRAL))
+				.types(List.of(ShinyStatusType.SUCCESS, ShinyStatusType.SUCCESS, ShinyStatusType.WARNING, ShinyStatusType.ERROR, ShinyStatusType.NEUTRAL))
 				.render(writer);
 		Shiny.status()
 				.title("System Health")
-				.types(StatusType.SUCCESS, StatusType.SUCCESS, StatusType.SUCCESS, StatusType.WARNING, StatusType.ERROR)
+				.types(ShinyStatusType.SUCCESS, ShinyStatusType.SUCCESS, ShinyStatusType.SUCCESS, ShinyStatusType.WARNING, ShinyStatusType.ERROR)
 				.style(new ShinyStatusStyle()
-						.shape(StatusShape.CIRCLE))
+						.shape(ShinyStatusShape.CIRCLE))
 				.render(writer);
 		writer.println();
 	}

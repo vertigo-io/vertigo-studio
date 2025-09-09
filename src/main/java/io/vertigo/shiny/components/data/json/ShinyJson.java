@@ -23,15 +23,15 @@ public final class ShinyJson implements ShinyComponent {
 		jsonStyle = Shiny.theme().jsonStyle();
 	}
 
-	public ShinyJson json(final String json) {
-		this.jsonString = json;
-		return this;
-	}
-
 	public ShinyJson style(final ShinyJsonStyle style) {
 		Assertion.check().isNotNull(style);
 		//---
 		this.jsonStyle = style;
+		return this;
+	}
+
+	public ShinyJson json(final String json) {
+		this.jsonString = json;
 		return this;
 	}
 
@@ -57,34 +57,34 @@ public final class ShinyJson implements ShinyComponent {
 	}
 
 	private void printObject(final ShinyWriter writer, final JsonNode node, final String indent, final boolean isLast) {
-		writer.println(jsonStyle.bracesColor.fg("{"));
+		writer.println(jsonStyle.bracesColor().fg("{"));
 		final Iterator<Entry<String, JsonNode>> fields = node.fields();
 		while (fields.hasNext()) {
 			final Entry<String, JsonNode> field = fields.next();
 			final boolean lastField = !fields.hasNext();
 			writer.print(indent + "  "
-					+ jsonStyle.labelColor.fg("\"" + field.getKey() + "\"")
-					+ jsonStyle.colonColor.fg(":") + " ");
+					+ jsonStyle.labelColor().fg("\"" + field.getKey() + "\"")
+					+ jsonStyle.colonColor().fg(":") + " ");
 			printNode(writer, field.getValue(), indent + "  ", lastField);
 		}
-		writer.print(indent + jsonStyle.bracesColor.fg("}"));
+		writer.print(indent + jsonStyle.bracesColor().fg("}"));
 		if (!isLast) {
-			writer.print(jsonStyle.commaColor.fg(","));
+			writer.print(jsonStyle.commaColor().fg(","));
 		}
 		writer.println();
 	}
 
 	private void printArray(final ShinyWriter writer, JsonNode node, final String indent, final boolean isLast) {
-		writer.println(jsonStyle.bracketColor.fg("["));
+		writer.println(jsonStyle.bracketColor().fg("["));
 		for (int i = 0; i < node.size(); i++) {
 			final JsonNode element = node.get(i);
 			final boolean lastElement = (i == node.size() - 1);
 			writer.print(indent + "  ");
 			printNode(writer, element, indent + "  ", lastElement);
 		}
-		writer.print(indent + jsonStyle.bracketColor.fg("]"));
+		writer.print(indent + jsonStyle.bracketColor().fg("]"));
 		if (!isLast) {
-			writer.print(jsonStyle.commaColor.fg(","));
+			writer.print(jsonStyle.commaColor().fg(","));
 		}
 		writer.println();
 	}
@@ -92,19 +92,19 @@ public final class ShinyJson implements ShinyComponent {
 	private void printValue(final ShinyWriter writer, final JsonNode node, final String indent, final boolean isLast) {
 		final String display;
 		if (node.isTextual()) {
-			display = jsonStyle.stringColor.fg("\"" + node.asText() + "\"");
+			display = jsonStyle.stringColor().fg("\"" + node.asText() + "\"");
 		} else if (node.isNumber()) {
-			display = jsonStyle.numberColor.fg(node.asText());
+			display = jsonStyle.numberColor().fg(node.asText());
 		} else if (node.isBoolean()) {
-			display = jsonStyle.booleanColor.fg(node.asText());
+			display = jsonStyle.booleanColor().fg(node.asText());
 		} else if (node.isNull()) {
-			display = jsonStyle.nullColor.fg("null");
+			display = jsonStyle.nullColor().fg("null");
 		} else {
 			display = ShinyColors.RED.bg("UNKNOW");
 		}
 		writer.print(display);
 		if (!isLast) {
-			writer.print(jsonStyle.commaColor.fg(","));
+			writer.print(jsonStyle.commaColor().fg(","));
 		}
 		writer.println();
 	}
