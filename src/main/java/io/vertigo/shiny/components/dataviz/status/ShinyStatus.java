@@ -1,5 +1,6 @@
 package io.vertigo.shiny.components.dataviz.status;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,7 +13,7 @@ import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyStatus implements ShinyComponent {
 	private String title;
-	private List<StatusType> statusTypes;
+	private final List<StatusType> statusTypes = new ArrayList<>();
 	private ShinyStatusStyle statusStyle;
 
 	public ShinyStatus() {
@@ -31,15 +32,17 @@ public final class ShinyStatus implements ShinyComponent {
 		return this;
 	}
 
-	public ShinyStatus statuses(final Status... statusList) {
-
-	public ShinyStatus statuses(final List<StatusType> statusList) {
-		this.statuses = statusList;
+	public ShinyStatus types(final List<StatusType> types) {
+		this.statusTypes.addAll(types);
 		return this;
 	}
 
+	public ShinyStatus types(final StatusType... types) {
+		return types(List.of(types));
+	}
+
 	public void render(final ShinyWriter writer) {
-		final String statusLine = statuses.stream()
+		final String statusLine = statusTypes.stream()
 				.map(status -> status.getColor().fg(statusStyle.statusShape.getCharacter()))
 				.collect(Collectors.joining(" "));
 
