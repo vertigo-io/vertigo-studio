@@ -5,8 +5,8 @@ import io.vertigo.shiny.style.ShinyColor;
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyListStyle {
-	public ShinyColor itemColor = ShinyColors.BLUE_BRIGHT;
-	public ShinyColor bulletColor = ShinyColors.CYAN;
+	private ShinyColor itemColor = ShinyColors.BLUE_BRIGHT;
+	private ShinyColor bulletColor = ShinyColors.CYAN;
 
 	public ShinyListStyle itemColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
@@ -20,5 +20,13 @@ public final class ShinyListStyle {
 		//---
 		this.bulletColor = color;
 		return this;
+	}
+
+	ShinyColor itemColor() {
+		return this.itemColor;
+	}
+
+	ShinyColor bulletColor() {
+		return this.bulletColor;
 	}
 }

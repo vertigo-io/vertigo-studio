@@ -63,13 +63,13 @@ public final class ShinyList implements ShinyComponent {
 		for (final Object item : listItems) {
 			if (item instanceof String s) {
 				final String prefix = getPrefix(number);
-				writer.println(indent + listStyle.bulletColor.fg(prefix) + listStyle.itemColor.fg(s));
+				writer.println(indent + listStyle.bulletColor().fg(prefix) + listStyle.itemColor().fg(s));
 				if (listType == ShinyListType.ORDERED) { // Changed from NUMBERED
 					number++;
 				}
 			} else if (item instanceof ShinyList list) {
 				final String prefix = getPrefix(number);
-				writer.println(indent + listStyle.bulletColor.fg(prefix) + listStyle.itemColor.fg("Nested List:"));
+				writer.println(indent + listStyle.bulletColor().fg(prefix) + listStyle.itemColor().fg("Nested List:"));
 				list.print(writer, indentLevel + 1); // Recursive call for nested lists
 				if (listType == ShinyListType.ORDERED) { // Changed from NUMBERED
 					number++;
