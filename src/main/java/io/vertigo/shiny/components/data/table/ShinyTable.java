@@ -14,7 +14,6 @@ import io.vertigo.shiny.components.ShinyComponent;
  * borders and formatted numeric values.
  */
 public final class ShinyTable implements ShinyComponent {
-	private final NumberFormat numberFormat;
 	private String tableTitle;
 	private String noDataFound;
 	private String[] tableHeader;
@@ -28,7 +27,6 @@ public final class ShinyTable implements ShinyComponent {
 	 */
 	public ShinyTable() {
 		this.tableStyle = Shiny.theme().tableStyle();
-		this.numberFormat = Shiny.theme().numberFormat();
 	}
 
 	/**
@@ -95,6 +93,8 @@ public final class ShinyTable implements ShinyComponent {
 				.isNotNull(tableRows)
 				.when(tableRows.isEmpty(), () -> Assertion.check().isNotBlank(noDataFound))
 				.isNotNull(tableHeader);
+
+		final NumberFormat numberFormat = Shiny.theme().numberFormat();
 
 		if (tableRows.isEmpty()) {
 			writer.println(noDataFound);
