@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket avec Java et Quasar QTable</title>
+    <!-- Quasar CSS via CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/quasar@2.16.1/dist/quasar.prod.css" rel="stylesheet" type="text/css">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .q-btn { margin-right: 10px; }
+        .q-table { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>Communication WebSocket avec Java</h1>
+        <q-btn label="Connecter WebSocket" @click="connectWebSocket" color="primary"></q-btn>
+        <q-btn label="Envoyer Message Test" @click="sendTestMessage" color="secondary"></q-btn>
+        <div id="components">
+            <div v-for="(component, index) in dynamicComponents" :key="index">
+                <q-table
+                    :title="component.props.title"
+                    :rows="component.props.rows"
+                    :columns="component.props.columns"
+                    :no-data-label="component.props.noDataFound"
+                    row-key="name"
+                    dense
+                >
+                    <template v-slot:no-data>
+                        <div class="full-width row flex-center q-gutter-sm">
+                            <span>{{ component.props.noDataFound }}</span>
+                        </div>
+                    </template>
+                </q-table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vue.js via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+    <!-- Quasar JS via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/quasar@2.16.1/dist/quasar.umd.prod.js"></script>
+
+    <script>
+        const { createApp } = Vue;
+
+        const app = createApp({
+            data() {
+                return {
+                    ws: null,
+                    dynamicComponents: [] // Liste de composants dynamiques
+                };
+            },
+            methods: {
+                connectWebSocket() {
+                    this.ws = new WebSocket('ws://localhost:8080');
+                    this.ws.onopen = () => console.log('WebSocket connecté');
+                    this.ws.onmessage = (event) => {
+                        const msg = JSON.parse(event.data);
+                        this.addDynamicComponent(msg);
+                    };
+                    this.ws.onclose = () => console.log('WebSocket fermé');
+                    this.ws.onerror = (error) => console.error('Erreur WebSocket:', error);
+                },
+                sendTestMessage() {
+                    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+                        this.ws.send('Message test depuis la page');
+                    } else {
+                        console.log('WebSocket non connecté');
+                    }
+                },
+                addDynamicComponent(msg) {
+                    if (msg.type === 'table') {
+                        // Créer une q-table à partir des données
+                        const columns = msg.data.tableHeader.map((col, index) => ({
+                            name: `col${index}`,
+                            label: col,
+                            field: row => row[index],
+                            align: 'left'
+                        }));
+                        this.dynamicComponents.push({
+                            props: {
+                                title: msg.data.tableTitle,
+                                noDataFound: msg.data.noDataFound,
+                                rows: msg.data.tableRows,
+                                columns: columns,
+                                rowKey: `col0` // Utilise la première colonne comme clé
+                            }
+                        });
+                    }
+                }
+            }
+        });
+
+        // Intégrer Quasar à l'app Vue
+        app.use(Quasar, {
+            config: {} // Options Quasar si besoin
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+</html>
