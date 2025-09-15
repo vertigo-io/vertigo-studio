@@ -1,19 +1,26 @@
 package io.vertigo.shell.server;
 
 import java.net.InetSocketAddress;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.vertigo.shell.Shell;
+import io.vertigo.shell.systems.file.FileContext;
+import io.vertigo.shiny.Shiny;
 
 public class ShinyWebServer extends WebSocketServer {
 	private static final Set<WebSocket> connections = Collections.synchronizedSet(new HashSet<>());
@@ -58,7 +65,38 @@ public class ShinyWebServer extends WebSocketServer {
 
 				if ("test".equals(userInput)) {
 					sendTable(conn);
+				} else if ("ls".equals(userInput)) {
+					final FileContext fileContext = FileContext.get();
+					final Path path = fileContext.getCurrentAbsolutePath();
+
+					final List<String[]> rows = new ArrayList<>();
+
+					try (Stream<Path> stream = Files.list(path)) {
+						stream.forEach(p -> {
+							final String[] row = new String[2];
+							row[0] = p.getFileName().toString();
+							row[1] = Boolean.valueOf(!Files.isDirectory(p)).toString();
+							rows.add(row);
+						});
+						//					} catch (final IOException e) {
+						//						System.out.println("Error listing files: " + e.getMessage());
+					}
+					var table = Shiny.table()
+							.title("files of " + path)
+							.noDataFound("no files found")
+							.header("name", "isFile")
+							.rows(rows);
+					mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+					final String data = mapper.writeValueAsString(table);
+					final String json = String.format("""
+							{
+							"type": "table", "data": %s
+							}
+							""", data);
+					System.out.println("send : " + json);
+					conn.send(json);
 				}
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -5,68 +5,85 @@
     <title>WebSocket avec Java et Quasar QTable</title>
     <!-- Quasar CSS via CDN -->
     <link href="https://cdn.jsdelivr.net/npm/quasar@2.16.1/dist/quasar.prod.css" rel="stylesheet" type="text/css">
+    <!-- Material Icons via CDN -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         body {
             font-family: 'Roboto', Arial, sans-serif;
             margin: 20px;
-            background-color: #002433;
-            color: #B0BEC5;
+            background-color: #001F2A;
+            color: #E0F7FA;
         }
         #app {
             max-width: 1200px;
             margin: 0 auto;
         }
         h1 {
-            color: #42A5F5;
+            color: #00E5FF;
         }
         .q-btn {
             margin-right: 10px;
-            background-color: #1E88E5;
+            background-color: #0288D1;
             color: #FFFFFF;
         }
         .q-btn:hover {
-            background-color: #42A5F5;
+            background-color: #03A9F4;
         }
         .q-input {
             margin: 10px 0;
             max-width: 400px;
         }
         .q-input .q-field__control {
-            background-color: #1E1E1E;
-            color: #B0BEC5;
-            border-color: #37474F;
+            background-color: #004D2B;
+            color: #E8F5E9;
+            border-color: #00C853;
+            border-radius: 8px;
+            font-size: 16px;
+            padding: 5px 10px;
         }
-        .q-input .q-field__control:hover {
-            border-color: #42A5F5;
+        .q-input .q-field__control:hover,
+        .q-input .q-field__control:focus {
+            border-color: #00E676;
+            box-shadow: 0 0 8px rgba(0, 230, 118, 0.5);
+        }
+        .q-input .q-field__native::placeholder {
+            color: #80CBC4;
+            opacity: 0.8;
+        }
+        .q-btn[flat][dense][icon="send"] {
+            color: #00E676;
+        }
+        .q-btn[flat][dense][icon="send"]:hover {
+            color: #69F0AE;
         }
         .q-table {
-            background-color: #1E1E1E;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            background-color: #022B3A;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
         }
         .q-table th {
-            background-color: #263238;
-            color: #42A5F5;
-            font-weight: 500;
+            background-color: #01579B;
+            color: #00E5FF;
+            font-weight: 600;
         }
         .q-table td {
-            color: #B0BEC5;
-            border-color: #37474F;
+            color: #E0F7FA;
+            border-color: #0288D1;
         }
         .q-table tbody tr:nth-child(odd) {
-            background-color: #212121;
+            background-color: #013440;
         }
         .q-table tbody tr:hover {
-            background-color: #37474F;
+            background-color: #01579B;
         }
         .q-table__title {
-            color: #42A5F5;
+            color: #00E5FF;
         }
         .q-table__no-data {
-            color: #B0BEC5;
+            color: #E0F7FA;
         }
         .error {
-            color: #EF5350;
+            color: #FF5252;
             margin-top: 10px;
         }
         
@@ -75,9 +92,9 @@
             max-width: 900px;
             margin: 20px 0;
             padding: 20px;
-            background: linear-gradient(135deg, #0A1929, #1A2332);
+            background: linear-gradient(135deg, #003049, #004D6B);
             border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
             max-height: 600px;
             overflow-y: auto;
         }
@@ -87,7 +104,7 @@
             padding: 18px 22px;
             border-radius: 18px;
             position: relative;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
             animation: slideIn 0.3s ease-out;
         }
@@ -104,12 +121,12 @@
         }
         
         .user-message {
-            background: linear-gradient(135deg, #1B4332, #2D5A47, #40916C);
-            color: #E8F5E8;
+            background: linear-gradient(135deg, #00C853, #00E676, #69F0AE);
+            color: #1A1F1B;
             margin-left: 60px;
             border-bottom-right-radius: 8px;
-            border: 1px solid rgba(64, 145, 108, 0.3);
-            box-shadow: 0 6px 25px rgba(27, 67, 50, 0.4);
+            border: 1px solid rgba(0, 200, 83, 0.4);
+            box-shadow: 0 6px 25px rgba(0, 100, 41, 0.4);
         }
         
         .user-message::before {
@@ -118,19 +135,19 @@
             top: -25px;
             right: 15px;
             font-size: 13px;
-            color: #52C67A;
+            color: #00E676;
             font-weight: 600;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         
         .response-message {
-            background: linear-gradient(135deg, #0D47A1, #1565C0, #1976D2);
-            color: #E3F2FD;
+            background: linear-gradient(135deg, #0288D1, #03A9F4, #29B6F6);
+            color: #E0F7FA;
             margin-right: 60px;
             border-bottom-left-radius: 8px;
-            border-left: 4px solid #42A5F5;
-            border: 1px solid rgba(25, 118, 210, 0.3);
-            box-shadow: 0 6px 25px rgba(13, 71, 161, 0.4);
+            border-left: 4px solid #00E5FF;
+            border: 1px solid rgba(2, 136, 209, 0.4);
+            box-shadow: 0 6px 25px rgba(1, 87, 155, 0.4);
         }
         
         .response-message::before {
@@ -139,7 +156,7 @@
             top: -25px;
             left: 15px;
             font-size: 13px;
-            color: #64B5F6;
+            color: #00E5FF;
             font-weight: 600;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
@@ -147,11 +164,11 @@
         .prompt-container {
             position: sticky;
             bottom: 0;
-            background: linear-gradient(180deg, rgba(0, 36, 51, 0.9), #002433);
-            padding: 25px 0;
-            border-top: 2px solid rgba(66, 165, 245, 0.2);
+            background: linear-gradient(180deg, rgba(0, 77, 38, 0.9), #002E3B);
+            padding: 20px 0;
+            border-top: 2px solid #00E676;
             backdrop-filter: blur(15px);
-            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
         }
         
         /* Scrollbar personnalisée pour le chat */
@@ -160,17 +177,28 @@
         }
         
         .chat-container::-webkit-scrollbar-track {
-            background: rgba(55, 71, 79, 0.3);
+            background: rgba(2, 136, 209, 0.3);
             border-radius: 10px;
         }
         
         .chat-container::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #42A5F5, #64B5F6);
+            background: linear-gradient(135deg, #03A9F4, #00E5FF);
             border-radius: 10px;
         }
         
         .chat-container::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #1E88E5, #42A5F5);
+            background: linear-gradient(135deg, #0288D1, #03A9F4);
+        }
+
+        /* Styles pour les composants intégrés comme les tables */
+        .chat-message .q-expansion-item {
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .chat-message .q-expansion-item .q-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
         }
     </style>
 </head>
@@ -186,7 +214,33 @@
         <div class="chat-container">
             <div v-for="(message, index) in chatMessages" :key="index" class="chat-message"
                  :class="message.type === 'user' ? 'user-message' : 'response-message'">
-                {{ message.content }}
+                <div v-if="message.contentType === 'text'">
+                    {{ message.content }}
+                </div>
+                <q-expansion-item
+                    v-else-if="message.contentType === 'table'"
+                    icon="table_chart"
+                    :label="`Tableau: ${message.content.tableTitle}`"
+                    expand-separator
+                    expand-icon="keyboard_arrow_down"
+                    default-opened
+                >
+                    <q-card flat bordered>
+                        <q-table
+                            :rows="message.content.tableRows"
+                            :columns="getColumns(message.content.tableHeader)"
+                            row-key="name"
+                            :no-data-label="message.content.noDataFound"
+                            dense
+                        >
+                            <template v-slot:no-data>
+                                <div class="full-width row flex-center q-gutter-sm q-table__no-data">
+                                    <span>{{ message.content.noDataFound }}</span>
+                                </div>
+                            </template>
+                        </q-table>
+                    </q-card>
+                </q-expansion-item>
             </div>
         </div>
         
@@ -206,31 +260,11 @@
                         dense
                         icon="send"
                         @click="sendPrompt"
-                        style="color: #42A5F5;"
+                        style="color: #00E676;"
                         :disable="!promptInput.trim()"
                     />
                 </template>
             </q-input>
-        </div>
-        
-        <!-- Tables dynamiques -->
-        <div id="components">
-            <div v-for="(component, index) in dynamicComponents" :key="index">
-                <q-table
-                    :title="component.props.title"
-                    :rows="component.props.rows"
-                    :columns="component.props.columns"
-                    :no-data-label="component.props.noDataFound"
-                    row-key="name"
-                    dense
-                >
-                    <template v-slot:no-data>
-                        <div class="full-width row flex-center q-gutter-sm q-table__no-data">
-                            <span>{{ component.props.noDataFound }}</span>
-                        </div>
-                    </template>
-                </q-table>
-            </div>
         </div>
     </div>
 
@@ -246,10 +280,9 @@
             data() {
                 return {
                     ws: null,
-                    dynamicComponents: [],
                     error: null,
                     promptInput: '',
-                    chatMessages: [] // Nouveau: stockage des messages de chat
+                    chatMessages: []
                 };
             },
             methods: {
@@ -265,8 +298,7 @@
                             const msg = JSON.parse(event.data);
                             this.handleWebSocketMessage(msg);
                         } catch (e) {
-                            // Si ce n'est pas du JSON, traiter comme message texte simple
-                            this.addChatMessage('response', event.data);
+                            this.addChatMessage('response', 'text', event.data);
                         }
                     };
                     this.ws.onclose = () => {
@@ -288,17 +320,9 @@
                 sendPrompt() {
                     if (this.ws && this.ws.readyState === WebSocket.OPEN && this.promptInput.trim()) {
                         const userMessage = this.promptInput.trim();
-                        
-                        // Ajouter le message de l'utilisateur au chat (en vert)
-                        this.addChatMessage('user', userMessage);
-                        
-                        // Envoyer via WebSocket
+                        this.addChatMessage('user', 'text', userMessage);
                         this.ws.send(JSON.stringify({ type: 'prompt', data: userMessage }));
-                        
-                        // Réinitialiser l'input
                         this.promptInput = '';
-                        
-                        // Scroll vers le bas
                         this.$nextTick(() => {
                             this.scrollToBottom();
                         });
@@ -306,49 +330,33 @@
                         this.error = this.ws ? 'Saisie vide' : 'WebSocket non connecté';
                     }
                 },
-                addChatMessage(type, content) {
+                addChatMessage(type, contentType, content) {
                     this.chatMessages.push({
-                        type: type, // 'user' ou 'response'
+                        type: type,
+                        contentType: contentType || 'text',
                         content: content,
                         timestamp: new Date()
                     });
                 },
                 handleWebSocketMessage(msg) {
                     if (msg.type === 'table') {
-                        this.addDynamicComponent(msg);
-                        // Optionnel: ajouter un message dans le chat pour indiquer qu'un tableau a été reçu
-                        this.addChatMessage('response', `Tableau reçu: ${msg.data.tableTitle}`);
+                        this.addChatMessage('response', 'table', msg.data);
                     } else if (msg.type === 'response' || msg.type === 'message') {
-                        // Message de réponse textuel
-                        this.addChatMessage('response', msg.data || msg.message || 'Réponse reçue');
+                        this.addChatMessage('response', 'text', msg.data || msg.message || 'Réponse reçue');
                     } else {
-                        // Autres types de messages
-                        this.addChatMessage('response', JSON.stringify(msg));
+                        this.addChatMessage('response', 'text', JSON.stringify(msg));
                     }
-                    
-                    // Scroll vers le bas après réception
                     this.$nextTick(() => {
                         this.scrollToBottom();
                     });
                 },
-                addDynamicComponent(msg) {
-                    if (msg.type === 'table') {
-                        const columns = msg.data.tableHeader.map((col, index) => ({
-                            name: `col${index}`,
-                            label: col,
-                            field: row => row[index],
-                            align: 'left'
-                        }));
-                        this.dynamicComponents.push({
-                            props: {
-                                title: msg.data.tableTitle,
-                                noDataFound: msg.data.noDataFound,
-                                rows: msg.data.tableRows,
-                                columns: columns,
-                                rowKey: `col0`
-                            }
-                        });
-                    }
+                getColumns(header) {
+                    return header.map((col, index) => ({
+                        name: `col${index}`,
+                        label: col,
+                        field: row => row[index],
+                        align: 'left'
+                    }));
                 },
                 scrollToBottom() {
                     const chatContainer = document.querySelector('.chat-container');
@@ -359,7 +367,7 @@
             }
         });
 
-        app.use(Quasar, { config: {} });
+        app.use(Quasar, { config: { iconSet: 'material-icons' } });
         app.mount('#app');
     </script>
 </body>
