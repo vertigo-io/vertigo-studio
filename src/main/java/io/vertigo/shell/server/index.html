@@ -2,26 +2,124 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Terminal Web</title>
+    <title>WebSocket avec Java et Quasar QTable</title>
     <!-- Quasar CSS via CDN -->
     <link href="https://cdn.jsdelivr.net/npm/quasar@2.16.1/dist/quasar.prod.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.14.5/xterm.min.css" />
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 10px; background-color: #000; }
-        #terminal { width: 100%; height: 600px; }
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 20px;
+            background-color: #002433;
+            color: #B0BEC5;
+        }
+        #app {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #42A5F5;
+        }
+        .q-btn {
+            margin-right: 10px;
+            background-color: #1E88E5;
+            color: #FFFFFF;
+        }
+        .q-btn:hover {
+            background-color: #42A5F5;
+        }
+        .q-input {
+            margin: 10px 0;
+            max-width: 400px;
+        }
+        .q-input .q-field__control {
+            background-color: #1E1E1E;
+            color: #B0BEC5;
+            border-color: #37474F;
+        }
+        .q-input .q-field__control:hover {
+            border-color: #42A5F5;
+        }
+        .q-table {
+            background-color: #1E1E1E;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .q-table th {
+            background-color: #263238;
+            color: #42A5F5;
+            font-weight: 500;
+        }
+        .q-table td {
+            color: #B0BEC5;
+            border-color: #37474F;
+        }
+        .q-table tbody tr:nth-child(odd) {
+            background-color: #212121;
+        }
+        .q-table tbody tr:hover {
+            background-color: #37474F;
+        }
+        .q-table__title {
+            color: #42A5F5;
+        }
+        .q-table__no-data {
+            color: #B0BEC5;
+        }
+        .error {
+            color: #EF5350;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
     <div id="app">
         <h1>Communication WebSocket avec Java</h1>
-        <div id="terminal"></div>
+        <q-btn label="Connecter WebSocket" @click="connectWebSocket" color="primary"></q-btn>
+        <q-btn label="Envoyer Message Test" @click="sendTestMessage" color="secondary"></q-btn>
+        <div class="prompt">
+            <q-input
+                v-model="promptInput"
+                placeholder="Saisissez une commande"
+                outlined
+                dense
+                @keyup.enter="sendPrompt"
+            >
+                <template v-slot:append>
+                    <q-btn
+                        flat
+                        dense
+                        icon="send"
+                        @click="sendPrompt"
+                        style="color: #42A5F5;"
+                    />
+                </template>
+            </q-input>
+        </div>
+        <div v-if="error" class="error">{{ error }}</div>
+        <div id="components">
+            <div v-for="(component, index) in dynamicComponents" :key="index">
+                <q-table
+                    :title="component.props.title"
+                    :rows="component.props.rows"
+                    :columns="component.props.columns"
+                    :no-data-label="component.props.noDataFound"
+                    row-key="name"
+                    dense
+                >
+                    <template v-slot:no-data>
+                        <div class="full-width row flex-center q-gutter-sm q-table__no-data">
+                            <span>{{ component.props.noDataFound }}</span>
+                        </div>
+                    </template>
+                </q-table>
+            </div>
+        </div>
     </div>
 
     <!-- Vue.js via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
     <!-- Quasar JS via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/quasar@2.16.1/dist/quasar.umd.prod.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.14.5/xterm.min.js"></script>
 
     <script>
         const { createApp } = Vue;
@@ -30,52 +128,74 @@
             data() {
                 return {
                     ws: null,
-                    term: null
+                    dynamicComponents: [],
+                    error: null,
+                    promptInput: '' // Saisie utilisateur
                 };
             },
-            mounted() {
-                this.initTerminal();
-                this.connectWebSocket();
-            },
             methods: {
-                initTerminal() {
-                    this.term = new Terminal();
-                    this.term.open(document.getElementById('terminal'));
-
-                    this.term.onData(data => {
-                        // Simple local echo
-                        this.term.write(data);
-                        if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-                            this.ws.send(data);
-                        }
-                    });
-                },
                 connectWebSocket() {
-                    this.ws = new WebSocket('ws://localhost:8887'); // Use port 8887 for XtermServer
+                    this.error = null;
+                    this.ws = new WebSocket('ws://localhost:8080');
                     this.ws.onopen = () => {
                         console.log('WebSocket connecté');
-                        this.term.write('Connected to shell\r\n');
+                        this.error = null;
                     };
                     this.ws.onmessage = (event) => {
-                        this.term.write(event.data);
+                        try {
+                            const msg = JSON.parse(event.data);
+                            this.addDynamicComponent(msg);
+                        } catch (e) {
+                            this.error = 'Erreur de parsing JSON : ' + e.message;
+                        }
                     };
                     this.ws.onclose = () => {
                         console.log('WebSocket fermé');
-                        this.term.write('\r\nConnection closed');
+                        this.error = 'Connexion WebSocket fermée';
                     };
                     this.ws.onerror = (error) => {
                         console.error('Erreur WebSocket:', error);
-                        this.term.write('\r\n\u001B[31mWebSocket Error: ' + error + '\u001B[0m\r\n');
+                        this.error = 'Erreur WebSocket : Vérifiez que le serveur est en cours d\'exécution sur ws://localhost:8080/websocket';
                     };
+                },
+                sendTestMessage() {
+                    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+                        this.ws.send('Message test depuis la page');
+                    } else {
+                        this.error = 'WebSocket non connecté';
+                    }
+                },
+                sendPrompt() {
+                    if (this.ws && this.ws.readyState === WebSocket.OPEN && this.promptInput.trim()) {
+                        this.ws.send(JSON.stringify({ type: 'prompt', data: this.promptInput }));
+                        this.promptInput = ''; // Réinitialiser la saisie
+                    } else {
+                        this.error = this.ws ? 'Saisie vide' : 'WebSocket non connecté';
+                    }
+                },
+                addDynamicComponent(msg) {
+                    if (msg.type === 'table') {
+                        const columns = msg.data.tableHeader.map((col, index) => ({
+                            name: `col${index}`,
+                            label: col,
+                            field: row => row[index],
+                            align: 'left'
+                        }));
+                        this.dynamicComponents.push({
+                            props: {
+                                title: msg.data.tableTitle,
+                                noDataFound: msg.data.noDataFound,
+                                rows: msg.data.tableRows,
+                                columns: columns,
+                                rowKey: `col0`
+                            }
+                        });
+                    }
                 }
             }
         });
 
-        // Intégrer Quasar à l'app Vue
-        app.use(Quasar, {
-            config: {} // Options Quasar si besoin
-        });
-
+        app.use(Quasar, { config: {} });
         app.mount('#app');
     </script>
 </body>

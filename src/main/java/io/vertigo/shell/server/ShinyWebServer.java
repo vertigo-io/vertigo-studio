@@ -43,17 +43,38 @@ public class ShinyWebServer extends WebSocketServer {
 		System.out.println("Closed connection to " + conn.getRemoteSocketAddress().getAddress().getHostAddress());
 	}
 
+	private final ObjectMapper mapper = new ObjectMapper();
+
 	@Override
 	public void onMessage(WebSocket conn, String message) {
-		System.out.println("Received from web console : " + message);
+		System.out.println("Message reçu : " + message);
+		try {
+			// Parser le message JSON
+			WebSocketMessage wsMessage = mapper.readValue(message, WebSocketMessage.class);
+			if ("prompt".equals(wsMessage.type())) {
+				// Traiter la saisie utilisateur
+				String userInput = wsMessage.data();
+				System.out.println("Prompt reçu : " + userInput);
 
+				if ("test".equals(userInput)) {
+					sendTable(conn);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			//			System.out.println("Erreur de parsing : " + e.getMessage());
+			//			// Envoie une erreur au client
+			//			session.getBasicRemote().sendText("{\"type\": \"error\", \"message\": \"Erreur de traitement : " + e.getMessage() + "\"}");
+		}
+	}
+
+	private void sendTable(WebSocket conn) {
 		String[] header = { "Nom", "Valeur" };
 		List<String[]> rows = new ArrayList<>();
 		rows.add(new String[] { "Item1", "100" });
 		rows.add(new String[] { "Item2", "200" });
 		TableData table = new TableData("Résultats", "Rien à afficher", header, rows);
 
-		ObjectMapper mapper = new ObjectMapper();
 		try {
 			final String data = mapper.writeValueAsString(table);
 			//			broadcast(json);
