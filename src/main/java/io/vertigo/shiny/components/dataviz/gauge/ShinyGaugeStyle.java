@@ -6,6 +6,7 @@ import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyGaugeStyle {
 	private ShinyColor gaugeColor = ShinyColors.GREEN;
+	private int gaugeMaxLength = 50; // Longueur de la barre en caractères
 
 	public ShinyGaugeStyle color(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
@@ -16,5 +17,17 @@ public final class ShinyGaugeStyle {
 
 	ShinyColor color() {
 		return gaugeColor;
+	}
+
+	public ShinyGaugeStyle maxLength(int maxLength) {
+		Assertion.check()
+				.isTrue(maxLength > 1, "maxlength mus be positive");
+		//---
+		this.gaugeMaxLength = maxLength;
+		return this;
+	}
+
+	int maxLength() {
+		return gaugeMaxLength;
 	}
 }

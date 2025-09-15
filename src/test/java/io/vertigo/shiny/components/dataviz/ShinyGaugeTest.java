@@ -71,16 +71,16 @@ public class ShinyGaugeTest {
 		Shiny.gauge()
 				.title("Short Gauge")
 				.value(60)
-				.length(20) // Shorter bar
 				.style(new ShinyGaugeStyle()
+						.maxLength(20) // Shorter bar
 						.color(ShinyColors.BLUE))
 				.render(writer);
 
 		Shiny.gauge()
 				.title("Long Gauge")
 				.value(40)
-				.length(80) // Longer bar
 				.style(new ShinyGaugeStyle()
+						.maxLength(80)
 						.color(ShinyColors.WHITE))
 				.render(writer);
 		writer.println();
@@ -102,6 +102,14 @@ public class ShinyGaugeTest {
 				.title("Value > Max")
 				.value(120)
 				.max(100)
+				.style(new ShinyGaugeStyle()
+						.color(ShinyColors.RED))
+				.render(writer); // Should show full bar (capped at max)
+
+		Shiny.gauge()
+				.title("50 %")
+				.value(120)
+				.max(240)
 				.style(new ShinyGaugeStyle()
 						.color(ShinyColors.RED))
 				.render(writer); // Should show full bar (capped at max)

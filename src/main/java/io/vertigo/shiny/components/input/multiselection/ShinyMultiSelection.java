@@ -17,7 +17,6 @@ public final class ShinyMultiSelection implements ShinyComponent {
 	private String multiselectionTitle;
 	private final List<String> multiselectionOptions;
 	private Set<Integer> selectedIndices;
-	private boolean strictMode = false; // Fallback for non-cursor consoles
 
 	public ShinyMultiSelection() {
 		this.multiselectionOptions = new ArrayList<>();
@@ -53,24 +52,11 @@ public final class ShinyMultiSelection implements ShinyComponent {
 		return this;
 	}
 
-	public ShinyMultiSelection strict() {
-		this.strictMode = true;
-		return this;
-	}
-
 	@Override
 	public void render(ShinyWriter writer) {
 		if (multiselectionTitle != null) {
 			writer.println(multiselectionTitle);
 		}
-		if (strictMode) {
-			handleStrictMode(writer);
-		} else {
-			handleInteractiveMode(writer);
-		}
-	}
-
-	private void handleStrictMode(ShinyWriter writer) {
 		writer.println("Please enter the numbers of the options you want to select, separated by commas (e.g., 1,3,5):");
 		for (int i = 0; i < multiselectionOptions.size(); i++) {
 			final String prefix = selectedIndices.contains(i) ? "[X] " : "[ ] ";
@@ -98,12 +84,6 @@ public final class ShinyMultiSelection implements ShinyComponent {
 			writer.println(ShinyColors.RED.fg("Invalid input. Please try again."));
 			selectedIndices.clear(); // Clear selection on error
 		}
-	}
-
-	private void handleInteractiveMode(ShinyWriter writer) {
-		writer.println(ShinyColors.YELLOW.fg("Interactive mode not fully implemented yet. Using strict mode fallback."));
-		strictMode = true; // Fallback to strict mode
-		handleStrictMode(writer);
 	}
 
 	public List<String> getSelectedOptions() {

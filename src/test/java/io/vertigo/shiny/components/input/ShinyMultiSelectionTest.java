@@ -16,8 +16,7 @@ public class ShinyMultiSelectionTest {
 	private static void testBasicMultiSelectionStrict(final ShinyWriter writer) {
 		final ShinyMultiSelection multiSelection = Shiny.multiSelection()
 				.title("Choose your favorite fruits:")
-				.options("Apple", "Banana", "Cherry", "Date")
-				.strict(); // Enable strict mode
+				.options("Apple", "Banana", "Cherry", "Date");
 		multiSelection.render(writer);
 
 		final List<String> selected = multiSelection.getSelectedOptions();
@@ -28,8 +27,7 @@ public class ShinyMultiSelectionTest {
 		final ShinyMultiSelection multiSelection = Shiny.multiSelection()
 				.title("Choose your favorite colors:")
 				.options("Red", "Green", "Blue", "Yellow")
-				.selected(List.of("Green", "Yellow"))
-				.strict();
+				.selected(List.of("Green", "Yellow"));
 		multiSelection.render(writer);
 
 		final List<String> selected = multiSelection.getSelectedOptions();

@@ -9,7 +9,6 @@ public final class ShinyGauge implements ShinyComponent {
 	private String title;
 	private double value;
 	private double max = 100;
-	private int barLength = 50;
 	private ShinyGaugeStyle gaugeStyle;
 
 	public ShinyGauge() {
@@ -38,11 +37,6 @@ public final class ShinyGauge implements ShinyComponent {
 		return this;
 	}
 
-	public ShinyGauge length(final int length) {
-		this.barLength = length;
-		return this;
-	}
-
 	public void render(ShinyWriter writer) {
 		final double percentage;
 		if (value >= max) {
@@ -52,11 +46,11 @@ public final class ShinyGauge implements ShinyComponent {
 		} else {
 			percentage = (value / max);
 		}
-		final int filledLength = (int) (barLength * percentage);
+		final int filledLength = (int) (this.gaugeStyle.maxLength() * percentage);
 		final String gauge = new StringBuilder()
 				.append(title != null ? title + " " : "")
 				.append("[")
-				.append(gaugeStyle.color().fg("█".repeat(filledLength) + "▒".repeat(barLength - filledLength)))
+				.append(gaugeStyle.color().fg("█".repeat(filledLength) + "▒".repeat(this.gaugeStyle.maxLength() - filledLength)))
 				.append("] ")
 				.append(String.format("%.2f%%", percentage * 100))
 				.toString();

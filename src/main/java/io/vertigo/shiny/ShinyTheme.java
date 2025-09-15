@@ -3,6 +3,7 @@ package io.vertigo.shiny;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.ShellContext;
 import io.vertigo.shiny.components.data.json.ShinyJsonStyle;
 import io.vertigo.shiny.components.data.list.ShinyListStyle;
@@ -12,6 +13,8 @@ import io.vertigo.shiny.components.dataviz.gauge.ShinyGaugeStyle;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingStyle;
 import io.vertigo.shiny.components.dataviz.sparkline.ShinySparklineStyle;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatusStyle;
+import io.vertigo.shiny.components.live.progressbar.ShinyProgressBarStyle;
+import io.vertigo.shiny.components.live.spinner.ShinySpinnerStyle;
 import io.vertigo.shiny.components.text.figlet.ShinyFigletStyle;
 import io.vertigo.shiny.components.text.textpath.ShinyTextPathStyle;
 import io.vertigo.shiny.components.text.toggle.ShinyToggleStyle;
@@ -20,8 +23,8 @@ public final class ShinyTheme {
 	private boolean asciiTheme = false; //vs unicode
 	private boolean squareTheme = false; //vs rounded
 	//Values by default
-	public final NumberFormat numberFormat = NumberFormat.getNumberInstance(ShellContext.LOCALE);
-	private Locale locale = ShellContext.LOCALE;
+	public final NumberFormat themeNumberFormat = NumberFormat.getNumberInstance(ShellContext.LOCALE);
+	private Locale themeLocale = ShellContext.LOCALE;
 
 	ShinyTheme() {
 		//Theme must be obtained by Shiny.
@@ -56,11 +59,17 @@ public final class ShinyTheme {
 	}
 
 	public NumberFormat numberFormat() {
-		return numberFormat;
+		return themeNumberFormat;
+	}
+
+	public void locale(Locale locale) {
+		Assertion.check().isNotNull(locale);
+		//---
+		this.themeLocale = locale;
 	}
 
 	public Locale locale() {
-		return locale;
+		return themeLocale;
 	}
 
 	private final ShinyTableStyle tableStyle = new ShinyTableStyle();
@@ -75,6 +84,8 @@ public final class ShinyTheme {
 	private final ShinyListStyle listStyle = new ShinyListStyle();
 	private final ShinyRatingStyle ratingStyle = new ShinyRatingStyle();
 	private final ShinySparklineStyle sparklineStyle = new ShinySparklineStyle();
+	private final ShinyProgressBarStyle progressBarStyle = new ShinyProgressBarStyle();
+	private final ShinySpinnerStyle spinnerStyle = new ShinySpinnerStyle();
 
 	public ShinyTableStyle tableStyle() {
 		return tableStyle;
@@ -122,5 +133,13 @@ public final class ShinyTheme {
 
 	public ShinySparklineStyle sparklineStyle() {
 		return sparklineStyle;
+	}
+
+	public ShinyProgressBarStyle progressBarStyle() {
+		return progressBarStyle;
+	}
+
+	public ShinySpinnerStyle spinnerStyle() {
+		return spinnerStyle;
 	}
 }

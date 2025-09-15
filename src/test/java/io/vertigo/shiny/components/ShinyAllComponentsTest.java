@@ -9,7 +9,6 @@ import static io.vertigo.shiny.style.ShinyColors.YELLOW;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 
 import io.vertigo.shiny.Shiny;
@@ -65,8 +64,7 @@ public class ShinyAllComponentsTest {
 		//---
 		final ShinyMultiSelection multiSelection = Shiny.multiSelection()
 				.title("Choose your favorite fruits:")
-				.options("Apple", "Banana", "Cherry")
-				.strict();
+				.options("Apple", "Banana", "Cherry");
 
 		multiSelection.render(writer);
 
@@ -83,7 +81,6 @@ public class ShinyAllComponentsTest {
 				.header("Jan", "Feb", "Mar")
 				.rows(100, 120, 90)
 				.sort(ShinySortMode.VALUE_DESC)
-				.length(50)
 				.render(writer);
 		waitForEnter(writer);
 	}
@@ -95,7 +92,6 @@ public class ShinyAllComponentsTest {
 		Shiny.calendar()
 				.year(2024)
 				.month(Month.JULY.getValue())
-				.locale(Locale.FRENCH)
 				.highlight(LocalDate.of(2024, Month.JULY, 14))
 				.render(writer);
 		waitForEnter(writer);

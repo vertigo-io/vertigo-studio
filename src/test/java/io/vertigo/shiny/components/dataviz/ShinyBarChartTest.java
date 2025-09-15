@@ -20,7 +20,6 @@ public class ShinyBarChartTest {
 				.title("Monthly Sales")
 				.header("Jan", "Feb", "Mar", "Apr", "May")
 				.rows(100, 120, 90, 150, 110)
-				.length(50)
 				.render(writer); // Max bar length of 50 characters
 		writer.println();
 	}
@@ -40,7 +39,6 @@ public class ShinyBarChartTest {
 						1800000, 2800000, 660000, 520000, 17800000,
 						37600000, 10300000, 19000000, 5400000, 2100000, 48000000, 10600000)
 				.sort(ShinySortMode.VALUE_DESC)
-				.length(100)
 				.render(writer);
 		writer.println();
 	}
@@ -58,7 +56,6 @@ public class ShinyBarChartTest {
 				.header(headers)
 				.rows(values)
 				.sort(ShinySortMode.NO)
-				.length(30)
 				.render(writer);
 		writer.println();
 
@@ -69,7 +66,6 @@ public class ShinyBarChartTest {
 				.header(headers)
 				.rows(values)
 				.sort(ShinySortMode.VALUE_ASC)
-				.length(30)
 				.render(writer);
 		writer.println();
 
@@ -80,7 +76,6 @@ public class ShinyBarChartTest {
 				.header(headers)
 				.rows(values)
 				.sort(ShinySortMode.VALUE_DESC)
-				.length(30)
 				.render(writer);
 		writer.println();
 
@@ -91,7 +86,6 @@ public class ShinyBarChartTest {
 				.header(headers)
 				.rows(values)
 				.sort(ShinySortMode.HEADER_ASC)
-				.length(30)
 				.render(writer);
 		writer.println();
 
@@ -102,8 +96,8 @@ public class ShinyBarChartTest {
 				.header(headers)
 				.rows(values)
 				.sort(ShinySortMode.HEADER_DESC)
-				.length(30)
-				.style(new ShinyBarChartStyle().barColors(ShinyColors.MAGENTA, ShinyColors.MAGENTA_BRIGHT))
+				.style(new ShinyBarChartStyle()
+						.colors(ShinyColors.MAGENTA, ShinyColors.MAGENTA_BRIGHT))
 				.render(writer);
 		writer.println();
 	}

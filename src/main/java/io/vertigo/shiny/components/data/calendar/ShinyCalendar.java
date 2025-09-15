@@ -15,7 +15,6 @@ import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.components.data.table.ShinyTableStyle;
 
 public final class ShinyCalendar implements ShinyComponent {
-	private Locale calendarLocale;
 	private final List<LocalDate> highlightedDates = new ArrayList<>();
 	private int year;
 	private int month;
@@ -23,7 +22,6 @@ public final class ShinyCalendar implements ShinyComponent {
 
 	public ShinyCalendar() {
 		this.calendarStyle = Shiny.theme().calendarStyle();
-		this.calendarLocale = Shiny.theme().locale();
 		final LocalDate now = LocalDate.now();
 		this.year = now.getYear();
 		this.month = now.getMonthValue();
@@ -38,11 +36,6 @@ public final class ShinyCalendar implements ShinyComponent {
 
 	public ShinyCalendar year(final int calendarYear) {
 		this.year = calendarYear;
-		return this;
-	}
-
-	public ShinyCalendar locale(final Locale locale) {
-		this.calendarLocale = locale;
 		return this;
 	}
 
@@ -62,6 +55,7 @@ public final class ShinyCalendar implements ShinyComponent {
 	}
 
 	public void render(ShinyWriter writer) {
+		final Locale calendarLocale = Shiny.theme().locale();
 		final LocalDate firstDayOfMonth = LocalDate.of(year, month, 1);
 		final LocalDate lastDayOfMonth = firstDayOfMonth.plusMonths(1).minusDays(1);
 

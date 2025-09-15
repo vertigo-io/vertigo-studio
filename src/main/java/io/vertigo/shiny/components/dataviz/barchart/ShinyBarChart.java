@@ -3,6 +3,7 @@ package io.vertigo.shiny.components.dataviz.barchart;
 import java.util.Arrays;
 import java.util.List;
 
+import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
@@ -12,20 +13,21 @@ public final class ShinyBarChart implements ShinyComponent {
 	private String[] barChartHeader;
 	private int[] barChartRow;
 	private ShinySortMode sortMode = ShinySortMode.NO;
-	private int maxBarLength; // Longueur de la barre en caractères
 	private ShinyBarChartStyle barChartStyle;
 
 	public ShinyBarChart() {
 		barChartStyle = Shiny.theme().barChartStyle();
 	}
 
-	public ShinyBarChart title(final String title) {
-		this.barChartTitle = title;
+	public ShinyBarChart style(final ShinyBarChartStyle style) {
+		Assertion.check().isNotNull(style);
+		//---
+		this.barChartStyle = style;
 		return this;
 	}
 
-	public ShinyBarChart length(final int length) {
-		this.maxBarLength = length;
+	public ShinyBarChart title(final String title) {
+		this.barChartTitle = title;
 		return this;
 	}
 
@@ -54,11 +56,6 @@ public final class ShinyBarChart implements ShinyComponent {
 
 	public ShinyBarChart sort(final ShinySortMode mode) {
 		this.sortMode = mode;
-		return this;
-	}
-
-	public ShinyBarChart style(final ShinyBarChartStyle style) {
-		this.barChartStyle = style;
 		return this;
 	}
 
@@ -120,15 +117,15 @@ public final class ShinyBarChart implements ShinyComponent {
 			final String category = barChartHeader[i] != null ? barChartHeader[i] : "Catégorie " + (i + 1);
 			final int count = barChartRow[i];
 			// Normaliser la longueur de la barre
-			final int barLength = (int) ((double) count / maxCount * maxBarLength);
+			final int barLength = (int) ((double) count / maxCount * barChartStyle.maxLength());
 			final String bar = "█".repeat(Math.max(0, barLength)); // Utiliser le caractère carré plein █
-			final String coloredBar = barChartStyle.barColors[i % barChartStyle.barColors.length].fg(bar);
+			final String coloredBar = barChartStyle.colors()[i % barChartStyle.colors().length].fg(bar);
 			String content = "%-" + maxLabelLength + "s | %-50s (%d)%n";
 			writer.print(String.format(content, category, coloredBar, count));
 		}
 
 		writer
 				.println("----------------------------------------")
-				.println("Échelle : █ représente environ " + (maxCount / (double) maxBarLength) + " unités.");
+				.println("Échelle : █ représente environ " + (maxCount / (double) barChartStyle.maxLength()) + " unités.");
 	}
 }

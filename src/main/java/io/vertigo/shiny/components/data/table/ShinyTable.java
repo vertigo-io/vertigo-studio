@@ -23,7 +23,7 @@ public final class ShinyTable implements ShinyComponent {
 	/**
 	 * Creates a new ShinyTable.
 	 *
-	 * @param numberFormat the NumberFormat used to format numeric values
+	 * @param themeNumberFormat the NumberFormat used to format numeric values
 	 */
 	public ShinyTable() {
 		this.tableStyle = Shiny.theme().tableStyle();

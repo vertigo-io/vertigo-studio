@@ -44,7 +44,6 @@ public final class DbStatsCommand implements ShellCommand {
 				.title("Tables Row Count")
 				.header(tableNames)
 				.rows(tableCounts)
-				.length(100)
 				.render(writer);
 	}
 

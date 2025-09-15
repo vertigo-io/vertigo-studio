@@ -43,13 +43,13 @@ public final class ShinyTextPath implements ShinyComponent {
 	public void render(final ShinyWriter writer) {
 		Assertion.check().isNotBlank(textPath, "Path cannot be blank");
 		//---
-		final StringBuilder coloredPath = new StringBuilder();
+		//		final StringBuilder coloredPath = new StringBuilder();
 		final String[] parts = textPath.split(Pattern.quote(separator)); // Modified line
 
 		final boolean relative = textPath.startsWith(separator);
 
 		if (relative) {
-			coloredPath.append(textPathStyle.rootColor().fg(separator));
+			writer.print(textPathStyle.rootColor().fg(separator));
 		}
 		for (int i = 0; i < parts.length; i++) {
 			final String part = parts[i];
@@ -65,7 +65,7 @@ public final class ShinyTextPath implements ShinyComponent {
 			} else { //node
 				color = textPathStyle.nodeColor();
 			}
-			coloredPath.append(color.fg(part));
+			writer.print(color.fg(part));
 
 			if (i < parts.length - 1) {
 				final ShinyColor sepColor;
@@ -74,9 +74,9 @@ public final class ShinyTextPath implements ShinyComponent {
 				} else {
 					sepColor = textPathStyle.separatorColor();
 				}
-				coloredPath.append(sepColor.fg(separator));
+				writer.print(sepColor.fg(separator));
 			}
 		}
-		writer.println(coloredPath.toString());
+		writer.println();
 	}
 }

@@ -56,19 +56,19 @@ public class ShinyCalendarTest {
 
 	private static void testDifferentLocales(ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Calendar with French Locale (September 2024) ---"));
+		Shiny.theme().locale(Locale.FRENCH);
 		Shiny.calendar()
 				.year(2024)
 				.month(Month.SEPTEMBER)
-				.locale(Locale.FRENCH) // Set locale to French
 				.highlight(LocalDate.of(2024, Month.SEPTEMBER, 1)) // Highlight a date in French calendar
 				.render(writer);
 		writer.println();
 
 		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Calendar with German Locale (January 2025) ---"));
+		Shiny.theme().locale(Locale.GERMAN);
 		Shiny.calendar()
 				.year(2025)
 				.month(Month.JANUARY)
-				.locale(Locale.GERMAN) // Set locale to German
 				.highlight(LocalDate.of(2025, Month.JANUARY, 1))
 				.render(writer);
 		writer.println();
@@ -93,6 +93,7 @@ public class ShinyCalendarTest {
 		writer.println();
 
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Calendar with ASCII Border (February 2025) ---"));
+		Shiny.theme().ascii();
 		Shiny.calendar()
 				.year(2025)
 				.month(Month.FEBRUARY.getValue())

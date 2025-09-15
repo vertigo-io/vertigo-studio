@@ -11,7 +11,7 @@ import io.vertigo.shiny.components.ShinyComponent;
 public final class ShinyList implements ShinyComponent {
 	private String title;
 	private final List<Object> listItems = new ArrayList<>();
-	private ShinyListType listType = ShinyListType.UNORDERED; // Changed default
+	private ShinyListType listType = ShinyListType.UNORDERED;
 	private ShinyListStyle listStyle;
 
 	public ShinyList() {

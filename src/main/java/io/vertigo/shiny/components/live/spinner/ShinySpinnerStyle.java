@@ -1,12 +1,22 @@
 package io.vertigo.shiny.components.live.spinner;
 
-class ShinySpinnerStyle {
-	static final String[] FRAMES = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" };
-	//		private static final String[] COLORS = {
-	//				ShinyColors.CYAN_BRIGHT,
-	//				ShinyColors.BLUE,
-	//				ShinyColors.MAGENTA_BRIGHT,
-	//				ShinyColors.YELLOW,
-	//				ShinyColors.GREEN
-	//		};
+import io.vertigo.core.lang.Assertion;
+
+public final class ShinySpinnerStyle {
+	private static final String[] PRETTY_FRAMES = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" };
+
+	private String[] spinnerFrames = PRETTY_FRAMES;
+
+	String[] frames() {
+		return spinnerFrames;
+	}
+
+	public ShinySpinnerStyle frames(String... frames) {
+		Assertion.check()
+				.isNotNull(frames)
+				.isTrue(frames.length > 1, "you mus register at least 2 frames");
+		//---
+		this.spinnerFrames = frames;
+		return this;
+	}
 }

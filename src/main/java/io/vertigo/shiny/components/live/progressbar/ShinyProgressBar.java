@@ -1,22 +1,25 @@
 package io.vertigo.shiny.components.live.progressbar;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.live.ShinyLiveComponent;
 
 public final class ShinyProgressBar extends ShinyLiveComponent<ShinyProgressBar> {
 	private int total = 0; // Valeur totale correspondant à 100%
-	private int barLength; // Longueur de la barre en caractères
 	private volatile int currentProgress;
+	private ShinyProgressBarStyle progressBarStyle;
 
 	// Constructeur
 	public ShinyProgressBar() {
 		super();
-		this.barLength = 50;
+		this.progressBarStyle = Shiny.theme().progressBarStyle();
 	}
 
-	public ShinyProgressBar length(final int length) {
-		this.barLength = length;
+	public ShinyProgressBar style(final ShinyProgressBarStyle style) {
+		Assertion.check().isNotNull(style);
+		//---
+		this.progressBarStyle = style;
 		return this;
 	}
 
@@ -43,13 +46,13 @@ public final class ShinyProgressBar extends ShinyLiveComponent<ShinyProgressBar>
 		// Calculer le pourcentage
 		final int percentage = (currentProgress * 100) / total;
 		// Calculer le nombre de carrés à remplir
-		final int filled = (currentProgress * barLength) / total;
+		final int filled = (currentProgress * progressBarStyle.maxLength()) / total;
 
 		// Construire la barre
 		writer.print("\r")
 				.print("[")
 				.print("█".repeat(filled))
-				.print("▒".repeat(barLength - filled))
+				.print("▒".repeat(progressBarStyle.maxLength() - filled))
 				.print("] ")
 				.print(percentage + "%")
 				.flush(); //On force le flush
