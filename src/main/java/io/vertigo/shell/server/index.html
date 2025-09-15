@@ -69,6 +69,109 @@
             color: #EF5350;
             margin-top: 10px;
         }
+        
+        /* Styles pour le chat */
+        .chat-container {
+            max-width: 900px;
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #0A1929, #1A2332);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .chat-message {
+            margin: 20px 0;
+            padding: 18px 22px;
+            border-radius: 18px;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .user-message {
+            background: linear-gradient(135deg, #1B4332, #2D5A47, #40916C);
+            color: #E8F5E8;
+            margin-left: 60px;
+            border-bottom-right-radius: 8px;
+            border: 1px solid rgba(64, 145, 108, 0.3);
+            box-shadow: 0 6px 25px rgba(27, 67, 50, 0.4);
+        }
+        
+        .user-message::before {
+            content: "👤 Vous";
+            position: absolute;
+            top: -25px;
+            right: 15px;
+            font-size: 13px;
+            color: #52C67A;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .response-message {
+            background: linear-gradient(135deg, #0D47A1, #1565C0, #1976D2);
+            color: #E3F2FD;
+            margin-right: 60px;
+            border-bottom-left-radius: 8px;
+            border-left: 4px solid #42A5F5;
+            border: 1px solid rgba(25, 118, 210, 0.3);
+            box-shadow: 0 6px 25px rgba(13, 71, 161, 0.4);
+        }
+        
+        .response-message::before {
+            content: "🤖 Assistant";
+            position: absolute;
+            top: -25px;
+            left: 15px;
+            font-size: 13px;
+            color: #64B5F6;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .prompt-container {
+            position: sticky;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(0, 36, 51, 0.9), #002433);
+            padding: 25px 0;
+            border-top: 2px solid rgba(66, 165, 245, 0.2);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Scrollbar personnalisée pour le chat */
+        .chat-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .chat-container::-webkit-scrollbar-track {
+            background: rgba(55, 71, 79, 0.3);
+            border-radius: 10px;
+        }
+        
+        .chat-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #42A5F5, #64B5F6);
+            border-radius: 10px;
+        }
+        
+        .chat-container::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #1E88E5, #42A5F5);
+        }
     </style>
 </head>
 <body>
@@ -76,13 +179,26 @@
         <h1>Communication WebSocket avec Java</h1>
         <q-btn label="Connecter WebSocket" @click="connectWebSocket" color="primary"></q-btn>
         <q-btn label="Envoyer Message Test" @click="sendTestMessage" color="secondary"></q-btn>
-        <div class="prompt">
+        
+        <div v-if="error" class="error">{{ error }}</div>
+        
+        <!-- Container pour les messages de chat -->
+        <div class="chat-container">
+            <div v-for="(message, index) in chatMessages" :key="index" class="chat-message"
+                 :class="message.type === 'user' ? 'user-message' : 'response-message'">
+                {{ message.content }}
+            </div>
+        </div>
+        
+        <!-- Input prompt collant en bas -->
+        <div class="prompt-container">
             <q-input
                 v-model="promptInput"
-                placeholder="Saisissez une commande"
+                placeholder="Saisissez votre question..."
                 outlined
                 dense
                 @keyup.enter="sendPrompt"
+                style="max-width: 100%;"
             >
                 <template v-slot:append>
                     <q-btn
@@ -91,11 +207,13 @@
                         icon="send"
                         @click="sendPrompt"
                         style="color: #42A5F5;"
+                        :disable="!promptInput.trim()"
                     />
                 </template>
             </q-input>
         </div>
-        <div v-if="error" class="error">{{ error }}</div>
+        
+        <!-- Tables dynamiques -->
         <div id="components">
             <div v-for="(component, index) in dynamicComponents" :key="index">
                 <q-table
@@ -130,7 +248,8 @@
                     ws: null,
                     dynamicComponents: [],
                     error: null,
-                    promptInput: '' // Saisie utilisateur
+                    promptInput: '',
+                    chatMessages: [] // Nouveau: stockage des messages de chat
                 };
             },
             methods: {
@@ -144,9 +263,10 @@
                     this.ws.onmessage = (event) => {
                         try {
                             const msg = JSON.parse(event.data);
-                            this.addDynamicComponent(msg);
+                            this.handleWebSocketMessage(msg);
                         } catch (e) {
-                            this.error = 'Erreur de parsing JSON : ' + e.message;
+                            // Si ce n'est pas du JSON, traiter comme message texte simple
+                            this.addChatMessage('response', event.data);
                         }
                     };
                     this.ws.onclose = () => {
@@ -167,11 +287,49 @@
                 },
                 sendPrompt() {
                     if (this.ws && this.ws.readyState === WebSocket.OPEN && this.promptInput.trim()) {
-                        this.ws.send(JSON.stringify({ type: 'prompt', data: this.promptInput }));
-                        this.promptInput = ''; // Réinitialiser la saisie
+                        const userMessage = this.promptInput.trim();
+                        
+                        // Ajouter le message de l'utilisateur au chat (en vert)
+                        this.addChatMessage('user', userMessage);
+                        
+                        // Envoyer via WebSocket
+                        this.ws.send(JSON.stringify({ type: 'prompt', data: userMessage }));
+                        
+                        // Réinitialiser l'input
+                        this.promptInput = '';
+                        
+                        // Scroll vers le bas
+                        this.$nextTick(() => {
+                            this.scrollToBottom();
+                        });
                     } else {
                         this.error = this.ws ? 'Saisie vide' : 'WebSocket non connecté';
                     }
+                },
+                addChatMessage(type, content) {
+                    this.chatMessages.push({
+                        type: type, // 'user' ou 'response'
+                        content: content,
+                        timestamp: new Date()
+                    });
+                },
+                handleWebSocketMessage(msg) {
+                    if (msg.type === 'table') {
+                        this.addDynamicComponent(msg);
+                        // Optionnel: ajouter un message dans le chat pour indiquer qu'un tableau a été reçu
+                        this.addChatMessage('response', `Tableau reçu: ${msg.data.tableTitle}`);
+                    } else if (msg.type === 'response' || msg.type === 'message') {
+                        // Message de réponse textuel
+                        this.addChatMessage('response', msg.data || msg.message || 'Réponse reçue');
+                    } else {
+                        // Autres types de messages
+                        this.addChatMessage('response', JSON.stringify(msg));
+                    }
+                    
+                    // Scroll vers le bas après réception
+                    this.$nextTick(() => {
+                        this.scrollToBottom();
+                    });
                 },
                 addDynamicComponent(msg) {
                     if (msg.type === 'table') {
@@ -190,6 +348,12 @@
                                 rowKey: `col0`
                             }
                         });
+                    }
+                },
+                scrollToBottom() {
+                    const chatContainer = document.querySelector('.chat-container');
+                    if (chatContainer) {
+                        chatContainer.scrollTop = chatContainer.scrollHeight;
                     }
                 }
             }

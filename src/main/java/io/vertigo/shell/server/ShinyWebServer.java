@@ -69,15 +69,14 @@ public class ShinyWebServer extends WebSocketServer {
 	}
 
 	private void sendTable(WebSocket conn) {
-		String[] header = { "Nom", "Valeur" };
-		List<String[]> rows = new ArrayList<>();
+		final String[] header = { "Nom", "Valeur" };
+		final List<String[]> rows = new ArrayList<>();
 		rows.add(new String[] { "Item1", "100" });
 		rows.add(new String[] { "Item2", "200" });
-		TableData table = new TableData("Résultats", "Rien à afficher", header, rows);
+		final TableData table = new TableData("Résultats", "Rien à afficher", header, rows);
 
 		try {
 			final String data = mapper.writeValueAsString(table);
-			//			broadcast(json);
 			final String json = String.format("""
 					{
 					"type": "table", "data": %s
