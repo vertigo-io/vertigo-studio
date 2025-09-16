@@ -1,32 +1,38 @@
         :root {
-  --theme-bg: #001F2A;
-  --theme-surface: #022B3A;
-  --theme-primary: #0288D1;
-  --theme-accent: #00E5FF;
-  --theme-positive: #00C853;
-  --theme-negative: #FF5252;
-  --theme-text-light: #E0F7FA;
-  --theme-text-dark: #1A1F1B;
-  --theme-shadow: rgba(0, 0, 0, 0.4);
+  /* General */
+  --general-bg: #001F2A;
+  --general-surface: #022B3A;
+  --general-text: #E0F7FA;
+  --general-shadow: rgba(0, 0, 0, 0.4);
+  --general-error: #FF5252;
+
+  /* Assistant (Bot) */
+  --assistant-bg: #0288D1;
+  --assistant-accent: #00E5FF;
+  --assistant-text: #E0F7FA;
+
+  /* User */
+  --user-bg: #00C853;
+  --user-text: #E0F7FA;
 }
 
 body {
     font-family: 'Roboto', Arial, sans-serif;
     margin: 20px;
-    background-color: var(--theme-bg);
-    color: var(--theme-text-light);
+    background-color: var(--general-bg);
+    color: var(--general-text);
 }
 #app {
     max-width: 1200px;
     margin: 0 auto;
 }
 h1 {
-    color: var(--theme-accent);
+    color: var(--assistant-accent);
 }
 .q-btn {
     margin-right: 10px;
-    background-color: var(--theme-primary);
-    color: var(--theme-text-light);
+    background-color: var(--assistant-bg);
+    color: var(--assistant-text);
 }
 .q-btn:hover {
     filter: brightness(1.2);
@@ -36,56 +42,56 @@ h1 {
     max-width: 400px;
 }
 .q-input .q-field__control {
-    background-color: var(--theme-surface);
-    color: var(--theme-text-light);
-    border-color: var(--theme-primary);
+    background-color: var(--general-surface);
+    color: var(--general-text);
+    border-color: var(--assistant-bg);
     border-radius: 8px;
     font-size: 16px;
     padding: 5px 10px;
 }
 .q-input .q-field__control:hover,
 .q-input .q-field__control:focus {
-    border-color: var(--theme-accent);
-    box-shadow: 0 0 8px var(--theme-shadow);
+    border-color: var(--assistant-accent);
+    box-shadow: 0 0 8px var(--general-shadow);
 }
 .q-input .q-field__native::placeholder {
-    color: var(--theme-text-light);
+    color: var(--general-text);
     opacity: 0.6;
 }
 .q-btn[flat][dense][icon="send"] {
-    color: var(--theme-positive);
+    color: var(--user-bg);
 }
 .q-btn[flat][dense][icon="send"]:hover {
-    color: var(--theme-accent);
+    color: var(--assistant-accent);
 }
 .q-table {
-    background-color: var(--theme-surface);
+    background-color: var(--general-surface);
     border-radius: 8px;
-    box-shadow: 0 4px 12px var(--theme-shadow);
+    box-shadow: 0 4px 12px var(--general-shadow);
 }
 .q-table th {
-    background-color: var(--theme-primary);
-    color: var(--theme-text-light);
+    background-color: var(--assistant-bg);
+    color: var(--assistant-text);
     font-weight: 600;
 }
 .q-table td {
-    color: var(--theme-text-light);
-    border-color: var(--theme-primary);
+    color: var(--general-text);
+    border-color: var(--assistant-bg);
 }
 .q-table tbody tr:nth-child(odd) {
-    background-color: var(--theme-bg);
+    background-color: var(--general-bg);
 }
 .q-table tbody tr:hover {
-    background-color: var(--theme-primary);
+    background-color: var(--assistant-bg);
 }
 .q-table__title {
-    color: var(--theme-accent);
+    color: var(--assistant-accent);
 }
 .q-table__no-data {
-    color: var(--theme-text-light);
+    color: var(--general-text);
 }
 .error {
-    color: var(--theme-negative);
+    color: var(--general-error);
     margin-top: 10px;
 }
 
@@ -94,9 +100,9 @@ h1 {
     max-width: 900px;
     margin: 20px 0;
     padding: 20px;
-    background: var(--theme-surface);
+    background: var(--general-surface);
     border-radius: 15px;
-    box-shadow: 0 8px 32px var(--theme-shadow);
+    box-shadow: 0 8px 32px var(--general-shadow);
     max-height: 600px;
     overflow-y: auto;
 }
@@ -106,7 +112,7 @@ h1 {
     padding: 18px 22px;
     border-radius: 18px;
     position: relative;
-    box-shadow: 0 6px 20px var(--theme-shadow);
+    box-shadow: 0 6px 20px var(--general-shadow);
     backdrop-filter: blur(10px);
     animation: slideIn 0.3s ease-out;
 }
@@ -123,12 +129,12 @@ h1 {
 }
 
 .user-message {
-    background: var(--theme-positive);
-    color: var(--theme-text-dark);
+    background: var(--user-bg);
+    color: var(--user-text);
     margin-left: 60px;
     border-bottom-right-radius: 8px;
-    border: 1px solid var(--theme-shadow);
-    box-shadow: 0 6px 25px var(--theme-shadow);
+    border: 1px solid var(--general-shadow);
+    box-shadow: 0 6px 25px var(--general-shadow);
 }
 
 .user-message::before {
@@ -137,19 +143,19 @@ h1 {
     top: -25px;
     right: 15px;
     font-size: 13px;
-    color: var(--theme-positive);
+    color: var(--user-bg);
     font-weight: 600;
-    text-shadow: 0 2px 4px var(--theme-shadow);
+    text-shadow: 0 2px 4px var(--general-shadow);
 }
 
 .response-message {
-    background: var(--theme-primary);
-    color: var(--theme-text-light);
+    background: var(--assistant-bg);
+    color: var(--assistant-text);
     margin-right: 60px;
     border-bottom-left-radius: 8px;
-    border-left: 4px solid var(--theme-accent);
-    border: 1px solid var(--theme-shadow);
-    box-shadow: 0 6px 25px var(--theme-shadow);
+    border-left: 4px solid var(--assistant-accent);
+    border: 1px solid var(--general-shadow);
+    box-shadow: 0 6px 25px var(--general-shadow);
 }
 
 .response-message::before {
@@ -158,19 +164,19 @@ h1 {
     top: -25px;
     left: 15px;
     font-size: 13px;
-    color: var(--theme-accent);
+    color: var(--assistant-accent);
     font-weight: 600;
-    text-shadow: 0 2px 4px var(--theme-shadow);
+    text-shadow: 0 2px 4px var(--general-shadow);
 }
 
 .prompt-container {
     position: sticky;
     bottom: 0;
-    background: var(--theme-surface);
+    background: var(--general-surface);
     padding: 20px 0;
-    border-top: 2px solid var(--theme-positive);
+    border-top: 2px solid var(--user-bg);
     backdrop-filter: blur(15px);
-    box-shadow: 0 -4px 20px var(--theme-shadow);
+    box-shadow: 0 -4px 20px var(--general-shadow);
 }
 
 /* Scrollbar personnalisée pour le chat */
@@ -179,17 +185,17 @@ h1 {
 }
 
 .chat-container::-webkit-scrollbar-track {
-    background: var(--theme-bg);
+    background: var(--general-bg);
     border-radius: 10px;
 }
 
 .chat-container::-webkit-scrollbar-thumb {
-    background: var(--theme-primary);
+    background: var(--assistant-bg);
     border-radius: 10px;
 }
 
 .chat-container::-webkit-scrollbar-thumb:hover {
-    background: var(--theme-accent);
+    background: var(--assistant-accent);
 }
 
 /* Styles pour les composants intégrés comme les tables */
@@ -199,6 +205,6 @@ h1 {
 }
 
 .chat-message .q-expansion-item .q-item {
-    background: var(--theme-surface);
+    background: var(--general-surface);
     border-radius: 8px;
 }
