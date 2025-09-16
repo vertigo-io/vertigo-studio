@@ -11,10 +11,9 @@
 </head>
 <body>
     <div id="app">
-        <h1>Communication WebSocket avec Java</h1>
+        <h1>Banshee</h1>
         <q-btn label="Connecter WebSocket" @click="connectWebSocket" color="primary"></q-btn>
-        <q-btn label="Envoyer Message Test" @click="sendTestMessage" color="secondary"></q-btn>
-        
+       
         <div v-if="error" class="error">{{ error }}</div>
         
         <!-- Container pour les messages de chat -->
@@ -24,6 +23,7 @@
                 <div v-if="message.contentType === 'text'">
                     {{ message.content }}
                 </div>
+                <!-- =====TABLE===== -->
                 <q-expansion-item
                     v-else-if="message.contentType === 'table'"
                     icon="table_chart"
@@ -48,6 +48,24 @@
                         </q-table>
                     </q-card>
                 </q-expansion-item>
+                <!-- =====/TABLE===== -->
+                
+                <!-- =====JSON===== -->
+                <q-expansion-item
+				  v-else-if="message.contentType === 'json'"
+				  icon="table_chart"
+				  :label="message.content.title || 'JSON Data'"
+				  expand-separator
+				  expand-icon="keyboard_arrow_down"
+				  default-opened
+				>
+				  <q-card flat bordered>
+				  	<q-code 
+				  		:code="formatJson(message.content.json)" 
+				  		language="json" 
+				  	/>
+				  </q-card>
+				</q-expansion-item>
             </div>
         </div>
         
@@ -97,7 +115,7 @@
                     this.error = null;
                     this.ws = new WebSocket('ws://localhost:8080');
                     this.ws.onopen = () => {
-                        console.log('WebSocket connecté');
+                        console.log('You are connected');
                         this.error = null;
                     };
                     this.ws.onmessage = (event) => {
@@ -110,21 +128,14 @@
                     };
                     this.ws.onclose = () => {
                         console.log('WebSocket fermé');
-                        this.error = 'Connexion WebSocket fermée';
+                        this.error = 'Connection is closed';
                     };
                     this.ws.onerror = (error) => {
                         console.error('Erreur WebSocket:', error);
                         this.error = 'Erreur WebSocket : Vérifiez que le serveur est en cours d\'exécution sur ws://localhost:8080/websocket';
                     };
                 },
-                sendTestMessage() {
-                    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-                        this.ws.send('Message test depuis la page');
-                    } else {
-                        this.error = 'WebSocket non connecté';
-                    }
-                },
-                sendPrompt() {
+                 sendPrompt() {
                     if (this.ws && this.ws.readyState === WebSocket.OPEN && this.promptInput.trim()) {
                         const userMessage = this.promptInput.trim();
                         this.addChatMessage('user', 'text', userMessage);
@@ -147,7 +158,9 @@
                 },
                 handleWebSocketMessage(msg) {
                     if (msg.type === 'table') {
-                        this.addChatMessage('response', 'table', msg.data);
+                        this.addChatMessage('response', 'table',  msg.data);
+                    }else if (msg.type === 'json') {
+                        this.addChatMessage('response', 'json',  msg.data);
                     } else if (msg.type === 'response' || msg.type === 'message') {
                         this.addChatMessage('response', 'text', msg.data || msg.message || 'Réponse reçue');
                     } else {
@@ -170,7 +183,21 @@
                     if (chatContainer) {
                         chatContainer.scrollTop = chatContainer.scrollHeight;
                     }
-                }
+                }, 
+                formatJson(jsonData) {
+                 console.log('format  '+ jsonData);
+				    try {
+				      // Si jsonData est déjà une chaîne, on la retourne telle quelle
+				      if (typeof jsonData === 'string') {
+				        return jsonData;
+				      }
+				      // Sinon, on convertit l'objet JSON en chaîne formatée
+				      return JSON.stringify(jsonData, null, 2);
+				    } catch (error) {
+				      console.error('Erreur lors du formatage JSON:', error);
+				      return '{}'; // Retourne un JSON vide en cas d'erreur
+				    }
+				}
             }
         });
 

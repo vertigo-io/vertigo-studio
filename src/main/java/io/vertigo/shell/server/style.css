@@ -1,4 +1,4 @@
-        :root {
+:root {
   /* General */
   --general-bg: #001F2A;
   --general-surface: #022B3A;
@@ -12,6 +12,9 @@
 
   /* User */
   --user-bg: #00C853;
+
+  /* JSON */
+  --json-bg: #011627;
 }
 
 /* General Typography & Layout */
@@ -230,4 +233,36 @@ h1 {
 .chat-message .q-expansion-item .q-item {
     background: var(--general-surface);
     border-radius: 8px;
+}
+
+.chat-message .q-expansion-item .q-item__section--avatar {
+    color: var(--assistant-accent);
+}
+
+.chat-message .q-expansion-item .q-item__label {
+    color: var(--general-text);
+    font-weight: 600;
+}
+
+.chat-message .q-expansion-item .q-card {
+    background: var(--general-bg);
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+/* JSON Viewer Styles */
+.json-container {
+    background-color: var(--json-bg);
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 10px;
+    border: 1px solid var(--assistant-bg);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.json-container code {
+    font-family: 'Fira Code', 'Courier New', monospace;
+    color: #d6deeb;
+    font-size: 14px;
 }
