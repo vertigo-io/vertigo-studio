@@ -9,38 +9,49 @@
   /* Assistant (Bot) */
   --assistant-bg: #0288D1;
   --assistant-accent: #00E5FF;
-  --assistant-text: #E0F7FA;
 
   /* User */
   --user-bg: #00C853;
-  --user-text: #E0F7FA;
 }
 
+/* General Typography & Layout */
 body {
     font-family: 'Roboto', Arial, sans-serif;
     margin: 20px;
     background-color: var(--general-bg);
     color: var(--general-text);
 }
+
 #app {
     max-width: 1200px;
     margin: 0 auto;
 }
+
 h1 {
     color: var(--assistant-accent);
 }
+
+.error {
+    color: var(--general-error);
+    margin-top: 10px;
+}
+
+/* Common component styles */
 .q-btn {
     margin-right: 10px;
     background-color: var(--assistant-bg);
-    color: var(--assistant-text);
+    color: var(--general-text);
 }
+
 .q-btn:hover {
     filter: brightness(1.2);
 }
+
 .q-input {
     margin: 10px 0;
     max-width: 400px;
 }
+
 .q-input .q-field__control {
     background-color: var(--general-surface);
     color: var(--general-text);
@@ -49,53 +60,66 @@ h1 {
     font-size: 16px;
     padding: 5px 10px;
 }
+
 .q-input .q-field__control:hover,
 .q-input .q-field__control:focus {
     border-color: var(--assistant-accent);
     box-shadow: 0 0 8px var(--general-shadow);
 }
+
+.q-input .q-field__native {
+    color: var(--general-text);
+}
+
 .q-input .q-field__native::placeholder {
     color: var(--general-text);
     opacity: 0.6;
 }
+
 .q-btn[flat][dense][icon="send"] {
     color: var(--user-bg);
 }
+
 .q-btn[flat][dense][icon="send"]:hover {
     color: var(--assistant-accent);
 }
+
+/* Table Styles */
 .q-table {
     background-color: var(--general-surface);
     border-radius: 8px;
     box-shadow: 0 4px 12px var(--general-shadow);
 }
+
 .q-table th {
     background-color: var(--assistant-bg);
-    color: var(--assistant-text);
+    color: var(--general-text);
     font-weight: 600;
 }
+
 .q-table td {
     color: var(--general-text);
     border-color: var(--assistant-bg);
 }
+
 .q-table tbody tr:nth-child(odd) {
     background-color: var(--general-bg);
 }
+
 .q-table tbody tr:hover {
     background-color: var(--assistant-bg);
 }
+
 .q-table__title {
     color: var(--assistant-accent);
 }
+
 .q-table__no-data {
     color: var(--general-text);
 }
-.error {
-    color: var(--general-error);
-    margin-top: 10px;
-}
 
-/* Styles pour le chat */
+
+/* Chat specific styles */
 .chat-container {
     max-width: 900px;
     margin: 20px 0;
@@ -128,45 +152,44 @@ h1 {
     }
 }
 
-.user-message {
-    background: var(--user-bg);
-    color: var(--user-text);
-    margin-left: 60px;
-    border-bottom-right-radius: 8px;
+.user-message, .response-message {
     border: 1px solid var(--general-shadow);
     box-shadow: 0 6px 25px var(--general-shadow);
 }
 
-.user-message::before {
-    content: "👤 Vous";
-    position: absolute;
-    top: -25px;
-    right: 15px;
-    font-size: 13px;
-    color: var(--user-bg);
-    font-weight: 600;
-    text-shadow: 0 2px 4px var(--general-shadow);
+.user-message {
+    background: var(--user-bg);
+    color: var(--general-text);
+    margin-left: 60px;
+    border-bottom-right-radius: 8px;
 }
 
 .response-message {
     background: var(--assistant-bg);
-    color: var(--assistant-text);
+    color: var(--general-text);
     margin-right: 60px;
     border-bottom-left-radius: 8px;
     border-left: 4px solid var(--assistant-accent);
-    border: 1px solid var(--general-shadow);
-    box-shadow: 0 6px 25px var(--general-shadow);
+}
+
+.user-message::before, .response-message::before {
+    position: absolute;
+    top: -25px;
+    font-size: 13px;
+    font-weight: 600;
+    text-shadow: 0 2px 4px var(--general-shadow);
+}
+
+.user-message::before {
+    content: "👤 Vous";
+    right: 15px;
+    color: var(--user-bg);
 }
 
 .response-message::before {
     content: "🤖 Assistant";
-    position: absolute;
-    top: -25px;
     left: 15px;
-    font-size: 13px;
     color: var(--assistant-accent);
-    font-weight: 600;
-    text-shadow: 0 2px 4px var(--general-shadow);
 }
 
 .prompt-container {
@@ -179,7 +202,7 @@ h1 {
     box-shadow: 0 -4px 20px var(--general-shadow);
 }
 
-/* Scrollbar personnalisée pour le chat */
+/* Scrollbar */
 .chat-container::-webkit-scrollbar {
     width: 8px;
 }
@@ -198,7 +221,7 @@ h1 {
     background: var(--assistant-accent);
 }
 
-/* Styles pour les composants intégrés comme les tables */
+/* Expansion item in chat */
 .chat-message .q-expansion-item {
     background: transparent;
     box-shadow: none;
