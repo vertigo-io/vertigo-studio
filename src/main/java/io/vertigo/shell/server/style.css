@@ -1,135 +1,91 @@
         :root {
-  --q-dark: #001F2A;
-  --q-accent: #00E5FF;
-  --q-primary: #0288D1;
-  --q-positive: #00C853;
-  --q-negative: #FF5252;
-
-  --text-light: #E0F7FA;
-  --text-dark: #1A1F1B;
-  --white: #FFFFFF;
-
-  --bg-dark-green: #004D2B;
-  --text-light-green: #E8F5E9;
-  --placeholder-teal: #80CBC4;
-  --positive-light: #69F0AE;
-  --positive-hover: #00E676;
-
-  --table-bg: #022B3A;
-  --table-header-bg: #01579B;
-  --table-row-odd-bg: #013440;
-
-  --chat-bg-gradient-start: #003049;
-  --chat-bg-gradient-end: #004D6B;
-
-  --user-msg-gradient-start: #00C853;
-  --user-msg-gradient-mid: #00E676;
-  --user-msg-gradient-end: #69F0AE;
-
-  --response-msg-gradient-start: #0288D1;
-  --response-msg-gradient-mid: #03A9F4;
-  --response-msg-gradient-end: #29B6F6;
-
-  --prompt-bg-gradient-start: rgba(0, 77, 38, 0.9);
-  --prompt-bg-gradient-end: #002E3B;
-
-  --scrollbar-track-bg: rgba(2, 136, 209, 0.3);
-  --scrollbar-thumb-gradient-start: #03A9F4;
-  --scrollbar-thumb-gradient-end: #00E5FF;
-  --scrollbar-thumb-hover-gradient-start: #0288D1;
-  --scrollbar-thumb-hover-gradient-end: #03A9F4;
-
-  --shadow-color-dark: rgba(0, 0, 0, 0.6);
-  --shadow-color-medium: rgba(0, 0, 0, 0.5);
-  --shadow-color-light: rgba(0, 0, 0, 0.4);
-  --shadow-color-extra-light: rgba(0, 0, 0, 0.3);
-
-  --positive-shadow: rgba(0, 230, 118, 0.5);
-  --positive-border: rgba(0, 200, 83, 0.4);
-  --positive-shadow-dark: rgba(0, 100, 41, 0.4);
-
-  --primary-border: rgba(2, 136, 209, 0.4);
-  --primary-shadow-dark: rgba(1, 87, 155, 0.4);
-
-  --item-bg-transparent: rgba(255, 255, 255, 0.1);
+  --theme-bg: #001F2A;
+  --theme-surface: #022B3A;
+  --theme-primary: #0288D1;
+  --theme-accent: #00E5FF;
+  --theme-positive: #00C853;
+  --theme-negative: #FF5252;
+  --theme-text-light: #E0F7FA;
+  --theme-text-dark: #1A1F1B;
+  --theme-shadow: rgba(0, 0, 0, 0.4);
 }
 
 body {
     font-family: 'Roboto', Arial, sans-serif;
     margin: 20px;
-    background-color: var(--q-dark);
-    color: var(--text-light);
+    background-color: var(--theme-bg);
+    color: var(--theme-text-light);
 }
 #app {
     max-width: 1200px;
     margin: 0 auto;
 }
 h1 {
-    color: var(--q-accent);
+    color: var(--theme-accent);
 }
 .q-btn {
     margin-right: 10px;
-    background-color: var(--q-primary);
-    color: var(--white);
+    background-color: var(--theme-primary);
+    color: var(--theme-text-light);
 }
 .q-btn:hover {
-    background-color: var(--q-primary);
+    filter: brightness(1.2);
 }
 .q-input {
     margin: 10px 0;
     max-width: 400px;
 }
 .q-input .q-field__control {
-    background-color: var(--bg-dark-green);
-    color: var(--text-light-green);
-    border-color: var(--q-positive);
+    background-color: var(--theme-surface);
+    color: var(--theme-text-light);
+    border-color: var(--theme-primary);
     border-radius: 8px;
     font-size: 16px;
     padding: 5px 10px;
 }
 .q-input .q-field__control:hover,
 .q-input .q-field__control:focus {
-    border-color: var(--positive-hover);
-    box-shadow: 0 0 8px var(--positive-shadow);
+    border-color: var(--theme-accent);
+    box-shadow: 0 0 8px var(--theme-shadow);
 }
 .q-input .q-field__native::placeholder {
-    color: var(--placeholder-teal);
-    opacity: 0.8;
+    color: var(--theme-text-light);
+    opacity: 0.6;
 }
 .q-btn[flat][dense][icon="send"] {
-    color: var(--positive-hover);
+    color: var(--theme-positive);
 }
 .q-btn[flat][dense][icon="send"]:hover {
-    color: var(--positive-light);
+    color: var(--theme-accent);
 }
 .q-table {
-    background-color: var(--table-bg);
+    background-color: var(--theme-surface);
     border-radius: 8px;
-    box-shadow: 0 4px 12px var(--shadow-color-dark);
+    box-shadow: 0 4px 12px var(--theme-shadow);
 }
 .q-table th {
-    background-color: var(--table-header-bg);
-    color: var(--q-accent);
+    background-color: var(--theme-primary);
+    color: var(--theme-text-light);
     font-weight: 600;
 }
 .q-table td {
-    color: var(--text-light);
-    border-color: var(--q-primary);
+    color: var(--theme-text-light);
+    border-color: var(--theme-primary);
 }
 .q-table tbody tr:nth-child(odd) {
-    background-color: var(--table-row-odd-bg);
+    background-color: var(--theme-bg);
 }
 .q-table tbody tr:hover {
-    background-color: var(--table-header-bg);
+    background-color: var(--theme-primary);
 }
 .q-table__title {
-    color: var(--q-accent);
+    color: var(--theme-accent);
 }
 .q-table__no-data {
-    color: var(--text-light);
+    color: var(--theme-text-light);
 }
 .error {
-    color: var(--q-negative);
+    color: var(--theme-negative);
     margin-top: 10px;
 }
 
@@ -138,9 +94,9 @@ h1 {
     max-width: 900px;
     margin: 20px 0;
     padding: 20px;
-    background: linear-gradient(135deg, var(--chat-bg-gradient-start), var(--chat-bg-gradient-end));
+    background: var(--theme-surface);
     border-radius: 15px;
-    box-shadow: 0 8px 32px var(--shadow-color-medium);
+    box-shadow: 0 8px 32px var(--theme-shadow);
     max-height: 600px;
     overflow-y: auto;
 }
@@ -150,7 +106,7 @@ h1 {
     padding: 18px 22px;
     border-radius: 18px;
     position: relative;
-    box-shadow: 0 6px 20px var(--shadow-color-light);
+    box-shadow: 0 6px 20px var(--theme-shadow);
     backdrop-filter: blur(10px);
     animation: slideIn 0.3s ease-out;
 }
@@ -167,12 +123,12 @@ h1 {
 }
 
 .user-message {
-    background: linear-gradient(135deg, var(--user-msg-gradient-start), var(--user-msg-gradient-mid), var(--user-msg-gradient-end));
-    color: var(--text-dark);
+    background: var(--theme-positive);
+    color: var(--theme-text-dark);
     margin-left: 60px;
     border-bottom-right-radius: 8px;
-    border: 1px solid var(--positive-border);
-    box-shadow: 0 6px 25px var(--positive-shadow-dark);
+    border: 1px solid var(--theme-shadow);
+    box-shadow: 0 6px 25px var(--theme-shadow);
 }
 
 .user-message::before {
@@ -181,19 +137,19 @@ h1 {
     top: -25px;
     right: 15px;
     font-size: 13px;
-    color: var(--positive-hover);
+    color: var(--theme-positive);
     font-weight: 600;
-    text-shadow: 0 2px 4px var(--shadow-color-extra-light);
+    text-shadow: 0 2px 4px var(--theme-shadow);
 }
 
 .response-message {
-    background: linear-gradient(135deg, var(--response-msg-gradient-start), var(--response-msg-gradient-mid), var(--response-msg-gradient-end));
-    color: var(--text-light);
+    background: var(--theme-primary);
+    color: var(--theme-text-light);
     margin-right: 60px;
     border-bottom-left-radius: 8px;
-    border-left: 4px solid var(--q-accent);
-    border: 1px solid var(--primary-border);
-    box-shadow: 0 6px 25px var(--primary-shadow-dark);
+    border-left: 4px solid var(--theme-accent);
+    border: 1px solid var(--theme-shadow);
+    box-shadow: 0 6px 25px var(--theme-shadow);
 }
 
 .response-message::before {
@@ -202,19 +158,19 @@ h1 {
     top: -25px;
     left: 15px;
     font-size: 13px;
-    color: var(--q-accent);
+    color: var(--theme-accent);
     font-weight: 600;
-    text-shadow: 0 2px 4px var(--shadow-color-extra-light);
+    text-shadow: 0 2px 4px var(--theme-shadow);
 }
 
 .prompt-container {
     position: sticky;
     bottom: 0;
-    background: linear-gradient(180deg, var(--prompt-bg-gradient-start), var(--prompt-bg-gradient-end));
+    background: var(--theme-surface);
     padding: 20px 0;
-    border-top: 2px solid var(--positive-hover);
+    border-top: 2px solid var(--theme-positive);
     backdrop-filter: blur(15px);
-    box-shadow: 0 -4px 20px var(--shadow-color-light);
+    box-shadow: 0 -4px 20px var(--theme-shadow);
 }
 
 /* Scrollbar personnalisée pour le chat */
@@ -223,17 +179,17 @@ h1 {
 }
 
 .chat-container::-webkit-scrollbar-track {
-    background: var(--scrollbar-track-bg);
+    background: var(--theme-bg);
     border-radius: 10px;
 }
 
 .chat-container::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, var(--scrollbar-thumb-gradient-start), var(--scrollbar-thumb-gradient-end));
+    background: var(--theme-primary);
     border-radius: 10px;
 }
 
 .chat-container::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(135deg, var(--scrollbar-thumb-hover-gradient-start), var(--scrollbar-thumb-hover-gradient-end));
+    background: var(--theme-accent);
 }
 
 /* Styles pour les composants intégrés comme les tables */
@@ -243,6 +199,6 @@ h1 {
 }
 
 .chat-message .q-expansion-item .q-item {
-    background: var(--item-bg-transparent);
+    background: var(--theme-surface);
     border-radius: 8px;
 }
