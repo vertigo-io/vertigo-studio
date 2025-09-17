@@ -172,7 +172,6 @@ h1 {
     color: var(--general-text);
     margin-right: 60px;
     border-bottom-left-radius: 8px;
-    border-left: 4px solid var(--assistant-accent);
 }
 
 .user-message::before, .response-message::before {

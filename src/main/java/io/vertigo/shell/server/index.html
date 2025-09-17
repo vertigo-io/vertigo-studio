@@ -27,24 +27,25 @@
                 <q-expansion-item
                     v-else-if="message.contentType === 'table'"
                     icon="table_chart"
-                    :label="`Tableau: ${message.content.tableTitle}`"
+                    :label="message.content.title"
                     expand-separator
                     expand-icon="keyboard_arrow_down"
                     default-opened
                 >
                     <q-card flat bordered>
                         <q-table
-                            :rows="message.content.tableRows"
-                            :columns="getColumns(message.content.tableHeader)"
+                            :rows="message.content.rows"
+                            :columns="getColumns(message.content.header)"
                             row-key="name"
                             :no-data-label="message.content.noDataFound"
                             dense
                         >
-                            <template v-slot:no-data>
+      <!--                      <template v-slot:no-data>
                                 <div class="full-width row flex-center q-gutter-sm q-table__no-data">
                                     <span>{{ message.content.noDataFound }}</span>
                                 </div>
                             </template>
+      -->
                         </q-table>
                     </q-card>
                 </q-expansion-item>
