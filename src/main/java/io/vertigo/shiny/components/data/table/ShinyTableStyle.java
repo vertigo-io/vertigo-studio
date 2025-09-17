@@ -16,42 +16,42 @@ public final class ShinyTableStyle {
 	private ShinyColor altRowBackgroundColor = ShinyColors.CYAN_BRIGHT;
 	private ShinyColor borderColor = ShinyColors.BLACK;
 
-	public ShinyTableStyle border(final ShinyBorder border) {
+	public ShinyTableStyle withBorder(final ShinyBorder border) {
 		Assertion.check().isNotNull(border);
 		//---
 		this.tableBorder = border;
 		return this;
 	}
 
-	public ShinyTableStyle titleBackgroundColor(final ShinyColor color) {
+	public ShinyTableStyle withTitleBackgroundColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.titleBackgroundColor = color;
 		return this;
 	}
 
-	public ShinyTableStyle borderColor(final ShinyColor color) {
+	public ShinyTableStyle withBorderColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.borderColor = color;
 		return this;
 	}
 
-	public ShinyTableStyle titleTextColor(final ShinyColor color) {
+	public ShinyTableStyle withTitleTextColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.titleTextColor = color;
 		return this;
 	}
 
-	public ShinyTableStyle headerBackgroundColor(final ShinyColor color) {
+	public ShinyTableStyle withHeaderBackgroundColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.headerBackgroundColor = color;
 		return this;
 	}
 
-	public ShinyTableStyle altRowBackgroundColor(final ShinyColor color) {
+	public ShinyTableStyle withAltRowBackgroundColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.altRowBackgroundColor = color;

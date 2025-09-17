@@ -23,57 +23,57 @@ public final class ShinyRating implements ShinyComponent {
 		this.ratingStyle = Shiny.theme().ratingStyle();
 	}
 
-	public ShinyRating style(final ShinyRatingStyle style) {
+	public ShinyRating withStyle(final ShinyRatingStyle style) {
 		Assertion.check().isNotNull(style);
 		//---
 		this.ratingStyle = style;
 		return this;
 	}
 
-	public ShinyRating label(final String text) {
+	public ShinyRating withLabel(final String text) {
 		this.label = text;
 		return this;
 	}
 
-	public ShinyRating value(final double currentValue) {
+	public ShinyRating withValue(final double currentValue) {
 		this.value = Math.max(0, currentValue); // Ensure non-negative
 		return this;
 	}
 
-	public ShinyRating scale(final ShinyRatingScale ratingScale) {
+	public ShinyRating withScale(final ShinyRatingScale ratingScale) {
 		this.scale = ratingScale;
 		this.customMaxValue = -1; // Reset custom max when using scale
 		return this;
 	}
 
-	public ShinyRating maxValue(final int max) {
+	public ShinyRating withMaxValue(final int max) {
 		this.customMaxValue = Math.max(1, max); // Ensure positive
 		return this;
 	}
 
-	public ShinyRating showValue(final boolean show) {
+	public ShinyRating withShowValue(final boolean show) {
 		this.showValue = show;
 		return this;
 	}
 
-	public ShinyRating showPercentage(final boolean show) {
+	public ShinyRating withShowPercentage(final boolean show) {
 		this.showPercentage = show;
 		return this;
 	}
 
-	public ShinyRating showBox(final boolean show) {
+	public ShinyRating withShowBox(final boolean show) {
 		this.showBox = show;
 		return this;
 	}
 
-	public ShinyRating separator(final String sep) {
+	public ShinyRating withSeparator(final String sep) {
 		Assertion.check().isNotNull(sep);
 		//---
 		this.separator = sep;
 		return this;
 	}
 
-	public ShinyRating allowHalfRating(final boolean allow) {
+	public ShinyRating withAllowHalfRating(final boolean allow) {
 		this.allowHalfRating = allow;
 		return this;
 	}
@@ -131,7 +131,7 @@ public final class ShinyRating implements ShinyComponent {
 			if (allowHalfRating && clampedValue >= i - 0.5 && clampedValue < i) {
 				// Half rating (for now, use filled icon with different color)
 				rating.append(ShinyEffects.DIM.apply(
-						ratingStyle.filledColor().fg(ratingStyle.type().getFilledIcon())));
+					ratingStyle.filledColor().fg(ratingStyle.type().getFilledIcon())));
 			} else if (clampedValue >= i) {
 				// Filled
 				rating.append(ratingStyle.filledColor().fg(ratingStyle.type().getFilledIcon()));

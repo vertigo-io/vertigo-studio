@@ -20,7 +20,7 @@ public final class ShinySpinner extends ShinyLiveComponent<ShinySpinner> {
 		this.spinnerStyle = Shiny.theme().spinnerStyle();
 	}
 
-	public ShinySpinner style(final ShinySpinnerStyle style) {
+	public ShinySpinner withStyle(final ShinySpinnerStyle style) {
 		Assertion.check().isNotNull(style);
 		//---
 		this.spinnerStyle = style;

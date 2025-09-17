@@ -9,21 +9,21 @@ public final class ShinyRatingStyle {
 	private ShinyColor emptyColor = ShinyColors.WHITE;
 	private ShinyRatingType ratingType = ShinyRatingType.STAR;
 
-	public ShinyRatingStyle type(final ShinyRatingType type) {
+	public ShinyRatingStyle withType(final ShinyRatingType type) {
 		Assertion.check().isNotNull(type);
 		//---
 		this.ratingType = type;
 		return this;
 	}
 
-	public ShinyRatingStyle filledColor(final ShinyColor color) {
+	public ShinyRatingStyle withFilledColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.filledColor = color;
 		return this;
 	}
 
-	public ShinyRatingStyle emptyColor(final ShinyColor color) {
+	public ShinyRatingStyle withEmptyColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.emptyColor = color;

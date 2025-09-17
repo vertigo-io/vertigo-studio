@@ -19,39 +19,39 @@ public final class ShinyToggle implements ShinyComponent {
 		toggleStyle = Shiny.theme().toggleStyle();
 	}
 
-	public ShinyToggle style(final ShinyToggleStyle style) {
+	public ShinyToggle withStyle(final ShinyToggleStyle style) {
 		Assertion.check().isNotNull(style);
 		//---
 		this.toggleStyle = style;
 		return this;
 	}
 
-	public ShinyToggle label(final String label) {
+	public ShinyToggle withLabel(final String label) {
 		this.toggleLabel = label;
 		return this;
 	}
 
-	public ShinyToggle value(final boolean value) {
+	public ShinyToggle withValue(final boolean value) {
 		this.toggleValue = value;
 		return this;
 	}
 
-	public ShinyToggle type(final ShinyToggleType type) {
+	public ShinyToggle withType(final ShinyToggleType type) {
 		this.toggleType = type;
 		return this;
 	}
 
-	public ShinyToggle onText(final String text) {
+	public ShinyToggle withOnText(final String text) {
 		this.onText = text;
 		return this;
 	}
 
-	public ShinyToggle offText(final String text) {
+	public ShinyToggle withOffText(final String text) {
 		this.offText = text;
 		return this;
 	}
 
-	public ShinyToggle showText(final boolean show) {
+	public ShinyToggle withShowText(final boolean show) {
 		this.showText = show;
 		return this;
 	}

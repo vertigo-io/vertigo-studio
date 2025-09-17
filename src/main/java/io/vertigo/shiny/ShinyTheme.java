@@ -30,12 +30,12 @@ public final class ShinyTheme {
 		//Theme must be obtained by Shiny.
 	}
 
-	public ShinyTheme ascii(boolean ascii) {
+	public ShinyTheme withAscii(boolean ascii) {
 		asciiTheme = ascii;
 		return this;
 	}
 
-	public ShinyTheme unicode(boolean unicode) {
+	public ShinyTheme withUnicode(boolean unicode) {
 		asciiTheme = !unicode;
 		return this;
 	}
@@ -44,12 +44,12 @@ public final class ShinyTheme {
 		return asciiTheme;
 	}
 
-	public ShinyTheme square(boolean square) {
+	public ShinyTheme withSquare(boolean square) {
 		squareTheme = square;
 		return this;
 	}
 
-	public ShinyTheme rounded(boolean rounded) {
+	public ShinyTheme withRounded(boolean rounded) {
 		squareTheme = !rounded;
 		return this;
 	}
@@ -62,7 +62,7 @@ public final class ShinyTheme {
 		return themeNumberFormat;
 	}
 
-	public void locale(Locale locale) {
+	public void withLocale(Locale locale) {
 		Assertion.check().isNotNull(locale);
 		//---
 		this.themeLocale = locale;

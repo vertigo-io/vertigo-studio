@@ -35,7 +35,7 @@ public final class ShinyTable implements ShinyComponent {
 	 * @param tableTitle the table title
 	 * @return this instance for method chaining
 	 */
-	public ShinyTable title(final String title) {
+	public ShinyTable withTitle(final String title) {
 		Assertion.check().isNotBlank(title);
 		//---
 		this.tableTitle = title;
@@ -45,7 +45,7 @@ public final class ShinyTable implements ShinyComponent {
 	/**
 	 * Opens Style.
 	 */
-	public ShinyTable style(ShinyTableStyle style) {
+	public ShinyTable withStyle(ShinyTableStyle style) {
 		Assertion.check().isNotNull(style);
 		//---
 		this.tableStyle = style;
@@ -55,7 +55,7 @@ public final class ShinyTable implements ShinyComponent {
 	/**
 	 * Sets the message to be displayed when no data is found.
 	 */
-	public ShinyTable noDataFound(final String message) {
+	public ShinyTable withNoDataFound(final String message) {
 		this.noDataFound = message;
 		return this;
 	}
@@ -63,15 +63,23 @@ public final class ShinyTable implements ShinyComponent {
 	/**
 	 * Defines the header row of the table.
 	 */
-	public ShinyTable header(final String... header) {
+	public ShinyTable withHeader(final String... header) {
 		this.tableHeader = header;
+		return this;
+	}
+
+	/**
+	 * Adds a single row of data to the table.
+	 */
+	public ShinyTable addRow(final String... row) {
+		this.tableRows.add(row);
 		return this;
 	}
 
 	/**
 	 * Adds multiple rows of data to the table.
 	 */
-	public ShinyTable rows(final List<String[]> rows) {
+	public ShinyTable addAllRows(final List<String[]> rows) {
 		this.tableRows.addAll(rows);
 		return this;
 	}
@@ -79,7 +87,7 @@ public final class ShinyTable implements ShinyComponent {
 	/**
 	 * Adds multiple rows of data to the table.
 	 */
-	public ShinyTable rows(final String[]... rows) {
+	public ShinyTable addAllRows(final String[]... rows) {
 		this.tableRows.addAll(List.of(rows));
 		return this;
 	}
@@ -87,6 +95,7 @@ public final class ShinyTable implements ShinyComponent {
 	/**
 	 * Prints the table to the console with the configured formatting.
 	 */
+	@Override
 	public void render(ShinyWriter writer) {
 		Assertion.check()
 				//				.isNotBlank(tableTitle)

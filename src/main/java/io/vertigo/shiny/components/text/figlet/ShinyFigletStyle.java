@@ -8,14 +8,14 @@ public final class ShinyFigletStyle {
 	private ShinyColor figletColor = ShinyColors.BLUE;
 	private ShinyFigletFont figletFont = ShinyFigletFont.STANDARD; // Default figletFont
 
-	public ShinyFigletStyle color(final ShinyColor color) {
+	public ShinyFigletStyle withColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.figletColor = color;
 		return this;
 	}
 
-	public ShinyFigletStyle font(final ShinyFigletFont font) {
+	public ShinyFigletStyle withFont(final ShinyFigletFont font) {
 		Assertion.check().isNotNull(font);
 		//---
 		this.figletFont = font;

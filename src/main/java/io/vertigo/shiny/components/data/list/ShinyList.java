@@ -18,14 +18,14 @@ public final class ShinyList implements ShinyComponent {
 		this.listStyle = Shiny.theme().listStyle();
 	}
 
-	public ShinyList style(final ShinyListStyle style) {
+	public ShinyList withStyle(final ShinyListStyle style) {
 		Assertion.check().isNotNull(style);
 		//---
 		this.listStyle = style;
 		return this;
 	}
 
-	public ShinyList title(final String text) {
+	public ShinyList withTitle(final String text) {
 		this.title = text;
 		return this;
 	}
@@ -35,7 +35,7 @@ public final class ShinyList implements ShinyComponent {
 		return this;
 	}
 
-	public ShinyList items(final List<String> items) {
+	public ShinyList addAllItems(final List<String> items) {
 		this.listItems.addAll(items);
 		return this;
 	}
@@ -45,7 +45,7 @@ public final class ShinyList implements ShinyComponent {
 		return this;
 	}
 
-	public ShinyList type(final ShinyListType type) {
+	public ShinyList withType(final ShinyListType type) {
 		this.listType = type;
 		return this;
 	}

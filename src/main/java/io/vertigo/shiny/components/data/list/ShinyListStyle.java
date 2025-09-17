@@ -8,14 +8,14 @@ public final class ShinyListStyle {
 	private ShinyColor itemColor = ShinyColors.BLUE_BRIGHT;
 	private ShinyColor bulletColor = ShinyColors.CYAN;
 
-	public ShinyListStyle itemColor(final ShinyColor color) {
+	public ShinyListStyle withItemColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.itemColor = color;
 		return this;
 	}
 
-	public ShinyListStyle bulletColor(final ShinyColor color) {
+	public ShinyListStyle withBulletColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.bulletColor = color;

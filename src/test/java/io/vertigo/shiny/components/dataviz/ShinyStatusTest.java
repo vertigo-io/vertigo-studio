@@ -22,10 +22,10 @@ public class ShinyStatusTest {
 	private static void testMatchResults(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Last 5 Match Results ---"));
 		Shiny.status()
-				.title("Last 5 Matches")
-				.types(ShinyStatusType.SUCCESS, ShinyStatusType.SUCCESS, ShinyStatusType.NEUTRAL, ShinyStatusType.ERROR, ShinyStatusType.SUCCESS)
-				.style(new ShinyStatusStyle()
-						.shape(ShinyStatusShape.SQUARE))
+				.withTitle("Last 5 Matches")
+				.addAllTypes(ShinyStatusType.SUCCESS, ShinyStatusType.SUCCESS, ShinyStatusType.NEUTRAL, ShinyStatusType.ERROR, ShinyStatusType.SUCCESS)
+				.withStyle(new ShinyStatusStyle()
+						.withShape(ShinyStatusShape.SQUARE))
 				.render(writer);
 		writer.println();
 	}
@@ -33,22 +33,22 @@ public class ShinyStatusTest {
 	private static void testServerStatus(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Server Status ---"));
 		Shiny.status()
-				.title("Server (success)")
-				.types(ShinyStatusType.SUCCESS)
-				.style(new ShinyStatusStyle()
-						.shape(ShinyStatusShape.CIRCLE))
+				.withTitle("Server (success)")
+				.addAllTypes(ShinyStatusType.SUCCESS)
+				.withStyle(new ShinyStatusStyle()
+						.withShape(ShinyStatusShape.CIRCLE))
 				.render(writer);
 		Shiny.status()
-				.title("Server (error)")
-				.types(List.of(ShinyStatusType.ERROR))
-				.style(new ShinyStatusStyle()
-						.shape(ShinyStatusShape.CIRCLE))
+				.withTitle("Server (error)")
+				.addAllTypes(List.of(ShinyStatusType.ERROR))
+				.withStyle(new ShinyStatusStyle()
+						.withShape(ShinyStatusShape.CIRCLE))
 				.render(writer);
 		Shiny.status()
-				.title("Server (success, success, error, success, success")
-				.types(ShinyStatusType.SUCCESS, ShinyStatusType.SUCCESS, ShinyStatusType.ERROR, ShinyStatusType.SUCCESS, ShinyStatusType.SUCCESS)
-				.style(new ShinyStatusStyle()
-						.shape(ShinyStatusShape.CIRCLE))
+				.withTitle("Server (success, success, error, success, success")
+				.addAllTypes(ShinyStatusType.SUCCESS, ShinyStatusType.SUCCESS, ShinyStatusType.ERROR, ShinyStatusType.SUCCESS, ShinyStatusType.SUCCESS)
+				.withStyle(new ShinyStatusStyle()
+						.withShape(ShinyStatusShape.CIRCLE))
 				.render(writer);
 		writer.println();
 	}
@@ -56,16 +56,16 @@ public class ShinyStatusTest {
 	private static void testBuildStatus(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Build Status ---"));
 		Shiny.status()
-				.title("Build Pipeline")
-				.types(
+				.withTitle("Build Pipeline")
+				.addAllTypes(
 						ShinyStatusType.SUCCESS,
 						ShinyStatusType.WARNING,
 						ShinyStatusType.ERROR,
 						ShinyStatusType.INFO,
 						ShinyStatusType.NEUTRAL,
 						ShinyStatusType.SUCCESS)
-				.style(new ShinyStatusStyle()
-						.shape(ShinyStatusShape.SQUARE))
+				.withStyle(new ShinyStatusStyle()
+						.withShape(ShinyStatusShape.SQUARE))
 				.render(writer);
 		writer.println();
 	}
@@ -73,14 +73,14 @@ public class ShinyStatusTest {
 	private static void testMixedStatusesAndShapes(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Mixed Statuses and Shapes ---"));
 		Shiny.status()
-				.title("Daily Report")
-				.types(List.of(ShinyStatusType.SUCCESS, ShinyStatusType.SUCCESS, ShinyStatusType.WARNING, ShinyStatusType.ERROR, ShinyStatusType.NEUTRAL))
+				.withTitle("Daily Report")
+				.addAllTypes(List.of(ShinyStatusType.SUCCESS, ShinyStatusType.SUCCESS, ShinyStatusType.WARNING, ShinyStatusType.ERROR, ShinyStatusType.NEUTRAL))
 				.render(writer);
 		Shiny.status()
-				.title("System Health")
-				.types(ShinyStatusType.SUCCESS, ShinyStatusType.SUCCESS, ShinyStatusType.SUCCESS, ShinyStatusType.WARNING, ShinyStatusType.ERROR)
-				.style(new ShinyStatusStyle()
-						.shape(ShinyStatusShape.CIRCLE))
+				.withTitle("System Health")
+				.addAllTypes(ShinyStatusType.SUCCESS, ShinyStatusType.SUCCESS, ShinyStatusType.SUCCESS, ShinyStatusType.WARNING, ShinyStatusType.ERROR)
+				.withStyle(new ShinyStatusStyle()
+						.withShape(ShinyStatusShape.CIRCLE))
 				.render(writer);
 		writer.println();
 	}

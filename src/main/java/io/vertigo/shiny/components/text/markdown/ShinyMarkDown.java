@@ -19,7 +19,7 @@ public final class ShinyMarkDown implements ShinyComponent {
 	public ShinyMarkDown() {
 	}
 
-	public ShinyMarkDown fromFile(final String path) {
+	public ShinyMarkDown withFile(final String path) {
 		try {
 			this._markdownText = Files.readString(Path.of(path));
 		} catch (final IOException e) {
@@ -28,7 +28,7 @@ public final class ShinyMarkDown implements ShinyComponent {
 		return this;
 	}
 
-	public ShinyMarkDown fromText(final String text) {
+	public ShinyMarkDown withText(final String text) {
 		this._markdownText = text;
 		return this;
 	}

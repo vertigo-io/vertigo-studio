@@ -32,7 +32,7 @@ public final class Shiny {
 
 	private final ShinyTheme theme = new ShinyTheme();
 
-	public static void printWriter(PrintWriter printWriter) {
+	public static void withWriter(PrintWriter printWriter) {
 		INSTANCE.writer = printWriter;
 	}
 

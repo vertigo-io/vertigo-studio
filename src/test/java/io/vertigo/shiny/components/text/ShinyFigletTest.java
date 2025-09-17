@@ -17,28 +17,28 @@ public class ShinyFigletTest {
 	private static void testSpecificFonts(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Testing Specific Figlet Fonts ---"));
 		Shiny.figlet()
-				.text("Vertigo")
+				.withText("Vertigo")
 				.render(writer); // Uses default font (STANDARD)
 
 		Shiny.figlet()
-				.text("Hello")
-				.style(new ShinyFigletStyle()
-						.font(ShinyFigletFont.BIG) // Use BIG font
-						.color(ShinyColors.BLUE))
+				.withText("Hello")
+				.withStyle(new ShinyFigletStyle()
+						.withFont(ShinyFigletFont.BIG) // Use BIG font
+						.withColor(ShinyColors.BLUE))
 				.render(writer);
 
 		Shiny.figlet()
-				.text("World")
-				.style(new ShinyFigletStyle()
-						.font(ShinyFigletFont.SLANT) // Use SLANT font
-						.color(ShinyColors.RED))
+				.withText("World")
+				.withStyle(new ShinyFigletStyle()
+						.withFont(ShinyFigletFont.SLANT) // Use SLANT font
+						.withColor(ShinyColors.RED))
 				.render(writer);
 
 		Shiny.figlet()
-				.text("Figlet")
-				.style(new ShinyFigletStyle()
-						.font(ShinyFigletFont.STANDARD) // Use STANDARD font
-						.color(ShinyColors.GREEN))
+				.withText("Figlet")
+				.withStyle(new ShinyFigletStyle()
+						.withFont(ShinyFigletFont.STANDARD) // Use STANDARD font
+						.withColor(ShinyColors.GREEN))
 				.render(writer);
 		writer.println();
 	}
@@ -48,10 +48,10 @@ public class ShinyFigletTest {
 		for (final ShinyFigletFont font : ShinyFigletFont.values()) {
 			writer.println(ShinyColors.CYAN.fg("Font: " + font.name()));
 			Shiny.figlet()
-					.text(font.name()) // Print the font name using the font itself
-					.style(new ShinyFigletStyle()
-							.font(font)
-							.color(ShinyColors.GREEN))
+					.withText(font.name()) // Print the font name using the font itself
+					.withStyle(new ShinyFigletStyle()
+							.withFont(font)
+							.withColor(ShinyColors.GREEN))
 					.render(writer);
 			writer.println();
 		}

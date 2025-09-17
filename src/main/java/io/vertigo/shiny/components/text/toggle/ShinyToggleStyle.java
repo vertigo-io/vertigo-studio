@@ -8,14 +8,14 @@ public final class ShinyToggleStyle {
 	private ShinyColor onColor = ShinyColors.GREEN;
 	private ShinyColor offColor = ShinyColors.RED;
 
-	public ShinyToggleStyle onColor(final ShinyColor color) {
+	public ShinyToggleStyle withOnColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.onColor = color;
 		return this;
 	}
 
-	public ShinyToggleStyle offColor(final ShinyColor color) {
+	public ShinyToggleStyle withOffColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.offColor = color;

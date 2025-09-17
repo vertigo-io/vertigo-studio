@@ -8,7 +8,7 @@ public final class ShinyGaugeStyle {
 	private ShinyColor gaugeColor = ShinyColors.GREEN;
 	private int gaugeMaxLength = 50; // Longueur de la barre en caractères
 
-	public ShinyGaugeStyle color(final ShinyColor color) {
+	public ShinyGaugeStyle withColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.gaugeColor = color;
@@ -19,7 +19,7 @@ public final class ShinyGaugeStyle {
 		return gaugeColor;
 	}
 
-	public ShinyGaugeStyle maxLength(int maxLength) {
+	public ShinyGaugeStyle withMaxLength(int maxLength) {
 		Assertion.check()
 				.isTrue(maxLength > 1, "maxlength mus be positive");
 		//---

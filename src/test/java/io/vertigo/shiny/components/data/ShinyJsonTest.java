@@ -21,7 +21,7 @@ public class ShinyJsonTest {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Basic JSON ---"));
 		final String json = "{\"name\": \"John Doe\", \"age\": 30, \"isStudent\": false, \"address\": null}";
 		Shiny.json()
-				.json(json)
+				.withJson(json)
 				.render(writer);
 		writer.println();
 	}
@@ -43,7 +43,7 @@ public class ShinyJsonTest {
 							  },"customer": null
 
 				}""";
-		Shiny.json().json(json).render(writer);
+		Shiny.json().withJson(json).render(writer);
 		writer.println();
 	}
 
@@ -55,14 +55,14 @@ public class ShinyJsonTest {
 				}
 				""";
 		Shiny.json()
-				.json(json)
-				.style(new ShinyJsonStyle()
-						.labelColor(ShinyColors.CYAN)
-						.numberColor(ShinyColors.MAGENTA)
-						.stringColor(ShinyColors.YELLOW)
-						.colonColor(ShinyColors.GREEN)
-						.bracketColor(ShinyColors.RED)
-						.bracesColor(ShinyColors.RED))
+				.withJson(json)
+				.withStyle(new ShinyJsonStyle()
+						.withLabelColor(ShinyColors.CYAN)
+						.withNumberColor(ShinyColors.MAGENTA)
+						.withStringColor(ShinyColors.YELLOW)
+						.withColonColor(ShinyColors.GREEN)
+						.withBracketColor(ShinyColors.RED)
+						.withBracesColor(ShinyColors.RED))
 				.render(writer);
 		writer.println();
 	}
@@ -80,17 +80,17 @@ public class ShinyJsonTest {
 					}
 				""";
 		Shiny.json()
-				.json(json)
-				.style(new ShinyJsonStyle()
-						.labelColor(ShinyColors.BLUE_BRIGHT)
-						.stringColor(ShinyColors.GREEN_BRIGHT)
-						.numberColor(ShinyColors.CYAN_BRIGHT)
-						.bracesColor(ShinyColors.RED)
-						.bracketColor(ShinyColors.MAGENTA)
-						.colonColor(ShinyColors.YELLOW)
-						.commaColor(ShinyColors.WHITE)
-						.booleanColor(ShinyColors.GREEN)
-						.nullColor(ShinyColors.RED))
+				.withJson(json)
+				.withStyle(new ShinyJsonStyle()
+						.withLabelColor(ShinyColors.BLUE_BRIGHT)
+						.withStringColor(ShinyColors.GREEN_BRIGHT)
+						.withNumberColor(ShinyColors.CYAN_BRIGHT)
+						.withBracesColor(ShinyColors.RED)
+						.withBracketColor(ShinyColors.MAGENTA)
+						.withColonColor(ShinyColors.YELLOW)
+						.withCommaColor(ShinyColors.WHITE)
+						.withBooleanColor(ShinyColors.GREEN)
+						.withNullColor(ShinyColors.RED))
 				.render(writer);
 		writer.println();
 	}
@@ -104,7 +104,7 @@ public class ShinyJsonTest {
 				"isStudent": false,
 				"address": null
 				"""; // Missing closing brace
-		Shiny.json().json(json).render(writer);
+		Shiny.json().withJson(json).render(writer);
 		writer.println();
 	}
 }

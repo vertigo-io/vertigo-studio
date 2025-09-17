@@ -24,34 +24,46 @@ public final class ShinyInputText implements ShinyComponent {
 	public ShinyInputText() {
 	}
 
-	public ShinyInputText label(final String label) {
+	public ShinyInputText withLabel(final String label) {
 		this.inputTextLabel = label;
 		return this;
 	}
 
-	public ShinyInputText required(final boolean required) {
+	public ShinyInputText withRequired(final boolean required) {
 		this.inputTextRequired = required;
 		return this;
 	}
 
-	public ShinyInputText pattern(final String regex) {
+	public ShinyInputText withPattern(final String regex) {
 		Assertion.check().isNotBlank(regex, "Pattern cannot be blank");
 		this.inputTextValidationPattern = Pattern.compile(regex);
 		return this;
 	}
 
-	public ShinyInputText suggestions(final List<String> suggestions) {
-		Assertion.check().isNotNull(suggestions);
-		this.inputTextSuggestions = suggestions;
+	public ShinyInputText addSuggestion(final String suggestion) {
+		Assertion.check().isNotNull(suggestion);
+		if (this.inputTextSuggestions == null) {
+			this.inputTextSuggestions = new java.util.ArrayList<>();
+		}
+		this.inputTextSuggestions.add(suggestion);
 		return this;
 	}
 
-	public ShinyInputText defaultValue(final String defaultValue) {
+	public ShinyInputText addAllSuggestions(final List<String> suggestions) {
+		Assertion.check().isNotNull(suggestions);
+		if (this.inputTextSuggestions == null) {
+			this.inputTextSuggestions = new java.util.ArrayList<>();
+		}
+		this.inputTextSuggestions.addAll(suggestions);
+		return this;
+	}
+
+	public ShinyInputText withDefaultValue(final String defaultValue) {
 		this.inputTextDefaultValue = defaultValue;
 		return this;
 	}
 
-	public ShinyInputText secret(final boolean secret) {
+	public ShinyInputText withSecret(final boolean secret) {
 		this.inputTextSecret = secret;
 		return this;
 	}

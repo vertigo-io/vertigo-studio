@@ -12,12 +12,12 @@ public final class ShinyTitle implements ShinyComponent {
 	public ShinyTitle() {
 	}
 
-	public ShinyTitle text(final String text) {
+	public ShinyTitle withText(final String text) {
 		this.title = text;
 		return this;
 	}
 
-	public ShinyTitle level(final int titleLevel) {
+	public ShinyTitle withLevel(final int titleLevel) {
 		Assertion.check()
 				.isTrue(titleLevel >= 1 && titleLevel <= 3, "Title level must be between 1 and 3");
 		this.level = titleLevel;

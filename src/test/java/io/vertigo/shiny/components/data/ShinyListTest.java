@@ -24,7 +24,7 @@ public class ShinyListTest {
 	private static void testUnorderedList(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Unordered List ---"));
 		Shiny.list()
-				.type(ShinyListType.UNORDERED)
+				.withType(ShinyListType.UNORDERED)
 				.addItem("Item 1")
 				.addItem("Item 2")
 				.addItem("Item 3")
@@ -35,7 +35,7 @@ public class ShinyListTest {
 	private static void testOrderedList(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Ordered List ---"));
 		Shiny.list()
-				.type(ShinyListType.ORDERED)
+				.withType(ShinyListType.ORDERED)
 				.addItem("First item")
 				.addItem("Second item")
 				.addItem("Third item")
@@ -46,7 +46,7 @@ public class ShinyListTest {
 	private static void testDashedList(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Dashed List ---"));
 		Shiny.list()
-				.type(ShinyListType.DASHED)
+				.withType(ShinyListType.DASHED)
 				.addItem("Task A")
 				.addItem("Task B")
 				.addItem("Task C")
@@ -57,12 +57,12 @@ public class ShinyListTest {
 	private static void testNestedList(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Nested List ---"));
 		final ShinyList nested = Shiny.list()
-				.type(ShinyListType.UNORDERED)
+				.withType(ShinyListType.UNORDERED)
 				.addItem("Sub-item 1")
 				.addItem("Sub-item 2");
 
 		Shiny.list()
-				.type(ShinyListType.ORDERED)
+				.withType(ShinyListType.ORDERED)
 				.addItem("Main Item 1")
 				.addList(nested)
 				.addItem("Main Item 2")
@@ -73,11 +73,11 @@ public class ShinyListTest {
 	private static void testColoredList(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Colored List ---"));
 		Shiny.list()
-				.type(ShinyListType.DASHED)
-				.style(new ShinyListStyle()
+				.withType(ShinyListType.DASHED)
+				.withStyle(new ShinyListStyle()
 						// Color the bullets/numbers/dashes
-						.itemColor(GREEN)
-						.bulletColor(RED))
+						.withItemColor(GREEN)
+						.withBulletColor(RED))
 				.addItem("Uranus")
 				.addItem("Saturn")
 				.addItem("Venus")

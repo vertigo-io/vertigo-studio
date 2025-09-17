@@ -23,24 +23,24 @@ public final class ShinyMultiSelection implements ShinyComponent {
 		this.selectedIndices = new HashSet<>();
 	}
 
-	public ShinyMultiSelection title(final String title) {
+	public ShinyMultiSelection withTitle(final String title) {
 		this.multiselectionTitle = title;
 		return this;
 	}
 
-	public ShinyMultiSelection options(final List<String> options) {
+	public ShinyMultiSelection withOptions(final List<String> options) {
 		Assertion.check().isNotNull(options);
 		this.multiselectionOptions.clear();
 		this.multiselectionOptions.addAll(options);
 		return this;
 	}
 
-	public ShinyMultiSelection options(final String... options) {
+	public ShinyMultiSelection withOptions(final String... options) {
 		Assertion.check().isNotNull(options);
-		return options(Arrays.asList(options));
+		return withOptions(Arrays.asList(options));
 	}
 
-	public ShinyMultiSelection selected(final List<String> initialSelected) {
+	public ShinyMultiSelection withSelected(final List<String> initialSelected) {
 		Assertion.check().isNotNull(initialSelected);
 		this.selectedIndices.clear();
 		for (final String selectedOption : initialSelected) {

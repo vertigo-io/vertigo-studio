@@ -18,22 +18,22 @@ public class ShinyGaugeTest {
 	private static void testBasicGauges(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Basic Gauges ---"));
 		Shiny.gauge()
-				.title("CPU Usage")
-				.value(50) // 50% of 100 (default max)
+				.withTitle("CPU Usage")
+				.withValue(50) // 50% of 100 (default max)
 				.render(writer);
 
 		Shiny.gauge()
-				.title("Memory Usage")
-				.value(75)
-				.style(new ShinyGaugeStyle()
-						.color(ShinyColors.YELLOW))
+				.withTitle("Memory Usage")
+				.withValue(75)
+				.withStyle(new ShinyGaugeStyle()
+						.withColor(ShinyColors.YELLOW))
 				.render(writer);
 
 		Shiny.gauge()
-				.title("Disk Usage")
-				.value(90)
-				.style(new ShinyGaugeStyle()
-						.color(ShinyColors.RED))
+				.withTitle("Disk Usage")
+				.withValue(90)
+				.withStyle(new ShinyGaugeStyle()
+						.withColor(ShinyColors.RED))
 				.render(writer);
 		writer.println();
 	}
@@ -41,27 +41,27 @@ public class ShinyGaugeTest {
 	private static void testCustomRanges(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Gauges with Custom Ranges ---"));
 		Shiny.gauge()
-				.title("Battery Level")
-				.value(85)
-				.max(100)
-				.style(new ShinyGaugeStyle()
-						.color(ShinyColors.GREEN))
+				.withTitle("Battery Level")
+				.withValue(85)
+				.withMax(100)
+				.withStyle(new ShinyGaugeStyle()
+						.withColor(ShinyColors.GREEN))
 				.render(writer);
 
 		Shiny.gauge()
-				.title("Progress (0-200)")
-				.value(120)
-				.max(200)
-				.style(new ShinyGaugeStyle()
-						.color(ShinyColors.CYAN))
+				.withTitle("Progress (0-200)")
+				.withValue(120)
+				.withMax(200)
+				.withStyle(new ShinyGaugeStyle()
+						.withColor(ShinyColors.CYAN))
 				.render(writer);
 
 		Shiny.gauge()
-				.title("Temperature (°C)")
-				.value(25)
-				.max(40)
-				.style(new ShinyGaugeStyle()
-						.color(ShinyColors.MAGENTA))
+				.withTitle("Temperature (°C)")
+				.withValue(25)
+				.withMax(40)
+				.withStyle(new ShinyGaugeStyle()
+						.withColor(ShinyColors.MAGENTA))
 				.render(writer);
 		writer.println();
 	}
@@ -69,19 +69,19 @@ public class ShinyGaugeTest {
 	private static void testDifferentLengths(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Gauges with Different Lengths ---"));
 		Shiny.gauge()
-				.title("Short Gauge")
-				.value(60)
-				.style(new ShinyGaugeStyle()
-						.maxLength(20) // Shorter bar
-						.color(ShinyColors.BLUE))
+				.withTitle("Short Gauge")
+				.withValue(60)
+				.withStyle(new ShinyGaugeStyle()
+						.withMaxLength(20) // Shorter bar
+						.withColor(ShinyColors.BLUE))
 				.render(writer);
 
 		Shiny.gauge()
-				.title("Long Gauge")
-				.value(40)
-				.style(new ShinyGaugeStyle()
-						.maxLength(80)
-						.color(ShinyColors.WHITE))
+				.withTitle("Long Gauge")
+				.withValue(40)
+				.withStyle(new ShinyGaugeStyle()
+						.withMaxLength(80)
+						.withColor(ShinyColors.WHITE))
 				.render(writer);
 		writer.println();
 	}
@@ -89,34 +89,34 @@ public class ShinyGaugeTest {
 	private static void testEdgeCases(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Gauge Edge Cases ---"));
 		Shiny.gauge()
-				.title("Zero Value")
-				.value(0)
+				.withTitle("Zero Value")
+				.withValue(0)
 				.render(writer); // Should show empty bar
 
 		Shiny.gauge()
-				.title("Max Value")
-				.value(100)
+				.withTitle("Max Value")
+				.withValue(100)
 				.render(writer); // Should show full bar
 
 		Shiny.gauge()
-				.title("Value > Max")
-				.value(120)
-				.max(100)
-				.style(new ShinyGaugeStyle()
-						.color(ShinyColors.RED))
+				.withTitle("Value > Max")
+				.withValue(120)
+				.withMax(100)
+				.withStyle(new ShinyGaugeStyle()
+						.withColor(ShinyColors.RED))
 				.render(writer); // Should show full bar (capped at max)
 
 		Shiny.gauge()
-				.title("50 %")
-				.value(120)
-				.max(240)
-				.style(new ShinyGaugeStyle()
-						.color(ShinyColors.RED))
+				.withTitle("50 %")
+				.withValue(120)
+				.withMax(240)
+				.withStyle(new ShinyGaugeStyle()
+						.withColor(ShinyColors.RED))
 				.render(writer); // Should show full bar (capped at max)
 
 		Shiny.gauge()
-				.title("Negative Value")
-				.value(-10)
+				.withTitle("Negative Value")
+				.withValue(-10)
 				.render(writer); // Should show empty bar (capped at 0)
 		writer.println();
 	}

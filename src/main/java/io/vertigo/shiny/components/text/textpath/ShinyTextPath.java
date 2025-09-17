@@ -18,24 +18,24 @@ public final class ShinyTextPath implements ShinyComponent {
 		textPathStyle = Shiny.theme().textPathStyle();
 	}
 
-	public ShinyTextPath style(final ShinyTextPathStyle style) {
+	public ShinyTextPath withStyle(final ShinyTextPathStyle style) {
 		Assertion.check().isNotNull(style);
 		//---
 		this.textPathStyle = style;
 		return this;
 	}
 
-	public ShinyTextPath path(final Path path) {
+	public ShinyTextPath withPath(final Path path) {
 		this.textPath = path.normalize().toString();
 		return this;
 	}
 
-	public ShinyTextPath path(final String path) {
+	public ShinyTextPath withPath(final String path) {
 		this.textPath = path;
 		return this;
 	}
 
-	public ShinyTextPath separator(final String pathSeparator) {
+	public ShinyTextPath withSeparator(final String pathSeparator) {
 		this.separator = pathSeparator;
 		return this;
 	}
@@ -69,7 +69,7 @@ public final class ShinyTextPath implements ShinyComponent {
 
 			if (i < parts.length - 1) {
 				final ShinyColor sepColor;
-				if (i == 0 && !relative && i == 0) {
+					if (i == 0 && !relative && i == 0) {
 					sepColor = textPathStyle.rootColor();
 				} else {
 					sepColor = textPathStyle.separatorColor();

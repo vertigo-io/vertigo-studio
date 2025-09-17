@@ -27,29 +27,29 @@ public final class ShinyCalendar implements ShinyComponent {
 		this.month = now.getMonthValue();
 	}
 
-	public ShinyCalendar style(final ShinyTableStyle style) {
+	public ShinyCalendar withStyle(final ShinyTableStyle style) {
 		Assertion.check().isNotNull(style);
 		//---
 		this.calendarStyle = style;
 		return this;
 	}
 
-	public ShinyCalendar year(final int calendarYear) {
+	public ShinyCalendar withYear(final int calendarYear) {
 		this.year = calendarYear;
 		return this;
 	}
 
-	public ShinyCalendar month(final java.time.Month calendarMonth) {
+	public ShinyCalendar withMonth(final java.time.Month calendarMonth) {
 		this.month = calendarMonth.getValue();
 		return this;
 	}
 
-	public ShinyCalendar month(final int calendarMonth) {
+	public ShinyCalendar withMonth(final int calendarMonth) {
 		this.month = calendarMonth;
 		return this;
 	}
 
-	public ShinyCalendar highlight(final LocalDate date) {
+	public ShinyCalendar addHighlightedDate(final LocalDate date) {
 		highlightedDates.add(date);
 		return this;
 	}
@@ -89,10 +89,10 @@ public final class ShinyCalendar implements ShinyComponent {
 			}
 		}
 		Shiny.table()
-				.title(String.format("%s %d", monthName, year))
-				.header(days)
-				.style(calendarStyle)
-				.rows(rows)
+				.withTitle(String.format("%s %d", monthName, year))
+				.withHeader(days)
+				.withStyle(calendarStyle)
+				.addAllRows(rows)
 				.render(writer);
 	}
 }

@@ -10,28 +10,28 @@ public final class ShinyTextPathStyle {
 	private ShinyColor leafColor = ShinyColors.BLUE_BRIGHT;
 	private ShinyColor separatorColor = ShinyColors.RED;
 
-	public ShinyTextPathStyle rootColor(final ShinyColor color) {
+	public ShinyTextPathStyle withRootColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.rootColor = color;
 		return this;
 	}
 
-	public ShinyTextPathStyle nodeColor(final ShinyColor color) {
+	public ShinyTextPathStyle withNodeColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.nodeColor = color;
 		return this;
 	}
 
-	public ShinyTextPathStyle leafColor(final ShinyColor color) {
+	public ShinyTextPathStyle withLeafColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.leafColor = color;
 		return this;
 	}
 
-	public ShinyTextPathStyle separatorColor(final ShinyColor color) {
+	public ShinyTextPathStyle withSeparatorColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.separatorColor = color;

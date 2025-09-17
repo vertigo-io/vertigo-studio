@@ -22,18 +22,18 @@ public class ShinyToggleTest {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Basic Toggles ---"));
 
 		Shiny.toggle()
-				.label("WiFi Connection")
-				.value(true)
+				.withLabel("WiFi Connection")
+				.withValue(true)
 				.render(writer);
 
 		Shiny.toggle()
-				.label("Bluetooth")
-				.value(false)
+				.withLabel("Bluetooth")
+				.withValue(false)
 				.render(writer);
 
 		Shiny.toggle()
-				.label("Auto-save")
-				.value(true)
+				.withLabel("Auto-save")
+				.withValue(true)
 				.render(writer);
 
 		writer.println();
@@ -43,39 +43,39 @@ public class ShinyToggleTest {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Different Toggle Styles ---"));
 
 		Shiny.toggle()
-				.label("Classic Style")
-				.value(true)
-				.type(ShinyToggleType.CLASSIC)
+				.withLabel("Classic Style")
+				.withValue(true)
+				.withType(ShinyToggleType.CLASSIC)
 				.render(writer);
 
 		Shiny.toggle()
-				.label("Switch Style")
-				.value(false)
-				.type(ShinyToggleType.SWITCH)
+				.withLabel("Switch Style")
+				.withValue(false)
+				.withType(ShinyToggleType.SWITCH)
 				.render(writer);
 
 		Shiny.toggle()
-				.label("Light Bulb")
-				.value(true)
-				.type(ShinyToggleType.LIGHT)
+				.withLabel("Light Bulb")
+				.withValue(true)
+				.withType(ShinyToggleType.LIGHT)
 				.render(writer);
 
 		Shiny.toggle()
-				.label("Battery Level")
-				.value(false)
-				.type(ShinyToggleType.BATTERY)
+				.withLabel("Battery Level")
+				.withValue(false)
+				.withType(ShinyToggleType.BATTERY)
 				.render(writer);
 
 		Shiny.toggle()
-				.label("Server Status")
-				.value(true)
-				.type(ShinyToggleType.STATUS)
+				.withLabel("Server Status")
+				.withValue(true)
+				.withType(ShinyToggleType.STATUS)
 				.render(writer);
 
 		Shiny.toggle()
-				.label("User Rating")
-				.value(false)
-				.type(ShinyToggleType.THUMBS)
+				.withLabel("User Rating")
+				.withValue(false)
+				.withType(ShinyToggleType.THUMBS)
 				.render(writer);
 
 		writer.println();
@@ -85,37 +85,37 @@ public class ShinyToggleTest {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Customized Toggles ---"));
 
 		Shiny.toggle()
-				.label("Custom Colors")
-				.value(true)
-				.style(new ShinyToggleStyle()
-						.onColor(ShinyColors.CYAN)
-						.offColor(ShinyColors.MAGENTA))
+				.withLabel("Custom Colors")
+				.withValue(true)
+				.withStyle(new ShinyToggleStyle()
+						.withOnColor(ShinyColors.CYAN)
+						.withOffColor(ShinyColors.MAGENTA))
 				.render(writer);
 
 		Shiny.toggle()
-				.label("Custom Text")
-				.value(false)
-				.onText("ENABLED")
-				.offText("DISABLED")
-				.type(ShinyToggleType.ARROW)
+				.withLabel("Custom Text")
+				.withValue(false)
+				.withOnText("ENABLED")
+				.withOffText("DISABLED")
+				.withType(ShinyToggleType.ARROW)
 				.render(writer);
 
 		Shiny.toggle()
-				.label("No Text")
-				.value(true)
-				.showText(false)
-				.type(ShinyToggleType.CHECK)
+				.withLabel("No Text")
+				.withValue(true)
+				.withShowText(false)
+				.withType(ShinyToggleType.CHECK)
 				.render(writer);
 
 		Shiny.toggle()
-				.label("With star-on")
-				.value(true)
-				.type(ShinyToggleType.STAR)
+				.withLabel("With star-on")
+				.withValue(true)
+				.withType(ShinyToggleType.STAR)
 				.render(writer);
 		Shiny.toggle()
-				.label("With star-off")
-				.value(false)
-				.type(ShinyToggleType.STAR)
+				.withLabel("With star-off")
+				.withValue(false)
+				.withType(ShinyToggleType.STAR)
 				.render(writer);
 
 		writer.println();

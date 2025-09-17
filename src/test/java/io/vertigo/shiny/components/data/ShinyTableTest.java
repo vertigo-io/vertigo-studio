@@ -27,9 +27,9 @@ public class ShinyTableTest {
 				new String[] { "Peter Jones", "35", "Paris" });
 
 		Shiny.table()
-				.title("User Information")
-				.header("Name", "Age", "City")
-				.rows(data)
+				.withTitle("User Information")
+				.withHeader("Name", "Age", "City")
+				.addAllRows(data)
 				.render(writer);
 		writer.println();
 	}
@@ -66,9 +66,9 @@ public class ShinyTableTest {
 				new String[] { "Sweden", "10600000" });
 
 		Shiny.table()
-				.title("European Union Countries - Population")
-				.header("Country", "Population")
-				.rows(euCountries)
+				.withTitle("European Union Countries - Population")
+				.withHeader("Country", "Population")
+				.addAllRows(euCountries)
 				.render(writer);
 		writer.println();
 	}
@@ -76,10 +76,10 @@ public class ShinyTableTest {
 	private static void testEmptyTable(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Empty Table ---"));
 		Shiny.table()
-				.title("Empty Data")
-				.header("Col1", "Col2")
-				.rows(List.of()) // Empty data
-				.noDataFound("No data available for this table.")
+				.withTitle("Empty Data")
+				.withHeader("Col1", "Col2")
+				.addAllRows(List.of()) // Empty data
+				.withNoDataFound("No data available for this table.")
 				.render(writer);
 		writer.println();
 	}
@@ -92,47 +92,47 @@ public class ShinyTableTest {
 				new String[] { "Item C", "75", "Active" });
 
 		Shiny.table()
-				.title("Product Status")
-				.header("Product", "Quantity", "Status")
-				.rows(data)
-				.style(new ShinyTableStyle()
-						.titleBackgroundColor(ShinyColors.WHITE)
-						.headerBackgroundColor(ShinyColors.GREEN_BRIGHT)
-						.altRowBackgroundColor(ShinyColors.CYAN_BRIGHT)
-						.borderColor(ShinyColors.RED))
+				.withTitle("Product Status")
+				.withHeader("Product", "Quantity", "Status")
+				.addAllRows(data)
+				.withStyle(new ShinyTableStyle()
+						.withTitleBackgroundColor(ShinyColors.WHITE)
+						.withHeaderBackgroundColor(ShinyColors.GREEN_BRIGHT)
+						.withAltRowBackgroundColor(ShinyColors.CYAN_BRIGHT)
+						.withBorderColor(ShinyColors.RED))
 				.render(writer);
 		writer.println();
 
 		final ShinyTable table = Shiny.table()
-				.title("Sales Report")
-				.header("Region", "Sales", "Growth")
-				.rows(List.of(
+				.withTitle("Sales Report")
+				.withHeader("Region", "Sales", "Growth")
+				.addAllRows(List.of(
 						new String[] { "North", "12345", "10.5%" },
 						new String[] { "South", "9876", "5.2%" }))
-				.style(new ShinyTableStyle()
-						.titleBackgroundColor(ShinyColors.BLUE)
-						.headerBackgroundColor(ShinyColors.WHITE)
-						.altRowBackgroundColor(ShinyColors.CYAN)
-						.borderColor(ShinyColors.YELLOW));
+				.withStyle(new ShinyTableStyle()
+						.withTitleBackgroundColor(ShinyColors.BLUE)
+						.withHeaderBackgroundColor(ShinyColors.WHITE)
+						.withAltRowBackgroundColor(ShinyColors.CYAN)
+						.withBorderColor(ShinyColors.YELLOW));
 
 		table
-				.title("Sales Report - Simple")
-				.style(new ShinyTableStyle()
-						.border(ShinyBorder.Simple))
+				.withTitle("Sales Report - Simple")
+				.withStyle(new ShinyTableStyle()
+						.withBorder(ShinyBorder.Simple))
 				.render(writer);
 		writer.println();
 
 		table
-				.title("Sales Report - SimpleHeavy")
-				.style(new ShinyTableStyle()
-						.border(ShinyBorder.SimpleHeavy))
+				.withTitle("Sales Report - SimpleHeavy")
+				.withStyle(new ShinyTableStyle()
+						.withBorder(ShinyBorder.SimpleHeavy))
 				.render(writer);
 		writer.println();
 
 		table
-				.title("Sales Report - Horizontal")
-				.style(new ShinyTableStyle()
-						.border(ShinyBorder.Horizontal))
+				.withTitle("Sales Report - Horizontal")
+				.withStyle(new ShinyTableStyle()
+						.withBorder(ShinyBorder.Horizontal))
 				.render(writer);
 		writer.println();
 	}

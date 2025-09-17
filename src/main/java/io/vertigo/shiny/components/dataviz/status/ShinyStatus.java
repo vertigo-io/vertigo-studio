@@ -18,25 +18,25 @@ public final class ShinyStatus implements ShinyComponent {
 		this.statusStyle = Shiny.theme().statusStyle();
 	}
 
-	public ShinyStatus style(final ShinyStatusStyle style) {
+	public ShinyStatus withStyle(final ShinyStatusStyle style) {
 		Assertion.check().isNotNull(style);
 		//---
 		this.statusStyle = style;
 		return this;
 	}
 
-	public ShinyStatus title(final String text) {
+	public ShinyStatus withTitle(final String text) {
 		this.title = text;
 		return this;
 	}
 
-	public ShinyStatus types(final List<ShinyStatusType> types) {
+	public ShinyStatus addAllTypes(final List<ShinyStatusType> types) {
 		this.statusTypes.addAll(types);
 		return this;
 	}
 
-	public ShinyStatus types(final ShinyStatusType... types) {
-		return types(List.of(types));
+	public ShinyStatus addAllTypes(final ShinyStatusType... types) {
+		return addAllTypes(List.of(types));
 	}
 
 	public void render(final ShinyWriter writer) {

@@ -18,14 +18,14 @@ public final class ShinyFiglet implements ShinyComponent {
 		this.figletStyle = Shiny.theme().figletStyle();
 	}
 
-	public ShinyFiglet style(final ShinyFigletStyle style) {
+	public ShinyFiglet withStyle(final ShinyFigletStyle style) {
 		Assertion.check().isNotNull(style);
 		//---
 		this.figletStyle = style;
 		return this;
 	}
 
-	public ShinyFiglet text(final String text) {
+	public ShinyFiglet withText(final String text) {
 		this.figletText = text;
 		return this;
 	}

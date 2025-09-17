@@ -11,7 +11,7 @@ import io.vertigo.shiny.components.ShinyComponent;
 public final class ShinyBarChart implements ShinyComponent {
 	private String barChartTitle;
 	private String[] barChartHeader;
-	private int[] barChartRow;
+	private int[] barChartValues;
 	private ShinySortMode sortMode = ShinySortMode.NO;
 	private ShinyBarChartStyle barChartStyle;
 
@@ -19,42 +19,42 @@ public final class ShinyBarChart implements ShinyComponent {
 		barChartStyle = Shiny.theme().barChartStyle();
 	}
 
-	public ShinyBarChart style(final ShinyBarChartStyle style) {
+	public ShinyBarChart withStyle(final ShinyBarChartStyle style) {
 		Assertion.check().isNotNull(style);
 		//---
 		this.barChartStyle = style;
 		return this;
 	}
 
-	public ShinyBarChart title(final String title) {
+	public ShinyBarChart withTitle(final String title) {
 		this.barChartTitle = title;
 		return this;
 	}
 
-	public ShinyBarChart header(final String... header) {
+	public ShinyBarChart withHeader(final String... header) {
 		this.barChartHeader = header;
 		return this;
 	}
 
-	public ShinyBarChart header(final List<String> header) {
+	public ShinyBarChart withHeader(final List<String> header) {
 		this.barChartHeader = header.toArray(new String[0]);
 		return this;
 	}
 
-	public ShinyBarChart rows(final int... rows) {
-		this.barChartRow = rows;
+	public ShinyBarChart withValues(final int... values) {
+		this.barChartValues = values;
 		return this;
 	}
 
-	public ShinyBarChart rows(final List<Integer> values) {
-		this.barChartRow = new int[values.size()];
+	public ShinyBarChart withValues(final List<Integer> values) {
+		this.barChartValues = new int[values.size()];
 		for (int i = 0; i < values.size(); i++) {
-			this.barChartRow[i] = values.get(i);
+			this.barChartValues[i] = values.get(i);
 		}
 		return this;
 	}
 
-	public ShinyBarChart sort(final ShinySortMode mode) {
+	public ShinyBarChart withSort(final ShinySortMode mode) {
 		this.sortMode = mode;
 		return this;
 	}
@@ -69,10 +69,10 @@ public final class ShinyBarChart implements ShinyComponent {
 			case NO:
 				break;
 			case VALUE_ASC:
-				Arrays.sort(indices, (i1, i2) -> Integer.compare(barChartRow[i1], barChartRow[i2]));
+				Arrays.sort(indices, (i1, i2) -> Integer.compare(barChartValues[i1], barChartValues[i2]));
 				break;
 			case VALUE_DESC:
-				Arrays.sort(indices, (i1, i2) -> Integer.compare(barChartRow[i2], barChartRow[i1]));
+				Arrays.sort(indices, (i1, i2) -> Integer.compare(barChartValues[i2], barChartValues[i1]));
 				break;
 			case HEADER_ASC:
 				Arrays.sort(indices, (i1, i2) -> barChartHeader[i1].compareToIgnoreCase(barChartHeader[i2]));
@@ -87,20 +87,20 @@ public final class ShinyBarChart implements ShinyComponent {
 
 	private void reorder(final Integer[] indices) {
 		final String[] newHeader = new String[barChartHeader.length];
-		final int[] newRow = new int[barChartRow.length];
+		final int[] newValues = new int[barChartValues.length];
 		for (int i = 0; i < indices.length; i++) {
 			newHeader[i] = barChartHeader[indices[i]];
-			newRow[i] = barChartRow[indices[i]];
+			newValues[i] = barChartValues[indices[i]];
 		}
 		this.barChartHeader = newHeader;
-		this.barChartRow = newRow;
+		this.barChartValues = newValues;
 	}
 
 	public void render(final ShinyWriter writer) {
 		sort();
 
 		// Trouver la valeur maximale pour normaliser les barres
-		final int maxCount = Arrays.stream(barChartRow).max().orElse(1);
+		final int maxCount = Arrays.stream(barChartValues).max().orElse(1);
 
 		// Déterminer la longueur maximale du nom de catégorie pour l'alignement
 		final int maxLabelLength = Arrays.stream(barChartHeader)
@@ -115,7 +115,7 @@ public final class ShinyBarChart implements ShinyComponent {
 
 		for (int i = 0; i < barChartHeader.length; i++) {
 			final String category = barChartHeader[i] != null ? barChartHeader[i] : "Catégorie " + (i + 1);
-			final int count = barChartRow[i];
+			final int count = barChartValues[i];
 			// Normaliser la longueur de la barre
 			final int barLength = (int) ((double) count / maxCount * barChartStyle.maxLength());
 			final String bar = "█".repeat(Math.max(0, barLength)); // Utiliser le caractère carré plein █

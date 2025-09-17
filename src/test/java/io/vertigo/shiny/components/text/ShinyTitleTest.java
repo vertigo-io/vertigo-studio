@@ -12,17 +12,17 @@ public class ShinyTitleTest {
 
 	private static void testTitles(final ShinyWriter writer) {
 		Shiny.title()
-				.text("Level 1 Title")
-				.level(1)
+				.withText("Level 1 Title")
+				.withLevel(1)
 				.render(writer);
 		Shiny.title()
-				.text("Level 2 Title")
-				.level(2)
+				.withText("Level 2 Title")
+				.withLevel(2)
 				.render(writer);
 		Shiny.title()
-				.text("Level 3 Title")
-				.level(3)
+				.withText("Level 3 Title")
+				.withLevel(3)
 				.render(writer);
-		Shiny.title().text("Default Level Title").render(writer); // Default, should be level 1
+		Shiny.title().withText("Default Level Title").render(writer); // Default, should be level 1
 	}
 }

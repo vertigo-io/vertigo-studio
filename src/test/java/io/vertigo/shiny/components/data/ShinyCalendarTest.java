@@ -30,15 +30,15 @@ public class ShinyCalendarTest {
 	private static void testSpecificMonthAndYear(ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Specific Month and Year Calendar (July 2024) ---"));
 		Shiny.calendar()
-				.year(2024)
-				.month(Month.JULY)
+				.withYear(2024)
+				.withMonth(Month.JULY)
 				.render(writer);
 		writer.println();
 
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Specific Month and Year Calendar (December 2023) ---"));
 		Shiny.calendar()
-				.year(2023)
-				.month(Month.DECEMBER)
+				.withYear(2023)
+				.withMonth(Month.DECEMBER)
 				.render(writer);
 		writer.println();
 	}
@@ -46,10 +46,10 @@ public class ShinyCalendarTest {
 	private static void testHighlightedDates(ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Calendar with Highlighted Dates (August 2024) ---"));
 		Shiny.calendar()
-				.year(2024)
-				.month(Month.AUGUST)
-				.highlight(LocalDate.of(2024, Month.AUGUST, 15)) // Highlight a specific date
-				.highlight(LocalDate.of(2024, Month.AUGUST, 20)) // Highlight another date
+				.withYear(2024)
+				.withMonth(Month.AUGUST)
+				.addHighlightedDate(LocalDate.of(2024, Month.AUGUST, 15)) // Highlight a specific date
+				.addHighlightedDate(LocalDate.of(2024, Month.AUGUST, 20)) // Highlight another date
 				.render(writer);
 		writer.println();
 	}
@@ -58,18 +58,18 @@ public class ShinyCalendarTest {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Calendar with French Locale (September 2024) ---"));
 		Shiny.theme().locale(Locale.FRENCH);
 		Shiny.calendar()
-				.year(2024)
-				.month(Month.SEPTEMBER)
-				.highlight(LocalDate.of(2024, Month.SEPTEMBER, 1)) // Highlight a date in French calendar
+				.withYear(2024)
+				.withMonth(Month.SEPTEMBER)
+				.addHighlightedDate(LocalDate.of(2024, Month.SEPTEMBER, 1)) // Highlight a date in French calendar
 				.render(writer);
 		writer.println();
 
 		System.out.println(ShinyColors.BLUE_BRIGHT.fg("--- Calendar with German Locale (January 2025) ---"));
 		Shiny.theme().locale(Locale.GERMAN);
 		Shiny.calendar()
-				.year(2025)
-				.month(Month.JANUARY)
-				.highlight(LocalDate.of(2025, Month.JANUARY, 1))
+				.withYear(2025)
+				.withMonth(Month.JANUARY)
+				.addHighlightedDate(LocalDate.of(2025, Month.JANUARY, 1))
 				.render(writer);
 		writer.println();
 	}
@@ -77,26 +77,26 @@ public class ShinyCalendarTest {
 	private static void testBordersAndHighlightColors(ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Calendar with SQUARE Border and Custom Highlight Color (October 2024) ---"));
 		Shiny.calendar()
-				.year(2024)
-				.month(Month.OCTOBER)
-				.highlight(LocalDate.of(2024, Month.OCTOBER, 10))
-				.highlight(LocalDate.of(2024, Month.OCTOBER, 20))
+				.withYear(2024)
+				.withMonth(Month.OCTOBER)
+				.addHighlightedDate(LocalDate.of(2024, Month.OCTOBER, 10))
+				.addHighlightedDate(LocalDate.of(2024, Month.OCTOBER, 20))
 				//.highlightColor(ShinyColors.MAGENTA_BRIGHT) // Custom highlight color
 				.render(writer);
 		writer.println();
 
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Calendar with ROUNDED Border (November 2024) ---"));
 		Shiny.calendar()
-				.year(2024)
-				.month(Month.NOVEMBER.getValue())
+				.withYear(2024)
+				.withMonth(Month.NOVEMBER.getValue())
 				.render(writer);
 		writer.println();
 
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Calendar with ASCII Border (February 2025) ---"));
 		Shiny.theme().ascii();
 		Shiny.calendar()
-				.year(2025)
-				.month(Month.FEBRUARY.getValue())
+				.withYear(2025)
+				.withMonth(Month.FEBRUARY.getValue())
 				.render(writer);
 		writer.println();
 	}

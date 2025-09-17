@@ -17,19 +17,19 @@ public final class ShinySparkline implements ShinyComponent {
 		this.sparklineStyle = Shiny.theme().sparklineStyle();
 	}
 
-	public ShinySparkline style(final ShinySparklineStyle style) {
+	public ShinySparkline withStyle(final ShinySparklineStyle style) {
 		Assertion.check().isNotNull(style);
 		//---
 		this.sparklineStyle = style;
 		return this;
 	}
 
-	public ShinySparkline title(final String text) {
+	public ShinySparkline withTitle(final String text) {
 		this.title = text;
 		return this;
 	}
 
-	public ShinySparkline data(final List<Double> values) {
+	public ShinySparkline withData(final List<Double> values) {
 		Assertion.check().isNotNull(values);
 		//---
 		this.data = values;

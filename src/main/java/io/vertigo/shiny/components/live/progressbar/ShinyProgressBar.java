@@ -16,7 +16,7 @@ public final class ShinyProgressBar extends ShinyLiveComponent<ShinyProgressBar>
 		this.progressBarStyle = Shiny.theme().progressBarStyle();
 	}
 
-	public ShinyProgressBar style(final ShinyProgressBarStyle style) {
+	public ShinyProgressBar withStyle(final ShinyProgressBarStyle style) {
 		Assertion.check().isNotNull(style);
 		//---
 		this.progressBarStyle = style;
@@ -24,7 +24,7 @@ public final class ShinyProgressBar extends ShinyLiveComponent<ShinyProgressBar>
 	}
 
 	//  Valeur totale correspondant à 100%
-	public ShinyProgressBar total(final int value) {
+	public ShinyProgressBar withTotal(final int value) {
 		Assertion.check().isTrue(value > 0, "total must be > 0");
 		//---
 		this.total = value;

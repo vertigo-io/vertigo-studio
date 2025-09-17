@@ -18,63 +18,63 @@ public final class ShinyJsonStyle {
 	private ShinyColor bracketColor = ShinyColors.WHITE;
 	private ShinyColor bracesColor = ShinyColors.WHITE;
 
-	public ShinyJsonStyle labelColor(final ShinyColor color) {
+	public ShinyJsonStyle withLabelColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.labelColor = color;
 		return this;
 	}
 
-	public ShinyJsonStyle numberColor(final ShinyColor color) {
+	public ShinyJsonStyle withNumberColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.numberColor = color;
 		return this;
 	}
 
-	public ShinyJsonStyle stringColor(final ShinyColor color) {
+	public ShinyJsonStyle withStringColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.stringColor = color;
 		return this;
 	}
 
-	public ShinyJsonStyle booleanColor(final ShinyColor color) {
+	public ShinyJsonStyle withBooleanColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.booleanColor = color;
 		return this;
 	}
 
-	public ShinyJsonStyle nullColor(final ShinyColor color) {
+	public ShinyJsonStyle withNullColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.nullColor = color;
 		return this;
 	}
 
-	public ShinyJsonStyle colonColor(final ShinyColor color) {
+	public ShinyJsonStyle withColonColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.colonColor = color;
 		return this;
 	}
 
-	public ShinyJsonStyle commaColor(final ShinyColor color) {
+	public ShinyJsonStyle withCommaColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.commaColor = color;
 		return this;
 	}
 
-	public ShinyJsonStyle bracketColor(final ShinyColor color) {
+	public ShinyJsonStyle withBracketColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.bracketColor = color;
 		return this;
 	}
 
-	public ShinyJsonStyle bracesColor(final ShinyColor color) {
+	public ShinyJsonStyle withBracesColor(final ShinyColor color) {
 		Assertion.check().isNotNull(color);
 		//---
 		this.bracesColor = color;

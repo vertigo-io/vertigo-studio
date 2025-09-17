@@ -2,6 +2,7 @@ package io.vertigo.shiny;
 
 import io.vertigo.shiny.style.ShinyColors;
 import io.vertigo.shiny.style.ShinyEffects;
+import java.util.Locale;
 
 public class ShinyStyleTest {
 
@@ -14,6 +15,7 @@ public class ShinyStyleTest {
 		testEffects(writer);
 		testCombos(writer);
 		testShake(writer);
+		testThemeChanges(writer); // New test case for theme changes
 	}
 
 	private static void testColors(final ShinyWriter writer) {
@@ -129,6 +131,42 @@ public class ShinyStyleTest {
 		writer.println(text);
 
 		writer.println();
+		writer.println();
+	}
+
+	private static void testThemeChanges(final ShinyWriter writer) {
+		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Theme Changes ---"));
+
+		// Test locale change
+		Shiny.theme().withLocale(Locale.FRENCH);
+		writer.println("Current locale: " + Shiny.theme().locale().getDisplayName());
+		Shiny.theme().withLocale(Locale.ENGLISH); // Reset to default for other tests
+		writer.println("Current locale: " + Shiny.theme().locale().getDisplayName());
+
+		// Test ASCII theme
+		Shiny.theme().withAscii(true);
+		writer.println("ASCII theme enabled: " + Shiny.theme().ascii());
+		Shiny.theme().withAscii(false);
+		writer.println("ASCII theme enabled: " + Shiny.theme().ascii());
+
+		// Test Square theme
+		Shiny.theme().withSquare(true);
+		writer.println("Square theme enabled: " + Shiny.theme().square());
+		Shiny.theme().withSquare(false);
+		writer.println("Square theme enabled: " + Shiny.theme().square());
+
+		// Test Unicode theme
+		Shiny.theme().withUnicode(true);
+		writer.println("Unicode theme enabled: " + !Shiny.theme().ascii());
+		Shiny.theme().withUnicode(false);
+		writer.println("Unicode theme enabled: " + !Shiny.theme().ascii());
+
+		// Test Rounded theme
+		Shiny.theme().withRounded(true);
+		writer.println("Rounded theme enabled: " + !Shiny.theme().square());
+		Shiny.theme().withRounded(false);
+		writer.println("Rounded theme enabled: " + !Shiny.theme().square());
+
 		writer.println();
 	}
 }

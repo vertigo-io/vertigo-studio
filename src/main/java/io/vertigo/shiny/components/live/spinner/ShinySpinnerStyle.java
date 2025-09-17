@@ -11,7 +11,7 @@ public final class ShinySpinnerStyle {
 		return spinnerFrames;
 	}
 
-	public ShinySpinnerStyle frames(String... frames) {
+	public ShinySpinnerStyle withFrames(String... frames) {
 		Assertion.check()
 				.isNotNull(frames)
 				.isTrue(frames.length > 1, "you mus register at least 2 frames");

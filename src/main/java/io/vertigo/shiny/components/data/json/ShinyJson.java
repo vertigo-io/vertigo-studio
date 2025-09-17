@@ -23,14 +23,14 @@ public final class ShinyJson implements ShinyComponent {
 		jsonStyle = Shiny.theme().jsonStyle();
 	}
 
-	public ShinyJson style(final ShinyJsonStyle style) {
+	public ShinyJson withStyle(final ShinyJsonStyle style) {
 		Assertion.check().isNotNull(style);
 		//---
 		this.jsonStyle = style;
 		return this;
 	}
 
-	public ShinyJson json(final String json) {
+	public ShinyJson withJson(final String json) {
 		this.jsonString = json;
 		return this;
 	}

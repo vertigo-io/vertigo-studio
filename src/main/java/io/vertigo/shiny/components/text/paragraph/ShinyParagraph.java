@@ -10,7 +10,7 @@ public final class ShinyParagraph implements ShinyComponent {
 	public ShinyParagraph() {
 	}
 
-	public ShinyParagraph text(final String text) {
+	public ShinyParagraph withText(final String text) {
 		this.paragraphText = text;
 		return this;
 	}

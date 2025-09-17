@@ -8,7 +8,7 @@ public final class ShinyBarChartStyle {
 	private ShinyColor[] barColors = { ShinyColors.BLUE, ShinyColors.BLUE_BRIGHT };
 	private int barMaxLength = 50;
 
-	public ShinyBarChartStyle colors(final ShinyColor... colors) {
+	public ShinyBarChartStyle withColors(final ShinyColor... colors) {
 		Assertion.check()
 				.isNotNull(colors)
 				.isTrue(colors.length > 1, "you need to put at least 2 colors");
@@ -17,7 +17,7 @@ public final class ShinyBarChartStyle {
 		return this;
 	}
 
-	public ShinyBarChartStyle maxLength(int maxLength) {
+	public ShinyBarChartStyle withMaxLength(int maxLength) {
 		Assertion.check()
 				.isTrue(maxLength > 1, "maxlength mus be positive");
 		//---

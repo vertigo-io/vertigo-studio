@@ -15,24 +15,24 @@ public final class ShinyGauge implements ShinyComponent {
 		this.gaugeStyle = Shiny.theme().gaugeStyle();
 	}
 
-	public ShinyGauge style(final ShinyGaugeStyle style) {
+	public ShinyGauge withStyle(final ShinyGaugeStyle style) {
 		Assertion.check().isNotNull(style);
 		//---
 		this.gaugeStyle = style;
 		return this;
 	}
 
-	public ShinyGauge title(final String text) {
+	public ShinyGauge withTitle(final String text) {
 		this.title = text;
 		return this;
 	}
 
-	public ShinyGauge value(final double currentValue) {
+	public ShinyGauge withValue(final double currentValue) {
 		this.value = currentValue;
 		return this;
 	}
 
-	public ShinyGauge max(final double maxValue) {
+	public ShinyGauge withMax(final double maxValue) {
 		this.max = maxValue;
 		return this;
 	}

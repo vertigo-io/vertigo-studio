@@ -41,7 +41,7 @@ public class ShinySpinnerTest {
 	private static void testShortDurationSpinner(final ShinyWriter writer) throws Exception {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Short Duration Spinner ---"));
 
-		try (ShinySpinner spinner = Shiny.spinner().style(new ShinySpinnerStyle().frames("|", "/", "─", "\\")).start(writer)) {
+		try (ShinySpinner spinner = Shiny.spinner().withStyle(new ShinySpinnerStyle().withFrames("|", "/", "─", "\\")).start(writer)) {
 			spinner.liveSend("Quick task...");
 			Thread.sleep(1000); // Short duration
 		}
