@@ -71,6 +71,7 @@ public class ShinyWebServer extends WebSocketServer {
 							.build();
 					mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
 					sendMessage(webSocket, "table", mapper.writeValueAsString(table));
+					break;
 				case "x-json":
 					var jsonContent = """
 							{
