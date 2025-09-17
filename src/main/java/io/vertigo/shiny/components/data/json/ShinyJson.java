@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -13,8 +14,9 @@ import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColors;
 
 public record ShinyJson(
+		String title,
 		String json,
-		ShinyJsonStyle style) implements ShinyComponent {
+		@JsonIgnore ShinyJsonStyle style) implements ShinyComponent {
 
 	public ShinyJson {
 		Assertion.check().isNotBlank(json, "JSON string cannot be blank");

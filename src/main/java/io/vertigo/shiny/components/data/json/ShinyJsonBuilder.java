@@ -7,11 +7,19 @@ import io.vertigo.shiny.Shiny;
 public final class ShinyJsonBuilder implements Builder<ShinyJson> {
 	private String jsonString;
 	private ShinyJsonStyle jsonStyle;
+	private String jsonTitle;
 
 	// No public constructor, use ShinyJson.builder()
 	ShinyJsonBuilder() {
 		// Package-private constructor
 		jsonStyle = Shiny.theme().jsonStyle(); // Initialize default style
+	}
+
+	public ShinyJsonBuilder withTitle(final String title) {
+		Assertion.check().isNotBlank(title);
+		//---
+		this.jsonTitle = title;
+		return this;
 	}
 
 	public ShinyJsonBuilder withStyle(final ShinyJsonStyle style) {
@@ -28,6 +36,6 @@ public final class ShinyJsonBuilder implements Builder<ShinyJson> {
 
 	@Override
 	public ShinyJson build() {
-		return new ShinyJson(jsonString, jsonStyle);
+		return new ShinyJson(jsonTitle, jsonString, jsonStyle);
 	}
 }

@@ -11,8 +11,6 @@ import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.vertigo.shell.Shell;
@@ -59,7 +57,7 @@ public class ShinyWebServer extends WebSocketServer {
 				//				// Traiter la saisie utilisateur
 				//				String userInput = wsMessage.data();
 				//				System.out.println("Prompt reçu : " + userInput);
-				case "x-table":
+				case "xtable":
 					final List<String[]> rows = new ArrayList<>();
 					rows.add(new String[] { "Arthur", "Penn" });
 					rows.add(new String[] { "Marilyn", "Pinson" });
@@ -69,10 +67,9 @@ public class ShinyWebServer extends WebSocketServer {
 							.withHeader("Prénom", "Nom")
 							.addAllRows(rows)
 							.build();
-					mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
 					sendMessage(webSocket, "table", mapper.writeValueAsString(table));
 					break;
-				case "x-json":
+				case "xjson":
 					var jsonContent = """
 							{
 							  "title": "The Shining",
@@ -84,9 +81,11 @@ public class ShinyWebServer extends WebSocketServer {
 							  "synopsis": "A family heads to an isolated hotel for the winter where a sinister presence influences the father into violence."
 							}
 															""";
-					var jsonData = new JsonData("titre ", "json vide", jsonContent);
-					final String data = mapper.writeValueAsString(jsonData);
-					sendMessage(webSocket, "json", data);
+					var json = Shiny.json()
+							.withJson(jsonContent)
+							.withTitle("Fiche de Shinning")
+							.build();
+					sendMessage(webSocket, "json", mapper.writeValueAsString(json));
 					break;
 				default:
 					sendMessage(webSocket, "text", "nada");

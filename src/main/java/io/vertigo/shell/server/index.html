@@ -575,18 +575,14 @@
 				`<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`
 			).join('')}
       </tbody></table>`;
-			const type = "table";
-			const title = tableData.title;
 			
-			addCollapsible(type, title, content);
+			addCollapsible("table", tableData.title, content);
 		}
 
 		function addJson(jsonData) {
 			const content = `<div class="json-container">${syntaxHighlight(jsonData.json)}</div>`;
-			const type = "json";
-			const title = jsonData.title;
 
-			addCollapsible(type, title, content);
+			addCollapsible("json", jsonData.title, content);
 		}
 
 		function syntaxHighlight(json) {

@@ -4,6 +4,8 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
@@ -18,7 +20,7 @@ public record ShinyTable(
 		String noDataFound,
 		String[] header,
 		List<String[]> rows,
-		ShinyTableStyle style) implements ShinyComponent {
+		@JsonIgnore ShinyTableStyle style) implements ShinyComponent {
 
 	public ShinyTable {
 		// Perform any final validations here before building the object
