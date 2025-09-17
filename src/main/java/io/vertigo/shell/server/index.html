@@ -59,12 +59,9 @@
 				  expand-icon="keyboard_arrow_down"
 				  default-opened
 				>
-				  <q-card flat bordered>
-				  	<q-code 
-				  		:code="formatJson(message.content.json)" 
-				  		language="json" 
-				  	/>
-				  </q-card>
+					<q-card flat bordered class="json-container">
+ 						<pre><code>{{ JSON.stringify(message.content.json, null, 2) }}</code></pre>      
+				  	</q-card>
 				</q-expansion-item>
             </div>
         </div>
@@ -183,21 +180,7 @@
                     if (chatContainer) {
                         chatContainer.scrollTop = chatContainer.scrollHeight;
                     }
-                }, 
-                formatJson(jsonData) {
-                 console.log('format  '+ jsonData);
-				    try {
-				      // Si jsonData est déjà une chaîne, on la retourne telle quelle
-				      if (typeof jsonData === 'string') {
-				        return jsonData;
-				      }
-				      // Sinon, on convertit l'objet JSON en chaîne formatée
-				      return JSON.stringify(jsonData, null, 2);
-				    } catch (error) {
-				      console.error('Erreur lors du formatage JSON:', error);
-				      return '{}'; // Retourne un JSON vide en cas d'erreur
-				    }
-				}
+                }
             }
         });
 
