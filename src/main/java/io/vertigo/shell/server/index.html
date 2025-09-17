@@ -46,6 +46,17 @@
       color: var(--general-text);
     }
 
+    /* Barre verticale jaune */
+    .vertical-bar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 48px; /* Épaisseur correspondant à la taille du h1 en desktop */
+      height: 100vh;
+      background-color: #FFC107; /* Jaune */
+      z-index: 1000;
+    }
+
     .header-container {
       display: flex;
       align-items: center;
@@ -62,6 +73,20 @@
       letter-spacing: 4px;
       margin: 0;
       text-shadow: 0 0 12px var(--assistant-accent);
+      position: relative; /* Pour le bullet point */
+    }
+
+    h1 span.yellow {
+      color: #FFC107; /* Jaune */
+    }
+
+    /* Bullet point jaune */
+    h1::after {
+      content: '●';
+      color: #FFC107; /* Jaune */
+      font-size: 24px;
+      margin-left: 10px;
+      vertical-align: middle;
     }
 
     #status {
@@ -308,8 +333,6 @@
       transition: all 0.2s ease;
     }
 
-
-
     /* JSON Viewer */
     .json-container {
       background-color: var(--json-bg);
@@ -390,12 +413,22 @@
       h1 {
         font-size: 32px;
       }
+
+      h1::after {
+        font-size: 16px; /* Ajustement du bullet point pour mobile */
+      }
+
+      .vertical-bar {
+        width: 32px; /* Épaisseur correspondant à la taille du h1 en mobile */
+      }
     }
   </style>
 </head>
 <body>
+  <div class="vertical-bar"></div>
+
   <div class="header-container">
-    <h1>BANSHEE</h1>
+    <h1>BAN<span class="yellow">SHEE</span></h1>
     <div id="status" class="status-disconnected">
       <div class="status-dot"></div>
       <span id="status-text">Connecting</span>
