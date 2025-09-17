@@ -7,9 +7,9 @@ import io.vertigo.core.lang.Builder;
 import io.vertigo.shiny.Shiny;
 
 public final class ShinyTextPathBuilder implements Builder<ShinyTextPath> {
-	String textPath;
-	String separator = "/";
-	ShinyTextPathStyle textPathStyle;
+	private String textPath;
+	private String textPathSeparator = "/";
+	private ShinyTextPathStyle textPathStyle;
 
 	// No public constructor, use ShinyTextPath.builder()
 	ShinyTextPathBuilder() {
@@ -34,16 +34,13 @@ public final class ShinyTextPathBuilder implements Builder<ShinyTextPath> {
 		return this;
 	}
 
-	public ShinyTextPathBuilder withSeparator(final String pathSeparator) {
-		this.separator = pathSeparator;
+	public ShinyTextPathBuilder withSeparator(final String separator) {
+		this.textPathSeparator = separator;
 		return this;
 	}
 
 	@Override
 	public ShinyTextPath build() {
-		// Perform any final validations here before building the object
-		Assertion.check().isNotBlank(textPath, "Path cannot be blank");
-		//---
-		return new ShinyTextPath(this);
+		return new ShinyTextPath(textPath, textPathSeparator, textPathStyle);
 	}
 }

@@ -8,9 +8,9 @@ import io.vertigo.core.lang.Builder;
 import io.vertigo.shiny.Shiny;
 
 public final class ShinyStatusBuilder implements Builder<ShinyStatus> {
-	String title;
-	final List<ShinyStatusType> statusTypes = new ArrayList<>();
-	ShinyStatusStyle statusStyle;
+	private String statusTitle;
+	private final List<ShinyStatusType> statusTypes = new ArrayList<>();
+	private ShinyStatusStyle statusStyle;
 
 	// No public constructor, use ShinyStatus.builder()
 	ShinyStatusBuilder() {
@@ -25,8 +25,8 @@ public final class ShinyStatusBuilder implements Builder<ShinyStatus> {
 		return this;
 	}
 
-	public ShinyStatusBuilder withTitle(final String text) {
-		this.title = text;
+	public ShinyStatusBuilder withTitle(final String title) {
+		this.statusTitle = title;
 		return this;
 	}
 
@@ -41,8 +41,6 @@ public final class ShinyStatusBuilder implements Builder<ShinyStatus> {
 
 	@Override
 	public ShinyStatus build() {
-		// Perform any final validations here before building the object
-		//---
-		return new ShinyStatus(this);
+		return new ShinyStatus(statusTitle, statusTypes, statusStyle);
 	}
 }

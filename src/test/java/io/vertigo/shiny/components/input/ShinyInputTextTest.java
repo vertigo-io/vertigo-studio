@@ -22,7 +22,7 @@ public class ShinyInputTextTest {
 
 		input.render(Shiny.writer());
 
-		Assertions.assertEquals("Hello World", input.getValue());
+		Assertions.assertEquals("Hello World", input.value().get());
 	}
 
 	@Test
@@ -37,7 +37,7 @@ public class ShinyInputTextTest {
 
 		input.render(Shiny.writer());
 
-		Assertions.assertEquals("Hello World", input.getValue());
+		Assertions.assertEquals("Hello World", input.value().get());
 	}
 
 	@Test
@@ -52,7 +52,7 @@ public class ShinyInputTextTest {
 
 		input.render(Shiny.writer());
 
-		Assertions.assertEquals("12345", input.getValue());
+		Assertions.assertEquals("12345", input.value().get());
 	}
 
 	@Test
@@ -67,7 +67,7 @@ public class ShinyInputTextTest {
 
 		input.render(Shiny.writer());
 
-		Assertions.assertEquals("red", input.getValue());
+		Assertions.assertEquals("red", input.value().get());
 	}
 
 	@Test
@@ -82,6 +82,6 @@ public class ShinyInputTextTest {
 
 		input.render(Shiny.writer());
 
-		Assertions.assertEquals("Paris", input.getValue());
+		Assertions.assertEquals("Paris", input.value().get());
 	}
 }

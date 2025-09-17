@@ -3,23 +3,15 @@ package io.vertigo.shiny.components.dataviz.status;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 
-public final class ShinyStatus implements ShinyComponent {
-	private final String title;
-	private final List<ShinyStatusType> statusTypes;
-	private final ShinyStatusStyle statusStyle;
+public record ShinyStatus(
+		String title,
+		List<ShinyStatusType> types,
+		ShinyStatusStyle style) implements ShinyComponent {
 
-	// Package-private constructor, only accessible by the Builder
-	ShinyStatus(ShinyStatusBuilder builder) {
-		Assertion.check()
-				.isNotNull(builder);
-		//---
-		this.title = builder.title;
-		this.statusTypes = builder.statusTypes;
-		this.statusStyle = builder.statusStyle;
+	public ShinyStatus {
 	}
 
 	// Static factory method to get a new Builder instance
@@ -28,8 +20,8 @@ public final class ShinyStatus implements ShinyComponent {
 	}
 
 	public void render(final ShinyWriter writer) {
-		final String statusLine = statusTypes.stream()
-				.map(status -> status.color().fg(statusStyle.shape().getCharacter()))
+		final String statusLine = types.stream()
+				.map(status -> status.color().fg(style.shape().getCharacter()))
 				.collect(Collectors.joining(" "));
 
 		writer.println(title != null ? title + " " + statusLine : statusLine);

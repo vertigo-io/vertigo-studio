@@ -5,17 +5,12 @@ import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColors;
 
-public final class ShinyTitle implements ShinyComponent {
-	private final String title;
-	private final int level;
+public record ShinyTitle(
+		String title,
+		int level) implements ShinyComponent {
 
-	// Package-private constructor, only accessible by the Builder
-	ShinyTitle(ShinyTitleBuilder builder) {
-		Assertion.check()
-			.isNotNull(builder);
-		//---
-		this.title = builder.title;
-		this.level = builder.level;
+	public ShinyTitle {
+		Assertion.check().isNotBlank(title, "Title cannot be blank");
 	}
 
 	// Static factory method to get a new Builder instance
@@ -24,8 +19,6 @@ public final class ShinyTitle implements ShinyComponent {
 	}
 
 	public void render(ShinyWriter writer) {
-		Assertion.check().isNotBlank(title, "Title cannot be blank");
-		//---
 		switch (level) {
 			case 1:
 				printLevel1(writer);

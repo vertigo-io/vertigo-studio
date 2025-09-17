@@ -2,25 +2,16 @@ package io.vertigo.shiny.components.data.list;
 
 import java.util.List;
 
-import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 
-public final class ShinyList implements ShinyComponent {
-	private final String title;
-	private final List<Object> listItems;
-	private final ShinyListType listType;
-	private final ShinyListStyle listStyle;
+public record ShinyList(
+		String title,
+		List<Object> items,
+		ShinyListType type,
+		ShinyListStyle style) implements ShinyComponent {
 
-	// Package-private constructor, only accessible by the Builder
-	ShinyList(ShinyListBuilder builder) {
-		Assertion.check()
-				.isNotNull(builder);
-		//---
-		this.title = builder.title;
-		this.listItems = builder.listItems;
-		this.listType = builder.listType;
-		this.listStyle = builder.listStyle;
+	public ShinyList {
 	}
 
 	// Static factory method to get a new Builder instance
@@ -38,18 +29,18 @@ public final class ShinyList implements ShinyComponent {
 	private void print(final ShinyWriter writer, final int indentLevel) {
 		final String indent = "  ".repeat(indentLevel);
 		int number = 1;
-		for (final Object item : listItems) {
+		for (final Object item : items) {
 			if (item instanceof String s) {
 				final String prefix = getPrefix(number);
-				writer.println(indent + listStyle.bulletColor().fg(prefix) + listStyle.itemColor().fg(s));
-				if (listType == ShinyListType.ORDERED) { // Changed from NUMBERED
+				writer.println(indent + style.bulletColor().fg(prefix) + style.itemColor().fg(s));
+				if (type == ShinyListType.ORDERED) { // Changed from NUMBERED
 					number++;
 				}
 			} else if (item instanceof ShinyList list) {
 				final String prefix = getPrefix(number);
-				writer.println(indent + listStyle.bulletColor().fg(prefix) + listStyle.itemColor().fg("Nested List:"));
+				writer.println(indent + style.bulletColor().fg(prefix) + style.itemColor().fg("Nested List:"));
 				list.print(writer, indentLevel + 1); // Recursive call for nested lists
-				if (listType == ShinyListType.ORDERED) { // Changed from NUMBERED
+				if (type == ShinyListType.ORDERED) { // Changed from NUMBERED
 					number++;
 				}
 			}
@@ -57,7 +48,7 @@ public final class ShinyList implements ShinyComponent {
 	}
 
 	private String getPrefix(final int number) {
-		return switch (listType) {
+		return switch (type) {
 			case UNORDERED -> "• ";
 			case ORDERED -> number + ". ";
 			case DASHED -> "- ";

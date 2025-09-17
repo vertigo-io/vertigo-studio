@@ -5,10 +5,10 @@ import io.vertigo.core.lang.Builder;
 import io.vertigo.shiny.Shiny;
 
 public final class ShinyGaugeBuilder implements Builder<ShinyGauge> {
-	String title;
-	double value;
-	double max = 100;
-	ShinyGaugeStyle gaugeStyle;
+	private String gaugeTitle;
+	private double gaugeValue;
+	private double gaugeMaxValue = 100;
+	private ShinyGaugeStyle gaugeStyle;
 
 	// No public constructor, use ShinyGauge.builder()
 	ShinyGaugeBuilder() {
@@ -23,25 +23,23 @@ public final class ShinyGaugeBuilder implements Builder<ShinyGauge> {
 		return this;
 	}
 
-	public ShinyGaugeBuilder withTitle(final String text) {
-		this.title = text;
+	public ShinyGaugeBuilder withTitle(final String title) {
+		this.gaugeTitle = title;
 		return this;
 	}
 
-	public ShinyGaugeBuilder withValue(final double currentValue) {
-		this.value = currentValue;
+	public ShinyGaugeBuilder withValue(final double value) {
+		this.gaugeValue = value;
 		return this;
 	}
 
-	public ShinyGaugeBuilder withMax(final double maxValue) {
-		this.max = maxValue;
+	public ShinyGaugeBuilder withMaxValue(final double maxValue) {
+		this.gaugeMaxValue = maxValue;
 		return this;
 	}
 
 	@Override
 	public ShinyGauge build() {
-		// Perform any final validations here before building the object
-		//---
-		return new ShinyGauge(this);
+		return new ShinyGauge(gaugeTitle, gaugeValue, gaugeMaxValue, gaugeStyle);
 	}
 }

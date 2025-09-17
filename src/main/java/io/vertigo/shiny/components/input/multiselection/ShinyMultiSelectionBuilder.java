@@ -10,9 +10,9 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinyMultiSelectionBuilder implements Builder<ShinyMultiSelection> {
-	String multiselectionTitle;
-	final List<String> multiselectionOptions = new ArrayList<>();
-	Set<Integer> selectedIndices = new HashSet<>();
+	private String multiselectionTitle;
+	private final List<String> multiselectionOptions = new ArrayList<>();
+	private final Set<Integer> selectedIndices = new HashSet<>();
 
 	// No public constructor, use ShinyMultiSelection.builder()
 	ShinyMultiSelectionBuilder() {
@@ -52,6 +52,6 @@ public final class ShinyMultiSelectionBuilder implements Builder<ShinyMultiSelec
 	public ShinyMultiSelection build() {
 		// Perform any final validations here before building the object
 		//---
-		return new ShinyMultiSelection(this);
+		return new ShinyMultiSelection(multiselectionTitle, multiselectionOptions, selectedIndices);
 	}
 }

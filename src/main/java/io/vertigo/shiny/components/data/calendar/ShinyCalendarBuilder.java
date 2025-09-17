@@ -10,18 +10,18 @@ import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.data.table.ShinyTableStyle;
 
 public final class ShinyCalendarBuilder implements Builder<ShinyCalendar> {
-	final List<LocalDate> highlightedDates = new ArrayList<>();
-	int year;
-	int month;
-	ShinyTableStyle calendarStyle;
+	private final List<LocalDate> highlightedDates = new ArrayList<>();
+	private int calendarYear;
+	private int calendarMonth;
+	private ShinyTableStyle calendarStyle;
 
 	// No public constructor, use ShinyCalendar.builder()
 	ShinyCalendarBuilder() {
 		// Package-private constructor
 		this.calendarStyle = Shiny.theme().calendarStyle(); // Initialize default style
 		final LocalDate now = LocalDate.now();
-		this.year = now.getYear();
-		this.month = now.getMonthValue();
+		this.calendarYear = now.getYear();
+		this.calendarMonth = now.getMonthValue();
 	}
 
 	public ShinyCalendarBuilder withStyle(final ShinyTableStyle style) {
@@ -31,18 +31,18 @@ public final class ShinyCalendarBuilder implements Builder<ShinyCalendar> {
 		return this;
 	}
 
-	public ShinyCalendarBuilder withYear(final int calendarYear) {
-		this.year = calendarYear;
+	public ShinyCalendarBuilder withYear(final int year) {
+		this.calendarYear = year;
 		return this;
 	}
 
-	public ShinyCalendarBuilder withMonth(final java.time.Month calendarMonth) {
-		this.month = calendarMonth.getValue();
+	public ShinyCalendarBuilder withMonth(final java.time.Month month) {
+		this.calendarMonth = month.getValue();
 		return this;
 	}
 
-	public ShinyCalendarBuilder withMonth(final int calendarMonth) {
-		this.month = calendarMonth;
+	public ShinyCalendarBuilder withMonth(final int month) {
+		this.calendarMonth = month;
 		return this;
 	}
 
@@ -53,8 +53,6 @@ public final class ShinyCalendarBuilder implements Builder<ShinyCalendar> {
 
 	@Override
 	public ShinyCalendar build() {
-		// Perform any final validations here before building the object
-		//---
-		return new ShinyCalendar(this);
+		return new ShinyCalendar(calendarYear, calendarMonth, calendarStyle);
 	}
 }

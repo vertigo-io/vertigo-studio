@@ -4,15 +4,11 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 
-public final class ShinyParagraph implements ShinyComponent {
-	private final String paragraphText;
+public record ShinyParagraph(
+		String text) implements ShinyComponent {
 
-	// Package-private constructor, only accessible by the Builder
-	ShinyParagraph(ShinyParagraphBuilder builder) {
-		Assertion.check()
-			.isNotNull(builder);
-		//---
-		this.paragraphText = builder.paragraphText;
+	public ShinyParagraph {
+		Assertion.check().isNotNull(text, "Text cannot be null");
 	}
 
 	// Static factory method to get a new Builder instance
@@ -22,9 +18,7 @@ public final class ShinyParagraph implements ShinyComponent {
 
 	@Override
 	public void render(final ShinyWriter writer) {
-		Assertion.check().isNotNull(paragraphText, "Text cannot be null");
-		//---
-		writer.println(paragraphText);
+		writer.println(text);
 		writer.println(); // Add a blank line after the paragraph
 	}
 }

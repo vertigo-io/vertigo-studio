@@ -1,10 +1,9 @@
 package io.vertigo.shiny.components.text.paragraph;
 
-import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinyParagraphBuilder implements Builder<ShinyParagraph> {
-	String paragraphText;
+	private String paragraphText;
 
 	// No public constructor, use ShinyParagraph.builder()
 	ShinyParagraphBuilder() {
@@ -18,9 +17,6 @@ public final class ShinyParagraphBuilder implements Builder<ShinyParagraph> {
 
 	@Override
 	public ShinyParagraph build() {
-		// Perform any final validations here before building the object
-		Assertion.check().isNotNull(paragraphText, "Text cannot be null");
-		//---
-		return new ShinyParagraph(this);
+		return new ShinyParagraph(paragraphText);
 	}
 }

@@ -2,19 +2,13 @@ package io.vertigo.shiny.components.data.tree;
 
 import java.util.List;
 
-import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 
-public final class ShinyTree implements ShinyComponent {
-	private final ShinyTreeNode rootNode;
+public record ShinyTree(
+		ShinyTreeNode rootNode) implements ShinyComponent {
 
-	// Package-private constructor, only accessible by the Builder
-	ShinyTree(ShinyTreeBuilder builder) {
-		Assertion.check()
-				.isNotNull(builder);
-		//---
-		this.rootNode = builder.treeRootNode;
+	public ShinyTree {
 	}
 
 	// Static factory method to get a new Builder instance

@@ -7,19 +7,14 @@ import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColor;
 
-public final class ShinyTextPath implements ShinyComponent {
-	private final String textPath;
-	private final String separator;
-	private final ShinyTextPathStyle textPathStyle;
+public record ShinyTextPath(
+		String path,
+		String separator,
+		ShinyTextPathStyle textPathStyle) implements ShinyComponent {
 
-	// Package-private constructor, only accessible by the Builder
-	ShinyTextPath(ShinyTextPathBuilder builder) {
-		Assertion.check()
-				.isNotNull(builder);
-		//---
-		this.textPath = builder.textPath;
-		this.separator = builder.separator;
-		this.textPathStyle = builder.textPathStyle;
+	public ShinyTextPath {
+		// Perform any final validations here before building the object
+		Assertion.check().isNotBlank(path, "Path cannot be blank");
 	}
 
 	// Static factory method to get a new Builder instance
@@ -28,12 +23,12 @@ public final class ShinyTextPath implements ShinyComponent {
 	}
 
 	public void render(final ShinyWriter writer) {
-		Assertion.check().isNotBlank(textPath, "Path cannot be blank");
+		Assertion.check().isNotBlank(path, "Path cannot be blank");
 		//---
 		//		final StringBuilder coloredPath = new StringBuilder();
-		final String[] parts = textPath.split(Pattern.quote(separator)); // Modified line
+		final String[] parts = path.split(Pattern.quote(separator)); // Modified line
 
-		final boolean relative = textPath.startsWith(separator);
+		final boolean relative = path.startsWith(separator);
 
 		if (relative) {
 			writer.print(textPathStyle.rootColor().fg(separator));

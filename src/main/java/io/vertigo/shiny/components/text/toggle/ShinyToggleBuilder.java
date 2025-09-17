@@ -5,13 +5,13 @@ import io.vertigo.core.lang.Builder;
 import io.vertigo.shiny.Shiny;
 
 public final class ShinyToggleBuilder implements Builder<ShinyToggle> {
-	String toggleLabel;
-	boolean toggleValue;
-	ShinyToggleType toggleType = ShinyToggleType.TOGGLE;
-	String onText = "ON";
-	String offText = "OFF";
-	boolean showText = true;
-	ShinyToggleStyle toggleStyle;
+	private String toggleLabel;
+	private boolean toggleValue;
+	private ShinyToggleType toggleType = ShinyToggleType.TOGGLE;
+	private String onText = "ON";
+	private String offText = "OFF";
+	private boolean showText = true;
+	private ShinyToggleStyle toggleStyle;
 
 	// No public constructor, use ShinyToggle.builder()
 	ShinyToggleBuilder() {
@@ -51,15 +51,20 @@ public final class ShinyToggleBuilder implements Builder<ShinyToggle> {
 		return this;
 	}
 
-	public ShinyToggleBuilder withShowText(final boolean show) {
-		this.showText = show;
+	public ShinyToggleBuilder withShowText(final boolean text) {
+		this.showText = text;
 		return this;
 	}
 
 	@Override
 	public ShinyToggle build() {
-		// Perform any final validations here before building the object
-		//---
-		return new ShinyToggle(this);
+		return new ShinyToggle(
+				toggleLabel,
+				toggleValue,
+				toggleType,
+				onText,
+				offText,
+				showText,
+				toggleStyle);
 	}
 }

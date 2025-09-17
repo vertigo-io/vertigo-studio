@@ -6,14 +6,15 @@ import java.util.regex.Pattern;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
+import io.vertigo.shiny.ShinyMagicBox;
 
 public final class ShinyInputTextBuilder implements Builder<ShinyInputText> {
-	String inputTextLabel;
-	boolean inputTextRequired = false;
-	Pattern inputTextValidationPattern;
-	List<String> inputTextSuggestions = new ArrayList<>();
-	String inputTextDefaultValue;
-	boolean inputTextSecret = false;
+	private String inputTextLabel;
+	private boolean inputTextRequired = false;
+	private Pattern inputTextValidationPattern;
+	private List<String> inputTextSuggestions = new ArrayList<>();
+	private String inputTextDefaultValue;
+	private boolean inputTextSecret = false;
 
 	// No public constructor, use ShinyInputText.builder()
 	ShinyInputTextBuilder() {
@@ -58,11 +59,42 @@ public final class ShinyInputTextBuilder implements Builder<ShinyInputText> {
 		return this;
 	}
 
+	// Getters for the fields, needed by the record constructor
+	String inputTextLabel() {
+		return inputTextLabel;
+	}
+
+	boolean inputTextRequired() {
+		return inputTextRequired;
+	}
+
+	Pattern inputTextValidationPattern() {
+		return inputTextValidationPattern;
+	}
+
+	List<String> inputTextSuggestions() {
+		return inputTextSuggestions;
+	}
+
+	String inputTextDefaultValue() {
+		return inputTextDefaultValue;
+	}
+
+	boolean inputTextSecret() {
+		return inputTextSecret;
+	}
+
 	@Override
 	public ShinyInputText build() {
 		Assertion.check()
-			.when(inputTextRequired, () -> Assertion.check().isNotBlank(inputTextLabel, "Label is required when input is required."));
+				.when(inputTextRequired, () -> Assertion.check().isNotBlank(inputTextLabel, "Label is required when input is required."));
 		//---
-		return new ShinyInputText(this);
+		return new ShinyInputText(
+				inputTextLabel,
+				inputTextRequired,
+				inputTextValidationPattern,
+				inputTextSuggestions,
+				inputTextDefaultValue,
+				new ShinyMagicBox<>());
 	}
 }

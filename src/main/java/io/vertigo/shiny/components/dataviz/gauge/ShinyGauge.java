@@ -4,21 +4,14 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 
-public final class ShinyGauge implements ShinyComponent {
-	private final String title;
-	private final double value;
-	private final double max;
-	private final ShinyGaugeStyle gaugeStyle;
+public record ShinyGauge(
+		String title,
+		double value,
+		double maxValue,
+		ShinyGaugeStyle style) implements ShinyComponent {
 
-	// Package-private constructor, only accessible by the Builder
-	ShinyGauge(ShinyGaugeBuilder builder) {
-		Assertion.check()
-				.isNotNull(builder);
-		//---
-		this.title = builder.title;
-		this.value = builder.value;
-		this.max = builder.max;
-		this.gaugeStyle = builder.gaugeStyle;
+	public ShinyGauge {
+		Assertion.check().isNotBlank(title, "Title cannot be blank");
 	}
 
 	// Static factory method to get a new Builder instance
@@ -28,18 +21,18 @@ public final class ShinyGauge implements ShinyComponent {
 
 	public void render(ShinyWriter writer) {
 		final double percentage;
-		if (value >= max) {
+		if (value >= maxValue) {
 			percentage = 1;
 		} else if (value <= 0) {
 			percentage = 0;
 		} else {
-			percentage = (value / max);
+			percentage = (value / maxValue);
 		}
-		final int filledLength = (int) (this.gaugeStyle.maxLength() * percentage);
+		final int filledLength = (int) (style.maxLength() * percentage);
 		final String gauge = new StringBuilder()
 				.append(title != null ? title + " " : "")
 				.append("[")
-				.append(gaugeStyle.color().fg("█".repeat(filledLength) + "▒".repeat(this.gaugeStyle.maxLength() - filledLength)))
+				.append(style.color().fg("█".repeat(filledLength) + "▒".repeat(style.maxLength() - filledLength)))
 				.append("] ")
 				.append(String.format("%.2f%%", percentage * 100))
 				.toString();

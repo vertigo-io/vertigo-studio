@@ -8,11 +8,11 @@ import io.vertigo.core.lang.Builder;
 import io.vertigo.shiny.Shiny;
 
 public final class ShinyTableBuilder implements Builder<ShinyTable> {
-	String tableTitle;
-	String noDataFound;
-	String[] tableHeader;
-	final List<String[]> tableRows = new ArrayList<>();
-	ShinyTableStyle tableStyle;
+	private String tableTitle;
+	private String noDataFound;
+	private String[] tableHeader;
+	private final List<String[]> tableRows = new ArrayList<>();
+	private ShinyTableStyle tableStyle;
 
 	// No public constructor, use ShinyTable.builder()
 	ShinyTableBuilder() {
@@ -61,12 +61,7 @@ public final class ShinyTableBuilder implements Builder<ShinyTable> {
 
 	@Override
 	public ShinyTable build() {
-		// Perform any final validations here before building the object
-		Assertion.check()
-			.isNotNull(tableRows)
-			.when(tableRows.isEmpty(), () -> Assertion.check().isNotBlank(noDataFound, "noDataFound message is required when table is empty"))
-			.isNotNull(tableHeader, "Table header is required");
-		//---
-		return new ShinyTable(this);
+		return new ShinyTable(
+				tableTitle, noDataFound, tableHeader, tableRows, tableStyle);
 	}
 }

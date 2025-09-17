@@ -9,17 +9,12 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 
-public final class ShinyFiglet implements ShinyComponent {
-	private final String figletText;
-	private final ShinyFigletStyle figletStyle;
+public record ShinyFiglet(
+		String text,
+		ShinyFigletStyle style) implements ShinyComponent {
 
-	// Package-private constructor, only accessible by the Builder
-	ShinyFiglet(ShinyFigletBuilder builder) {
-		Assertion.check()
-				.isNotNull(builder);
-		//---
-		this.figletText = builder.figletText;
-		this.figletStyle = builder.figletStyle;
+	public ShinyFiglet {
+		Assertion.check().isNotNull(text);
 	}
 
 	// Static factory method to get a new Builder instance
@@ -29,8 +24,8 @@ public final class ShinyFiglet implements ShinyComponent {
 
 	public void render(final ShinyWriter writer) {
 		try {
-			final FigletRenderer figletRenderer = new FigletRenderer(FigFontResources.loadFigFontResource(figletStyle.font().getFileName()));
-			final String asciiArt = figletStyle.color().fg(figletRenderer.renderText(figletText));
+			final FigletRenderer figletRenderer = new FigletRenderer(FigFontResources.loadFigFontResource(style.font().getFileName()));
+			final String asciiArt = style.color().fg(figletRenderer.renderText(text));
 			//We prefer use println instead of print a figletText with \n inside
 			for (String line : asciiArt.split("\\r?\\n")) {
 				writer.println(line);

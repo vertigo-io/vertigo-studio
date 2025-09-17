@@ -1,38 +1,23 @@
 package io.vertigo.shiny.components.dataviz.rating;
 
-import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyEffects;
 
-public final class ShinyRating implements ShinyComponent {
-
-	private final String label;
-	private final double value;
-	private final ShinyRatingScale scale;
-	private final int customMaxValue; // -1 means use scale
-	private final ShinyRatingStyle ratingStyle;
-	private final boolean showValue;
-	private final boolean showPercentage;
-	private final boolean showBox;
-	private final String separator;
-	private final boolean allowHalfRating;
+public record ShinyRating(
+		String label,
+		double value,
+		ShinyRatingScale scale,
+		int customMaxValue, // -1 means use scale
+		ShinyRatingStyle style,
+		boolean showValue,
+		boolean showPercentage,
+		boolean showBox,
+		String separator,
+		boolean allowHalfRating) implements ShinyComponent {
 
 	// Package-private constructor, only accessible by the Builder
-	ShinyRating(ShinyRatingBuilder builder) {
-		Assertion.check()
-				.isNotNull(builder);
-		//---
-		this.label = builder.label;
-		this.value = builder.value;
-		this.scale = builder.scale;
-		this.customMaxValue = builder.customMaxValue;
-		this.ratingStyle = builder.ratingStyle;
-		this.showValue = builder.showValue;
-		this.showPercentage = builder.showPercentage;
-		this.showBox = builder.showBox;
-		this.separator = builder.separator;
-		this.allowHalfRating = builder.allowHalfRating;
+	public ShinyRating {
 	}
 
 	// Static factory method to get a new Builder instance
@@ -93,13 +78,13 @@ public final class ShinyRating implements ShinyComponent {
 			if (allowHalfRating && clampedValue >= i - 0.5 && clampedValue < i) {
 				// Half rating (for now, use filled icon with different color)
 				rating.append(ShinyEffects.DIM.apply(
-						ratingStyle.filledColor().fg(ratingStyle.type().getFilledIcon())));
+						style.filledColor().fg(style.type().getFilledIcon())));
 			} else if (clampedValue >= i) {
 				// Filled
-				rating.append(ratingStyle.filledColor().fg(ratingStyle.type().getFilledIcon()));
+				rating.append(style.filledColor().fg(style.type().getFilledIcon()));
 			} else {
 				// Empty
-				rating.append(ratingStyle.emptyColor().fg(ratingStyle.type().getEmptyIcon()));
+				rating.append(style.emptyColor().fg(style.type().getEmptyIcon()));
 			}
 		}
 	}
@@ -110,8 +95,8 @@ public final class ShinyRating implements ShinyComponent {
 		final int filledLength = (int) (barLength * percentage);
 
 		rating.append("[")
-				.append(ratingStyle.filledColor().fg(ratingStyle.type().getFilledIcon().repeat(filledLength)))
-				.append(ratingStyle.emptyColor().fg(ratingStyle.type().getEmptyIcon().repeat(barLength - filledLength)))
+				.append(style.filledColor().fg(style.type().getFilledIcon().repeat(filledLength)))
+				.append(style.emptyColor().fg(style.type().getEmptyIcon().repeat(barLength - filledLength)))
 				.append("]");
 	}
 

@@ -10,15 +10,12 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 
-public final class ShinyMarkDown implements ShinyComponent {
-	final String _markdownText;
+public record ShinyMarkDown(
+		String markdownText) implements ShinyComponent {
 
 	// Package-private constructor, only accessible by the Builder
 	ShinyMarkDown(ShinyMarkDownBuilder builder) {
-		Assertion.check()
-				.isNotNull(builder);
-		//---
-		this._markdownText = builder._markdownText;
+		this(builder.markdownText()); // Access builder field directly
 	}
 
 	// Static factory method to get a new Builder instance
@@ -28,12 +25,12 @@ public final class ShinyMarkDown implements ShinyComponent {
 
 	@Override
 	public void render(final ShinyWriter writer) {
-		Assertion.check().isNotNull(_markdownText, "Markdown text not set. Use fromFile() or fromText().");
+		Assertion.check().isNotNull(markdownText, "Markdown text not set. Use fromFile() or fromText()."); // Access directly
 		//---
 		final Parser parser = Parser.builder()
 				.extensions(Collections.singletonList(TablesExtension.create()))
 				.build();
-		final Node document = parser.parse(_markdownText);
+		final Node document = parser.parse(markdownText); // Access directly
 		document.accept(new ShinyMarkdownVisitor(writer));
 	}
 

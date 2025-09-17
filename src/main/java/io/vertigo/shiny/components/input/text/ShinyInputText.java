@@ -7,31 +7,21 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import io.vertigo.core.lang.Assertion;
+import io.vertigo.shiny.ShinyMagicBox;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColors;
 
-public final class ShinyInputText implements ShinyComponent {
-	private final String inputTextLabel;
-	private final boolean inputTextRequired;
-	private final Pattern inputTextValidationPattern;
-	private final List<String> inputTextSuggestions;
-	private final String inputTextDefaultValue;
-	private final boolean inputTextSecret;
-	private String inputTextValue; // Stores the entered value (mutable)
+public record ShinyInputText(
+		String label,
+		boolean required,
+		Pattern validationPattern,
+		List<String> suggestions,
+		String defaultValue,
+		ShinyMagicBox<String> value) implements ShinyComponent {
 
-	// Package-private constructor, only accessible by the Builder
-	ShinyInputText(ShinyInputTextBuilder builder) {
-		Assertion.check()
-			.isNotNull(builder);
-		//---
-		this.inputTextLabel = builder.inputTextLabel;
-		this.inputTextRequired = builder.inputTextRequired;
-		this.inputTextValidationPattern = builder.inputTextValidationPattern;
-		this.inputTextSuggestions = builder.inputTextSuggestions;
-		this.inputTextDefaultValue = builder.inputTextDefaultValue;
-		this.inputTextSecret = builder.inputTextSecret;
+	// Compact constructor to initialize the mutable field
+	public ShinyInputText {
 	}
 
 	// Static factory method to get a new Builder instance
@@ -39,21 +29,17 @@ public final class ShinyInputText implements ShinyComponent {
 		return new ShinyInputTextBuilder();
 	}
 
-	public String getValue() {
-		return inputTextValue;
-	}
-
 	@Override
 	public void render(final ShinyWriter writer) {
-		String prompt = inputTextLabel;
-		if (inputTextRequired) {
+		String prompt = label;
+		if (required) {
 			prompt += ShinyColors.RED.fg(" (required)");
 		}
-		if (inputTextSuggestions != null && !inputTextSuggestions.isEmpty()) {
-			prompt += " " + ShinyColors.CYAN.fg(inputTextSuggestions.toString());
+		if (suggestions != null && !suggestions.isEmpty()) {
+			prompt += " " + ShinyColors.CYAN.fg(suggestions.toString());
 		}
-		if (inputTextDefaultValue != null) {
-			prompt += " " + ShinyColors.YELLOW.fg("[" + inputTextDefaultValue + "]");
+		if (defaultValue != null) {
+			prompt += " " + ShinyColors.YELLOW.fg("[" + defaultValue + "]");
 		}
 		prompt += ": ";
 
@@ -64,28 +50,22 @@ public final class ShinyInputText implements ShinyComponent {
 					.flush();
 
 			try {
-				String inputLine;
-				if (inputTextSecret) {
-					writer.println(ShinyColors.YELLOW.fg("(Input will be masked, but not truly hidden in this basic console)"));
-					inputLine = reader.readLine();
-				} else {
-					inputLine = reader.readLine();
-				}
+				String inputLine = reader.readLine();
 
 				if (inputLine == null) {
-					inputTextValue = null;
+					value().set(null);
 					validInput = true;
 				} else {
-					inputTextValue = inputLine.trim();
+					value().set(inputLine.trim());
 
-					if (inputTextValue.isEmpty() && inputTextDefaultValue != null) {
-						inputTextValue = inputTextDefaultValue;
+					if (value().get().isEmpty() && defaultValue != null) {
+						value().set(defaultValue);
 					}
 
-					if (inputTextRequired && inputTextValue.isEmpty()) {
+					if (required && value.get().isEmpty()) {
 						writer.println(ShinyColors.RED.fg("Input is required."));
-					} else if (inputTextValidationPattern != null && !inputTextValue.isEmpty()) {
-						Matcher matcher = inputTextValidationPattern.matcher(inputTextValue);
+					} else if (validationPattern != null && !value.get().isEmpty()) {
+						Matcher matcher = validationPattern.matcher(value.get());
 						if (!matcher.matches()) {
 							writer.println(ShinyColors.RED.fg("Input does not match the required pattern."));
 						} else {
@@ -97,7 +77,7 @@ public final class ShinyInputText implements ShinyComponent {
 				}
 			} catch (IOException e) {
 				writer.println(ShinyColors.RED.fg("Error reading input: " + e.getMessage()));
-				inputTextValue = null;
+				value.set(null);
 				validInput = true;
 			}
 		}

@@ -5,8 +5,8 @@ import io.vertigo.core.lang.Builder;
 import io.vertigo.shiny.Shiny;
 
 public final class ShinyFigletBuilder implements Builder<ShinyFiglet> {
-	String figletText;
-	ShinyFigletStyle figletStyle;
+	private String figletText;
+	private ShinyFigletStyle figletStyle;
 
 	// No public constructor, use ShinyFiglet.builder()
 	ShinyFigletBuilder() {
@@ -28,8 +28,6 @@ public final class ShinyFigletBuilder implements Builder<ShinyFiglet> {
 
 	@Override
 	public ShinyFiglet build() {
-		// Perform any final validations here before building the object
-		//---
-		return new ShinyFiglet(this);
+		return new ShinyFiglet(figletText, figletStyle);
 	}
 }

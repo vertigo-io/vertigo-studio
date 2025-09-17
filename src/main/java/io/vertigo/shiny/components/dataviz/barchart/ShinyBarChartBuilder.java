@@ -1,5 +1,6 @@
 package io.vertigo.shiny.components.dataviz.barchart;
 
+import java.util.Arrays;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
@@ -7,11 +8,11 @@ import io.vertigo.core.lang.Builder;
 import io.vertigo.shiny.Shiny;
 
 public final class ShinyBarChartBuilder implements Builder<ShinyBarChart> {
-	String barChartTitle;
-	String[] barChartHeader;
-	int[] barChartValues;
-	ShinySortMode sortMode = ShinySortMode.NO;
-	ShinyBarChartStyle barChartStyle;
+	private String barChartTitle;
+	private String[] barChartHeader;
+	private int[] barChartValues;
+	private ShinySortMode sortMode = ShinySortMode.NO;
+	private ShinyBarChartStyle barChartStyle;
 
 	// No public constructor, use ShinyBarChart.builder()
 	ShinyBarChartBuilder() {
@@ -59,10 +60,46 @@ public final class ShinyBarChartBuilder implements Builder<ShinyBarChart> {
 		return this;
 	}
 
+	private void sort() {
+		final Integer[] indices = new Integer[barChartHeader.length];
+		for (int i = 0; i < barChartHeader.length; i++) {
+			indices[i] = i;
+		}
+
+		switch (sortMode) {
+			case NO:
+				break;
+			case VALUE_ASC:
+				Arrays.sort(indices, (i1, i2) -> Integer.compare(barChartValues[i1], barChartValues[i2]));
+				break;
+			case VALUE_DESC:
+				Arrays.sort(indices, (i1, i2) -> Integer.compare(barChartValues[i2], barChartValues[i1]));
+				break;
+			case HEADER_ASC:
+				Arrays.sort(indices, (i1, i2) -> barChartHeader[i1].compareToIgnoreCase(barChartHeader[i2]));
+				break;
+			case HEADER_DESC:
+				Arrays.sort(indices, (i1, i2) -> barChartHeader[i2].compareToIgnoreCase(barChartHeader[i1]));
+				break;
+		}
+		// Réappliquer le tri aux deux tableaux
+		reorder(indices);
+	}
+
+	private void reorder(final Integer[] indices) {
+		final String[] newHeader = new String[barChartHeader.length];
+		final int[] newValues = new int[barChartValues.length];
+		for (int i = 0; i < indices.length; i++) {
+			newHeader[i] = barChartHeader[indices[i]];
+			newValues[i] = barChartValues[indices[i]];
+		}
+		this.barChartHeader = newHeader;
+		this.barChartValues = newValues;
+	}
+
 	@Override
 	public ShinyBarChart build() {
-		// Perform any final validations here before building the object
-		//---
-		return new ShinyBarChart(this);
+		this.sort();
+		return new ShinyBarChart(barChartTitle, barChartHeader, barChartValues, barChartStyle);
 	}
 }

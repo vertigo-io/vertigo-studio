@@ -13,23 +13,19 @@ import io.vertigo.shiny.components.ShinyComponent;
  * Represents a table that can be printed in a terminal with colors,
  * borders and formatted numeric values.
  */
-public final class ShinyTable implements ShinyComponent {
-	private final String tableTitle;
-	private final String noDataFound;
-	private final String[] tableHeader;
-	private final List<String[]> tableRows;
-	private final ShinyTableStyle tableStyle;
+public record ShinyTable(
+		String title,
+		String noDataFound,
+		String[] header,
+		List<String[]> rows,
+		ShinyTableStyle style) implements ShinyComponent {
 
-	// Package-private constructor, only accessible by the Builder
-	ShinyTable(ShinyTableBuilder builder) {
+	public ShinyTable {
+		// Perform any final validations here before building the object
 		Assertion.check()
-			.isNotNull(builder);
-		//---
-		this.tableTitle = builder.tableTitle;
-		this.noDataFound = builder.noDataFound;
-		this.tableHeader = builder.tableHeader;
-		this.tableRows = builder.tableRows;
-		this.tableStyle = builder.tableStyle;
+				.isNotNull(rows)
+				.when(rows.isEmpty(), () -> Assertion.check().isNotBlank(noDataFound, "noDataFound message is required when table is empty"))
+				.isNotNull(header, "Table header is required");
 	}
 
 	// Static factory method to get a new Builder instance
@@ -43,28 +39,28 @@ public final class ShinyTable implements ShinyComponent {
 	@Override
 	public void render(ShinyWriter writer) {
 		Assertion.check()
-				.isNotNull(tableRows)
-				.when(tableRows.isEmpty(), () -> Assertion.check().isNotBlank(noDataFound))
-				.isNotNull(tableHeader);
+				.isNotNull(rows)
+				.when(rows.isEmpty(), () -> Assertion.check().isNotBlank(noDataFound))
+				.isNotNull(header);
 
 		final NumberFormat numberFormat = Shiny.theme().numberFormat();
 
-		if (tableRows.isEmpty()) {
+		if (rows.isEmpty()) {
 			writer.println(noDataFound);
 			return;
 		}
 
-		final int columns = tableHeader.length;
+		final int columns = header.length;
 
 		// 1. Format data and detect numeric columns
 		final List<String[]> formattedRows = new ArrayList<>();
 		final boolean[] isNumericColumn = new boolean[columns];
 
 		for (int i = 0; i < columns; i++) {
-			isNumericColumn[i] = isColumnNumeric(tableRows, i);
+			isNumericColumn[i] = isColumnNumeric(rows, i);
 		}
 
-		for (final String[] row : tableRows) {
+		for (final String[] row : rows) {
 			Assertion.check().isTrue(row.length == columns, "Header and rows must have the same length");
 			final String[] formattedRow = new String[columns];
 			for (int colIndex = 0; colIndex < columns; colIndex++) {
@@ -78,10 +74,10 @@ public final class ShinyTable implements ShinyComponent {
 			formattedRows.add(formattedRow);
 		}
 
-		// 2. Compute max width per column
+		// 2. Compute maxValue width per column
 		final int[] widths = new int[columns];
 		for (int i = 0; i < columns; i++) {
-			widths[i] = tableHeader[i].length();
+			widths[i] = header[i].length();
 		}
 		for (final String[] row : formattedRows) {
 			for (int i = 0; i < columns; i++) {
@@ -95,35 +91,35 @@ public final class ShinyTable implements ShinyComponent {
 		final StringBuilder formatBuilder = new StringBuilder();
 		for (int i = 0; i < columns; i++) {
 			formatBuilder
-					.append(i == 0 ? "" : tableStyle.border().chars().vertical())
+					.append(i == 0 ? "" : style.border().chars().vertical())
 					.append(isNumericColumn[i] ? " %" : " %-")
 					.append(widths[i]).append("s ");
 		}
 		final String format = formatBuilder.toString();
 
 		// 4. Print
-		if (tableTitle != null) {
-			writer.println(tableStyle.titleBackgroundColor().bg(
-					tableStyle.titleTextColor().fg(tableTitle)));
+		if (title != null) {
+			writer.println(style.titleBackgroundColor().bg(
+					style.titleTextColor().fg(title)));
 		}
 		printLineSeparator(writer, widths, Position.TOP);
 
-		writer.print(tableStyle.border().chars().vertical())
-				.print(tableStyle.headerBackgroundColor().bg(String.format(format, (Object[]) tableHeader)))
-				.println(tableStyle.border().chars().vertical());
+		writer.print(style.border().chars().vertical())
+				.print(style.headerBackgroundColor().bg(String.format(format, (Object[]) header)))
+				.println(style.border().chars().vertical());
 
 		printLineSeparator(writer, widths, Position.INNER);
 
 		boolean invert = false;
 		for (final String[] formattedRow : formattedRows) {
-			writer.print(tableStyle.border().chars().vertical());
+			writer.print(style.border().chars().vertical());
 			final String srow = String.format(format, (Object[]) formattedRow);
 			if (invert) {
-				writer.print(tableStyle.altRowBackgroundColor().bg(srow));
+				writer.print(style.altRowBackgroundColor().bg(srow));
 			} else {
 				writer.print(srow);
 			}
-			writer.println(tableStyle.border().chars().vertical());
+			writer.println(style.border().chars().vertical());
 			invert = !invert;
 		}
 		printLineSeparator(writer, widths, Position.BOTTOM);
@@ -138,38 +134,38 @@ public final class ShinyTable implements ShinyComponent {
 		for (final int width : widths) {
 			if (first) {
 				final var left = switch (position) {
-					case TOP -> tableStyle.border().chars().topLeft();
-					case INNER -> tableStyle.border().chars().innerLeft();
-					case BOTTOM -> tableStyle.border().chars().bottomLeft();
+					case TOP -> style.border().chars().topLeft();
+					case INNER -> style.border().chars().innerLeft();
+					case BOTTOM -> style.border().chars().bottomLeft();
 				};
 				writer.print(left);
 				final var h = switch (position) {
-					case TOP -> tableStyle.border().chars().topHorizontal();
-					case INNER -> tableStyle.border().chars().innerHorizontal();
-					case BOTTOM -> tableStyle.border().chars().bottomHorizontal();
+					case TOP -> style.border().chars().topHorizontal();
+					case INNER -> style.border().chars().innerHorizontal();
+					case BOTTOM -> style.border().chars().bottomHorizontal();
 				};
 				writer.print(h.repeat(width + 2));
 				first = false;
 			} else {
 				final var middle = switch (position) {
-					case TOP -> tableStyle.border().chars().topMiddle();
-					case INNER -> tableStyle.border().chars().center();
-					case BOTTOM -> tableStyle.border().chars().bottomMiddle();
+					case TOP -> style.border().chars().topMiddle();
+					case INNER -> style.border().chars().center();
+					case BOTTOM -> style.border().chars().bottomMiddle();
 				};
 				writer.print(middle);
 				final var h = switch (position) {
-					case TOP -> tableStyle.border().chars().topHorizontal();
-					case INNER -> tableStyle.border().chars().innerHorizontal();
-					case BOTTOM -> tableStyle.border().chars().bottomHorizontal();
+					case TOP -> style.border().chars().topHorizontal();
+					case INNER -> style.border().chars().innerHorizontal();
+					case BOTTOM -> style.border().chars().bottomHorizontal();
 				};
 				writer.print(h.repeat(width + 2));
 			}
 
 		}
 		final String right = switch (position) {
-			case TOP -> tableStyle.border().chars().topRight();
-			case INNER -> tableStyle.border().chars().innerRight();
-			case BOTTOM -> tableStyle.border().chars().bottomRight();
+			case TOP -> style.border().chars().topRight();
+			case INNER -> style.border().chars().innerRight();
+			case BOTTOM -> style.border().chars().bottomRight();
 		};
 		writer.println(right);
 	}

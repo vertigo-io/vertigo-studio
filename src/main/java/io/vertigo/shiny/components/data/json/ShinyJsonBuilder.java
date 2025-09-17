@@ -5,8 +5,8 @@ import io.vertigo.core.lang.Builder;
 import io.vertigo.shiny.Shiny;
 
 public final class ShinyJsonBuilder implements Builder<ShinyJson> {
-	String jsonString;
-	ShinyJsonStyle jsonStyle;
+	private String jsonString;
+	private ShinyJsonStyle jsonStyle;
 
 	// No public constructor, use ShinyJson.builder()
 	ShinyJsonBuilder() {
@@ -28,9 +28,6 @@ public final class ShinyJsonBuilder implements Builder<ShinyJson> {
 
 	@Override
 	public ShinyJson build() {
-		// Perform any final validations here before building the object
-		Assertion.check().isNotBlank(jsonString, "JSON string cannot be blank");
-		//---
-		return new ShinyJson(this);
+		return new ShinyJson(jsonString, jsonStyle);
 	}
 }

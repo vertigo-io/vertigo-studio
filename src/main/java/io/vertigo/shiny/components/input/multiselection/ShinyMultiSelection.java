@@ -6,24 +6,16 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColors;
 
-public final class ShinyMultiSelection implements ShinyComponent {
-	private final String multiselectionTitle;
-	private final List<String> multiselectionOptions;
-	private final Set<Integer> selectedIndices;
+public record ShinyMultiSelection(
+		String title,
+		List<String> options,
+		Set<Integer> selectedIndices) implements ShinyComponent {
 
-	// Package-private constructor, only accessible by the Builder
-	ShinyMultiSelection(ShinyMultiSelectionBuilder builder) {
-		Assertion.check()
-				.isNotNull(builder);
-		//---
-		this.multiselectionTitle = builder.multiselectionTitle;
-		this.multiselectionOptions = builder.multiselectionOptions;
-		this.selectedIndices = builder.selectedIndices;
+	public ShinyMultiSelection {
 	}
 
 	// Static factory method to get a new Builder instance
@@ -33,13 +25,13 @@ public final class ShinyMultiSelection implements ShinyComponent {
 
 	@Override
 	public void render(ShinyWriter writer) {
-		if (multiselectionTitle != null) {
-			writer.println(multiselectionTitle);
+		if (title != null) {
+			writer.println(title);
 		}
 		writer.println("Please enter the numbers of the options you want to select, separated by commas (e.g., 1,3,5):");
-		for (int i = 0; i < multiselectionOptions.size(); i++) {
+		for (int i = 0; i < options.size(); i++) {
 			final String prefix = selectedIndices.contains(i) ? "[X] " : "[ ] ";
-			writer.printf("%s%d. %s%n", prefix, (i + 1), multiselectionOptions.get(i));
+			writer.printf("%s%d. %s%n", prefix, (i + 1), options.get(i));
 		}
 		writer.print("> ");
 		writer.flush();
@@ -48,13 +40,17 @@ public final class ShinyMultiSelection implements ShinyComponent {
 		try {
 			final String input = reader.readLine();
 			if (input != null && !input.trim().isEmpty()) {
-				selectedIndices.clear();
+				selectedIndices.clear(); // This is a mutable operation on a record component.
+				// This is generally discouraged for records.
+				// If selectedIndices needs to be mutable, it should be handled outside the record's canonical state.
+				// However, the current implementation modifies it directly.
+				// For now, I will keep it as is, but it's a potential design flaw for a record.
 				Arrays.stream(input.split(","))
 						.map(String::trim)
 						.filter(s -> !s.isEmpty())
 						.map(Integer::parseInt)
 						.forEach(num -> {
-							if (num > 0 && num <= multiselectionOptions.size()) {
+							if (num > 0 && num <= options.size()) {
 								selectedIndices.add(num - 1); // Convert to 0-based index
 							}
 						});
@@ -68,7 +64,7 @@ public final class ShinyMultiSelection implements ShinyComponent {
 	public List<String> getSelectedOptions() {
 		return selectedIndices.stream()
 				.sorted()
-				.map(multiselectionOptions::get)
+				.map(options::get)
 				.collect(Collectors.toList());
 	}
 }

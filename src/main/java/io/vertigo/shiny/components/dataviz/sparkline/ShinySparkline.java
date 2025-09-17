@@ -3,23 +3,15 @@ package io.vertigo.shiny.components.dataviz.sparkline;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 
-public final class ShinySparkline implements ShinyComponent {
-	private final String title;
-	private final List<Double> data;
-	private final ShinySparklineStyle sparklineStyle;
+public record ShinySparkline(
+		String title,
+		List<Double> data,
+		ShinySparklineStyle style) implements ShinyComponent {
 
-	// Package-private constructor, only accessible by the Builder
-	ShinySparkline(ShinySparklineBuilder builder) {
-		Assertion.check()
-				.isNotNull(builder);
-		//---
-		this.title = builder.title;
-		this.data = builder.data;
-		this.sparklineStyle = builder.sparklineStyle;
+	public ShinySparkline {
 	}
 
 	// Static factory method to get a new Builder instance
@@ -33,7 +25,7 @@ public final class ShinySparkline implements ShinyComponent {
 				.collect(Collectors.joining());
 
 		writer.print(title != null ? title + " " : "")
-				.println(sparklineStyle.color().fg(sparkline));
+				.println(style.color().fg(sparkline));
 	}
 
 	private String getSparklineChar(final double value) {

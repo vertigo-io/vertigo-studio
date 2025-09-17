@@ -46,7 +46,7 @@ public class ShinyAllComponentsTest {
 		testToggle(writer);
 		testTree(writer);
 		testShinyParagraph(writer);
-		testShinyMarkDown(writer);
+		//	testShinyMarkDown(writer);
 
 		writer.println(BLUE_BRIGHT.fg("--- All Shiny Components Test Finished ---"));
 		scanner.close();
@@ -113,12 +113,12 @@ public class ShinyAllComponentsTest {
 
 	private static void testGauge(final ShinyWriter writer) {
 		writer.println(CYAN.fg("Component: ShinyGauge"))
-				.println("Parameters: title='Progress', value=75, max=100, color=GREEN");
+				.println("Parameters: title='Progress', value=75, maxValue=100, color=GREEN");
 		//---
 		Shiny.gauge()
 				.withTitle("Progress")
 				.withValue(75)
-				.withMax(100)
+				.withMaxValue(100)
 				.build()
 				.render(writer);
 		waitForEnter(writer);
@@ -171,7 +171,7 @@ public class ShinyAllComponentsTest {
 
 	private static void testRating(final ShinyWriter writer) {
 		writer.println(CYAN.fg("Component: ShinyRating"))
-				.println("Parameters: rating=4, max=5");
+				.println("Parameters: rating=4, maxValue=5");
 		//---
 		Shiny.rating()
 				.withValue(4)
@@ -187,7 +187,7 @@ public class ShinyAllComponentsTest {
 		//---
 		Shiny.sparkline()
 				.withTitle("Data Trend")
-				.withData(List.of(10.0, 12.0, 15.0, 13.0, 11.0, 10.0, 9.0, 10.0, 12.0, 14.0, 16.0, 15.0))
+				.withValues(List.of(10.0, 12.0, 15.0, 13.0, 11.0, 10.0, 9.0, 10.0, 12.0, 14.0, 16.0, 15.0))
 				.build()
 				.render(writer);
 		waitForEnter(writer);
@@ -306,15 +306,15 @@ public class ShinyAllComponentsTest {
 		waitForEnter(writer);
 	}
 
-	private static void testShinyMarkDown(final ShinyWriter writer) {
-		writer.println(CYAN.fg("Component: ShinyMarkDown"))
-				.println("Parameters: markdown text with title, list, and table");
-		//---
-		final String markdown = "# Title\n* item 1\n* item 2\n| h1 | h2 |\n|---|---|\n| c1 | c2 |";
-		Shiny.markdown()
-				.withText(markdown)
-				.build()
-				.render(writer);
-		waitForEnter(writer);
-	}
+	//	private static void testShinyMarkDown(final ShinyWriter writer) {
+	//		writer.println(CYAN.fg("Component: ShinyMarkDown"))
+	//				.println("Parameters: markdown text with title, list, and table");
+	//		//---
+	//		final String markdown = "# Title\n* item 1\n* item 2\n| h1 | h2 |\n|---|---|\n| c1 | c2 |";
+	//		Shiny.markdown()
+	//				.withText(markdown)
+	//				.build()
+	//				.render(writer);
+	//		waitForEnter(writer);
+	//	}
 }

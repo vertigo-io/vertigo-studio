@@ -8,10 +8,10 @@ import io.vertigo.core.lang.Builder;
 import io.vertigo.shiny.Shiny;
 
 public final class ShinyListBuilder implements Builder<ShinyList> {
-	String title;
-	final List<Object> listItems = new ArrayList<>();
-	ShinyListType listType = ShinyListType.UNORDERED;
-	ShinyListStyle listStyle;
+	private String listTitle;
+	private final List<Object> listItems = new ArrayList<>();
+	private ShinyListType listType = ShinyListType.UNORDERED;
+	private ShinyListStyle listStyle;
 
 	// No public constructor, use ShinyList.builder()
 	ShinyListBuilder() {
@@ -26,8 +26,8 @@ public final class ShinyListBuilder implements Builder<ShinyList> {
 		return this;
 	}
 
-	public ShinyListBuilder withTitle(final String text) {
-		this.title = text;
+	public ShinyListBuilder withTitle(final String title) {
+		this.listTitle = title;
 		return this;
 	}
 
@@ -53,9 +53,6 @@ public final class ShinyListBuilder implements Builder<ShinyList> {
 
 	@Override
 	public ShinyList build() {
-		// Perform any final validations here before building the object
-		// For example, if title is null, it should be handled
-		//---
-		return new ShinyList(this);
+		return new ShinyList(listTitle, listItems, listType, listStyle);
 	}
 }

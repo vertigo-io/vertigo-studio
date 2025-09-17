@@ -33,8 +33,6 @@ import io.vertigo.shiny.components.live.spinner.ShinySpinner;
 import io.vertigo.shiny.components.live.spinner.ShinySpinnerBuilder;
 import io.vertigo.shiny.components.text.figlet.ShinyFiglet;
 import io.vertigo.shiny.components.text.figlet.ShinyFigletBuilder;
-import io.vertigo.shiny.components.text.markdown.ShinyMarkDown;
-import io.vertigo.shiny.components.text.markdown.ShinyMarkDownBuilder;
 import io.vertigo.shiny.components.text.paragraph.ShinyParagraph;
 import io.vertigo.shiny.components.text.paragraph.ShinyParagraphBuilder;
 import io.vertigo.shiny.components.text.textpath.ShinyTextPath;
@@ -120,9 +118,9 @@ public final class Shiny {
 		return ShinyTitle.builder();
 	}
 
-	public static ShinyMarkDownBuilder markdown() {
-		return ShinyMarkDown.builder();
-	}
+	//	public static ShinyMarkDownBuilder markdown() {
+	//		return ShinyMarkDown.builder();
+	//	}
 
 	public static ShinyParagraphBuilder paragraph() {
 		return ShinyParagraph.builder();

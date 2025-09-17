@@ -5,7 +5,7 @@ import io.vertigo.core.lang.Builder;
 
 public final class ShinyTreeBuilder implements Builder<ShinyTree> {
 	private String treeLabel;
-	ShinyTreeNode treeRootNode;
+	private ShinyTreeNode treeRootNode;
 
 	// No public constructor, use ShinyTree.builder()
 	ShinyTreeBuilder() {
@@ -31,6 +31,6 @@ public final class ShinyTreeBuilder implements Builder<ShinyTree> {
 			treeRootNode = new ShinyTreeNode(null, treeLabel);
 		}
 		//---
-		return new ShinyTree(this);
+		return new ShinyTree(treeRootNode);
 	}
 }

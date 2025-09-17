@@ -8,27 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.components.data.table.ShinyTableStyle;
 
-public final class ShinyCalendar implements ShinyComponent {
-	//private final List<LocalDate> highlightedDates;
-	private final int year;
-	private final int month;
-	private final ShinyTableStyle calendarStyle;
+public record ShinyCalendar(
+		//private final List<LocalDate> highlightedDates;
+		int year,
+		int month,
+		ShinyTableStyle style) implements ShinyComponent {
 
 	// Package-private constructor, only accessible by the Builder
-	ShinyCalendar(ShinyCalendarBuilder builder) {
-		Assertion.check()
-				.isNotNull(builder);
-		//---
-		//this.highlightedDates = builder.highlightedDates;
-		this.year = builder.year;
-		this.month = builder.month;
-		this.calendarStyle = builder.calendarStyle;
+	public ShinyCalendar {
 	}
 
 	// Static factory method to get a new Builder instance
@@ -73,7 +65,7 @@ public final class ShinyCalendar implements ShinyComponent {
 		Shiny.table()
 				.withTitle(String.format("%s %d", monthName, year))
 				.withHeader(days)
-				.withStyle(calendarStyle)
+				.withStyle(style)
 				.addAllRows(rows)
 				.build()
 				.render(writer);
