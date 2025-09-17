@@ -441,6 +441,83 @@
 				/* Épaisseur correspondant à la taille du h1 en mobile */
 			}
 		}
+
+		/* Styles pour les listes dans les conteneurs collapsible */
+		.list-container ul,
+		.list-container ol {
+			margin: 1rem 0;
+			padding-left: 1.5rem;
+			list-style-position: outside;
+			font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+			font-size: 13px;
+			color: var(--assistant-text);
+		}
+
+		.list-container li {
+			margin-bottom: 0.5rem;
+			line-height: 1.4;
+		}
+
+		.list-container li span.nested-title {
+			font-weight: 600;
+			display: inline-block;
+			margin-right: 0.5rem;
+			color: var(--json-key);
+		}
+
+		/* Style spécifique pour DASHED : tirets personnalisés */
+		.list-container .dashed-list {
+			list-style: none;
+			padding-left: 0;
+		}
+
+		.list-container .dashed-list li {
+			position: relative;
+			padding-left: 1.8rem;
+			margin-bottom: 0.6rem;
+		}
+
+		.list-container .dashed-list li::before {
+			content: "–";
+			/* Tiret en dash */
+			position: absolute;
+			left: 0;
+			top: 0.1em;
+			font-size: 1.3em;
+			color: var(--json-string);
+			/* Jaune clair pour contraste */
+			font-weight: bold;
+			text-shadow: 0 0 4px rgba(241, 250, 140, 0.5);
+			/* Légère ombre pour relief */
+		}
+
+		/* Imbrication : indentation pour les sous-listes */
+		.list-container ul ul,
+		.list-container ol ol,
+		.list-container ul ol,
+		.list-container ol ul {
+			margin-left: 1rem;
+			padding-left: 1rem;
+			border-left: 2px solid var(--assistant-accent);
+		}
+
+		/* Responsive pour mobile */
+		@media (max-width: 768px) {
+
+			.list-container ul,
+			.list-container ol {
+				padding-left: 1rem;
+			}
+
+			.list-container .dashed-list li {
+				padding-left: 1.4rem;
+			}
+
+			.list-container .dashed-list li::before {
+				font-size: 1.1em;
+				/* Réduction légère pour mobile */
+			}
+		}
 	</style>
 </head>
 
@@ -488,6 +565,8 @@
 					addTable(parsed.data);
 				} else if (parsed.type === "json") {
 					addJson(parsed.data);
+				} else if (parsed.type === "list") {
+					addList(parsed.data);
 				} else {
 					addMessage(JSON.stringify(parsed), "response");
 				}
@@ -584,6 +663,48 @@
 
 			addCollapsible("json", jsonData.title, content);
 		}
+
+		function addList(listData) {
+			// Fonction récursive pour construire le HTML de la liste
+			function buildList(items, type, level = 0) {
+				let html = '';
+				let tag = 'ol'; // Par défaut pour ORDERED
+				let className = '';
+
+				if (type === 'UNORDERED') {
+					tag = 'ul';
+				} else if (type === 'DASHED') {
+					tag = 'ul';
+					className = 'dashed-list';
+				}
+
+				html += `<${tag} class="${className}">`;
+
+				items.forEach(item => {
+					if (typeof item === 'object' && item !== null && 'items' in item) {
+						// Élément avec sous-liste imbriquée
+						const subType = item.type || type; // Hérite du type parent si non spécifié
+						const itemTitle = item.title || ''; // Gère title: null comme chaîne vide
+						html += `<li><span class="nested-title">${itemTitle}</span>`;
+						html += buildList(item.items, subType, level + 1);
+						html += '</li>';
+					} else {
+						// Élément simple
+						html += `<li>${item}</li>`;
+					}
+				});
+
+				html += `</${tag}>`;
+				return html;
+			}
+
+			// Génère le contenu HTML de la liste
+			const listHtml = buildList(listData.items, listData.type);
+
+			// Ajoute dans un conteneur collapsible (similaire à addTable)
+			addCollapsible("list", listData.title, listHtml);
+		}
+
 
 		function syntaxHighlight(json) {
 			if (typeof json != 'string') json = JSON.stringify(json, null, 2);

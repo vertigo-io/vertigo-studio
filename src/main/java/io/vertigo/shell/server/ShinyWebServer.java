@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.vertigo.shell.Shell;
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.components.data.list.ShinyListType;
 
 public class ShinyWebServer extends WebSocketServer {
 	private static final Set<WebSocket> connections = Collections.synchronizedSet(new HashSet<>());
@@ -68,6 +69,16 @@ public class ShinyWebServer extends WebSocketServer {
 							.addAllRows(rows)
 							.build();
 					sendMessage(webSocket, "table", mapper.writeValueAsString(table));
+					break;
+				case "xlist":
+					var list = Shiny.list()
+							.withTitle("planetes")
+							.withType(ShinyListType.DASHED)
+							.addItem("Uranus")
+							.addItem("Saturn")
+							.addItem("Venus")
+							.build();
+					sendMessage(webSocket, "list", mapper.writeValueAsString(list));
 					break;
 				case "xjson":
 					var jsonContent = """
