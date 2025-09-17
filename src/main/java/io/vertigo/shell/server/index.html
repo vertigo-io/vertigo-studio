@@ -46,17 +46,6 @@
       color: var(--general-text);
     }
 
-    /* Barre verticale jaune */
-    .vertical-bar {
-      position: fixed;
-      left: 0;
-      top: 0;
-      width: 48px; /* Épaisseur correspondant à la taille du h1 en desktop */
-      height: 100vh;
-      background-color: #FFC107; /* Jaune */
-      z-index: 1000;
-    }
-
     .header-container {
       display: flex;
       align-items: center;
@@ -86,7 +75,7 @@
       color: #FFC107; /* Jaune */
       font-size: 24px;
       margin-left: 10px;
-      vertical-align: middle;
+      vertical-align: baseline;
     }
 
     #status {
@@ -425,8 +414,6 @@
   </style>
 </head>
 <body>
-  <div class="vertical-bar"></div>
-
   <div class="header-container">
     <h1>BAN<span class="yellow">SHEE</span></h1>
     <div id="status" class="status-disconnected">
@@ -512,6 +499,7 @@
 
     function getDataTypeIcon(type) {
       const iconMap = {
+      //on récupère des icones de Lucid à partir des types
         'table': 'table-2',
         'json': 'code-2', 
         'list': 'list',
@@ -520,29 +508,21 @@
         'database': 'database',
         'chart': 'bar-chart-3'
       };
-      return iconMap[type] || 'table-2';
+      return iconMap[type] || 'traffic-cone'; // si non trouvé on met un traffic-cone
     }
 
-    function addTable(tableData) {
-      const div = document.createElement("div");
-      div.className = "chat-message response-message";
-      
-      let html = "";
-      
-      // Ajouter le titre s'il existe
-      if (tableData.title) {
-        const iconType = tableData.type || 'table';
-        const iconName = getDataTypeIcon(iconType);
-        
-        html += `<div class="table-title" onclick="toggleCollapse(this)">
+	function title(type, title){
+        const iconName = getDataTypeIcon(type);
+        return `<div class="table-title" onclick="toggleCollapse(this)">
           <div class="table-title-content">
             <i data-lucide="${iconName}" class="table-icon"></i>
-            ${tableData.title}
+            ${title}
           </div>
           <i data-lucide="chevron-down" class="collapse-icon"></i>
         </div>`;
-      }
-      
+	}	
+	
+    function addTable(tableData) {
       // Ajouter le tableau dans un conteneur collapsible
       const tableContent = `<table><thead><tr>
         ${tableData.header.map(h => `<th>${h}</th>`).join('')}
@@ -552,9 +532,12 @@
         ).join('')}
       </tbody></table>`;
       
+      let html = title("table", tableData.title);
       html += `<div class="collapsible-content">${tableContent}</div>`;
       
-      div.innerHTML = html;
+	  const div = document.createElement("div");
+	  div.className = "chat-message response-message";
+	  div.innerHTML = html;
       chat.appendChild(div);
       
       // Initialiser les icônes Lucide pour ce nouveau contenu
@@ -565,21 +548,14 @@
       chat.scrollTop = chat.scrollHeight;
     }
 
-    function addJson(obj) {
-      const div = document.createElement("div");
-      div.className = "chat-message response-message";
-      
+    function addJson(jsonData) {
       // Ajouter un titre avec icône pour le JSON
-      let html = `<div class="table-title" onclick="toggleCollapse(this)">
-        <div class="table-title-content">
-          <i data-lucide="code-2" class="table-icon"></i>
-          JSON Data
-        </div>
-        <i data-lucide="chevron-down" class="collapse-icon"></i>
-      </div>`;
-      
-      html += `<div class="collapsible-content"><div class="json-container">${syntaxHighlight(obj)}</div></div>`;
-      div.innerHTML = html;
+      let html = title("json", jsonData.title);
+      html += `<div class="collapsible-content"><div class="json-container">${syntaxHighlight(jsonData.json)}</div></div>`;
+
+	  const div = document.createElement("div");
+	  div.className = "chat-message response-message";
+	  div.innerHTML = html;
       chat.appendChild(div);
       
       // Initialiser les icônes Lucide pour ce nouveau contenu
