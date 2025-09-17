@@ -1,595 +1,619 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-  <meta charset="UTF-8">
-  <title>BANSHEE</title>
+	<meta charset="UTF-8">
+	<title>BANSHEE</title>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+	<!-- Lucide Icons -->
+	<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 
-  <style>
-    :root {
-      --general-bg: #1A1D21;
-      --general-surface: #24282D;
-      --general-text: #E6E8EA;
-      --general-shadow: rgba(0, 0, 0, 0.45);
+	<style>
+		:root {
+			--general-bg: #1A1D21;
+			--general-surface: #24282D;
+			--general-text: #E6E8EA;
+			--general-shadow: rgba(0, 0, 0, 0.45);
 
-      --assistant-bg: #2E3338;
-      --assistant-accent: #3C4047;
-      --assistant-text: #F0F1F3;
+			--assistant-bg: #2E3338;
+			--assistant-accent: #3C4047;
+			--assistant-text: #F0F1F3;
 
-      --user-bg: #383D44;
-      --user-accent: #4A4F57;
-      --user-text: #FFFFFF;
+			--user-bg: #383D44;
+			--user-accent: #4A4F57;
+			--user-text: #FFFFFF;
 
-      --json-bg: #1F2226;
-      --json-text: #C8CDD2;
-      --json-key: #8AB4F8;
-      --json-string: #F1FA8C;
-      --json-number: #FFB86C;
-      --json-boolean: #50FA7B;
-      --json-null: #FF5555;
+			--json-bg: #1F2226;
+			--json-text: #C8CDD2;
+			--json-key: #8AB4F8;
+			--json-string: #F1FA8C;
+			--json-number: #FFB86C;
+			--json-boolean: #50FA7B;
+			--json-null: #FF5555;
 
-      --table-header-bg: #1C2024;
-      --table-row-even: #2A2F35;
-      --table-row-odd: #2E3439;
-      --table-hover: #212529;
-    }
+			--table-header-bg: #1C2024;
+			--table-row-even: #2A2F35;
+			--table-row-odd: #2E3439;
+			--table-hover: #212529;
+		}
 
-    body {
-      font-family: 'Roboto', Arial, sans-serif;
-      margin: 20px;
-      background-color: var(--general-bg);
-      color: var(--general-text);
-    }
+		body {
+			font-family: 'Roboto', Arial, sans-serif;
+			margin: 20px;
+			background-color: var(--general-bg);
+			color: var(--general-text);
+		}
 
-    .header-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      margin-bottom: 20px;
-    }
+		.header-container {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+			margin-bottom: 20px;
+		}
 
-    h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-weight: 700;
-      font-size: 48px;
-      color: var(--assistant-text);
-      letter-spacing: 4px;
-      margin: 0;
-      text-shadow: 0 0 12px var(--assistant-accent);
-      position: relative; /* Pour le bullet point */
-    }
+		h1 {
+			font-family: 'Orbitron', sans-serif;
+			font-weight: 700;
+			font-size: 48px;
+			color: var(--assistant-text);
+			letter-spacing: 4px;
+			margin: 0;
+			text-shadow: 0 0 12px var(--assistant-accent);
+			position: relative;
+			/* Pour le bullet point */
+		}
 
-    h1 span.yellow {
-      color: #FFC107; /* Jaune */
-    }
+		h1 span.yellow {
+			color: #FFC107;
+			/* Jaune */
+		}
 
-    /* Bullet point jaune */
-    h1::after {
-      content: '●';
-      color: #FFC107; /* Jaune */
-      font-size: 24px;
-      margin-left: 10px;
-      vertical-align: baseline;
-    }
+		/* Bullet point jaune */
+		h1::after {
+			content: '●';
+			color: #FFC107;
+			/* Jaune */
+			font-size: 24px;
+			margin-left: 10px;
+			vertical-align: baseline;
+		}
 
-    #status {
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--general-text);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 8px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
+		#status {
+			position: absolute;
+			right: 0;
+			top: 50%;
+			transform: translateY(-50%);
+			font-size: 11px;
+			font-weight: 500;
+			color: var(--general-text);
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			padding: 4px 8px;
+			background: rgba(255, 255, 255, 0.05);
+			border-radius: 12px;
+			backdrop-filter: blur(10px);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+		}
 
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
+		.status-dot {
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+			animation: pulse 2s infinite;
+		}
 
-    .status-connected .status-dot {
-      background: #50FA7B;
-      box-shadow: 0 0 8px #50FA7B;
-    }
+		.status-connected .status-dot {
+			background: #50FA7B;
+			box-shadow: 0 0 8px #50FA7B;
+		}
 
-    .status-disconnected .status-dot {
-      background: #FF5555;
-      box-shadow: 0 0 8px #FF5555;
-    }
+		.status-disconnected .status-dot {
+			background: #FF5555;
+			box-shadow: 0 0 8px #FF5555;
+		}
 
-    .status-error .status-dot {
-      background: #FFB86C;
-      box-shadow: 0 0 8px #FFB86C;
-    }
+		.status-error .status-dot {
+			background: #FFB86C;
+			box-shadow: 0 0 8px #FFB86C;
+		}
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.6; }
-    }
+		@keyframes pulse {
 
-    /* Chat Container */
-    .chat-container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 20px;
-      background: var(--general-surface);
-      border-radius: 15px;
-      box-shadow: 0 8px 32px var(--general-shadow);
-      max-height: 600px;
-      overflow-y: auto;
-    }
+			0%,
+			100% {
+				opacity: 1;
+			}
 
-    .chat-message {
-      margin: 15px 0;
-      padding: 14px 18px;
-      border-radius: 18px;
-      position: relative;
-      box-shadow: 0 6px 20px var(--general-shadow);
-      backdrop-filter: blur(10px);
-    }
+			50% {
+				opacity: 0.6;
+			}
+		}
 
-    .user-message {
-      background: var(--user-bg);
-      color: var(--user-text);
-      margin-left: auto;
-      text-align: right;
-      max-width: 70%;
-      box-shadow: 0 6px 20px var(--general-shadow), 0 0 15px rgba(80, 250, 123, 0.15);
-      border: 1px solid rgba(80, 250, 123, 0.1);
-    }
+		/* Chat Container */
+		.chat-container {
+			max-width: 900px;
+			margin: 0 auto;
+			padding: 20px;
+			background: var(--general-surface);
+			border-radius: 15px;
+			box-shadow: 0 8px 32px var(--general-shadow);
+			max-height: 600px;
+			overflow-y: auto;
+		}
 
-    .response-message {
-      background: var(--assistant-bg);
-      color: var(--assistant-text);
-      margin-right: auto;
-      text-align: left;
-      max-width: 70%;
-      box-shadow: 0 6px 20px var(--general-shadow), 0 0 15px rgba(139, 180, 248, 0.15);
-      border: 1px solid rgba(139, 180, 248, 0.1);
-    }
+		.chat-message {
+			margin: 15px 0;
+			padding: 14px 18px;
+			border-radius: 18px;
+			position: relative;
+			box-shadow: 0 6px 20px var(--general-shadow);
+			backdrop-filter: blur(10px);
+		}
 
-    /* Prompt input */
-    .prompt-container {
-      display: flex;
-      gap: 10px;
-      margin-top: 15px;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
-    }
+		.user-message {
+			background: var(--user-bg);
+			color: var(--user-text);
+			margin-left: auto;
+			text-align: right;
+			max-width: 70%;
+			box-shadow: 0 6px 20px var(--general-shadow), 0 0 15px rgba(80, 250, 123, 0.15);
+			border: 1px solid rgba(80, 250, 123, 0.1);
+		}
 
-    .prompt-container input {
-      flex: 1;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid var(--assistant-bg);
-      background: var(--general-surface);
-      color: var(--general-text);
-      font-size: 16px;
-    }
+		.response-message {
+			background: var(--assistant-bg);
+			color: var(--assistant-text);
+			margin-right: auto;
+			text-align: left;
+			max-width: 70%;
+			box-shadow: 0 6px 20px var(--general-shadow), 0 0 15px rgba(139, 180, 248, 0.15);
+			border: 1px solid rgba(139, 180, 248, 0.1);
+		}
 
-    .prompt-container button {
-      padding: 10px 18px;
-      border: none;
-      border-radius: 8px;
-      background: var(--assistant-bg);
-      color: var(--general-text);
-      cursor: pointer;
-      font-weight: bold;
-      transition: background 0.2s ease;
-    }
+		/* Prompt input */
+		.prompt-container {
+			display: flex;
+			gap: 10px;
+			margin-top: 15px;
+			max-width: 900px;
+			margin-left: auto;
+			margin-right: auto;
+		}
 
-    .prompt-container button:hover {
-      background: var(--assistant-accent);
-    }
+		.prompt-container input {
+			flex: 1;
+			padding: 10px;
+			border-radius: 8px;
+			border: 1px solid var(--assistant-bg);
+			background: var(--general-surface);
+			color: var(--general-text);
+			font-size: 16px;
+		}
 
-    /* Table Title Styling */
-    .table-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 12px;
-      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--assistant-text);
-      padding: 8px 12px;
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      user-select: none;
-    }
+		.prompt-container button {
+			padding: 10px 18px;
+			border: none;
+			border-radius: 8px;
+			background: var(--assistant-bg);
 
-    .table-title:hover {
-      background: rgba(255, 255, 255, 0.06);
-    }
+			color: var(--general-text);
+			cursor: pointer;
+			font-weight: bold;
+			transition: background 0.2s ease;
+		}
 
-    .table-title-content {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+		.prompt-container button:hover {
+			/*  background: var(--assistant-accent);*/
+			background: #FFC107;
+		}
 
-    .collapse-icon {
-      width: 14px;
-      height: 14px;
-      stroke: #9CA3AF;
-      stroke-width: 2;
-      transition: transform 0.2s ease;
-    }
+		/* Table Title Styling */
+		.table-title {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 8px;
+			margin-bottom: 12px;
+			font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+			font-size: 14px;
+			font-weight: 500;
+			color: var(--assistant-text);
+			padding: 8px 12px;
+			background: rgba(255, 255, 255, 0.03);
+			border-radius: 6px;
+			cursor: pointer;
+			transition: all 0.2s ease;
+			user-select: none;
+		}
 
-    .collapsed .collapse-icon {
-      transform: rotate(-90deg);
-    }
+		.table-title:hover {
+			background: rgba(255, 255, 255, 0.06);
+		}
 
-    .table-icon {
-      width: 16px;
-      height: 16px;
-      stroke: #9CA3AF;
-      stroke-width: 2;
-      opacity: 0.7;
-      flex-shrink: 0;
-    }
+		.table-title-content {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
 
-    .collapsible-content {
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
+		.collapse-icon {
+			width: 14px;
+			height: 14px;
+			stroke: #9CA3AF;
+			stroke-width: 2;
+			transition: transform 0.2s ease;
+		}
 
-    .collapsible-content.collapsed {
-      max-height: 0;
-      opacity: 0;
-      margin-top: 0;
-    }
+		.collapsed .collapse-icon {
+			transform: rotate(-90deg);
+		}
 
-    /* Enhanced Table Style with Pyjama Effect */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-      background: var(--general-bg);
-      border-radius: 8px;
-      overflow: hidden;
-      font-size: 14px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-    }
+		.table-icon {
+			width: 16px;
+			height: 16px;
+			stroke: #9CA3AF;
+			stroke-width: 2;
+			opacity: 0.7;
+			flex-shrink: 0;
+		}
 
-    th, td {
-      padding: 12px 16px;
-      text-align: left;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      border-left: none;
-      border-right: none;
-    }
+		.collapsible-content {
+			overflow: hidden;
+			transition: all 0.3s ease;
+		}
 
-    th {
-      background: var(--table-header-bg);
-      color: #9CA3AF;
-      font-weight: 600;
-      font-family: 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
-      text-transform: uppercase;
-      font-size: 11px;
-      letter-spacing: 1.2px;
-      position: sticky;
-      top: 0;
-      z-index: 1;
-      border-bottom: 2px solid var(--assistant-accent);
-    }
+		.collapsible-content.collapsed {
+			max-height: 0;
+			opacity: 0;
+			margin-top: 0;
+		}
 
-    td {
-      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-      font-size: 13px;
-      line-height: 1.4;
-    }
+		/* Enhanced Table Style with Pyjama Effect */
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-top: 10px;
+			background: var(--general-bg);
+			border-radius: 8px;
+			overflow: hidden;
+			font-size: 14px;
+			box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+			font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+		}
 
-    tr:nth-child(odd) {
-      background: var(--table-row-odd);
-    }
+		th,
+		td {
+			padding: 12px 16px;
+			text-align: left;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+			border-left: none;
+			border-right: none;
+		}
 
-    tr:nth-child(even) {
-      background: var(--table-row-even);
-    }
+		th {
+			background: var(--table-header-bg);
+			color: #9CA3AF;
+			font-weight: 600;
+			font-family: 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
+			text-transform: uppercase;
+			font-size: 11px;
+			letter-spacing: 1.2px;
+			position: sticky;
+			top: 0;
+			z-index: 1;
+			border-bottom: 2px solid var(--assistant-accent);
+		}
 
-    tbody tr:hover {
-      background: var(--table-hover) !important;
-      transform: scale(1.01);
-      transition: all 0.2s ease;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-    }
+		td {
+			font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+			font-size: 13px;
+			line-height: 1.4;
+		}
 
-    td {
-      transition: all 0.2s ease;
-    }
+		tr:nth-child(odd) {
+			background: var(--table-row-odd);
+		}
 
-    /* JSON Viewer */
-    .json-container {
-      background-color: var(--json-bg);
-      border-radius: 8px;
-      padding: 16px;
-      margin-top: 10px;
-      border: 1px solid var(--assistant-bg);
-      font-family: 'Fira Code', 'Courier New', monospace;
-      font-size: 14px;
-      line-height: 1.5;
-      overflow-x: auto;
-      white-space: pre;
-    }
+		tr:nth-child(even) {
+			background: var(--table-row-even);
+		}
 
-    /* JSON Container Scrollbars */
-    .json-container::-webkit-scrollbar {
-      width: 10px;
-      height: 10px;
-    }
+		tbody tr:hover {
+			background: var(--table-hover) !important;
+			transform: scale(1.01);
+			transition: all 0.2s ease;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+		}
 
-    .json-container::-webkit-scrollbar-track {
-      background: var(--general-bg);
-      border-radius: 10px;
-    }
+		td {
+			transition: all 0.2s ease;
+		}
 
-    .json-container::-webkit-scrollbar-thumb {
-      background: var(--assistant-bg);
-      border-radius: 10px;
-      border: 2px solid var(--json-bg);
-    }
+		/* JSON Viewer */
+		.json-container {
+			background-color: var(--json-bg);
+			border-radius: 8px;
+			padding: 16px;
+			margin-top: 10px;
+			border: 1px solid var(--assistant-bg);
+			font-family: 'Fira Code', 'Courier New', monospace;
+			font-size: 14px;
+			line-height: 1.5;
+			overflow-x: auto;
+			white-space: pre;
+		}
 
-    .json-container::-webkit-scrollbar-thumb:hover {
-      background: var(--assistant-accent);
-    }
+		/* JSON Container Scrollbars */
+		.json-container::-webkit-scrollbar {
+			width: 10px;
+			height: 10px;
+		}
 
-    .json-container::-webkit-scrollbar-corner {
-      background: var(--json-bg);
-    }
+		.json-container::-webkit-scrollbar-track {
+			background: var(--general-bg);
+			border-radius: 10px;
+		}
 
-    .json-key { color: var(--json-key); }
-    .json-string { color: var(--json-string); }
-    .json-number { color: var(--json-number); }
-    .json-boolean { color: var(--json-boolean); }
-    .json-null { color: var(--json-null); }
+		.json-container::-webkit-scrollbar-thumb {
+			background: var(--assistant-bg);
+			border-radius: 10px;
+			border: 2px solid var(--json-bg);
+		}
 
-    /* Scrollbar */
-    .chat-container::-webkit-scrollbar {
-      width: 10px;
-    }
+		.json-container::-webkit-scrollbar-thumb:hover {
+			background: var(--assistant-accent);
+		}
 
-    .chat-container::-webkit-scrollbar-track {
-      background: var(--general-bg);
-      border-radius: 10px;
-    }
+		.json-container::-webkit-scrollbar-corner {
+			background: var(--json-bg);
+		}
 
-    .chat-container::-webkit-scrollbar-thumb {
-      background: var(--assistant-bg);
-      border-radius: 10px;
-      border: 2px solid var(--general-bg);
-    }
+		.json-key {
+			color: var(--json-key);
+		}
 
-    .chat-container::-webkit-scrollbar-thumb:hover {
-      background: var(--assistant-accent);
-    }
+		.json-string {
+			color: var(--json-string);
+		}
 
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-      .header-container {
-        flex-direction: column;
-        gap: 10px;
-      }
+		.json-number {
+			color: var(--json-number);
+		}
 
-      #status {
-        position: static;
-        transform: none;
-      }
+		.json-boolean {
+			color: var(--json-boolean);
+		}
 
-      h1 {
-        font-size: 32px;
-      }
+		.json-null {
+			color: var(--json-null);
+		}
 
-      h1::after {
-        font-size: 16px; /* Ajustement du bullet point pour mobile */
-      }
+		/* Scrollbar */
+		.chat-container::-webkit-scrollbar {
+			width: 10px;
+		}
 
-      .vertical-bar {
-        width: 32px; /* Épaisseur correspondant à la taille du h1 en mobile */
-      }
-    }
-  </style>
+		.chat-container::-webkit-scrollbar-track {
+			background: var(--general-bg);
+			border-radius: 10px;
+		}
+
+		.chat-container::-webkit-scrollbar-thumb {
+			background: var(--assistant-bg);
+			border-radius: 10px;
+			border: 2px solid var(--general-bg);
+		}
+
+		.chat-container::-webkit-scrollbar-thumb:hover {
+			background: var(--assistant-accent);
+		}
+
+		/* Responsive adjustments */
+		@media (max-width: 768px) {
+			.header-container {
+				flex-direction: column;
+				gap: 10px;
+			}
+
+			#status {
+				position: static;
+				transform: none;
+			}
+
+			h1 {
+				font-size: 32px;
+			}
+
+			h1::after {
+				font-size: 16px;
+				/* Ajustement du bullet point pour mobile */
+			}
+
+			.vertical-bar {
+				width: 32px;
+				/* Épaisseur correspondant à la taille du h1 en mobile */
+			}
+		}
+	</style>
 </head>
+
 <body>
-  <div class="header-container">
-    <h1>BAN<span class="yellow">SHEE</span></h1>
-    <div id="status" class="status-disconnected">
-      <div class="status-dot"></div>
-      <span id="status-text">Connecting</span>
-    </div>
-  </div>
+	<div class="header-container">
+		<h1>BAN<span class="yellow">SHEE</span></h1>
+		<div id="status" class="status-disconnected">
+			<div class="status-dot"></div>
+			<span id="status-text">Connecting</span>
+		</div>
+	</div>
 
-  <div class="chat-container" id="chat"></div>
+	<div class="chat-container" id="chat"></div>
 
-  <div class="prompt-container">
-    <input type="text" id="prompt" placeholder="Écrivez un message...">
-    <button onclick="sendMessage()">Envoyer</button>
-  </div>
+	<div class="prompt-container">
+		<input type="text" id="prompt" placeholder="Écrivez un message...">
+		<button onclick="sendMessage()">Envoyer</button>
+	</div>
 
-  <script>
-    const socket = new WebSocket("ws://localhost:8080");
-    const chat = document.getElementById("chat");
-    const status = document.getElementById("status");
-    const statusText = document.getElementById("status-text");
+	<script>
+		const socket = new WebSocket("ws://localhost:8080");
+		const chat = document.getElementById("chat");
+		const status = document.getElementById("status");
+		const statusText = document.getElementById("status-text");
 
-    socket.onopen = () => {
-      status.className = 'status-connected';
-      statusText.textContent = 'Connected';
-    };
+		socket.onopen = () => {
+			status.className = 'status-connected';
+			statusText.textContent = 'Connected';
+		};
 
-    socket.onclose = () => {
-      status.className = 'status-disconnected';
-      statusText.textContent = 'Disconnected';
-    };
+		socket.onclose = () => {
+			status.className = 'status-disconnected';
+			statusText.textContent = 'Disconnected';
+		};
 
-    socket.onerror = () => {
-      status.className = 'status-error';
-      statusText.textContent = 'Error';
-    };
+		socket.onerror = () => {
+			status.className = 'status-error';
+			statusText.textContent = 'Error';
+		};
 
-    socket.onmessage = (event) => {
-      try {
-        const parsed = JSON.parse(event.data);
-        if (parsed.type === "table") {
-          addTable(parsed.data);
-        } else if (parsed.type === "json") {
-          addJson(parsed.data);
-        } else {
-          addMessage(JSON.stringify(parsed), "response");
-        }
-      } catch {
-        addMessage(event.data, "response");
-      }
-    };
+		socket.onmessage = (event) => {
+			try {
+				const parsed = JSON.parse(event.data);
+				if (parsed.type === "table") {
+					addTable(parsed.data);
+				} else if (parsed.type === "json") {
+					addJson(parsed.data);
+				} else {
+					addMessage(JSON.stringify(parsed), "response");
+				}
+			} catch {
+				addMessage(event.data, "response");
+			}
+		};
 
-    function sendMessage() {
-      const input = document.getElementById("prompt");
-      const message = input.value.trim();
-      if (message) {
-        addMessage(message, "user");
-        socket.send(message);
-        input.value = "";
-      }
-    }
+		function sendMessage() {
+			const input = document.getElementById("prompt");
+			const message = input.value.trim();
+			if (message) {
+				addMessage(message, "user");
+				socket.send(message);
+				input.value = "";
+			}
+		}
 
-    function addMessage(text, type) {
-      const div = document.createElement("div");
-      div.className = `chat-message ${type === "user" ? "user-message" : "response-message"}`;
-      div.textContent = text;
-      chat.appendChild(div);
-      chat.scrollTop = chat.scrollHeight;
-    }
+		function addMessage(text, type) {
+			const div = document.createElement("div");
+			div.className = `chat-message ${type === "user" ? "user-message" : "response-message"}`;
+			div.textContent = text;
+			chat.appendChild(div);
+			chat.scrollTop = chat.scrollHeight;
+		}
 
-    function toggleCollapse(element) {
-      const content = element.nextElementSibling;
-      const collapseIcon = element.querySelector('.collapse-icon');
-      const container = element.parentElement;
-      
-      if (content.classList.contains('collapsed')) {
-        content.classList.remove('collapsed');
-        container.classList.remove('collapsed');
-      } else {
-        content.classList.add('collapsed');
-        container.classList.add('collapsed');
-      }
-    }
+		function toggleCollapse(element) {
+			const content = element.nextElementSibling;
+			const collapseIcon = element.querySelector('.collapse-icon');
+			const container = element.parentElement;
 
-    function getDataTypeIcon(type) {
-      const iconMap = {
-      //on récupère des icones de Lucid à partir des types
-        'table': 'table-2',
-        'json': 'code-2', 
-        'list': 'list',
-        'tree': 'git-branch',
-        'grid': 'grid-3x3',
-        'database': 'database',
-        'chart': 'bar-chart-3'
-      };
-      return iconMap[type] || 'traffic-cone'; // si non trouvé on met un traffic-cone
-    }
+			if (content.classList.contains('collapsed')) {
+				content.classList.remove('collapsed');
+				container.classList.remove('collapsed');
+			} else {
+				content.classList.add('collapsed');
+				container.classList.add('collapsed');
+			}
+		}
 
-	function title(type, title){
-        const iconName = getDataTypeIcon(type);
-        return `<div class="table-title" onclick="toggleCollapse(this)">
-          <div class="table-title-content">
-            <i data-lucide="${iconName}" class="table-icon"></i>
-            ${title}
-          </div>
-          <i data-lucide="chevron-down" class="collapse-icon"></i>
-        </div>`;
-	}	
-	
-    function addTable(tableData) {
-      // Ajouter le tableau dans un conteneur collapsible
-      const tableContent = `<table><thead><tr>
+		function getDataTypeIcon(type) {
+			const iconMap = {
+				//on récupère des icones de Lucid à partir des types
+				'table': 'table-2',
+				'json': 'code-2',
+				'list': 'list',
+				'tree': 'git-branch',
+				'grid': 'grid-3x3',
+				'database': 'database',
+				'chart': 'bar-chart-3'
+			};
+			return iconMap[type] || 'traffic-cone'; // si non trouvé on met un traffic-cone
+		}
+
+		function addCollapsible(type, title, content) {
+			const iconName = getDataTypeIcon(type);
+			const html = `<div class="table-title" onclick="toggleCollapse(this)">
+          	<div class="table-title-content">
+            		<i data-lucide="${iconName}" class="table-icon"></i>
+           	 	${title}
+          	</div>
+          	<i data-lucide="chevron-down" class="collapse-icon"></i>
+        		</div>
+			<div class="collapsible-content">${content}</div>`;
+
+			const div = document.createElement("div");
+			div.className = "chat-message response-message";
+			div.innerHTML = html;
+			chat.appendChild(div);
+
+			// Initialiser les icônes Lucide pour ce nouveau contenu
+			lucide.createIcons({
+				nameAttr: 'data-lucide'
+			});
+
+			chat.scrollTop = chat.scrollHeight;
+		}
+
+		function addTable(tableData) {
+			// Ajouter le tableau dans un conteneur collapsible
+			const content = `<table><thead><tr>
         ${tableData.header.map(h => `<th>${h}</th>`).join('')}
       </tr></thead><tbody>
-        ${tableData.rows.map(row => 
-          `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`
-        ).join('')}
+        ${tableData.rows.map(row =>
+				`<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`
+			).join('')}
       </tbody></table>`;
-      
-      let html = title("table", tableData.title);
-      html += `<div class="collapsible-content">${tableContent}</div>`;
-      
-	  const div = document.createElement("div");
-	  div.className = "chat-message response-message";
-	  div.innerHTML = html;
-      chat.appendChild(div);
-      
-      // Initialiser les icônes Lucide pour ce nouveau contenu
-      lucide.createIcons({
-        nameAttr: 'data-lucide'
-      });
-      
-      chat.scrollTop = chat.scrollHeight;
-    }
+			const type = "table";
+			const title = tableData.title;
+			
+			addCollapsible(type, title, content);
+		}
 
-    function addJson(jsonData) {
-      // Ajouter un titre avec icône pour le JSON
-      let html = title("json", jsonData.title);
-      html += `<div class="collapsible-content"><div class="json-container">${syntaxHighlight(jsonData.json)}</div></div>`;
+		function addJson(jsonData) {
+			const content = `<div class="json-container">${syntaxHighlight(jsonData.json)}</div>`;
+			const type = "json";
+			const title = jsonData.title;
 
-	  const div = document.createElement("div");
-	  div.className = "chat-message response-message";
-	  div.innerHTML = html;
-      chat.appendChild(div);
-      
-      // Initialiser les icônes Lucide pour ce nouveau contenu
-      lucide.createIcons({
-        nameAttr: 'data-lucide'
-      });
-      
-      chat.scrollTop = chat.scrollHeight;
-    }
+			addCollapsible(type, title, content);
+		}
 
-    function syntaxHighlight(json) {
-      if (typeof json != 'string') json = JSON.stringify(json, null, 2);
-      json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(?:\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-        if (/^"/.test(match)) {
-          return /:$/.test(match) ? `<span class="json-key">${match}</span>` : `<span class="json-string">${match}</span>`;
-        } else if (/true|false/.test(match)) {
-          return `<span class="json-boolean">${match}</span>`;
-        } else if (/null/.test(match)) {
-          return `<span class="json-null">${match}</span>`;
-        } else {
-          return `<span class="json-number">${match}</span>`;
-        }
-      });
-    }
+		function syntaxHighlight(json) {
+			if (typeof json != 'string') json = JSON.stringify(json, null, 2);
+			json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+			return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(?:\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+				if (/^"/.test(match)) {
+					return /:$/.test(match) ? `<span class="json-key">${match}</span>` : `<span class="json-string">${match}</span>`;
+				} else if (/true|false/.test(match)) {
+					return `<span class="json-boolean">${match}</span>`;
+				} else if (/null/.test(match)) {
+					return `<span class="json-null">${match}</span>`;
+				} else {
+					return `<span class="json-number">${match}</span>`;
+				}
+			});
+		}
 
-    // Initialiser les icônes Lucide au chargement
-    document.addEventListener('DOMContentLoaded', function() {
-      lucide.createIcons();
-    });
+		// Initialiser les icônes Lucide au chargement
+		document.addEventListener('DOMContentLoaded', function () {
+			lucide.createIcons();
+		});
 
-    document.getElementById("prompt").addEventListener("keydown", e => {
-      if (e.key === "Enter") sendMessage();
-    });
-  </script>
+		document.getElementById("prompt").addEventListener("keydown", e => {
+			if (e.key === "Enter") sendMessage();
+		});
+	</script>
 </body>
+
 </html>
