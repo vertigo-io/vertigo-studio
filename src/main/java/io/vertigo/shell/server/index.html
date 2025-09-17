@@ -1,192 +1,308 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>WebSocket avec Java et Quasar QTable</title>
-    <!-- Quasar CSS via CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/quasar@2.16.1/dist/quasar.prod.css" rel="stylesheet" type="text/css">
-    <!-- Material Icons via CDN -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="style.css" rel="stylesheet" type="text/css">
+  <meta charset="UTF-8">
+  <title>BANSHEE</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --general-bg: #1A1D21;
+      --general-surface: #24282D;
+      --general-text: #E6E8EA;
+      --general-shadow: rgba(0, 0, 0, 0.45);
+
+      --assistant-bg: #2E3338;
+      --assistant-accent: #3C4047;
+      --assistant-text: #F0F1F3;
+
+      --user-bg: #383D44;
+      --user-accent: #4A4F57;
+      --user-text: #FFFFFF;
+
+      --json-bg: #1F2226;
+      --json-text: #C8CDD2;
+      --json-key: #8AB4F8;
+      --json-string: #F1FA8C;
+      --json-number: #FFB86C;
+      --json-boolean: #50FA7B;
+      --json-null: #FF5555;
+    }
+
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      margin: 20px;
+      background-color: var(--general-bg);
+      color: var(--general-text);
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 48px;
+      text-align: center;
+      color: var(--assistant-text);
+      letter-spacing: 4px;
+      margin-bottom: 5px;
+      text-shadow: 0 0 12px var(--assistant-accent);
+    }
+
+    #status {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 16px;
+      color: var(--general-text);
+    }
+
+    /* Chat Container */
+    .chat-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      background: var(--general-surface);
+      border-radius: 15px;
+      box-shadow: 0 8px 32px var(--general-shadow);
+      max-height: 600px;
+      overflow-y: auto;
+    }
+
+    .chat-message {
+      margin: 15px 0;
+      padding: 14px 18px;
+      border-radius: 18px;
+      position: relative;
+      box-shadow: 0 6px 20px var(--general-shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .user-message {
+      background: var(--user-bg);
+      color: var(--user-text);
+      margin-left: auto;
+      text-align: right;
+      max-width: 70%;
+    }
+
+    .response-message {
+      background: var(--assistant-bg);
+      color: var(--assistant-text);
+      margin-right: auto;
+      text-align: left;
+      max-width: 70%;
+    }
+
+    /* Prompt input */
+    .prompt-container {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .prompt-container input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--assistant-bg);
+      background: var(--general-surface);
+      color: var(--general-text);
+      font-size: 16px;
+    }
+
+    .prompt-container button {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      background: var(--assistant-bg);
+      color: var(--general-text);
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s ease;
+    }
+
+    .prompt-container button:hover {
+      background: var(--assistant-accent);
+    }
+
+    /* Table Style */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: var(--general-bg);
+      border-radius: 8px;
+      overflow: hidden;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 8px 12px;
+      text-align: left;
+    }
+
+    th {
+      background: var(--assistant-bg);
+      color: var(--assistant-text);
+    }
+
+    tr:nth-child(even) {
+      background: var(--assistant-accent);
+    }
+
+    tr:hover {
+      background: var(--user-bg);
+    }
+
+    /* JSON Viewer */
+    .json-container {
+      background-color: var(--json-bg);
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 10px;
+      border: 1px solid var(--assistant-bg);
+      font-family: 'Fira Code', 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.5;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    .json-key { color: var(--json-key); }
+    .json-string { color: var(--json-string); }
+    .json-number { color: var(--json-number); }
+    .json-boolean { color: var(--json-boolean); }
+    .json-null { color: var(--json-null); }
+
+    /* Scrollbar */
+    .chat-container::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    .chat-container::-webkit-scrollbar-track {
+      background: var(--general-bg);
+      border-radius: 10px;
+    }
+
+    .chat-container::-webkit-scrollbar-thumb {
+      background: var(--assistant-bg);
+      border-radius: 10px;
+      border: 2px solid var(--general-bg);
+    }
+
+    .chat-container::-webkit-scrollbar-thumb:hover {
+      background: var(--assistant-accent);
+    }
+  </style>
 </head>
 <body>
-    <div id="app">
-        <h1>Banshee</h1>
-        <q-btn label="Connecter WebSocket" @click="connectWebSocket" color="primary"></q-btn>
-       
-        <div v-if="error" class="error">{{ error }}</div>
-        
-        <!-- Container pour les messages de chat -->
-        <div class="chat-container">
-            <div v-for="(message, index) in chatMessages" :key="index" class="chat-message"
-                 :class="message.type === 'user' ? 'user-message' : 'response-message'">
-                <div v-if="message.contentType === 'text'">
-                    {{ message.content }}
-                </div>
-                <!-- =====TABLE===== -->
-                <q-expansion-item
-                    v-else-if="message.contentType === 'table'"
-                    icon="table_chart"
-                    :label="message.content.title"
-                    expand-separator
-                    expand-icon="keyboard_arrow_down"
-                    default-opened
-                >
-                    <q-card flat bordered>
-                        <q-table
-                            :rows="message.content.rows"
-                            :columns="getColumns(message.content.header)"
-                            row-key="name"
-                            :no-data-label="message.content.noDataFound"
-                            dense
-                        >
-      <!--                      <template v-slot:no-data>
-                                <div class="full-width row flex-center q-gutter-sm q-table__no-data">
-                                    <span>{{ message.content.noDataFound }}</span>
-                                </div>
-                            </template>
-      -->
-                        </q-table>
-                    </q-card>
-                </q-expansion-item>
-                <!-- =====/TABLE===== -->
-                
-                <!-- =====JSON===== -->
-                <q-expansion-item
-				  v-else-if="message.contentType === 'json'"
-				  icon="table_chart"
-				  :label="message.content.title || 'JSON Data'"
-				  expand-separator
-				  expand-icon="keyboard_arrow_down"
-				  default-opened
-				>
-					<q-card flat bordered class="json-container">
- 						<pre><code>{{ JSON.stringify(message.content.json, null, 2) }}</code></pre>      
-				  	</q-card>
-				</q-expansion-item>
-            </div>
-        </div>
-        
-        <!-- Input prompt collant en bas -->
-        <div class="prompt-container">
-            <q-input
-                v-model="promptInput"
-                placeholder="Saisissez votre question..."
-                outlined
-                dense
-                @keyup.enter="sendPrompt"
-                style="max-width: 100%;"
-            >
-                <template v-slot:append>
-                    <q-btn
-                        flat
-                        dense
-                        icon="send"
-                        @click="sendPrompt"
-                        style="color: #00E676;"
-                        :disable="!promptInput.trim()"
-                    />
-                </template>
-            </q-input>
-        </div>
-    </div>
+  <h1>BANSHEE</h1>
+  <div id="status">🔌 Connecting...</div>
 
-    <!-- Vue.js via CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
-    <!-- Quasar JS via CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/quasar@2.16.1/dist/quasar.umd.prod.js"></script>
+  <div class="chat-container" id="chat"></div>
 
-    <script>
-        const { createApp } = Vue;
+  <div class="prompt-container">
+    <input type="text" id="prompt" placeholder="Écrivez un message...">
+    <button onclick="sendMessage()">Envoyer</button>
+  </div>
 
-        const app = createApp({
-            data() {
-                return {
-                    ws: null,
-                    error: null,
-                    promptInput: '',
-                    chatMessages: []
-                };
-            },
-            methods: {
-                connectWebSocket() {
-                    this.error = null;
-                    this.ws = new WebSocket('ws://localhost:8080');
-                    this.ws.onopen = () => {
-                        console.log('You are connected');
-                        this.error = null;
-                    };
-                    this.ws.onmessage = (event) => {
-                        try {
-                            const msg = JSON.parse(event.data);
-                            this.handleWebSocketMessage(msg);
-                        } catch (e) {
-                            this.addChatMessage('response', 'text', event.data);
-                        }
-                    };
-                    this.ws.onclose = () => {
-                        console.log('WebSocket fermé');
-                        this.error = 'Connection is closed';
-                    };
-                    this.ws.onerror = (error) => {
-                        console.error('Erreur WebSocket:', error);
-                        this.error = 'Erreur WebSocket : Vérifiez que le serveur est en cours d\'exécution sur ws://localhost:8080/websocket';
-                    };
-                },
-                 sendPrompt() {
-                    if (this.ws && this.ws.readyState === WebSocket.OPEN && this.promptInput.trim()) {
-                        const userMessage = this.promptInput.trim();
-                        this.addChatMessage('user', 'text', userMessage);
-                        this.ws.send(JSON.stringify({ type: 'prompt', data: userMessage }));
-                        this.promptInput = '';
-                        this.$nextTick(() => {
-                            this.scrollToBottom();
-                        });
-                    } else {
-                        this.error = this.ws ? 'Saisie vide' : 'WebSocket non connecté';
-                    }
-                },
-                addChatMessage(type, contentType, content) {
-                    this.chatMessages.push({
-                        type: type,
-                        contentType: contentType || 'text',
-                        content: content,
-                        timestamp: new Date()
-                    });
-                },
-                handleWebSocketMessage(msg) {
-                    if (msg.type === 'table') {
-                        this.addChatMessage('response', 'table',  msg.data);
-                    }else if (msg.type === 'json') {
-                        this.addChatMessage('response', 'json',  msg.data);
-                    } else if (msg.type === 'response' || msg.type === 'message') {
-                        this.addChatMessage('response', 'text', msg.data || msg.message || 'Réponse reçue');
-                    } else {
-                        this.addChatMessage('response', 'text', JSON.stringify(msg));
-                    }
-                    this.$nextTick(() => {
-                        this.scrollToBottom();
-                    });
-                },
-                getColumns(header) {
-                    return header.map((col, index) => ({
-                        name: `col${index}`,
-                        label: col,
-                        field: row => row[index],
-                        align: 'left'
-                    }));
-                },
-                scrollToBottom() {
-                    const chatContainer = document.querySelector('.chat-container');
-                    if (chatContainer) {
-                        chatContainer.scrollTop = chatContainer.scrollHeight;
-                    }
-                }
-            }
-        });
+  <script>
+    const socket = new WebSocket("ws://localhost:8080");
+    const chat = document.getElementById("chat");
+    const status = document.getElementById("status");
 
-        app.use(Quasar, { config: { iconSet: 'material-icons' } });
-        app.mount('#app');
-    </script>
+    socket.onopen = () => {
+      status.innerHTML = '🟢 Connected';
+    };
+
+    socket.onclose = () => {
+      status.innerHTML = '🔴 Disconnected';
+    };
+
+    socket.onerror = () => {
+      status.innerHTML = '⚠️ Error';
+    };
+
+    socket.onmessage = (event) => {
+      try {
+        const parsed = JSON.parse(event.data);
+        if (parsed.type === "table") {
+          addTable(parsed.data);
+        } else if (parsed.type === "json") {
+          addJson(parsed.data);
+        } else {
+          addMessage(JSON.stringify(parsed), "response");
+        }
+      } catch {
+        addMessage(event.data, "response");
+      }
+    };
+
+    function sendMessage() {
+      const input = document.getElementById("prompt");
+      const message = input.value.trim();
+      if (message) {
+        addMessage(message, "user");
+        socket.send(message);
+        input.value = "";
+      }
+    }
+
+    function addMessage(text, type) {
+      const div = document.createElement("div");
+      div.className = `chat-message ${type === "user" ? "user-message" : "response-message"}`;
+      div.textContent = text;
+      chat.appendChild(div);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function addTable(tableData) {
+      const div = document.createElement("div");
+      div.className = "chat-message response-message";
+      let html = "<table><thead><tr>";
+      tableData.header.forEach(h => html += `<th>${h}</th>`);
+      html += "</tr></thead><tbody>";
+      tableData.rows.forEach(row => {
+        html += "<tr>";
+        row.forEach(cell => html += `<td>${cell}</td>`);
+        html += "</tr>";
+      });
+      html += "</tbody></table>";
+      div.innerHTML = html;
+      chat.appendChild(div);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function addJson(obj) {
+      const div = document.createElement("div");
+      div.className = "chat-message response-message";
+      div.innerHTML = `<div class="json-container">${syntaxHighlight(obj)}</div>`;
+      chat.appendChild(div);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function syntaxHighlight(json) {
+      if (typeof json != 'string') json = JSON.stringify(json, null, 2);
+      json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(?:\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+        if (/^"/.test(match)) {
+          return /:$/.test(match) ? `<span class="json-key">${match}</span>` : `<span class="json-string">${match}</span>`;
+        } else if (/true|false/.test(match)) {
+          return `<span class="json-boolean">${match}</span>`;
+        } else if (/null/.test(match)) {
+          return `<span class="json-null">${match}</span>`;
+        } else {
+          return `<span class="json-number">${match}</span>`;
+        }
+      });
+    }
+
+    document.getElementById("prompt").addEventListener("keydown", e => {
+      if (e.key === "Enter") sendMessage();
+    });
+  </script>
 </body>
 </html>

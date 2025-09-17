@@ -26,9 +26,9 @@ public class ShinyWebServer extends WebSocketServer {
 	}
 
 	@Override
-	public void onOpen(WebSocket conn, ClientHandshake handshake) {
-		connections.add(conn);
-		System.out.println("New connection from " + conn.getRemoteSocketAddress().getAddress().getHostAddress());
+	public void onOpen(WebSocket webSocket, ClientHandshake handshake) {
+		connections.add(webSocket);
+		System.out.println("New connection from " + webSocket.getRemoteSocketAddress().getAddress().getHostAddress());
 
 		final PipedInputStream in = new PipedInputStream();
 
@@ -37,29 +37,29 @@ public class ShinyWebServer extends WebSocketServer {
 		final Shell shell = new Shell();
 		new Thread(shell).start();
 
-		conn.setAttachment(in);
+		webSocket.setAttachment(in);
 	}
 
 	@Override
-	public void onClose(WebSocket conn, int code, String reason, boolean remote) {
-		connections.remove(conn);
-		System.out.println("Closed connection to " + conn.getRemoteSocketAddress().getAddress().getHostAddress());
+	public void onClose(WebSocket webSocket, int code, String reason, boolean remote) {
+		connections.remove(webSocket);
+		System.out.println("Closed connection to " + webSocket.getRemoteSocketAddress().getAddress().getHostAddress());
 	}
 
 	private final ObjectMapper mapper = new ObjectMapper();
 
 	@Override
-	public void onMessage(WebSocket conn, String message) {
+	public void onMessage(WebSocket webSocket, String message) {
 		System.out.println("Message reçu : " + message);
 		try {
-			// Parser le message JSON
-			WebSocketMessage wsMessage = mapper.readValue(message, WebSocketMessage.class);
-			if ("prompt".equals(wsMessage.type())) {
-				// Traiter la saisie utilisateur
-				String userInput = wsMessage.data();
-				System.out.println("Prompt reçu : " + userInput);
-
-				if ("x-table".equals(userInput)) {
+			switch (message) {
+				//			// Parser le message JSON
+				//			WebSocketMessage wsMessage = mapper.readValue(message, WebSocketMessage.class);
+				//			if ("prompt".equals(wsMessage.type())) {
+				//				// Traiter la saisie utilisateur
+				//				String userInput = wsMessage.data();
+				//				System.out.println("Prompt reçu : " + userInput);
+				case "x-table":
 					final List<String[]> rows = new ArrayList<>();
 					rows.add(new String[] { "Arthur", "Penn" });
 					rows.add(new String[] { "Marilyn", "Pinson" });
@@ -70,9 +70,8 @@ public class ShinyWebServer extends WebSocketServer {
 							.addAllRows(rows)
 							.build();
 					mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-					final String data = mapper.writeValueAsString(table);
-					sendMessage(conn, "table", data);
-				} else if ("x-json".equals(userInput)) {
+					sendMessage(webSocket, "table", mapper.writeValueAsString(table));
+				case "x-json":
 					var jsonContent = """
 							{
 							  "title": "The Shining",
@@ -86,9 +85,10 @@ public class ShinyWebServer extends WebSocketServer {
 															""";
 					var jsonData = new JsonData("titre ", "json vide", jsonContent);
 					final String data = mapper.writeValueAsString(jsonData);
-					sendMessage(conn, "json", data);
-				}
-
+					sendMessage(webSocket, "json", data);
+					break;
+				default:
+					sendMessage(webSocket, "text", "nada");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
