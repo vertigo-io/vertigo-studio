@@ -60,10 +60,11 @@ public final class DbQueryCommand implements ShellCommand {
 		}
 
 		Shiny.table()
-				.title("Result of query:")
-				.noDataFound("No data found")
-				.header(header)
-				.rows(rows)
+				.withTitle("Result of query:")
+				.withNoDataFound("No data found")
+				.withHeader(header)
+				.addAllRows(rows)
+				.build()
 				.render(writer);
 	}
 

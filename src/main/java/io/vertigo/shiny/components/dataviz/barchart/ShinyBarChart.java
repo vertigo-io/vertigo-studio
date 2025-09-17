@@ -1,62 +1,33 @@
 package io.vertigo.shiny.components.dataviz.barchart;
 
 import java.util.Arrays;
-import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 
 public final class ShinyBarChart implements ShinyComponent {
-	private String barChartTitle;
+	private final String barChartTitle;
 	private String[] barChartHeader;
 	private int[] barChartValues;
-	private ShinySortMode sortMode = ShinySortMode.NO;
-	private ShinyBarChartStyle barChartStyle;
+	private final ShinySortMode sortMode;
+	private final ShinyBarChartStyle barChartStyle;
 
-	public ShinyBarChart() {
-		barChartStyle = Shiny.theme().barChartStyle();
-	}
-
-	public ShinyBarChart withStyle(final ShinyBarChartStyle style) {
-		Assertion.check().isNotNull(style);
+	// Package-private constructor, only accessible by the Builder
+	ShinyBarChart(ShinyBarChartBuilder builder) {
+		Assertion.check()
+				.isNotNull(builder);
 		//---
-		this.barChartStyle = style;
-		return this;
+		this.barChartTitle = builder.barChartTitle;
+		this.barChartHeader = builder.barChartHeader;
+		this.barChartValues = builder.barChartValues;
+		this.sortMode = builder.sortMode;
+		this.barChartStyle = builder.barChartStyle;
 	}
 
-	public ShinyBarChart withTitle(final String title) {
-		this.barChartTitle = title;
-		return this;
-	}
-
-	public ShinyBarChart withHeader(final String... header) {
-		this.barChartHeader = header;
-		return this;
-	}
-
-	public ShinyBarChart withHeader(final List<String> header) {
-		this.barChartHeader = header.toArray(new String[0]);
-		return this;
-	}
-
-	public ShinyBarChart withValues(final int... values) {
-		this.barChartValues = values;
-		return this;
-	}
-
-	public ShinyBarChart withValues(final List<Integer> values) {
-		this.barChartValues = new int[values.size()];
-		for (int i = 0; i < values.size(); i++) {
-			this.barChartValues[i] = values.get(i);
-		}
-		return this;
-	}
-
-	public ShinyBarChart withSort(final ShinySortMode mode) {
-		this.sortMode = mode;
-		return this;
+	// Static factory method to get a new Builder instance
+	public static ShinyBarChartBuilder builder() {
+		return new ShinyBarChartBuilder();
 	}
 
 	private void sort() {

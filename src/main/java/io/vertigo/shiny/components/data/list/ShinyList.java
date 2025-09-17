@@ -1,53 +1,31 @@
 package io.vertigo.shiny.components.data.list;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 
 public final class ShinyList implements ShinyComponent {
-	private String title;
-	private final List<Object> listItems = new ArrayList<>();
-	private ShinyListType listType = ShinyListType.UNORDERED;
-	private ShinyListStyle listStyle;
+	private final String title;
+	private final List<Object> listItems;
+	private final ShinyListType listType;
+	private final ShinyListStyle listStyle;
 
-	public ShinyList() {
-		this.listStyle = Shiny.theme().listStyle();
-	}
-
-	public ShinyList withStyle(final ShinyListStyle style) {
-		Assertion.check().isNotNull(style);
+	// Package-private constructor, only accessible by the Builder
+	ShinyList(ShinyListBuilder builder) {
+		Assertion.check()
+				.isNotNull(builder);
 		//---
-		this.listStyle = style;
-		return this;
+		this.title = builder.title;
+		this.listItems = builder.listItems;
+		this.listType = builder.listType;
+		this.listStyle = builder.listStyle;
 	}
 
-	public ShinyList withTitle(final String text) {
-		this.title = text;
-		return this;
-	}
-
-	public ShinyList addItem(final String item) {
-		listItems.add(item);
-		return this;
-	}
-
-	public ShinyList addAllItems(final List<String> items) {
-		this.listItems.addAll(items);
-		return this;
-	}
-
-	public ShinyList addList(final ShinyList nestedList) {
-		listItems.add(nestedList);
-		return this;
-	}
-
-	public ShinyList withType(final ShinyListType type) {
-		this.listType = type;
-		return this;
+	// Static factory method to get a new Builder instance
+	public static ShinyListBuilder builder() {
+		return new ShinyListBuilder();
 	}
 
 	public void render(ShinyWriter writer) {

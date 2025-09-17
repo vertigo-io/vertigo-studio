@@ -37,10 +37,11 @@ public final class FileLsCommand implements ShellCommand {
 		final ShinyWriter writer = Shiny.writer();
 
 		Shiny.table()
-				.title("files of " + path)
-				.noDataFound("no files found")
-				.header("name", "isFile")
-				.rows(rows)
+				.withTitle("files of " + path)
+				.withNoDataFound("no files found")
+				.withHeader("name", "isFile")
+				.addAllRows(rows)
+				.build()
 				.render(writer);
 	}
 }

@@ -29,7 +29,7 @@ public final class DbPingCommand implements ShellCommand {
 		final List<Double> pingTimes = new ArrayList<>();
 
 		writer.println("ping database");
-		try (final ShinyProgressBar progressBar = Shiny.progressBar().total(calls).start(writer)) {
+		try (final ShinyProgressBar progressBar = Shiny.progressBar().withTotal(calls).build().start(writer)) {
 			for (int i = 0; i < calls; i++) {
 				ping(writer, pingTimes);
 				progressBar.liveUpdate(i + 1);

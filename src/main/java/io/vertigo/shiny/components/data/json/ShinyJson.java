@@ -8,31 +8,28 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyJson implements ShinyComponent {
-	private String jsonString;
-	private ShinyJsonStyle jsonStyle;
+	private final String jsonString;
+	private final ShinyJsonStyle jsonStyle;
 
 	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-	public ShinyJson() {
-		jsonStyle = Shiny.theme().jsonStyle();
-	}
-
-	public ShinyJson withStyle(final ShinyJsonStyle style) {
-		Assertion.check().isNotNull(style);
+	// Package-private constructor, only accessible by the Builder
+	ShinyJson(ShinyJsonBuilder builder) {
+		Assertion.check()
+				.isNotNull(builder);
 		//---
-		this.jsonStyle = style;
-		return this;
+		this.jsonString = builder.jsonString;
+		this.jsonStyle = builder.jsonStyle;
 	}
 
-	public ShinyJson withJson(final String json) {
-		this.jsonString = json;
-		return this;
+	// Static factory method to get a new Builder instance
+	public static ShinyJsonBuilder builder() {
+		return new ShinyJsonBuilder();
 	}
 
 	public void render(ShinyWriter writer) {

@@ -1,12 +1,9 @@
 package io.vertigo.shiny.components.input;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.Arrays;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import io.vertigo.shiny.Shiny;
@@ -14,84 +11,77 @@ import io.vertigo.shiny.components.input.text.ShinyInputText;
 
 public class ShinyInputTextTest {
 
-    private final InputStream originalIn = System.in;
+	@Test
+	public static void testSimpleInput() {
+		String simulatedInput = "Hello World\n";
+		System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
 
-    @BeforeEach
-    public void setUp() {
-        // Redirect System.in to a mock input stream if needed
-    }
+		ShinyInputText input = Shiny.inputText()
+				.withLabel("Enter your name")
+				.build();
 
-    @AfterEach
-    public void tearDown() {
-        System.setIn(originalIn);
-    }
+		input.render(Shiny.writer());
 
-    @Test
-    public void testSimpleInput() {
-        String simulatedInput = "Hello World\n";
-        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+		Assertions.assertEquals("Hello World", input.getValue());
+	}
 
-        ShinyInputText input = Shiny.ui().newInputText()
-                                  .withLabel("Enter your name");
+	@Test
+	public void testRequiredInput_FailThenSuccess() {
+		String simulatedInput = "\nHello World\n"; // First empty, then valid
+		System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
 
-        Shiny.render(input);
+		ShinyInputText input = Shiny.inputText()
+				.withLabel("Enter something")
+				.withRequired(true)
+				.build();
 
-        Assertions.assertEquals("Hello World", input.getValue());
-    }
+		input.render(Shiny.writer());
 
-    @Test
-    public void testRequiredInput_FailThenSuccess() {
-        String simulatedInput = "\nHello World\n"; // First empty, then valid
-        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+		Assertions.assertEquals("Hello World", input.getValue());
+	}
 
-        ShinyInputText input = Shiny.ui().newInputText()
-                                  .withLabel("Enter something")
-                                  .withRequired(true);
+	@Test
+	public void testPatternInput_FailThenSuccess() {
+		String simulatedInput = "abc\n12345\n"; // First invalid, then valid
+		System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
 
-        Shiny.render(input);
+		ShinyInputText input = Shiny.inputText()
+				.withLabel("Enter a 5-digit number")
+				.withPattern("\\d{5}")
+				.build();
 
-        Assertions.assertEquals("Hello World", input.getValue());
-    }
+		input.render(Shiny.writer());
 
-    @Test
-    public void testPatternInput_FailThenSuccess() {
-        String simulatedInput = "abc\n12345\n"; // First invalid, then valid
-        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+		Assertions.assertEquals("12345", input.getValue());
+	}
 
-        ShinyInputText input = Shiny.ui().newInputText()
-                                  .withLabel("Enter a 5-digit number")
-                                  .withPattern("\\d{5}");
+	@Test
+	public void testSuggestions() {
+		String simulatedInput = "red\n";
+		System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
 
-        Shiny.render(input);
+		ShinyInputText input = Shiny.inputText()
+				.withLabel("Choose a color")
+				.addAllSuggestions(Arrays.asList("red", "green", "blue"))
+				.build();
 
-        Assertions.assertEquals("12345", input.getValue());
-    }
-    
-    @Test
-    public void testSuggestions() {
-        String simulatedInput = "red\n";
-        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+		input.render(Shiny.writer());
 
-        ShinyInputText input = Shiny.ui().newInputText()
-                                  .withLabel("Choose a color")
-                                  .addAllSuggestions(Arrays.asList("red", "green", "blue"));
+		Assertions.assertEquals("red", input.getValue());
+	}
 
-        Shiny.render(input);
+	@Test
+	public void testDefaultValue() {
+		String simulatedInput = "\n"; // User just presses Enter
+		System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
 
-        Assertions.assertEquals("red", input.getValue());
-    }
+		ShinyInputText input = Shiny.inputText()
+				.withLabel("Enter your city")
+				.withDefaultValue("Paris")
+				.build();
 
-    @Test
-    public void testDefaultValue() {
-        String simulatedInput = "\n"; // User just presses Enter
-        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+		input.render(Shiny.writer());
 
-        ShinyInputText input = Shiny.ui().newInputText()
-                                  .withLabel("Enter your city")
-                                  .withDefaultValue("Paris");
-
-        Shiny.render(input);
-
-        Assertions.assertEquals("Paris", input.getValue());
-    }
+		Assertions.assertEquals("Paris", input.getValue());
+	}
 }

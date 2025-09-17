@@ -25,6 +25,7 @@ public class ShinySparklineTest {
 				.withData(List.of(10.0, 12.0, 15.0, 13.0, 11.0, 10.0, 9.0, 10.0, 12.0, 14.0, 16.0, 15.0))
 				.withStyle(new ShinySparklineStyle()
 						.withColor(ShinyColors.GREEN))
+				.build()
 				.render(writer);
 		writer.println();
 	}
@@ -36,6 +37,7 @@ public class ShinySparklineTest {
 				.withData(List.of(100.0, 102.0, 105.0, 103.0, 101.0, 100.0, 99.0, 100.0, 102.0, 104.0, 106.0, 105.0))
 				.withStyle(new ShinySparklineStyle()
 						.withColor(ShinyColors.BLUE))
+				.build()
 				.render(writer);
 		writer.println();
 	}
@@ -47,6 +49,7 @@ public class ShinySparklineTest {
 				.withData(List.of(0.1, 0.2, 0.5, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0))
 				.withStyle(new ShinySparklineStyle()
 						.withColor(ShinyColors.RED))
+				.build()
 				.render(writer);
 		writer.println();
 	}
@@ -58,6 +61,7 @@ public class ShinySparklineTest {
 				.withData(List.of(5.0, 5.0, 5.0, 5.0, 5.0))
 				.withStyle(new ShinySparklineStyle()
 						.withColor(ShinyColors.YELLOW))
+				.build()
 				.render(writer);
 		writer.println();
 	}
@@ -69,6 +73,7 @@ public class ShinySparklineTest {
 				.withData(List.of()) // Empty list
 				.withStyle(new ShinySparklineStyle()
 						.withColor(ShinyColors.MAGENTA))
+				.build()
 				.render(writer);
 		writer.println();
 	}

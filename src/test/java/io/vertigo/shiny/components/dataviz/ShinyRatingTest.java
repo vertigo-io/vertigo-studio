@@ -24,16 +24,19 @@ public class ShinyRatingTest {
 		Shiny.rating()
 				.withLabel("Movie Rating")
 				.withValue(4.5)
+				.build()
 				.render(writer);
 
 		Shiny.rating()
 				.withLabel("User Experience")
 				.withValue(3)
+				.build()
 				.render(writer);
 
 		Shiny.rating()
 				.withLabel("Service Quality")
 				.withValue(5)
+				.build()
 				.render(writer);
 
 		writer.println();
@@ -47,6 +50,7 @@ public class ShinyRatingTest {
 				.withValue(4)
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.STAR))
+				.build()
 				.render(writer);
 
 		Shiny.rating()
@@ -55,6 +59,7 @@ public class ShinyRatingTest {
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.HEART)
 						.withFilledColor(ShinyColors.RED))
+				.build()
 				.render(writer);
 
 		Shiny.rating()
@@ -63,6 +68,7 @@ public class ShinyRatingTest {
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.CIRCLE)
 						.withFilledColor(ShinyColors.BLUE))
+				.build()
 				.render(writer);
 
 		Shiny.rating()
@@ -71,6 +77,7 @@ public class ShinyRatingTest {
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.SQUARE)
 						.withFilledColor(ShinyColors.GREEN))
+				.build()
 				.render(writer);
 
 		Shiny.rating()
@@ -79,6 +86,7 @@ public class ShinyRatingTest {
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.DIAMOND)
 						.withFilledColor(ShinyColors.MAGENTA))
+				.build()
 				.render(writer);
 
 		Shiny.rating()
@@ -86,6 +94,7 @@ public class ShinyRatingTest {
 				.withValue(3)
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.THUMB))
+				.build()
 				.render(writer);
 
 		Shiny.rating()
@@ -93,6 +102,7 @@ public class ShinyRatingTest {
 				.withValue(4)
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.FIRE))
+				.build()
 				.render(writer);
 
 		Shiny.rating()
@@ -100,6 +110,7 @@ public class ShinyRatingTest {
 				.withValue(5)
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.SMILE))
+				.build()
 				.render(writer);
 
 		writer.println();
@@ -112,6 +123,7 @@ public class ShinyRatingTest {
 				.withLabel("5-Star Scale")
 				.withValue(3.5)
 				.withScale(ShinyRatingScale.SCALE_5)
+				.build()
 				.render(writer);
 
 		Shiny.rating()
@@ -120,6 +132,7 @@ public class ShinyRatingTest {
 				.withScale(ShinyRatingScale.SCALE_10)
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.CIRCLE))
+				.build()
 				.render(writer);
 
 		Shiny.rating()
@@ -129,6 +142,7 @@ public class ShinyRatingTest {
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.SQUARE)
 						.withFilledColor(ShinyColors.CYAN))
+				.build()
 				.render(writer);
 
 		Shiny.rating()
@@ -137,6 +151,7 @@ public class ShinyRatingTest {
 				.withMaxValue(7)
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.DIAMOND))
+				.build()
 				.render(writer);
 
 		Shiny.rating()
@@ -146,6 +161,7 @@ public class ShinyRatingTest {
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.HEART)
 						.withFilledColor(ShinyColors.RED))
+				.build()
 				.render(writer);
 
 		writer.println();
@@ -160,6 +176,7 @@ public class ShinyRatingTest {
 				.withStyle(new ShinyRatingStyle()
 						.withFilledColor(ShinyColors.MAGENTA)
 						.withEmptyColor(ShinyColors.WHITE))
+				.build()
 				.render(writer);
 
 		Shiny.rating()
@@ -168,6 +185,7 @@ public class ShinyRatingTest {
 				.withSeparator(" | ")
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.ARROW))
+				.build()
 				.render(writer);
 
 		Shiny.rating()
@@ -176,6 +194,7 @@ public class ShinyRatingTest {
 				.withShowValue(false)
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.STAR))
+				.build()
 				.render(writer);
 
 		Shiny.rating()
@@ -184,6 +203,7 @@ public class ShinyRatingTest {
 				.withShowPercentage(true)
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.CIRCLE))
+				.build()
 				.render(writer);
 
 		Shiny.rating()
@@ -194,6 +214,7 @@ public class ShinyRatingTest {
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.HEART)
 						.withFilledColor(ShinyColors.RED))
+				.build()
 				.render(writer);
 
 		Shiny.rating()
@@ -202,6 +223,7 @@ public class ShinyRatingTest {
 				.withAllowHalfRating(true)
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.STAR))
+				.build()
 				.render(writer);
 
 		Shiny.rating()
@@ -211,6 +233,7 @@ public class ShinyRatingTest {
 						.withType(ShinyRatingType.DIAMOND)
 						.withFilledColor(ShinyColors.YELLOW))
 				.withShowBox(true)
+				.build()
 				.render(writer);
 
 		writer.println();
@@ -224,6 +247,7 @@ public class ShinyRatingTest {
 				.withValue(3)
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.STAR))
+				.build()
 				.render(writer);
 
 		// Zero rating
@@ -232,6 +256,7 @@ public class ShinyRatingTest {
 				.withValue(0)
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.STAR))
+				.build()
 				.render(writer);
 
 		// Maximum rating
@@ -240,6 +265,7 @@ public class ShinyRatingTest {
 				.withValue(5)
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.STAR))
+				.build()
 				.render(writer);
 
 		// Rating exceeding maximum (should be clamped)
@@ -249,6 +275,7 @@ public class ShinyRatingTest {
 				.withMaxValue(5)
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.STAR))
+				.build()
 				.render(writer);
 
 		// Very small custom scale
@@ -258,6 +285,7 @@ public class ShinyRatingTest {
 				.withMaxValue(2)
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.THUMB))
+				.build()
 				.render(writer);
 
 		// Very large custom scale
@@ -265,10 +293,12 @@ public class ShinyRatingTest {
 				.withLabel("Large Scale")
 				.withValue(15)
 				.withMaxValue(20)
+
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.DOT))
 				.withSeparator(" ")
 				.withShowValue(false)
+				.build()
 				.render(writer);
 
 		// All styles showcase
@@ -278,7 +308,8 @@ public class ShinyRatingTest {
 					.withLabel(style.name())
 					.withValue(3)
 					.withStyle(new ShinyRatingStyle()
-							.withType(style))
+							.withType(ShinyRatingType.STAR))
+					.build()
 					.render(writer);
 		}
 
@@ -290,6 +321,7 @@ public class ShinyRatingTest {
 				.withScale(ShinyRatingScale.SCALE_5)
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.STAR))
+				.build()
 				.render(writer);
 
 		Shiny.rating()
@@ -298,6 +330,7 @@ public class ShinyRatingTest {
 				.withScale(ShinyRatingScale.SCALE_10)
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.CIRCLE))
+				.build()
 				.render(writer);
 
 		Shiny.rating()
@@ -306,6 +339,7 @@ public class ShinyRatingTest {
 				.withScale(ShinyRatingScale.SCALE_100)
 				.withStyle(new ShinyRatingStyle()
 						.withType(ShinyRatingType.SQUARE))
+				.build()
 				.render(writer);
 
 		writer.println();

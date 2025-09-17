@@ -10,6 +10,7 @@ public class ShinyFigletTest {
 
 	public static void main(final String[] args) {
 		final ShinyWriter writer = Shiny.writer();
+
 		testSpecificFonts(writer);
 		testAllFonts(writer);
 	}
@@ -18,6 +19,7 @@ public class ShinyFigletTest {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Testing Specific Figlet Fonts ---"));
 		Shiny.figlet()
 				.withText("Vertigo")
+				.build()
 				.render(writer); // Uses default font (STANDARD)
 
 		Shiny.figlet()
@@ -25,6 +27,7 @@ public class ShinyFigletTest {
 				.withStyle(new ShinyFigletStyle()
 						.withFont(ShinyFigletFont.BIG) // Use BIG font
 						.withColor(ShinyColors.BLUE))
+				.build()
 				.render(writer);
 
 		Shiny.figlet()
@@ -32,6 +35,7 @@ public class ShinyFigletTest {
 				.withStyle(new ShinyFigletStyle()
 						.withFont(ShinyFigletFont.SLANT) // Use SLANT font
 						.withColor(ShinyColors.RED))
+				.build()
 				.render(writer);
 
 		Shiny.figlet()
@@ -39,6 +43,7 @@ public class ShinyFigletTest {
 				.withStyle(new ShinyFigletStyle()
 						.withFont(ShinyFigletFont.STANDARD) // Use STANDARD font
 						.withColor(ShinyColors.GREEN))
+				.build()
 				.render(writer);
 		writer.println();
 	}
@@ -52,6 +57,7 @@ public class ShinyFigletTest {
 					.withStyle(new ShinyFigletStyle()
 							.withFont(font)
 							.withColor(ShinyColors.GREEN))
+					.build()
 					.render(writer);
 			writer.println();
 		}

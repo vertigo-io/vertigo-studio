@@ -1,40 +1,29 @@
 package io.vertigo.shiny.components.dataviz.gauge;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 
 public final class ShinyGauge implements ShinyComponent {
-	private String title;
-	private double value;
-	private double max = 100;
-	private ShinyGaugeStyle gaugeStyle;
+	private final String title;
+	private final double value;
+	private final double max;
+	private final ShinyGaugeStyle gaugeStyle;
 
-	public ShinyGauge() {
-		this.gaugeStyle = Shiny.theme().gaugeStyle();
-	}
-
-	public ShinyGauge withStyle(final ShinyGaugeStyle style) {
-		Assertion.check().isNotNull(style);
+	// Package-private constructor, only accessible by the Builder
+	ShinyGauge(ShinyGaugeBuilder builder) {
+		Assertion.check()
+				.isNotNull(builder);
 		//---
-		this.gaugeStyle = style;
-		return this;
+		this.title = builder.title;
+		this.value = builder.value;
+		this.max = builder.max;
+		this.gaugeStyle = builder.gaugeStyle;
 	}
 
-	public ShinyGauge withTitle(final String text) {
-		this.title = text;
-		return this;
-	}
-
-	public ShinyGauge withValue(final double currentValue) {
-		this.value = currentValue;
-		return this;
-	}
-
-	public ShinyGauge withMax(final double maxValue) {
-		this.max = maxValue;
-		return this;
+	// Static factory method to get a new Builder instance
+	public static ShinyGaugeBuilder builder() {
+		return new ShinyGaugeBuilder();
 	}
 
 	public void render(ShinyWriter writer) {

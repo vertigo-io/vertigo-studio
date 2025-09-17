@@ -44,7 +44,7 @@ public final class DbListCommand implements ShellCommand {
 	}
 
 	private void listAll(ShinyWriter writer) {
-		final ShinyTree tree = Shiny.tree("model");
+		final ShinyTree tree = Shiny.tree("model").build();
 		for (final JdbcSchema schema : DbContext.model().schemas()) {
 			final ShinyTreeNode schemaNode = tree.getRoot().addChild("schema : " + schema.name());
 			final ShinyTreeNode tablesNode = schemaNode.addChild("tables (" + schema.tables().size() + ")");
@@ -75,10 +75,11 @@ public final class DbListCommand implements ShellCommand {
 			}
 		}
 		Shiny.table()
-				.title("Tables in the database:")
-				.noDataFound("No tables found in the database.")
-				.header("TABLE_NAME", "COLUMNS")
-				.rows(rows)
+				.withTitle("Tables in the database:")
+				.withNoDataFound("No tables found in the database.")
+				.withHeader("TABLE_NAME", "COLUMNS")
+				.addAllRows(rows)
+				.build()
 				.render(writer);
 	}
 
@@ -105,12 +106,12 @@ public final class DbListCommand implements ShellCommand {
 				}
 			}
 			Shiny.table()
-					.title("Structure of table " + tableName + ":")
-					.noDataFound("\"Table '\" + tableName + '\' not found or has no columns.\"")
-					.header("Name", "Type", "Size", "Nullable")
-					.rows(columns)
+					.withTitle("Structure of table " + tableName + ":")
+					.withNoDataFound("\"Table '\" + tableName + '\' not found or has no columns.\"")
+					.withHeader("Name", "Type", "Size", "Nullable")
+					.addAllRows(columns)
+					.build()
 					.render(writer);
 		}
 	}
-
 }

@@ -63,8 +63,9 @@ public class ShinyAllComponentsTest {
 				.println("Parameters: title='Choose your favorite fruits:', options=['Apple', 'Banana', 'Cherry'], rows=[100, 120, 90], sort=VALUE_DESC, maxBarLength=50");
 		//---
 		final ShinyMultiSelection multiSelection = Shiny.multiSelection()
-				.title("Choose your favorite fruits:")
-				.options("Apple", "Banana", "Cherry");
+				.withTitle("Choose your favorite fruits:")
+				.withOptions("Apple", "Banana", "Cherry")
+				.build();
 
 		multiSelection.render(writer);
 
@@ -77,10 +78,11 @@ public class ShinyAllComponentsTest {
 				.println("Parameters: title='Monthly Sales', header=['Jan', 'Feb', 'Mar'], rows=[100, 120, 90], sort=VALUE_DESC, maxBarLength=50");
 		//---
 		Shiny.barChart()
-				.title("Monthly Sales")
-				.header("Jan", "Feb", "Mar")
-				.rows(100, 120, 90)
-				.sort(ShinySortMode.VALUE_DESC)
+				.withTitle("Monthly Sales")
+				.withHeader("Jan", "Feb", "Mar")
+				.withValues(100, 120, 90)
+				.withSort(ShinySortMode.VALUE_DESC)
+				.build()
 				.render(writer);
 		waitForEnter(writer);
 	}
@@ -90,9 +92,10 @@ public class ShinyAllComponentsTest {
 				.println("Parameters: year=2024, month=JULY, locale=FRENCH, highlight=[2024-07-14], tableBorder=ROUNDED");
 		//---
 		Shiny.calendar()
-				.year(2024)
-				.month(Month.JULY.getValue())
-				.highlight(LocalDate.of(2024, Month.JULY, 14))
+				.withYear(2024)
+				.withMonth(Month.JULY.getValue())
+				.addHighlightedDate(LocalDate.of(2024, Month.JULY, 14))
+				.build()
 				.render(writer);
 		waitForEnter(writer);
 	}
@@ -102,7 +105,8 @@ public class ShinyAllComponentsTest {
 				.println("Parameters: text='Hello', font=BIG, color=BLUE");
 		//---
 		Shiny.figlet()
-				.text("Hello")
+				.withText("Hello")
+				.build()
 				.render(writer);
 		waitForEnter(writer);
 	}
@@ -112,9 +116,10 @@ public class ShinyAllComponentsTest {
 				.println("Parameters: title='Progress', value=75, max=100, color=GREEN");
 		//---
 		Shiny.gauge()
-				.title("Progress")
-				.value(75)
-				.max(100)
+				.withTitle("Progress")
+				.withValue(75)
+				.withMax(100)
+				.build()
 				.render(writer);
 		waitForEnter(writer);
 	}
@@ -127,7 +132,8 @@ public class ShinyAllComponentsTest {
 				{\"name\": \"John Doe\", \"age\": 30, \"isStudent\": true, \"address\": null}
 				""";
 		Shiny.json()
-				.json(json)
+				.withJson(json)
+				.build()
 				.render(writer);
 		waitForEnter(writer);
 	}
@@ -137,10 +143,11 @@ public class ShinyAllComponentsTest {
 				.println("Parameters: title='Tasks', items=['Task 1', 'Task 2', 'Task 3']");
 		//---
 		Shiny.list()
-				.title("Tasks")
+				.withTitle("Tasks")
 				.addItem("Task 1")
 				.addItem("Task 2")
 				.addItem("Task 3")
+				.build()
 				.render(writer);
 		waitForEnter(writer);
 	}
@@ -149,7 +156,7 @@ public class ShinyAllComponentsTest {
 		writer.println(CYAN.fg("Component: ShinyProgressBar"))
 				.println("Parameters: total=100");
 		//---
-		try (var progressBar = Shiny.progressBar().total(100).start(writer)) {
+		try (var progressBar = Shiny.progressBar().withTotal(100).build().start(writer)) {
 			for (int i = 0; i <= 100; i += 10) {
 				progressBar.liveUpdate(i + 1);
 				try {
@@ -167,8 +174,9 @@ public class ShinyAllComponentsTest {
 				.println("Parameters: rating=4, max=5");
 		//---
 		Shiny.rating()
-				.value(4)
-				.maxValue(5)
+				.withValue(4)
+				.withMaxValue(5)
+				.build()
 				.render(writer);
 		waitForEnter(writer);
 	}
@@ -178,8 +186,9 @@ public class ShinyAllComponentsTest {
 				.println("Parameters: title='Data Trend', data=[10, 12, 15, 13, 11, 10, 9, 10, 12, 14, 16, 15], color=MAGENTA");
 		//---
 		Shiny.sparkline()
-				.title("Data Trend")
-				.data(List.of(10.0, 12.0, 15.0, 13.0, 11.0, 10.0, 9.0, 10.0, 12.0, 14.0, 16.0, 15.0))
+				.withTitle("Data Trend")
+				.withData(List.of(10.0, 12.0, 15.0, 13.0, 11.0, 10.0, 9.0, 10.0, 12.0, 14.0, 16.0, 15.0))
+				.build()
 				.render(writer);
 		waitForEnter(writer);
 	}
@@ -188,7 +197,7 @@ public class ShinyAllComponentsTest {
 		writer.println(CYAN.fg("Component: ShinySpinner"))
 				.println("Parameters: messages='Loading...', 'Processing...'");
 		//---
-		try (var spinner = Shiny.spinner().start(writer)) {
+		try (var spinner = Shiny.spinner().build().start(writer)) {
 			spinner.liveSend("Loading...");
 			Thread.sleep(1000);
 			spinner.liveSend("Processing...");
@@ -203,12 +212,13 @@ public class ShinyAllComponentsTest {
 				.println("Parameters: title='Build Status', statuses=[SUCCESS, WARNING, ERROR, INFO], shape=SQUARE");
 		//---
 		Shiny.status()
-				.title("Build Status")
-				.types(
+				.withTitle("Build Status")
+				.addAllTypes(
 						ShinyStatusType.SUCCESS,
 						ShinyStatusType.WARNING,
 						ShinyStatusType.ERROR,
 						ShinyStatusType.INFO)
+				.build()
 				.render(writer);
 		waitForEnter(writer);
 	}
@@ -218,11 +228,12 @@ public class ShinyAllComponentsTest {
 				.println("Parameters: title='Users', header=['firstName', 'lastName', 'Age'], rows=[['John', 'doe', '30'], ['Jane', 'doe', '25']], tableBorder=ASCII");
 		//---
 		Shiny.table()
-				.title("Users")
-				.header("FirstName", "LastName", "Age")
-				.rows(
+				.withTitle("Users")
+				.withHeader("FirstName", "LastName", "Age")
+				.addAllRows(
 						new String[] { "John", "doe", "30" },
 						new String[] { "Jane", "doe", "25" })
+				.build()
 				.render(writer);
 		waitForEnter(writer);
 	}
@@ -232,7 +243,8 @@ public class ShinyAllComponentsTest {
 				.println("Parameters: path='/home/user/documents/report.pdf', custom colors");
 		//---
 		Shiny.textPath()
-				.path("C:/home/user/documents/report.pdf")
+				.withPath("C:/home/user/documents/report.pdf")
+				.build()
 				.render(writer);
 		waitForEnter(writer);
 	}
@@ -242,7 +254,8 @@ public class ShinyAllComponentsTest {
 				.println("text: title='My Awesome Title', color=MAGENTA");
 		//---
 		Shiny.title()
-				.text("My Awesome Title")
+				.withText("My Awesome Title")
+				.build()
 				.render(writer);
 		waitForEnter(writer);
 	}
@@ -252,8 +265,9 @@ public class ShinyAllComponentsTest {
 				.println("Parameters: label='Enable Feature', enabled=true");
 		//---
 		Shiny.toggle()
-				.label("Enable Feature")
-				.value(true)
+				.withLabel("Enable Feature")
+				.withValue(true)
+				.build()
 				.render(writer);
 		waitForEnter(writer);
 	}
@@ -262,7 +276,7 @@ public class ShinyAllComponentsTest {
 		writer.println(CYAN.fg("Component: ShinyTree"))
 				.println("Parameters: label='Files', nodes=['src', 'main', 'file.txt'] with icons");
 		//---
-		final var tree = Shiny.tree("Files");
+		final var tree = Shiny.tree("Files").build();
 		tree.getRoot().addChild("src", FOLDER_OPEN)
 				.addChild("main", FOLDER_OPEN)
 				.addChild("file.txt", FILE);
@@ -275,7 +289,8 @@ public class ShinyAllComponentsTest {
 				.println("Parameters: label='Enter your name'");
 		//---
 		Shiny.inputText()
-				.label("Enter your name")
+				.withLabel("Enter your name")
+				.build()
 				.render(writer);
 		waitForEnter(writer);
 	}
@@ -285,7 +300,8 @@ public class ShinyAllComponentsTest {
 				.println("Parameters: text='This is a simple paragraph.'");
 		//---
 		Shiny.paragraph()
-				.text("This is a simple paragraph.")
+				.withText("This is a simple paragraph.")
+				.build()
 				.render(writer);
 		waitForEnter(writer);
 	}
@@ -296,7 +312,8 @@ public class ShinyAllComponentsTest {
 		//---
 		final String markdown = "# Title\n* item 1\n* item 2\n| h1 | h2 |\n|---|---|\n| c1 | c2 |";
 		Shiny.markdown()
-				.fromText(markdown)
+				.withText(markdown)
+				.build()
 				.render(writer);
 		waitForEnter(writer);
 	}

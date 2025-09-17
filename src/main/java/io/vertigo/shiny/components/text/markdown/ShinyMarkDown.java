@@ -1,8 +1,5 @@
 package io.vertigo.shiny.components.text.markdown;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Collections;
 
 import org.commonmark.ext.gfm.tables.TablesExtension;
@@ -14,23 +11,19 @@ import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 
 public final class ShinyMarkDown implements ShinyComponent {
-	private String _markdownText;
+	final String _markdownText;
 
-	public ShinyMarkDown() {
+	// Package-private constructor, only accessible by the Builder
+	ShinyMarkDown(ShinyMarkDownBuilder builder) {
+		Assertion.check()
+				.isNotNull(builder);
+		//---
+		this._markdownText = builder._markdownText;
 	}
 
-	public ShinyMarkDown withFile(final String path) {
-		try {
-			this._markdownText = Files.readString(Path.of(path));
-		} catch (final IOException e) {
-			throw new RuntimeException("Error reading file: " + path, e);
-		}
-		return this;
-	}
-
-	public ShinyMarkDown withText(final String text) {
-		this._markdownText = text;
-		return this;
+	// Static factory method to get a new Builder instance
+	public static ShinyMarkDownBuilder builder() {
+		return new ShinyMarkDownBuilder();
 	}
 
 	@Override

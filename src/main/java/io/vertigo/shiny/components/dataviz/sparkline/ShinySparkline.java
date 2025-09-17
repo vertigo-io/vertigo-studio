@@ -4,36 +4,27 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 
 public final class ShinySparkline implements ShinyComponent {
-	private String title;
-	private List<Double> data;
-	private ShinySparklineStyle sparklineStyle;
+	private final String title;
+	private final List<Double> data;
+	private final ShinySparklineStyle sparklineStyle;
 
-	public ShinySparkline() {
-		this.sparklineStyle = Shiny.theme().sparklineStyle();
-	}
-
-	public ShinySparkline withStyle(final ShinySparklineStyle style) {
-		Assertion.check().isNotNull(style);
+	// Package-private constructor, only accessible by the Builder
+	ShinySparkline(ShinySparklineBuilder builder) {
+		Assertion.check()
+				.isNotNull(builder);
 		//---
-		this.sparklineStyle = style;
-		return this;
+		this.title = builder.title;
+		this.data = builder.data;
+		this.sparklineStyle = builder.sparklineStyle;
 	}
 
-	public ShinySparkline withTitle(final String text) {
-		this.title = text;
-		return this;
-	}
-
-	public ShinySparkline withData(final List<Double> values) {
-		Assertion.check().isNotNull(values);
-		//---
-		this.data = values;
-		return this;
+	// Static factory method to get a new Builder instance
+	public static ShinySparklineBuilder builder() {
+		return new ShinySparklineBuilder();
 	}
 
 	public void render(final ShinyWriter writer) {

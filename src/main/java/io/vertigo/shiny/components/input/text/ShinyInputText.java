@@ -13,59 +13,30 @@ import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyInputText implements ShinyComponent {
-	private String inputTextLabel;
-	private boolean inputTextRequired = false;
-	private Pattern inputTextValidationPattern;
-	private List<String> inputTextSuggestions;
-	private String inputTextDefaultValue;
-	private boolean inputTextSecret = false; // For masking input
-	private String inputTextValue; // Stores the entered value
+	private final String inputTextLabel;
+	private final boolean inputTextRequired;
+	private final Pattern inputTextValidationPattern;
+	private final List<String> inputTextSuggestions;
+	private final String inputTextDefaultValue;
+	private final boolean inputTextSecret;
+	private String inputTextValue; // Stores the entered value (mutable)
 
-	public ShinyInputText() {
+	// Package-private constructor, only accessible by the Builder
+	ShinyInputText(ShinyInputTextBuilder builder) {
+		Assertion.check()
+			.isNotNull(builder);
+		//---
+		this.inputTextLabel = builder.inputTextLabel;
+		this.inputTextRequired = builder.inputTextRequired;
+		this.inputTextValidationPattern = builder.inputTextValidationPattern;
+		this.inputTextSuggestions = builder.inputTextSuggestions;
+		this.inputTextDefaultValue = builder.inputTextDefaultValue;
+		this.inputTextSecret = builder.inputTextSecret;
 	}
 
-	public ShinyInputText withLabel(final String label) {
-		this.inputTextLabel = label;
-		return this;
-	}
-
-	public ShinyInputText withRequired(final boolean required) {
-		this.inputTextRequired = required;
-		return this;
-	}
-
-	public ShinyInputText withPattern(final String regex) {
-		Assertion.check().isNotBlank(regex, "Pattern cannot be blank");
-		this.inputTextValidationPattern = Pattern.compile(regex);
-		return this;
-	}
-
-	public ShinyInputText addSuggestion(final String suggestion) {
-		Assertion.check().isNotNull(suggestion);
-		if (this.inputTextSuggestions == null) {
-			this.inputTextSuggestions = new java.util.ArrayList<>();
-		}
-		this.inputTextSuggestions.add(suggestion);
-		return this;
-	}
-
-	public ShinyInputText addAllSuggestions(final List<String> suggestions) {
-		Assertion.check().isNotNull(suggestions);
-		if (this.inputTextSuggestions == null) {
-			this.inputTextSuggestions = new java.util.ArrayList<>();
-		}
-		this.inputTextSuggestions.addAll(suggestions);
-		return this;
-	}
-
-	public ShinyInputText withDefaultValue(final String defaultValue) {
-		this.inputTextDefaultValue = defaultValue;
-		return this;
-	}
-
-	public ShinyInputText withSecret(final boolean secret) {
-		this.inputTextSecret = secret;
-		return this;
+	// Static factory method to get a new Builder instance
+	public static ShinyInputTextBuilder builder() {
+		return new ShinyInputTextBuilder();
 	}
 
 	public String getValue() {
@@ -95,16 +66,13 @@ public final class ShinyInputText implements ShinyComponent {
 			try {
 				String inputLine;
 				if (inputTextSecret) {
-					// For actual secret input, Console.readPassword() would be ideal,
-					// but it's not always available and hard to test.
-					// For now, we'll just read normally but note the masking intent.
 					writer.println(ShinyColors.YELLOW.fg("(Input will be masked, but not truly hidden in this basic console)"));
-					inputLine = reader.readLine(); // Cannot mask directly with BufferedReader
+					inputLine = reader.readLine();
 				} else {
 					inputLine = reader.readLine();
 				}
 
-				if (inputLine == null) { // EOF
+				if (inputLine == null) {
 					inputTextValue = null;
 					validInput = true;
 				} else {
@@ -130,7 +98,7 @@ public final class ShinyInputText implements ShinyComponent {
 			} catch (IOException e) {
 				writer.println(ShinyColors.RED.fg("Error reading input: " + e.getMessage()));
 				inputTextValue = null;
-				validInput = true; // Exit loop on error
+				validInput = true;
 			}
 		}
 	}

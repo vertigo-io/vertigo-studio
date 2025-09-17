@@ -53,10 +53,11 @@ public final class PhotoListCommand implements ShellCommand {
 		}
 
 		Shiny.table()
-				.title("Photos")
-				.noDataFound("No photos found.")
-				.header("Path", "Size", "Date/Time", "Width", "Height", "MD5 Hash")
-				.rows(rows)
+				.withTitle("Photos")
+				.withNoDataFound("No photos found.")
+				.withHeader("Path", "Size", "Date/Time", "Width", "Height", "MD5 Hash")
+				.addAllRows(rows)
+				.build()
 				.render(writer);
 	}
 }

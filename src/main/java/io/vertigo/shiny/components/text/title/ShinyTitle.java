@@ -6,22 +6,21 @@ import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyTitle implements ShinyComponent {
-	private String title;
-	private int level = 1; // Default to Level 1
+	private final String title;
+	private final int level;
 
-	public ShinyTitle() {
-	}
-
-	public ShinyTitle withText(final String text) {
-		this.title = text;
-		return this;
-	}
-
-	public ShinyTitle withLevel(final int titleLevel) {
+	// Package-private constructor, only accessible by the Builder
+	ShinyTitle(ShinyTitleBuilder builder) {
 		Assertion.check()
-				.isTrue(titleLevel >= 1 && titleLevel <= 3, "Title level must be between 1 and 3");
-		this.level = titleLevel;
-		return this;
+			.isNotNull(builder);
+		//---
+		this.title = builder.title;
+		this.level = builder.level;
+	}
+
+	// Static factory method to get a new Builder instance
+	public static ShinyTitleBuilder builder() {
+		return new ShinyTitleBuilder();
 	}
 
 	public void render(ShinyWriter writer) {

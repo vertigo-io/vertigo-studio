@@ -41,9 +41,10 @@ public final class DbStatsCommand implements ShellCommand {
 		}
 
 		Shiny.barChart()
-				.title("Tables Row Count")
-				.header(tableNames)
-				.rows(tableCounts)
+				.withTitle("Tables Row Count")
+				.withHeader(tableNames)
+				.withValues(tableCounts)
+				.build()
 				.render(writer);
 	}
 

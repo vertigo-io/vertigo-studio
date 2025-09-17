@@ -65,7 +65,7 @@ public final class PhotoLoadCommand implements ShellCommand {
 		int processedCount = 0;
 		try (final ShinyProgressBar progressBar = Shiny.progressBar()
 				//.title("Processing photos")
-				.total(photoPaths.size()).start(writer)) {
+				.withTotal(photoPaths.size()).build().start(writer)) {
 			for (final Path path : photoPaths) {
 				final PhotoInfo photoInfo = extract(writer, path);
 				if (photoInfo != null) {

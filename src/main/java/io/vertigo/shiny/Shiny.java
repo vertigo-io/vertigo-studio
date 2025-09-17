@@ -4,25 +4,45 @@ import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
 import io.vertigo.shiny.components.data.calendar.ShinyCalendar;
+import io.vertigo.shiny.components.data.calendar.ShinyCalendarBuilder;
 import io.vertigo.shiny.components.data.json.ShinyJson;
+import io.vertigo.shiny.components.data.json.ShinyJsonBuilder;
 import io.vertigo.shiny.components.data.list.ShinyList;
+import io.vertigo.shiny.components.data.list.ShinyListBuilder;
 import io.vertigo.shiny.components.data.table.ShinyTable;
+import io.vertigo.shiny.components.data.table.ShinyTableBuilder;
 import io.vertigo.shiny.components.data.tree.ShinyTree;
+import io.vertigo.shiny.components.data.tree.ShinyTreeBuilder;
 import io.vertigo.shiny.components.dataviz.barchart.ShinyBarChart;
+import io.vertigo.shiny.components.dataviz.barchart.ShinyBarChartBuilder;
 import io.vertigo.shiny.components.dataviz.gauge.ShinyGauge;
+import io.vertigo.shiny.components.dataviz.gauge.ShinyGaugeBuilder;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRating;
+import io.vertigo.shiny.components.dataviz.rating.ShinyRatingBuilder;
 import io.vertigo.shiny.components.dataviz.sparkline.ShinySparkline;
+import io.vertigo.shiny.components.dataviz.sparkline.ShinySparklineBuilder;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatus;
+import io.vertigo.shiny.components.dataviz.status.ShinyStatusBuilder;
 import io.vertigo.shiny.components.input.multiselection.ShinyMultiSelection;
+import io.vertigo.shiny.components.input.multiselection.ShinyMultiSelectionBuilder;
 import io.vertigo.shiny.components.input.text.ShinyInputText;
+import io.vertigo.shiny.components.input.text.ShinyInputTextBuilder;
 import io.vertigo.shiny.components.live.progressbar.ShinyProgressBar;
+import io.vertigo.shiny.components.live.progressbar.ShinyProgressBarBuilder;
 import io.vertigo.shiny.components.live.spinner.ShinySpinner;
+import io.vertigo.shiny.components.live.spinner.ShinySpinnerBuilder;
 import io.vertigo.shiny.components.text.figlet.ShinyFiglet;
+import io.vertigo.shiny.components.text.figlet.ShinyFigletBuilder;
 import io.vertigo.shiny.components.text.markdown.ShinyMarkDown;
+import io.vertigo.shiny.components.text.markdown.ShinyMarkDownBuilder;
 import io.vertigo.shiny.components.text.paragraph.ShinyParagraph;
+import io.vertigo.shiny.components.text.paragraph.ShinyParagraphBuilder;
 import io.vertigo.shiny.components.text.textpath.ShinyTextPath;
+import io.vertigo.shiny.components.text.textpath.ShinyTextPathBuilder;
 import io.vertigo.shiny.components.text.title.ShinyTitle;
+import io.vertigo.shiny.components.text.title.ShinyTitleBuilder;
 import io.vertigo.shiny.components.text.toggle.ShinyToggle;
+import io.vertigo.shiny.components.text.toggle.ShinyToggleBuilder;
 import io.vertigo.shiny.mermaid.ShinyMermaidServer;
 
 public final class Shiny {
@@ -44,84 +64,84 @@ public final class Shiny {
 		writer = new PrintWriter(System.out, true, StandardCharsets.UTF_8);
 	}
 
-	public static ShinyTable table() {
-		return new ShinyTable();
+	public static ShinyTableBuilder table() {
+		return ShinyTable.builder();
 	}
 
-	public static ShinyBarChart barChart() {
-		return new ShinyBarChart();
+	public static ShinyBarChartBuilder barChart() {
+		return ShinyBarChart.builder();
 	}
 
-	public static ShinyProgressBar progressBar() {
-		return new ShinyProgressBar();
+	public static ShinyProgressBarBuilder progressBar() {
+		return ShinyProgressBar.builder();
 	}
 
-	public static ShinySpinner spinner() {
-		return new ShinySpinner();
+	public static ShinySpinnerBuilder spinner() {
+		return ShinySpinner.builder();
 	}
 
-	public static ShinyTree tree(final String label) {
-		return new ShinyTree(label);
+	public static ShinyTreeBuilder tree(final String label) {
+		return ShinyTree.builder().withLabel(label);
 	}
 
-	public static ShinyGauge gauge() {
-		return new ShinyGauge();
+	public static ShinyGaugeBuilder gauge() {
+		return ShinyGauge.builder();
 	}
 
-	public static ShinySparkline sparkline() {
-		return new ShinySparkline();
+	public static ShinySparklineBuilder sparkline() {
+		return ShinySparkline.builder();
 	}
 
-	public static ShinyStatus status() {
-		return new ShinyStatus();
+	public static ShinyStatusBuilder status() {
+		return ShinyStatus.builder();
 	}
 
-	public static ShinyFiglet figlet() {
-		return new ShinyFiglet();
+	public static ShinyFigletBuilder figlet() {
+		return ShinyFiglet.builder();
 	}
 
-	public static ShinyCalendar calendar() {
-		return new ShinyCalendar();
+	public static ShinyCalendarBuilder calendar() {
+		return ShinyCalendar.builder();
 	}
 
-	public static ShinyTextPath textPath() {
-		return new ShinyTextPath();
+	public static ShinyTextPathBuilder textPath() {
+		return ShinyTextPath.builder();
 	}
 
-	public static ShinyJson json() {
-		return new ShinyJson();
+	public static ShinyJsonBuilder json() {
+		return ShinyJson.builder();
 	}
 
-	public static ShinyList list() {
-		return new ShinyList();
+	public static ShinyListBuilder list() {
+		return ShinyList.builder();
 	}
 
-	public static ShinyTitle title() {
-		return new ShinyTitle();
+	public static ShinyTitleBuilder title() {
+		return ShinyTitle.builder();
 	}
 
-	public static ShinyMarkDown markdown() {
-		return new ShinyMarkDown();
+	public static ShinyMarkDownBuilder markdown() {
+		return ShinyMarkDown.builder();
 	}
 
-	public static ShinyParagraph paragraph() {
-		return new ShinyParagraph();
+	public static ShinyParagraphBuilder paragraph() {
+		return ShinyParagraph.builder();
 	}
 
-	public static ShinyToggle toggle() {
-		return new ShinyToggle();
+	public static ShinyToggleBuilder toggle() {
+		return ShinyToggle.builder();
 	}
 
-	public static ShinyRating rating() {
-		return new ShinyRating();
+	public static ShinyRatingBuilder rating() {
+		return ShinyRating.builder();
 	}
 
-	public static ShinyMultiSelection multiSelection() {
-		return new ShinyMultiSelection();
+	public static ShinyMultiSelectionBuilder multiSelection() {
+		return ShinyMultiSelection.builder();
 	}
 
-	public static ShinyInputText inputText() {
-		return new ShinyInputText();
+	public static ShinyInputTextBuilder inputText() {
+		return ShinyInputText.builder();
 	}
 
 	public static ShinyTheme theme() {

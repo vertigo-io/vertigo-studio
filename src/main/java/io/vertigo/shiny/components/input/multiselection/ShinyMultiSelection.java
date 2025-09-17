@@ -1,9 +1,7 @@
 package io.vertigo.shiny.components.input.multiselection;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -14,42 +12,23 @@ import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyMultiSelection implements ShinyComponent {
-	private String multiselectionTitle;
+	private final String multiselectionTitle;
 	private final List<String> multiselectionOptions;
-	private Set<Integer> selectedIndices;
+	private final Set<Integer> selectedIndices;
 
-	public ShinyMultiSelection() {
-		this.multiselectionOptions = new ArrayList<>();
-		this.selectedIndices = new HashSet<>();
+	// Package-private constructor, only accessible by the Builder
+	ShinyMultiSelection(ShinyMultiSelectionBuilder builder) {
+		Assertion.check()
+				.isNotNull(builder);
+		//---
+		this.multiselectionTitle = builder.multiselectionTitle;
+		this.multiselectionOptions = builder.multiselectionOptions;
+		this.selectedIndices = builder.selectedIndices;
 	}
 
-	public ShinyMultiSelection withTitle(final String title) {
-		this.multiselectionTitle = title;
-		return this;
-	}
-
-	public ShinyMultiSelection withOptions(final List<String> options) {
-		Assertion.check().isNotNull(options);
-		this.multiselectionOptions.clear();
-		this.multiselectionOptions.addAll(options);
-		return this;
-	}
-
-	public ShinyMultiSelection withOptions(final String... options) {
-		Assertion.check().isNotNull(options);
-		return withOptions(Arrays.asList(options));
-	}
-
-	public ShinyMultiSelection withSelected(final List<String> initialSelected) {
-		Assertion.check().isNotNull(initialSelected);
-		this.selectedIndices.clear();
-		for (final String selectedOption : initialSelected) {
-			final int index = multiselectionOptions.indexOf(selectedOption);
-			if (index != -1) {
-				selectedIndices.add(index);
-			}
-		}
-		return this;
+	// Static factory method to get a new Builder instance
+	public static ShinyMultiSelectionBuilder builder() {
+		return new ShinyMultiSelectionBuilder();
 	}
 
 	@Override

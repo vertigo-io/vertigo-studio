@@ -6,28 +6,25 @@ import com.github.dtmo.jfiglet.FigFontResources;
 import com.github.dtmo.jfiglet.FigletRenderer;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 
 public final class ShinyFiglet implements ShinyComponent {
-	private String figletText;
-	private ShinyFigletStyle figletStyle;
+	private final String figletText;
+	private final ShinyFigletStyle figletStyle;
 
-	public ShinyFiglet() {
-		this.figletStyle = Shiny.theme().figletStyle();
-	}
-
-	public ShinyFiglet withStyle(final ShinyFigletStyle style) {
-		Assertion.check().isNotNull(style);
+	// Package-private constructor, only accessible by the Builder
+	ShinyFiglet(ShinyFigletBuilder builder) {
+		Assertion.check()
+				.isNotNull(builder);
 		//---
-		this.figletStyle = style;
-		return this;
+		this.figletText = builder.figletText;
+		this.figletStyle = builder.figletStyle;
 	}
 
-	public ShinyFiglet withText(final String text) {
-		this.figletText = text;
-		return this;
+	// Static factory method to get a new Builder instance
+	public static ShinyFigletBuilder builder() {
+		return new ShinyFigletBuilder();
 	}
 
 	public void render(final ShinyWriter writer) {

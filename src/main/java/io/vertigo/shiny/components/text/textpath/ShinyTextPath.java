@@ -1,43 +1,30 @@
 package io.vertigo.shiny.components.text.textpath;
 
-import java.nio.file.Path;
 import java.util.regex.Pattern; // New import
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColor;
 
 public final class ShinyTextPath implements ShinyComponent {
-	private String textPath;
-	private String separator = "/";
-	private ShinyTextPathStyle textPathStyle;
+	private final String textPath;
+	private final String separator;
+	private final ShinyTextPathStyle textPathStyle;
 
-	public ShinyTextPath() {
-		textPathStyle = Shiny.theme().textPathStyle();
-	}
-
-	public ShinyTextPath withStyle(final ShinyTextPathStyle style) {
-		Assertion.check().isNotNull(style);
+	// Package-private constructor, only accessible by the Builder
+	ShinyTextPath(ShinyTextPathBuilder builder) {
+		Assertion.check()
+				.isNotNull(builder);
 		//---
-		this.textPathStyle = style;
-		return this;
+		this.textPath = builder.textPath;
+		this.separator = builder.separator;
+		this.textPathStyle = builder.textPathStyle;
 	}
 
-	public ShinyTextPath withPath(final Path path) {
-		this.textPath = path.normalize().toString();
-		return this;
-	}
-
-	public ShinyTextPath withPath(final String path) {
-		this.textPath = path;
-		return this;
-	}
-
-	public ShinyTextPath withSeparator(final String pathSeparator) {
-		this.separator = pathSeparator;
-		return this;
+	// Static factory method to get a new Builder instance
+	public static ShinyTextPathBuilder builder() {
+		return new ShinyTextPathBuilder();
 	}
 
 	public void render(final ShinyWriter writer) {
@@ -69,7 +56,7 @@ public final class ShinyTextPath implements ShinyComponent {
 
 			if (i < parts.length - 1) {
 				final ShinyColor sepColor;
-					if (i == 0 && !relative && i == 0) {
+				if (i == 0 && !relative && i == 0) {
 					sepColor = textPathStyle.rootColor();
 				} else {
 					sepColor = textPathStyle.separatorColor();

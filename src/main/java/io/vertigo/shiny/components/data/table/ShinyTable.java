@@ -14,82 +14,27 @@ import io.vertigo.shiny.components.ShinyComponent;
  * borders and formatted numeric values.
  */
 public final class ShinyTable implements ShinyComponent {
-	private String tableTitle;
-	private String noDataFound;
-	private String[] tableHeader;
-	private final List<String[]> tableRows = new ArrayList<>();
-	private ShinyTableStyle tableStyle;
+	private final String tableTitle;
+	private final String noDataFound;
+	private final String[] tableHeader;
+	private final List<String[]> tableRows;
+	private final ShinyTableStyle tableStyle;
 
-	/**
-	 * Creates a new ShinyTable.
-	 *
-	 * @param themeNumberFormat the NumberFormat used to format numeric values
-	 */
-	public ShinyTable() {
-		this.tableStyle = Shiny.theme().tableStyle();
-	}
-
-	/**
-	 * Sets the title of the table.
-	 *
-	 * @param tableTitle the table title
-	 * @return this instance for method chaining
-	 */
-	public ShinyTable withTitle(final String title) {
-		Assertion.check().isNotBlank(title);
+	// Package-private constructor, only accessible by the Builder
+	ShinyTable(ShinyTableBuilder builder) {
+		Assertion.check()
+			.isNotNull(builder);
 		//---
-		this.tableTitle = title;
-		return this;
+		this.tableTitle = builder.tableTitle;
+		this.noDataFound = builder.noDataFound;
+		this.tableHeader = builder.tableHeader;
+		this.tableRows = builder.tableRows;
+		this.tableStyle = builder.tableStyle;
 	}
 
-	/**
-	 * Opens Style.
-	 */
-	public ShinyTable withStyle(ShinyTableStyle style) {
-		Assertion.check().isNotNull(style);
-		//---
-		this.tableStyle = style;
-		return this;
-	}
-
-	/**
-	 * Sets the message to be displayed when no data is found.
-	 */
-	public ShinyTable withNoDataFound(final String message) {
-		this.noDataFound = message;
-		return this;
-	}
-
-	/**
-	 * Defines the header row of the table.
-	 */
-	public ShinyTable withHeader(final String... header) {
-		this.tableHeader = header;
-		return this;
-	}
-
-	/**
-	 * Adds a single row of data to the table.
-	 */
-	public ShinyTable addRow(final String... row) {
-		this.tableRows.add(row);
-		return this;
-	}
-
-	/**
-	 * Adds multiple rows of data to the table.
-	 */
-	public ShinyTable addAllRows(final List<String[]> rows) {
-		this.tableRows.addAll(rows);
-		return this;
-	}
-
-	/**
-	 * Adds multiple rows of data to the table.
-	 */
-	public ShinyTable addAllRows(final String[]... rows) {
-		this.tableRows.addAll(List.of(rows));
-		return this;
+	// Static factory method to get a new Builder instance
+	public static ShinyTableBuilder builder() {
+		return new ShinyTableBuilder();
 	}
 
 	/**
@@ -98,7 +43,6 @@ public final class ShinyTable implements ShinyComponent {
 	@Override
 	public void render(ShinyWriter writer) {
 		Assertion.check()
-				//				.isNotBlank(tableTitle)
 				.isNotNull(tableRows)
 				.when(tableRows.isEmpty(), () -> Assertion.check().isNotBlank(noDataFound))
 				.isNotNull(tableHeader);

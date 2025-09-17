@@ -53,10 +53,11 @@ public final class StudioListCommand implements ShellCommand {
 			rows.add(row);
 		}
 		Shiny.table()
-				.title("List of sketches:")
-				.noDataFound("No sketch found")
-				.header("Key", "Name", "type")
-				.rows(rows)
+				.withTitle("List of sketches:")
+				.withNoDataFound("No sketch found")
+				.withHeader("Key", "Name", "type")
+				.addAllRows(rows)
+				.build()
 				.render(writer);
 	}
 

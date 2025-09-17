@@ -28,6 +28,7 @@ public class ShinyListTest {
 				.addItem("Item 1")
 				.addItem("Item 2")
 				.addItem("Item 3")
+				.build()
 				.render(writer);
 		writer.println();
 	}
@@ -39,6 +40,7 @@ public class ShinyListTest {
 				.addItem("First item")
 				.addItem("Second item")
 				.addItem("Third item")
+				.build()
 				.render(writer);
 		writer.println();
 	}
@@ -50,6 +52,7 @@ public class ShinyListTest {
 				.addItem("Task A")
 				.addItem("Task B")
 				.addItem("Task C")
+				.build()
 				.render(writer);
 		writer.println();
 	}
@@ -59,13 +62,15 @@ public class ShinyListTest {
 		final ShinyList nested = Shiny.list()
 				.withType(ShinyListType.UNORDERED)
 				.addItem("Sub-item 1")
-				.addItem("Sub-item 2");
+				.addItem("Sub-item 2")
+				.build();
 
 		Shiny.list()
 				.withType(ShinyListType.ORDERED)
 				.addItem("Main Item 1")
 				.addList(nested)
 				.addItem("Main Item 2")
+				.build()
 				.render(writer);
 		writer.println();
 	}
@@ -81,6 +86,7 @@ public class ShinyListTest {
 				.addItem("Uranus")
 				.addItem("Saturn")
 				.addItem("Venus")
+				.build()
 				.render(writer);
 		writer.println();
 	}

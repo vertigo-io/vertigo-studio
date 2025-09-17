@@ -15,43 +15,25 @@ import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.components.data.table.ShinyTableStyle;
 
 public final class ShinyCalendar implements ShinyComponent {
-	private final List<LocalDate> highlightedDates = new ArrayList<>();
-	private int year;
-	private int month;
-	private ShinyTableStyle calendarStyle;
+	//private final List<LocalDate> highlightedDates;
+	private final int year;
+	private final int month;
+	private final ShinyTableStyle calendarStyle;
 
-	public ShinyCalendar() {
-		this.calendarStyle = Shiny.theme().calendarStyle();
-		final LocalDate now = LocalDate.now();
-		this.year = now.getYear();
-		this.month = now.getMonthValue();
-	}
-
-	public ShinyCalendar withStyle(final ShinyTableStyle style) {
-		Assertion.check().isNotNull(style);
+	// Package-private constructor, only accessible by the Builder
+	ShinyCalendar(ShinyCalendarBuilder builder) {
+		Assertion.check()
+				.isNotNull(builder);
 		//---
-		this.calendarStyle = style;
-		return this;
+		//this.highlightedDates = builder.highlightedDates;
+		this.year = builder.year;
+		this.month = builder.month;
+		this.calendarStyle = builder.calendarStyle;
 	}
 
-	public ShinyCalendar withYear(final int calendarYear) {
-		this.year = calendarYear;
-		return this;
-	}
-
-	public ShinyCalendar withMonth(final java.time.Month calendarMonth) {
-		this.month = calendarMonth.getValue();
-		return this;
-	}
-
-	public ShinyCalendar withMonth(final int calendarMonth) {
-		this.month = calendarMonth;
-		return this;
-	}
-
-	public ShinyCalendar addHighlightedDate(final LocalDate date) {
-		highlightedDates.add(date);
-		return this;
+	// Static factory method to get a new Builder instance
+	public static ShinyCalendarBuilder builder() {
+		return new ShinyCalendarBuilder();
 	}
 
 	public void render(ShinyWriter writer) {
@@ -93,6 +75,7 @@ public final class ShinyCalendar implements ShinyComponent {
 				.withHeader(days)
 				.withStyle(calendarStyle)
 				.addAllRows(rows)
+				.build()
 				.render(writer);
 	}
 }

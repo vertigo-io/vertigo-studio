@@ -20,13 +20,16 @@ public class ShinyTextPathTest {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Basic Paths ---"));
 		Shiny.textPath()
 				.withPath("/home/user/documents/report.pdf")
+				.build()
 				.render(writer);
 		Shiny.textPath()
 				.withPath("C:\\Program Files\\Java\\jdk-17\\bin")
 				.withSeparator("\\")
+				.build()
 				.render(writer);
 		Shiny.textPath()
 				.withPath("folder/subfolder/file.txt")
+				.build()
 				.render(writer);
 		writer.println();
 	}
@@ -39,6 +42,7 @@ public class ShinyTextPathTest {
 						.withRootColor(ShinyColors.RED)
 						.withNodeColor(ShinyColors.YELLOW)
 						.withLeafColor(ShinyColors.GREEN))
+				.build()
 				.render(writer);
 		Shiny.textPath()
 				.withPath("/var/log/syslog")
@@ -46,6 +50,7 @@ public class ShinyTextPathTest {
 						.withRootColor(ShinyColors.MAGENTA)
 						.withNodeColor(ShinyColors.CYAN)
 						.withLeafColor(ShinyColors.WHITE))
+				.build()
 				.render(writer);
 		writer.println();
 	}
@@ -59,6 +64,7 @@ public class ShinyTextPathTest {
 						.withRootColor(ShinyColors.WHITE)
 						.withNodeColor(ShinyColors.BLUE)
 						.withLeafColor(ShinyColors.RED))
+				.build()
 				.render(writer);
 		Shiny.textPath()
 				.withPath("item1->item2->item3")
@@ -67,6 +73,7 @@ public class ShinyTextPathTest {
 						.withRootColor(ShinyColors.WHITE)
 						.withNodeColor(ShinyColors.GREEN)
 						.withLeafColor(ShinyColors.YELLOW))
+				.build()
 				.render(writer);
 		writer.println();
 	}
@@ -77,12 +84,14 @@ public class ShinyTextPathTest {
 				.withPath("/path/to/my/file.txt")
 				.withStyle(new ShinyTextPathStyle()
 						.withSeparatorColor(ShinyColors.RED))
+				.build()
 				.render(writer);
 		Shiny.textPath()
 				.withPath("C:\\Users\\Admin\\Desktop")
 				.withSeparator("\\")
 				.withStyle(new ShinyTextPathStyle()
 						.withSeparatorColor(ShinyColors.BLUE))
+				.build()
 				.render(writer);
 		writer.println();
 	}
@@ -91,15 +100,19 @@ public class ShinyTextPathTest {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Edge Cases ---"));
 		Shiny.textPath()
 				.withPath("/singlefile.txt")
+				.build()
 				.render(writer); // Root and leaf
 		Shiny.textPath()
 				.withPath("justfile.txt")
+				.build()
 				.render(writer); // Just leaf
 		Shiny.textPath()
 				.withPath("/")
+				.build()
 				.render(writer); // Just root
 		Shiny.textPath()
 				.withPath("///a/b///c.txt")
+				.build()
 				.render(writer); // Multiple separators
 		writer.println();
 	}

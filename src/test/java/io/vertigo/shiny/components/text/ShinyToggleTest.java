@@ -24,16 +24,19 @@ public class ShinyToggleTest {
 		Shiny.toggle()
 				.withLabel("WiFi Connection")
 				.withValue(true)
+				.build()
 				.render(writer);
 
 		Shiny.toggle()
 				.withLabel("Bluetooth")
 				.withValue(false)
+				.build()
 				.render(writer);
 
 		Shiny.toggle()
 				.withLabel("Auto-save")
 				.withValue(true)
+				.build()
 				.render(writer);
 
 		writer.println();
@@ -46,36 +49,42 @@ public class ShinyToggleTest {
 				.withLabel("Classic Style")
 				.withValue(true)
 				.withType(ShinyToggleType.CLASSIC)
+				.build()
 				.render(writer);
 
 		Shiny.toggle()
 				.withLabel("Switch Style")
 				.withValue(false)
 				.withType(ShinyToggleType.SWITCH)
+				.build()
 				.render(writer);
 
 		Shiny.toggle()
 				.withLabel("Light Bulb")
 				.withValue(true)
 				.withType(ShinyToggleType.LIGHT)
+				.build()
 				.render(writer);
 
 		Shiny.toggle()
 				.withLabel("Battery Level")
 				.withValue(false)
 				.withType(ShinyToggleType.BATTERY)
+				.build()
 				.render(writer);
 
 		Shiny.toggle()
 				.withLabel("Server Status")
 				.withValue(true)
 				.withType(ShinyToggleType.STATUS)
+				.build()
 				.render(writer);
 
 		Shiny.toggle()
 				.withLabel("User Rating")
 				.withValue(false)
 				.withType(ShinyToggleType.THUMBS)
+				.build()
 				.render(writer);
 
 		writer.println();
@@ -90,6 +99,7 @@ public class ShinyToggleTest {
 				.withStyle(new ShinyToggleStyle()
 						.withOnColor(ShinyColors.CYAN)
 						.withOffColor(ShinyColors.MAGENTA))
+				.build()
 				.render(writer);
 
 		Shiny.toggle()
@@ -98,6 +108,7 @@ public class ShinyToggleTest {
 				.withOnText("ENABLED")
 				.withOffText("DISABLED")
 				.withType(ShinyToggleType.ARROW)
+				.build()
 				.render(writer);
 
 		Shiny.toggle()
@@ -105,17 +116,20 @@ public class ShinyToggleTest {
 				.withValue(true)
 				.withShowText(false)
 				.withType(ShinyToggleType.CHECK)
+				.build()
 				.render(writer);
 
 		Shiny.toggle()
 				.withLabel("With star-on")
 				.withValue(true)
 				.withType(ShinyToggleType.STAR)
+				.build()
 				.render(writer);
 		Shiny.toggle()
 				.withLabel("With star-off")
 				.withValue(false)
 				.withType(ShinyToggleType.STAR)
+				.build()
 				.render(writer);
 
 		writer.println();

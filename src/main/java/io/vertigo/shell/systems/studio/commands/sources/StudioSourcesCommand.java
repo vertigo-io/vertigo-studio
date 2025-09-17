@@ -26,10 +26,11 @@ public final class StudioSourcesCommand implements ShellCommand {
 			rows.add(row);
 		}
 		Shiny.table()
-				.title("List of sources:")
-				.noDataFound("No source found")
-				.header("Type", "Path")
-				.rows(rows)
+				.withTitle("List of sources:")
+				.withNoDataFound("No source found")
+				.withHeader("Type", "Path")
+				.addAllRows(rows)
+				.build()
 				.render(writer);
 	}
 

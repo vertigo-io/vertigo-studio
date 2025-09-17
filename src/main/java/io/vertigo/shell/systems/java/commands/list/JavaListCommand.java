@@ -40,7 +40,7 @@ public final class JavaListCommand implements ShellCommand {
 		//To avoid java keyword
 		//Class => clazz
 		//package => jpackage
-		final ShinyTree tree = Shiny.tree("model");
+		final ShinyTree tree = Shiny.tree("model").build();
 		for (final JavaPackage jpackage : JavaContext.model().packages()) {
 			parse(jpackage, tree.getRoot());
 		}

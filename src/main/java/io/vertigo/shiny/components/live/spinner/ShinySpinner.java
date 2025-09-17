@@ -1,7 +1,6 @@
 package io.vertigo.shiny.components.live.spinner;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.live.ShinyLiveComponent;
 
@@ -12,19 +11,21 @@ public final class ShinySpinner extends ShinyLiveComponent<ShinySpinner> {
 	private volatile String message;
 	private volatile int frameIndex = 0;
 
-	private ShinySpinnerStyle spinnerStyle;
+	private final ShinySpinnerStyle spinnerStyle;
 
-	// Constructeur
-	public ShinySpinner() {
+	// Package-private constructor, only accessible by the Builder
+	ShinySpinner(ShinySpinnerBuilder builder) {
 		super();
-		this.spinnerStyle = Shiny.theme().spinnerStyle();
+		Assertion.check()
+				.isNotNull(builder);
+		//---
+		this.message = builder.message;
+		this.spinnerStyle = builder.spinnerStyle;
 	}
 
-	public ShinySpinner withStyle(final ShinySpinnerStyle style) {
-		Assertion.check().isNotNull(style);
-		//---
-		this.spinnerStyle = style;
-		return this;
+	// Static factory method to get a new Builder instance
+	public static ShinySpinnerBuilder builder() {
+		return new ShinySpinnerBuilder();
 	}
 
 	/**

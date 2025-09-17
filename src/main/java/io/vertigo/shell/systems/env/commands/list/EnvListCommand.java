@@ -43,9 +43,10 @@ public final class EnvListCommand implements ShellCommand {
 		rows.add(new String[] { "java", "rootPath", Env.get(JavaVar.ROOT_PATH) });
 
 		Shiny.table()
-				.title("Systems Properties")
-				.header("System", "properties", "Value")
-				.rows(rows)
+				.withTitle("Systems Properties")
+				.withHeader("System", "properties", "Value")
+				.addAllRows(rows)
+				.build()
 				.render(writer);
 	}
 }

@@ -1,81 +1,43 @@
 package io.vertigo.shiny.components.dataviz.rating;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyEffects;
 
 public final class ShinyRating implements ShinyComponent {
 
-	private String label;
-	private double value = 0;
-	private ShinyRatingScale scale = ShinyRatingScale.SCALE_5;
-	private int customMaxValue = -1; // -1 means use scale
-	private ShinyRatingStyle ratingStyle;
-	private boolean showValue = true;
-	private boolean showPercentage = false;
-	private boolean showBox = false;
-	private String separator = "";
-	private boolean allowHalfRating = false;
+	private final String label;
+	private final double value;
+	private final ShinyRatingScale scale;
+	private final int customMaxValue; // -1 means use scale
+	private final ShinyRatingStyle ratingStyle;
+	private final boolean showValue;
+	private final boolean showPercentage;
+	private final boolean showBox;
+	private final String separator;
+	private final boolean allowHalfRating;
 
-	public ShinyRating() {
-		this.ratingStyle = Shiny.theme().ratingStyle();
-	}
-
-	public ShinyRating withStyle(final ShinyRatingStyle style) {
-		Assertion.check().isNotNull(style);
+	// Package-private constructor, only accessible by the Builder
+	ShinyRating(ShinyRatingBuilder builder) {
+		Assertion.check()
+				.isNotNull(builder);
 		//---
-		this.ratingStyle = style;
-		return this;
+		this.label = builder.label;
+		this.value = builder.value;
+		this.scale = builder.scale;
+		this.customMaxValue = builder.customMaxValue;
+		this.ratingStyle = builder.ratingStyle;
+		this.showValue = builder.showValue;
+		this.showPercentage = builder.showPercentage;
+		this.showBox = builder.showBox;
+		this.separator = builder.separator;
+		this.allowHalfRating = builder.allowHalfRating;
 	}
 
-	public ShinyRating withLabel(final String text) {
-		this.label = text;
-		return this;
-	}
-
-	public ShinyRating withValue(final double currentValue) {
-		this.value = Math.max(0, currentValue); // Ensure non-negative
-		return this;
-	}
-
-	public ShinyRating withScale(final ShinyRatingScale ratingScale) {
-		this.scale = ratingScale;
-		this.customMaxValue = -1; // Reset custom max when using scale
-		return this;
-	}
-
-	public ShinyRating withMaxValue(final int max) {
-		this.customMaxValue = Math.max(1, max); // Ensure positive
-		return this;
-	}
-
-	public ShinyRating withShowValue(final boolean show) {
-		this.showValue = show;
-		return this;
-	}
-
-	public ShinyRating withShowPercentage(final boolean show) {
-		this.showPercentage = show;
-		return this;
-	}
-
-	public ShinyRating withShowBox(final boolean show) {
-		this.showBox = show;
-		return this;
-	}
-
-	public ShinyRating withSeparator(final String sep) {
-		Assertion.check().isNotNull(sep);
-		//---
-		this.separator = sep;
-		return this;
-	}
-
-	public ShinyRating withAllowHalfRating(final boolean allow) {
-		this.allowHalfRating = allow;
-		return this;
+	// Static factory method to get a new Builder instance
+	public static ShinyRatingBuilder builder() {
+		return new ShinyRatingBuilder();
 	}
 
 	public void render(final ShinyWriter writer) {
@@ -131,7 +93,7 @@ public final class ShinyRating implements ShinyComponent {
 			if (allowHalfRating && clampedValue >= i - 0.5 && clampedValue < i) {
 				// Half rating (for now, use filled icon with different color)
 				rating.append(ShinyEffects.DIM.apply(
-					ratingStyle.filledColor().fg(ratingStyle.type().getFilledIcon())));
+						ratingStyle.filledColor().fg(ratingStyle.type().getFilledIcon())));
 			} else if (clampedValue >= i) {
 				// Filled
 				rating.append(ratingStyle.filledColor().fg(ratingStyle.type().getFilledIcon()));

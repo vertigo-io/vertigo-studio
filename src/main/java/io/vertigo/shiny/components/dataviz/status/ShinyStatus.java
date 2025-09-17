@@ -1,42 +1,30 @@
 package io.vertigo.shiny.components.dataviz.status;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 
 public final class ShinyStatus implements ShinyComponent {
-	private String title;
-	private final List<ShinyStatusType> statusTypes = new ArrayList<>();
-	private ShinyStatusStyle statusStyle;
+	private final String title;
+	private final List<ShinyStatusType> statusTypes;
+	private final ShinyStatusStyle statusStyle;
 
-	public ShinyStatus() {
-		this.statusStyle = Shiny.theme().statusStyle();
-	}
-
-	public ShinyStatus withStyle(final ShinyStatusStyle style) {
-		Assertion.check().isNotNull(style);
+	// Package-private constructor, only accessible by the Builder
+	ShinyStatus(ShinyStatusBuilder builder) {
+		Assertion.check()
+				.isNotNull(builder);
 		//---
-		this.statusStyle = style;
-		return this;
+		this.title = builder.title;
+		this.statusTypes = builder.statusTypes;
+		this.statusStyle = builder.statusStyle;
 	}
 
-	public ShinyStatus withTitle(final String text) {
-		this.title = text;
-		return this;
-	}
-
-	public ShinyStatus addAllTypes(final List<ShinyStatusType> types) {
-		this.statusTypes.addAll(types);
-		return this;
-	}
-
-	public ShinyStatus addAllTypes(final ShinyStatusType... types) {
-		return addAllTypes(List.of(types));
+	// Static factory method to get a new Builder instance
+	public static ShinyStatusBuilder builder() {
+		return new ShinyStatusBuilder();
 	}
 
 	public void render(final ShinyWriter writer) {

@@ -26,6 +26,7 @@ public class ShinyStatusTest {
 				.addAllTypes(ShinyStatusType.SUCCESS, ShinyStatusType.SUCCESS, ShinyStatusType.NEUTRAL, ShinyStatusType.ERROR, ShinyStatusType.SUCCESS)
 				.withStyle(new ShinyStatusStyle()
 						.withShape(ShinyStatusShape.SQUARE))
+				.build()
 				.render(writer);
 		writer.println();
 	}
@@ -37,18 +38,21 @@ public class ShinyStatusTest {
 				.addAllTypes(ShinyStatusType.SUCCESS)
 				.withStyle(new ShinyStatusStyle()
 						.withShape(ShinyStatusShape.CIRCLE))
+				.build()
 				.render(writer);
 		Shiny.status()
 				.withTitle("Server (error)")
 				.addAllTypes(List.of(ShinyStatusType.ERROR))
 				.withStyle(new ShinyStatusStyle()
 						.withShape(ShinyStatusShape.CIRCLE))
+				.build()
 				.render(writer);
 		Shiny.status()
 				.withTitle("Server (success, success, error, success, success")
 				.addAllTypes(ShinyStatusType.SUCCESS, ShinyStatusType.SUCCESS, ShinyStatusType.ERROR, ShinyStatusType.SUCCESS, ShinyStatusType.SUCCESS)
 				.withStyle(new ShinyStatusStyle()
 						.withShape(ShinyStatusShape.CIRCLE))
+				.build()
 				.render(writer);
 		writer.println();
 	}
@@ -66,6 +70,7 @@ public class ShinyStatusTest {
 						ShinyStatusType.SUCCESS)
 				.withStyle(new ShinyStatusStyle()
 						.withShape(ShinyStatusShape.SQUARE))
+				.build()
 				.render(writer);
 		writer.println();
 	}
@@ -75,12 +80,14 @@ public class ShinyStatusTest {
 		Shiny.status()
 				.withTitle("Daily Report")
 				.addAllTypes(List.of(ShinyStatusType.SUCCESS, ShinyStatusType.SUCCESS, ShinyStatusType.WARNING, ShinyStatusType.ERROR, ShinyStatusType.NEUTRAL))
+				.build()
 				.render(writer);
 		Shiny.status()
 				.withTitle("System Health")
 				.addAllTypes(ShinyStatusType.SUCCESS, ShinyStatusType.SUCCESS, ShinyStatusType.SUCCESS, ShinyStatusType.WARNING, ShinyStatusType.ERROR)
 				.withStyle(new ShinyStatusStyle()
 						.withShape(ShinyStatusShape.CIRCLE))
+				.build()
 				.render(writer);
 		writer.println();
 	}

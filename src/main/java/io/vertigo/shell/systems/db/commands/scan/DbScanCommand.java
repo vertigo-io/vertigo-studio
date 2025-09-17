@@ -18,7 +18,7 @@ public class DbScanCommand implements ShellCommand {
 		final ShinyWriter writer = Shiny.writer();
 
 		final DbModel mockDbModel = DbContext.model();
-		final ShinyTree resultsTree = Shiny.tree("Sensitive Data Scan Results");
+		final ShinyTree resultsTree = Shiny.tree("Sensitive Data Scan Results").build();
 		final ShinyTreeNode root = resultsTree.getRoot();
 
 		boolean sensitiveDataFound = false;

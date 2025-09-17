@@ -1,59 +1,36 @@
 package io.vertigo.shiny.components.text.toggle;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColor;
 
 public final class ShinyToggle implements ShinyComponent {
-	private String toggleLabel;
-	private boolean toggleValue;
-	private ShinyToggleType toggleType = ShinyToggleType.TOGGLE;
-	private String onText = "ON";
-	private String offText = "OFF";
-	private boolean showText = true;
-	private ShinyToggleStyle toggleStyle;
+	private final String toggleLabel;
+	private final boolean toggleValue;
+	private final ShinyToggleType toggleType;
+	private final String onText;
+	private final String offText;
+	private final boolean showText;
+	private final ShinyToggleStyle toggleStyle;
 
-	public ShinyToggle() {
-		toggleStyle = Shiny.theme().toggleStyle();
-	}
-
-	public ShinyToggle withStyle(final ShinyToggleStyle style) {
-		Assertion.check().isNotNull(style);
+	// Package-private constructor, only accessible by the Builder
+	ShinyToggle(ShinyToggleBuilder builder) {
+		Assertion.check()
+				.isNotNull(builder);
 		//---
-		this.toggleStyle = style;
-		return this;
+		this.toggleLabel = builder.toggleLabel;
+		this.toggleValue = builder.toggleValue;
+		this.toggleType = builder.toggleType;
+		this.onText = builder.onText;
+		this.offText = builder.offText;
+		this.showText = builder.showText;
+		this.toggleStyle = builder.toggleStyle;
 	}
 
-	public ShinyToggle withLabel(final String label) {
-		this.toggleLabel = label;
-		return this;
-	}
-
-	public ShinyToggle withValue(final boolean value) {
-		this.toggleValue = value;
-		return this;
-	}
-
-	public ShinyToggle withType(final ShinyToggleType type) {
-		this.toggleType = type;
-		return this;
-	}
-
-	public ShinyToggle withOnText(final String text) {
-		this.onText = text;
-		return this;
-	}
-
-	public ShinyToggle withOffText(final String text) {
-		this.offText = text;
-		return this;
-	}
-
-	public ShinyToggle withShowText(final boolean show) {
-		this.showText = show;
-		return this;
+	// Static factory method to get a new Builder instance
+	public static ShinyToggleBuilder builder() {
+		return new ShinyToggleBuilder();
 	}
 
 	public void render(final ShinyWriter writer) {
@@ -76,5 +53,4 @@ public final class ShinyToggle implements ShinyComponent {
 						: "")))
 				.println();
 	}
-
 }

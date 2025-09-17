@@ -1,34 +1,27 @@
 package io.vertigo.shiny.components.live.progressbar;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.live.ShinyLiveComponent;
 
 public final class ShinyProgressBar extends ShinyLiveComponent<ShinyProgressBar> {
-	private int total = 0; // Valeur totale correspondant à 100%
+	private final int total; // Valeur totale correspondant à 100%
 	private volatile int currentProgress;
-	private ShinyProgressBarStyle progressBarStyle;
+	private final ShinyProgressBarStyle progressBarStyle;
 
-	// Constructeur
-	public ShinyProgressBar() {
+	// Package-private constructor, only accessible by the Builder
+	ShinyProgressBar(ShinyProgressBarBuilder builder) {
 		super();
-		this.progressBarStyle = Shiny.theme().progressBarStyle();
+		Assertion.check()
+				.isNotNull(builder);
+		//---
+		this.total = builder.total;
+		this.progressBarStyle = builder.progressBarStyle;
 	}
 
-	public ShinyProgressBar withStyle(final ShinyProgressBarStyle style) {
-		Assertion.check().isNotNull(style);
-		//---
-		this.progressBarStyle = style;
-		return this;
-	}
-
-	//  Valeur totale correspondant à 100%
-	public ShinyProgressBar withTotal(final int value) {
-		Assertion.check().isTrue(value > 0, "total must be > 0");
-		//---
-		this.total = value;
-		return this;
+	// Static factory method to get a new Builder instance
+	public static ShinyProgressBarBuilder builder() {
+		return new ShinyProgressBarBuilder();
 	}
 
 	// Méthode pour mettre à jour la progression

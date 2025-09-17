@@ -19,9 +19,17 @@ public class ShinyJsonTest {
 
 	private static void testBasicJson(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Basic JSON ---"));
-		final String json = "{\"name\": \"John Doe\", \"age\": 30, \"isStudent\": false, \"address\": null}";
+		final String json = """
+				{
+				"name": "John Doe",
+				"age": 30,
+				"isStudent": false,
+				"address": null
+				}
+				""";
 		Shiny.json()
 				.withJson(json)
+				.build()
 				.render(writer);
 		writer.println();
 	}
@@ -43,7 +51,7 @@ public class ShinyJsonTest {
 							  },"customer": null
 
 				}""";
-		Shiny.json().withJson(json).render(writer);
+		Shiny.json().withJson(json).build().render(writer);
 		writer.println();
 	}
 
@@ -63,6 +71,7 @@ public class ShinyJsonTest {
 						.withColonColor(ShinyColors.GREEN)
 						.withBracketColor(ShinyColors.RED)
 						.withBracesColor(ShinyColors.RED))
+				.build()
 				.render(writer);
 		writer.println();
 	}
@@ -91,6 +100,7 @@ public class ShinyJsonTest {
 						.withCommaColor(ShinyColors.WHITE)
 						.withBooleanColor(ShinyColors.GREEN)
 						.withNullColor(ShinyColors.RED))
+				.build()
 				.render(writer);
 		writer.println();
 	}
@@ -104,7 +114,7 @@ public class ShinyJsonTest {
 				"isStudent": false,
 				"address": null
 				"""; // Missing closing brace
-		Shiny.json().withJson(json).render(writer);
+		Shiny.json().withJson(json).build().render(writer);
 		writer.println();
 	}
 }

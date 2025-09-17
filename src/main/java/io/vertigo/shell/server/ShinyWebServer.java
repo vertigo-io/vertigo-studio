@@ -64,10 +64,11 @@ public class ShinyWebServer extends WebSocketServer {
 					rows.add(new String[] { "Arthur", "Penn" });
 					rows.add(new String[] { "Marilyn", "Pinson" });
 					var table = Shiny.table()
-							.title("carnet d'adresses")
-							.noDataFound("no files found")
-							.header("Prénom", "Nom")
-							.rows(rows);
+							.withTitle("carnet d'adresses")
+							.withNoDataFound("no files found")
+							.withHeader("Prénom", "Nom")
+							.addAllRows(rows)
+							.build();
 					mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
 					final String data = mapper.writeValueAsString(table);
 					sendMessage(conn, "table", data);

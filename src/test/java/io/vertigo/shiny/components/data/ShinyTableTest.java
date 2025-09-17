@@ -5,7 +5,7 @@ import java.util.List;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.data.table.ShinyBorder;
-import io.vertigo.shiny.components.data.table.ShinyTable;
+import io.vertigo.shiny.components.data.table.ShinyTableBuilder;
 import io.vertigo.shiny.components.data.table.ShinyTableStyle;
 import io.vertigo.shiny.style.ShinyColors;
 
@@ -30,6 +30,7 @@ public class ShinyTableTest {
 				.withTitle("User Information")
 				.withHeader("Name", "Age", "City")
 				.addAllRows(data)
+				.build()
 				.render(writer);
 		writer.println();
 	}
@@ -69,6 +70,7 @@ public class ShinyTableTest {
 				.withTitle("European Union Countries - Population")
 				.withHeader("Country", "Population")
 				.addAllRows(euCountries)
+				.build()
 				.render(writer);
 		writer.println();
 	}
@@ -80,6 +82,7 @@ public class ShinyTableTest {
 				.withHeader("Col1", "Col2")
 				.addAllRows(List.of()) // Empty data
 				.withNoDataFound("No data available for this table.")
+				.build()
 				.render(writer);
 		writer.println();
 	}
@@ -100,10 +103,11 @@ public class ShinyTableTest {
 						.withHeaderBackgroundColor(ShinyColors.GREEN_BRIGHT)
 						.withAltRowBackgroundColor(ShinyColors.CYAN_BRIGHT)
 						.withBorderColor(ShinyColors.RED))
+				.build()
 				.render(writer);
 		writer.println();
 
-		final ShinyTable table = Shiny.table()
+		final ShinyTableBuilder tableBuilder = Shiny.table()
 				.withTitle("Sales Report")
 				.withHeader("Region", "Sales", "Growth")
 				.addAllRows(List.of(
@@ -115,24 +119,39 @@ public class ShinyTableTest {
 						.withAltRowBackgroundColor(ShinyColors.CYAN)
 						.withBorderColor(ShinyColors.YELLOW));
 
-		table
+		tableBuilder
 				.withTitle("Sales Report - Simple")
+				.withHeader("Region", "Sales", "Growth") // Need to re-add header and rows
+				.addAllRows(List.of(
+						new String[] { "North", "12345", "10.5%" },
+						new String[] { "South", "9876", "5.2%" }))
 				.withStyle(new ShinyTableStyle()
 						.withBorder(ShinyBorder.Simple))
+				.build()
 				.render(writer);
 		writer.println();
 
-		table
+		tableBuilder
 				.withTitle("Sales Report - SimpleHeavy")
+				.withHeader("Region", "Sales", "Growth") // Need to re-add header and rows
+				.addAllRows(List.of(
+						new String[] { "North", "12345", "10.5%" },
+						new String[] { "South", "9876", "5.2%" }))
 				.withStyle(new ShinyTableStyle()
 						.withBorder(ShinyBorder.SimpleHeavy))
+				.build()
 				.render(writer);
 		writer.println();
 
-		table
+		tableBuilder
 				.withTitle("Sales Report - Horizontal")
+				.withHeader("Region", "Sales", "Growth") // Need to re-add header and rows
+				.addAllRows(List.of(
+						new String[] { "North", "12345", "10.5%" },
+						new String[] { "South", "9876", "5.2%" }))
 				.withStyle(new ShinyTableStyle()
 						.withBorder(ShinyBorder.Horizontal))
+				.build()
 				.render(writer);
 		writer.println();
 	}

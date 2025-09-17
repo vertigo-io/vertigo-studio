@@ -33,7 +33,7 @@ public class ShinyTreeTest {
 
 	private static void testVideoGamesTree(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Video Games Tree ---"));
-		final var tree = Shiny.tree("Video Games");
+		final var tree = Shiny.tree("Video Games").build();
 		tree.getRoot()
 				.addChild("RPG", FOLDER_OPEN)
 				.addChild("Final Fantasy", FILE).up()
@@ -53,7 +53,7 @@ public class ShinyTreeTest {
 
 	private static void testIconShowcase(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Icon Showcase ---"));
-		final var tree = Shiny.tree("Icons");
+		final var tree = Shiny.tree("Icons").build();
 		tree.getRoot()
 				.addChild("Status Icons", FOLDER_OPEN)
 				.addChild("Success", SUCCESS).up()
@@ -79,7 +79,7 @@ public class ShinyTreeTest {
 
 	private static void testComplexTreeStructure(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Complex Tree Structure ---"));
-		final var tree = Shiny.tree("Project Structure");
+		final var tree = Shiny.tree("Project Structure").build();
 		final var srcNode = tree.getRoot().addChild("src", FOLDER_CLOSED);
 		final var main = srcNode.addChild("main", FOLDER_CLOSED);
 		final var java = main.addChild("java", FOLDER_CLOSED);

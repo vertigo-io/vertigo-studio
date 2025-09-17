@@ -17,8 +17,9 @@ public final class FilePwdCommand implements ShellCommand {
 		System.out.println("Path");
 		System.out.println("____");
 		Shiny.textPath()
-				.separator("/")
-				.path(fileContext.getRootPath().toString())
+				.withSeparator("/")
+				.withPath(fileContext.getRootPath().toString())
+				.build()
 				.render(writer);
 	}
 }

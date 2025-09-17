@@ -5,14 +5,19 @@ import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 
 public final class ShinyParagraph implements ShinyComponent {
-	private String paragraphText;
+	private final String paragraphText;
 
-	public ShinyParagraph() {
+	// Package-private constructor, only accessible by the Builder
+	ShinyParagraph(ShinyParagraphBuilder builder) {
+		Assertion.check()
+			.isNotNull(builder);
+		//---
+		this.paragraphText = builder.paragraphText;
 	}
 
-	public ShinyParagraph withText(final String text) {
-		this.paragraphText = text;
-		return this;
+	// Static factory method to get a new Builder instance
+	public static ShinyParagraphBuilder builder() {
+		return new ShinyParagraphBuilder();
 	}
 
 	@Override

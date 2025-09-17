@@ -25,7 +25,7 @@ public final class DbClusterCommand implements ShellCommand {
 
 		final List<JdbcCluster> clusters = DbCluster.analyze(DbContext.model(), DbClusterStrategy.STRONGLY_CONNECTED_COMPONENTS);
 
-		final ShinyTree tree = Shiny.tree("Clusters");
+		final ShinyTree tree = Shiny.tree("Clusters").build();
 		for (final JdbcCluster cluster : clusters) {
 			final var node = tree.getRoot().addChild(cluster.name());
 			for (final String tableName : cluster.tableNames()) {

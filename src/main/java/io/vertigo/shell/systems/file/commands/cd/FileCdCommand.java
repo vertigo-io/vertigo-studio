@@ -34,8 +34,9 @@ public final class FileCdCommand implements ShellCommand {
 		try {
 			fileContext.changeDirectory(newPath);
 			Shiny.textPath()
-					.path(fileContext.getCurrentAbsolutePath().toString())
-					.separator("/")
+					.withPath(fileContext.getCurrentAbsolutePath().toString())
+					.withSeparator("/")
+					.build()
 					.render(writer);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
