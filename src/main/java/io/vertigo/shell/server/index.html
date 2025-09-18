@@ -515,6 +515,52 @@
 		        min-height: 200px; /* Hauteur réduite pour mobile */
 		        max-height: 300px;
 		    }
+			.progress-container {
+			    margin: 1rem 0;
+			    padding: 0.5rem;
+			    background: var(--general-bg);
+			    border-radius: 8px;
+			    border: 1px solid var(--assistant-accent);
+			    box-shadow: 0 4px 16px var(--general-shadow);
+			    position: relative;
+			    height: 30px; /* Hauteur fixe pour la barre */
+			}
+
+			.progress-bar {
+			    height: 100%;
+			    background: var(--x-neon-blue); /* Bleu néon de X */
+			    border-radius: 6px;
+			    transition: width 0.3s ease; /* Animation fluide pour les mises à jour */
+			    box-shadow: 0 0 8px rgba(29, 161, 242, 0.5); /* Ombre néon */
+			}
+
+			.progress-bar.completed {
+			    background: var(--json-boolean); /* Vert pour complétion (#50FA7B) */
+			    box-shadow: 0 0 12px rgba(80, 250, 123, 0.7); /* Ombre plus forte */
+			}
+
+			.progress-text {
+			    position: absolute;
+			    top: 50%;
+			    right: 1rem;
+			    transform: translateY(-50%);
+			    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+			    font-size: 12px;
+			    font-weight: 500;
+			    color: var(--general-text);
+			}
+
+			/* Responsive pour mobile */
+			@media (max-width: 768px) {
+			    .progress-container {
+			        height: 24px; /* Hauteur réduite pour mobile */
+			    }
+
+			    .progress-text {
+			        font-size: 10px;
+			        right: 0.5rem;
+			    }
+			}
 		}
 	</style>
 </head>
@@ -556,17 +602,22 @@
 			statusText.textContent = 'Error';
 		};
 
+		const liveMap = new Map();
 		socket.onmessage = (event) => {
 			try {
 				const parsed = JSON.parse(event.data);
 				if (parsed.type === "table") {
 					addTable(parsed.data);
 				} else if (parsed.type === "json") {
-					addJson(parsed.data);
+					addJson(parsed.data);					
+				} else if (parsed.type === "progressBar") {
+					addProgressBar(parsed.data);
+				} else if (parsed.type === "live") {
+					updateLive(parsed.data);
 				} else if (parsed.type === "list") {
 					addList(parsed.data);					
 				} else if (parsed.type === "barChart") {
-						addBarChart(parsed.data);
+					addBarChart(parsed.data);					
 				} else {
 					addMessage(JSON.stringify(parsed), "response");
 				}
@@ -616,7 +667,8 @@
 				'tree': 'git-branch',
 				'grid': 'grid-3x3',
 				'database': 'database',
-				'barChart': 'chart-bar'
+				'barChart': 'chart-bar', 
+				'progressBar': 'rabbit' 
 			};
 			return iconMap[type] || 'traffic-cone'; // si non trouvé on met un traffic-cone
 		}
@@ -664,6 +716,68 @@
 			addCollapsible("json", jsonData.title, content);
 		}
 
+		function updateLive(liveData){
+			//const liveComponent = liveMap.get(liveData.id);
+			const liveComponent = liveMap.values().next().value;
+			console.log(liveComponent);
+			if (liveData.action==="update") {
+				liveComponent.update (liveData.value);
+			}else if(liveData.action==="complete"){
+				livecomponent.complete();
+				liveMap.clear();
+			}
+		}
+		
+		function addProgressBar(progressData) {
+		    // Générer un ID unique pour la barre de progression
+		    const progressId = `progressbar-${Math.random().toString(36).substr(2, 9)}`;
+		    
+		    // Calculer le pourcentage initial
+		    const percentage = Math.min((progressData.value / progressData.total) * 100, 100);
+		    
+		    // Créer le conteneur HTML pour la barre de progression
+		    const content = `
+		        <div class="progress-container" id="${progressId}">
+		            <div class="progress-bar" style="width: ${percentage}%"></div>
+		            <div class="progress-text">${Math.round(percentage)}%</div>
+		        </div>
+		    `;
+		    
+		    // Ajouter dans un conteneur collapsible
+		    addCollapsible("progressBar", progressData.title || "Progression", content);
+		    
+			// Créer l'objet de gestion de la barre
+		    const progressBar = {
+		        id: progressId,
+		        update(value) {
+		            // Mettre à jour la valeur
+		            const container = document.getElementById(progressId);
+		            if (!container) {
+		                console.error("Progress container not found for ID:", progressId);
+		                return;
+		            }
+		            const newPercentage = Math.min((value / progressData.total) * 100, 100);
+		            const bar = container.querySelector('.progress-bar');
+		            const text = container.querySelector('.progress-text');
+		            bar.style.width = `${newPercentage}%`;
+		            text.textContent = `${Math.round(newPercentage)}%`;
+		            
+		            // Ajouter une classe pour indiquer la complétion si 100%
+		            if (newPercentage >= 100) {
+		                bar.classList.add('completed');
+		            } else {
+		                bar.classList.remove('completed');
+		            }
+		        },
+		        complete() {
+		            // Marquer comme complet (100%)
+		            this.update(progressData.total);
+		        }
+		    };
+			// Ajouter la barre à la Map
+			liveMap.set(progressId, progressBar);
+		}
+		
 		function addList(listData) {
 			// Fonction récursive pour construire le HTML de la liste
 			function buildList(items, type, level = 0) {

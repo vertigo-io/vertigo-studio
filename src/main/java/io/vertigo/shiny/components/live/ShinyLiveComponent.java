@@ -1,9 +1,13 @@
 package io.vertigo.shiny.components.live;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.vertigo.shiny.ShinyWriter;
 
 public abstract class ShinyLiveComponent<S extends ShinyLiveComponent<S>> implements AutoCloseable {
+	@JsonIgnore
 	private final ShinyLiveDrawer drawer;
+	@JsonIgnore
 	private ShinyWriter shinyWriter;
 
 	// Constructeur

@@ -47,6 +47,9 @@ public class ShinyWebServer extends WebSocketServer {
 
 	private final ObjectMapper mapper = new ObjectMapper();
 
+	public static record LiveComponent(String action, int value) {
+	}
+
 	@Override
 	public void onMessage(WebSocket webSocket, String message) {
 		System.out.println("Message reçu : " + message);
@@ -77,6 +80,22 @@ public class ShinyWebServer extends WebSocketServer {
 							.withValues(156, 34, 55)
 							.build();
 					sendMessage(webSocket, "barChart", mapper.writeValueAsString(barchart));
+					break;
+				case "xpb":
+					try (var progressBar = Shiny.progressBar().withTotal(100).build()) {
+						sendMessage(webSocket, "progressBar", mapper.writeValueAsString(progressBar));
+						for (int i = 0; i <= 100; i += 10) {
+							sendMessage(webSocket, "live", mapper.writeValueAsString(new LiveComponent("update", i + 1)));
+							//							progressBar.liveUpdate(i + 1);
+							try {
+								Thread.sleep(50);
+							} catch (final InterruptedException e) {
+								Thread.currentThread().interrupt();
+							}
+						}
+					}
+					sendMessage(webSocket, "live",
+							mapper.writeValueAsString(new LiveComponent("complete", -1)));
 					break;
 				case "xlist":
 					var list = Shiny.list()
