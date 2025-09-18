@@ -70,6 +70,14 @@ public class ShinyWebServer extends WebSocketServer {
 							.build();
 					sendMessage(webSocket, "table", mapper.writeValueAsString(table));
 					break;
+				case "xbar":
+					var barchart = Shiny.barChart()
+							.withTitle("Ventes par produit")
+							.withHeader("telephones", "ordinateurs", "livres")
+							.withValues(156, 34, 55)
+							.build();
+					sendMessage(webSocket, "barChart", mapper.writeValueAsString(barchart));
+					break;
 				case "xlist":
 					var list = Shiny.list()
 							.withTitle("planetes")

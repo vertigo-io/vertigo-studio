@@ -2,6 +2,8 @@ package io.vertigo.shiny.components.dataviz.barchart;
 
 import java.util.Arrays;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 
@@ -9,7 +11,7 @@ public record ShinyBarChart(
 		String title,
 		String[] header,
 		int[] values,
-		ShinyBarChartStyle style) implements ShinyComponent {
+		@JsonIgnore ShinyBarChartStyle style) implements ShinyComponent {
 
 	public ShinyBarChart {
 	}
