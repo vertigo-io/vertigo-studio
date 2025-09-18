@@ -621,7 +621,8 @@
 				} else {
 					addMessage(JSON.stringify(parsed), "response");
 				}
-			} catch {
+			} catch (error) {
+			    alert(`Erreur : ${error.message}`);
 				addMessage(event.data, "response");
 			}
 		};
@@ -718,11 +719,10 @@
 
 		function updateLive(liveData){
 			const liveComponent = liveMap.get(liveData.id);
-			console.log(liveComponent);
 			if (liveData.action==="update") {
 				liveComponent.update (liveData.value);
 			}else if(liveData.action==="complete"){
-				livecomponent.complete();
+				liveComponent.complete();
 				liveMap.delete(liveData.id);
 			}
 		}
