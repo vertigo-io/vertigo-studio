@@ -717,21 +717,21 @@
 		}
 
 		function updateLive(liveData){
-			//const liveComponent = liveMap.get(liveData.id);
-			const liveComponent = liveMap.values().next().value;
+			const liveComponent = liveMap.get(liveData.id);
 			console.log(liveComponent);
 			if (liveData.action==="update") {
 				liveComponent.update (liveData.value);
 			}else if(liveData.action==="complete"){
 				livecomponent.complete();
-				liveMap.clear();
+				liveMap.delete(liveData.id);
 			}
 		}
 		
 		function addProgressBar(progressData) {
 		    // Générer un ID unique pour la barre de progression
-		    const progressId = `progressbar-${Math.random().toString(36).substr(2, 9)}`;
-		    
+		    //const progressId = `progressbar-${Math.random().toString(36).substr(2, 9)}`;
+		    const progressId = progressData.id;
+			
 		    // Calculer le pourcentage initial
 		    const percentage = Math.min((progressData.value / progressData.total) * 100, 100);
 		    

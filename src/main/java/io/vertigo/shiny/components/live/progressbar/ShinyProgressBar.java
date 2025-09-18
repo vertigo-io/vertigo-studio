@@ -1,5 +1,7 @@
 package io.vertigo.shiny.components.live.progressbar;
 
+import java.util.UUID;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -12,6 +14,8 @@ public final class ShinyProgressBar extends ShinyLiveComponent<ShinyProgressBar>
 	private final int total; // Valeur totale correspondant à 100%
 	@JsonProperty
 	private volatile int value;
+	@JsonProperty
+	public final String id = UUID.randomUUID().toString();
 	@JsonIgnore
 	private final ShinyProgressBarStyle progressBarStyle;
 
