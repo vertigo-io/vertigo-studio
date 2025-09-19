@@ -353,82 +353,56 @@ class GaugeComponent extends Component {
 }
 
 class SankeyComponent extends Component {
-	constructor({ title, nodes, links }) {
-		super();
-		this.title = title || 'Sankey Flow';
-		this.nodes = nodes || [];
-		this.links = links || [];
-		this.canvasId = `sankey-${Math.random().toString(36).substr(2, 9)}`;
-	}
+  constructor({ title, data }) {
+    super();
+    this.title = title || 'Sankey Flow';
+    this.data = data || []; // format attendu: [{ from, to, flow }]
+    this.canvasId = `sankey-${Math.random().toString(36).substr(2, 9)}`;
+    this.chart = null;
+  }
 
-	toHtml() {
-		return `<canvas id="${this.canvasId}" class="sankey-canvas"></canvas>`;
-	}
+  toHtml() {
+    return `<canvas id="${this.canvasId}" class="sankey-canvas"></canvas>`;
+  }
 
-	activate() {
-		const target = document.getElementById(this.canvasId);
-		if (!target) {
-			throw new Error(`SankeyFlow canvas not found for ID: ${this.canvasId}`);
-		}
+  activate() {
+    const target = document.getElementById(this.canvasId);
+    if (!target) throw new Error(`Sankey canvas not found: ${this.canvasId}`);
 
-		const data = {
-			datasets: [{
-				type: 'sankey',
-				data: {
-					nodes: this.nodes,
-					links: this.links
-				},
-				colorFrom: (c) => 'rgba(75, 192, 192, 0.8)',
-				colorTo: (c) => 'rgba(153, 102, 255, 0.8)',
-				colorMode: 'gradient',
-				// Node styling
-				node: {
-					color: 'rgba(100, 100, 100, 0.8)',
-					borderWidth: 0
-				},
-				// Link styling
-				link: {
-					color: 'rgba(100, 100, 100, 0.2)',
-					borderWidth: 0
-				}
-			}]
-		};
+    // Détruire l'ancien graphe si besoin
+    if (this.chart) this.chart.destroy();
 
-		const options = {
-			responsive: true,
-			maintainAspectRatio: false,
-			plugins: {
-				title: {
-					display: true,
-					text: this.title
-				},
-				legend: {
-					display: false
-				},
-				tooltip: {
-					callbacks: {
-						label: (context) => {
-							if (context.dataset.type === 'sankey') {
-								const item = context.raw;
-								if (item.source && item.target) {
-									return `${item.source.name} -> ${item.target.name}: ${item.value}`;
-								} else if (item.name) {
-									return item.name;
-								}
-							}
-							return '';
-						}
-					}
-				}
-			}
-		};
-
-		new Chart(target, {
-			type: 'sankey',
-			data: data,
-			options: options
-		});
-	}
+    this.chart = new Chart(target, {
+      type: 'sankey',
+      data: {
+        datasets: [{
+          data: this.data,
+          colorFrom: (c) => 'rgba(75, 192, 192, 0.8)',
+          colorTo: (c) => 'rgba(153, 102, 255, 0.8)',
+          colorMode: 'gradient'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          title: {
+            display: true,
+            text: this.title
+          },
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (context) => {
+                const { raw } = context;
+                return `${raw.from} -> ${raw.to}: ${raw.flow}`;
+              }
+            }
+          }
+        }
+      }
+    });
+  }
 }
 
 class GeoMapComponent extends Component {

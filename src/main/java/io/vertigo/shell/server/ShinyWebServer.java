@@ -110,26 +110,28 @@ public class ShinyWebServer extends WebSocketServer {
 					sendMessage(webSocket, "geoMap", geoMap);
 					break;
 				case "xsankey":
-					var sankeyJson = """
+					final var jsonSankey = """
 														{
-														  "type": "sankeyFlow",
-														  "data": {
-														    "title": "Financial Flow",
-														    "nodes": [
-														      { "id": "source1", "name": "Revenue" },
-														      { "id": "source2", "name": "Investment" },
-														      { "id": "target1", "name": "Marketing" },
-														      { "id": "target2", "name": "Operations" }
-														    ],
-														    "links": [
-														      { "source": "source1", "target": "target1", "value": 50000 },
-														      { "source": "source1", "target": "target2", "value": 30000 },
-														      { "source": "source2", "target": "target2", "value": 20000 }
-														    ]
-														  }
+														"title": "Flux d'énergie",
+														"data": [
+							  { "from": "Nucléaire", "to": "Réseau électrique", "flow": 120 },
+							  { "from": "Hydraulique", "to": "Réseau électrique", "flow": 80 },
+							  { "from": "Éolien", "to": "Réseau électrique", "flow": 60 },
+							  { "from": "Solaire", "to": "Réseau électrique", "flow": 40 },
+							  { "from": "Charbon", "to": "Réseau électrique", "flow": 100 },
+
+							  { "from": "Réseau électrique", "to": "Industrie", "flow": 150 },
+							  { "from": "Réseau électrique", "to": "Transport", "flow": 70 },
+							  { "from": "Réseau électrique", "to": "Résidentiel", "flow": 100 },
+							  { "from": "Réseau électrique", "to": "Pertes réseau", "flow": 20 },
+
+							  { "from": "Résidentiel", "to": "Chauffage", "flow": 40 },
+							  { "from": "Résidentiel", "to": "Électroménager", "flow": 30 },
+							  { "from": "Résidentiel", "to": "Informatique", "flow": 30 }
+							]
 														}
-							""";
-					sendMessage(webSocket, "sankey", mapper.writeValueAsString(sankeyJson));
+														""";
+					sendMessage(webSocket, "sankey", jsonSankey);
 					break;
 				case "xtree":
 					var tree = Shiny.tree("Files").build();
