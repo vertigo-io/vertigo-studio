@@ -109,6 +109,28 @@ public class ShinyWebServer extends WebSocketServer {
 							""";
 					sendMessage(webSocket, "geoMap", geoMap);
 					break;
+				case "xsankey":
+					var sankeyJson = """
+														{
+														  "type": "sankeyFlow",
+														  "data": {
+														    "title": "Financial Flow",
+														    "nodes": [
+														      { "id": "source1", "name": "Revenue" },
+														      { "id": "source2", "name": "Investment" },
+														      { "id": "target1", "name": "Marketing" },
+														      { "id": "target2", "name": "Operations" }
+														    ],
+														    "links": [
+														      { "source": "source1", "target": "target1", "value": 50000 },
+														      { "source": "source1", "target": "target2", "value": 30000 },
+														      { "source": "source2", "target": "target2", "value": 20000 }
+														    ]
+														  }
+														}
+							""";
+					sendMessage(webSocket, "sankey", mapper.writeValueAsString(sankeyJson));
+					break;
 				case "xtree":
 					var tree = Shiny.tree("Files").build();
 					tree.getRoot().addChild("src", FOLDER_OPEN)

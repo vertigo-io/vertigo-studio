@@ -611,3 +611,9 @@
     padding-left: 10px;
 }
 
+.sankey-canvas {
+    width: 100%;
+    height: 400px; /* Default height for Sankey */
+    display: block;
+}
+

@@ -27,6 +27,7 @@ wsManager.onMessageHandler = (event) => {
 		    json: JsonComponent,
 			list: ListComponent,
 		    progressBar: ProgressBarComponent,
+			sankey:SankeyComponent,
 		    sparkLine: SparkLineComponent,
 			table: TableComponent,
 			tree:TreeComponent,
@@ -103,6 +104,7 @@ function getDataTypeIcon(type) {
 		'json': 'code-2',
 		'list': 'list',
 		'progressBar': 'rabbit',
+		'sankey':'waves',
 		'sparkLine': 'trending-up',
 		'table': 'table-2',
 		'tree': 'folder-tree'
