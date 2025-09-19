@@ -27,9 +27,15 @@ class Table {
 }
 
 class ListComponent {
+    static TYPES = {
+        ORDERED: 'ORDERED',
+        UNORDERED: 'UNORDERED',
+        DASHED: 'DASHED'
+    };
+
     constructor({ title, type, items }) {
         this.title = title || '';
-        this.type = type || 'UNORDERED';
+        this.type = type || ListComponent.TYPES.UNORDERED;
         this.items = (items || []).map(item => {
             if (typeof item === 'object' && item !== null) {
                 return new ListComponent(item);
@@ -42,13 +48,13 @@ class ListComponent {
         let tag;
         let className = '';
         switch (this.type) {
-            case 'ORDERED':
+            case ListComponent.TYPES.ORDERED:
                 tag = 'ol';
                 break;
-            case 'UNORDERED':
+            case ListComponent.TYPES.UNORDERED:
                 tag = 'ul';
                 break;
-            case 'DASHED':
+            case ListComponent.TYPES.DASHED:
                 tag = 'ul';
                 className = 'dashed-list';
                 break;
