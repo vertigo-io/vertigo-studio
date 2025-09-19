@@ -211,6 +211,9 @@ class ProgressBarComponent extends LiveComponent {
         this.title = title || 'Progression';
         this.value = value || 0;
         this.total = total || 100;
+		if (!this.id) {
+		    throw new Error("ProgressBar data must have an id.");
+		}
     }
 
     toHtml() {
@@ -243,29 +246,93 @@ class ProgressBarComponent extends LiveComponent {
     }
 }
 
+const CONFIG = {
+    WEBSOCKET_URL: 'ws://localhost:8080',
+    RECONNECT_INTERVAL: 3000,
+    MAX_RECONNECT_ATTEMPTS: 5,
+};
 
-const socket = new WebSocket("ws://localhost:8080");
+class WebSocketManager {
+    constructor(url, statusElement, statusTextElement) {
+        this.url = url;
+        this.statusElement = statusElement;
+        this.statusTextElement = statusTextElement;
+        this.socket = null;
+        this.reconnectAttempts = 0;
+        this.onMessageHandler = () => {};
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                this.tryReconnect();
+            }
+        });
+    }
+
+    connect() {
+        console.log("Attempting to connect to WebSocket...");
+        this.socket = new WebSocket(this.url);
+        this.socket.onopen = () => this.onOpen();
+        this.socket.onclose = () => this.onClose();
+        this.socket.onerror = (error) => this.onError(error);
+        this.socket.onmessage = (event) => this.onMessageHandler(event);
+    }
+
+    onOpen() {
+        this.statusElement.className = 'status-connected';
+        this.statusTextElement.textContent = 'Connected';
+        this.reconnectAttempts = 0;
+    }
+
+    onClose() {
+        console.log("WebSocket connection closed.");
+        this.statusElement.className = 'status-disconnected';
+        this.statusTextElement.textContent = 'Disconnected';
+        if (this.reconnectAttempts < CONFIG.MAX_RECONNECT_ATTEMPTS) {
+            this.reconnectAttempts++;
+            this.statusTextElement.textContent = `Disconnected. Retrying... (${this.reconnectAttempts}/${CONFIG.MAX_RECONNECT_ATTEMPTS})`;
+            setTimeout(() => this.connect(), CONFIG.RECONNECT_INTERVAL);
+        } else {
+            this.statusTextElement.textContent = 'Disconnected. Max retries reached.';
+        }
+    }
+
+    onError(error) {
+        console.error("WebSocket error:", error);
+        this.statusElement.className = 'status-error';
+        this.statusTextElement.textContent = 'Error';
+    }
+    
+    tryReconnect() {
+        if (!this.socket || this.socket.readyState === WebSocket.CLOSED) {
+            console.log('Window became visible, attempting to reconnect...');
+            this.reconnectAttempts = 0;
+            this.connect();
+        }
+    }
+
+    sendMessage(message) {
+        if (this.socket && this.socket.readyState === WebSocket.OPEN) {
+            this.socket.send(message);
+        } else {
+            throw new Error("Cannot send message, WebSocket is not open.");
+        }
+    }
+}
+
+// ========================================================================
+// Application Logic
+// ========================================================================
+
 const chat = document.getElementById("chat");
+const liveMap = new Map();
+
+// Initialize WebSocket Manager
 const statusDiv = document.getElementById("status");
 const statusText = document.getElementById("status-text");
+const wsManager = new WebSocketManager(CONFIG.WEBSOCKET_URL, statusDiv, statusText);
 
-socket.onopen = () => {
-    statusDiv.className = 'status-connected';
-    statusText.textContent = 'Connected';
-};
-
-socket.onclose = () => {
-    statusDiv.className = 'status-disconnected';
-    statusText.textContent = 'Disconnected';
-};
-
-socket.onerror = () => {
-    statusDiv.className = 'status-error';
-    statusText.textContent = 'Error';
-};
-
-const liveMap = new Map();
-socket.onmessage = (event) => {
+// Set up message handler
+wsManager.onMessageHandler = (event) => {
     try {
         const parsed = JSON.parse(event.data);
         switch (parsed.type) {
@@ -302,8 +369,12 @@ function sendMessage() {
     const message = input.value.trim();
     if (message) {
         addMessage(message, "user");
-        socket.send(message);
-        input.value = "";
+        try {
+            wsManager.sendMessage(message);
+            input.value = "";
+        } catch (error) {
+            alert(`Erreur d'envoi : ${error.message}`);
+        }
     }
 }
 
@@ -317,7 +388,6 @@ function addMessage(text, type) {
 
 function toggleCollapse(element) {
     const content = element.nextElementSibling;
-    const collapseIcon = element.querySelector('.collapse-icon');
     const container = element.parentElement;
 
     if (content.classList.contains('collapsed')) {
@@ -391,9 +461,6 @@ function updateLive(liveData) {
 }
 
 function addProgressBar(progressData) {
-    if (!progressData.id) {
-        throw new Error("ProgressBar data must have an id.");
-    }
     const progressBar = new ProgressBarComponent(progressData);
     const progressBarHtml = progressBar.toHtml();
     addCollapsible("progressBar", progressBar.title, progressBarHtml);
@@ -422,4 +489,7 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
         sendMessage();
     });
+    
+    // Connect WebSocket when DOM is loaded
+    wsManager.connect();
 });
