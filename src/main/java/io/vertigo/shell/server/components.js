@@ -180,3 +180,49 @@ class ProgressBarComponent extends LiveComponent {
         this.update(this.total);
     }
 }
+
+class GaugeComponent {
+    constructor({ title, value, min, max, label }) {
+        this.title = title || 'Gauge';
+        this.value = value || 0;
+        this.min = min || 0;
+        this.max = max || 100;
+        this.label = label || '';
+        this.canvasId = `gauge-${Math.random().toString(36).substr(2, 9)}`;
+    }
+
+    toHtml() {
+        return `<canvas id="${this.canvasId}" class="gauge-canvas"></canvas>`;
+    }
+
+    activate() {
+        const target = document.getElementById(this.canvasId);
+        if (!target) {
+            throw new Error(`Gauge canvas not found for ID: ${this.canvasId}`);
+        }
+        
+        const opts = {
+            angle: 0.15,
+            lineWidth: 0.44,
+            radiusScale: 1,
+            pointer: {
+                length: 0.6,
+                strokeWidth: 0.035,
+                color: '#FFFFFF'
+            },
+            limitMax: false,
+            limitMin: false,
+            colorStart: '#6FADCF',
+            colorStop: '#8FC0DA',
+            strokeColor: '#E0E0E0',
+            generateGradient: true,
+            highDpiSupport: true,
+        };
+
+        const gauge = new Gauge(target).setOptions(opts);
+        gauge.maxValue = this.max;
+        gauge.setMinValue(this.min);
+        gauge.animationSpeed = 32;
+        gauge.set(this.value);
+    }
+}

@@ -548,3 +548,11 @@
 			    }
 			}
 		}
+
+.gauge-canvas {
+    width: 100%;
+    max-width: 250px;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+}
