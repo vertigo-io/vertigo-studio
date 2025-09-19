@@ -39,6 +39,7 @@ wsManager.onMessageHandler = (event) => {
 			}
 		} else if (parsed.type === 'live') {
 			//Update a component that inherits LiveComponent
+			const liveData = parsed.data;
 			const liveComponent = liveMap.get(liveData.id);
 			if (liveComponent) {
 				if (liveData.action === "update") {
