@@ -2,22 +2,27 @@
 <html lang="fr">
 
 <head>
-	<meta charset="UTF-8">
-	<title>BANSHEE</title>
+<meta charset="UTF-8">
+<title>BANSHEE</title>
 
-	<!-- Google Fonts -->
-	<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+<!-- Google Fonts -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap"
+	rel="stylesheet">
 
-	<!-- Lucide Icons -->
-	<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-	
-	<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-	<link rel="stylesheet" href="style.css">
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+<script
+	src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 	<div class="header-container">
-		<h1>BAN<span class="yellow">SHEE</span></h1>
+		<h1>
+			BAN<span class="yellow">SHEE</span>
+		</h1>
 		<div id="status" class="status-disconnected">
 			<div class="status-dot"></div>
 			<span id="status-text">Connecting</span>
@@ -25,15 +30,14 @@
 	</div>
 
 	<main>
-        <div class="chat-container" id="chat"></div>
-    </main>
+		<div class="chat-container" id="chat"></div>
+	</main>
 
 	<form class="prompt-container" id="prompt-form">
 		<input type="text" id="prompt" placeholder="Écrivez un message...">
 		<button type="submit">Envoyer</button>
 	</form>
-
+	<script src="components.js"></script>
 	<script src="app.js"></script>
 </body>
-
 </html>
