@@ -1,5 +1,6 @@
+/* All components must inherit Component */
 class Component {
-	title = "UNDEFINED COMPONENT";
+	title = "";
 	toHtml() {
 		throw new Error(`Component.toHtml() must be implemented by subclasses.`);
 	}

@@ -13,48 +13,44 @@ const liveMap = new Map();
 const wsManager = new WebSocketManager(
 	CONFIG.WEBSOCKET_URL,
 	document.getElementById("status"),
-	document.getElementById("status-text"));
+	document.getElementById("status-text")
+);
 
 // Set up message handler
 wsManager.onMessageHandler = (event) => {
 	try {
 		const parsed = JSON.parse(event.data);
-		let component = null;
-		switch (parsed.type) {
-			case "table":
-				component = new TableComponent(parsed.data);
-				break;
-			case "json":
-				component = new JsonComponent(parsed.data);
-				break;
-			case "progressBar":
-				component  = new ProgressBarComponent(parsed.data);
-				liveMap.set(component.id, component);
-				break;
-			case "live":
-				updateLive(parsed.data);
-				break;
-			case "list":
-				component  = new ListComponent(parsed.data);
-				break;
-			case "barChart":
-				component  = new BarChartComponent(parsed.data);
-				break;
-			case "gauge":
-				component  =  new GaugeComponent(parsed.data);
-				break; 
-			case "sparkLine":
-				component  = new SparkLineComponent(parsed.data);
-				break;
-			default:
-				addMessage(JSON.stringify(parsed), "response");
-				break;
-		}
-		//=== The system core
-		if (component){
+		const componentMap = {
+		    table: TableComponent,
+		    json: JsonComponent,
+		    progressBar: ProgressBarComponent,
+		    list: ListComponent,
+		    barChart: BarChartComponent,
+		    gauge: GaugeComponent,
+		    sparkLine: SparkLineComponent
+		};
+		
+		if (componentMap[parsed.type]) {
+			const component = new componentMap[parsed.type](parsed.data);
 			addCollapsible(parsed.type, component.title, component.toHtml());
 			setTimeout(() => component.activate(), 0);
-		}
+			if(component instanceof LiveComponent){
+				liveMap.set(component.id, component);
+			}
+		} else if (parsed.type === 'live') {
+			//Update a component that inherits LiveComponent
+			const liveComponent = liveMap.get(liveData.id);
+			if (liveComponent) {
+				if (liveData.action === "update") {
+					liveComponent.update(liveData.value);
+				} else if (liveData.action === "complete") {
+					liveComponent.complete();
+					liveMap.delete(liveData.id);
+				}
+			}
+		} else {
+		    addMessage(JSON.stringify(parsed), 'response');
+		}	
 	} catch (error) {
 		alert(`Erreur : ${error.message}`);
 		addMessage(event.data, "response");
@@ -132,18 +128,6 @@ function addCollapsible(type, title, content) {
 	});
 
 	chat.scrollTop = chat.scrollHeight;
-}
-
-function updateLive(liveData) {
-	const liveComponent = liveMap.get(liveData.id);
-	if (liveComponent) {
-		if (liveData.action === "update") {
-			liveComponent.update(liveData.value);
-		} else if (liveData.action === "complete") {
-			liveComponent.complete();
-			liveMap.delete(liveData.id);
-		}
-	}
 }
 
 document.addEventListener('DOMContentLoaded', function() {
