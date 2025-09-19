@@ -268,20 +268,28 @@ const liveMap = new Map();
 socket.onmessage = (event) => {
     try {
         const parsed = JSON.parse(event.data);
-        if (parsed.type === "table") {
-            addTable(parsed.data);
-        } else if (parsed.type === "json") {
-            addJson(parsed.data);
-        } else if (parsed.type === "progressBar") {
-            addProgressBar(parsed.data);
-        } else if (parsed.type === "live") {
-            updateLive(parsed.data);
-        } else if (parsed.type === "list") {
-            addList(parsed.data);
-        } else if (parsed.type === "barChart") {
-            addBarChart(parsed.data);
-        } else {
-            addMessage(JSON.stringify(parsed), "response");
+        switch (parsed.type) {
+            case "table":
+                addTable(parsed.data);
+                break;
+            case "json":
+                addJson(parsed.data);
+                break;
+            case "progressBar":
+                addProgressBar(parsed.data);
+                break;
+            case "live":
+                updateLive(parsed.data);
+                break;
+            case "list":
+                addList(parsed.data);
+                break;
+            case "barChart":
+                addBarChart(parsed.data);
+                break;
+            default:
+                addMessage(JSON.stringify(parsed), "response");
+                break;
         }
     } catch (error) {
         alert(`Erreur : ${error.message}`);
