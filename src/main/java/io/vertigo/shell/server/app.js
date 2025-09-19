@@ -93,6 +93,9 @@ wsManager.onMessageHandler = (event) => {
 				break;
 			case "gauge":
 				addGauge(parsed.data);
+				break; 
+			case "sparkLine":
+				addSparkLine(parsed.data);
 				break;
 			default:
 				addMessage(JSON.stringify(parsed), "response");
@@ -189,6 +192,13 @@ function addJson(jsonData) {
 	addCollapsible("json", jsonComponent.title, jsonHtml);
 }
 
+function addSparkLine(sparkLineData) {
+	const sparkLineComponent = new SparkLineComponent(sparkLineData);
+	const sparkLineHtml = sparkLineComponent.toHtml();
+	addCollapsible("sparkLine", sparkLineComponent.title, sparkLineHtml);
+	setTimeout(() => sparkLineComponent.activate(), 0);
+}
+
 function updateLive(liveData) {
 	const liveComponent = liveMap.get(liveData.id);
 	if (liveComponent) {
@@ -218,8 +228,8 @@ function addGauge(gaugeData) {
 	const gauge = new GaugeComponent(gaugeData);
 	const gaugeHtml = gauge.toHtml();
 	addCollapsible("gauge", gauge.title, gaugeHtml);
-    // Activate the gauge after it has been added to the DOM.
-    setTimeout(() => gauge.activate(), 0);
+	// Activate the gauge after it has been added to the DOM.
+	setTimeout(() => gauge.activate(), 0);
 }
 
 function addBarChart(chartData) {

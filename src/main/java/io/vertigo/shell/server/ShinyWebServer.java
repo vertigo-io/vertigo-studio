@@ -89,6 +89,13 @@ public class ShinyWebServer extends WebSocketServer {
 							.build();
 					sendMessage(webSocket, "gauge", mapper.writeValueAsString(gauge));
 					break;
+				case "xspark":
+					var sparkLine = Shiny.sparkline()
+							.withTitle("Ventes par produit")
+							.withValues(156, 450, 300, 200, 100, 23)
+							.build();
+					sendMessage(webSocket, "sparkLine", mapper.writeValueAsString(sparkLine));
+					break;
 				case "xpb":
 					String id;
 					var progressBar = Shiny.progressBar().withTotal(10).build();
