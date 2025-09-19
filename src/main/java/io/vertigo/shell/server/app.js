@@ -218,6 +218,8 @@ function addGauge(gaugeData) {
 	const gauge = new GaugeComponent(gaugeData);
 	const gaugeHtml = gauge.toHtml();
 	addCollapsible("gauge", gauge.title, gaugeHtml);
+    // Activate the gauge after it has been added to the DOM.
+    setTimeout(() => gauge.activate(), 0);
 }
 
 function addBarChart(chartData) {

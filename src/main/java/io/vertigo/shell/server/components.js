@@ -182,11 +182,11 @@ class ProgressBarComponent extends LiveComponent {
 }
 
 class GaugeComponent {
-    constructor({ title, value, min, max, label }) {
+    constructor({ title, value, min, maxValue, label }) {
         this.title = title || 'Gauge';
         this.value = value || 0;
         this.min = min || 0;
-        this.max = max || 100;
+        this.max = maxValue || 100;
         this.label = label || '';
         this.canvasId = `gauge-${Math.random().toString(36).substr(2, 9)}`;
     }
