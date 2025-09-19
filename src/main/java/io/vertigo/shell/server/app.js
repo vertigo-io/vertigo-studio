@@ -1,3 +1,7 @@
+// ========================================================================
+// Component Classes
+// ========================================================================
+
 class Table {
     constructor({ title, header, rows }) {
         this.title = title || 'Table';
@@ -110,8 +114,7 @@ class BarChartComponent {
     activate() {
         const canvas = document.getElementById(this.canvasId);
         if (!canvas) {
-            console.error("Canvas not found for ID:", this.canvasId);
-            return;
+            throw new Error(`Canvas not found for ID: ${this.canvasId}`);
         }
         const chartConfig = {
             type: 'bar',
@@ -188,11 +191,11 @@ class LiveComponent {
     }
 
     update(data) {
-        console.warn("LiveComponent.update() not implemented for", this.id, data);
+        throw new Error(`LiveComponent.update() must be implemented by subclasses. Component ID: ${this.id}`);
     }
 
     complete() {
-        console.warn("LiveComponent.complete() not implemented for", this.id);
+        throw new Error(`LiveComponent.complete() must be implemented by subclasses. Component ID: ${this.id}`);
     }
 }
 
@@ -218,9 +221,7 @@ class ProgressBarComponent extends LiveComponent {
     update(value) {
         this.value = value;
         const container = document.getElementById(this.id);
-        if (!container) {
-            return;
-        }
+        if (!container) return;
         const newPercentage = Math.min((this.value / this.total) * 100, 100);
         const bar = container.querySelector('.progress-bar');
         const text = container.querySelector('.progress-text');
