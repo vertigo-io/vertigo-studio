@@ -31,7 +31,9 @@ wsManager.onMessageHandler = (event) => {
 		    sparkLine: SparkLineComponent,
 			table: TableComponent,
 			tree:TreeComponent,
-		};
+			youtube: YouTubeComponent,
+			spotify: SpotifyComponent,
+			photo: PhotoComponent};
 		
 		if (componentMap[parsed.type]) {
 			const component = new componentMap[parsed.type](parsed.data);

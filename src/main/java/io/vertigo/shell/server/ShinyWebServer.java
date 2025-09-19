@@ -15,6 +15,7 @@ import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import io.vertigo.shell.Shell;
 import io.vertigo.shiny.Shiny;
@@ -186,6 +187,25 @@ public class ShinyWebServer extends WebSocketServer {
 							.withTitle("Fiche de Shinning")
 							.build();
 					sendMessage(webSocket, "json", mapper.writeValueAsString(json));
+					break;
+				case "xyoutube":
+					ObjectNode youtubeData = mapper.createObjectNode()
+							.put("title", "Rick Astley - Never Gonna Give You Up")
+							.put("videoId", "dQw4w9WgXcQ");
+					sendMessage(webSocket, "youtube", mapper.writeValueAsString(youtubeData));
+					break;
+				case "xspotify":
+					ObjectNode spotifyData = mapper.createObjectNode()
+							.put("title", "The Beatles - Here Comes The Sun")
+							.put("uri", "spotify:track:0MjJ0s0J80000000000000"); // Placeholder URI
+					sendMessage(webSocket, "spotify", mapper.writeValueAsString(spotifyData));
+					break;
+				case "xphoto":
+					ObjectNode photoData = mapper.createObjectNode()
+							.put("title", "Random image from picsum")
+							.put("url", "https://picsum.photos/800/600")
+							.put("alt", "Random image from picsum");
+					sendMessage(webSocket, "photo", mapper.writeValueAsString(photoData));
 					break;
 				default:
 					sendMessage(webSocket, "text", "nada");
