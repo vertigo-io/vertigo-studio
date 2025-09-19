@@ -7,10 +7,10 @@ class WebSocketManager {
 		this.onMessageHandler = () => { };
 
 		document.addEventListener('visibilitychange', () => {
-			if (document.visibilityState === 'visible') {
+/*			if (document.visibilityState === 'visible') {
 				this.tryReconnect();
 			}
-		});
+*/		});
 	}
 
 	connect() {

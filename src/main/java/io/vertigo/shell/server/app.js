@@ -21,13 +21,15 @@ wsManager.onMessageHandler = (event) => {
 	try {
 		const parsed = JSON.parse(event.data);
 		const componentMap = {
-		    table: TableComponent,
+			barChart: BarChartComponent,
+			gauge: GaugeComponent,
+			geoMap: GeoMapComponent,
 		    json: JsonComponent,
+			list: ListComponent,
 		    progressBar: ProgressBarComponent,
-		    list: ListComponent,
-		    barChart: BarChartComponent,
-		    gauge: GaugeComponent,
-		    sparkLine: SparkLineComponent
+		    sparkLine: SparkLineComponent,
+			table: TableComponent,
+			tree:TreeComponent,
 		};
 		
 		if (componentMap[parsed.type]) {
@@ -95,16 +97,16 @@ function toggleCollapse(element) {
 
 function getDataTypeIcon(type) {
 	const iconMap = {
-		'table': 'table-2',
+		'barChart': 'chart-bar',
+		'gauge': 'gauge', 
+		'geoMap': 'map-pin',
 		'json': 'code-2',
 		'list': 'list',
-		'tree': 'git-branch',
-		'grid': 'grid-3x3',
-		'database': 'database',
-		'barChart': 'chart-bar',
 		'progressBar': 'rabbit',
-		'gauge': 'gauge'
-	};
+		'sparkLine': 'trending-up',
+		'table': 'table-2',
+		'tree': 'folder-tree'
+		};
 	return iconMap[type] || 'traffic-cone';
 }
 

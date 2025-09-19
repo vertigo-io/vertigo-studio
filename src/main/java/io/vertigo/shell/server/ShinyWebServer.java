@@ -1,5 +1,8 @@
 package io.vertigo.shell.server;
 
+import static io.vertigo.shiny.components.data.tree.ShinyIcon.FILE;
+import static io.vertigo.shiny.components.data.tree.ShinyIcon.FOLDER_OPEN;
+
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -95,6 +98,23 @@ public class ShinyWebServer extends WebSocketServer {
 							.withValues(156, 450, 300, 200, 100, 23)
 							.build();
 					sendMessage(webSocket, "sparkLine", mapper.writeValueAsString(sparkLine));
+					break;
+				case "xmap":
+					var geoMap = """
+							{
+							"title" : "Tour Eiffel",
+							"latitude":48.8584,
+							"longitude":2.2945
+							}
+							""";
+					sendMessage(webSocket, "geoMap", geoMap);
+					break;
+				case "xtree":
+					var tree = Shiny.tree("Files").build();
+					tree.getRoot().addChild("src", FOLDER_OPEN)
+							.addChild("main", FOLDER_OPEN)
+							.addChild("file.txt", FILE);
+					sendMessage(webSocket, "tree", mapper.writeValueAsString(tree));
 					break;
 				case "xpb":
 					String id;
