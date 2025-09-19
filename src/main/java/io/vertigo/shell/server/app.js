@@ -178,6 +178,64 @@ class BarChartComponent {
     }
 }
 
+// Base class for components that can be updated after being rendered.
+class LiveComponent {
+    constructor({ id }) {
+        if (!id) {
+            throw new Error("LiveComponent requires an id");
+        }
+        this.id = id;
+    }
+
+    update(data) {
+        console.warn("LiveComponent.update() not implemented for", this.id, data);
+    }
+
+    complete() {
+        console.warn("LiveComponent.complete() not implemented for", this.id);
+    }
+}
+
+class ProgressBarComponent extends LiveComponent {
+    constructor({ id, title, value, total }) {
+        super({ id }); // Call the parent constructor
+        this.title = title || 'Progression';
+        this.value = value || 0;
+        this.total = total || 100;
+    }
+
+    toHtml() {
+        const percentage = Math.min((this.value / this.total) * 100, 100);
+        return (
+            `<div class="progress-container" id="${this.id}">
+                <div class="progress-bar" style="width: ${percentage}%"></div>
+                <div class="progress-text">${Math.round(percentage)}%</div>
+            </div>
+        `
+        );
+    }
+
+    update(value) {
+        this.value = value;
+        const container = document.getElementById(this.id);
+        if (!container) {
+            return;
+        }
+        const newPercentage = Math.min((this.value / this.total) * 100, 100);
+        const bar = container.querySelector('.progress-bar');
+        const text = container.querySelector('.progress-text');
+        if (bar && text) {
+            bar.style.width = `${newPercentage}%`;
+            text.textContent = `${Math.round(newPercentage)}%`;
+            bar.classList.toggle('completed', newPercentage >= 100);
+        }
+    }
+
+    complete() {
+        this.update(this.total);
+    }
+}
+
 
 const socket = new WebSocket("ws://localhost:8080");
 const chat = document.getElementById("chat");
@@ -307,48 +365,24 @@ function addJson(jsonData) {
 
 function updateLive(liveData) {
     const liveComponent = liveMap.get(liveData.id);
-    if (liveData.action === "update") {
-        liveComponent.update(liveData.value);
-    } else if (liveData.action === "complete") {
-        liveComponent.complete();
-        liveMap.delete(liveData.id);
+    if (liveComponent) {
+        if (liveData.action === "update") {
+            liveComponent.update(liveData.value);
+        } else if (liveData.action === "complete") {
+            liveComponent.complete();
+            liveMap.delete(liveData.id);
+        }
     }
 }
 
 function addProgressBar(progressData) {
-    const progressId = progressData.id;
-    const percentage = Math.min((progressData.value / progressData.total) * 100, 100);
-    const content = 
-        `<div class="progress-container" id="${progressId}">
-            <div class="progress-bar" style="width: ${percentage}%"></div>
-            <div class="progress-text">${Math.round(percentage)}%</div>
-        </div>
-    `;
-    addCollapsible("progressBar", progressData.title || "Progression", content);
-    const progressBar = {
-        id: progressId,
-        update(value) {
-            const container = document.getElementById(progressId);
-            if (!container) {
-                console.error("Progress container not found for ID:", progressId);
-                return;
-            }
-            const newPercentage = Math.min((value / progressData.total) * 100, 100);
-            const bar = container.querySelector('.progress-bar');
-            const text = container.querySelector('.progress-text');
-            bar.style.width = `${newPercentage}%`;
-            text.textContent = `${Math.round(newPercentage)}%`;
-            if (newPercentage >= 100) {
-                bar.classList.add('completed');
-            } else {
-                bar.classList.remove('completed');
-            }
-        },
-        complete() {
-            this.update(progressData.total);
-        }
-    };
-    liveMap.set(progressId, progressBar);
+    if (!progressData.id) {
+        throw new Error("ProgressBar data must have an id.");
+    }
+    const progressBar = new ProgressBarComponent(progressData);
+    const progressBarHtml = progressBar.toHtml();
+    addCollapsible("progressBar", progressBar.title, progressBarHtml);
+    liveMap.set(progressBar.id, progressBar);
 }
 
 function addList(listData) {
