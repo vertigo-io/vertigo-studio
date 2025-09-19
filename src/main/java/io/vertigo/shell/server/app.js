@@ -6,59 +6,6 @@ const CONFIG = {
 	WEBSOCKET_URL: 'ws://localhost:8080',
 }
 
-class WebSocketManager {
-	constructor(url, statusElement, statusTextElement) {
-		this.url = url;
-		this.statusElement = statusElement;
-		this.statusTextElement = statusTextElement;
-		this.socket = null;
-		this.onMessageHandler = () => { };
-
-		document.addEventListener('visibilitychange', () => {
-			if (document.visibilityState === 'visible') {
-				this.tryReconnect();
-			}
-		});
-	}
-
-	connect() {
-		console.log("Attempting to connect to WebSocket...");
-		this.socket = new WebSocket(this.url);
-		this.socket.onopen = () => this.onOpen();
-		this.socket.onclose = () => this.onClose();
-		this.socket.onerror = (error) => this.onError(error);
-		this.socket.onmessage = (event) => this.onMessageHandler(event);
-	}
-
-	onOpen() {
-		this.statusElement.className = 'status-connected';
-		this.statusTextElement.textContent = 'Connected';
-	}
-
-	onClose() {
-		console.log("WebSocket connection closed.");
-		this.statusElement.className = 'status-disconnected';
-		this.statusTextElement.textContent = 'Disconnected';
-	}
-
-	onError(error) {
-		console.error("WebSocket error:", error);
-		this.statusElement.className = 'status-error';
-		this.statusTextElement.textContent = 'Error';
-	}
-
-	sendMessage(message) {
-		if (this.socket && this.socket.readyState === WebSocket.OPEN) {
-			this.socket.send(message);
-		} else {
-			throw new Error("Cannot send message, WebSocket is not open.");
-		}
-	}
-}
-// ========================================================================
-// Application Logic
-// ========================================================================
-
 const chat = document.getElementById("chat");
 const liveMap = new Map();
 
@@ -72,34 +19,41 @@ const wsManager = new WebSocketManager(
 wsManager.onMessageHandler = (event) => {
 	try {
 		const parsed = JSON.parse(event.data);
+		let component = null;
 		switch (parsed.type) {
 			case "table":
-				addTable(parsed.data);
+				component = new TableComponent(parsed.data);
 				break;
 			case "json":
-				addJson(parsed.data);
+				component = new JsonComponent(parsed.data);
 				break;
 			case "progressBar":
-				addProgressBar(parsed.data);
+				component  = new ProgressBarComponent(parsed.data);
+				liveMap.set(component.id, component);
 				break;
 			case "live":
 				updateLive(parsed.data);
 				break;
 			case "list":
-				addList(parsed.data);
+				component  = new ListComponent(parsed.data);
 				break;
 			case "barChart":
-				addBarChart(parsed.data);
+				component  = new BarChartComponent(parsed.data);
 				break;
 			case "gauge":
-				addGauge(parsed.data);
+				component  =  new GaugeComponent(parsed.data);
 				break; 
 			case "sparkLine":
-				addSparkLine(parsed.data);
+				component  = new SparkLineComponent(parsed.data);
 				break;
 			default:
 				addMessage(JSON.stringify(parsed), "response");
 				break;
+		}
+		//=== The system core
+		if (component){
+			addCollapsible(parsed.type, component.title, component.toHtml());
+			setTimeout(() => component.activate(), 0);
 		}
 	} catch (error) {
 		alert(`Erreur : ${error.message}`);
@@ -180,25 +134,6 @@ function addCollapsible(type, title, content) {
 	chat.scrollTop = chat.scrollHeight;
 }
 
-function addTable(tableData) {
-	const table = new Table(tableData);
-	const tableHtml = table.toHtml();
-	addCollapsible("table", table.title, tableHtml);
-}
-
-function addJson(jsonData) {
-	const jsonComponent = new JsonComponent(jsonData);
-	const jsonHtml = jsonComponent.toHtml();
-	addCollapsible("json", jsonComponent.title, jsonHtml);
-}
-
-function addSparkLine(sparkLineData) {
-	const sparkLineComponent = new SparkLineComponent(sparkLineData);
-	const sparkLineHtml = sparkLineComponent.toHtml();
-	addCollapsible("sparkLine", sparkLineComponent.title, sparkLineHtml);
-	setTimeout(() => sparkLineComponent.activate(), 0);
-}
-
 function updateLive(liveData) {
 	const liveComponent = liveMap.get(liveData.id);
 	if (liveComponent) {
@@ -209,36 +144,6 @@ function updateLive(liveData) {
 			liveMap.delete(liveData.id);
 		}
 	}
-}
-
-function addProgressBar(progressData) {
-	const progressBar = new ProgressBarComponent(progressData);
-	const progressBarHtml = progressBar.toHtml();
-	addCollapsible("progressBar", progressBar.title, progressBarHtml);
-	liveMap.set(progressBar.id, progressBar);
-}
-
-function addList(listData) {
-	const list = new ListComponent(listData);
-	const listHtml = list.toHtml();
-	addCollapsible("list", list.title, listHtml);
-}
-
-function addGauge(gaugeData) {
-	const gauge = new GaugeComponent(gaugeData);
-	const gaugeHtml = gauge.toHtml();
-	addCollapsible("gauge", gauge.title, gaugeHtml);
-	// Activate the gauge after it has been added to the DOM.
-	setTimeout(() => gauge.activate(), 0);
-}
-
-function addBarChart(chartData) {
-	const chartComponent = new BarChartComponent(chartData);
-	const chartHtml = chartComponent.toHtml();
-	addCollapsible("barChart", chartComponent.title, chartHtml);
-
-	// Activate the chart after it has been added to the DOM.
-	setTimeout(() => chartComponent.activate(), 0);
 }
 
 document.addEventListener('DOMContentLoaded', function() {

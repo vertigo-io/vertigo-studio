@@ -1,68 +1,79 @@
-
-class SparkLineComponent {
-    constructor({ title, values }) {               
-        this.title = title || 'Sparkline';                                                                                                        
-        this.values = Array.isArray(values) ? values : []; // Ensure values is an array                                                                                                               
-        this.canvasId = `sparkline-${Math.random().toString(36).substr(2, 9)}`;                                                                   
-    }                                                                                                                                             
-
-    toHtml() {                                                                                                                                    
-        return `<canvas id="${this.canvasId}" class="sparkline-canvas"></canvas>`;                                                                
-    }                                                                                                                                             
-
-    activate() {                                                                                                                                  
-        const target = document.getElementById(this.canvasId);                                                                                    
-        if (!target) {                                                                                                                            
-            throw new Error(`Sparkline canvas not found for ID: ${this.canvasId}`);                                                               
-        }                                                                                                                                         
-
-        // Validate values
-        if (this.values.length === 0) {
-            console.warn('No data provided for sparkline chart');
-            return;
-        }
-
-        const data = {
-            labels: this.values.map((_, i) => i + 1),
-            datasets: [{
-                data: this.values,
-                borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderWidth: 1,
-                pointRadius: 0,
-                fill: true,
-                tension: 0.4
-            }]
-        };
-
-        const options = {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                tooltip: { enabled: false }
-            },
-            scales: {
-                x: { display: false },
-                y: { display: false } // Added y-axis configuration
-            },
-            elements: {
-                line: {
-                    borderWidth: 1
-                }
-            }
-        };
-
-        // Create the chart
-        new Chart(target, {
-            type: 'line',
-            data: data,
-            options: options
-        });
-    }
+class Component {
+	title = "UNDEFINED COMPONENT";
+	toHtml() {
+		throw new Error(`Component.toHtml() must be implemented by subclasses.`);
+	}
+	activate() {
+		// By default, nothing is done
+	}
 }
-class Table {
+
+class SparkLineComponent extends Component {
+	constructor({ title, values }) {
+		super();
+		this.title = title || 'Sparkline';
+		this.values = Array.isArray(values) ? values : []; // Ensure values is an array                                                                                                               
+		this.canvasId = `sparkline-${Math.random().toString(36).substr(2, 9)}`;
+	}
+
+	toHtml() {
+		return `<canvas id="${this.canvasId}" class="sparkline-canvas"></canvas>`;
+	}
+
+	activate() {
+		const target = document.getElementById(this.canvasId);
+		if (!target) {
+			throw new Error(`Sparkline canvas not found for ID: ${this.canvasId}`);
+		}
+
+		// Validate values
+		if (this.values.length === 0) {
+			console.warn('No data provided for sparkline chart');
+			return;
+		}
+
+		const data = {
+			labels: this.values.map((_, i) => i + 1),
+			datasets: [{
+				data: this.values,
+				borderColor: 'rgba(75, 192, 192, 1)',
+				backgroundColor: 'rgba(75, 192, 192, 0.2)',
+				borderWidth: 1,
+				pointRadius: 0,
+				fill: true,
+				tension: 0.4
+			}]
+		};
+
+		const options = {
+			responsive: true,
+			maintainAspectRatio: false,
+			plugins: {
+				legend: { display: false },
+				tooltip: { enabled: false }
+			},
+			scales: {
+				x: { display: false },
+				y: { display: false }
+			},
+			elements: {
+				line: {
+					borderWidth: 1
+				}
+			}
+		};
+
+		new Chart(target, {
+			type: 'line',
+			data: data,
+			options: options
+		});
+	}
+}
+
+class TableComponent extends Component {
 	constructor({ title, header, rows }) {
+		super();
 		this.title = title || 'Table';
 		this.header = header || [];
 		this.rows = rows || [];
@@ -78,7 +89,7 @@ class Table {
 	}
 }
 
-class ListComponent {
+class ListComponent extends Component {
 	static TYPES = {
 		ORDERED: 'ORDERED',
 		UNORDERED: 'UNORDERED',
@@ -86,6 +97,7 @@ class ListComponent {
 	};
 
 	constructor({ title, type, items }) {
+		super();
 		this.title = title || '';
 		this.type = type || ListComponent.TYPES.UNORDERED;
 		this.items = (items || []).map(item => {
@@ -125,8 +137,9 @@ class ListComponent {
 	}
 }
 
-class JsonComponent {
+class JsonComponent extends Component {
 	constructor({ title, json }) {
+		super();
 		this.title = title || 'JSON';
 		this.json = json || {};
 	}
@@ -155,8 +168,9 @@ class JsonComponent {
 	}
 }
 
-class BarChartComponent {
+class BarChartComponent extends Component {
 	constructor({ title, header, values }) {
+		super();
 		this.title = title || 'Bar Chart';
 		this.header = header || [];
 		this.values = values || [];
@@ -186,14 +200,60 @@ class BarChartComponent {
 					categoryPercentage: 0.8
 				}]
 			},
-			options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: true, labels: { color: '#E6E8EA', font: { family: "'Inter', 'Segoe UI', system-ui, sans-serif", size: 12 } } } }, scales: { x: { beginAtZero: true, ticks: { color: '#E6E8EA', font: { family: "'Inter', 'Segoe UI', system-ui, sans-serif", size: 12 } }, grid: { color: 'rgba(255, 255, 255, 0.1)', borderColor: '#3C4047' } }, y: { ticks: { color: '#E6E8EA', font: { family: "'Inter', 'Segoe UI', system-ui, sans-serif", size: 12 } }, grid: { color: 'rgba(255, 255, 255, 0.1)', borderColor: '#3C4047' } } } }
+			options: {
+				indexAxis: 'y',
+				responsive: true,
+				maintainAspectRatio: false,
+				plugins: {
+					legend: {
+						display: true,
+						labels: {
+							color: '#E6E8EA',
+							font: {
+								family: "'Inter', 'Segoe UI', system-ui, sans-serif",
+								size: 12
+							}
+						}
+					}
+				},
+				scales: {
+					x: {
+						beginAtZero: true,
+						ticks: {
+							color: '#E6E8EA',
+							font: {
+								family: "'Inter', 'Segoe UI', system-ui, sans-serif",
+								size: 12
+							}
+						},
+						grid: {
+							color: 'rgba(255, 255, 255, 0.1)',
+							borderColor: '#3C4047'
+						}
+					},
+					y: {
+						ticks: {
+							color: '#E6E8EA',
+							font: {
+								family: "'Inter', 'Segoe UI', system-ui, sans-serif",
+								size: 12
+							}
+						},
+						grid: {
+							color: 'rgba(255, 255, 255, 0.1)',
+							borderColor: '#3C4047'
+						}
+					}
+				}
+			}
 		};
 		new Chart(canvas.getContext('2d'), chartConfig);
 	}
 }
 
-class LiveComponent {
+class LiveComponent extends Component {
 	constructor({ id }) {
+		super();
 		if (!id) {
 			throw new Error("LiveComponent requires an id");
 		}
@@ -244,64 +304,9 @@ class ProgressBarComponent extends LiveComponent {
 	}
 }
 
-class SparklineComponent {
-	constructor({ title, values }) {
-		this.title = title || 'Sparkline';
-		this.values = values || [];
-		this.canvasId = `sparkline-${Math.random().toString(36).substr(2, 9)}`;
-	}
-
-	toHtml() {
-		return `<canvas id="${this.canvasId}" class="sparkline-canvas"></canvas>`;
-	}
-
-	activate() {
-		const target = document.getElementById(this.canvasId);
-		if (!target) {
-			throw new Error(`Sparkline canvas not found for ID: ${this.canvasId}`);
-		}
-
-		const data = {
-			labels: this.values.map((_, i) => i + 1),
-			datasets: [{
-				data: this.values,
-				borderColor: 'rgba(75, 192, 192, 1)',
-				backgroundColor: 'rgba(75, 192, 192, 0.2)',
-				borderWidth: 1,
-				pointRadius: 0,
-				fill: true,
-				tension: 0.4
-			}]
-		};
-
-		const options = {
-			responsive: true,
-			maintainAspectRatio: false,
-			plugins: {
-				legend: { display: false },
-				tooltip: { enabled: false }
-			},
-			scales: {
-				x: { display: false },
-				y: { display: false }
-			},
-			elements: {
-				line: {
-					borderWidth: 1
-				}
-			}
-		};
-
-		new Chart(target, {
-			type: 'line',
-			data: data,
-			options: options
-		});
-	}
-}
-
-class GaugeComponent {
+class GaugeComponent extends Component {
 	constructor({ title, value, min, maxValue, label }) {
+		super();
 		this.title = title || 'Gauge';
 		this.value = value || 0;
 		this.min = min || 0;
