@@ -64,9 +64,10 @@ const chat = document.getElementById("chat");
 const liveMap = new Map();
 
 // Initialize WebSocket Manager
-const statusDiv = document.getElementById("status");
-const statusText = document.getElementById("status-text");
-const wsManager = new WebSocketManager(CONFIG.WEBSOCKET_URL, statusDiv, statusText);
+const wsManager = new WebSocketManager(
+	CONFIG.WEBSOCKET_URL, 
+	document.getElementById("status"), 
+	ddocument.getElementById("status-text"));
 
 // Set up message handler
 wsManager.onMessageHandler = (event) => {
