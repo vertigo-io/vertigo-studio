@@ -2,7 +2,6 @@ package io.vertigo.shiny.components.error;
 
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
-import io.vertigo.shiny.style.ShinyColors;
 
 public record ShinyError(
 		String text) implements ShinyComponent {
@@ -15,7 +14,7 @@ public record ShinyError(
 		return new ShinyErrorBuilder();
 	}
 
-	public void render(ShinyWriter writer) {
-		writer.println(ShinyColors.RED.fg("!> " + text + " "));
+	public void render(final ShinyWriter writer) {
+		ShinyErrorRenderer.render(this, writer);
 	}
 }
