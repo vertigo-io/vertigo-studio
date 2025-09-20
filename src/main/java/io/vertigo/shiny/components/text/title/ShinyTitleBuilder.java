@@ -7,11 +7,6 @@ public final class ShinyTitleBuilder implements Builder<ShinyTitle> {
 	private String titleText;
 	private int titleLevel = 1; // Default to Level 1
 
-	// No public constructor, use ShinyTitle.builder()
-	ShinyTitleBuilder() {
-		// Package-private constructor
-	}
-
 	public ShinyTitleBuilder withText(final String text) {
 		this.titleText = text;
 		return this;

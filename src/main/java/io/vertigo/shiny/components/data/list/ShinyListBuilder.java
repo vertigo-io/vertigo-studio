@@ -13,9 +13,7 @@ public final class ShinyListBuilder implements Builder<ShinyList> {
 	private ShinyListType listType = ShinyListType.UNORDERED;
 	private ShinyListStyle listStyle;
 
-	// No public constructor, use ShinyList.builder()
-	ShinyListBuilder() {
-		// Package-private constructor
+	public ShinyListBuilder() {
 		this.listStyle = Shiny.theme().listStyle(); // Initialize default style
 	}
 

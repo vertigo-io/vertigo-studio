@@ -9,9 +9,7 @@ public final class ShinyJsonBuilder implements Builder<ShinyJson> {
 	private ShinyJsonStyle jsonStyle;
 	private String jsonTitle;
 
-	// No public constructor, use ShinyJson.builder()
-	ShinyJsonBuilder() {
-		// Package-private constructor
+	public ShinyJsonBuilder() {
 		jsonStyle = Shiny.theme().jsonStyle(); // Initialize default style
 	}
 

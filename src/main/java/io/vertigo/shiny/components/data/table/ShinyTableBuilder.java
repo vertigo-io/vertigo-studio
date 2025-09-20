@@ -14,9 +14,7 @@ public final class ShinyTableBuilder implements Builder<ShinyTable> {
 	private final List<String[]> tableRows = new ArrayList<>();
 	private ShinyTableStyle tableStyle;
 
-	// No public constructor, use ShinyTable.builder()
-	ShinyTableBuilder() {
-		// Package-private constructor
+	public ShinyTableBuilder() {
 		this.tableStyle = Shiny.theme().tableStyle(); // Initialize default style
 	}
 

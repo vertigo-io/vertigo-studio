@@ -13,9 +13,7 @@ public final class ShinySparklineBuilder implements Builder<ShinySparkline> {
 	private List<Double> sparkLineValues;
 	private ShinySparklineStyle sparklineStyle;
 
-	// No public constructor, use ShinySparkline.builder()
-	ShinySparklineBuilder() {
-		// Package-private constructor
+	public ShinySparklineBuilder() {
 		this.sparklineStyle = Shiny.theme().sparklineStyle(); // Initialize default style
 	}
 

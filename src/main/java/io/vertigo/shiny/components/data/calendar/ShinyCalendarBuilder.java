@@ -15,9 +15,7 @@ public final class ShinyCalendarBuilder implements Builder<ShinyCalendar> {
 	private int calendarMonth;
 	private ShinyTableStyle calendarStyle;
 
-	// No public constructor, use ShinyCalendar.builder()
-	ShinyCalendarBuilder() {
-		// Package-private constructor
+	public ShinyCalendarBuilder() {
 		this.calendarStyle = Shiny.theme().calendarStyle(); // Initialize default style
 		final LocalDate now = LocalDate.now();
 		this.calendarYear = now.getYear();

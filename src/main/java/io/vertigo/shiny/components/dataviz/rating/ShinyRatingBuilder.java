@@ -16,9 +16,7 @@ public final class ShinyRatingBuilder implements Builder<ShinyRating> {
 	private String ratingSeparator = "";
 	private boolean allowHalfRating = false;
 
-	// No public constructor, use ShinyRating.builder()
-	ShinyRatingBuilder() {
-		// Package-private constructor
+	public ShinyRatingBuilder() {
 		this.ratingStyle = Shiny.theme().ratingStyle(); // Initialize default style
 	}
 

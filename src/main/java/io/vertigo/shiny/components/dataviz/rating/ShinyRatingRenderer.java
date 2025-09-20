@@ -7,17 +7,12 @@ import io.vertigo.shiny.components.ShinyComponent; // New import
 import io.vertigo.shiny.style.ShinyEffects;
 
 public final class ShinyRatingRenderer implements ShinyComponentRenderer<ShinyRating> { // Implements interface
-
-	public ShinyRatingRenderer() { // Public no-arg constructor
-		//private constructor
-	}
-
-	@Override // Override annotation
+	@Override
 	public boolean accept(final ShinyComponent component) {
 		return component instanceof ShinyRating;
 	}
 
-	@Override // Override annotation
+	@Override
 	public void render(final ShinyRating shinyRating, final ShinyWriter writer) { // Not static
 		Assertion.check().isNotNull(shinyRating);
 		Assertion.check().isNotNull(writer);

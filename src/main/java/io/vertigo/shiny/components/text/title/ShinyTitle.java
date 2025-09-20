@@ -1,7 +1,6 @@
 package io.vertigo.shiny.components.text.title;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 
 public record ShinyTitle(
@@ -10,14 +9,5 @@ public record ShinyTitle(
 
 	public ShinyTitle {
 		Assertion.check().isNotBlank(title, "Title cannot be blank");
-	}
-
-	// Static factory method to get a new Builder instance
-	public static ShinyTitleBuilder builder() {
-		return new ShinyTitleBuilder();
-	}
-
-	public void render(final ShinyWriter writer) {
-		new ShinyTitleRenderer().render(this, writer);
 	}
 }

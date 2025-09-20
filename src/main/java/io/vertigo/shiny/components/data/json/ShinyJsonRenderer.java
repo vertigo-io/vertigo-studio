@@ -14,19 +14,14 @@ import io.vertigo.shiny.components.ShinyComponent; // New import
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyJsonRenderer implements ShinyComponentRenderer<ShinyJson> { // Implements interface
-
 	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-	public ShinyJsonRenderer() { // Public no-arg constructor
-		//private constructor
-	}
-
-	@Override // Override annotation
+	@Override
 	public boolean accept(final ShinyComponent component) {
 		return component instanceof ShinyJson;
 	}
 
-	@Override // Override annotation
+	@Override
 	public void render(final ShinyJson shinyJson, final ShinyWriter writer) { // Not static
 		Assertion.check().isNotNull(shinyJson);
 		Assertion.check().isNotNull(writer);

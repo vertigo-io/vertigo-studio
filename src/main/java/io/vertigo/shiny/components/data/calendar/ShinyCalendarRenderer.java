@@ -15,17 +15,12 @@ import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent; // New import
 
 public final class ShinyCalendarRenderer implements ShinyComponentRenderer<ShinyCalendar> { // Implements interface
-
-	public ShinyCalendarRenderer() { // Public no-arg constructor
-		//private constructor
-	}
-
-	@Override // Override annotation
+	@Override
 	public boolean accept(final ShinyComponent component) {
 		return component instanceof ShinyCalendar;
 	}
 
-	@Override // Override annotation
+	@Override
 	public void render(final ShinyCalendar shinyCalendar, final ShinyWriter writer) { // Not static
 		Assertion.check().isNotNull(shinyCalendar);
 		Assertion.check().isNotNull(writer);
@@ -63,12 +58,12 @@ public final class ShinyCalendarRenderer implements ShinyComponentRenderer<Shiny
 				row = new String[7];
 			}
 		}
-		Shiny.table()
-				.withTitle(String.format("%s %d", monthName, shinyCalendar.year()))
-				.withHeader(days)
-				.withStyle(shinyCalendar.style())
-				.addAllRows(rows)
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.table()
+						.withTitle(String.format("%s %d", monthName, shinyCalendar.year()))
+						.withHeader(days)
+						.withStyle(shinyCalendar.style())
+						.addAllRows(rows)
+						.build());
 	}
 }
