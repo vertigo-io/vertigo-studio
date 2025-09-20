@@ -30,6 +30,8 @@ import io.vertigo.shell.systems.file.commands.ls.FileLsCommand;
 import io.vertigo.shell.systems.file.commands.pwd.FilePwdCommand;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.data.list.ShinyListType;
+import io.vertigo.shiny.components.media.rss.ShinyRssData;
+import io.vertigo.shiny.components.media.rss.ShinyRssItem;
 
 public class ShinyWebServer extends WebSocketServer {
 	private static final Set<WebSocket> connections = Collections.synchronizedSet(new HashSet<>());
@@ -100,16 +102,19 @@ public class ShinyWebServer extends WebSocketServer {
 						final URL feedUrl = new URL("https://www.francetvinfo.fr/titres.rss");
 						final SyndFeedInput input = new SyndFeedInput();
 						final SyndFeed feed = input.build(new XmlReader(feedUrl));
-						final var listBuilder = Shiny.list()
-								.withTitle("Franceinfo RSS")
-								.withType(ShinyListType.DASHED);
-
+						List<ShinyRssItem> items = new ArrayList<>();
 						for (final SyndEntry entry : feed.getEntries()) {
-							// Create a markdown link for each item
-							final String markdownLink = "[" + entry.getTitle() + "](" + entry.getLink() + ")";
-							listBuilder.addItem(markdownLink);
+							ShinyRssItem item = new ShinyRssItem(
+									entry.getTitle(),
+									entry.getLink(),
+									entry.getDescription().getValue(),
+									entry.getEnclosures().getFirst().getUrl(),
+									entry.getPublishedDate().toString(),
+									entry.getAuthor());
+							items.add(item);
 						}
-						sendMessage(webSocket, "rssFeed", mapper.writeValueAsString(listBuilder.build()));
+						ShinyRssData rssData = new ShinyRssData(feed.getTitle(), items);
+						sendMessage(webSocket, "rssFeed", mapper.writeValueAsString(rssData));
 					} catch (final Exception e) {
 						e.printStackTrace();
 						sendMessage(webSocket, "text", "\"Erreur lors de la récupération du flux RSS : " + e.getMessage() + "\"");
