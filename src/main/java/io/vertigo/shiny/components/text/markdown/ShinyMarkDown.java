@@ -25,13 +25,7 @@ public record ShinyMarkDown(
 
 	@Override
 	public void render(final ShinyWriter writer) {
-		Assertion.check().isNotNull(markdownText, "Markdown text not set. Use fromFile() or fromText()."); // Access directly
-		//---
-		final Parser parser = Parser.builder()
-				.extensions(Collections.singletonList(TablesExtension.create()))
-				.build();
-		final Node document = parser.parse(markdownText); // Access directly
-		document.accept(new ShinyMarkdownVisitor(writer));
+		ShinyMarkDownRenderer.render(this, writer);
 	}
 
 }

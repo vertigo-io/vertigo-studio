@@ -23,6 +23,22 @@ public final class ShinySpinner extends ShinyLiveComponent<ShinySpinner> {
 		this.spinnerStyle = builder.spinnerStyle;
 	}
 
+	public String getMessage() {
+		return message;
+	}
+
+	public int getFrameIndex() {
+		return frameIndex;
+	}
+
+	public void setFrameIndex(final int frameIndex) {
+		this.frameIndex = frameIndex;
+	}
+
+	public ShinySpinnerStyle getSpinnerStyle() {
+		return spinnerStyle;
+	}
+
 	// Static factory method to get a new Builder instance
 	public static ShinySpinnerBuilder builder() {
 		return new ShinySpinnerBuilder();
@@ -39,12 +55,8 @@ public final class ShinySpinner extends ShinyLiveComponent<ShinySpinner> {
 	/**
 	 * Draws the current frame of the spinner with the message.
 	 */
-	synchronized protected void draw(ShinyWriter writer) {
-		final var frame = spinnerStyle.frames()[frameIndex % spinnerStyle.frames().length];
-		writer.print("\r")
-				.print(frame)
-				.print(" " + message)
-				.flush(); //On force le flush
-		frameIndex++;
+	@Override
+	synchronized protected void draw(final ShinyWriter writer) {
+		ShinySpinnerRenderer.render(this, writer);
 	}
 }

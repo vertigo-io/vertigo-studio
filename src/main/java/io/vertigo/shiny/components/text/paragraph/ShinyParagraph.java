@@ -18,7 +18,6 @@ public record ShinyParagraph(
 
 	@Override
 	public void render(final ShinyWriter writer) {
-		writer.println(text);
-		writer.println(); // Add a blank line after the paragraph
+		ShinyParagraphRenderer.render(this, writer);
 	}
 }

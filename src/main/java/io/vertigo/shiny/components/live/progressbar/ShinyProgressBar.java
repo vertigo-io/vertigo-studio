@@ -29,6 +29,18 @@ public final class ShinyProgressBar extends ShinyLiveComponent<ShinyProgressBar>
 		this.progressBarStyle = builder.progressBarStyle;
 	}
 
+	public int getTotal() {
+		return total;
+	}
+
+	public int getValue() {
+		return value;
+	}
+
+	public ShinyProgressBarStyle getProgressBarStyle() {
+		return progressBarStyle;
+	}
+
 	// Static factory method to get a new Builder instance
 	public static ShinyProgressBarBuilder builder() {
 		return new ShinyProgressBarBuilder();
@@ -45,20 +57,9 @@ public final class ShinyProgressBar extends ShinyLiveComponent<ShinyProgressBar>
 		}
 	}
 
-	synchronized protected void draw(ShinyWriter writer) {
-		// Calculer le pourcentage
-		final int percentage = (value * 100) / total;
-		// Calculer le nombre de carrés à remplir
-		final int filled = (value * progressBarStyle.maxLength()) / total;
-
-		// Construire la barre
-		writer.print("\r")
-				.print("[")
-				.print("█".repeat(filled))
-				.print("▒".repeat(progressBarStyle.maxLength() - filled))
-				.print("] ")
-				.print(percentage + "%")
-				.flush(); //On force le flush
+	@Override
+	synchronized protected void draw(final ShinyWriter writer) {
+		ShinyProgressBarRenderer.render(this, writer);
 	}
 
 }
