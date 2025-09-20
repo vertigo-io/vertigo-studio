@@ -6,9 +6,6 @@ const CONFIG = {
 	WEBSOCKET_URL: 'ws://localhost:8080',
 }
 
-const chat = document.getElementById("chat");
-const liveMap = new Map();
-
 // Initialize WebSocket Manager
 const wsManager = new WebSocketManager(
 	CONFIG.WEBSOCKET_URL,
@@ -16,11 +13,14 @@ const wsManager = new WebSocketManager(
 	document.getElementById("status-text")
 );
 
+const chat = document.getElementById("chat");
+const liveMap = new Map();
+
 // Set up message handler
 wsManager.onMessageHandler = (event) => {
 	try {
 		const parsed = JSON.parse(event.data);
-		print(parsed, true);		
+		print(parsed);		
 	} catch (error) {
 		alert(`Erreur : ${error.message}`);
 		addMessage(event.data, "response");
@@ -28,7 +28,7 @@ wsManager.onMessageHandler = (event) => {
 };
 
 //parsed = {type , data}
-function print(parsed, isCollapsible){
+function print(parsed){
 		console.log("print>>"+JSON.stringify(parsed));
 			const componentMap = {
 				barChart: BarChartComponent,
@@ -48,9 +48,10 @@ function print(parsed, isCollapsible){
 				tree: TreeComponent,
 				youtube: YouTubeComponent,
 			};
-	if (componentMap[parsed.type]) {
+
+				if (componentMap[parsed.type]) {
 		const component = new componentMap[parsed.type](parsed.data);
-		addCollapsible(parsed.type, component.title, component.toHtml(), isCollapsible);
+		addCollapsible(parsed.type, component.title, component.toHtml());
 		setTimeout(() => component.activate(), 0);
 		if (component instanceof LiveComponent) {
 			liveMap.set(component.id, component);
@@ -76,7 +77,7 @@ function print(parsed, isCollapsible){
 			}	
 		}
 		const container = new ContainerComponent(parsed.data.title, children);
-		addCollapsible(parsed.type, container.title, container.toHtml(), isCollapsible);
+		addCollapsible(parsed.type, container.title, container.toHtml());
 		setTimeout(() => container.activate(), 0);
 		
 /*		// Instantiate child components and pass them to the container
@@ -147,12 +148,10 @@ function getDataTypeIcon(type) {
 	return iconMap[type] || 'traffic-cone';
 }
 
-function addCollapsible(type, title, content, isCollapsible) {
+function addCollapsible(type, title, content) {
 	const iconName = getDataTypeIcon(type);
 
-	html = "";
-	if (isCollapsible){
-		html = `<div class="table-title" onclick="toggleCollapse(this)">
+	const html = `<div class="table-title" onclick="toggleCollapse(this)">
           	<div class="table-title-content">
             		<i data-lucide="${iconName}" class="table-icon"></i>
            	 	${title}
@@ -160,9 +159,7 @@ function addCollapsible(type, title, content, isCollapsible) {
           	<i data-lucide="chevron-down" class="collapse-icon"></i>
         		</div>
 			<div class="collapsible-content">${content}</div>`;
-	} else {
-		html= content;
-	}
+
 	const div = document.createElement("div");
 	div.className = "chat-message response-message";
 	div.innerHTML = html;
