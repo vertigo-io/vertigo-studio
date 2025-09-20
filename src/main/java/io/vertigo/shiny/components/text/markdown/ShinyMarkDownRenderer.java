@@ -7,15 +7,23 @@ import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.shiny.ShinyRenderer; // New import
 import io.vertigo.shiny.ShinyWriter;
+import io.vertigo.shiny.components.ShinyComponent; // New import
 
-public final class ShinyMarkDownRenderer {
+public final class ShinyMarkDownRenderer implements ShinyRenderer<ShinyMarkDown> { // Implements interface
 
-	private ShinyMarkDownRenderer() {
+	public ShinyMarkDownRenderer() { // Public no-arg constructor
 		//private constructor
 	}
 
-	public static void render(final ShinyMarkDown shinyMarkDown, final ShinyWriter writer) {
+	@Override // Override annotation
+	public boolean accept(final ShinyComponent component) {
+		return component instanceof ShinyMarkDown;
+	}
+
+	@Override // Override annotation
+	public void render(final ShinyMarkDown shinyMarkDown, final ShinyWriter writer) { // Not static
 		Assertion.check().isNotNull(shinyMarkDown);
 		Assertion.check().isNotNull(writer);
 		Assertion.check().isNotNull(shinyMarkDown.markdownText(), "Markdown text not set. Use fromFile() or fromText()."); // Access directly

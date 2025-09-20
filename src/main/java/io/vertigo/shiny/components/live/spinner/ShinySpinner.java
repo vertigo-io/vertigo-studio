@@ -57,6 +57,6 @@ public final class ShinySpinner extends ShinyLiveComponent<ShinySpinner> {
 	 */
 	@Override
 	synchronized protected void draw(final ShinyWriter writer) {
-		ShinySpinnerRenderer.render(this, writer);
+		new ShinySpinnerRenderer().render(this, writer);
 	}
 }

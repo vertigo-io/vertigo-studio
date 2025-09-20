@@ -1,16 +1,24 @@
 package io.vertigo.shiny.components.text.title;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.shiny.ShinyComponentRenderer; // New import
 import io.vertigo.shiny.ShinyWriter;
+import io.vertigo.shiny.components.ShinyComponent; // New import
 import io.vertigo.shiny.style.ShinyColors;
 
-public final class ShinyTitleRenderer {
+public final class ShinyTitleRenderer implements ShinyComponentRenderer<ShinyTitle> { // Implements interface
 
-	private ShinyTitleRenderer() {
+	public ShinyTitleRenderer() { // Public no-arg constructor
 		//private constructor
 	}
 
-	public static void render(final ShinyTitle shinyTitle, final ShinyWriter writer) {
+	@Override // Override annotation
+	public boolean accept(final ShinyComponent component) {
+		return component instanceof ShinyTitle;
+	}
+
+	@Override // Override annotation
+	public void render(final ShinyTitle shinyTitle, final ShinyWriter writer) { // Not static
 		Assertion.check().isNotNull(shinyTitle);
 		Assertion.check().isNotNull(writer);
 		//---
@@ -30,9 +38,9 @@ public final class ShinyTitleRenderer {
 		}
 	}
 
-	private static final String CRLF = "\r\n";
+	private final String CRLF = "\r\n"; // Not static
 
-	private static void printLevel1(final ShinyTitle shinyTitle, final ShinyWriter writer) {
+	private void printLevel1(final ShinyTitle shinyTitle, final ShinyWriter writer) { // Not static
 		final String line = "=".repeat(shinyTitle.title().length() + 4);
 		writer.println(ShinyColors.BLUE.fg(
 				line + CRLF
@@ -40,7 +48,7 @@ public final class ShinyTitleRenderer {
 						+ line));
 	}
 
-	private static void printLevel2(final ShinyTitle shinyTitle, final ShinyWriter writer) {
+	private void printLevel2(final ShinyTitle shinyTitle, final ShinyWriter writer) { // Not static
 		final String line = "-".repeat(shinyTitle.title().length() + 4);
 		writer.println(ShinyColors.BLUE_BRIGHT.fg(
 				line + CRLF
@@ -48,7 +56,7 @@ public final class ShinyTitleRenderer {
 						+ line));
 	}
 
-	private static void printLevel3(final ShinyTitle shinyTitle, final ShinyWriter writer) {
+	private void printLevel3(final ShinyTitle shinyTitle, final ShinyWriter writer) { // Not static
 		writer.println(ShinyColors.CYAN.fg(">> " + shinyTitle.title() + " <<"));
 	}
 }

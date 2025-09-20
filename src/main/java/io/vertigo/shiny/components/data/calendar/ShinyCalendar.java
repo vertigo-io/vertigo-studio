@@ -20,6 +20,6 @@ public record ShinyCalendar(
 	}
 
 	public void render(final ShinyWriter writer) {
-		ShinyCalendarRenderer.render(this, writer);
+		new ShinyCalendarRenderer().render(this, writer);
 	}
 }

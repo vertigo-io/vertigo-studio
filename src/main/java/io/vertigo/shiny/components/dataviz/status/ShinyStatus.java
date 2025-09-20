@@ -19,6 +19,6 @@ public record ShinyStatus(
 	}
 
 	public void render(final ShinyWriter writer) {
-		ShinyStatusRenderer.render(this, writer);
+		new ShinyStatusRenderer().render(this, writer);
 	}
 }

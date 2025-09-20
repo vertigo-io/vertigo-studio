@@ -25,7 +25,7 @@ public record ShinyMarkDown(
 
 	@Override
 	public void render(final ShinyWriter writer) {
-		ShinyMarkDownRenderer.render(this, writer);
+		new ShinyMarkDownRenderer().render(this, writer);
 	}
 
 }

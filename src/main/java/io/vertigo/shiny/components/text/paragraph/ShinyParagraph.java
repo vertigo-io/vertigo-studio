@@ -18,6 +18,6 @@ public record ShinyParagraph(
 
 	@Override
 	public void render(final ShinyWriter writer) {
-		ShinyParagraphRenderer.render(this, writer);
+		new ShinyParagraphRenderer().render(this, writer);
 	}
 }

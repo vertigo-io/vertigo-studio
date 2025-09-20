@@ -1,15 +1,23 @@
 package io.vertigo.shiny.components.live.spinner;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.shiny.ShinyComponentRenderer; // New import
 import io.vertigo.shiny.ShinyWriter;
+import io.vertigo.shiny.components.ShinyComponent; // New import
 
-public final class ShinySpinnerRenderer {
+public final class ShinySpinnerRenderer implements ShinyComponentRenderer<ShinySpinner> { // Implements interface
 
-	private ShinySpinnerRenderer() {
+	public ShinySpinnerRenderer() { // Public no-arg constructor
 		//private constructor
 	}
 
-	public static synchronized void render(final ShinySpinner shinySpinner, final ShinyWriter writer) {
+	@Override // Override annotation
+	public boolean accept(final ShinyComponent component) {
+		return component instanceof ShinySpinner;
+	}
+
+	@Override // Override annotation
+	public synchronized void render(final ShinySpinner shinySpinner, final ShinyWriter writer) { // Not static
 		Assertion.check().isNotNull(shinySpinner);
 		Assertion.check().isNotNull(writer);
 		//---

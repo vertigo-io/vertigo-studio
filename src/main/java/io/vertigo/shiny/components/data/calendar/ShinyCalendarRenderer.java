@@ -10,15 +10,23 @@ import java.util.Locale;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyComponentRenderer; // New import
 import io.vertigo.shiny.ShinyWriter;
+import io.vertigo.shiny.components.ShinyComponent; // New import
 
-public final class ShinyCalendarRenderer {
+public final class ShinyCalendarRenderer implements ShinyComponentRenderer<ShinyCalendar> { // Implements interface
 
-	private ShinyCalendarRenderer() {
+	public ShinyCalendarRenderer() { // Public no-arg constructor
 		//private constructor
 	}
 
-	public static void render(final ShinyCalendar shinyCalendar, final ShinyWriter writer) {
+	@Override // Override annotation
+	public boolean accept(final ShinyComponent component) {
+		return component instanceof ShinyCalendar;
+	}
+
+	@Override // Override annotation
+	public void render(final ShinyCalendar shinyCalendar, final ShinyWriter writer) { // Not static
 		Assertion.check().isNotNull(shinyCalendar);
 		Assertion.check().isNotNull(writer);
 		//---

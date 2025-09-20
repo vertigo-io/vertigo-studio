@@ -59,7 +59,7 @@ public final class ShinyProgressBar extends ShinyLiveComponent<ShinyProgressBar>
 
 	@Override
 	synchronized protected void draw(final ShinyWriter writer) {
-		ShinyProgressBarRenderer.render(this, writer);
+		new ShinyProgressBarRenderer().render(this, writer);
 	}
 
 }

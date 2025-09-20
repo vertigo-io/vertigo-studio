@@ -21,6 +21,6 @@ public record ShinyJson(
 	}
 
 	public void render(final ShinyWriter writer) {
-		ShinyJsonRenderer.render(this, writer);
+		new ShinyJsonRenderer().render(this, writer);
 	}
 }

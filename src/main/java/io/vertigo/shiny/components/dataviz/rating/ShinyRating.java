@@ -25,6 +25,6 @@ public record ShinyRating(
 	}
 
 	public void render(final ShinyWriter writer) {
-		ShinyRatingRenderer.render(this, writer);
+		new ShinyRatingRenderer().render(this, writer);
 	}
 }

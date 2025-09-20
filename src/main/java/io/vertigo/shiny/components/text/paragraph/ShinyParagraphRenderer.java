@@ -1,15 +1,23 @@
 package io.vertigo.shiny.components.text.paragraph;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.shiny.ShinyComponentRenderer; // New import
 import io.vertigo.shiny.ShinyWriter;
+import io.vertigo.shiny.components.ShinyComponent; // New import
 
-public final class ShinyParagraphRenderer {
+public final class ShinyParagraphRenderer implements ShinyComponentRenderer<ShinyParagraph> { // Implements interface
 
-	private ShinyParagraphRenderer() {
+	public ShinyParagraphRenderer() { // Public no-arg constructor
 		//private constructor
 	}
 
-	public static void render(final ShinyParagraph shinyParagraph, final ShinyWriter writer) {
+	@Override // Override annotation
+	public boolean accept(final ShinyComponent component) {
+		return component instanceof ShinyParagraph;
+	}
+
+	@Override // Override annotation
+	public void render(final ShinyParagraph shinyParagraph, final ShinyWriter writer) { // Not static
 		Assertion.check().isNotNull(shinyParagraph);
 		Assertion.check().isNotNull(writer);
 		//---

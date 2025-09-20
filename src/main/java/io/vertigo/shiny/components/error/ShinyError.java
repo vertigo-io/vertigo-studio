@@ -14,7 +14,7 @@ public record ShinyError(
 		return new ShinyErrorBuilder();
 	}
 
-	public void render(final ShinyWriter writer) {
-		ShinyErrorRenderer.render(this, writer);
+	public void render(ShinyWriter writer) {
+		new ShinyErrorRenderer().render(this, writer);
 	}
 }

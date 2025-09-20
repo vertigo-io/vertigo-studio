@@ -20,6 +20,6 @@ public record ShinyBarChart(
 	}
 
 	public void render(final ShinyWriter writer) {
-		ShinyBarChartRenderer.render(this, writer);
+		new ShinyBarChartRenderer().render(this, writer);
 	}
 }

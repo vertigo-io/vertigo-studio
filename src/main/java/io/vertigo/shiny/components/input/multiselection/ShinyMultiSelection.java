@@ -21,8 +21,8 @@ public record ShinyMultiSelection(
 	}
 
 	@Override
-	public void render(final ShinyWriter writer) {
-		ShinyMultiSelectionRenderer.render(this, writer);
+	public void render(ShinyWriter writer) {
+		new ShinyMultiSelectionRenderer().render(this, writer);
 	}
 
 	public List<String> getSelectedOptions() {

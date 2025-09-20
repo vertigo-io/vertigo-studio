@@ -18,6 +18,6 @@ public record ShinyTitle(
 	}
 
 	public void render(final ShinyWriter writer) {
-		ShinyTitleRenderer.render(this, writer);
+		new ShinyTitleRenderer().render(this, writer);
 	}
 }

@@ -8,18 +8,26 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.shiny.ShinyComponentRenderer; // New import
 import io.vertigo.shiny.ShinyWriter;
+import io.vertigo.shiny.components.ShinyComponent; // New import
 import io.vertigo.shiny.style.ShinyColors;
 
-public final class ShinyJsonRenderer {
+public final class ShinyJsonRenderer implements ShinyComponentRenderer<ShinyJson> { // Implements interface
 
 	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-	private ShinyJsonRenderer() {
+	public ShinyJsonRenderer() { // Public no-arg constructor
 		//private constructor
 	}
 
-	public static void render(final ShinyJson shinyJson, final ShinyWriter writer) {
+	@Override // Override annotation
+	public boolean accept(final ShinyComponent component) {
+		return component instanceof ShinyJson;
+	}
+
+	@Override // Override annotation
+	public void render(final ShinyJson shinyJson, final ShinyWriter writer) { // Not static
 		Assertion.check().isNotNull(shinyJson);
 		Assertion.check().isNotNull(writer);
 		//---

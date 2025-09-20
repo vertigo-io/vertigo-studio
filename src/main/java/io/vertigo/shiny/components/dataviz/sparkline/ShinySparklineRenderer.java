@@ -3,15 +3,23 @@ package io.vertigo.shiny.components.dataviz.sparkline;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.shiny.ShinyComponentRenderer; // New import
 import io.vertigo.shiny.ShinyWriter;
+import io.vertigo.shiny.components.ShinyComponent; // New import
 
-public final class ShinySparklineRenderer {
+public final class ShinySparklineRenderer implements ShinyComponentRenderer<ShinySparkline> { // Implements interface
 
-	private ShinySparklineRenderer() {
+	public ShinySparklineRenderer() { // Public no-arg constructor
 		//private constructor
 	}
 
-	public static void render(final ShinySparkline shinySparkline, final ShinyWriter writer) {
+	@Override // Override annotation
+	public boolean accept(final ShinyComponent component) {
+		return component instanceof ShinySparkline;
+	}
+
+	@Override // Override annotation
+	public void render(final ShinySparkline shinySparkline, final ShinyWriter writer) { // Not static
 		Assertion.check().isNotNull(shinySparkline);
 		Assertion.check().isNotNull(writer);
 		//---

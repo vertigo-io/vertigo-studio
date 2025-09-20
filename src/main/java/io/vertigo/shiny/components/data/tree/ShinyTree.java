@@ -19,7 +19,7 @@ public record ShinyTree(
 	}
 
 	public void render(final ShinyWriter writer) {
-		ShinyTreeRenderer.render(this, writer);
+		new ShinyTreeRenderer().render(this, writer);
 	}
 
 }

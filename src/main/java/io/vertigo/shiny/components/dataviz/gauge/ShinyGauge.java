@@ -22,6 +22,6 @@ public record ShinyGauge(
 	}
 
 	public void render(final ShinyWriter writer) {
-		ShinyGaugeRenderer.render(this, writer);
+		new ShinyGaugeRenderer().render(this, writer);
 	}
 }

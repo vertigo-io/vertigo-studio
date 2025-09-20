@@ -21,6 +21,6 @@ public record ShinyToggle(
 	}
 
 	public void render(final ShinyWriter writer) {
-		ShinyToggleRenderer.render(this, writer);
+		new ShinyToggleRenderer().render(this, writer);
 	}
 }

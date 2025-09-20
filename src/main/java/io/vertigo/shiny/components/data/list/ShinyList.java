@@ -22,6 +22,6 @@ public record ShinyList(
 	}
 
 	public void render(final ShinyWriter writer) {
-		ShinyListRenderer.render(this, writer);
+		new ShinyListRenderer().render(this, writer);
 	}
 }

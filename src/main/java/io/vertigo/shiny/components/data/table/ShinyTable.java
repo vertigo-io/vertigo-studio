@@ -37,7 +37,7 @@ public record ShinyTable(
 	 */
 	@Override
 	public void render(final ShinyWriter writer) {
-		ShinyTableRenderer.render(this, writer);
+		new ShinyTableRenderer().render(this, writer);
 	}
 
 }

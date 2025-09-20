@@ -3,16 +3,24 @@ package io.vertigo.shiny.components.text.textpath;
 import java.util.regex.Pattern;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.shiny.ShinyComponentRenderer; // New import
 import io.vertigo.shiny.ShinyWriter;
+import io.vertigo.shiny.components.ShinyComponent; // New import
 import io.vertigo.shiny.style.ShinyColor;
 
-public final class ShinyTextPathRenderer {
+public final class ShinyTextPathRenderer implements ShinyComponentRenderer<ShinyTextPath> { // Implements interface
 
-	private ShinyTextPathRenderer() {
+	public ShinyTextPathRenderer() { // Public no-arg constructor
 		//private constructor
 	}
 
-	public static void render(final ShinyTextPath shinyTextPath, final ShinyWriter writer) {
+	@Override // Override annotation
+	public boolean accept(final ShinyComponent component) {
+		return component instanceof ShinyTextPath;
+	}
+
+	@Override // Override annotation
+	public void render(final ShinyTextPath shinyTextPath, final ShinyWriter writer) { // Not static
 		Assertion.check().isNotNull(shinyTextPath);
 		Assertion.check().isNotNull(writer);
 		Assertion.check().isNotBlank(shinyTextPath.path(), "Path cannot be blank");

@@ -1,15 +1,23 @@
 package io.vertigo.shiny.components.live.progressbar;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.shiny.ShinyComponentRenderer; // New import
 import io.vertigo.shiny.ShinyWriter;
+import io.vertigo.shiny.components.ShinyComponent; // New import
 
-public final class ShinyProgressBarRenderer {
+public final class ShinyProgressBarRenderer implements ShinyComponentRenderer { // Implements interface
 
-	private ShinyProgressBarRenderer() {
+	public ShinyProgressBarRenderer() { // Public no-arg constructor
 		//private constructor
 	}
 
-	public static synchronized void render(final ShinyProgressBar shinyProgressBar, final ShinyWriter writer) {
+	@Override // Override annotation
+	public boolean accept(final ShinyComponent component) {
+		return component instanceof ShinyProgressBar;
+	}
+
+	@Override // Override annotation
+	public synchronized void render(final ShinyProgressBar shinyProgressBar, final ShinyWriter writer) { // Not static
 		Assertion.check().isNotNull(shinyProgressBar);
 		Assertion.check().isNotNull(writer);
 		//---

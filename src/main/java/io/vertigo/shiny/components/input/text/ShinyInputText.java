@@ -26,6 +26,6 @@ public record ShinyInputText(
 
 	@Override
 	public void render(final ShinyWriter writer) {
-		ShinyInputTextRenderer.render(this, writer);
+		new ShinyInputTextRenderer().render(this, writer);
 	}
 }

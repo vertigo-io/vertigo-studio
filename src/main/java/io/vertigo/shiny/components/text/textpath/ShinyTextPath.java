@@ -22,6 +22,6 @@ public record ShinyTextPath(
 	}
 
 	public void render(final ShinyWriter writer) {
-		ShinyTextPathRenderer.render(this, writer);
+		new ShinyTextPathRenderer().render(this, writer);
 	}
 }

@@ -6,15 +6,23 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyComponentRenderer;
 import io.vertigo.shiny.ShinyWriter;
+import io.vertigo.shiny.components.ShinyComponent;
 
-public final class ShinyTableRenderer {
+public final class ShinyTableRenderer implements ShinyComponentRenderer<ShinyTable> {
 
-	private ShinyTableRenderer() {
+	public ShinyTableRenderer() {
 		//private constructor
 	}
 
-	public static void render(final ShinyTable shinyTable, final ShinyWriter writer) {
+	@Override
+	public boolean accept(final ShinyComponent component) {
+		return component instanceof ShinyTable;
+	}
+
+	@Override
+	public void render(final ShinyTable shinyTable, final ShinyWriter writer) {
 		Assertion.check()
 				.isNotNull(shinyTable.rows())
 				.when(shinyTable.rows().isEmpty(), () -> Assertion.check().isNotBlank(shinyTable.noDataFound()))

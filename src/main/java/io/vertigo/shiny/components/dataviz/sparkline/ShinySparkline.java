@@ -21,6 +21,6 @@ public record ShinySparkline(
 	}
 
 	public void render(final ShinyWriter writer) {
-		ShinySparklineRenderer.render(this, writer);
+		new ShinySparklineRenderer().render(this, writer);
 	}
 }
