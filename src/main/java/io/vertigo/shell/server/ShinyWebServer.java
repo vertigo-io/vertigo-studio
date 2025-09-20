@@ -19,6 +19,8 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import io.vertigo.shell.Shell;
+import io.vertigo.shell.systems.file.commands.ls.FileLsCommand;
+import io.vertigo.shell.systems.file.commands.pwd.FilePwdCommand;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.data.list.ShinyListType;
 
@@ -66,6 +68,16 @@ public class ShinyWebServer extends WebSocketServer {
 				//				// Traiter la saisie utilisateur
 				//				String userInput = wsMessage.data();
 				//				System.out.println("Prompt reçu : " + userInput);
+				case "ls":
+					sendMessage(webSocket,
+							"table",
+							mapper.writeValueAsString(new FileLsCommand().build()));
+					break;
+				case "pwd":
+					sendMessage(webSocket,
+							"textPath",
+							mapper.writeValueAsString(new FilePwdCommand().build()));
+					break;
 				case "xcontainer":
 					ObjectNode child1Data = mapper.createObjectNode()
 							.put("type", "sparkLine")

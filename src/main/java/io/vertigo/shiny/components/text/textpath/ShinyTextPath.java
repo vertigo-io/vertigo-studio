@@ -2,6 +2,8 @@ package io.vertigo.shiny.components.text.textpath;
 
 import java.util.regex.Pattern; // New import
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
@@ -10,7 +12,7 @@ import io.vertigo.shiny.style.ShinyColor;
 public record ShinyTextPath(
 		String path,
 		String separator,
-		ShinyTextPathStyle textPathStyle) implements ShinyComponent {
+		@JsonIgnore ShinyTextPathStyle textPathStyle) implements ShinyComponent {
 
 	public ShinyTextPath {
 		// Perform any final validations here before building the object

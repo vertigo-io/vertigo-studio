@@ -23,6 +23,8 @@ import io.vertigo.shiny.components.dataviz.sparkline.ShinySparkline;
 import io.vertigo.shiny.components.dataviz.sparkline.ShinySparklineBuilder;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatus;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatusBuilder;
+import io.vertigo.shiny.components.error.ShinyError;
+import io.vertigo.shiny.components.error.ShinyErrorBuilder;
 import io.vertigo.shiny.components.input.multiselection.ShinyMultiSelection;
 import io.vertigo.shiny.components.input.multiselection.ShinyMultiSelectionBuilder;
 import io.vertigo.shiny.components.input.text.ShinyInputText;
@@ -60,6 +62,10 @@ public final class Shiny {
 
 	private Shiny() {
 		writer = new PrintWriter(System.out, true, StandardCharsets.UTF_8);
+	}
+
+	public static ShinyErrorBuilder error() {
+		return ShinyError.builder();
 	}
 
 	public static ShinyTableBuilder table() {

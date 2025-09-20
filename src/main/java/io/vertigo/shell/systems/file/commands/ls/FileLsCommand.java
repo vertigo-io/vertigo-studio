@@ -10,14 +10,14 @@ import java.util.stream.Stream;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.file.FileContext;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.ShinyWriter;
+import io.vertigo.shiny.components.ShinyComponent;
 import picocli.CommandLine.Command;
 
 @Command(name = "ls", description = "List files and directories.")
 public final class FileLsCommand implements ShellCommand {
 
 	@Override
-	public void run() {
+	public ShinyComponent build() {
 		final FileContext fileContext = FileContext.get();
 		final Path path = fileContext.getCurrentAbsolutePath();
 
@@ -31,17 +31,16 @@ public final class FileLsCommand implements ShellCommand {
 				rows.add(row);
 			});
 		} catch (final IOException e) {
-			System.out.println("Error listing files: " + e.getMessage());
+			return Shiny.error()
+					.withText("Error listing files: " + e.getMessage())
+					.build();
 		}
 
-		final ShinyWriter writer = Shiny.writer();
-
-		Shiny.table()
+		return Shiny.table()
 				.withTitle("files of " + path)
 				.withNoDataFound("no files found")
 				.withHeader("name", "isFile")
 				.addAllRows(rows)
-				.build()
-				.render(writer);
+				.build();
 	}
 }
