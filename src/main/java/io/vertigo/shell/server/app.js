@@ -40,6 +40,7 @@ function print(parsed) {
 		paragraph: ParagraphComponent,
 		photo: PhotoComponent,
 		progressBar: ProgressBarComponent,
+		rssFeed: RssComponent, // Ajout du nouveau composant
 		sankey: SankeyComponent,
 		sparkLine: SparkLineComponent,
 		spotify: SpotifyComponent,
@@ -135,6 +136,7 @@ function getDataTypeIcon(type) {
 		'json': 'code-2',
 		'list': 'list',
 		'progressBar': 'rabbit',
+		'rssFeed': 'rss',
 		'sankey': 'waves',
 		'sparkLine': 'trending-up',
 		'table': 'table-2',

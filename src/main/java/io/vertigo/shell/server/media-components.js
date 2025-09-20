@@ -24,22 +24,17 @@ class YouTubeComponent extends Component {
 }
 
 class SpotifyComponent extends Component {
-    constructor({ title, uri }) {
+    constructor({ title, url }) {
         super();
         this.title = title || 'Spotify Content';
-        this.uri = uri; // e.g., spotify:track:3n3Ppam7aqaR3ple0eGzCJ
+        this.url = url; // e.g., spotify:track:3n3Ppam7aqaR3ple0eGzCJ
     }
 
     toHtml() {
-        if (!this.uri) {
-            return `<div class="spotify-container">No Spotify URI provided.</div>`;
-        }
-        // Convert Spotify URI to embed URL
-        const embedUrl = this.uri.replace('spotify:', 'https://open.spotify.com/embed/').replace(':', '/');
         return `
             <div class="spotify-container">
                 <iframe 
-                    src="${embedUrl}"
+                    src="${this.url}"
                     width="100%" 
                     height="380" 
                     frameborder="0" 
@@ -68,5 +63,34 @@ class PhotoComponent extends Component {
                 <img src="${this.url}" alt="${this.alt}" class="photo-image">
             </div>
         `;
+    }
+}
+
+class RssComponent extends Component {
+    constructor({ title, items }) {
+        super();
+        this.title = title || 'RSS Feed';
+        this.items = items || [];
+    }
+
+    toHtml() {
+        if (this.items.length === 0) {
+            return '<div>No items in the feed.</div>';
+        }
+
+        let listHtml = '<ul>';
+        this.items.forEach(item => {
+            // Parse markdown link: [Title](URL)
+            const match = item.match(/\[(.*?)\]\((.*?)\)/);
+            if (match && match.length === 3) {
+                const itemTitle = match[1];
+                const itemUrl = match[2];
+                listHtml += `<li><a href="${itemUrl}" target="_blank" rel="noopener noreferrer">${itemTitle}</a></li>`;
+            } else {
+                listHtml += `<li>${item}</li>`; // Fallback for non-markdown items
+            }
+        });
+        listHtml += '</ul>';
+        return listHtml;
     }
 }

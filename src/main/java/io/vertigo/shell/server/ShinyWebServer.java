@@ -4,6 +4,7 @@ import static io.vertigo.shiny.components.data.tree.ShinyIcon.FILE;
 import static io.vertigo.shiny.components.data.tree.ShinyIcon.FOLDER_OPEN;
 
 import java.net.InetSocketAddress;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -17,6 +18,10 @@ import org.java_websocket.server.WebSocketServer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.rometools.rome.feed.synd.SyndEntry;
+import com.rometools.rome.feed.synd.SyndFeed;
+import com.rometools.rome.io.SyndFeedInput;
+import com.rometools.rome.io.XmlReader;
 
 import io.vertigo.shell.Shell;
 import io.vertigo.shell.systems.core.commands.uptime.UptimeCommand;
@@ -89,6 +94,26 @@ public class ShinyWebServer extends WebSocketServer {
 					sendMessage(webSocket,
 							"paragraph",
 							mapper.writeValueAsString(new UptimeCommand().build()));
+					break;
+				case "rss":
+					try {
+						final URL feedUrl = new URL("https://www.francetvinfo.fr/titres.rss");
+						final SyndFeedInput input = new SyndFeedInput();
+						final SyndFeed feed = input.build(new XmlReader(feedUrl));
+						final var listBuilder = Shiny.list()
+								.withTitle("Franceinfo RSS")
+								.withType(ShinyListType.DASHED);
+
+						for (final SyndEntry entry : feed.getEntries()) {
+							// Create a markdown link for each item
+							final String markdownLink = "[" + entry.getTitle() + "](" + entry.getLink() + ")";
+							listBuilder.addItem(markdownLink);
+						}
+						sendMessage(webSocket, "rssFeed", mapper.writeValueAsString(listBuilder.build()));
+					} catch (final Exception e) {
+						e.printStackTrace();
+						sendMessage(webSocket, "text", "\"Erreur lors de la récupération du flux RSS : " + e.getMessage() + "\"");
+					}
 					break;
 				case "xcontainer":
 					ObjectNode child1Data = mapper.createObjectNode()
@@ -248,7 +273,7 @@ public class ShinyWebServer extends WebSocketServer {
 				case "xspotify":
 					ObjectNode spotifyData = mapper.createObjectNode()
 							.put("title", "The Beatles - Here Comes The Sun")
-							.put("uri", "spotify:track:0MjJ0s0J80000000000000"); // Placeholder URI
+							.put("url", "https://open.spotify.com/intl-fr/track/45yEy5WJywhJ3sDI28ajTm");
 					sendMessage(webSocket, "spotify", mapper.writeValueAsString(spotifyData));
 					break;
 				case "xphoto":
