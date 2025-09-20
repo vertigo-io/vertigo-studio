@@ -20,7 +20,7 @@ const liveMap = new Map();
 wsManager.onMessageHandler = (event) => {
 	try {
 		const parsed = JSON.parse(event.data);
-		print(parsed);		
+		print(parsed);
 	} catch (error) {
 		alert(`Erreur : ${error.message}`);
 		addMessage(event.data, "response");
@@ -28,29 +28,30 @@ wsManager.onMessageHandler = (event) => {
 };
 
 //parsed = {type , data}
-function print(parsed){
-		console.log("print>>"+JSON.stringify(parsed));
-			const componentMap = {
-				barChart: BarChartComponent,
-	//			container: ContainerComponent,
-				gauge: GaugeComponent,
-				geoMap: GeoMapComponent,
-				json: JsonComponent,
-				list: ListComponent,
-				paragraph: ParagraphComponent,
-				photo: PhotoComponent,
-				progressBar: ProgressBarComponent,
-				sankey: SankeyComponent,
-				sparkLine: SparkLineComponent,
-				spotify: SpotifyComponent,
-				table: TableComponent,
-				title: TitleComponent,
-				tree: TreeComponent,
-				youtube: YouTubeComponent,
-			};
+function print(parsed) {
+	console.log("print>>" + JSON.stringify(parsed));
+	const componentMap = {
+		barChart: BarChartComponent,
+		//			container: ContainerComponent,
+		gauge: GaugeComponent,
+		geoMap: GeoMapComponent,
+		json: JsonComponent,
+		list: ListComponent,
+		paragraph: ParagraphComponent,
+		photo: PhotoComponent,
+		progressBar: ProgressBarComponent,
+		sankey: SankeyComponent,
+		sparkLine: SparkLineComponent,
+		spotify: SpotifyComponent,
+		table: TableComponent,
+		title: TitleComponent,
+		tree: TreeComponent,
+		youtube: YouTubeComponent,
+	};
 
-				if (componentMap[parsed.type]) {
+	if (componentMap[parsed.type]) {
 		const component = new componentMap[parsed.type](parsed.data);
+		
 		addCollapsible(parsed.type, component.title, component.toHtml());
 		setTimeout(() => component.activate(), 0);
 		if (component instanceof LiveComponent) {
@@ -68,31 +69,25 @@ function print(parsed){
 				liveMap.delete(liveData.id);
 			}
 		}
-	} else if (parsed.type ==='container') {
-		children = []; 
-		for (const componentParsed of parsed.data.children){
+	} else if (parsed.type === 'container') {
+		subComponents = [];
+		for (const componentParsed of parsed.data.children) {
 			if (componentMap[componentParsed.type]) {
 				const component = new componentMap[componentParsed.type](componentParsed.data);
-				children.push(component);
-			}	
-		}
-		const container = new ContainerComponent(parsed.data.title, children);
-		addCollapsible(parsed.type, container.title, container.toHtml());
-		setTimeout(() => container.activate(), 0);
-		
-/*		// Instantiate child components and pass them to the container
-		const childInstances = containerData.components.map(compData => {
-			const ComponentClass = componentMap[compData.type];
-			if (!ComponentClass) {
-				//Children must be simple components
-				throw new Error (`Unknown component type in container: ${compData.type}`);
+				subComponents.push(component);
 			}
-			return new ComponentClass(compData.data);
+		}
+		const container = new ContainerComponent(parsed.data.title, subComponents);
+
+		addCollapsible(parsed.type, container.title, container.toHtml());
+		//On active les composants du container
+		this.subComponents.forEach(subComponent => {
+			setTimeout(() => subComponent.activate(), 0);
+			if (subComponent instanceof LiveComponent) {
+				liveMap.set(subComponent.id, subComponent);
+			}
 		});
-		container.setChildComponents(childInstances);
-		addCollapsible("container", container.title, container.toHtml());
-		setTimeout(() => container.activate(), 0);
-*/	} else  {
+	} else {
 		addMessage(JSON.stringify(parsed), 'response');
 	}
 }
