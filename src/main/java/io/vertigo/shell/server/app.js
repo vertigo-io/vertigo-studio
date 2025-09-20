@@ -20,48 +20,74 @@ const wsManager = new WebSocketManager(
 wsManager.onMessageHandler = (event) => {
 	try {
 		const parsed = JSON.parse(event.data);
-		const componentMap = {
-			barChart: BarChartComponent,
-			gauge: GaugeComponent,
-			geoMap: GeoMapComponent,
-		    json: JsonComponent,
-			list: ListComponent,
-		    progressBar: ProgressBarComponent,
-			sankey:SankeyComponent,
-		    sparkLine: SparkLineComponent,
-			table: TableComponent,
-			tree:TreeComponent,
-			youtube: YouTubeComponent,
-			spotify: SpotifyComponent,
-			photo: PhotoComponent};
-		
-		if (componentMap[parsed.type]) {
-			const component = new componentMap[parsed.type](parsed.data);
-			addCollapsible(parsed.type, component.title, component.toHtml());
-			setTimeout(() => component.activate(), 0);
-			if(component instanceof LiveComponent){
-				liveMap.set(component.id, component);
-			}
-		} else if (parsed.type === 'live') {
-			//Update a component that inherits LiveComponent
-			const liveData = parsed.data;
-			const liveComponent = liveMap.get(liveData.id);
-			if (liveComponent) {
-				if (liveData.action === "update") {
-					liveComponent.update(liveData.value);
-				} else if (liveData.action === "complete") {
-					liveComponent.complete();
-					liveMap.delete(liveData.id);
-				}
-			}
-		} else {
-		    addMessage(JSON.stringify(parsed), 'response');
-		}	
+		print(parsed, true);		
 	} catch (error) {
 		alert(`Erreur : ${error.message}`);
 		addMessage(event.data, "response");
 	}
 };
+
+//parsed = {type , data}
+function print(parsed, isCollapsible){
+		console.log("print>>"+JSON.stringify(parsed));
+			const componentMap = {
+				barChart: BarChartComponent,
+	//			container: ContainerComponent,
+				gauge: GaugeComponent,
+				geoMap: GeoMapComponent,
+				json: JsonComponent,
+				list: ListComponent,
+				paragraph: ParagraphComponent,
+				photo: PhotoComponent,
+				progressBar: ProgressBarComponent,
+				sankey: SankeyComponent,
+				sparkLine: SparkLineComponent,
+				spotify: SpotifyComponent,
+				table: TableComponent,
+				title: TitleComponent,
+				tree: TreeComponent,
+				youtube: YouTubeComponent,
+			};
+	if (componentMap[parsed.type]) {
+		const component = new componentMap[parsed.type](parsed.data);
+		addCollapsible(parsed.type, component.title, component.toHtml(), isCollapsible);
+		setTimeout(() => component.activate(), 0);
+		if (component instanceof LiveComponent) {
+			liveMap.set(component.id, component);
+		}
+	} else if (parsed.type === 'live') {
+		//Update a component that inherits LiveComponent
+		const liveData = parsed.data;
+		const liveComponent = liveMap.get(liveData.id);
+		if (liveComponent) {
+			if (liveData.action === "update") {
+				liveComponent.update(liveData.value);
+			} else if (liveData.action === "complete") {
+				liveComponent.complete();
+				liveMap.delete(liveData.id);
+			}
+		}
+	} else if (parsed.type ==='container') {
+		const container = new ContainerComponent(parsed.data);
+		for (const componentParsed of container.childrenData){
+			print(componentParsed, false);			
+		}
+/*		// Instantiate child components and pass them to the container
+		const childInstances = containerData.components.map(compData => {
+			const ComponentClass = componentMap[compData.type];
+			if (!ComponentClass) {
+				//Children must be simple components
+				throw new Error (`Unknown component type in container: ${compData.type}`);
+			}
+			return new ComponentClass(compData.data);
+		});
+		container.setChildComponents(childInstances);
+		addCollapsible("container", container.title, container.toHtml());
+		setTimeout(() => container.activate(), 0);
+*/	} else  {
+		addMessage(JSON.stringify(parsed), 'response');
+	}
+}
 
 function sendMessage() {
 	const input = document.getElementById("prompt");
@@ -101,22 +127,25 @@ function toggleCollapse(element) {
 function getDataTypeIcon(type) {
 	const iconMap = {
 		'barChart': 'chart-bar',
-		'gauge': 'gauge', 
+		'gauge': 'gauge',
 		'geoMap': 'map-pin',
 		'json': 'code-2',
 		'list': 'list',
 		'progressBar': 'rabbit',
-		'sankey':'waves',
+		'sankey': 'waves',
 		'sparkLine': 'trending-up',
 		'table': 'table-2',
 		'tree': 'folder-tree'
-		};
+	};
 	return iconMap[type] || 'traffic-cone';
 }
 
-function addCollapsible(type, title, content) {
+function addCollapsible(type, title, content, isCollapsible) {
 	const iconName = getDataTypeIcon(type);
-	const html = `<div class="table-title" onclick="toggleCollapse(this)">
+
+	html = "";
+	if (isCollapsible){
+		html = `<div class="table-title" onclick="toggleCollapse(this)">
           	<div class="table-title-content">
             		<i data-lucide="${iconName}" class="table-icon"></i>
            	 	${title}
@@ -124,7 +153,9 @@ function addCollapsible(type, title, content) {
           	<i data-lucide="chevron-down" class="collapse-icon"></i>
         		</div>
 			<div class="collapsible-content">${content}</div>`;
-
+	} else {
+		html= content;
+	}
 	const div = document.createElement("div");
 	div.className = "chat-message response-message";
 	div.innerHTML = html;

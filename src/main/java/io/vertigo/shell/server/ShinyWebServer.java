@@ -15,6 +15,7 @@ import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import io.vertigo.shell.Shell;
@@ -65,6 +66,32 @@ public class ShinyWebServer extends WebSocketServer {
 				//				// Traiter la saisie utilisateur
 				//				String userInput = wsMessage.data();
 				//				System.out.println("Prompt reçu : " + userInput);
+				case "xcontainer":
+					ObjectNode child1Data = mapper.createObjectNode()
+							.put("type", "sparkLine")
+							.putPOJO("data", Shiny.sparkline()
+									.withTitle("Ventes par produit")
+									.withValues(156, 450, 300, 200, 100, 23)
+									.build());
+					ObjectNode child2Data = mapper.createObjectNode()
+							.put("type", "list")
+							.putPOJO("data", Shiny.list()
+									.withTitle("planetes")
+									.withType(ShinyListType.DASHED)
+									.addItem("Uranus")
+									.addItem("Saturn")
+									.addItem("Venus")
+									.build());
+					ArrayNode children = mapper.createArrayNode()
+							.add(child1Data)
+							.add(child2Data);
+
+					ObjectNode containerData = mapper.createObjectNode()
+							.put("title", "premier conteneur")
+							.set("children", children);
+
+					sendMessage(webSocket, "container", mapper.writeValueAsString(containerData));
+					break;
 				case "xtable":
 					final List<String[]> rows = new ArrayList<>();
 					rows.add(new String[] { "Arthur", "Penn" });
@@ -218,13 +245,17 @@ public class ShinyWebServer extends WebSocketServer {
 		}
 	}
 
-	private void sendMessage(WebSocket conn, String type, String data) {
-		final String json = String.format("""
+	private String buildMessage(String type, String data) {
+		return String.format("""
 				{
 				"type": "%s",
 				"data": %s
 				}
 				""", type, data);
+	}
+
+	private void sendMessage(WebSocket conn, String type, String data) {
+		final String json = buildMessage(type, data);
 		System.out.println("send : " + json);
 		conn.send(json);
 	}

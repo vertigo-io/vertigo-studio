@@ -651,3 +651,10 @@
     display: block;
 }
 
+.container-content {
+    padding: 10px;
+    border: 1px dashed var(--assistant-accent);
+    margin-top: 10px;
+    border-radius: 8px;
+}
+

@@ -306,51 +306,63 @@ class ProgressBarComponent extends LiveComponent {
 }
 
 class GaugeComponent extends Component {
-	constructor({ title, value, min, maxValue, label }) {
-		super();
-		this.title = title || 'Gauge';
-		this.value = value || 0;
-		this.min = min || 0;
-		this.max = maxValue || 100;
-		this.label = label || '';
-		this.canvasId = `gauge-${Math.random().toString(36).substr(2, 9)}`;
-	}
+    constructor({ title, value, min, maxValue, label }) {
+        super();
+        this.title = title || 'Gauge';
+        this.value = value || 0;
+        this.min = min || 0;
+        this.max = maxValue || 100;
+        this.label = label || '';
+        this.canvasId = `gauge-${Math.random().toString(36).substr(2, 9)}`;
+    }
 
-	toHtml() {
-		return `<canvas id="${this.canvasId}" class="gauge-canvas"></canvas>`;
-	}
+    toHtml() {
+        return `<canvas id="${this.canvasId}" class="gauge-canvas"></canvas>`;
+    }
 
-	activate() {
-		const target = document.getElementById(this.canvasId);
-		if (!target) {
-			throw new Error(`Gauge canvas not found for ID: ${this.canvasId}`);
-		}
-
-		const opts = {
-			angle: 0.15,
-			lineWidth: 0.44,
-			radiusScale: 1,
-			pointer: {
-				length: 0.6,
-				strokeWidth: 0.035,
-				color: '#FFFFFF'
-			},
-			limitMax: false,
-			limitMin: false,
-			colorStart: '#6FADCF',
-			colorStop: '#8FC0DA',
-			strokeColor: '#E0E0E0',
-			generateGradient: true,
-			highDpiSupport: true,
-		};
-
-		const gauge = new Gauge(target).setOptions(opts);
-		gauge.maxValue = this.max;
-		gauge.setMinValue(this.min);
-		gauge.animationSpeed = 32;
-		gauge.set(this.value);
-	}
+    activate() {
+        const target = document.getElementById(this.canvasId);
+        if (!target) {
+            throw new Error(`Gauge canvas not found for ID: ${this.canvasId}`);
+        }
+        
+        // Use minimal options for debugging
+        const gauge = new Gauge(target);
+        gauge.maxValue = this.max;
+        gauge.setMinValue(this.min);
+        gauge.set(this.value);
+    }
 }
+
+class ContainerComponent extends Component {
+    constructor({ title, children }) {
+        super();
+        this.title = title || 'Container';
+        this.childrenData = children; //[] arrays of
+    }
+
+/*    // This method will be called by addContainerComponent to instantiate children
+    setChildComponents(componentInstances) {
+        this.childComponents = componentInstances;
+    }
+*/
+    toHtml() {
+        // Generate HTML for all child components
+/*        const childrenHtml = this.children.map(comp => comp.toHtml()).join('');
+        return `<div class="container-content">${childrenHtml}</div>`;
+*/    }
+
+    activate() {
+/*        // Activate all child components
+        this.childComponents.forEach(comp => {
+            if (typeof comp.activate === 'function') {
+                comp.activate();
+            }
+        });
+*/    }
+}
+
+
 
 class SankeyComponent extends Component {
   constructor({ title, data }) {

@@ -21,10 +21,6 @@ class YouTubeComponent extends Component {
             </div>
         `;
     }
-
-    activate() {
-        // YouTube embeds usually don't require activation beyond being in the DOM
-    }
 }
 
 class SpotifyComponent extends Component {
@@ -53,10 +49,6 @@ class SpotifyComponent extends Component {
             </div>
         `;
     }
-
-    activate() {
-        // Spotify embeds usually don't require activation beyond being in the DOM
-    }
 }
 
 class PhotoComponent extends Component {
@@ -76,9 +68,5 @@ class PhotoComponent extends Component {
                 <img src="${this.url}" alt="${this.alt}" class="photo-image">
             </div>
         `;
-    }
-
-    activate() {
-        // Simple images don't require activation
     }
 }
