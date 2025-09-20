@@ -21,23 +21,7 @@ public record ShinyGauge(
 		return new ShinyGaugeBuilder();
 	}
 
-	public void render(ShinyWriter writer) {
-		final double percentage;
-		if (value >= maxValue) {
-			percentage = 1;
-		} else if (value <= 0) {
-			percentage = 0;
-		} else {
-			percentage = (value / maxValue);
-		}
-		final int filledLength = (int) (style.maxLength() * percentage);
-		final String gauge = new StringBuilder()
-				.append(title != null ? title + " " : "")
-				.append("[")
-				.append(style.color().fg("█".repeat(filledLength) + "▒".repeat(style.maxLength() - filledLength)))
-				.append("] ")
-				.append(String.format("%.2f%%", percentage * 100))
-				.toString();
-		writer.println(gauge);
+	public void render(final ShinyWriter writer) {
+		ShinyGaugeRenderer.render(this, writer);
 	}
 }
