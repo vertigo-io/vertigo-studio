@@ -335,31 +335,25 @@ class GaugeComponent extends Component {
 }
 
 class ContainerComponent extends Component {
-    constructor({ title, children }) {
+	//Attention on le construit de l'extérieur et non à partir de ses données !!
+    constructor(title, children) {
         super();
         this.title = title || 'Container';
-        this.childrenData = children; //[] arrays of
+        this.children = children; //[] arrays of Components
     }
 
-/*    // This method will be called by addContainerComponent to instantiate children
-    setChildComponents(componentInstances) {
-        this.childComponents = componentInstances;
-    }
-*/
     toHtml() {
         // Generate HTML for all child components
-/*        const childrenHtml = this.children.map(comp => comp.toHtml()).join('');
+        const childrenHtml = this.children.map(comp => comp.toHtml()).join('');
         return `<div class="container-content">${childrenHtml}</div>`;
-*/    }
+    }
 
     activate() {
-/*        // Activate all child components
-        this.childComponents.forEach(comp => {
-            if (typeof comp.activate === 'function') {
+        // Activate all child components
+        this.children.forEach(comp => {
                 comp.activate();
-            }
         });
-*/    }
+    }
 }
 
 

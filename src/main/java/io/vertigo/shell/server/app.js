@@ -68,10 +68,17 @@ function print(parsed, isCollapsible){
 			}
 		}
 	} else if (parsed.type ==='container') {
-		const container = new ContainerComponent(parsed.data);
-		for (const componentParsed of container.childrenData){
-			print(componentParsed, false);			
+		children = []; 
+		for (const componentParsed of parsed.data.children){
+			if (componentMap[componentParsed.type]) {
+				const component = new componentMap[componentParsed.type](componentParsed.data);
+				children.push(component);
+			}	
 		}
+		const container = new ContainerComponent(parsed.data.title, children);
+		addCollapsible(parsed.type, container.title, container.toHtml(), isCollapsible);
+		setTimeout(() => container.activate(), 0);
+		
 /*		// Instantiate child components and pass them to the container
 		const childInstances = containerData.components.map(compData => {
 			const ComponentClass = componentMap[compData.type];
