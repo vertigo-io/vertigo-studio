@@ -10,16 +10,14 @@ import io.vertigo.shell.systems.file.FileContext;
 import io.vertigo.shell.systems.java.JavaVar;
 import io.vertigo.shell.systems.photo.PhotoVar;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.ShinyWriter;
+import io.vertigo.shiny.components.ShinyComponent;
 import picocli.CommandLine.Command;
 
 @Command(name = "list", description = "Display env properties.")
 public final class EnvListCommand implements ShellCommand {
 
 	@Override
-	public void run() {
-		final ShinyWriter writer = Shiny.writer();
-
+	public ShinyComponent build() {
 		final List<String[]> rows = new ArrayList<>();
 
 		// File Context
@@ -42,11 +40,10 @@ public final class EnvListCommand implements ShellCommand {
 		// Java 
 		rows.add(new String[] { "java", "rootPath", Env.get(JavaVar.ROOT_PATH) });
 
-		Shiny.table()
+		return Shiny.table()
 				.withTitle("Systems Properties")
 				.withHeader("System", "properties", "Value")
 				.addAllRows(rows)
-				.build()
-				.render(writer);
+				.build();
 	}
 }

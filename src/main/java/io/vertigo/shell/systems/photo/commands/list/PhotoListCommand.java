@@ -10,7 +10,7 @@ import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.photo.PhotoContext;
 import io.vertigo.shell.systems.photo.PhotoInfo;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.ShinyWriter;
+import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.style.ShinyColors;
 import picocli.CommandLine.Command;
 
@@ -18,15 +18,8 @@ import picocli.CommandLine.Command;
 public final class PhotoListCommand implements ShellCommand {
 
 	@Override
-	public void run() {
-		final ShinyWriter writer = Shiny.writer();
-
+	public ShinyComponent build() {
 		final List<PhotoInfo> photos = PhotoContext.getPhotos();
-
-		if (photos.isEmpty()) {
-			writer.println("No photos loaded. Use 'load' command first.");
-			return;
-		}
 
 		final Set<String> duplicateHashes = photos.stream()
 				.collect(Collectors.groupingBy(PhotoInfo::md5Hash, Collectors.counting()))
@@ -52,12 +45,11 @@ public final class PhotoListCommand implements ShellCommand {
 			rows.add(row);
 		}
 
-		Shiny.table()
+		return Shiny.table()
 				.withTitle("Photos")
-				.withNoDataFound("No photos found.")
+				.withNoDataFound("No photos loaded. Use 'load' command first.")
 				.withHeader("Path", "Size", "Date/Time", "Width", "Height", "MD5 Hash")
 				.addAllRows(rows)
-				.build()
-				.render(writer);
+				.build();
 	}
 }

@@ -4,6 +4,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import io.vertigo.shell.ShellCommand;
+import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.components.ShinyComponent;
 import picocli.CommandLine.Command;
 
 @Command(name = "ip", description = "Displays the local host's IP address.")
@@ -11,12 +13,16 @@ import picocli.CommandLine.Command;
 public class IpCommand implements ShellCommand {
 
 	@Override
-	public void run() {
+	public ShinyComponent build() {
 		try {
 			final InetAddress localHost = InetAddress.getLocalHost();
-			writer().println("IP Address: " + localHost.getHostAddress());
+			return Shiny.paragraph()
+					.withText("IP Address: " + localHost.getHostAddress())
+					.build();
 		} catch (final UnknownHostException e) {
-			System.err.println("Unable to obtain the IP address.");
+			return Shiny.error()
+					.withText("Unable to obtain the IP address.")
+					.build();
 		}
 	}
 }

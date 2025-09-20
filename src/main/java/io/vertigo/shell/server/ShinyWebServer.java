@@ -19,6 +19,8 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import io.vertigo.shell.Shell;
+import io.vertigo.shell.systems.core.commands.uptime.UptimeCommand;
+import io.vertigo.shell.systems.env.commands.list.EnvListCommand;
 import io.vertigo.shell.systems.file.commands.ls.FileLsCommand;
 import io.vertigo.shell.systems.file.commands.pwd.FilePwdCommand;
 import io.vertigo.shiny.Shiny;
@@ -77,6 +79,16 @@ public class ShinyWebServer extends WebSocketServer {
 					sendMessage(webSocket,
 							"textPath",
 							mapper.writeValueAsString(new FilePwdCommand().build()));
+					break;
+				case "env list":
+					sendMessage(webSocket,
+							"table",
+							mapper.writeValueAsString(new EnvListCommand().build()));
+					break;
+				case "uptime":
+					sendMessage(webSocket,
+							"paragraph",
+							mapper.writeValueAsString(new UptimeCommand().build()));
 					break;
 				case "xcontainer":
 					ObjectNode child1Data = mapper.createObjectNode()
