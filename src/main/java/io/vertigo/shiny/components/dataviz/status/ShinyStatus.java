@@ -1,7 +1,6 @@
 package io.vertigo.shiny.components.dataviz.status;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
@@ -20,10 +19,6 @@ public record ShinyStatus(
 	}
 
 	public void render(final ShinyWriter writer) {
-		final String statusLine = types.stream()
-				.map(status -> status.color().fg(style.shape().getCharacter()))
-				.collect(Collectors.joining(" "));
-
-		writer.println(title != null ? title + " " + statusLine : statusLine);
+		ShinyStatusRenderer.render(this, writer);
 	}
 }
