@@ -27,10 +27,10 @@ public class ShinyJsonTest {
 				"address": null
 				}
 				""";
-		Shiny.json()
-				.withJson(json)
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.json()
+						.withJson(json)
+						.build());
 		writer.println();
 	}
 
@@ -51,7 +51,10 @@ public class ShinyJsonTest {
 							  },"customer": null
 
 				}""";
-		Shiny.json().withJson(json).build().render(writer);
+		Shiny.render(
+				Shiny.json()
+						.withJson(json)
+						.build());
 		writer.println();
 	}
 
@@ -62,17 +65,17 @@ public class ShinyJsonTest {
 				"city": "New York", "population": 8400000, "landmarks": ["Statue of Liberty", "Empire State Building"]
 				}
 				""";
-		Shiny.json()
-				.withJson(json)
-				.withStyle(new ShinyJsonStyle()
-						.withLabelColor(ShinyColors.CYAN)
-						.withNumberColor(ShinyColors.MAGENTA)
-						.withStringColor(ShinyColors.YELLOW)
-						.withColonColor(ShinyColors.GREEN)
-						.withBracketColor(ShinyColors.RED)
-						.withBracesColor(ShinyColors.RED))
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.json()
+						.withJson(json)
+						.withStyle(new ShinyJsonStyle()
+								.withLabelColor(ShinyColors.CYAN)
+								.withNumberColor(ShinyColors.MAGENTA)
+								.withStringColor(ShinyColors.YELLOW)
+								.withColonColor(ShinyColors.GREEN)
+								.withBracketColor(ShinyColors.RED)
+								.withBracesColor(ShinyColors.RED))
+						.build());
 		writer.println();
 	}
 
@@ -88,20 +91,20 @@ public class ShinyJsonTest {
 							"details": null
 					}
 				""";
-		Shiny.json()
-				.withJson(json)
-				.withStyle(new ShinyJsonStyle()
-						.withLabelColor(ShinyColors.BLUE_BRIGHT)
-						.withStringColor(ShinyColors.GREEN_BRIGHT)
-						.withNumberColor(ShinyColors.CYAN_BRIGHT)
-						.withBracesColor(ShinyColors.RED)
-						.withBracketColor(ShinyColors.MAGENTA)
-						.withColonColor(ShinyColors.YELLOW)
-						.withCommaColor(ShinyColors.WHITE)
-						.withBooleanColor(ShinyColors.GREEN)
-						.withNullColor(ShinyColors.RED))
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.json()
+						.withJson(json)
+						.withStyle(new ShinyJsonStyle()
+								.withLabelColor(ShinyColors.BLUE_BRIGHT)
+								.withStringColor(ShinyColors.GREEN_BRIGHT)
+								.withNumberColor(ShinyColors.CYAN_BRIGHT)
+								.withBracesColor(ShinyColors.RED)
+								.withBracketColor(ShinyColors.MAGENTA)
+								.withColonColor(ShinyColors.YELLOW)
+								.withCommaColor(ShinyColors.WHITE)
+								.withBooleanColor(ShinyColors.GREEN)
+								.withNullColor(ShinyColors.RED))
+						.build());
 		writer.println();
 	}
 
@@ -114,7 +117,10 @@ public class ShinyJsonTest {
 				"isStudent": false,
 				"address": null
 				"""; // Missing closing brace
-		Shiny.json().withJson(json).build().render(writer);
+		Shiny.render(
+				Shiny.json()
+						.withJson(json)
+						.build());
 		writer.println();
 	}
 }

@@ -47,7 +47,7 @@ public class ShinyTreeTest {
 				.addChild("The Legend of Zelda", FILE).up()
 				.addChild("Uncharted", FILE);
 
-		tree.render(writer);
+		Shiny.render(tree);
 		writer.println();
 	}
 
@@ -73,7 +73,7 @@ public class ShinyTreeTest {
 				.addChild("Star", STAR).up()
 				.addChild("Heart", HEART).up()
 				.addChild("Smiley", SMILEY).up();
-		tree.render(writer);
+		Shiny.render(tree);
 		writer.println();
 	}
 
@@ -96,7 +96,7 @@ public class ShinyTreeTest {
 		tree.getRoot().addChild("database", DB);
 		tree.getRoot().addChild("admin", USER);
 
-		tree.render(writer);
+		Shiny.render(tree);
 		writer.println();
 	}
 }

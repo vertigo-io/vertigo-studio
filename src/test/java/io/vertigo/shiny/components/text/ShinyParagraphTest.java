@@ -12,14 +12,14 @@ public class ShinyParagraphTest {
 	}
 
 	private static void testParagraph(final ShinyWriter writer) {
-		Shiny.paragraph()
-				.withText("This is a paragraph.")
-				.build()
-				.render(writer);
-		Shiny.paragraph()
-				.withText("This is a paragraph with " + ShinyColors.BLUE.fg("blue fg") + " and " + ShinyColors.GREEN.bg("green bg"))
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.paragraph()
+						.withText("This is a paragraph.")
+						.build());
+		Shiny.render(
+				Shiny.paragraph()
+						.withText("This is a paragraph with " + ShinyColors.BLUE.fg("blue fg") + " and " + ShinyColors.GREEN.bg("green bg"))
+						.build());
 	}
 
 }

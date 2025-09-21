@@ -23,37 +23,37 @@ public class ShinyListTest {
 
 	private static void testUnorderedList(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Unordered List ---"));
-		Shiny.list()
-				.withType(ShinyListType.UNORDERED)
-				.addItem("Item 1")
-				.addItem("Item 2")
-				.addItem("Item 3")
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.list()
+						.withType(ShinyListType.UNORDERED)
+						.addItem("Item 1")
+						.addItem("Item 2")
+						.addItem("Item 3")
+						.build());
 		writer.println();
 	}
 
 	private static void testOrderedList(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Ordered List ---"));
-		Shiny.list()
-				.withType(ShinyListType.ORDERED)
-				.addItem("First item")
-				.addItem("Second item")
-				.addItem("Third item")
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.list()
+						.withType(ShinyListType.ORDERED)
+						.addItem("First item")
+						.addItem("Second item")
+						.addItem("Third item")
+						.build());
 		writer.println();
 	}
 
 	private static void testDashedList(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Dashed List ---"));
-		Shiny.list()
-				.withType(ShinyListType.DASHED)
-				.addItem("Task A")
-				.addItem("Task B")
-				.addItem("Task C")
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.list()
+						.withType(ShinyListType.DASHED)
+						.addItem("Task A")
+						.addItem("Task B")
+						.addItem("Task C")
+						.build());
 		writer.println();
 	}
 
@@ -65,29 +65,29 @@ public class ShinyListTest {
 				.addItem("Sub-item 2")
 				.build();
 
-		Shiny.list()
-				.withType(ShinyListType.ORDERED)
-				.addItem("Main Item 1")
-				.addList(nested)
-				.addItem("Main Item 2")
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.list()
+						.withType(ShinyListType.ORDERED)
+						.addItem("Main Item 1")
+						.addList(nested)
+						.addItem("Main Item 2")
+						.build());
 		writer.println();
 	}
 
 	private static void testColoredList(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Colored List ---"));
-		Shiny.list()
-				.withType(ShinyListType.DASHED)
-				.withStyle(new ShinyListStyle()
-						// Color the bullets/numbers/dashes
-						.withItemColor(GREEN)
-						.withBulletColor(RED))
-				.addItem("Uranus")
-				.addItem("Saturn")
-				.addItem("Venus")
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.list()
+						.withType(ShinyListType.DASHED)
+						.withStyle(new ShinyListStyle()
+								// Color the bullets/numbers/dashes
+								.withItemColor(GREEN)
+								.withBulletColor(RED))
+						.addItem("Uranus")
+						.addItem("Saturn")
+						.addItem("Venus")
+						.build());
 		writer.println();
 	}
 }

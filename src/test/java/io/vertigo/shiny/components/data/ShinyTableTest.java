@@ -26,12 +26,12 @@ public class ShinyTableTest {
 				new String[] { "Jane Smith", "25", "London" },
 				new String[] { "Peter Jones", "35", "Paris" });
 
-		Shiny.table()
-				.withTitle("User Information")
-				.withHeader("Name", "Age", "City")
-				.addAllRows(data)
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.table()
+						.withTitle("User Information")
+						.withHeader("Name", "Age", "City")
+						.addAllRows(data)
+						.build());
 		writer.println();
 	}
 
@@ -66,24 +66,24 @@ public class ShinyTableTest {
 				new String[] { "Spain", "48000000" },
 				new String[] { "Sweden", "10600000" });
 
-		Shiny.table()
-				.withTitle("European Union Countries - Population")
-				.withHeader("Country", "Population")
-				.addAllRows(euCountries)
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.table()
+						.withTitle("European Union Countries - Population")
+						.withHeader("Country", "Population")
+						.addAllRows(euCountries)
+						.build());
 		writer.println();
 	}
 
 	private static void testEmptyTable(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Empty Table ---"));
-		Shiny.table()
-				.withTitle("Empty Data")
-				.withHeader("Col1", "Col2")
-				.addAllRows(List.of()) // Empty data
-				.withNoDataFound("No data available for this table.")
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.table()
+						.withTitle("Empty Data")
+						.withHeader("Col1", "Col2")
+						.addAllRows(List.of()) // Empty data
+						.withNoDataFound("No data available for this table.")
+						.build());
 		writer.println();
 	}
 
@@ -94,17 +94,17 @@ public class ShinyTableTest {
 				new String[] { "Item B", "250", "Inactive" },
 				new String[] { "Item C", "75", "Active" });
 
-		Shiny.table()
-				.withTitle("Product Status")
-				.withHeader("Product", "Quantity", "Status")
-				.addAllRows(data)
-				.withStyle(new ShinyTableStyle()
-						.withTitleBackgroundColor(ShinyColors.WHITE)
-						.withHeaderBackgroundColor(ShinyColors.GREEN_BRIGHT)
-						.withAltRowBackgroundColor(ShinyColors.CYAN_BRIGHT)
-						.withBorderColor(ShinyColors.RED))
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.table()
+						.withTitle("Product Status")
+						.withHeader("Product", "Quantity", "Status")
+						.addAllRows(data)
+						.withStyle(new ShinyTableStyle()
+								.withTitleBackgroundColor(ShinyColors.WHITE)
+								.withHeaderBackgroundColor(ShinyColors.GREEN_BRIGHT)
+								.withAltRowBackgroundColor(ShinyColors.CYAN_BRIGHT)
+								.withBorderColor(ShinyColors.RED))
+						.build());
 		writer.println();
 
 		final ShinyTableBuilder tableBuilder = Shiny.table()
@@ -119,40 +119,40 @@ public class ShinyTableTest {
 						.withAltRowBackgroundColor(ShinyColors.CYAN)
 						.withBorderColor(ShinyColors.YELLOW));
 
-		tableBuilder
-				.withTitle("Sales Report - Simple")
-				.withHeader("Region", "Sales", "Growth") // Need to re-add header and rows
-				.addAllRows(List.of(
-						new String[] { "North", "12345", "10.5%" },
-						new String[] { "South", "9876", "5.2%" }))
-				.withStyle(new ShinyTableStyle()
-						.withBorder(ShinyBorder.Simple))
-				.build()
-				.render(writer);
+		Shiny.render(
+				tableBuilder
+						.withTitle("Sales Report - Simple")
+						.withHeader("Region", "Sales", "Growth") // Need to re-add header and rows
+						.addAllRows(List.of(
+								new String[] { "North", "12345", "10.5%" },
+								new String[] { "South", "9876", "5.2%" }))
+						.withStyle(new ShinyTableStyle()
+								.withBorder(ShinyBorder.Simple))
+						.build());
 		writer.println();
 
-		tableBuilder
-				.withTitle("Sales Report - SimpleHeavy")
-				.withHeader("Region", "Sales", "Growth") // Need to re-add header and rows
-				.addAllRows(List.of(
-						new String[] { "North", "12345", "10.5%" },
-						new String[] { "South", "9876", "5.2%" }))
-				.withStyle(new ShinyTableStyle()
-						.withBorder(ShinyBorder.SimpleHeavy))
-				.build()
-				.render(writer);
+		Shiny.render(
+				tableBuilder
+						.withTitle("Sales Report - SimpleHeavy")
+						.withHeader("Region", "Sales", "Growth") // Need to re-add header and rows
+						.addAllRows(List.of(
+								new String[] { "North", "12345", "10.5%" },
+								new String[] { "South", "9876", "5.2%" }))
+						.withStyle(new ShinyTableStyle()
+								.withBorder(ShinyBorder.SimpleHeavy))
+						.build());
 		writer.println();
 
-		tableBuilder
-				.withTitle("Sales Report - Horizontal")
-				.withHeader("Region", "Sales", "Growth") // Need to re-add header and rows
-				.addAllRows(List.of(
-						new String[] { "North", "12345", "10.5%" },
-						new String[] { "South", "9876", "5.2%" }))
-				.withStyle(new ShinyTableStyle()
-						.withBorder(ShinyBorder.Horizontal))
-				.build()
-				.render(writer);
+		Shiny.render(
+				tableBuilder
+						.withTitle("Sales Report - Horizontal")
+						.withHeader("Region", "Sales", "Growth") // Need to re-add header and rows
+						.addAllRows(List.of(
+								new String[] { "North", "12345", "10.5%" },
+								new String[] { "South", "9876", "5.2%" }))
+						.withStyle(new ShinyTableStyle()
+								.withBorder(ShinyBorder.Horizontal))
+						.build());
 		writer.println();
 	}
 }

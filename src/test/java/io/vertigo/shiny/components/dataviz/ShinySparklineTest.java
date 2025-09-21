@@ -20,61 +20,61 @@ public class ShinySparklineTest {
 
 	private static void testTemperatureSparkline(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Temperature Sparkline ---"));
-		Shiny.sparkline()
-				.withTitle("Temperature")
-				.withValues(List.of(10.0, 12.0, 15.0, 13.0, 11.0, 10.0, 9.0, 10.0, 12.0, 14.0, 16.0, 15.0))
-				.withStyle(new ShinySparklineStyle()
-						.withColor(ShinyColors.GREEN))
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.sparkline()
+						.withTitle("Temperature")
+						.withValues(List.of(10.0, 12.0, 15.0, 13.0, 11.0, 10.0, 9.0, 10.0, 12.0, 14.0, 16.0, 15.0))
+						.withStyle(new ShinySparklineStyle()
+								.withColor(ShinyColors.GREEN))
+						.build());
 		writer.println();
 	}
 
 	private static void testStockPriceSparkline(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Stock Price Sparkline ---"));
-		Shiny.sparkline()
-				.withTitle("Stock Price")
-				.withValues(List.of(100.0, 102.0, 105.0, 103.0, 101.0, 100.0, 99.0, 100.0, 102.0, 104.0, 106.0, 105.0))
-				.withStyle(new ShinySparklineStyle()
-						.withColor(ShinyColors.BLUE))
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.sparkline()
+						.withTitle("Stock Price")
+						.withValues(List.of(100.0, 102.0, 105.0, 103.0, 101.0, 100.0, 99.0, 100.0, 102.0, 104.0, 106.0, 105.0))
+						.withStyle(new ShinySparklineStyle()
+								.withColor(ShinyColors.BLUE))
+						.build());
 		writer.println();
 	}
 
 	private static void testCPULoadSparkline(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- CPU Load Sparkline ---"));
-		Shiny.sparkline()
-				.withTitle("CPU Load")
-				.withValues(List.of(0.1, 0.2, 0.5, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0))
-				.withStyle(new ShinySparklineStyle()
-						.withColor(ShinyColors.RED))
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.sparkline()
+						.withTitle("CPU Load")
+						.withValues(List.of(0.1, 0.2, 0.5, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0))
+						.withStyle(new ShinySparklineStyle()
+								.withColor(ShinyColors.RED))
+						.build());
 		writer.println();
 	}
 
 	private static void testConstantValueSparkline(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Constant Value Sparkline ---"));
-		Shiny.sparkline()
-				.withTitle("Constant")
-				.withValues(List.of(5.0, 5.0, 5.0, 5.0, 5.0))
-				.withStyle(new ShinySparklineStyle()
-						.withColor(ShinyColors.YELLOW))
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.sparkline()
+						.withTitle("Constant")
+						.withValues(List.of(5.0, 5.0, 5.0, 5.0, 5.0))
+						.withStyle(new ShinySparklineStyle()
+								.withColor(ShinyColors.YELLOW))
+						.build());
 		writer.println();
 	}
 
 	private static void testEmptyDataSparkline(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Empty Data Sparkline ---"));
-		Shiny.sparkline()
-				.withTitle("Empty")
-				.withValues(List.of()) // Empty list
-				.withStyle(new ShinySparklineStyle()
-						.withColor(ShinyColors.MAGENTA))
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.sparkline()
+						.withTitle("Empty")
+						.withValues(List.of()) // Empty list
+						.withStyle(new ShinySparklineStyle()
+								.withColor(ShinyColors.MAGENTA))
+						.build());
 		writer.println();
 	}
 }

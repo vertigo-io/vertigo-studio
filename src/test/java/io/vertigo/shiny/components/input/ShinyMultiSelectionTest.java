@@ -18,7 +18,7 @@ public class ShinyMultiSelectionTest {
 				.withTitle("Choose your favorite fruits:")
 				.withOptions("Apple", "Banana", "Cherry", "Date")
 				.build();
-		multiSelection.render(writer);
+		Shiny.render(multiSelection);
 
 		final List<String> selected = multiSelection.getSelectedOptions();
 		writer.println("You have selected " + selected);
@@ -30,7 +30,7 @@ public class ShinyMultiSelectionTest {
 				.withOptions("Red", "Green", "Blue", "Yellow")
 				.withSelected(List.of("Green", "Yellow"))
 				.build();
-		multiSelection.render(writer);
+		Shiny.render(multiSelection);
 
 		final List<String> selected = multiSelection.getSelectedOptions();
 		writer.println(selected.toString());

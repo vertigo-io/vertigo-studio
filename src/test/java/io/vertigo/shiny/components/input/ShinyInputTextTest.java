@@ -20,7 +20,7 @@ public class ShinyInputTextTest {
 				.withLabel("Enter your name")
 				.build();
 
-		input.render(Shiny.writer());
+		Shiny.render(input);
 
 		Assertions.assertEquals("Hello World", input.value().get());
 	}
@@ -35,7 +35,7 @@ public class ShinyInputTextTest {
 				.withRequired(true)
 				.build();
 
-		input.render(Shiny.writer());
+		Shiny.render(input);
 
 		Assertions.assertEquals("Hello World", input.value().get());
 	}
@@ -50,7 +50,7 @@ public class ShinyInputTextTest {
 				.withPattern("\\d{5}")
 				.build();
 
-		input.render(Shiny.writer());
+		Shiny.render(input);
 
 		Assertions.assertEquals("12345", input.value().get());
 	}
@@ -65,7 +65,7 @@ public class ShinyInputTextTest {
 				.addAllSuggestions(Arrays.asList("red", "green", "blue"))
 				.build();
 
-		input.render(Shiny.writer());
+		Shiny.render(input);
 
 		Assertions.assertEquals("red", input.value().get());
 	}
@@ -80,7 +80,7 @@ public class ShinyInputTextTest {
 				.withDefaultValue("Paris")
 				.build();
 
-		input.render(Shiny.writer());
+		Shiny.render(input);
 
 		Assertions.assertEquals("Paris", input.value().get());
 	}

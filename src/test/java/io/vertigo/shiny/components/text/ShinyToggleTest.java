@@ -21,23 +21,23 @@ public class ShinyToggleTest {
 	private static void testBasicToggles(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Basic Toggles ---"));
 
-		Shiny.toggle()
-				.withLabel("WiFi Connection")
-				.withValue(true)
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.toggle()
+						.withLabel("WiFi Connection")
+						.withValue(true)
+						.build());
 
-		Shiny.toggle()
-				.withLabel("Bluetooth")
-				.withValue(false)
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.toggle()
+						.withLabel("Bluetooth")
+						.withValue(false)
+						.build());
 
-		Shiny.toggle()
-				.withLabel("Auto-save")
-				.withValue(true)
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.toggle()
+						.withLabel("Auto-save")
+						.withValue(true)
+						.build());
 
 		writer.println();
 	}
@@ -45,47 +45,47 @@ public class ShinyToggleTest {
 	private static void testDifferentStyles(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Different Toggle Styles ---"));
 
-		Shiny.toggle()
-				.withLabel("Classic Style")
-				.withValue(true)
-				.withType(ShinyToggleType.CLASSIC)
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.toggle()
+						.withLabel("Classic Style")
+						.withValue(true)
+						.withType(ShinyToggleType.CLASSIC)
+						.build());
 
-		Shiny.toggle()
-				.withLabel("Switch Style")
-				.withValue(false)
-				.withType(ShinyToggleType.SWITCH)
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.toggle()
+						.withLabel("Switch Style")
+						.withValue(false)
+						.withType(ShinyToggleType.SWITCH)
+						.build());
 
-		Shiny.toggle()
-				.withLabel("Light Bulb")
-				.withValue(true)
-				.withType(ShinyToggleType.LIGHT)
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.toggle()
+						.withLabel("Light Bulb")
+						.withValue(true)
+						.withType(ShinyToggleType.LIGHT)
+						.build());
 
-		Shiny.toggle()
-				.withLabel("Battery Level")
-				.withValue(false)
-				.withType(ShinyToggleType.BATTERY)
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.toggle()
+						.withLabel("Battery Level")
+						.withValue(false)
+						.withType(ShinyToggleType.BATTERY)
+						.build());
 
-		Shiny.toggle()
-				.withLabel("Server Status")
-				.withValue(true)
-				.withType(ShinyToggleType.STATUS)
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.toggle()
+						.withLabel("Server Status")
+						.withValue(true)
+						.withType(ShinyToggleType.STATUS)
+						.build());
 
-		Shiny.toggle()
-				.withLabel("User Rating")
-				.withValue(false)
-				.withType(ShinyToggleType.THUMBS)
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.toggle()
+						.withLabel("User Rating")
+						.withValue(false)
+						.withType(ShinyToggleType.THUMBS)
+						.build());
 
 		writer.println();
 	}
@@ -93,44 +93,44 @@ public class ShinyToggleTest {
 	private static void testCustomization(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Customized Toggles ---"));
 
-		Shiny.toggle()
-				.withLabel("Custom Colors")
-				.withValue(true)
-				.withStyle(new ShinyToggleStyle()
-						.withOnColor(ShinyColors.CYAN)
-						.withOffColor(ShinyColors.MAGENTA))
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.toggle()
+						.withLabel("Custom Colors")
+						.withValue(true)
+						.withStyle(new ShinyToggleStyle()
+								.withOnColor(ShinyColors.CYAN)
+								.withOffColor(ShinyColors.MAGENTA))
+						.build());
 
-		Shiny.toggle()
-				.withLabel("Custom Text")
-				.withValue(false)
-				.withOnText("ENABLED")
-				.withOffText("DISABLED")
-				.withType(ShinyToggleType.ARROW)
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.toggle()
+						.withLabel("Custom Text")
+						.withValue(false)
+						.withOnText("ENABLED")
+						.withOffText("DISABLED")
+						.withType(ShinyToggleType.ARROW)
+						.build());
 
-		Shiny.toggle()
-				.withLabel("No Text")
-				.withValue(true)
-				.withShowText(false)
-				.withType(ShinyToggleType.CHECK)
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.toggle()
+						.withLabel("No Text")
+						.withValue(true)
+						.withShowText(false)
+						.withType(ShinyToggleType.CHECK)
+						.build());
 
-		Shiny.toggle()
-				.withLabel("With star-on")
-				.withValue(true)
-				.withType(ShinyToggleType.STAR)
-				.build()
-				.render(writer);
-		Shiny.toggle()
-				.withLabel("With star-off")
-				.withValue(false)
-				.withType(ShinyToggleType.STAR)
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.toggle()
+						.withLabel("With star-on")
+						.withValue(true)
+						.withType(ShinyToggleType.STAR)
+						.build());
+		Shiny.render(
+				Shiny.toggle()
+						.withLabel("With star-off")
+						.withValue(false)
+						.withType(ShinyToggleType.STAR)
+						.build());
 
 		writer.println();
 	}
