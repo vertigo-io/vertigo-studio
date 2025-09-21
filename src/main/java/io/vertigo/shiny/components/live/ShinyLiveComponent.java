@@ -3,8 +3,9 @@ package io.vertigo.shiny.components.live;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.vertigo.shiny.ShinyWriter;
+import io.vertigo.shiny.components.ShinyComponent;
 
-public abstract class ShinyLiveComponent<S extends ShinyLiveComponent<S>> implements AutoCloseable {
+public abstract class ShinyLiveComponent<S extends ShinyLiveComponent<S>> implements ShinyComponent, AutoCloseable {
 	@JsonIgnore
 	private final ShinyLiveDrawer drawer;
 	@JsonIgnore
@@ -25,7 +26,7 @@ public abstract class ShinyLiveComponent<S extends ShinyLiveComponent<S>> implem
 
 	public final void close() {
 		drawer.running = false;
-		draw(this.shinyWriter);
+		//draw(this.shinyWriter);
 		try {
 			drawer.join();
 		} catch (final InterruptedException e) {

@@ -5,14 +5,14 @@ import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent; // New import
 import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 
-public final class ShinyProgressBarRenderer implements ShinyComponentRenderer {
+public final class ShinyProgressBarRenderer implements ShinyComponentRenderer<ShinyProgressBar> {
 	@Override
 	public boolean accept(final ShinyComponent component) {
 		return component instanceof ShinyProgressBar;
 	}
 
 	@Override
-	public synchronized void render(final ShinyProgressBar shinyProgressBar, final ShinyWriter writer) {
+	public void render(final ShinyProgressBar shinyProgressBar, final ShinyWriter writer) {
 		Assertion.check().isNotNull(shinyProgressBar);
 		Assertion.check().isNotNull(writer);
 		//---

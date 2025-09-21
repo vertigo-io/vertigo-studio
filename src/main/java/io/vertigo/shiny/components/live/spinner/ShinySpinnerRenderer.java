@@ -13,7 +13,7 @@ public final class ShinySpinnerRenderer implements ShinyComponentRenderer<ShinyS
 	}
 
 	@Override
-	public synchronized void render(final ShinySpinner shinySpinner, final ShinyWriter writer) {
+	public void render(final ShinySpinner shinySpinner, final ShinyWriter writer) {
 		Assertion.check().isNotNull(shinySpinner);
 		Assertion.check().isNotNull(writer);
 		//---
