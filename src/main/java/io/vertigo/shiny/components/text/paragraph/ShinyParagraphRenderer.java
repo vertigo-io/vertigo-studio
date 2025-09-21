@@ -7,16 +7,12 @@ import io.vertigo.shiny.components.ShinyComponent; // New import
 
 public final class ShinyParagraphRenderer implements ShinyComponentRenderer<ShinyParagraph> { // Implements interface
 
-	public ShinyParagraphRenderer() { // Public no-arg constructor
-		//private constructor
-	}
-
-	@Override // Override annotation
+	@Override
 	public boolean accept(final ShinyComponent component) {
 		return component instanceof ShinyParagraph;
 	}
 
-	@Override // Override annotation
+	@Override
 	public void render(final ShinyParagraph shinyParagraph, final ShinyWriter writer) { // Not static
 		Assertion.check().isNotNull(shinyParagraph);
 		Assertion.check().isNotNull(writer);

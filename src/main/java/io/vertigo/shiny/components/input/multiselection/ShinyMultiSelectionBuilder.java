@@ -14,11 +14,6 @@ public final class ShinyMultiSelectionBuilder implements Builder<ShinyMultiSelec
 	private final List<String> multiselectionOptions = new ArrayList<>();
 	private final Set<Integer> selectedIndices = new HashSet<>();
 
-	// No public constructor, use ShinyMultiSelection.builder()
-	ShinyMultiSelectionBuilder() {
-		// Package-private constructor
-	}
-
 	public ShinyMultiSelectionBuilder withTitle(final String title) {
 		this.multiselectionTitle = title;
 		return this;

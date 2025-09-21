@@ -6,15 +6,12 @@ import com.github.dtmo.jfiglet.FigFontResources;
 import com.github.dtmo.jfiglet.FigletRenderer;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.shiny.ShinyComponentRenderer;
 import io.vertigo.shiny.ShinyWriter;
+import io.vertigo.shiny.components.ShinyComponent;
 
-public final class ShinyFigletRenderer {
-
-	private ShinyFigletRenderer() {
-		//private constructor
-	}
-
-	public static void render(final ShinyFiglet shinyFiglet, final ShinyWriter writer) {
+public final class ShinyFigletRenderer implements ShinyComponentRenderer<ShinyFiglet> {
+	public void render(final ShinyFiglet shinyFiglet, final ShinyWriter writer) {
 		Assertion.check().isNotNull(shinyFiglet);
 		Assertion.check().isNotNull(writer);
 		//---
@@ -28,5 +25,10 @@ public final class ShinyFigletRenderer {
 		} catch (final IOException e) {
 			throw new RuntimeException("Failed to generate Figlet figletText", e);
 		}
+	}
+
+	@Override
+	public boolean accept(ShinyComponent component) {
+		return component instanceof ShinyFiglet;
 	}
 }

@@ -8,16 +8,12 @@ import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyErrorRenderer implements ShinyComponentRenderer<ShinyError> { // Implements interface
 
-	public ShinyErrorRenderer() { // Public no-arg constructor
-		//private constructor
-	}
-
-	@Override // Override annotation
+	@Override
 	public boolean accept(final ShinyComponent component) {
 		return component instanceof ShinyError;
 	}
 
-	@Override // Override annotation
+	@Override
 	public void render(final ShinyError shinyError, final ShinyWriter writer) { // Not static
 		Assertion.check().isNotNull(shinyError);
 		Assertion.check().isNotNull(writer);

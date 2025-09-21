@@ -11,9 +11,7 @@ public final class ShinyTextPathBuilder implements Builder<ShinyTextPath> {
 	private String textPathSeparator = "/";
 	private ShinyTextPathStyle textPathStyle;
 
-	// No public constructor, use ShinyTextPath.builder()
-	ShinyTextPathBuilder() {
-		// Package-private constructor
+	public ShinyTextPathBuilder() {
 		textPathStyle = Shiny.theme().textPathStyle(); // Initialize default style
 	}
 

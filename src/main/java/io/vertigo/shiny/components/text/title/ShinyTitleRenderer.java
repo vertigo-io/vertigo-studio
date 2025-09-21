@@ -7,17 +7,12 @@ import io.vertigo.shiny.components.ShinyComponent; // New import
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyTitleRenderer implements ShinyComponentRenderer<ShinyTitle> { // Implements interface
-
-	public ShinyTitleRenderer() { // Public no-arg constructor
-		//private constructor
-	}
-
-	@Override // Override annotation
+	@Override
 	public boolean accept(final ShinyComponent component) {
 		return component instanceof ShinyTitle;
 	}
 
-	@Override // Override annotation
+	@Override
 	public void render(final ShinyTitle shinyTitle, final ShinyWriter writer) { // Not static
 		Assertion.check().isNotNull(shinyTitle);
 		Assertion.check().isNotNull(writer);

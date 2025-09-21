@@ -8,9 +8,7 @@ public final class ShinyFigletBuilder implements Builder<ShinyFiglet> {
 	private String figletText;
 	private ShinyFigletStyle figletStyle;
 
-	// No public constructor, use ShinyFiglet.builder()
-	ShinyFigletBuilder() {
-		// Package-private constructor
+	public ShinyFigletBuilder() {
 		this.figletStyle = Shiny.theme().figletStyle(); // Initialize default style
 	}
 

@@ -10,16 +10,12 @@ import io.vertigo.shiny.style.ShinyColor;
 
 public final class ShinyTextPathRenderer implements ShinyComponentRenderer<ShinyTextPath> { // Implements interface
 
-	public ShinyTextPathRenderer() { // Public no-arg constructor
-		//private constructor
-	}
-
-	@Override // Override annotation
+	@Override
 	public boolean accept(final ShinyComponent component) {
 		return component instanceof ShinyTextPath;
 	}
 
-	@Override // Override annotation
+	@Override
 	public void render(final ShinyTextPath shinyTextPath, final ShinyWriter writer) { // Not static
 		Assertion.check().isNotNull(shinyTextPath);
 		Assertion.check().isNotNull(writer);

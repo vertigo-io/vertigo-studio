@@ -11,16 +11,12 @@ import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyMultiSelectionRenderer implements ShinyComponentRenderer<ShinyMultiSelection> { // Implements interface
 
-	public ShinyMultiSelectionRenderer() { // Public no-arg constructor
-		//private constructor
-	}
-
-	@Override // Override annotation
+	@Override
 	public boolean accept(final ShinyComponent component) {
 		return component instanceof ShinyMultiSelection;
 	}
 
-	@Override // Override annotation
+	@Override
 	public void render(final ShinyMultiSelection shinyMultiSelection, final ShinyWriter writer) { // Not static
 		Assertion.check().isNotNull(shinyMultiSelection);
 		Assertion.check().isNotNull(writer);
