@@ -7,7 +7,7 @@ import io.vertigo.shiny.components.ShinyComponent;
 public interface ShellCommand extends Runnable {
 
 	default void run() {
-		build().render(Shiny.writer());
+		Shiny.render(build());
 	}
 
 	default ShinyComponent build() {

@@ -7,11 +7,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.db.DbContext;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.ShinyWriter;
+import io.vertigo.shiny.components.ShinyComponent;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
@@ -21,24 +20,29 @@ public final class DbQueryCommand implements ShellCommand {
 	private String query;
 
 	@Override
-	public void run() {
-		final ShinyWriter writer = Shiny.writer();
+	public ShinyComponent build() {
+		final ShinyComponent component;
 		try (Statement stmt = DbContext.connection().createStatement()) {
 			if (query.trim().toLowerCase().startsWith("select")) {
 				try (ResultSet rs = stmt.executeQuery(query)) {
-					printResultSet(writer, rs);
+					component = buildResultSet(rs);
 				}
 			} else {
 				final int rowsAffected = stmt.executeUpdate(query);
-				System.out.println(rowsAffected + " row(s) affected.");
+				component = Shiny.paragraph()
+						.withText(rowsAffected + " row(s) affected.")
+						.build();
 			}
 			query = null;
 		} catch (final SQLException e) {
-			throw new VSystemException(e, "Failed to execute SQL query: {0}", e.getMessage());
+			return Shiny.error()
+					.withText("Failed to execute SQL query:" + e.getMessage())
+					.build();
 		}
+		return component;
 	}
 
-	private void printResultSet(final ShinyWriter writer, final ResultSet rs) throws SQLException {
+	private ShinyComponent buildResultSet(final ResultSet rs) throws SQLException {
 		final ResultSetMetaData rsmd = rs.getMetaData();
 		final int columnsNumber = rsmd.getColumnCount();
 
@@ -59,13 +63,12 @@ public final class DbQueryCommand implements ShellCommand {
 			rows.add(row);
 		}
 
-		Shiny.table()
+		return Shiny.table()
 				.withTitle("Result of query:")
 				.withNoDataFound("No data found")
 				.withHeader(header)
 				.addAllRows(rows)
-				.build()
-				.render(writer);
+				.build();
 	}
 
 	@Override
