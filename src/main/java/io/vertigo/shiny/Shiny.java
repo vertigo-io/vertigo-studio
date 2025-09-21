@@ -25,6 +25,7 @@ import io.vertigo.shiny.components.text.textpath.ShinyTextPathBuilder;
 import io.vertigo.shiny.components.text.title.ShinyTitleBuilder;
 import io.vertigo.shiny.components.text.toggle.ShinyToggleBuilder;
 import io.vertigo.shiny.mermaid.ShinyMermaidServer;
+import io.vertigo.shiny.renderers.ShinySuperRenderer;
 
 public final class Shiny {
 	private PrintWriter writer = new PrintWriter(System.out, true, StandardCharsets.UTF_8);

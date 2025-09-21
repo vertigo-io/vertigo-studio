@@ -6,19 +6,19 @@ import java.io.InputStreamReader;
 import java.util.regex.Matcher;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.ShinyComponentRenderer; // New import
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent; // New import
+import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 import io.vertigo.shiny.style.ShinyColors;
 
-public final class ShinyInputTextRenderer implements ShinyComponentRenderer<ShinyInputText> { // Implements interface
+public final class ShinyInputTextRenderer implements ShinyComponentRenderer<ShinyInputText> {
 	@Override
 	public boolean accept(final ShinyComponent component) {
 		return component instanceof ShinyInputText;
 	}
 
 	@Override
-	public void render(final ShinyInputText shinyInputText, final ShinyWriter writer) { // Not static
+	public void render(final ShinyInputText shinyInputText, final ShinyWriter writer) {
 		Assertion.check().isNotNull(shinyInputText);
 		Assertion.check().isNotNull(writer);
 		//---

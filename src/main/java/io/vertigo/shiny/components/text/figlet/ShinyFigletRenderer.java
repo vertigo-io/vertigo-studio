@@ -6,9 +6,9 @@ import com.github.dtmo.jfiglet.FigFontResources;
 import com.github.dtmo.jfiglet.FigletRenderer;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.ShinyComponentRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 
 public final class ShinyFigletRenderer implements ShinyComponentRenderer<ShinyFiglet> {
 	public void render(final ShinyFiglet shinyFiglet, final ShinyWriter writer) {

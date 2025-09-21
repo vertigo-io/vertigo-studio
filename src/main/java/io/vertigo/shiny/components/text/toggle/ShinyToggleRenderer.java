@@ -1,12 +1,12 @@
 package io.vertigo.shiny.components.text.toggle;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.ShinyComponentRenderer; // New import
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent; // New import
+import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 import io.vertigo.shiny.style.ShinyColor;
 
-public final class ShinyToggleRenderer implements ShinyComponentRenderer<ShinyToggle> { // Implements interface
+public final class ShinyToggleRenderer implements ShinyComponentRenderer<ShinyToggle> {
 
 	@Override
 	public boolean accept(final ShinyComponent component) {
@@ -14,7 +14,7 @@ public final class ShinyToggleRenderer implements ShinyComponentRenderer<ShinyTo
 	}
 
 	@Override
-	public void render(final ShinyToggle shinyToggle, final ShinyWriter writer) { // Not static
+	public void render(final ShinyToggle shinyToggle, final ShinyWriter writer) {
 		Assertion.check().isNotNull(shinyToggle);
 		Assertion.check().isNotNull(writer);
 		//---

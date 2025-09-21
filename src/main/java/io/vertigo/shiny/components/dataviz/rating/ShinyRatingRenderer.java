@@ -1,19 +1,19 @@
 package io.vertigo.shiny.components.dataviz.rating;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.ShinyComponentRenderer; // New import
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent; // New import
+import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 import io.vertigo.shiny.style.ShinyEffects;
 
-public final class ShinyRatingRenderer implements ShinyComponentRenderer<ShinyRating> { // Implements interface
+public final class ShinyRatingRenderer implements ShinyComponentRenderer<ShinyRating> {
 	@Override
 	public boolean accept(final ShinyComponent component) {
 		return component instanceof ShinyRating;
 	}
 
 	@Override
-	public void render(final ShinyRating shinyRating, final ShinyWriter writer) { // Not static
+	public void render(final ShinyRating shinyRating, final ShinyWriter writer) {
 		Assertion.check().isNotNull(shinyRating);
 		Assertion.check().isNotNull(writer);
 		//---

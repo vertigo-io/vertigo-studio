@@ -3,18 +3,18 @@ package io.vertigo.shiny.components.data.tree;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.ShinyComponentRenderer; // New import
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent; // New import
+import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 
-public final class ShinyTreeRenderer implements ShinyComponentRenderer<ShinyTree> { // Implements interface
-	@Override // Override annotation
+public final class ShinyTreeRenderer implements ShinyComponentRenderer<ShinyTree> {
+	@Override
 	public boolean accept(final ShinyComponent component) {
 		return component instanceof ShinyTree;
 	}
 
-	@Override // Override annotation
-	public void render(final ShinyTree shinyTree, final ShinyWriter writer) { // Not static
+	@Override
+	public void render(final ShinyTree shinyTree, final ShinyWriter writer) {
 		Assertion.check().isNotNull(shinyTree);
 		Assertion.check().isNotNull(writer);
 		//---

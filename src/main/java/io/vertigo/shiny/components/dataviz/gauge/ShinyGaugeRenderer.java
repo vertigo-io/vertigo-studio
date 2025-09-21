@@ -1,18 +1,18 @@
 package io.vertigo.shiny.components.dataviz.gauge;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.ShinyComponentRenderer; // New import
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent; // New import
+import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 
-public final class ShinyGaugeRenderer implements ShinyComponentRenderer<ShinyGauge> { // Implements interface
+public final class ShinyGaugeRenderer implements ShinyComponentRenderer<ShinyGauge> {
 	@Override
 	public boolean accept(final ShinyComponent component) {
 		return component instanceof ShinyGauge;
 	}
 
 	@Override
-	public void render(final ShinyGauge shinyGauge, final ShinyWriter writer) { // Not static
+	public void render(final ShinyGauge shinyGauge, final ShinyWriter writer) {
 		Assertion.check().isNotNull(shinyGauge);
 		Assertion.check().isNotNull(writer);
 		//---

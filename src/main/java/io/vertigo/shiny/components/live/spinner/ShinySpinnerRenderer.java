@@ -1,11 +1,11 @@
 package io.vertigo.shiny.components.live.spinner;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.ShinyComponentRenderer; // New import
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.ShinyComponent; // New import
+import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 
-public final class ShinySpinnerRenderer implements ShinyComponentRenderer<ShinySpinner> { // Implements interface
+public final class ShinySpinnerRenderer implements ShinyComponentRenderer<ShinySpinner> {
 
 	@Override
 	public boolean accept(final ShinyComponent component) {
@@ -13,7 +13,7 @@ public final class ShinySpinnerRenderer implements ShinyComponentRenderer<ShinyS
 	}
 
 	@Override
-	public synchronized void render(final ShinySpinner shinySpinner, final ShinyWriter writer) { // Not static
+	public synchronized void render(final ShinySpinner shinySpinner, final ShinyWriter writer) {
 		Assertion.check().isNotNull(shinySpinner);
 		Assertion.check().isNotNull(writer);
 		//---

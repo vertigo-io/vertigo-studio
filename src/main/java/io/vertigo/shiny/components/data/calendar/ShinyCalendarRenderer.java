@@ -10,9 +10,9 @@ import java.util.Locale;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.ShinyComponentRenderer; // New import
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent; // New import
+import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 
 public final class ShinyCalendarRenderer implements ShinyComponentRenderer<ShinyCalendar> { // Implements interface
 	@Override
@@ -21,7 +21,7 @@ public final class ShinyCalendarRenderer implements ShinyComponentRenderer<Shiny
 	}
 
 	@Override
-	public void render(final ShinyCalendar shinyCalendar, final ShinyWriter writer) { // Not static
+	public void render(final ShinyCalendar shinyCalendar, final ShinyWriter writer) {
 		Assertion.check().isNotNull(shinyCalendar);
 		Assertion.check().isNotNull(writer);
 		//---

@@ -3,18 +3,18 @@ package io.vertigo.shiny.components.dataviz.barchart;
 import java.util.Arrays;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.ShinyComponentRenderer; // New import
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent; // New import
+import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 
-public final class ShinyBarChartRenderer implements ShinyComponentRenderer<ShinyBarChart> { // Implements interface
+public final class ShinyBarChartRenderer implements ShinyComponentRenderer<ShinyBarChart> {
 	@Override
 	public boolean accept(final ShinyComponent component) {
 		return component instanceof ShinyBarChart;
 	}
 
 	@Override
-	public void render(final ShinyBarChart shinyBarChart, final ShinyWriter writer) { // Not static
+	public void render(final ShinyBarChart shinyBarChart, final ShinyWriter writer) {
 		Assertion.check().isNotNull(shinyBarChart);
 		Assertion.check().isNotNull(writer);
 		//---// Trouver la valeur maximale pour normaliser les barres

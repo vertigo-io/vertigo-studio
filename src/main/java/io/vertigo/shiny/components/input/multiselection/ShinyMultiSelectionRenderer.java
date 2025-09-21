@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.ShinyComponentRenderer; // New import
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent; // New import
+import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 import io.vertigo.shiny.style.ShinyColors;
 
-public final class ShinyMultiSelectionRenderer implements ShinyComponentRenderer<ShinyMultiSelection> { // Implements interface
+public final class ShinyMultiSelectionRenderer implements ShinyComponentRenderer<ShinyMultiSelection> {
 
 	@Override
 	public boolean accept(final ShinyComponent component) {
@@ -17,7 +17,7 @@ public final class ShinyMultiSelectionRenderer implements ShinyComponentRenderer
 	}
 
 	@Override
-	public void render(final ShinyMultiSelection shinyMultiSelection, final ShinyWriter writer) { // Not static
+	public void render(final ShinyMultiSelection shinyMultiSelection, final ShinyWriter writer) {
 		Assertion.check().isNotNull(shinyMultiSelection);
 		Assertion.check().isNotNull(writer);
 		//---

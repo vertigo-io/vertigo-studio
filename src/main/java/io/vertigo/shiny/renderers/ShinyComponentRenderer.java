@@ -1,5 +1,6 @@
-package io.vertigo.shiny;
+package io.vertigo.shiny.renderers;
 
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 
 public interface ShinyComponentRenderer<S extends ShinyComponent> {

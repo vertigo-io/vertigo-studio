@@ -6,9 +6,9 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.ShinyComponentRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 
 public final class ShinyTableRenderer implements ShinyComponentRenderer<ShinyTable> {
 	@Override

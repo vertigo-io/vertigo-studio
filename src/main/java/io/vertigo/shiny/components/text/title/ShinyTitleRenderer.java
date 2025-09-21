@@ -1,19 +1,19 @@
 package io.vertigo.shiny.components.text.title;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.ShinyComponentRenderer; // New import
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent; // New import
+import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 import io.vertigo.shiny.style.ShinyColors;
 
-public final class ShinyTitleRenderer implements ShinyComponentRenderer<ShinyTitle> { // Implements interface
+public final class ShinyTitleRenderer implements ShinyComponentRenderer<ShinyTitle> {
 	@Override
 	public boolean accept(final ShinyComponent component) {
 		return component instanceof ShinyTitle;
 	}
 
 	@Override
-	public void render(final ShinyTitle shinyTitle, final ShinyWriter writer) { // Not static
+	public void render(final ShinyTitle shinyTitle, final ShinyWriter writer) {
 		Assertion.check().isNotNull(shinyTitle);
 		Assertion.check().isNotNull(writer);
 		//---

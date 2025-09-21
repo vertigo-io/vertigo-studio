@@ -1,8 +1,9 @@
-package io.vertigo.shiny;
+package io.vertigo.shiny.renderers;
 
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.components.data.calendar.ShinyCalendarRenderer;
 import io.vertigo.shiny.components.data.json.ShinyJsonRenderer;

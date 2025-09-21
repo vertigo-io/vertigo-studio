@@ -1,18 +1,18 @@
 package io.vertigo.shiny.components.data.list;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.ShinyComponentRenderer; // New import
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent; // New import
+import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 
-public final class ShinyListRenderer implements ShinyComponentRenderer<ShinyList> { // Implements interface
+public final class ShinyListRenderer implements ShinyComponentRenderer<ShinyList> {
 	@Override
 	public boolean accept(final ShinyComponent component) {
 		return component instanceof ShinyList;
 	}
 
 	@Override
-	public void render(final ShinyList shinyList, final ShinyWriter writer) { // Not static
+	public void render(final ShinyList shinyList, final ShinyWriter writer) {
 		Assertion.check().isNotNull(shinyList);
 		Assertion.check().isNotNull(writer);
 		//---
