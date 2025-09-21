@@ -11,11 +11,6 @@ import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 
 public final class ShinyTableRenderer implements ShinyComponentRenderer<ShinyTable> {
-
-	public ShinyTableRenderer() {
-		//private constructor
-	}
-
 	@Override
 	public boolean accept(final ShinyComponent component) {
 		return component instanceof ShinyTable;

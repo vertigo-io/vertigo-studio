@@ -8,17 +8,12 @@ import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent; // New import
 
 public final class ShinyBarChartRenderer implements ShinyComponentRenderer<ShinyBarChart> { // Implements interface
-
-	public ShinyBarChartRenderer() { // Public no-arg constructor
-		//private constructor
-	}
-
-	@Override // Override annotation
+	@Override
 	public boolean accept(final ShinyComponent component) {
 		return component instanceof ShinyBarChart;
 	}
 
-	@Override // Override annotation
+	@Override
 	public void render(final ShinyBarChart shinyBarChart, final ShinyWriter writer) { // Not static
 		Assertion.check().isNotNull(shinyBarChart);
 		Assertion.check().isNotNull(writer);

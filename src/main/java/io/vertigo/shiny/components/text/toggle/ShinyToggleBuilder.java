@@ -13,9 +13,7 @@ public final class ShinyToggleBuilder implements Builder<ShinyToggle> {
 	private boolean showText = true;
 	private ShinyToggleStyle toggleStyle;
 
-	// No public constructor, use ShinyToggle.builder()
-	ShinyToggleBuilder() {
-		// Package-private constructor
+	public ShinyToggleBuilder() {
 		toggleStyle = Shiny.theme().toggleStyle(); // Initialize default style
 	}
 

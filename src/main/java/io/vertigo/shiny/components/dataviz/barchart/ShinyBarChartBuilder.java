@@ -14,9 +14,7 @@ public final class ShinyBarChartBuilder implements Builder<ShinyBarChart> {
 	private ShinySortMode sortMode = ShinySortMode.NO;
 	private ShinyBarChartStyle barChartStyle;
 
-	// No public constructor, use ShinyBarChart.builder()
-	ShinyBarChartBuilder() {
-		// Package-private constructor
+	public ShinyBarChartBuilder() {
 		barChartStyle = Shiny.theme().barChartStyle(); // Initialize default style
 	}
 

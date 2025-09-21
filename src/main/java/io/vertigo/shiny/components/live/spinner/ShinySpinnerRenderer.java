@@ -7,16 +7,12 @@ import io.vertigo.shiny.components.ShinyComponent; // New import
 
 public final class ShinySpinnerRenderer implements ShinyComponentRenderer<ShinySpinner> { // Implements interface
 
-	public ShinySpinnerRenderer() { // Public no-arg constructor
-		//private constructor
-	}
-
-	@Override // Override annotation
+	@Override
 	public boolean accept(final ShinyComponent component) {
 		return component instanceof ShinySpinner;
 	}
 
-	@Override // Override annotation
+	@Override
 	public synchronized void render(final ShinySpinner shinySpinner, final ShinyWriter writer) { // Not static
 		Assertion.check().isNotNull(shinySpinner);
 		Assertion.check().isNotNull(writer);

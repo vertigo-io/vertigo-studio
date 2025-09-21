@@ -12,17 +12,12 @@ import io.vertigo.shiny.components.ShinyComponent; // New import
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyInputTextRenderer implements ShinyComponentRenderer<ShinyInputText> { // Implements interface
-
-	public ShinyInputTextRenderer() { // Public no-arg constructor
-		//private constructor
-	}
-
-	@Override // Override annotation
+	@Override
 	public boolean accept(final ShinyComponent component) {
 		return component instanceof ShinyInputText;
 	}
 
-	@Override // Override annotation
+	@Override
 	public void render(final ShinyInputText shinyInputText, final ShinyWriter writer) { // Not static
 		Assertion.check().isNotNull(shinyInputText);
 		Assertion.check().isNotNull(writer);

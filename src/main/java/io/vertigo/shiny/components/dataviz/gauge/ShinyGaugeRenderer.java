@@ -6,17 +6,12 @@ import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent; // New import
 
 public final class ShinyGaugeRenderer implements ShinyComponentRenderer<ShinyGauge> { // Implements interface
-
-	public ShinyGaugeRenderer() { // Public no-arg constructor
-		//private constructor
-	}
-
-	@Override // Override annotation
+	@Override
 	public boolean accept(final ShinyComponent component) {
 		return component instanceof ShinyGauge;
 	}
 
-	@Override // Override annotation
+	@Override
 	public void render(final ShinyGauge shinyGauge, final ShinyWriter writer) { // Not static
 		Assertion.check().isNotNull(shinyGauge);
 		Assertion.check().isNotNull(writer);

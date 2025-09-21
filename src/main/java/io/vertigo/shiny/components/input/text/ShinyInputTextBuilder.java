@@ -16,11 +16,6 @@ public final class ShinyInputTextBuilder implements Builder<ShinyInputText> {
 	private String inputTextDefaultValue;
 	private boolean inputTextSecret = false;
 
-	// No public constructor, use ShinyInputText.builder()
-	ShinyInputTextBuilder() {
-		// Package-private constructor
-	}
-
 	public ShinyInputTextBuilder withLabel(final String label) {
 		this.inputTextLabel = label;
 		return this;

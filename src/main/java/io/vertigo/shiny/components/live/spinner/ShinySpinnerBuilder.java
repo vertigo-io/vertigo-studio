@@ -8,9 +8,7 @@ public final class ShinySpinnerBuilder implements Builder<ShinySpinner> {
 	String message;
 	ShinySpinnerStyle spinnerStyle;
 
-	// No public constructor, use ShinySpinner.builder()
-	ShinySpinnerBuilder() {
-		// Package-private constructor
+	public ShinySpinnerBuilder() {
 		this.spinnerStyle = Shiny.theme().spinnerStyle(); // Initialize default style
 	}
 

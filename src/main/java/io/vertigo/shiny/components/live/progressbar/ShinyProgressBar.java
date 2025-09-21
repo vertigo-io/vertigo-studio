@@ -41,11 +41,6 @@ public final class ShinyProgressBar extends ShinyLiveComponent<ShinyProgressBar>
 		return progressBarStyle;
 	}
 
-	// Static factory method to get a new Builder instance
-	public static ShinyProgressBarBuilder builder() {
-		return new ShinyProgressBarBuilder();
-	}
-
 	// Méthode pour mettre à jour la progression
 	public void liveUpdate(final int progress) {
 		if (progress < 0) {

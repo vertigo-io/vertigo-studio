@@ -7,11 +7,6 @@ public final class ShinyTreeBuilder implements Builder<ShinyTree> {
 	private String treeLabel;
 	private ShinyTreeNode treeRootNode;
 
-	// No public constructor, use ShinyTree.builder()
-	ShinyTreeBuilder() {
-		// Package-private constructor
-	}
-
 	public ShinyTreeBuilder withLabel(final String label) {
 		this.treeLabel = label;
 		return this;

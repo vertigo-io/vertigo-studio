@@ -6,11 +6,6 @@ import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent; // New import
 
 public final class ShinyProgressBarRenderer implements ShinyComponentRenderer { // Implements interface
-
-	public ShinyProgressBarRenderer() { // Public no-arg constructor
-		//private constructor
-	}
-
 	@Override // Override annotation
 	public boolean accept(final ShinyComponent component) {
 		return component instanceof ShinyProgressBar;

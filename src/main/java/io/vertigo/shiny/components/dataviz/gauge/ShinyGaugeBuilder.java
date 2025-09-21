@@ -10,9 +10,7 @@ public final class ShinyGaugeBuilder implements Builder<ShinyGauge> {
 	private double gaugeMaxValue = 100;
 	private ShinyGaugeStyle gaugeStyle;
 
-	// No public constructor, use ShinyGauge.builder()
-	ShinyGaugeBuilder() {
-		// Package-private constructor
+	public ShinyGaugeBuilder() {
 		this.gaugeStyle = Shiny.theme().gaugeStyle(); // Initialize default style
 	}
 

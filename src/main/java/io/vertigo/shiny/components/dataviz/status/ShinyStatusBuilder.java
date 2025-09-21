@@ -12,9 +12,7 @@ public final class ShinyStatusBuilder implements Builder<ShinyStatus> {
 	private final List<ShinyStatusType> statusTypes = new ArrayList<>();
 	private ShinyStatusStyle statusStyle;
 
-	// No public constructor, use ShinyStatus.builder()
-	ShinyStatusBuilder() {
-		// Package-private constructor
+	public ShinyStatusBuilder() {
 		this.statusStyle = Shiny.theme().statusStyle(); // Initialize default style
 	}
 

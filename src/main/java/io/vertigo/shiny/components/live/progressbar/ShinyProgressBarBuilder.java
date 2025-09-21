@@ -8,9 +8,7 @@ public final class ShinyProgressBarBuilder implements Builder<ShinyProgressBar> 
 	int total = 0; // Valeur totale correspondant à 100%
 	ShinyProgressBarStyle progressBarStyle;
 
-	// No public constructor, use ShinyProgressBar.builder()
-	ShinyProgressBarBuilder() {
-		// Package-private constructor
+	public ShinyProgressBarBuilder() {
 		this.progressBarStyle = Shiny.theme().progressBarStyle(); // Initialize default style
 	}
 

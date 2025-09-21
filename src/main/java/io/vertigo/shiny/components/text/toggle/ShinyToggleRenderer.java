@@ -8,16 +8,12 @@ import io.vertigo.shiny.style.ShinyColor;
 
 public final class ShinyToggleRenderer implements ShinyComponentRenderer<ShinyToggle> { // Implements interface
 
-	public ShinyToggleRenderer() { // Public no-arg constructor
-		//private constructor
-	}
-
-	@Override // Override annotation
+	@Override
 	public boolean accept(final ShinyComponent component) {
 		return component instanceof ShinyToggle;
 	}
 
-	@Override // Override annotation
+	@Override
 	public void render(final ShinyToggle shinyToggle, final ShinyWriter writer) { // Not static
 		Assertion.check().isNotNull(shinyToggle);
 		Assertion.check().isNotNull(writer);
