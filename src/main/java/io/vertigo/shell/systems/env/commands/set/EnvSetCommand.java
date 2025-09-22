@@ -2,6 +2,8 @@ package io.vertigo.shell.systems.env.commands.set;
 
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.env.Env;
+import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.components.ShinyComponent;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
@@ -15,8 +17,11 @@ public final class EnvSetCommand implements ShellCommand {
 	private String value;
 
 	@Override
-	public void run() {
+	public ShinyComponent build() {
 		Env.set(key, value);
+		return Shiny.paragraph()
+				.withText("parma '" + key + "' is now set with '" + value + "'")
+				.build();
 		//		
 		//		if ("rootPath".equalsIgnoreCase(variable)) {
 		//			final Path rootPath = Path.of(value);

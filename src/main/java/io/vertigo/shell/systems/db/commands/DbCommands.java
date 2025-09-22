@@ -11,6 +11,7 @@ import io.vertigo.shell.systems.db.commands.load.DbLoadCommand;
 import io.vertigo.shell.systems.db.commands.mermaid.DbMermaidCommand;
 import io.vertigo.shell.systems.db.commands.ping.DbPingCommand;
 import io.vertigo.shell.systems.db.commands.query.DbQueryCommand;
+import io.vertigo.shell.systems.db.commands.read.DbReadCommand;
 import io.vertigo.shell.systems.db.commands.save.DbSaveCommand;
 import io.vertigo.shell.systems.db.commands.scan.DbScanCommand;
 import io.vertigo.shell.systems.db.commands.stats.DbStatsCommand;
@@ -26,9 +27,10 @@ import picocli.CommandLine.Command;
 				DbQueryCommand.class,
 				DbPingCommand.class,
 				DbStatsCommand.class,
-				//--- Loads from db or json.
+				//--- Loads from db 
 				DbLoadCommand.class,
-				//--- Saves to json
+				//--- Reads & Saves to json
+				DbReadCommand.class,
 				DbSaveCommand.class,
 				//--- Lists elements ...
 				DbListCommand.class,

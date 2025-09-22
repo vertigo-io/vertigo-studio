@@ -23,15 +23,32 @@ import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 
+import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.Shell;
 import io.vertigo.shell.systems.core.commands.uptime.UptimeCommand;
+import io.vertigo.shell.systems.db.commands.connect.DbConnectCommand;
+import io.vertigo.shell.systems.db.commands.disconnect.DbDisconnectCommand;
+import io.vertigo.shell.systems.db.commands.load.DbLoadCommand;
+import io.vertigo.shell.systems.db.commands.read.DbReadCommand;
 import io.vertigo.shell.systems.env.commands.list.EnvListCommand;
 import io.vertigo.shell.systems.file.commands.ls.FileLsCommand;
 import io.vertigo.shell.systems.file.commands.pwd.FilePwdCommand;
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.components.data.json.ShinyJson;
+import io.vertigo.shiny.components.data.list.ShinyList;
 import io.vertigo.shiny.components.data.list.ShinyListType;
+import io.vertigo.shiny.components.data.table.ShinyTable;
+import io.vertigo.shiny.components.data.tree.ShinyTree;
+import io.vertigo.shiny.components.dataviz.barchart.ShinyBarChart;
+import io.vertigo.shiny.components.dataviz.gauge.ShinyGauge;
+import io.vertigo.shiny.components.dataviz.sparkline.ShinySparkline;
+import io.vertigo.shiny.components.error.ShinyError;
 import io.vertigo.shiny.components.media.rss.ShinyRssData;
 import io.vertigo.shiny.components.media.rss.ShinyRssItem;
+import io.vertigo.shiny.components.text.paragraph.ShinyParagraph;
+import io.vertigo.shiny.components.text.textpath.ShinyTextPath;
+import io.vertigo.shiny.components.text.title.ShinyTitle;
 
 public class ShinyWebServer extends WebSocketServer {
 	private static final Set<WebSocket> connections = Collections.synchronizedSet(new HashSet<>());
@@ -78,24 +95,28 @@ public class ShinyWebServer extends WebSocketServer {
 				//				String userInput = wsMessage.data();
 				//				System.out.println("Prompt reçu : " + userInput);
 				case "ls":
-					sendMessage(webSocket,
-							"table",
-							mapper.writeValueAsString(new FileLsCommand().build()));
+					sendMessage(webSocket, new FileLsCommand().build());
 					break;
 				case "pwd":
-					sendMessage(webSocket,
-							"textPath",
-							mapper.writeValueAsString(new FilePwdCommand().build()));
+					sendMessage(webSocket, new FilePwdCommand().build());
 					break;
 				case "env list":
-					sendMessage(webSocket,
-							"table",
-							mapper.writeValueAsString(new EnvListCommand().build()));
+					sendMessage(webSocket, new EnvListCommand().build());
 					break;
 				case "uptime":
-					sendMessage(webSocket,
-							"paragraph",
-							mapper.writeValueAsString(new UptimeCommand().build()));
+					sendMessage(webSocket, new UptimeCommand().build());
+					break;
+				case "db connect":
+					sendMessage(webSocket, new DbConnectCommand().build());
+					break;
+				case "db disconnect":
+					sendMessage(webSocket, new DbDisconnectCommand().build());
+					break;
+				case "db load":
+					sendMessage(webSocket, new DbLoadCommand().build());
+					break;
+				case "db read":
+					sendMessage(webSocket, new DbReadCommand().build());
 					break;
 				case "rss":
 					try {
@@ -156,7 +177,7 @@ public class ShinyWebServer extends WebSocketServer {
 							.withHeader("Prénom", "Nom")
 							.addAllRows(rows)
 							.build();
-					sendMessage(webSocket, "table", mapper.writeValueAsString(table));
+					sendMessage(webSocket, table);
 					break;
 				case "xbar":
 					var barchart = Shiny.barChart()
@@ -164,7 +185,7 @@ public class ShinyWebServer extends WebSocketServer {
 							.withHeader("telephones", "ordinateurs", "livres")
 							.withValues(156, 34, 55)
 							.build();
-					sendMessage(webSocket, "barChart", mapper.writeValueAsString(barchart));
+					sendMessage(webSocket, barchart);
 					break;
 				case "xgauge":
 					var gauge = Shiny.gauge()
@@ -172,14 +193,14 @@ public class ShinyWebServer extends WebSocketServer {
 							.withValue(156)
 							.withMaxValue(450)
 							.build();
-					sendMessage(webSocket, "gauge", mapper.writeValueAsString(gauge));
+					sendMessage(webSocket, gauge);
 					break;
 				case "xspark":
 					var sparkLine = Shiny.sparkline()
 							.withTitle("Ventes par produit")
 							.withValues(156, 450, 300, 200, 100, 23)
 							.build();
-					sendMessage(webSocket, "sparkLine", mapper.writeValueAsString(sparkLine));
+					sendMessage(webSocket, sparkLine);
 					break;
 				case "xmap":
 					var geoMap = """
@@ -220,7 +241,7 @@ public class ShinyWebServer extends WebSocketServer {
 					tree.getRoot().addChild("src", FOLDER_OPEN)
 							.addChild("main", FOLDER_OPEN)
 							.addChild("file.txt", FILE);
-					sendMessage(webSocket, "tree", mapper.writeValueAsString(tree));
+					sendMessage(webSocket, tree);
 					break;
 				case "xpb":
 					String id;
@@ -249,7 +270,7 @@ public class ShinyWebServer extends WebSocketServer {
 							.addItem("Saturn")
 							.addItem("Venus")
 							.build();
-					sendMessage(webSocket, "list", mapper.writeValueAsString(list));
+					sendMessage(webSocket, list);
 					break;
 				case "xjson":
 					var jsonContent = """
@@ -267,19 +288,13 @@ public class ShinyWebServer extends WebSocketServer {
 							.withJson(jsonContent)
 							.withTitle("Fiche de Shinning")
 							.build();
-					sendMessage(webSocket, "json", mapper.writeValueAsString(json));
+					sendMessage(webSocket, json);
 					break;
 				case "xyoutube":
 					ObjectNode youtubeData = mapper.createObjectNode()
 							.put("title", "Rick Astley - Never Gonna Give You Up")
 							.put("videoId", "dQw4w9WgXcQ");
 					sendMessage(webSocket, "youtube", mapper.writeValueAsString(youtubeData));
-					break;
-				case "xspotify":
-					ObjectNode spotifyData = mapper.createObjectNode()
-							.put("title", "The Beatles - Here Comes The Sun")
-							.put("url", "https://open.spotify.com/intl-fr/track/45yEy5WJywhJ3sDI28ajTm");
-					sendMessage(webSocket, "spotify", mapper.writeValueAsString(spotifyData));
 					break;
 				case "xphoto":
 					ObjectNode photoData = mapper.createObjectNode()
@@ -308,10 +323,36 @@ public class ShinyWebServer extends WebSocketServer {
 				""", type, data);
 	}
 
-	private void sendMessage(WebSocket conn, String type, String data) {
+	private void sendMessage(WebSocket webSocket, ShinyComponent component) {
+		Assertion.check()
+				.isNotNull(webSocket)
+				.isNotNull(component);
+		//---
+		final String type = switch (component) {
+			case ShinyTable c -> "table";
+			case ShinyTextPath c -> "textPath";
+			case ShinyParagraph c -> "paragraph";
+			case ShinyTitle c -> "title";
+			case ShinyError c -> "error";
+			case ShinyList c -> "list";
+			case ShinyJson c -> "json";
+			case ShinyBarChart c -> "barChart";
+			case ShinyGauge c -> "gauge";
+			case ShinySparkline c -> "sparkLine";
+			case ShinyTree c -> "tree";
+			default -> throw new IllegalArgumentException("Unknown component type: " + component.getClass());
+		};
+		try {
+			sendMessage(webSocket, type, mapper.writeValueAsString(component));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void sendMessage(WebSocket webSocket, String type, String data) {
 		final String json = buildMessage(type, data);
 		System.out.println("send : " + json);
-		conn.send(json);
+		webSocket.send(json);
 	}
 
 	@Override

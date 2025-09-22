@@ -1,6 +1,9 @@
 package io.vertigo.shell.systems.db;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.VSystemException;
@@ -15,10 +18,20 @@ public final class DbContext {
 		dbModel = model;
 	}
 
-	public static void connection(final Connection connection) {
-		Assertion.check().isNotNull(connection);
+	public static void connect(final String url, final String user, String password) throws SQLException {
+		final Properties props = new Properties();
+		props.setProperty("user", user);
+		props.setProperty("password", password);
 		//---
-		dbConnection = connection;
+		dbConnection = DriverManager.getConnection(url, props);
+		dbConnection.setReadOnly(true);
+	}
+
+	public static void disconnect() throws SQLException {
+		if (dbConnection != null) {
+			dbConnection.close();
+		}
+		dbConnection = null;
 	}
 
 	public static boolean isConnected() {

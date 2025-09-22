@@ -90,7 +90,7 @@ public final class PhotoLoadCommand implements ShellCommand {
 		}
 	}
 
-	private PhotoExifInfo extractExifInfo(final Path path) {
+	private static PhotoExifInfo extractExifInfo(final Path path) {
 		final Map<String, String> tags = new HashMap<>();
 		try {
 			final Metadata metadata = ImageMetadataReader.readMetadata(path.toFile());
@@ -105,7 +105,7 @@ public final class PhotoLoadCommand implements ShellCommand {
 		return new PhotoExifInfo(tags);
 	}
 
-	private String calculateMd5(final Path path) throws IOException, NoSuchAlgorithmException {
+	private static String calculateMd5(final Path path) throws IOException, NoSuchAlgorithmException {
 		final MessageDigest md = MessageDigest.getInstance("MD5");
 		try (InputStream is = Files.newInputStream(path);
 				DigestInputStream dis = new DigestInputStream(is, md)) {

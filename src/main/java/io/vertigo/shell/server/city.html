@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Ville Cyberpunk Isométrique</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: #00ff80;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+        }
+        .controls {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border: 1px solid #00ff80;
+            border-radius: 5px;
+        }
+        button {
+            background: #001100;
+            color: #00ff80;
+            border: 1px solid #00ff80;
+            padding: 8px 15px;
+            margin: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            border-radius: 3px;
+        }
+        button:hover {
+            background: #003300;
+        }
+        button.active {
+            background: #00ff80;
+            color: #000;
+        }
+        .info {
+            margin-top: 10px;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        .minimap {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 200px;
+            height: 200px;
+            border: 1px solid #00ff80;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 5px;
+            z-index: 100;
+        }
+        .skyline {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 120px;
+            background: rgba(0, 0, 0, 0.9);
+            border-top: 1px solid #00ff80;
+            z-index: 100;
+        }
+        #skylineCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <div>
+            <button id="cityView" class="active">Vue Ville</button>
+            <button id="quarterView">Vue Quartier</button>
+        </div>
+        <div>
+            <label>Quartier: </label>
+            <select id="quarterSelect">
+                <option value="0">Centre-ville</option>
+                <option value="1">District Nord</option>
+                <option value="2">Zone Industrielle</option>
+                <option value="3">Quartier Résidentiel</option>
+            </select>
+        </div>
+        <div class="info">
+            <div>Clic: Sélectionner quartier</div>
+            <div>Molette: Zoom</div>
+        </div>
+    </div>
+
+    <div class="minimap">
+        <canvas id="minimapCanvas"></canvas>
+    </div>
+
+    <div class="skyline">
+        <canvas id="skylineCanvas"></canvas>
+    </div>
+
+    <script>
+        // === DONNÉES JSON DE LA VILLE ===
+        const cityData = {
+            name: "Neo-Tokyo",
+            quarters: [
+                {
+                    id: 0,
+                    name: "Centre-ville",
+                    type: "commercial",
+                    color: { r: 0, g: 255, b: 140 },
+                    buildings: generateQuarterData(0.4, 3, 12) // 40% de bâtiments, hauteur 3-12
+                },
+                {
+                    id: 1,
+                    name: "District Nord",
+                    type: "business",
+                    color: { r: 0, g: 180, b: 255 },
+                    buildings: generateQuarterData(0.3, 2, 8) // 30% de bâtiments, hauteur 2-8
+                },
+                {
+                    id: 2,
+                    name: "Zone Industrielle",
+                    type: "industrial",
+                    color: { r: 255, g: 100, b: 0 },
+                    buildings: generateQuarterData(0.25, 1, 6) // 25% de bâtiments, hauteur 1-6
+                },
+                {
+                    id: 3,
+                    name: "Quartier Résidentiel",
+                    type: "residential",
+                    color: { r: 255, g: 0, b: 150 },
+                    buildings: generateQuarterData(0.35, 1, 4) // 35% de bâtiments, hauteur 1-4
+                }
+            ]
+        };
+
+        function generateQuarterData(density, minHeight, maxHeight) {
+            let buildings = [];
+            for (let x = 0; x < 12; x++) {
+                buildings[x] = [];
+                for (let y = 0; y < 12; y++) {
+                    if (Math.random() < density) {
+                        buildings[x][y] = Math.floor(Math.random() * (maxHeight - minHeight + 1)) + minHeight;
+                    } else {
+                        buildings[x][y] = 0;
+                    }
+                }
+            }
+            return buildings;
+        }
+
+        // === VARIABLES GLOBALES ===
+        let viewMode = 'city'; // 'city' ou 'quarter'
+        let selectedQuarter = 0;
+        let zoomLevel = 1;
+        let cameraOffset = { x: 0, y: 0 };
+        let isDragging = false;
+        let lastMouseX, lastMouseY;
+        let minimapCanvas, skylineCanvas;
+        let mainCanvas;
+
+        const cols = 12;
+        const rows = 12;
+        const quartersPerRow = 2;
+        const quartersPerCol = 2;
+        let tileW = 20;
+        let tileH = 10;
+        const tileGap = 0.1;
+
+        function setup() {
+            mainCanvas = createCanvas(1200, 800);
+            pixelDensity(2);
+            
+            // Créer les canvas pour minimap et skyline
+            setupMinimap();
+            setupSkyline();
+            
+            // Événements UI
+            document.getElementById('cityView').onclick = () => switchView('city');
+            document.getElementById('quarterView').onclick = () => switchView('quarter');
+            document.getElementById('quarterSelect').onchange = (e) => {
+                selectedQuarter = parseInt(e.target.value);
+                if (viewMode === 'quarter') {
+                    redraw();
+                }
+            };
+        }
+
+        function draw() {
+            background(5, 5, 15);
+            
+            push();
+            translate(width/2 + cameraOffset.x, height/2 + cameraOffset.y);
+            scale(zoomLevel);
+            
+            if (viewMode === 'city') {
+                drawCity();
+            } else {
+                drawQuarter(selectedQuarter);
+            }
+            
+            pop();
+            
+            // Mettre à jour minimap et skyline
+            updateMinimap();
+            updateSkyline();
+            
+            // UI Info
+            drawUI();
+        }
+
+        function drawCity() {
+            // Dessiner les 4 quartiers en grille 2x2
+            for (let qx = 0; qx < quartersPerRow; qx++) {
+                for (let qy = 0; qy < quartersPerCol; qy++) {
+                    let quarterId = qy * quartersPerRow + qx;
+                    if (quarterId < cityData.quarters.length) {
+                        push();
+                        translate(
+                            (qx - quartersPerRow/2 + 0.5) * cols * tileW * 1.2,
+                            (qy - quartersPerCol/2 + 0.5) * rows * tileH * 0.8
+                        );
+                        drawQuarterData(cityData.quarters[quarterId], quarterId === selectedQuarter);
+                        pop();
+                    }
+                }
+            }
+        }
+
+        function setupMinimap() {
+            minimapCanvas = document.getElementById('minimapCanvas');
+            minimapCanvas.width = 200;
+            minimapCanvas.height = 200;
+        }
+
+        function setupSkyline() {
+            skylineCanvas = document.getElementById('skylineCanvas');
+            skylineCanvas.width = window.innerWidth;
+            skylineCanvas.height = 120;
+        }
+
+        function updateMinimap() {
+            const ctx = minimapCanvas.getContext('2d');
+            ctx.clearRect(0, 0, 200, 200);
+            ctx.fillStyle = 'rgba(0, 20, 40, 0.8)';
+            ctx.fillRect(0, 0, 200, 200);
+            
+            // Vue de dessus des quartiers
+            const cellSize = 45; // Taille de chaque quartier dans la minimap
+            const offsetX = (200 - cellSize * 2) / 2;
+            const offsetY = (200 - cellSize * 2) / 2;
+            
+            for (let qx = 0; qx < quartersPerRow; qx++) {
+                for (let qy = 0; qy < quartersPerCol; qy++) {
+                    let quarterId = qy * quartersPerRow + qx;
+                    if (quarterId < cityData.quarters.length) {
+                        const quarter = cityData.quarters[quarterId];
+                        const x = offsetX + qx * cellSize;
+                        const y = offsetY + qy * cellSize;
+                        
+                        // Contour du quartier
+                        ctx.strokeStyle = quarterId === selectedQuarter ? 
+                            `rgb(${quarter.color.r}, ${quarter.color.g}, ${quarter.color.b})` : 
+                            `rgba(${quarter.color.r}, ${quarter.color.g}, ${quarter.color.b}, 0.5)`;
+                        ctx.lineWidth = quarterId === selectedQuarter ? 2 : 1;
+                        ctx.strokeRect(x, y, cellSize - 2, cellSize - 2);
+                        
+                        // Bâtiments en vue de dessus
+                        const buildingSize = (cellSize - 4) / 12;
+                        for (let bx = 0; bx < 12; bx++) {
+                            for (let by = 0; by < 12; by++) {
+                                const height = quarter.buildings[bx][by];
+                                if (height > 0) {
+                                    const intensity = Math.min(height / 8, 1);
+                                    ctx.fillStyle = `rgba(${quarter.color.r}, ${quarter.color.g}, ${quarter.color.b}, ${intensity * 0.8})`;
+                                    ctx.fillRect(
+                                        x + 2 + bx * buildingSize,
+                                        y + 2 + by * buildingSize,
+                                        buildingSize - 0.5,
+                                        buildingSize - 0.5
+                                    );
+                                }
+                            }
+                        }
+                        
+                        // Nom du quartier
+                        if (quarterId === selectedQuarter) {
+                            ctx.fillStyle = `rgb(${quarter.color.r}, ${quarter.color.g}, ${quarter.color.b})`;
+                            ctx.font = '10px Courier New';
+                            ctx.textAlign = 'center';
+                            ctx.fillText(quarter.name, x + cellSize/2, y - 5);
+                        }
+                    }
+                }
+            }
+            
+            // Indicateur de mode de vue
+            ctx.fillStyle = 'rgba(0, 255, 128, 0.8)';
+            ctx.font = '12px Courier New';
+            ctx.textAlign = 'center';
+            ctx.fillText(viewMode === 'city' ? 'VUE VILLE' : 'VUE QUARTIER', 100, 15);
+        }
+
+        function updateSkyline() {
+            const ctx = skylineCanvas.getContext('2d');
+            const width = skylineCanvas.width;
+            const height = skylineCanvas.height;
+            
+            ctx.clearRect(0, 0, width, height);
+            
+            // Dégradé de fond (horizon cyberpunk)
+            const gradient = ctx.createLinearGradient(0, 0, 0, height);
+            gradient.addColorStop(0, 'rgba(0, 20, 40, 0.9)');
+            gradient.addColorStop(1, 'rgba(0, 0, 0, 0.9)');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, width, height);
+            
+            // Générer la skyline
+            const buildings = [];
+            let currentX = 0;
+            
+            // Collecter tous les bâtiments de tous les quartiers
+            cityData.quarters.forEach((quarter, qIndex) => {
+                const quarterColor = quarter.color;
+                const isActive = (viewMode === 'quarter' && qIndex === selectedQuarter) || viewMode === 'city';
+                const alpha = isActive ? 0.8 : 0.3;
+                
+                for (let x = 0; x < 12; x++) {
+                    for (let y = 0; y < 12; y++) {
+                        const buildingHeight = quarter.buildings[x][y];
+                        if (buildingHeight > 0) {
+                            buildings.push({
+                                x: currentX,
+                                height: buildingHeight,
+                                color: quarterColor,
+                                alpha: alpha,
+                                quarter: qIndex
+                            });
+                            currentX += 2 + Math.random() * 3; // Espacement variable
+                        }
+                    }
+                }
+                currentX += 20; // Espace entre quartiers
+            });
+            
+            // Trier les bâtiments par hauteur pour l'effet de profondeur
+            buildings.sort((a, b) => b.height - a.height);
+            
+            // Dessiner la skyline
+            const skylineScale = width / currentX;
+            buildings.forEach((building, index) => {
+                const buildingWidth = (3 + Math.random() * 8) * skylineScale;
+                const buildingHeight = (building.height * 12) + (Math.random() * 10);
+                const x = building.x * skylineScale;
+                const y = height - buildingHeight;
+                
+                // Corps du bâtiment
+                const alpha = building.alpha;
+                ctx.fillStyle = `rgba(${building.color.r}, ${building.color.g}, ${building.color.b}, ${alpha})`;
+                ctx.fillRect(x, y, buildingWidth, buildingHeight);
+                
+                // Contour lumineux
+                ctx.strokeStyle = `rgba(${building.color.r}, ${building.color.g}, ${building.color.b}, ${alpha * 0.5})`;
+                ctx.lineWidth = 0.5;
+                ctx.strokeRect(x, y, buildingWidth, buildingHeight);
+                
+                // Fenêtres (points lumineux)
+                if (buildingHeight > 20) {
+                    ctx.fillStyle = `rgba(${building.color.r}, ${building.color.g}, ${building.color.b}, ${alpha * 0.9})`;
+                    const windowRows = Math.floor(buildingHeight / 8);
+                    const windowCols = Math.floor(buildingWidth / 6);
+                    
+                    for (let wy = 1; wy < windowRows; wy++) {
+                        for (let wx = 1; wx < windowCols; wx++) {
+                            if (Math.random() < 0.6) { // 60% de chance d'avoir une fenêtre allumée
+                                const windowX = x + wx * 6;
+                                const windowY = y + wy * 8;
+                                ctx.fillRect(windowX, windowY, 2, 2);
+                            }
+                        }
+                    }
+                }
+                
+                // Antennes sur les plus hauts bâtiments
+                if (building.height > 6 && Math.random() < 0.3) {
+                    ctx.strokeStyle = `rgba(${building.color.r}, ${building.color.g}, ${building.color.b}, ${alpha})`;
+                    ctx.lineWidth = 1;
+                    const antennaX = x + buildingWidth / 2;
+                    ctx.beginPath();
+                    ctx.moveTo(antennaX, y);
+                    ctx.lineTo(antennaX, y - 15);
+                    ctx.stroke();
+                    
+                    // Lumière clignotante
+                    if (Math.random() < 0.5) {
+                        ctx.fillStyle = `rgba(255, 50, 50, 0.9)`;
+                        ctx.fillRect(antennaX - 1, y - 17, 2, 2);
+                    }
+                }
+            });
+            
+            // Ligne d'horizon
+            ctx.strokeStyle = 'rgba(0, 255, 128, 0.3)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(0, height - 1);
+            ctx.lineTo(width, height - 1);
+            ctx.stroke();
+            
+            // Informations sur la skyline
+            ctx.fillStyle = 'rgba(0, 255, 128, 0.7)';
+            ctx.font = '10px Courier New';
+            ctx.textAlign = 'left';
+            ctx.fillText(`SKYLINE - ${cityData.name}`, 10, 15);
+            ctx.fillText(`Bâtiments: ${buildings.length}`, 10, 30);
+        }
+
+        function drawQuarter(quarterId) {
+            if (quarterId >= 0 && quarterId < cityData.quarters.length) {
+                tileW = 40;
+                tileH = 20;
+                drawQuarterData(cityData.quarters[quarterId], true);
+            }
+        }
+
+        function drawQuarterData(quarter, isSelected) {
+            const buildings = quarter.buildings;
+            const quarterColor = quarter.color;
+            
+            // Grille des rues
+            drawStreetGrid(quarterColor, isSelected ? 1 : 0.3);
+            
+            // Bâtiments
+            noStroke();
+            for (let x = 0; x < cols; x++) {
+                for (let y = 0; y < rows; y++) {
+                    let h = buildings[x][y];
+                    if (h > 0) {
+                        drawBuilding(x, y, h, quarterColor, isSelected ? 1 : 0.6);
+                    }
+                }
+            }
+            
+            // Nom du quartier (en vue ville)
+            if (viewMode === 'city') {
+                push();
+                fill(quarterColor.r, quarterColor.g, quarterColor.b, 200);
+                textAlign(CENTER, CENTER);
+                textSize(12);
+                text(quarter.name, 0, -rows * tileH/2 - 30);
+                pop();
+            }
+        }
+
+        function drawStreetGrid(quarterColor, alpha) {
+            noFill();
+            strokeWeight(1);
+            
+            for (let x = 0; x <= cols; x++) {
+                let brightness = (x % 2 === 0) ? 1 : 0.6;
+                stroke(quarterColor.r * brightness, quarterColor.g * brightness, quarterColor.b * brightness, alpha * 150);
+                isoLine(x, 0, 0, x, rows, 0);
+            }
+            for (let y = 0; y <= rows; y++) {
+                let brightness = (y % 2 === 0) ? 1 : 0.6;
+                stroke(quarterColor.r * brightness, quarterColor.g * brightness, quarterColor.b * brightness, alpha * 150);
+                isoLine(0, y, 0, cols, y, 0);
+            }
+        }
+
+        function drawBuilding(x, y, h, quarterColor, alpha) {
+            // Coins au sol et en haut
+            let p1 = iso(x, y, 0);
+            let p2 = iso(x+1, y, 0);
+            let p3 = iso(x+1, y+1, 0);
+            let p4 = iso(x, y+1, 0);
+            
+            let p1h = iso(x, y, h);
+            let p2h = iso(x+1, y, h);
+            let p3h = iso(x+1, y+1, h);
+            let p4h = iso(x, y+1, h);
+            
+            // Couleurs avec variation de luminosité
+            let cTop = color(quarterColor.r, quarterColor.g, quarterColor.b, alpha * 255);
+            let cLeft = color(quarterColor.r * 0.7, quarterColor.g * 0.7, quarterColor.b * 0.7, alpha * 255);
+            let cRight = color(quarterColor.r * 0.4, quarterColor.g * 0.4, quarterColor.b * 0.4, alpha * 255);
+            
+            // Face gauche
+            fill(cLeft);
+            quad(p1.x, p1.y, p4.x, p4.y, p4h.x, p4h.y, p1h.x, p1h.y);
+            
+            // Face droite
+            fill(cRight);
+            quad(p2.x, p2.y, p3.x, p3.y, p3h.x, p3h.y, p2h.x, p2h.y);
+            
+            // Face dessus
+            fill(cTop);
+            quad(p1h.x, p1h.y, p2h.x, p2h.y, p3h.x, p3h.y, p4h.x, p4h.y);
+            
+            // Fenêtres (petits points lumineux)
+            if (viewMode === 'quarter' && h > 1) {
+                drawWindows(x, y, h, quarterColor);
+            }
+        }
+
+        function drawWindows(x, y, h, quarterColor) {
+            fill(quarterColor.r, quarterColor.g, quarterColor.b, 180);
+            noStroke();
+            for (let floor = 1; floor < h; floor++) {
+                if (random() < 0.7) { // 70% chance d'avoir une fenêtre allumée
+                    let windowPos = iso(x + 0.3, y + 0.7, floor);
+                    circle(windowPos.x, windowPos.y, 2);
+                }
+                if (random() < 0.7) {
+                    let windowPos = iso(x + 0.7, y + 0.3, floor);
+                    circle(windowPos.x, windowPos.y, 2);
+                }
+            }
+        }
+
+        function iso(x, y, z) {
+            let gx = x * (1 + tileGap);
+            let gy = y * (1 + tileGap);
+            let isoX = (gx - gy) * tileW/2;
+            let isoY = (gx + gy) * tileH/2 - z * tileH;
+            return createVector(isoX, isoY);
+        }
+
+        function isoLine(x1, y1, z1, x2, y2, z2) {
+            let p1 = iso(x1, y1, z1);
+            let p2 = iso(x2, y2, z2);
+            line(p1.x, p1.y, p2.x, p2.y);
+        }
+
+        function switchView(mode) {
+            viewMode = mode;
+            
+            // Réinitialiser les paramètres de vue
+            if (mode === 'city') {
+                tileW = 20;
+                tileH = 10;
+                zoomLevel = 1;
+                cameraOffset = { x: 0, y: 0 };
+            } else {
+                tileW = 40;
+                tileH = 20;
+                zoomLevel = 1;
+                cameraOffset = { x: 0, y: 0 };
+            }
+            
+            // Mise à jour UI
+            document.getElementById('cityView').classList.toggle('active', mode === 'city');
+            document.getElementById('quarterView').classList.toggle('active', mode === 'quarter');
+            document.getElementById('quarterSelect').style.display = mode === 'quarter' ? 'inline' : 'none';
+            
+            redraw();
+        }
+
+        function drawUI() {
+            // Informations en bas à droite
+            push();
+            fill(0, 255, 128, 200);
+            textAlign(RIGHT, BOTTOM);
+            textSize(12);
+            text(`Mode: ${viewMode === 'city' ? 'Vue Ville' : 'Vue Quartier'}`, width - 20, height - 40);
+            text(`Zoom: ${zoomLevel.toFixed(1)}x`, width - 20, height - 20);
+            if (viewMode === 'quarter') {
+                text(`Quartier: ${cityData.quarters[selectedQuarter].name}`, width - 20, height - 60);
+            }
+            pop();
+        }
+
+        // === INTERACTIONS ===
+        function mousePressed() {
+            // Vérifier si le clic est sur la minimap
+            const minimapRect = document.getElementById('minimapCanvas').getBoundingClientRect();
+            if (mouseX >= minimapRect.left && mouseX <= minimapRect.right &&
+                mouseY >= minimapRect.top && mouseY <= minimapRect.bottom) {
+                
+                // Convertir coordonnées minimap vers quartier
+                const relX = (mouseX - minimapRect.left) / minimapRect.width;
+                const relY = (mouseY - minimapRect.top) / minimapRect.height;
+                
+                const cellSize = 0.45; // Proportion de chaque quartier
+                const offsetX = (1 - cellSize * 2) / 2;
+                const offsetY = (1 - cellSize * 2) / 2;
+                
+                const qx = Math.floor((relX - offsetX) / cellSize);
+                const qy = Math.floor((relY - offsetY) / cellSize);
+                
+                if (qx >= 0 && qx < quartersPerRow && qy >= 0 && qy < quartersPerCol) {
+                    const quarterId = qy * quartersPerRow + qx;
+                    if (quarterId < cityData.quarters.length) {
+                        selectedQuarter = quarterId;
+                        document.getElementById('quarterSelect').value = quarterId;
+                        redraw();
+                        return;
+                    }
+                }
+            }
+            
+            if (viewMode === 'city') {
+                // Détecter le clic sur un quartier
+                let quarterClicked = getQuarterFromMouse(mouseX, mouseY);
+                if (quarterClicked >= 0) {
+                    selectedQuarter = quarterClicked;
+                    document.getElementById('quarterSelect').value = quarterClicked;
+                    redraw();
+                }
+            }
+            
+            isDragging = true;
+            lastMouseX = mouseX;
+            lastMouseY = mouseY;
+        }
+
+        function mouseDragged() {
+            if (isDragging) {
+                cameraOffset.x += (mouseX - lastMouseX);
+                cameraOffset.y += (mouseY - lastMouseY);
+                lastMouseX = mouseX;
+                lastMouseY = mouseY;
+                redraw();
+            }
+        }
+
+        function mouseReleased() {
+            isDragging = false;
+        }
+
+        function mouseWheel(event) {
+            let zoomFactor = event.delta > 0 ? 0.9 : 1.1;
+            zoomLevel = constrain(zoomLevel * zoomFactor, 0.3, 3);
+            redraw();
+            return false;
+        }
+
+        function getQuarterFromMouse(mx, my) {
+            // Conversion approximative des coordonnées de souris vers quartier
+            let screenCenter = createVector(width/2 + cameraOffset.x, height/2 + cameraOffset.y);
+            let relX = (mx - screenCenter.x) / zoomLevel;
+            let relY = (my - screenCenter.y) / zoomLevel;
+            
+            let qx = Math.floor((relX / (cols * tileW * 1.2)) + quartersPerRow/2);
+            let qy = Math.floor((relY / (rows * tileH * 0.8)) + quartersPerCol/2);
+            
+            if (qx >= 0 && qx < quartersPerRow && qy >= 0 && qy < quartersPerCol) {
+                return qy * quartersPerRow + qx;
+            }
+            return -1;
+        }
+
+        function keyPressed() {
+            if (key === ' ') {
+                switchView(viewMode === 'city' ? 'quarter' : 'city');
+            } else if (key >= '1' && key <= '4') {
+                selectedQuarter = parseInt(key) - 1;
+                document.getElementById('quarterSelect').value = selectedQuarter;
+                if (viewMode === 'quarter') {
+                    redraw();
+                }
+            }
+        }
+    </script>
+</body>
+</html>

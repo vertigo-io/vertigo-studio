@@ -1,12 +1,11 @@
 package io.vertigo.shell.systems.file.commands.cd;
 
-import java.io.IOException;
 import java.nio.file.Path;
 
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.file.FileContext;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.ShinyWriter;
+import io.vertigo.shiny.components.ShinyComponent;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
@@ -17,29 +16,24 @@ public final class FileCdCommand implements ShellCommand {
 	private String newDirectory;
 
 	@Override
-	public void run() {
-		final ShinyWriter writer = Shiny.writer();
-		try {
-			changeDirectory(writer);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public ShinyComponent build() {
+		return changeDirectory();
 	}
 
-	private void changeDirectory(final ShinyWriter writer) throws IOException {
-		final FileContext fileContext = FileContext.get();
-
-		final Path newPath = Path.of(newDirectory);
-
+	private ShinyComponent changeDirectory() {
 		try {
+			final FileContext fileContext = FileContext.get();
+
+			final Path newPath = Path.of(newDirectory);
 			fileContext.changeDirectory(newPath);
-			Shiny.textPath()
+			return Shiny.textPath()
 					.withPath(fileContext.getCurrentAbsolutePath().toString())
 					.withSeparator("/")
-					.build()
-					.render(writer);
+					.build();
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
+			return Shiny.error()
+					.withText(e.getMessage())
+					.build();
 		}
 	}
 }

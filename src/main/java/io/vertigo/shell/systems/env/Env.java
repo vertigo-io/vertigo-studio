@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.Properties;
 
 public final class Env {
-	public static final File STORAGE_FILE = new File("c:/Dev/vortex/jdbc-model.json");
 	public static Properties secrets = buildSecrets();
 
 	private static Properties buildSecrets() {
