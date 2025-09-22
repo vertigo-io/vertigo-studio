@@ -43,7 +43,7 @@ function print(parsed) {
 		rssFeed: RssComponent, // Ajout du nouveau composant
 		sankey: SankeyComponent,
 		sparkLine: SparkLineComponent,
-		spotify: SpotifyComponent,
+		/*spotify: SpotifyComponent,*/
 		table: TableComponent,
 		title: TitleComponent,
 		tree: TreeComponent,
