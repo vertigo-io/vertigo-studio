@@ -1,4 +1,4 @@
-package io.vertigo.shiny.components.error;
+package io.vertigo.shiny.components.core.error;
 
 import io.vertigo.core.lang.Builder;
 

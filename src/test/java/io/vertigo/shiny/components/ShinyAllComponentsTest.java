@@ -26,26 +26,35 @@ public class ShinyAllComponentsTest {
 
 		writer.println(BLUE_BRIGHT.fg("--- Starting All Shiny Components with their default style---"));
 		waitForEnter(writer);
-
-		testBarChart(writer);
+		//---core
+		testContainer(writer);
+		testError(writer);
+		//---data
 		testCalendar(writer);
-		testFiglet(writer);
-		testGauge(writer);
-		testInputText(writer);
 		testJson(writer);
 		testList(writer);
-		testMultiSelection(writer);
-		testProgressBar(writer);
+		testTable(writer);
+		testTree(writer);
+		//---dataviz
+		testBarChart(writer);
+		testGauge(writer);
 		testRating(writer);
 		testSparkline(writer);
-		testSpinner(writer);
 		testStatus(writer);
-		testTable(writer);
+		//---input
+		testMultiSelection(writer);
+		testInputText(writer);
+		//---live
+		testProgressBar(writer);
+		testSpinner(writer);
+		//---text
+		testFiglet(writer);
+		testParagraph(writer);
 		testTextPath(writer);
 		testTitle(writer);
 		testToggle(writer);
-		testTree(writer);
-		testShinyParagraph(writer);
+		//
+
 		//	testShinyMarkDown(writer);
 
 		writer.println(BLUE_BRIGHT.fg("--- All Shiny Components Test Finished ---"));
@@ -295,13 +304,45 @@ public class ShinyAllComponentsTest {
 		waitForEnter(writer);
 	}
 
-	private static void testShinyParagraph(final ShinyWriter writer) {
+	private static void testParagraph(final ShinyWriter writer) {
 		writer.println(CYAN.fg("Component: ShinyParagraph"))
 				.println("Parameters: text='This is a simple paragraph.'");
 		//---
 		Shiny.render(
 				Shiny.paragraph()
 						.withText("This is a simple paragraph.")
+						.build());
+		waitForEnter(writer);
+	}
+
+	private static void testError(final ShinyWriter writer) {
+		writer.println(CYAN.fg("Component: ShinyError"))
+				.println("Parameters: text='This is an amazing error.'");
+		//---
+		Shiny.render(
+				Shiny.error()
+						.withText("This is an amazing error.")
+						.build());
+		waitForEnter(writer);
+	}
+
+	private static void testContainer(final ShinyWriter writer) {
+		writer.println(CYAN.fg("Component: ShinyContainer"))
+				.println("Parameters: components=[table, paragraph]");
+		//---
+		Shiny.render(
+				Shiny.container()
+						.addComponent(
+								Shiny.table()
+										.withTitle("Users")
+										.withHeader("FirstName", "LastName", "Age")
+										.addAllRows(
+												new String[] { "John", "doe", "30" },
+												new String[] { "Jane", "doe", "25" })
+										.build())
+						.addComponent(Shiny.paragraph()
+								.withText("This is a simple paragraph.")
+								.build())
 						.build());
 		waitForEnter(writer);
 	}

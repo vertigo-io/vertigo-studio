@@ -4,6 +4,8 @@ import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
 import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.components.core.container.ShinyContainerBuilder;
+import io.vertigo.shiny.components.core.error.ShinyErrorBuilder;
 import io.vertigo.shiny.components.data.calendar.ShinyCalendarBuilder;
 import io.vertigo.shiny.components.data.json.ShinyJsonBuilder;
 import io.vertigo.shiny.components.data.list.ShinyListBuilder;
@@ -14,7 +16,6 @@ import io.vertigo.shiny.components.dataviz.gauge.ShinyGaugeBuilder;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingBuilder;
 import io.vertigo.shiny.components.dataviz.sparkline.ShinySparklineBuilder;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatusBuilder;
-import io.vertigo.shiny.components.error.ShinyErrorBuilder;
 import io.vertigo.shiny.components.input.multiselection.ShinyMultiSelectionBuilder;
 import io.vertigo.shiny.components.input.text.ShinyInputTextBuilder;
 import io.vertigo.shiny.components.live.progressbar.ShinyProgressBarBuilder;
@@ -48,6 +49,10 @@ public final class Shiny {
 
 	public static ShinyErrorBuilder error() {
 		return new ShinyErrorBuilder();
+	}
+
+	public static ShinyContainerBuilder container() {
+		return new ShinyContainerBuilder();
 	}
 
 	public static ShinyTableBuilder table() {

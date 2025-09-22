@@ -5,6 +5,8 @@ import java.util.List;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.components.core.container.ShinyContainerRenderer;
+import io.vertigo.shiny.components.core.error.ShinyErrorRenderer;
 import io.vertigo.shiny.components.data.calendar.ShinyCalendarRenderer;
 import io.vertigo.shiny.components.data.json.ShinyJsonRenderer;
 import io.vertigo.shiny.components.data.list.ShinyListRenderer;
@@ -15,7 +17,6 @@ import io.vertigo.shiny.components.dataviz.gauge.ShinyGaugeRenderer;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingRenderer;
 import io.vertigo.shiny.components.dataviz.sparkline.ShinySparklineRenderer;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatusRenderer;
-import io.vertigo.shiny.components.error.ShinyErrorRenderer;
 import io.vertigo.shiny.components.input.multiselection.ShinyMultiSelectionRenderer;
 import io.vertigo.shiny.components.input.text.ShinyInputTextRenderer;
 import io.vertigo.shiny.components.text.figlet.ShinyFigletRenderer;
@@ -30,6 +31,9 @@ public final class ShinySuperRenderer {
 
 	public ShinySuperRenderer() {
 		this.renderers = List.of(
+				//---Core
+				new ShinyContainerRenderer(),
+				new ShinyErrorRenderer(),
 				//---Data
 				new ShinyCalendarRenderer(),
 				new ShinyJsonRenderer(),
@@ -42,8 +46,6 @@ public final class ShinySuperRenderer {
 				new ShinyRatingRenderer(),
 				new ShinySparklineRenderer(),
 				new ShinyStatusRenderer(),
-				//---Error
-				new ShinyErrorRenderer(),
 				//---Input
 				new ShinyMultiSelectionRenderer(),
 				new ShinyInputTextRenderer(),
