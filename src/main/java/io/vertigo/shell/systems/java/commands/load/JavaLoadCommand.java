@@ -3,23 +3,30 @@ package io.vertigo.shell.systems.java.commands.load;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.env.Env;
 import io.vertigo.shell.systems.java.JavaContext;
 import io.vertigo.shell.systems.java.JavaVar;
+import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.style.ShinyColors;
 import picocli.CommandLine.Command;
 
 @Command(name = "load", description = "Load the java model")
 public final class JavaLoadCommand implements ShellCommand {
 
 	@Override
-	public void run() {
+	public ShinyComponent build() {
 		final Path rootPath = Path.of(Env.get(JavaVar.ROOT_PATH));
 		try {
 			load(rootPath);
-		} catch (final IOException e) {
-			throw new VSystemException(e, "Failed to load model : {0}", e.getMessage());
+			return Shiny.paragraph()
+					.withText(ShinyColors.GREEN_BRIGHT.fg("Successfully loaded."))
+					.build();
+		} catch (final Exception e) {
+			return Shiny.error()
+					.withText("Failed to load model : " + e.getMessage())
+					.build();
 		}
 	}
 

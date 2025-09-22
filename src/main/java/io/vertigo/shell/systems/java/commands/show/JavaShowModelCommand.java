@@ -1,4 +1,4 @@
-package io.vertigo.shell.systems.java.commands.list;
+package io.vertigo.shell.systems.java.commands.show;
 
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.java.JavaContext;
@@ -11,28 +11,11 @@ import io.vertigo.shiny.components.data.tree.ShinyTree;
 import io.vertigo.shiny.components.data.tree.ShinyTreeNode;
 import picocli.CommandLine.Command;
 
-@Command(name = "list", description = "Display elements of the model")
-public final class JavaListCommand implements ShellCommand {
-	//	@Option(names = { "--all", "-a" }, description = "select all objects")
-	//	private boolean all;
-	//
-	//	@Option(names = { "--tableName", "-T" }, description = "select a table")
-	//	private String tableName;
-	//
-	//	@Option(names = { "--tables", "-t" }, description = "select all tables")
-	//	private boolean tables;
-
+@Command(name = "model", description = "Show the java model")
+public final class JavaShowModelCommand implements ShellCommand {
 	@Override
 	public ShinyComponent build() {
-		//		if (all) {
 		return listAll();
-		//		}
-		//		if (tableName != null) {
-		//			describeTable();
-		//		}
-		//		if (tables) {
-		//			listTables();
-		//		}
 	}
 
 	private ShinyComponent listAll() {

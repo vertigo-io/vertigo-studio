@@ -22,7 +22,7 @@ class YouTubeComponent extends Component {
         `;
     }
 }
-
+/*
 class SpotifyComponent extends Component {
     constructor({ title, url }) {
         super();
@@ -44,7 +44,7 @@ class SpotifyComponent extends Component {
             </div>
         `;
     }
-}
+}*/
 
 class PhotoComponent extends Component {
     constructor({ title, url, alt }) {

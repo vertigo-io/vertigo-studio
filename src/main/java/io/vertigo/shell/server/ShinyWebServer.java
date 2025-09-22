@@ -25,14 +25,19 @@ import com.rometools.rome.io.XmlReader;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.Shell;
+import io.vertigo.shell.systems.core.commands.ip.IpCommand;
 import io.vertigo.shell.systems.core.commands.uptime.UptimeCommand;
 import io.vertigo.shell.systems.db.commands.connect.DbConnectCommand;
 import io.vertigo.shell.systems.db.commands.disconnect.DbDisconnectCommand;
 import io.vertigo.shell.systems.db.commands.load.DbLoadCommand;
 import io.vertigo.shell.systems.db.commands.read.DbReadCommand;
+import io.vertigo.shell.systems.db.commands.show.DbShowModelCommand;
+import io.vertigo.shell.systems.db.commands.show.DbShowTablesCommand;
 import io.vertigo.shell.systems.env.commands.list.EnvListCommand;
 import io.vertigo.shell.systems.file.commands.ls.FileLsCommand;
 import io.vertigo.shell.systems.file.commands.pwd.FilePwdCommand;
+import io.vertigo.shell.systems.java.commands.load.JavaLoadCommand;
+import io.vertigo.shell.systems.java.commands.show.JavaShowModelCommand;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.components.data.json.ShinyJson;
@@ -106,6 +111,9 @@ public class ShinyWebServer extends WebSocketServer {
 				case "uptime":
 					sendMessage(webSocket, new UptimeCommand().build());
 					break;
+				case "ip":
+					sendMessage(webSocket, new IpCommand().build());
+					break;
 				case "db connect":
 					sendMessage(webSocket, new DbConnectCommand().build());
 					break;
@@ -117,6 +125,21 @@ public class ShinyWebServer extends WebSocketServer {
 					break;
 				case "db read":
 					sendMessage(webSocket, new DbReadCommand().build());
+					break;
+				case "db show tables":
+					sendMessage(webSocket, new DbShowTablesCommand().build());
+					break;
+				case "db show model":
+					sendMessage(webSocket, new DbShowModelCommand().build());
+					break;
+				//				case "db describe":
+				//					sendMessage(webSocket, new DbDescribeCommand().build());
+				//					break;
+				case "java load":
+					sendMessage(webSocket, new JavaLoadCommand().build());
+					break;
+				case "java show model":
+					sendMessage(webSocket, new JavaShowModelCommand().build());
 					break;
 				case "rss":
 					try {

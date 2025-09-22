@@ -4,9 +4,9 @@ import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.db.commands.analyze.DbAnalyzeCommand;
 import io.vertigo.shell.systems.db.commands.cluster.DbClusterCommand;
 import io.vertigo.shell.systems.db.commands.connect.DbConnectCommand;
+import io.vertigo.shell.systems.db.commands.describe.DbDescribeCommand;
 import io.vertigo.shell.systems.db.commands.disconnect.DbDisconnectCommand;
 import io.vertigo.shell.systems.db.commands.labs.DbFancyCommand;
-import io.vertigo.shell.systems.db.commands.list.DbListCommand;
 import io.vertigo.shell.systems.db.commands.load.DbLoadCommand;
 import io.vertigo.shell.systems.db.commands.mermaid.DbMermaidCommand;
 import io.vertigo.shell.systems.db.commands.ping.DbPingCommand;
@@ -14,6 +14,7 @@ import io.vertigo.shell.systems.db.commands.query.DbQueryCommand;
 import io.vertigo.shell.systems.db.commands.read.DbReadCommand;
 import io.vertigo.shell.systems.db.commands.save.DbSaveCommand;
 import io.vertigo.shell.systems.db.commands.scan.DbScanCommand;
+import io.vertigo.shell.systems.db.commands.show.DbShowCommands;
 import io.vertigo.shell.systems.db.commands.stats.DbStatsCommand;
 import picocli.CommandLine.Command;
 
@@ -33,7 +34,8 @@ import picocli.CommandLine.Command;
 				DbReadCommand.class,
 				DbSaveCommand.class,
 				//--- Lists elements ...
-				DbListCommand.class,
+				DbShowCommands.class,
+				DbDescribeCommand.class,
 				//--- Analyzes, clusters...
 				DbClusterCommand.class,
 				DbAnalyzeCommand.class,
@@ -44,7 +46,4 @@ import picocli.CommandLine.Command;
 		})
 
 public final class DbCommands implements ShellCommand {
-	@Override
-	public void run() {
-	}
 }

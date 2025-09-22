@@ -12,15 +12,14 @@ import io.vertigo.shell.systems.db.DbContext;
 import io.vertigo.shell.systems.db.DbModel.JdbcSchema;
 import io.vertigo.shell.systems.db.DbModel.JdbcTable;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.ShinyWriter;
+import io.vertigo.shiny.components.ShinyComponent;
 import picocli.CommandLine.Command;
 
 @Command(name = "stats", description = "List stats")
 public final class DbStatsCommand implements ShellCommand {
 
 	@Override
-	public void run() {
-		final ShinyWriter writer = Shiny.writer();
+	public ShinyComponent build() {
 
 		final List<String> tableNames = new ArrayList<>();
 		final List<Integer> tableCounts = new ArrayList<>();
@@ -40,12 +39,11 @@ public final class DbStatsCommand implements ShellCommand {
 			}
 		}
 
-		Shiny.barChart()
+		return Shiny.barChart()
 				.withTitle("Tables Row Count")
 				.withHeader(tableNames)
 				.withValues(tableCounts)
-				.build()
-				.render(writer);
+				.build();
 	}
 
 }
