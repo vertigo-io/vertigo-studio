@@ -48,6 +48,7 @@ function print(parsed) {
 		title: TitleComponent,
 		tree: TreeComponent,
 		youtube: YouTubeComponent,
+		figlet: FigletComponent,
 	};
 
 	if (componentMap[parsed.type]) {

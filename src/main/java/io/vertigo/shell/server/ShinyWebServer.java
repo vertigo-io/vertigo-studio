@@ -53,6 +53,7 @@ import io.vertigo.shiny.components.media.rss.ShinyRssData;
 import io.vertigo.shiny.components.media.rss.ShinyRssItem;
 import io.vertigo.shiny.components.text.paragraph.ShinyParagraph;
 import io.vertigo.shiny.components.text.textpath.ShinyTextPath;
+import io.vertigo.shiny.components.text.figlet.ShinyFiglet;
 import io.vertigo.shiny.components.text.title.ShinyTitle;
 
 public class ShinyWebServer extends WebSocketServer {
@@ -326,6 +327,12 @@ public class ShinyWebServer extends WebSocketServer {
 							.put("alt", "Random image from picsum");
 					sendMessage(webSocket, "photo", mapper.writeValueAsString(photoData));
 					break;
+				case "xfiglet":
+					var figlet = Shiny.figlet()
+							.withText("Hello Vertigo")
+							.build();
+					sendMessage(webSocket, figlet);
+					break;
 				default:
 					sendMessage(webSocket, "text", "nada");
 			}
@@ -362,6 +369,7 @@ public class ShinyWebServer extends WebSocketServer {
 			case ShinyBarChart c -> "barChart";
 			case ShinyGauge c -> "gauge";
 			case ShinySparkline c -> "sparkLine";
+			case ShinyFiglet c -> "figlet";
 			case ShinyTree c -> "tree";
 			default -> throw new IllegalArgumentException("Unknown component type: " + component.getClass());
 		};
