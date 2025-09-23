@@ -32,6 +32,7 @@ function print(parsed) {
 	console.log("print>>" + JSON.stringify(parsed));
 	const componentMap = {
 		barChart: BarChartComponent,
+		calendar: CalendarComponent,
 		//			container: ContainerComponent,
 		error: ErrorComponent,
 		gauge: GaugeComponent,
@@ -41,9 +42,11 @@ function print(parsed) {
 		paragraph: ParagraphComponent,
 		photo: PhotoComponent,
 		progressBar: ProgressBarComponent,
+		rating: RatingComponent,
 		rssFeed: RssComponent, // Ajout du nouveau composant
 		sankey: SankeyComponent,
 		sparkLine: SparkLineComponent,
+		status: StatusComponent,
 		/*spotify: SpotifyComponent,*/
 		table: TableComponent,
 		textPath: TextPathComponent,

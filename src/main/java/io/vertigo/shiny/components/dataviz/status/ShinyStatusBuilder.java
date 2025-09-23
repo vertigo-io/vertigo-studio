@@ -28,12 +28,23 @@ public final class ShinyStatusBuilder implements Builder<ShinyStatus> {
 		return this;
 	}
 
+	public ShinyStatusBuilder addType(final ShinyStatusType type) {
+		Assertion.check().isNotNull(type);
+		//---
+		this.statusTypes.add(type);
+		return this;
+	}
+
 	public ShinyStatusBuilder addAllTypes(final List<ShinyStatusType> types) {
+		Assertion.check().isNotNull(types);
+		//---
 		this.statusTypes.addAll(types);
 		return this;
 	}
 
 	public ShinyStatusBuilder addAllTypes(final ShinyStatusType... types) {
+		Assertion.check().isNotNull(types);
+		//---
 		return addAllTypes(List.of(types));
 	}
 

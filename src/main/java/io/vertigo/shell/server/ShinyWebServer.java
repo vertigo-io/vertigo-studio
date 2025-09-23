@@ -41,6 +41,7 @@ import io.vertigo.shell.systems.java.commands.show.JavaShowModelCommand;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.components.core.error.ShinyError;
+import io.vertigo.shiny.components.data.calendar.ShinyCalendar;
 import io.vertigo.shiny.components.data.json.ShinyJson;
 import io.vertigo.shiny.components.data.list.ShinyList;
 import io.vertigo.shiny.components.data.list.ShinyListType;
@@ -48,12 +49,16 @@ import io.vertigo.shiny.components.data.table.ShinyTable;
 import io.vertigo.shiny.components.data.tree.ShinyTree;
 import io.vertigo.shiny.components.dataviz.barchart.ShinyBarChart;
 import io.vertigo.shiny.components.dataviz.gauge.ShinyGauge;
+import io.vertigo.shiny.components.dataviz.rating.ShinyRating;
+import io.vertigo.shiny.components.dataviz.rating.ShinyRatingScale;
 import io.vertigo.shiny.components.dataviz.sparkline.ShinySparkline;
+import io.vertigo.shiny.components.dataviz.status.ShinyStatus;
+import io.vertigo.shiny.components.dataviz.status.ShinyStatusType;
 import io.vertigo.shiny.components.media.rss.ShinyRssData;
 import io.vertigo.shiny.components.media.rss.ShinyRssItem;
+import io.vertigo.shiny.components.text.figlet.ShinyFiglet;
 import io.vertigo.shiny.components.text.paragraph.ShinyParagraph;
 import io.vertigo.shiny.components.text.textpath.ShinyTextPath;
-import io.vertigo.shiny.components.text.figlet.ShinyFiglet;
 import io.vertigo.shiny.components.text.title.ShinyTitle;
 
 public class ShinyWebServer extends WebSocketServer {
@@ -346,6 +351,44 @@ public class ShinyWebServer extends WebSocketServer {
 							.build();
 					sendMessage(webSocket, error);
 					break;
+				case "xtitle":
+					var title = Shiny.title()
+							.withText("This is a title")
+							.withLevel(2)
+							.build();
+					sendMessage(webSocket, title);
+					break;
+				case "xparagraph":
+					var paragraph = Shiny.paragraph()
+							.withText("This is a paragraph.")
+							.build();
+					sendMessage(webSocket, paragraph);
+					break;
+				case "xstatus":
+					var status = Shiny.status()
+							.withTitle("Component Status")
+							.addType(ShinyStatusType.SUCCESS)
+							.addType(ShinyStatusType.ERROR)
+							.addType(ShinyStatusType.WARNING)
+							.build();
+					sendMessage(webSocket, status);
+					break;
+				case "xrating":
+					var rating = Shiny.rating()
+							.withLabel("User satisfaction")
+							.withValue(3.5)
+							.withScale(ShinyRatingScale.SCALE_5)
+							.withAllowHalfRating(true)
+							.build();
+					sendMessage(webSocket, rating);
+					break;
+				case "xcalendar":
+					var calendar = Shiny.calendar()
+							.withYear(2024)
+							.withMonth(7)
+							.build();
+					sendMessage(webSocket, calendar);
+					break;
 				default:
 					sendMessage(webSocket, "text", "nada");
 			}
@@ -382,6 +425,9 @@ public class ShinyWebServer extends WebSocketServer {
 			case ShinyBarChart c -> "barChart";
 			case ShinyGauge c -> "gauge";
 			case ShinySparkline c -> "sparkLine";
+			case ShinyStatus c -> "status";
+			case ShinyRating c -> "rating";
+			case ShinyCalendar c -> "calendar";
 			case ShinyFiglet c -> "figlet";
 			case ShinyTree c -> "tree";
 			default -> throw new IllegalArgumentException("Unknown component type: " + component.getClass());
