@@ -45,6 +45,7 @@ function print(parsed) {
 		sparkLine: SparkLineComponent,
 		/*spotify: SpotifyComponent,*/
 		table: TableComponent,
+		textPath: TextPathComponent,
 		title: TitleComponent,
 		tree: TreeComponent,
 		youtube: YouTubeComponent,

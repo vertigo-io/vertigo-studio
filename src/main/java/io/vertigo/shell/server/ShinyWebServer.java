@@ -333,6 +333,13 @@ public class ShinyWebServer extends WebSocketServer {
 							.build();
 					sendMessage(webSocket, figlet);
 					break;
+				case "xtp":
+					var textPath = Shiny.textPath()
+							.withPath("root/node/leaf")
+							.withSeparator("/")
+							.build();
+					sendMessage(webSocket, textPath);
+					break;
 				default:
 					sendMessage(webSocket, "text", "nada");
 			}
