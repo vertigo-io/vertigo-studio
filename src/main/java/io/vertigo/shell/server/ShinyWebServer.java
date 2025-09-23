@@ -340,6 +340,12 @@ public class ShinyWebServer extends WebSocketServer {
 							.build();
 					sendMessage(webSocket, textPath);
 					break;
+				case "xerror":
+					var error = Shiny.error()
+							.withText("This is an error message")
+							.build();
+					sendMessage(webSocket, error);
+					break;
 				default:
 					sendMessage(webSocket, "text", "nada");
 			}

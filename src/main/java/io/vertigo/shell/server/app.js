@@ -33,6 +33,7 @@ function print(parsed) {
 	const componentMap = {
 		barChart: BarChartComponent,
 		//			container: ContainerComponent,
+		error: ErrorComponent,
 		gauge: GaugeComponent,
 		geoMap: GeoMapComponent,
 		json: JsonComponent,
@@ -133,6 +134,7 @@ function toggleCollapse(element) {
 function getDataTypeIcon(type) {
 	const iconMap = {
 		'barChart': 'chart-bar',
+		'error': 'alert-triangle',
 		'gauge': 'gauge',
 		'geoMap': 'map-pin',
 		'json': 'code-2',
