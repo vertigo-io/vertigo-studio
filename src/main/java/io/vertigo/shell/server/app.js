@@ -40,7 +40,7 @@ function print(parsed) {
 		table: ChakraTableComponent,
 		tree: ChakraTreeComponent,
 		//---dataviz
-		barChart: BarChartComponent,
+		barChart: ChakraBarChartComponent,
 		gauge: GaugeComponent,
 		progressBar: ProgressBarComponent,
 		rating: RatingComponent,
@@ -48,9 +48,9 @@ function print(parsed) {
 		status: StatusComponent,
 		//---text
 		figlet: FigletComponent,
-		paragraph: ParagraphComponent,
+		paragraph: ChakraParagraphComponent,
 		textPath: TextPathComponent,
-		title: TitleComponent,
+		title: ChakraTitleComponent,
 		
 		//---media
 		chakraCard: ChakraCardComponent,

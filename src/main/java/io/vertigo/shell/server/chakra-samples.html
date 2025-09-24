@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chakra Components Samples</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <main>
+        <div class="chat-container" id="chat">
+            <h1>Chakra Components Samples</h1>
+        </div>
+    </main>
+
+    <script src="components.js"></script>
+    <script src="chakra/chakra-text-components.js"></script>
+    <script src="chakra/chakra-data-components.js"></script>
+    <script src="chakra/chakra-dataviz-components.js"></script>
+    <script src="chakra/chakra-media-components.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('chat');
+
+            const componentMap = {
+                'ChakraTitleComponent': ChakraTitleComponent,
+                'ChakraParagraphComponent': ChakraParagraphComponent,
+                'ChakraJsonComponent': ChakraJsonComponent,
+                'ChakraTableComponent': ChakraTableComponent,
+                'ChakraTreeComponent': ChakraTreeComponent,
+                'ChakraBarChartComponent': ChakraBarChartComponent,
+                'ChakraRadarChartComponent': ChakraRadarChartComponent,
+                'ChakraCardComponent': ChakraCardComponent,
+                'ChakraVideoComponent': ChakraVideoComponent
+            };
+
+            const components = [
+                { category: 'Text', name: 'ChakraTitleComponent', data: { title: 'Chakra Title' } },
+                { category: 'Text', name: 'ChakraParagraphComponent', data: { text: 'This is a Chakra paragraph.' } },
+                { category: 'Data', name: 'ChakraJsonComponent', data: { title: 'Chakra JSON', json: '{ "key": "value" }' } },
+                { category: 'Data', name: 'ChakraTableComponent', data: { title: 'Chakra Table', header: ['Name', 'Value'], rows: [['A', '1'], ['B', '2']] } },
+                { category: 'Data', name: 'ChakraTreeComponent', data: { rootNode: { label: 'root', children: [{ label: 'child 1' }, { label: 'child 2' }] } } },
+                { category: 'DataViz', name: 'ChakraBarChartComponent', data: { title: 'Chakra Bar Chart', labels: ['X', 'Y', 'Z'], data: [15, 25, 10] } },
+                { category: 'DataViz', name: 'ChakraRadarChartComponent', data: { title: 'Chakra Radar Chart', labels: ['Speed', 'Reliability', 'Comfort', 'Safety', 'Efficiency'], datasets: [{ label: 'Car A', data: [90, 80, 70, 95, 60] }] } },
+                { category: 'Media', name: 'ChakraCardComponent', data: { title: 'Chakra Card', description: 'This is a card.', imageUrl: 'https://via.placeholder.com/300' } },
+                { category: 'Media', name: 'ChakraVideoComponent', data: { title: 'Chakra Video', videoId: 'dQw4w9WgXcQ' } }
+            ];
+
+            let currentCategory = '';
+            components.forEach(compInfo => {
+                if (currentCategory !== compInfo.category) {
+                    currentCategory = compInfo.category;
+                    const categoryTitle = document.createElement('h2');
+                    categoryTitle.textContent = currentCategory;
+                    container.appendChild(categoryTitle);
+                }
+
+                const componentContainer = document.createElement('div');
+                componentContainer.className = 'component-sample';
+                const componentTitle = document.createElement('h3');
+                componentTitle.textContent = compInfo.name;
+                componentContainer.appendChild(componentTitle);
+
+                const componentClass = componentMap[compInfo.name];
+                if(componentClass) {
+                    const component = new componentClass(compInfo.data);
+                    const componentContent = document.createElement('div');
+                    componentContent.innerHTML = component.toHtml();
+                    componentContainer.appendChild(componentContent);
+
+                    container.appendChild(componentContainer);
+                    if (component.activate) {
+                        setTimeout(() => component.activate(), 0);
+                    }
+                }
+            });
+            lucide.createIcons();
+        });
+    </script>
+</body>
+
+</html>

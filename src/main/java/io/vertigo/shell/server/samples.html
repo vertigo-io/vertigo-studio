@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Basic Components Samples</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-sankey"></script>
+    <script src="https://bernii.github.io/gauge.js/dist/gauge.min.js"></script>
+</head>
+
+<body>
+    <main>
+        <div class="chat-container" id="chat">
+            <h1>Basic Components Samples</h1>
+        </div>
+    </main>
+
+    <script src="components.js"></script>
+    <script src="basic/core-components.js"></script>
+    <script src="basic/data-components.js"></script>
+    <script src="basic/dataviz-components.js"></script>
+    <script src="basic/live-components.js"></script>
+    <script src="basic/media-components.js"></script>
+    <script src="basic/text-components.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('chat');
+
+            const componentMap = {
+                'ErrorComponent': ErrorComponent,
+                'ListComponent': ListComponent,
+                'TableComponent': TableComponent,
+                'JsonComponent': JsonComponent,
+                'TreeComponent': TreeComponent,
+                'BarChartComponent': BarChartComponent,
+                'GaugeComponent': GaugeComponent,
+                'SparkLineComponent': SparkLineComponent,
+                'StatusComponent': StatusComponent,
+                'RatingComponent': RatingComponent,
+                'ProgressBarComponent': ProgressBarComponent,
+                'FigletComponent': FigletComponent,
+                'ParagraphComponent': ParagraphComponent,
+                'TextPathComponent': TextPathComponent,
+                'TitleComponent': TitleComponent,
+                'GeoMapComponent': GeoMapComponent,
+                'PhotoComponent': PhotoComponent,
+                'RssComponent': RssComponent,
+                'SankeyComponent': SankeyComponent,
+                'YouTubeComponent': YouTubeComponent
+            };
+
+            const components = [
+                { category: 'Core', name: 'ErrorComponent', data: { text: 'This is an error message.' } },
+                { category: 'Data', name: 'ListComponent', data: { items: ['Item 1', 'Item 2', 'Item 3'] } },
+                { category: 'Data', name: 'TableComponent', data: { header: ['Col 1', 'Col 2'], rows: [['a', 'b'], ['c', 'd']] } },
+                { category: 'Data', name: 'JsonComponent', data: { json: { a: 1, b: "test" } } },
+                { category: 'Data', name: 'TreeComponent', data: { rootNode: { label: 'root', nodes: [{ label: 'child 1' }, { label: 'child 2' }] } } },
+                { category: 'DataViz', name: 'BarChartComponent', data: { title: 'Bar Chart', header: ['A', 'B', 'C'], values: [10, 20, 30] } },
+                { category: 'DataViz', name: 'GaugeComponent', data: { title: 'Gauge', value: 65 } },
+                { category: 'DataViz', name: 'SparkLineComponent', data: { title: 'Sparkline', values: [5, 10, 15, 12, 8, 18] } },
+                { category: 'DataViz', name: 'StatusComponent', data: { title: 'Status', types: ['SUCCESS', 'ERROR', 'WARNING', 'INFO', 'NEUTRAL'] } },
+                { category: 'DataViz', name: 'RatingComponent', data: { title: 'Rating', value: 4 } },
+                { category: 'Live', name: 'ProgressBarComponent', data: { id: 'progress1', title: 'Progress Bar', value: 42 } },
+                { category: 'Text', name: 'FigletComponent', data: { text: 'Figlet' } },
+                { category: 'Text', name: 'ParagraphComponent', data: { text: 'This is a paragraph of text.' } },
+                { category: 'Text', name: 'TextPathComponent', data: { path: 'home/user/file.txt' } },
+                { category: 'Text', name: 'TitleComponent', data: { text: 'This is a Title', level: 2 } },
+                { category: 'Media', name: 'GeoMapComponent', data: { title: 'Geo Map', latitude: 48.85, longitude: 2.35, label: 'Paris' } },
+                { category: 'Media', name: 'PhotoComponent', data: { title: 'Photo', url: 'https://via.placeholder.com/150' } },
+                { category: 'Media', name: 'RssComponent', data: { title: 'RSS Feed', items: [{title: 'Item 1', link:'#'}] } },
+                { category: 'Media', name: 'SankeyComponent', data: { title: 'Sankey Diagram', data: [{from: 'a', to: 'b', flow: 10}] } },
+                { category: 'Media', name: 'YouTubeComponent', data: { videoId: 'dQw4w9WgXcQ' } }
+            ];
+
+            let currentCategory = '';
+            components.forEach(compInfo => {
+                if (currentCategory !== compInfo.category) {
+                    currentCategory = compInfo.category;
+                    const categoryTitle = document.createElement('h2');
+                    categoryTitle.textContent = currentCategory;
+                    container.appendChild(categoryTitle);
+                }
+
+                const componentContainer = document.createElement('div');
+                componentContainer.className = 'component-sample';
+                const componentTitle = document.createElement('h3');
+                componentTitle.textContent = compInfo.name;
+                componentContainer.appendChild(componentTitle);
+
+                const componentClass = componentMap[compInfo.name];
+                if(componentClass) {
+                    const component = new componentClass(compInfo.data);
+                    const componentContent = document.createElement('div');
+                    componentContent.innerHTML = component.toHtml();
+                    componentContainer.appendChild(componentContent);
+                    
+                    container.appendChild(componentContainer);
+                    if (component.activate) {
+                        setTimeout(() => component.activate(), 0);
+                    }
+                }
+            });
+            lucide.createIcons();
+        });
+    </script>
+</body>
+
+</html>
