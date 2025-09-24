@@ -42,6 +42,7 @@ import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.components.core.container.ShinyContainer;
 import io.vertigo.shiny.components.core.error.ShinyError;
+import io.vertigo.shiny.components.data.chakra.ShinyChakraTable;
 import io.vertigo.shiny.components.data.json.ShinyJson;
 import io.vertigo.shiny.components.data.list.ShinyList;
 import io.vertigo.shiny.components.data.list.ShinyListType;
@@ -100,7 +101,7 @@ public class ShinyWebServer extends WebSocketServer {
 
 	@Override
 	public void onMessage(WebSocket webSocket, String message) {
-		System.out.println("Message reçu : " + message);
+		System.out.println("<<< receive : " + message);
 		try {
 			switch (message) {
 				//			// Parser le message JSON
@@ -428,10 +429,11 @@ public class ShinyWebServer extends WebSocketServer {
 					final List<String[]> chakraRows = new ArrayList<>();
 					chakraRows.add(new String[] { "Chakra", "UI" });
 					chakraRows.add(new String[] { "React", "Components" });
-					var chakraTable = Shiny.table()
+					var chakraTable = Shiny.chakraTable()
 							.withTitle("Chakra Table")
 							.withNoDataFound("No Chakra data found")
 							.withHeader("Framework", "Library")
+							.withSortable(true)
 							.addAllRows(chakraRows)
 							.build();
 					sendMessage(webSocket, chakraTable);
@@ -481,6 +483,7 @@ public class ShinyWebServer extends WebSocketServer {
 			case ShinyChakraPieChart c -> "chakraPieChart";
 			case ShinyChakraDonutChart c -> "chakraDonutChart";
 			case ShinyChakraAreaChart c -> "chakraAreaChart";
+			case ShinyChakraTable c -> "chakraTable";
 			default -> throw new IllegalArgumentException("Unknown component type: " + component.getClass());
 		};
 		try {
@@ -492,7 +495,7 @@ public class ShinyWebServer extends WebSocketServer {
 
 	private void sendMessage(WebSocket webSocket, String type, String data) {
 		final String json = buildMessage(type, data);
-		System.out.println("send : " + json);
+		System.out.println(">>> send : " + json);
 		webSocket.send(json);
 	}
 
