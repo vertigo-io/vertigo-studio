@@ -35,10 +35,10 @@ function print(parsed) {
 		//			container: ContainerComponent,
 		error: ErrorComponent,
 		//---data
-		json: JsonComponent,
+		json: ChakraJsonComponent,
 		list: ListComponent,
-		table: TableComponent,
-		tree: TreeComponent,
+		table: ChakraTableComponent,
+		tree: ChakraTreeComponent,
 		//---dataviz
 		barChart: BarChartComponent,
 		gauge: GaugeComponent,
@@ -53,6 +53,8 @@ function print(parsed) {
 		title: TitleComponent,
 		
 		//---media
+		chakraCard: ChakraCardComponent,
+		chakraVideo: ChakraVideoComponent,
 		geoMap: GeoMapComponent,
 		photo: PhotoComponent,
 		rssFeed: RssComponent, // Ajout du nouveau composant
@@ -156,6 +158,7 @@ function getDataTypeIcon(type) {
 		'progressBar': 'rabbit',
 		//---text
 		//---media
+		'chakraCard': 'credit-card',
 		'geoMap': 'map-pin',
 		'rssFeed': 'rss',
 		'sankey': 'waves',
