@@ -41,7 +41,7 @@ import io.vertigo.shell.systems.java.commands.show.JavaShowModelCommand;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.components.core.error.ShinyError;
-import io.vertigo.shiny.components.data.calendar.ShinyCalendar;
+import io.vertigo.shiny.components.core.container.ShinyContainer;
 import io.vertigo.shiny.components.data.json.ShinyJson;
 import io.vertigo.shiny.components.data.list.ShinyList;
 import io.vertigo.shiny.components.data.list.ShinyListType;
@@ -382,13 +382,6 @@ public class ShinyWebServer extends WebSocketServer {
 							.build();
 					sendMessage(webSocket, rating);
 					break;
-				case "xcalendar":
-					var calendar = Shiny.calendar()
-							.withYear(2024)
-							.withMonth(7)
-							.build();
-					sendMessage(webSocket, calendar);
-					break;
 				default:
 					sendMessage(webSocket, "text", "nada");
 			}
@@ -427,7 +420,7 @@ public class ShinyWebServer extends WebSocketServer {
 			case ShinySparkline c -> "sparkLine";
 			case ShinyStatus c -> "status";
 			case ShinyRating c -> "rating";
-			case ShinyCalendar c -> "calendar";
+			case ShinyContainer c -> "container";
 			case ShinyFiglet c -> "figlet";
 			case ShinyTree c -> "tree";
 			default -> throw new IllegalArgumentException("Unknown component type: " + component.getClass());
