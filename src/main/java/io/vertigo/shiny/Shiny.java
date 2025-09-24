@@ -7,6 +7,7 @@ import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.components.core.container.ShinyContainerBuilder;
 import io.vertigo.shiny.components.core.error.ShinyErrorBuilder;
 import io.vertigo.shiny.components.data.calendar.ShinyCalendarBuilder;
+import io.vertigo.shiny.components.data.chakra.ShinyChakraListBuilder;
 import io.vertigo.shiny.components.data.chakra.ShinyChakraTableBuilder;
 import io.vertigo.shiny.components.data.json.ShinyJsonBuilder;
 import io.vertigo.shiny.components.data.list.ShinyListBuilder;
@@ -31,6 +32,7 @@ import io.vertigo.shiny.components.text.textpath.ShinyTextPathBuilder;
 import io.vertigo.shiny.components.text.title.ShinyTitleBuilder;
 import io.vertigo.shiny.components.text.toggle.ShinyToggleBuilder;
 import io.vertigo.shiny.mermaid.ShinyMermaidServer;
+import io.vertigo.shiny.renderers.ShinyStyle;
 import io.vertigo.shiny.renderers.ShinySuperRenderer;
 
 public final class Shiny {
@@ -179,7 +181,7 @@ public final class Shiny {
 
 	private static ShinySuperRenderer RENDERER = new ShinySuperRenderer();
 
-	public static void render(ShinyComponent component) {
-		RENDERER.render(component, writer());
+	public static <S extends ShinyComponent, Y extends ShinyStyle<S>> void render(S component, Y style) {
+		RENDERER.render(component, style, writer());
 	}
 }

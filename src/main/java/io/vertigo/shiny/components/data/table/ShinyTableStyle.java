@@ -1,13 +1,14 @@
 package io.vertigo.shiny.components.data.table;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.shiny.renderers.ShinyStyle;
 import io.vertigo.shiny.style.ShinyColor;
 import io.vertigo.shiny.style.ShinyColors;
 
 /**
  * Encapsulates all visual style parameters of the table.
  */
-public final class ShinyTableStyle {
+public final class ShinyTableStyle implements ShinyStyle<ShinyTable> {
 	private ShinyBorder tableBorder = ShinyBorder.Normal;
 	// Colors
 	private ShinyColor titleBackgroundColor = ShinyColors.MAGENTA;

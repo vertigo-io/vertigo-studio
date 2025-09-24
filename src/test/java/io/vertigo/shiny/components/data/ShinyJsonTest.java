@@ -30,7 +30,8 @@ public class ShinyJsonTest {
 		Shiny.render(
 				Shiny.json()
 						.withJson(json)
-						.build());
+						.build(),
+				Shiny.theme().jsonStyle());
 		writer.println();
 	}
 
@@ -54,7 +55,9 @@ public class ShinyJsonTest {
 		Shiny.render(
 				Shiny.json()
 						.withJson(json)
-						.build());
+						.build(),
+				Shiny.theme().jsonStyle());
+
 		writer.println();
 	}
 
@@ -68,14 +71,14 @@ public class ShinyJsonTest {
 		Shiny.render(
 				Shiny.json()
 						.withJson(json)
-						.withStyle(new ShinyJsonStyle()
-								.withLabelColor(ShinyColors.CYAN)
-								.withNumberColor(ShinyColors.MAGENTA)
-								.withStringColor(ShinyColors.YELLOW)
-								.withColonColor(ShinyColors.GREEN)
-								.withBracketColor(ShinyColors.RED)
-								.withBracesColor(ShinyColors.RED))
-						.build());
+						.build(),
+				new ShinyJsonStyle()
+						.withLabelColor(ShinyColors.CYAN)
+						.withNumberColor(ShinyColors.MAGENTA)
+						.withStringColor(ShinyColors.YELLOW)
+						.withColonColor(ShinyColors.GREEN)
+						.withBracketColor(ShinyColors.RED)
+						.withBracesColor(ShinyColors.RED));
 		writer.println();
 	}
 
@@ -94,17 +97,17 @@ public class ShinyJsonTest {
 		Shiny.render(
 				Shiny.json()
 						.withJson(json)
-						.withStyle(new ShinyJsonStyle()
-								.withLabelColor(ShinyColors.BLUE_BRIGHT)
-								.withStringColor(ShinyColors.GREEN_BRIGHT)
-								.withNumberColor(ShinyColors.CYAN_BRIGHT)
-								.withBracesColor(ShinyColors.RED)
-								.withBracketColor(ShinyColors.MAGENTA)
-								.withColonColor(ShinyColors.YELLOW)
-								.withCommaColor(ShinyColors.WHITE)
-								.withBooleanColor(ShinyColors.GREEN)
-								.withNullColor(ShinyColors.RED))
-						.build());
+						.build(),
+				new ShinyJsonStyle()
+						.withLabelColor(ShinyColors.BLUE_BRIGHT)
+						.withStringColor(ShinyColors.GREEN_BRIGHT)
+						.withNumberColor(ShinyColors.CYAN_BRIGHT)
+						.withBracesColor(ShinyColors.RED)
+						.withBracketColor(ShinyColors.MAGENTA)
+						.withColonColor(ShinyColors.YELLOW)
+						.withCommaColor(ShinyColors.WHITE)
+						.withBooleanColor(ShinyColors.GREEN)
+						.withNullColor(ShinyColors.RED));
 		writer.println();
 	}
 
@@ -120,7 +123,8 @@ public class ShinyJsonTest {
 		Shiny.render(
 				Shiny.json()
 						.withJson(json)
-						.build());
+						.build(),
+				Shiny.theme().jsonStyle());
 		writer.println();
 	}
 }

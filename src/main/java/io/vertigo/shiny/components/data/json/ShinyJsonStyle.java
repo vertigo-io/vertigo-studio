@@ -1,10 +1,11 @@
 package io.vertigo.shiny.components.data.json;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.shiny.renderers.ShinyStyle;
 import io.vertigo.shiny.style.ShinyColor;
 import io.vertigo.shiny.style.ShinyColors;
 
-public final class ShinyJsonStyle {
+public final class ShinyJsonStyle implements ShinyStyle<ShinyJson> {
 	private ShinyColor labelColor = ShinyColors.BLUE;
 
 	private ShinyColor numberColor = ShinyColors.GREEN;

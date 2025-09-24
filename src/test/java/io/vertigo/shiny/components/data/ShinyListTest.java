@@ -29,7 +29,8 @@ public class ShinyListTest {
 						.addItem("Item 1")
 						.addItem("Item 2")
 						.addItem("Item 3")
-						.build());
+						.build(),
+				Shiny.theme().listStyle());
 		writer.println();
 	}
 
@@ -41,7 +42,8 @@ public class ShinyListTest {
 						.addItem("First item")
 						.addItem("Second item")
 						.addItem("Third item")
-						.build());
+						.build(),
+				Shiny.theme().listStyle());
 		writer.println();
 	}
 
@@ -53,7 +55,8 @@ public class ShinyListTest {
 						.addItem("Task A")
 						.addItem("Task B")
 						.addItem("Task C")
-						.build());
+						.build(),
+				Shiny.theme().listStyle());
 		writer.println();
 	}
 
@@ -71,7 +74,8 @@ public class ShinyListTest {
 						.addItem("Main Item 1")
 						.addList(nested)
 						.addItem("Main Item 2")
-						.build());
+						.build(),
+				Shiny.theme().listStyle());
 		writer.println();
 	}
 
@@ -80,14 +84,14 @@ public class ShinyListTest {
 		Shiny.render(
 				Shiny.list()
 						.withType(ShinyListType.DASHED)
-						.withStyle(new ShinyListStyle()
-								// Color the bullets/numbers/dashes
-								.withItemColor(GREEN)
-								.withBulletColor(RED))
 						.addItem("Uranus")
 						.addItem("Saturn")
 						.addItem("Venus")
-						.build());
+						.build(),
+				new ShinyListStyle()
+						// Color the bullets/numbers/dashes
+						.withItemColor(GREEN)
+						.withBulletColor(RED));
 		writer.println();
 	}
 }

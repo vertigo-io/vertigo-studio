@@ -5,30 +5,17 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
-import io.vertigo.shiny.Shiny;
 
 public final class ShinyTableBuilder implements Builder<ShinyTable> {
 	private String tableTitle;
 	private String noDataFound;
 	private String[] tableHeader;
 	private final List<String[]> tableRows = new ArrayList<>();
-	private ShinyTableStyle tableStyle;
-
-	public ShinyTableBuilder() {
-		this.tableStyle = Shiny.theme().tableStyle(); // Initialize default style
-	}
 
 	public ShinyTableBuilder withTitle(final String title) {
 		Assertion.check().isNotBlank(title);
 		//---
 		this.tableTitle = title;
-		return this;
-	}
-
-	public ShinyTableBuilder withStyle(ShinyTableStyle style) {
-		Assertion.check().isNotNull(style);
-		//---
-		this.tableStyle = style;
 		return this;
 	}
 
@@ -60,6 +47,6 @@ public final class ShinyTableBuilder implements Builder<ShinyTable> {
 	@Override
 	public ShinyTable build() {
 		return new ShinyTable(
-				tableTitle, noDataFound, tableHeader, tableRows, tableStyle);
+				tableTitle, noDataFound, tableHeader, tableRows);
 	}
 }

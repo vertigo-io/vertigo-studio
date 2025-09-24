@@ -1,10 +1,11 @@
 package io.vertigo.shiny.components.data.list;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.shiny.renderers.ShinyStyle;
 import io.vertigo.shiny.style.ShinyColor;
 import io.vertigo.shiny.style.ShinyColors;
 
-public final class ShinyListStyle {
+public final class ShinyListStyle implements ShinyStyle<ShinyList> {
 	private ShinyColor itemColor = ShinyColors.BLUE_BRIGHT;
 	private ShinyColor bulletColor = ShinyColors.CYAN;
 

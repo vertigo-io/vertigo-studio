@@ -2,8 +2,6 @@ package io.vertigo.shiny.components.data.table;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.components.ShinyComponent;
 
@@ -15,8 +13,7 @@ public record ShinyTable(
 		String title,
 		String noDataFound,
 		String[] header,
-		List<String[]> rows,
-		@JsonIgnore ShinyTableStyle style) implements ShinyComponent {
+		List<String[]> rows) implements ShinyComponent {
 
 	public ShinyTable {
 		Assertion.check()

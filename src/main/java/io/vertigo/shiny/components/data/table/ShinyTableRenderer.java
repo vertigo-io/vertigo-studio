@@ -10,19 +10,22 @@ import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 
-public final class ShinyTableRenderer implements ShinyComponentRenderer<ShinyTable> {
+public final class ShinyTableRenderer implements ShinyComponentRenderer<ShinyTable, ShinyTableStyle> {
 	@Override
 	public boolean accept(final ShinyComponent component) {
 		return component instanceof ShinyTable;
 	}
 
 	@Override
-	public void render(final ShinyTable shinyTable, final ShinyWriter writer) {
+	public void render(final ShinyTable shinyTable, final ShinyTableStyle style, final ShinyWriter writer) {
 		Assertion.check()
+				.isNotNull(shinyTable)
+				.isNotNull(style)
+				.isNotNull(writer)
 				.isNotNull(shinyTable.rows())
 				.when(shinyTable.rows().isEmpty(), () -> Assertion.check().isNotBlank(shinyTable.noDataFound()))
 				.isNotNull(shinyTable.header());
-
+		//---
 		final NumberFormat numberFormat = Shiny.theme().numberFormat();
 
 		if (shinyTable.rows().isEmpty()) {
@@ -71,7 +74,7 @@ public final class ShinyTableRenderer implements ShinyComponentRenderer<ShinyTab
 		final StringBuilder formatBuilder = new StringBuilder();
 		for (int i = 0; i < columns; i++) {
 			formatBuilder
-					.append(i == 0 ? "" : shinyTable.style().border().chars().vertical())
+					.append(i == 0 ? "" : style.border().chars().vertical())
 					.append(isNumericColumn[i] ? " %" : " %-")
 					.append(widths[i]).append("s ");
 		}
@@ -79,73 +82,73 @@ public final class ShinyTableRenderer implements ShinyComponentRenderer<ShinyTab
 
 		// 4. Print
 		if (shinyTable.title() != null) {
-			writer.println(shinyTable.style().titleBackgroundColor().bg(
-					shinyTable.style().titleTextColor().fg(shinyTable.title())));
+			writer.println(style.titleBackgroundColor().bg(
+					style.titleTextColor().fg(shinyTable.title())));
 		}
-		printLineSeparator(shinyTable, writer, widths, Position.TOP);
+		printLineSeparator(shinyTable, style, writer, widths, Position.TOP);
 
-		writer.print(shinyTable.style().border().chars().vertical())
-				.print(shinyTable.style().headerBackgroundColor().bg(String.format(format, (Object[]) shinyTable.header())))
-				.println(shinyTable.style().border().chars().vertical());
+		writer.print(style.border().chars().vertical())
+				.print(style.headerBackgroundColor().bg(String.format(format, (Object[]) shinyTable.header())))
+				.println(style.border().chars().vertical());
 
-		printLineSeparator(shinyTable, writer, widths, Position.INNER);
+		printLineSeparator(shinyTable, style, writer, widths, Position.INNER);
 
 		boolean invert = false;
 		for (final String[] formattedRow : formattedRows) {
-			writer.print(shinyTable.style().border().chars().vertical());
+			writer.print(style.border().chars().vertical());
 			final String srow = String.format(format, (Object[]) formattedRow);
 			if (invert) {
-				writer.print(shinyTable.style().altRowBackgroundColor().bg(srow));
+				writer.print(style.altRowBackgroundColor().bg(srow));
 			} else {
 				writer.print(srow);
 			}
-			writer.println(shinyTable.style().border().chars().vertical());
+			writer.println(style.border().chars().vertical());
 			invert = !invert;
 		}
-		printLineSeparator(shinyTable, writer, widths, Position.BOTTOM);
+		printLineSeparator(shinyTable, style, writer, widths, Position.BOTTOM);
 	}
 
 	private static enum Position {
 		TOP, INNER, BOTTOM
 	}
 
-	private static void printLineSeparator(final ShinyTable shinyTable, final ShinyWriter writer, final int[] widths, final Position position) {
+	private static void printLineSeparator(final ShinyTable shinyTable, final ShinyTableStyle style, final ShinyWriter writer, final int[] widths, final Position position) {
 		boolean first = true;
 		for (final int width : widths) {
 			if (first) {
 				final var left = switch (position) {
-					case TOP -> shinyTable.style().border().chars().topLeft();
-					case INNER -> shinyTable.style().border().chars().innerLeft();
-					case BOTTOM -> shinyTable.style().border().chars().bottomLeft();
+					case TOP -> style.border().chars().topLeft();
+					case INNER -> style.border().chars().innerLeft();
+					case BOTTOM -> style.border().chars().bottomLeft();
 				};
 				writer.print(left);
 				final var h = switch (position) {
-					case TOP -> shinyTable.style().border().chars().topHorizontal();
-					case INNER -> shinyTable.style().border().chars().innerHorizontal();
-					case BOTTOM -> shinyTable.style().border().chars().bottomHorizontal();
+					case TOP -> style.border().chars().topHorizontal();
+					case INNER -> style.border().chars().innerHorizontal();
+					case BOTTOM -> style.border().chars().bottomHorizontal();
 				};
 				writer.print(h.repeat(width + 2));
 				first = false;
 			} else {
 				final var middle = switch (position) {
-					case TOP -> shinyTable.style().border().chars().topMiddle();
-					case INNER -> shinyTable.style().border().chars().center();
-					case BOTTOM -> shinyTable.style().border().chars().bottomMiddle();
+					case TOP -> style.border().chars().topMiddle();
+					case INNER -> style.border().chars().center();
+					case BOTTOM -> style.border().chars().bottomMiddle();
 				};
 				writer.print(middle);
 				final var h = switch (position) {
-					case TOP -> shinyTable.style().border().chars().topHorizontal();
-					case INNER -> shinyTable.style().border().chars().innerHorizontal();
-					case BOTTOM -> shinyTable.style().border().chars().bottomHorizontal();
+					case TOP -> style.border().chars().topHorizontal();
+					case INNER -> style.border().chars().innerHorizontal();
+					case BOTTOM -> style.border().chars().bottomHorizontal();
 				};
 				writer.print(h.repeat(width + 2));
 			}
 
 		}
 		final String right = switch (position) {
-			case TOP -> shinyTable.style().border().chars().topRight();
-			case INNER -> shinyTable.style().border().chars().innerRight();
-			case BOTTOM -> shinyTable.style().border().chars().bottomRight();
+			case TOP -> style.border().chars().topRight();
+			case INNER -> style.border().chars().innerRight();
+			case BOTTOM -> style.border().chars().bottomRight();
 		};
 		writer.println(right);
 	}
