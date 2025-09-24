@@ -26,7 +26,7 @@ public abstract class ShinyLiveComponent<S extends ShinyLiveComponent<S>> implem
 
 	public final void close() {
 		drawer.running = false;
-		//draw(this.shinyWriter);
+		draw(this.shinyWriter);
 		try {
 			drawer.join();
 		} catch (final InterruptedException e) {
