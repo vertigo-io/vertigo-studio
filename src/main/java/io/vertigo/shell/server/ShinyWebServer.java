@@ -493,7 +493,6 @@ public class ShinyWebServer extends WebSocketServer {
 			case ShinyChakraDonutChart c -> "chakraDonutChart";
 			case ShinyChakraAreaChart c -> "chakraAreaChart";
 			case ShinyChakraTable c -> "chakraTable";
-			case ShinyChakraTable c -> "chakraTable";
 			default -> throw new IllegalArgumentException("Unknown component type: " + component.getClass());
 		};
 		try {
@@ -542,8 +541,5 @@ public class ShinyWebServer extends WebSocketServer {
 			port = Integer.parseInt(args[0]);
 		}
 		new ShinyWebServer(port).start();
-	}
-}
-t).start();
 	}
 }
