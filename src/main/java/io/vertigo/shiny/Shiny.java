@@ -32,7 +32,6 @@ import io.vertigo.shiny.components.text.textpath.ShinyTextPathBuilder;
 import io.vertigo.shiny.components.text.title.ShinyTitleBuilder;
 import io.vertigo.shiny.components.text.toggle.ShinyToggleBuilder;
 import io.vertigo.shiny.mermaid.ShinyMermaidServer;
-import io.vertigo.shiny.renderers.ShinyStyle;
 import io.vertigo.shiny.renderers.ShinySuperRenderer;
 
 public final class Shiny {
@@ -181,7 +180,7 @@ public final class Shiny {
 
 	private static ShinySuperRenderer RENDERER = new ShinySuperRenderer();
 
-	public static <S extends ShinyComponent, Y extends ShinyStyle<S>> void render(S component, Y style) {
-		RENDERER.render(component, style, writer());
+	public static <S extends ShinyComponent> void render(S component) {
+		RENDERER.render(component);
 	}
 }

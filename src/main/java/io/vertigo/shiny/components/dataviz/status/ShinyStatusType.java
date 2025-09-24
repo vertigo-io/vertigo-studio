@@ -16,7 +16,7 @@ public enum ShinyStatusType {
 		this.color = color;
 	}
 
-	ShinyColor color() {
+	public ShinyColor color() {
 		return color;
 	}
 }

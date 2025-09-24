@@ -8,6 +8,5 @@ public record ShinyToggle(
 		ShinyToggleType type,
 		String onText,
 		String offText,
-		boolean showText,
-		ShinyToggleStyle style) implements ShinyComponent {
+		boolean showText) implements ShinyComponent {
 }

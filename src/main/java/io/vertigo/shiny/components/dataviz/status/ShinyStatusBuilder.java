@@ -5,23 +5,10 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
-import io.vertigo.shiny.Shiny;
 
 public final class ShinyStatusBuilder implements Builder<ShinyStatus> {
 	private String statusTitle;
 	private final List<ShinyStatusType> statusTypes = new ArrayList<>();
-	private ShinyStatusStyle statusStyle;
-
-	public ShinyStatusBuilder() {
-		this.statusStyle = Shiny.theme().statusStyle(); // Initialize default style
-	}
-
-	public ShinyStatusBuilder withStyle(final ShinyStatusStyle style) {
-		Assertion.check().isNotNull(style);
-		//---
-		this.statusStyle = style;
-		return this;
-	}
 
 	public ShinyStatusBuilder withTitle(final String title) {
 		this.statusTitle = title;
@@ -50,6 +37,6 @@ public final class ShinyStatusBuilder implements Builder<ShinyStatus> {
 
 	@Override
 	public ShinyStatus build() {
-		return new ShinyStatus(statusTitle, statusTypes, statusStyle);
+		return new ShinyStatus(statusTitle, statusTypes);
 	}
 }

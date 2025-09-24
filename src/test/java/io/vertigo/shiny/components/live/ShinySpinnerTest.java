@@ -3,7 +3,6 @@ package io.vertigo.shiny.components.live;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.live.spinner.ShinySpinner;
-import io.vertigo.shiny.components.live.spinner.ShinySpinnerStyle;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinySpinnerTest {
@@ -16,7 +15,7 @@ public class ShinySpinnerTest {
 
 	private static void testBasicSpinner(final ShinyWriter writer) throws Exception {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Basic Spinner ---"));
-		try (ShinySpinner spinner = Shiny.spinner().build().start(writer)) {
+		try (ShinySpinner spinner = Shiny.spinner().build().start()) {
 			spinner.liveSend("Working...");
 			Thread.sleep(3000); // Let it run for 3 seconds
 		}
@@ -26,7 +25,7 @@ public class ShinySpinnerTest {
 
 	private static void testSpinnerWithMultipleMessages(final ShinyWriter writer) throws Exception {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Spinner with Multiple Messages ---"));
-		try (ShinySpinner spinner = Shiny.spinner().build().start(writer)) {
+		try (ShinySpinner spinner = Shiny.spinner().build().start()) {
 			spinner.liveSend("Loading data...");
 			Thread.sleep(2000);
 			spinner.liveSend("Processing files...");
@@ -41,7 +40,9 @@ public class ShinySpinnerTest {
 	private static void testShortDurationSpinner(final ShinyWriter writer) throws Exception {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Short Duration Spinner ---"));
 
-		try (ShinySpinner spinner = Shiny.spinner().withStyle(new ShinySpinnerStyle().withFrames("|", "/", "─", "\\")).build().start(writer)) {
+		Shiny.theme().spinnerStyle()
+				.withFrames("|", "/", "─", "\\");
+		try (ShinySpinner spinner = Shiny.spinner().build().start()) {
 			spinner.liveSend("Quick task...");
 			Thread.sleep(1000); // Short duration
 		}

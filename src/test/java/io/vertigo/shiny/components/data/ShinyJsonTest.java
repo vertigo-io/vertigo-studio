@@ -2,7 +2,6 @@ package io.vertigo.shiny.components.data;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.data.json.ShinyJsonStyle;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyJsonTest {
@@ -30,8 +29,7 @@ public class ShinyJsonTest {
 		Shiny.render(
 				Shiny.json()
 						.withJson(json)
-						.build(),
-				Shiny.theme().jsonStyle());
+						.build());
 		writer.println();
 	}
 
@@ -55,8 +53,7 @@ public class ShinyJsonTest {
 		Shiny.render(
 				Shiny.json()
 						.withJson(json)
-						.build(),
-				Shiny.theme().jsonStyle());
+						.build());
 
 		writer.println();
 	}
@@ -68,17 +65,18 @@ public class ShinyJsonTest {
 				"city": "New York", "population": 8400000, "landmarks": ["Statue of Liberty", "Empire State Building"]
 				}
 				""";
+
+		Shiny.theme().jsonStyle()
+				.withLabelColor(ShinyColors.CYAN)
+				.withNumberColor(ShinyColors.MAGENTA)
+				.withStringColor(ShinyColors.YELLOW)
+				.withColonColor(ShinyColors.GREEN)
+				.withBracketColor(ShinyColors.RED)
+				.withBracesColor(ShinyColors.RED);
 		Shiny.render(
 				Shiny.json()
 						.withJson(json)
-						.build(),
-				new ShinyJsonStyle()
-						.withLabelColor(ShinyColors.CYAN)
-						.withNumberColor(ShinyColors.MAGENTA)
-						.withStringColor(ShinyColors.YELLOW)
-						.withColonColor(ShinyColors.GREEN)
-						.withBracketColor(ShinyColors.RED)
-						.withBracesColor(ShinyColors.RED));
+						.build());
 		writer.println();
 	}
 
@@ -94,20 +92,22 @@ public class ShinyJsonTest {
 							"details": null
 					}
 				""";
+
+		Shiny.theme().jsonStyle()
+				.withLabelColor(ShinyColors.BLUE_BRIGHT)
+				.withStringColor(ShinyColors.GREEN_BRIGHT)
+				.withNumberColor(ShinyColors.CYAN_BRIGHT)
+				.withBracesColor(ShinyColors.RED)
+				.withBracketColor(ShinyColors.MAGENTA)
+				.withColonColor(ShinyColors.YELLOW)
+				.withCommaColor(ShinyColors.WHITE)
+				.withBooleanColor(ShinyColors.GREEN)
+				.withNullColor(ShinyColors.RED);
+
 		Shiny.render(
 				Shiny.json()
 						.withJson(json)
-						.build(),
-				new ShinyJsonStyle()
-						.withLabelColor(ShinyColors.BLUE_BRIGHT)
-						.withStringColor(ShinyColors.GREEN_BRIGHT)
-						.withNumberColor(ShinyColors.CYAN_BRIGHT)
-						.withBracesColor(ShinyColors.RED)
-						.withBracketColor(ShinyColors.MAGENTA)
-						.withColonColor(ShinyColors.YELLOW)
-						.withCommaColor(ShinyColors.WHITE)
-						.withBooleanColor(ShinyColors.GREEN)
-						.withNullColor(ShinyColors.RED));
+						.build());
 		writer.println();
 	}
 
@@ -123,8 +123,7 @@ public class ShinyJsonTest {
 		Shiny.render(
 				Shiny.json()
 						.withJson(json)
-						.build(),
-				Shiny.theme().jsonStyle());
+						.build());
 		writer.println();
 	}
 }

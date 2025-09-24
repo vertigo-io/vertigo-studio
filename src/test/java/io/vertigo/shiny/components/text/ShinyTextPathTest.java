@@ -2,7 +2,6 @@ package io.vertigo.shiny.components.text;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.text.textpath.ShinyTextPathStyle;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyTextPathTest {
@@ -36,62 +35,70 @@ public class ShinyTextPathTest {
 
 	private static void testCustomColors(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Custom Colors ---"));
+		Shiny.theme().textPathStyle()
+				.withRootColor(ShinyColors.RED)
+				.withNodeColor(ShinyColors.YELLOW)
+				.withLeafColor(ShinyColors.GREEN);
+
 		Shiny.render(
 				Shiny.textPath()
 						.withPath("/app/config/settings.json")
-						.withStyle(new ShinyTextPathStyle()
-								.withRootColor(ShinyColors.RED)
-								.withNodeColor(ShinyColors.YELLOW)
-								.withLeafColor(ShinyColors.GREEN))
 						.build());
+
+		Shiny.theme().textPathStyle()
+				.withRootColor(ShinyColors.MAGENTA)
+				.withNodeColor(ShinyColors.CYAN)
+				.withLeafColor(ShinyColors.WHITE);
 		Shiny.render(
 				Shiny.textPath()
 						.withPath("/var/log/syslog")
-						.withStyle(new ShinyTextPathStyle()
-								.withRootColor(ShinyColors.MAGENTA)
-								.withNodeColor(ShinyColors.CYAN)
-								.withLeafColor(ShinyColors.WHITE))
 						.build());
 		writer.println();
 	}
 
 	private static void testCustomSeparator(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Custom Separator ---"));
+		Shiny.theme().textPathStyle()
+				.withRootColor(ShinyColors.WHITE)
+				.withNodeColor(ShinyColors.BLUE)
+				.withLeafColor(ShinyColors.RED);
+
 		Shiny.render(
 				Shiny.textPath()
 						.withPath("data.csv")
 						.withSeparator(".")
-						.withStyle(new ShinyTextPathStyle()
-								.withRootColor(ShinyColors.WHITE)
-								.withNodeColor(ShinyColors.BLUE)
-								.withLeafColor(ShinyColors.RED))
 						.build());
+
+		Shiny.theme().textPathStyle()
+				.withRootColor(ShinyColors.WHITE)
+				.withNodeColor(ShinyColors.GREEN)
+				.withLeafColor(ShinyColors.YELLOW);
+
 		Shiny.render(
 				Shiny.textPath()
 						.withPath("item1->item2->item3")
 						.withSeparator("->")
-						.withStyle(new ShinyTextPathStyle()
-								.withRootColor(ShinyColors.WHITE)
-								.withNodeColor(ShinyColors.GREEN)
-								.withLeafColor(ShinyColors.YELLOW))
 						.build());
 		writer.println();
 	}
 
 	private static void testSeparatorColor(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Separator Color ---"));
+		Shiny.theme().textPathStyle()
+				.withSeparatorColor(ShinyColors.RED);
+
 		Shiny.render(
 				Shiny.textPath()
 						.withPath("/path/to/my/file.txt")
-						.withStyle(new ShinyTextPathStyle()
-								.withSeparatorColor(ShinyColors.RED))
 						.build());
+
+		Shiny.theme().textPathStyle()
+				.withSeparatorColor(ShinyColors.BLUE);
+
 		Shiny.render(
 				Shiny.textPath()
 						.withPath("C:\\Users\\Admin\\Desktop")
 						.withSeparator("\\")
-						.withStyle(new ShinyTextPathStyle()
-								.withSeparatorColor(ShinyColors.BLUE))
 						.build());
 		writer.println();
 	}
@@ -101,19 +108,22 @@ public class ShinyTextPathTest {
 		Shiny.render(
 				Shiny.textPath()
 						.withPath("/singlefile.txt")
-						.build()); // Root and leaf
+						.build());// Root and leaf
+
 		Shiny.render(
 				Shiny.textPath()
 						.withPath("justfile.txt")
-						.build()); // Just leaf
+						.build());// Just leaf
+
 		Shiny.render(
 				Shiny.textPath()
 						.withPath("/")
-						.build()); // Just root
+						.build());// Just root
+
 		Shiny.render(
 				Shiny.textPath()
 						.withPath("///a/b///c.txt")
-						.build()); // Multiple separators
+						.build());
 		writer.println();
 	}
 }

@@ -1,8 +1,6 @@
 package io.vertigo.shiny.components.text.toggle;
 
-import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
-import io.vertigo.shiny.Shiny;
 
 public final class ShinyToggleBuilder implements Builder<ShinyToggle> {
 	private String toggleLabel;
@@ -11,18 +9,6 @@ public final class ShinyToggleBuilder implements Builder<ShinyToggle> {
 	private String onText = "ON";
 	private String offText = "OFF";
 	private boolean showText = true;
-	private ShinyToggleStyle toggleStyle;
-
-	public ShinyToggleBuilder() {
-		toggleStyle = Shiny.theme().toggleStyle(); // Initialize default style
-	}
-
-	public ShinyToggleBuilder withStyle(final ShinyToggleStyle style) {
-		Assertion.check().isNotNull(style);
-		//---
-		this.toggleStyle = style;
-		return this;
-	}
 
 	public ShinyToggleBuilder withLabel(final String label) {
 		this.toggleLabel = label;
@@ -62,7 +48,6 @@ public final class ShinyToggleBuilder implements Builder<ShinyToggle> {
 				toggleType,
 				onText,
 				offText,
-				showText,
-				toggleStyle);
+				showText);
 	}
 }

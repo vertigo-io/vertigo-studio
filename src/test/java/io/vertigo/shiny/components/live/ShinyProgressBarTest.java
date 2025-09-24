@@ -29,7 +29,7 @@ public class ShinyProgressBarTest {
 		try (final ShinyProgressBar progressBar = Shiny.progressBar()
 				.withTotal(100)
 				.build()
-				.start(writer)) {
+				.start()) {
 			for (int i = 0; i < 100; i++) {
 				progressBar.liveUpdate(i + 1);
 				wait(30); // Simulate work
@@ -40,7 +40,7 @@ public class ShinyProgressBarTest {
 
 	private static void testFastProgressBar(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Fast Progress Bar ---"));
-		try (final ShinyProgressBar progressBar = Shiny.progressBar().withTotal(500).build().start(writer)) {
+		try (final ShinyProgressBar progressBar = Shiny.progressBar().withTotal(500).build().start()) {
 			for (int i = 0; i < 500; i++) {
 				progressBar.liveUpdate(i + 1);
 				wait(5);// Faster simulation
@@ -51,7 +51,7 @@ public class ShinyProgressBarTest {
 
 	private static void testSlowProgressBar(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Slow Progress Bar ---"));
-		try (final ShinyProgressBar progressBar = Shiny.progressBar().withTotal(50).build().start(writer)) {
+		try (final ShinyProgressBar progressBar = Shiny.progressBar().withTotal(50).build().start()) {
 			for (int i = 0; i < 50; i++) {
 				progressBar.liveUpdate(i + 1);
 				wait(100);// Slower simulation
@@ -65,7 +65,7 @@ public class ShinyProgressBarTest {
 		for (int j = 0; j < 3; j++) {
 			writer.println("Task " + (j + 1) + ":");
 
-			try (final ShinyProgressBar progressBar = Shiny.progressBar().withTotal(100).build().start(writer)) {
+			try (final ShinyProgressBar progressBar = Shiny.progressBar().withTotal(100).build().start()) {
 				writer.println();
 				for (int i = 0; i < 100; i++) {
 					progressBar.liveUpdate(i + 1);

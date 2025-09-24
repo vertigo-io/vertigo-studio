@@ -2,12 +2,11 @@ package io.vertigo.shiny.components.live.progressbar;
 
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.live.ShinyLiveComponent;
+import io.vertigo.shiny.renderers.live.ShinyProgressBarRenderer;
 
 public final class ShinyProgressBar extends ShinyLiveComponent<ShinyProgressBar> {
 	@JsonProperty
@@ -16,8 +15,6 @@ public final class ShinyProgressBar extends ShinyLiveComponent<ShinyProgressBar>
 	private volatile int value;
 	@JsonProperty
 	public final String id = UUID.randomUUID().toString();
-	@JsonIgnore
-	private final ShinyProgressBarStyle progressBarStyle;
 
 	// Package-private constructor, only accessible by the Builder
 	ShinyProgressBar(ShinyProgressBarBuilder builder) {
@@ -26,7 +23,6 @@ public final class ShinyProgressBar extends ShinyLiveComponent<ShinyProgressBar>
 				.isNotNull(builder);
 		//---
 		this.total = builder.total;
-		this.progressBarStyle = builder.progressBarStyle;
 	}
 
 	public int getTotal() {
@@ -35,10 +31,6 @@ public final class ShinyProgressBar extends ShinyLiveComponent<ShinyProgressBar>
 
 	public int getValue() {
 		return value;
-	}
-
-	public ShinyProgressBarStyle getProgressBarStyle() {
-		return progressBarStyle;
 	}
 
 	// Méthode pour mettre à jour la progression
@@ -53,8 +45,8 @@ public final class ShinyProgressBar extends ShinyLiveComponent<ShinyProgressBar>
 	}
 
 	@Override
-	synchronized protected void draw(final ShinyWriter writer) {
-		new ShinyProgressBarRenderer().render(this, writer);
+	synchronized protected void draw() {
+		new ShinyProgressBarRenderer().render(this);
 	}
 
 }

@@ -2,7 +2,6 @@ package io.vertigo.shiny.components.text;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.text.toggle.ShinyToggleStyle;
 import io.vertigo.shiny.components.text.toggle.ShinyToggleType;
 import io.vertigo.shiny.style.ShinyColors;
 
@@ -93,13 +92,14 @@ public class ShinyToggleTest {
 	private static void testCustomization(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Customized Toggles ---"));
 
+		Shiny.theme().toggleStyle()
+				.withOnColor(ShinyColors.CYAN)
+				.withOffColor(ShinyColors.MAGENTA);
+
 		Shiny.render(
 				Shiny.toggle()
 						.withLabel("Custom Colors")
 						.withValue(true)
-						.withStyle(new ShinyToggleStyle()
-								.withOnColor(ShinyColors.CYAN)
-								.withOffColor(ShinyColors.MAGENTA))
 						.build());
 
 		Shiny.render(
@@ -125,6 +125,7 @@ public class ShinyToggleTest {
 						.withValue(true)
 						.withType(ShinyToggleType.STAR)
 						.build());
+
 		Shiny.render(
 				Shiny.toggle()
 						.withLabel("With star-off")
@@ -134,5 +135,4 @@ public class ShinyToggleTest {
 
 		writer.println();
 	}
-
 }

@@ -7,7 +7,6 @@ public record ShinyRating(
 		double value,
 		ShinyRatingScale scale,
 		int customMaxValue, // -1 means use scale
-		ShinyRatingStyle style,
 		boolean showValue,
 		boolean showPercentage,
 		boolean showBox,

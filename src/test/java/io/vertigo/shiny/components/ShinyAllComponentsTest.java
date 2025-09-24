@@ -165,7 +165,7 @@ public class ShinyAllComponentsTest {
 		writer.println(CYAN.fg("Component: ShinyProgressBar"))
 				.println("Parameters: total=100");
 		//---
-		try (var progressBar = Shiny.progressBar().withTotal(100).build().start(writer)) {
+		try (var progressBar = Shiny.progressBar().withTotal(100).build().start()) {
 			for (int i = 0; i <= 100; i += 10) {
 				progressBar.liveUpdate(i + 1);
 				try {
@@ -206,7 +206,7 @@ public class ShinyAllComponentsTest {
 		writer.println(CYAN.fg("Component: ShinySpinner"))
 				.println("Parameters: messages='Loading...', 'Processing...'");
 		//---
-		try (var spinner = Shiny.spinner().build().start(writer)) {
+		try (var spinner = Shiny.spinner().build().start()) {
 			spinner.liveSend("Loading...");
 			Thread.sleep(1000);
 			spinner.liveSend("Processing...");

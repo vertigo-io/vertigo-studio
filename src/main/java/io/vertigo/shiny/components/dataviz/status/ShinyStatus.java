@@ -6,6 +6,5 @@ import io.vertigo.shiny.components.ShinyComponent;
 
 public record ShinyStatus(
 		String title,
-		List<ShinyStatusType> types,
-		ShinyStatusStyle style) implements ShinyComponent {
+		List<ShinyStatusType> types) implements ShinyComponent {
 }

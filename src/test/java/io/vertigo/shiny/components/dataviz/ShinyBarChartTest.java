@@ -2,7 +2,6 @@ package io.vertigo.shiny.components.dataviz;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.dataviz.barchart.ShinyBarChartStyle;
 import io.vertigo.shiny.components.dataviz.barchart.ShinySortMode;
 import io.vertigo.shiny.style.ShinyColors;
 
@@ -97,14 +96,16 @@ public class ShinyBarChartTest {
 
 		// Header Descending
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Header Descending ---"));
+
+		Shiny.theme().barChartStyle()
+				.withColors(ShinyColors.MAGENTA, ShinyColors.MAGENTA_BRIGHT);
+
 		Shiny.render(
 				Shiny.barChart()
 						.withTitle("Fruits (Header Desc)")
 						.withHeader(headers)
 						.withValues(values)
 						.withSort(ShinySortMode.HEADER_DESC)
-						.withStyle(new ShinyBarChartStyle()
-								.withColors(ShinyColors.MAGENTA, ShinyColors.MAGENTA_BRIGHT))
 						.build());
 		writer.println();
 	}

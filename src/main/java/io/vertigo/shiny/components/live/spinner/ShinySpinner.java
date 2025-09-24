@@ -1,8 +1,8 @@
 package io.vertigo.shiny.components.live.spinner;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.live.ShinyLiveComponent;
+import io.vertigo.shiny.renderers.live.ShinySpinnerRenderer;
 
 /**
  * This component doesn't accept color. 
@@ -11,8 +11,6 @@ public final class ShinySpinner extends ShinyLiveComponent<ShinySpinner> {
 	private volatile String message;
 	private volatile int frameIndex = 0;
 
-	private final ShinySpinnerStyle spinnerStyle;
-
 	// Package-private constructor, only accessible by the Builder
 	ShinySpinner(ShinySpinnerBuilder builder) {
 		super();
@@ -20,7 +18,6 @@ public final class ShinySpinner extends ShinyLiveComponent<ShinySpinner> {
 				.isNotNull(builder);
 		//---
 		this.message = builder.message;
-		this.spinnerStyle = builder.spinnerStyle;
 	}
 
 	public String getMessage() {
@@ -33,10 +30,6 @@ public final class ShinySpinner extends ShinyLiveComponent<ShinySpinner> {
 
 	public void setFrameIndex(final int frameIndex) {
 		this.frameIndex = frameIndex;
-	}
-
-	public ShinySpinnerStyle getSpinnerStyle() {
-		return spinnerStyle;
 	}
 
 	// Static factory method to get a new Builder instance
@@ -56,7 +49,7 @@ public final class ShinySpinner extends ShinyLiveComponent<ShinySpinner> {
 	 * Draws the current frame of the spinner with the message.
 	 */
 	@Override
-	synchronized protected void draw(final ShinyWriter writer) {
-		new ShinySpinnerRenderer().render(this, writer);
+	synchronized protected void draw() {
+		new ShinySpinnerRenderer().render(this);
 	}
 }

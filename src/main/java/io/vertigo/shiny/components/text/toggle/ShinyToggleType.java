@@ -20,11 +20,11 @@ public enum ShinyToggleType {
 		this.offIcon = offIcon;
 	}
 
-	String getOnIcon() {
+	public String getOnIcon() {
 		return onIcon;
 	}
 
-	String getOffIcon() {
+	public String getOffIcon() {
 		return offIcon;
 	}
 }

@@ -2,7 +2,6 @@ package io.vertigo.shiny.components.dataviz;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.dataviz.gauge.ShinyGaugeStyle;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyGaugeTest {
@@ -23,73 +22,75 @@ public class ShinyGaugeTest {
 						.withValue(50) // 50% of 100 (default maxValue)
 						.build());
 
+		Shiny.theme().gaugeStyle()
+				.withColor(ShinyColors.YELLOW);
 		Shiny.render(
 				Shiny.gauge()
 						.withTitle("Memory Usage")
 						.withValue(75)
-						.withStyle(new ShinyGaugeStyle()
-								.withColor(ShinyColors.YELLOW))
 						.build());
 
+		Shiny.theme().gaugeStyle()
+				.withColor(ShinyColors.RED);
 		Shiny.render(
 				Shiny.gauge()
 						.withTitle("Disk Usage")
 						.withValue(90)
-						.withStyle(new ShinyGaugeStyle()
-								.withColor(ShinyColors.RED))
 						.build());
 		writer.println();
 	}
 
 	private static void testCustomRanges(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Gauges with Custom Ranges ---"));
+
+		Shiny.theme().gaugeStyle()
+				.withColor(ShinyColors.GREEN);
 		Shiny.render(
 				Shiny.gauge()
 						.withTitle("Battery Level")
 						.withValue(85)
 						.withMaxValue(100)
-						.withStyle(new ShinyGaugeStyle()
-								.withColor(ShinyColors.GREEN))
 						.build());
 
+		Shiny.theme().gaugeStyle()
+				.withColor(ShinyColors.CYAN);
 		Shiny.render(
 				Shiny.gauge()
 						.withTitle("Progress (0-200)")
 						.withValue(120)
 						.withMaxValue(200)
-						.withStyle(new ShinyGaugeStyle()
-								.withColor(ShinyColors.CYAN))
 						.build());
 
+		Shiny.theme().gaugeStyle()
+				.withColor(ShinyColors.MAGENTA);
+		;
 		Shiny.render(
 				Shiny.gauge()
 						.withTitle("Temperature (°C)")
 						.withValue(25)
 						.withMaxValue(40)
-						.withStyle(new ShinyGaugeStyle()
-								.withColor(ShinyColors.MAGENTA))
 						.build());
 		writer.println();
 	}
 
 	private static void testDifferentLengths(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Gauges with Different Lengths ---"));
+		Shiny.theme().gaugeStyle()
+				.withMaxLength(20) // Shorter bar
+				.withColor(ShinyColors.BLUE);
 		Shiny.render(
 				Shiny.gauge()
 						.withTitle("Short Gauge")
 						.withValue(60)
-						.withStyle(new ShinyGaugeStyle()
-								.withMaxLength(20) // Shorter bar
-								.withColor(ShinyColors.BLUE))
 						.build());
 
+		Shiny.theme().gaugeStyle()
+				.withMaxLength(80)
+				.withColor(ShinyColors.WHITE);
 		Shiny.render(
 				Shiny.gauge()
 						.withTitle("Long Gauge")
 						.withValue(40)
-						.withStyle(new ShinyGaugeStyle()
-								.withMaxLength(80)
-								.withColor(ShinyColors.WHITE))
 						.build());
 		writer.println();
 	}
@@ -100,37 +101,39 @@ public class ShinyGaugeTest {
 				Shiny.gauge()
 						.withTitle("Zero Value")
 						.withValue(0)
-						.build()); // Should show empty bar
+						.build());
 
 		Shiny.render(
 				Shiny.gauge()
 						.withTitle("Max Value")
 						.withValue(100)
-						.build()); // Should show full bar
+						.build());
 
+		Shiny.theme().gaugeStyle()
+				.withColor(ShinyColors.RED);
 		Shiny.render(
 				Shiny.gauge()
 						.withTitle("Value > Max")
 						.withValue(120)
 						.withMaxValue(100)
-						.withStyle(new ShinyGaugeStyle()
-								.withColor(ShinyColors.RED))
-						.build()); // Should show full bar (capped at maxValue)
+						.build());
+		// Should show full bar (capped at maxValue)
 
+		Shiny.theme().gaugeStyle()
+				.withColor(ShinyColors.RED);
 		Shiny.render(
 				Shiny.gauge()
 						.withTitle("50 %")
 						.withValue(120)
 						.withMaxValue(240)
-						.withStyle(new ShinyGaugeStyle()
-								.withColor(ShinyColors.RED))
-						.build()); // Should show full bar (capped at maxValue)
+						.build());
+		// Should show full bar (capped at maxValue)
 
 		Shiny.render(
 				Shiny.gauge()
 						.withTitle("Negative Value")
 						.withValue(-10)
-						.build()); // Should show empty bar (capped at 0)
+						.build());// Should show empty bar (capped at 0)
 		writer.println();
 	}
 }

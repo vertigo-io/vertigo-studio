@@ -3,27 +3,13 @@ package io.vertigo.shiny.components.dataviz.barchart;
 import java.util.Arrays;
 import java.util.List;
 
-import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
-import io.vertigo.shiny.Shiny;
 
 public final class ShinyBarChartBuilder implements Builder<ShinyBarChart> {
 	private String barChartTitle;
 	private String[] barChartHeader;
 	private int[] barChartValues;
 	private ShinySortMode sortMode = ShinySortMode.NO;
-	private ShinyBarChartStyle barChartStyle;
-
-	public ShinyBarChartBuilder() {
-		barChartStyle = Shiny.theme().barChartStyle(); // Initialize default style
-	}
-
-	public ShinyBarChartBuilder withStyle(final ShinyBarChartStyle style) {
-		Assertion.check().isNotNull(style);
-		//---
-		this.barChartStyle = style;
-		return this;
-	}
 
 	public ShinyBarChartBuilder withTitle(final String title) {
 		this.barChartTitle = title;
@@ -98,6 +84,6 @@ public final class ShinyBarChartBuilder implements Builder<ShinyBarChart> {
 	@Override
 	public ShinyBarChart build() {
 		this.sort();
-		return new ShinyBarChart(barChartTitle, barChartHeader, barChartValues, barChartStyle);
+		return new ShinyBarChart(barChartTitle, barChartHeader, barChartValues);
 	}
 }

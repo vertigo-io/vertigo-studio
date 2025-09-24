@@ -3,7 +3,6 @@ package io.vertigo.shiny.components.text;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.text.figlet.ShinyFigletFont;
-import io.vertigo.shiny.components.text.figlet.ShinyFigletStyle;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyFigletTest {
@@ -21,42 +20,47 @@ public class ShinyFigletTest {
 				.withText("Vertigo")
 				.build()); // Uses default font (STANDARD)
 
-		Shiny.render(
-				Shiny.figlet()
-						.withText("Hello")
-						.withStyle(new ShinyFigletStyle()
-								.withFont(ShinyFigletFont.BIG) // Use BIG font
-								.withColor(ShinyColors.BLUE))
-						.build());
+		Shiny.theme().figletStyle()
+				.withFont(ShinyFigletFont.BIG) // Use BIG font
+				.withColor(ShinyColors.BLUE);
 
 		Shiny.render(
 				Shiny.figlet()
-						.withText("World")
-						.withStyle(new ShinyFigletStyle()
-								.withFont(ShinyFigletFont.SLANT) // Use SLANT font
-								.withColor(ShinyColors.RED))
+						.withText("Hello")
 						.build());
+
+		Shiny.theme().figletStyle()
+				.withFont(ShinyFigletFont.SLANT) // Use SLANT font
+				.withColor(ShinyColors.RED);
+		Shiny.render(
+				Shiny.figlet()
+						.withText("World")
+						.build());
+
+		Shiny.theme().figletStyle()
+				.withFont(ShinyFigletFont.STANDARD) // Use STANDARD font
+				.withColor(ShinyColors.GREEN);
 
 		Shiny.render(
 				Shiny.figlet()
 						.withText("Figlet")
-						.withStyle(new ShinyFigletStyle()
-								.withFont(ShinyFigletFont.STANDARD) // Use STANDARD font
-								.withColor(ShinyColors.GREEN))
 						.build());
 		writer.println();
 	}
 
 	private static void testAllFonts(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Testing All Available Figlet Fonts ---"));
+
 		for (final ShinyFigletFont font : ShinyFigletFont.values()) {
 			writer.println(ShinyColors.CYAN.fg("Font: " + font.name()));
+
+			Shiny.theme().figletStyle()
+					.withFont(font)
+					.withColor(ShinyColors.GREEN);
+
 			Shiny.render(
 					Shiny.figlet()
 							.withText(font.name()) // Print the font name using the font itself
-							.withStyle(new ShinyFigletStyle()
-									.withFont(font)
-									.withColor(ShinyColors.GREEN))
 							.build());
 			writer.println();
 		}

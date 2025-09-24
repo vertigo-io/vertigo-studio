@@ -6,23 +6,10 @@ import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
-import io.vertigo.shiny.Shiny;
 
 public final class ShinySparklineBuilder implements Builder<ShinySparkline> {
 	private String sparkLineTitle;
 	private List<Double> sparkLineValues;
-	private ShinySparklineStyle sparklineStyle;
-
-	public ShinySparklineBuilder() {
-		this.sparklineStyle = Shiny.theme().sparklineStyle(); // Initialize default style
-	}
-
-	public ShinySparklineBuilder withStyle(final ShinySparklineStyle style) {
-		Assertion.check().isNotNull(style);
-		//---
-		this.sparklineStyle = style;
-		return this;
-	}
 
 	public ShinySparklineBuilder withTitle(final String title) {
 		this.sparkLineTitle = title;
@@ -45,6 +32,6 @@ public final class ShinySparklineBuilder implements Builder<ShinySparkline> {
 
 	@Override
 	public ShinySparkline build() {
-		return new ShinySparkline(sparkLineTitle, sparkLineValues, sparklineStyle);
+		return new ShinySparkline(sparkLineTitle, sparkLineValues);
 	}
 }

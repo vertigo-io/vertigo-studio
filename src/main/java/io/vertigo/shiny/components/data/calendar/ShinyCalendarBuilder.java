@@ -4,29 +4,17 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
-import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.components.data.table.ShinyTableStyle;
 
 public final class ShinyCalendarBuilder implements Builder<ShinyCalendar> {
 	private final List<LocalDate> highlightedDates = new ArrayList<>();
 	private int calendarYear;
 	private int calendarMonth;
-	private ShinyTableStyle calendarStyle;
 
 	public ShinyCalendarBuilder() {
-		this.calendarStyle = Shiny.theme().calendarStyle(); // Initialize default style
 		final LocalDate now = LocalDate.now();
 		this.calendarYear = now.getYear();
 		this.calendarMonth = now.getMonthValue();
-	}
-
-	public ShinyCalendarBuilder withStyle(final ShinyTableStyle style) {
-		Assertion.check().isNotNull(style);
-		//---
-		this.calendarStyle = style;
-		return this;
 	}
 
 	public ShinyCalendarBuilder withYear(final int year) {
@@ -51,6 +39,6 @@ public final class ShinyCalendarBuilder implements Builder<ShinyCalendar> {
 
 	@Override
 	public ShinyCalendar build() {
-		return new ShinyCalendar(calendarYear, calendarMonth, calendarStyle);
+		return new ShinyCalendar(calendarYear, calendarMonth);
 	}
 }

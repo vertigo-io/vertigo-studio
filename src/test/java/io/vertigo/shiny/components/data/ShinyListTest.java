@@ -6,7 +6,6 @@ import static io.vertigo.shiny.style.ShinyColors.RED;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.data.list.ShinyList;
-import io.vertigo.shiny.components.data.list.ShinyListStyle;
 import io.vertigo.shiny.components.data.list.ShinyListType;
 import io.vertigo.shiny.style.ShinyColors;
 
@@ -29,8 +28,7 @@ public class ShinyListTest {
 						.addItem("Item 1")
 						.addItem("Item 2")
 						.addItem("Item 3")
-						.build(),
-				Shiny.theme().listStyle());
+						.build());
 		writer.println();
 	}
 
@@ -42,8 +40,7 @@ public class ShinyListTest {
 						.addItem("First item")
 						.addItem("Second item")
 						.addItem("Third item")
-						.build(),
-				Shiny.theme().listStyle());
+						.build());
 		writer.println();
 	}
 
@@ -55,8 +52,7 @@ public class ShinyListTest {
 						.addItem("Task A")
 						.addItem("Task B")
 						.addItem("Task C")
-						.build(),
-				Shiny.theme().listStyle());
+						.build());
 		writer.println();
 	}
 
@@ -74,24 +70,26 @@ public class ShinyListTest {
 						.addItem("Main Item 1")
 						.addList(nested)
 						.addItem("Main Item 2")
-						.build(),
-				Shiny.theme().listStyle());
+						.build());
 		writer.println();
 	}
 
 	private static void testColoredList(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Colored List ---"));
+
+		Shiny.theme().listStyle()
+				// Color the bullets/numbers/dashes
+				.withItemColor(GREEN)
+				.withBulletColor(RED);
+
 		Shiny.render(
 				Shiny.list()
 						.withType(ShinyListType.DASHED)
 						.addItem("Uranus")
 						.addItem("Saturn")
 						.addItem("Venus")
-						.build(),
-				new ShinyListStyle()
-						// Color the bullets/numbers/dashes
-						.withItemColor(GREEN)
-						.withBulletColor(RED));
+						.build());
+
 		writer.println();
 	}
 }

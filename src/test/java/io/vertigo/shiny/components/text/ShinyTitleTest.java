@@ -17,6 +17,7 @@ public class ShinyTitleTest {
 						.withText("Level 1 Title")
 						.withLevel(1)
 						.build());
+
 		Shiny.render(
 				Shiny.title()
 						.withText("Level 2 Title")
@@ -30,6 +31,6 @@ public class ShinyTitleTest {
 		Shiny.render(
 				Shiny.title()
 						.withText("Default Level Title")
-						.build()); // Default, should be level 1
+						.build());
 	}
 }

@@ -4,9 +4,8 @@ import java.util.List;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.data.table.ShinyBorder;
 import io.vertigo.shiny.components.data.table.ShinyTableBuilder;
-import io.vertigo.shiny.components.data.table.ShinyTableStyle;
+import io.vertigo.shiny.renderers.data.ShinyTableBorder;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyTableTest {
@@ -31,8 +30,7 @@ public class ShinyTableTest {
 						.withTitle("User Information")
 						.withHeader("Name", "Age", "City")
 						.addAllRows(data)
-						.build(),
-				Shiny.theme().tableStyle());
+						.build());
 		writer.println();
 	}
 
@@ -72,8 +70,7 @@ public class ShinyTableTest {
 						.withTitle("European Union Countries - Population")
 						.withHeader("Country", "Population")
 						.addAllRows(euCountries)
-						.build(),
-				Shiny.theme().tableStyle());
+						.build());
 		writer.println();
 	}
 
@@ -85,8 +82,7 @@ public class ShinyTableTest {
 						.withHeader("Col1", "Col2")
 						.addAllRows(List.of()) // Empty data
 						.withNoDataFound("No data available for this table.")
-						.build(),
-				Shiny.theme().tableStyle());
+						.build());
 		writer.println();
 	}
 
@@ -97,17 +93,17 @@ public class ShinyTableTest {
 				new String[] { "Item B", "250", "Inactive" },
 				new String[] { "Item C", "75", "Active" });
 
+		Shiny.theme().tableStyle()
+				.withTitleBackgroundColor(ShinyColors.WHITE)
+				.withHeaderBackgroundColor(ShinyColors.GREEN_BRIGHT)
+				.withAltRowBackgroundColor(ShinyColors.CYAN_BRIGHT)
+				.withBorderColor(ShinyColors.RED);
 		Shiny.render(
 				Shiny.table()
 						.withTitle("Product Status")
 						.withHeader("Product", "Quantity", "Status")
 						.addAllRows(data)
-						.build(),
-				new ShinyTableStyle()
-						.withTitleBackgroundColor(ShinyColors.WHITE)
-						.withHeaderBackgroundColor(ShinyColors.GREEN_BRIGHT)
-						.withAltRowBackgroundColor(ShinyColors.CYAN_BRIGHT)
-						.withBorderColor(ShinyColors.RED));
+						.build());
 		writer.println();
 
 		final ShinyTableBuilder tableBuilder = Shiny.table()
@@ -117,6 +113,13 @@ public class ShinyTableTest {
 						new String[] { "North", "12345", "10.5%" },
 						new String[] { "South", "9876", "5.2%" }));
 
+		Shiny.theme().tableStyle()
+				.withTitleBackgroundColor(ShinyColors.BLUE)
+				.withHeaderBackgroundColor(ShinyColors.WHITE)
+				.withAltRowBackgroundColor(ShinyColors.CYAN)
+				.withBorderColor(ShinyColors.YELLOW)
+				.withBorder(ShinyTableBorder.Simple);
+
 		Shiny.render(
 				tableBuilder
 						.withTitle("Sales Report - Simple")
@@ -124,15 +127,12 @@ public class ShinyTableTest {
 						.addAllRows(List.of(
 								new String[] { "North", "12345", "10.5%" },
 								new String[] { "South", "9876", "5.2%" }))
-						.build(),
-				new ShinyTableStyle()
-						.withTitleBackgroundColor(ShinyColors.BLUE)
-						.withHeaderBackgroundColor(ShinyColors.WHITE)
-						.withAltRowBackgroundColor(ShinyColors.CYAN)
-						.withBorderColor(ShinyColors.YELLOW)
-						.withBorder(ShinyBorder.Simple));
+						.build());
 
 		writer.println();
+
+		Shiny.theme().tableStyle()
+				.withBorder(ShinyTableBorder.SimpleHeavy);
 
 		Shiny.render(
 				tableBuilder
@@ -141,12 +141,12 @@ public class ShinyTableTest {
 						.addAllRows(List.of(
 								new String[] { "North", "12345", "10.5%" },
 								new String[] { "South", "9876", "5.2%" }))
-						.build(),
-				new ShinyTableStyle()
-						.withBorder(ShinyBorder.SimpleHeavy));
+						.build());
 
 		writer.println();
 
+		Shiny.theme().tableStyle()
+				.withBorder(ShinyTableBorder.Horizontal);
 		Shiny.render(
 				tableBuilder
 						.withTitle("Sales Report - Horizontal")
@@ -154,9 +154,7 @@ public class ShinyTableTest {
 						.addAllRows(List.of(
 								new String[] { "North", "12345", "10.5%" },
 								new String[] { "South", "9876", "5.2%" }))
-						.build(),
-				new ShinyTableStyle()
-						.withBorder(ShinyBorder.Horizontal));
+						.build());
 		writer.println();
 	}
 }

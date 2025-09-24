@@ -3,6 +3,7 @@ package io.vertigo.shiny.components.live.progressbar;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.renderers.live.ShinyProgressBarStyle;
 
 public final class ShinyProgressBarBuilder implements Builder<ShinyProgressBar> {
 	int total = 0; // Valeur totale correspondant à 100%
