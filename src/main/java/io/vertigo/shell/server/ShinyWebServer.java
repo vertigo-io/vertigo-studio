@@ -40,8 +40,8 @@ import io.vertigo.shell.systems.java.commands.load.JavaLoadCommand;
 import io.vertigo.shell.systems.java.commands.show.JavaShowModelCommand;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.ShinyComponent;
-import io.vertigo.shiny.components.core.error.ShinyError;
 import io.vertigo.shiny.components.core.container.ShinyContainer;
+import io.vertigo.shiny.components.core.error.ShinyError;
 import io.vertigo.shiny.components.data.json.ShinyJson;
 import io.vertigo.shiny.components.data.list.ShinyList;
 import io.vertigo.shiny.components.data.list.ShinyListType;
@@ -381,6 +381,32 @@ public class ShinyWebServer extends WebSocketServer {
 							.withAllowHalfRating(true)
 							.build();
 					sendMessage(webSocket, rating);
+					break;
+				case "xchakratree":
+					var chakraTree = Shiny.tree("Chakra Tree").build();
+					chakraTree.getRoot().addChild("src", FOLDER_OPEN)
+							.addChild("main", FOLDER_OPEN)
+							.addChild("file.txt", FILE);
+					sendMessage(webSocket, chakraTree);
+					break;
+				case "xchakrajson":
+					var chakraJson = Shiny.json()
+							.withJson("{\"name\": \"Chakra UI\", \"version\": \"1.0.0\"}")
+							.withTitle("Chakra JSON")
+							.build();
+					sendMessage(webSocket, chakraJson);
+					break;
+				case "xchakratable":
+					final List<String[]> chakraRows = new ArrayList<>();
+					chakraRows.add(new String[] { "Chakra", "UI" });
+					chakraRows.add(new String[] { "React", "Components" });
+					var chakraTable = Shiny.table()
+							.withTitle("Chakra Table")
+							.withNoDataFound("No Chakra data found")
+							.withHeader("Framework", "Library")
+							.addAllRows(chakraRows)
+							.build();
+					sendMessage(webSocket, chakraTable);
 					break;
 				default:
 					sendMessage(webSocket, "text", "nada");
