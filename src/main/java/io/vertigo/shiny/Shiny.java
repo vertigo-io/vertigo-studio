@@ -116,6 +116,10 @@ public final class Shiny {
 		return new ShinyListBuilder();
 	}
 
+	public static ShinyChakraListBuilder chakraList() {
+		return new ShinyChakraListBuilder();
+	}
+
 	public static ShinyTitleBuilder title() {
 		return new ShinyTitleBuilder();
 	}

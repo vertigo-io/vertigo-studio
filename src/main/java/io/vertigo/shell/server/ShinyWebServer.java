@@ -438,6 +438,15 @@ public class ShinyWebServer extends WebSocketServer {
 							.build();
 					sendMessage(webSocket, chakraTable);
 					break;
+				case "xChakraList":
+					var chakraList = Shiny.chakraList()
+							.withTitle("Chakra List")
+							.addItem("Item 1")
+							.addItem("Item 2")
+							.addItem("Item 3")
+							.build();
+					sendMessage(webSocket, chakraList);
+					break;
 				default:
 					sendMessage(webSocket, "text", "nada");
 			}
@@ -483,6 +492,7 @@ public class ShinyWebServer extends WebSocketServer {
 			case ShinyChakraPieChart c -> "chakraPieChart";
 			case ShinyChakraDonutChart c -> "chakraDonutChart";
 			case ShinyChakraAreaChart c -> "chakraAreaChart";
+			case ShinyChakraTable c -> "chakraTable";
 			case ShinyChakraTable c -> "chakraTable";
 			default -> throw new IllegalArgumentException("Unknown component type: " + component.getClass());
 		};
@@ -532,5 +542,8 @@ public class ShinyWebServer extends WebSocketServer {
 			port = Integer.parseInt(args[0]);
 		}
 		new ShinyWebServer(port).start();
+	}
+}
+t).start();
 	}
 }
