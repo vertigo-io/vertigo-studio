@@ -31,29 +31,34 @@ wsManager.onMessageHandler = (event) => {
 function print(parsed) {
 	console.log("print>>" + JSON.stringify(parsed));
 	const componentMap = {
-		barChart: BarChartComponent,
-		calendar: CalendarComponent,
+		//---core
 		//			container: ContainerComponent,
 		error: ErrorComponent,
-		gauge: GaugeComponent,
-		geoMap: GeoMapComponent,
+		//---data
 		json: JsonComponent,
 		list: ListComponent,
-		paragraph: ParagraphComponent,
-		photo: PhotoComponent,
+		table: TableComponent,
+		tree: TreeComponent,
+		//---dataviz
+		barChart: BarChartComponent,
+		gauge: GaugeComponent,
 		progressBar: ProgressBarComponent,
 		rating: RatingComponent,
-		rssFeed: RssComponent, // Ajout du nouveau composant
-		sankey: SankeyComponent,
 		sparkLine: SparkLineComponent,
 		status: StatusComponent,
-		/*spotify: SpotifyComponent,*/
-		table: TableComponent,
+		//---text
+		figlet: FigletComponent,
+		paragraph: ParagraphComponent,
 		textPath: TextPathComponent,
 		title: TitleComponent,
-		tree: TreeComponent,
+		
+		//---media
+		geoMap: GeoMapComponent,
+		photo: PhotoComponent,
+		rssFeed: RssComponent, // Ajout du nouveau composant
+		sankey: SankeyComponent,
+		/*spotify: SpotifyComponent,*/
 		youtube: YouTubeComponent,
-		figlet: FigletComponent,
 	};
 
 	if (componentMap[parsed.type]) {
@@ -136,18 +141,24 @@ function toggleCollapse(element) {
 
 function getDataTypeIcon(type) {
 	const iconMap = {
-		'barChart': 'chart-bar',
+		//---core
 		'error': 'alert-triangle',
-		'gauge': 'gauge',
-		'geoMap': 'map-pin',
+		//---data
 		'json': 'code-2',
 		'list': 'list',
+		'table': 'table-2',
+		'tree': 'folder-tree',
+		//---dataviz
+		'barChart': 'chart-bar',
+		'gauge': 'gauge',
+		'sparkLine': 'trending-up',
+		//---live
 		'progressBar': 'rabbit',
+		//---text
+		//---media
+		'geoMap': 'map-pin',
 		'rssFeed': 'rss',
 		'sankey': 'waves',
-		'sparkLine': 'trending-up',
-		'table': 'table-2',
-		'tree': 'folder-tree'
 	};
 	return iconMap[type] || 'traffic-cone';
 }
