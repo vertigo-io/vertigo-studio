@@ -48,6 +48,10 @@ import io.vertigo.shiny.components.data.list.ShinyListType;
 import io.vertigo.shiny.components.data.table.ShinyTable;
 import io.vertigo.shiny.components.data.tree.ShinyTree;
 import io.vertigo.shiny.components.dataviz.barchart.ShinyBarChart;
+import io.vertigo.shiny.components.dataviz.chakra.ShinyChakraAreaChart;
+import io.vertigo.shiny.components.dataviz.chakra.ShinyChakraDonutChart;
+import io.vertigo.shiny.components.dataviz.chakra.ShinyChakraPieChart;
+import io.vertigo.shiny.components.dataviz.chakra.ShinyChakraSparkLine;
 import io.vertigo.shiny.components.dataviz.gauge.ShinyGauge;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRating;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingScale;
@@ -224,12 +228,36 @@ public class ShinyWebServer extends WebSocketServer {
 							.build();
 					sendMessage(webSocket, gauge);
 					break;
-				case "xspark":
-					var sparkLine = Shiny.sparkline()
-							.withTitle("Ventes par produit")
-							.withValues(156, 450, 300, 200, 100, 23)
+				case "xsparkline":
+					var sparkLine = Shiny.chakraSparkLine()
+							.withTitle("Chakra Sparkline")
+							.withData(156, 450, 300, 200, 100, 23)
 							.build();
 					sendMessage(webSocket, sparkLine);
+					break;
+				case "xpie":
+					var pieChart = Shiny.chakraPieChart()
+							.withTitle("Chakra Pie Chart")
+							.withLabels("A", "B", "C")
+							.withData(10, 20, 30)
+							.build();
+					sendMessage(webSocket, pieChart);
+					break;
+				case "xdonut":
+					var donutChart = Shiny.chakraDonutChart()
+							.withTitle("Chakra Donut Chart")
+							.withLabels("A", "B", "C")
+							.withData(10, 20, 30)
+							.build();
+					sendMessage(webSocket, donutChart);
+					break;
+				case "xarea":
+					var areaChart = Shiny.chakraAreaChart()
+							.withTitle("Chakra Area Chart")
+							.withLabels("Jan", "Feb", "Mar")
+							.withData(10, 20, 15)
+							.build();
+					sendMessage(webSocket, areaChart);
 					break;
 				case "xmap":
 					var geoMap = """
@@ -449,6 +477,10 @@ public class ShinyWebServer extends WebSocketServer {
 			case ShinyContainer c -> "container";
 			case ShinyFiglet c -> "figlet";
 			case ShinyTree c -> "tree";
+			case ShinyChakraSparkLine c -> "chakraSparkLine";
+			case ShinyChakraPieChart c -> "chakraPieChart";
+			case ShinyChakraDonutChart c -> "chakraDonutChart";
+			case ShinyChakraAreaChart c -> "chakraAreaChart";
 			default -> throw new IllegalArgumentException("Unknown component type: " + component.getClass());
 		};
 		try {
@@ -491,16 +523,8 @@ public class ShinyWebServer extends WebSocketServer {
 			String json) {
 	}
 
-	//	// Supposons que cette classe représente ta table
-	//	public static record TableData(
-	//			String tableTitle,
-	//			String noDataFound,
-	//			String[] tableHeader,
-	//			List<String[]> tableRows) {
-	//	}
-
 	public static void main(String[] args) {
-		int port = 8080; // default port
+		int port = 8080;
 		if (args.length > 0) {
 			port = Integer.parseInt(args[0]);
 		}

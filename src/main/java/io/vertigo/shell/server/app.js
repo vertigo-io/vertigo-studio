@@ -45,6 +45,9 @@ function print(parsed) {
 		progressBar: ProgressBarComponent,
 		rating: RatingComponent,
 		sparkLine: SparkLineComponent,
+		chakraPieChart: ChakraPieChartComponent,
+		chakraDonutChart: ChakraDonutChartComponent,
+		chakraAreaChart: ChakraAreaChartComponent,
 		status: StatusComponent,
 		//---text
 		figlet: FigletComponent,
@@ -152,6 +155,10 @@ function getDataTypeIcon(type) {
 		'tree': 'folder-tree',
 		//---dataviz
 		'barChart': 'chart-bar',
+		'chakraSparkLine': 'trending-up',
+		'chakraPieChart': 'pie-chart',
+		'chakraDonutChart': 'pie-chart',
+		'chakraAreaChart': 'area-chart',
 		'gauge': 'gauge',
 		'sparkLine': 'trending-up',
 		//---live

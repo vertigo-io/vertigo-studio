@@ -1,9 +1,9 @@
 class ChakraBarChartComponent extends Component {
-    constructor({ title, labels, data }) {
+    constructor({ title, header, values }) {
         super();
         this.title = title || 'Chakra Bar Chart';
-        this.labels = labels || [];
-        this.data = data || [];
+        this.labels = header || [];
+        this.data = values || [];
         this.canvasId = `chakra-barchart-${Math.random().toString(36).substr(2, 9)}`;
     }
 
@@ -107,6 +107,190 @@ class ChakraRadarChartComponent extends Component {
                         ticks: {
                             color: '#A0AEC0',
                             backdropColor: 'transparent'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#A0AEC0'
+                        }
+                    }
+                }
+            }
+        });
+    }
+}
+
+class ChakraSparkLineComponent extends Component {
+    constructor({ title, data }) {
+        super();
+        this.title = title || 'Chakra Sparkline';
+        this.data = data || [];
+        this.canvasId = `chakra-sparkline-${Math.random().toString(36).substr(2, 9)}`;
+    }
+
+    toHtml() {
+        return `<div class="chakra-sparkline-container" style="background-color: #1A202C; padding: 15px; border-radius: 8px;">
+                    <h3 class="chakra-sparkline-title" style="color: #CBD5E0; margin-bottom: 10px;">${this.title}</h3>
+                    <canvas id="${this.canvasId}"></canvas>
+                </div>`;
+    }
+
+    activate() {
+        const ctx = document.getElementById(this.canvasId).getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: this.data.map((_, i) => i),
+                datasets: [{
+                    data: this.data,
+                    borderColor: '#3182CE',
+                    borderWidth: 2,
+                    fill: false,
+                    pointRadius: 0,
+                }]
+            },
+            options: {
+                scales: {
+                    x: { display: false },
+                    y: { display: false }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { enabled: false }
+                }
+            }
+        });
+    }
+}
+
+class ChakraPieChartComponent extends Component {
+    constructor({ title, labels, data }) {
+        super();
+        this.title = title || 'Chakra Pie Chart';
+        this.labels = labels || [];
+        this.data = data || [];
+        this.canvasId = `chakra-piechart-${Math.random().toString(36).substr(2, 9)}`;
+    }
+
+    toHtml() {
+        return `<div class="chakra-piechart-container" style="background-color: #1A202C; padding: 15px; border-radius: 8px;">
+                    <h3 class="chakra-piechart-title" style="color: #CBD5E0; margin-bottom: 10px;">${this.title}</h3>
+                    <canvas id="${this.canvasId}"></canvas>
+                </div>`;
+    }
+
+    activate() {
+        const ctx = document.getElementById(this.canvasId).getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: this.labels,
+                datasets: [{
+                    data: this.data,
+                    backgroundColor: ['#3182CE', '#63B3ED', '#4299E1', '#319795', '#81E6D9'],
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#A0AEC0'
+                        }
+                    }
+                }
+            }
+        });
+    }
+}
+
+class ChakraDonutChartComponent extends Component {
+    constructor({ title, labels, data }) {
+        super();
+        this.title = title || 'Chakra Donut Chart';
+        this.labels = labels || [];
+        this.data = data || [];
+        this.canvasId = `chakra-donutchart-${Math.random().toString(36).substr(2, 9)}`;
+    }
+
+    toHtml() {
+        return `<div class="chakra-donutchart-container" style="background-color: #1A202C; padding: 15px; border-radius: 8px;">
+                    <h3 class="chakra-donutchart-title" style="color: #CBD5E0; margin-bottom: 10px;">${this.title}</h3>
+                    <canvas id="${this.canvasId}"></canvas>
+                </div>`;
+    }
+
+    activate() {
+        const ctx = document.getElementById(this.canvasId).getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: this.labels,
+                datasets: [{
+                    data: this.data,
+                    backgroundColor: ['#3182CE', '#63B3ED', '#4299E1', '#319795', '#81E6D9'],
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#A0AEC0'
+                        }
+                    }
+                }
+            }
+        });
+    }
+}
+
+class ChakraAreaChartComponent extends Component {
+    constructor({ title, labels, data }) {
+        super();
+        this.title = title || 'Chakra Area Chart';
+        this.labels = labels || [];
+        this.data = data || [];
+        this.canvasId = `chakra-areachart-${Math.random().toString(36).substr(2, 9)}`;
+    }
+
+    toHtml() {
+        return `<div class="chakra-areachart-container" style="background-color: #1A202C; padding: 15px; border-radius: 8px;">
+                    <h3 class="chakra-areachart-title" style="color: #CBD5E0; margin-bottom: 10px;">${this.title}</h3>
+                    <canvas id="${this.canvasId}"></canvas>
+                </div>`;
+    }
+
+    activate() {
+        const ctx = document.getElementById(this.canvasId).getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: this.labels,
+                datasets: [{
+                    data: this.data,
+                    borderColor: '#3182CE',
+                    backgroundColor: 'rgba(49, 130, 206, 0.2)',
+                    fill: true,
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            color: '#A0AEC0'
+                        },
+                        grid: {
+                            color: '#2D3748'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#A0AEC0'
+                        },
+                        grid: {
+                            color: '#2D3748'
                         }
                     }
                 },

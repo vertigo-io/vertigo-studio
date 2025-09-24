@@ -12,6 +12,10 @@ import io.vertigo.shiny.components.data.list.ShinyListBuilder;
 import io.vertigo.shiny.components.data.table.ShinyTableBuilder;
 import io.vertigo.shiny.components.data.tree.ShinyTreeBuilder;
 import io.vertigo.shiny.components.dataviz.barchart.ShinyBarChartBuilder;
+import io.vertigo.shiny.components.dataviz.chakra.ShinyChakraAreaChartBuilder;
+import io.vertigo.shiny.components.dataviz.chakra.ShinyChakraDonutChartBuilder;
+import io.vertigo.shiny.components.dataviz.chakra.ShinyChakraPieChartBuilder;
+import io.vertigo.shiny.components.dataviz.chakra.ShinyChakraSparkLineBuilder;
 import io.vertigo.shiny.components.dataviz.gauge.ShinyGaugeBuilder;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingBuilder;
 import io.vertigo.shiny.components.dataviz.sparkline.ShinySparklineBuilder;
@@ -133,6 +137,22 @@ public final class Shiny {
 
 	public static ShinyInputTextBuilder inputText() {
 		return new ShinyInputTextBuilder();
+	}
+
+	public static ShinyChakraSparkLineBuilder chakraSparkLine() {
+		return new ShinyChakraSparkLineBuilder();
+	}
+
+	public static ShinyChakraPieChartBuilder chakraPieChart() {
+		return new ShinyChakraPieChartBuilder();
+	}
+
+	public static ShinyChakraDonutChartBuilder chakraDonutChart() {
+		return new ShinyChakraDonutChartBuilder();
+	}
+
+	public static ShinyChakraAreaChartBuilder chakraAreaChart() {
+		return new ShinyChakraAreaChartBuilder();
 	}
 
 	public static ShinyTheme theme() {
