@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Shoelace Components Samples</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Shoelace CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.13.1/cdn/themes/dark.css" />
+    <!-- Shoelace JS -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.13.1/cdn/shoelace.js"></script>
+</head>
+
+<body>
+    <main>
+        <div class="chat-container" id="chat">
+            <h1>Shoelace Components Samples</h1>
+        </div>
+    </main>
+
+    <script src="components.js"></script>
+    <script src="shoelace/text/ShoelaceTitleComponent.js"></script>
+    <script src="shoelace/text/ShoelaceParagraphComponent.js"></script>
+    <script src="shoelace/data/ShoelaceJsonComponent.js"></script>
+    <script src="shoelace/data/ShoelaceTableComponent.js"></script>
+    <script src="shoelace/data/ShoelaceTreeComponent.js"></script>
+    <script src="shoelace/data/ShoelaceListComponent.js"></script>
+    <script src="shoelace/dataviz/ShoelaceChartComponent.js"></script>
+    <script src="shoelace/media/ShoelaceCardComponent.js"></script>
+    <script src="shoelace/media/ShoelaceVideoComponent.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('chat');
+
+            const componentMap = {
+                'ShoelaceTitleComponent': ShoelaceTitleComponent,
+                'ShoelaceParagraphComponent': ShoelaceParagraphComponent,
+                'ShoelaceJsonComponent': ShoelaceJsonComponent,
+                'ShoelaceTableComponent': ShoelaceTableComponent,
+                'ShoelaceTreeComponent': ShoelaceTreeComponent,
+                'ShoelaceListComponent': ShoelaceListComponent,
+                'ShoelaceChartComponent': ShoelaceChartComponent,
+                'ShoelaceCardComponent': ShoelaceCardComponent,
+                'ShoelaceVideoComponent': ShoelaceVideoComponent
+            };
+
+            const components = [
+                { category: 'Text', name: 'ShoelaceTitleComponent', data: { title: 'Shoelace Title' } },
+                { category: 'Text', name: 'ShoelaceParagraphComponent', data: { text: 'This is a Shoelace paragraph.' } },
+                { category: 'Data', name: 'ShoelaceJsonComponent', data: { title: 'Shoelace JSON', json: { "key": "value" } } },
+                { category: 'Data', name: 'ShoelaceTableComponent', data: { id: 'shoelace-table-1', title: 'Shoelace Table', header: ['Name', 'Age'], rows: [['Alice', '30'], ['Bob', '24']], sortable: true } },
+                { category: 'Data', name: 'ShoelaceTreeComponent', data: { title: 'Shoelace Tree', rootNode: { label: 'Root', nodes: [{ label: 'Child 1' }, { label: 'Child 2' }] } } },
+                { category: 'Data', name: 'ShoelaceListComponent', data: { title: 'Shoelace List', type: 'UNORDERED', items: ['Item A', 'Item B', { title: 'Sublist', type: 'ORDERED', items: ['Subitem 1', 'Subitem 2'] }] } },
+                { category: 'DataViz', name: 'ShoelaceChartComponent', data: { title: 'Shoelace Bar Chart', type: 'bar', labels: ['Jan', 'Feb', 'Mar'], series: [{ label: 'Sales', data: [100, 150, 120] }] } },
+                { category: 'DataViz', name: 'ShoelaceChartComponent', data: { title: 'Shoelace Pie Chart', type: 'pie', labels: ['Red', 'Blue', 'Yellow'], series: [{ label: 'Colors', data: [300, 50, 100] }] } },
+                { category: 'Media', name: 'ShoelaceCardComponent', data: { title: 'Shoelace Card', description: 'This is a beautiful card.', imageUrl: 'https://picsum.photos/300/200' } },
+                { category: 'Media', name: 'ShoelaceVideoComponent', data: { title: 'Shoelace Video', videoId: 'dQw4w9WgXcQ' } }
+            ];
+
+            let currentCategory = '';
+            components.forEach(compInfo => {
+                if (currentCategory !== compInfo.category) {
+                    currentCategory = compInfo.category;
+                    const categoryTitle = document.createElement('h2');
+                    categoryTitle.textContent = currentCategory;
+                    container.appendChild(categoryTitle);
+                }
+
+                const componentContainer = document.createElement('div');
+                componentContainer.className = 'component-sample';
+                const componentTitle = document.createElement('h3');
+                componentTitle.textContent = compInfo.name;
+                componentContainer.appendChild(componentTitle);
+
+                const componentClass = componentMap[compInfo.name];
+                if(componentClass) {
+                    const component = new componentClass(compInfo.data);
+                    const componentContent = document.createElement('div');
+                    componentContent.innerHTML = component.toHtml();
+                    componentContainer.appendChild(componentContent);
+                    
+                    container.appendChild(componentContainer);
+                    if (component.activate) {
+                        setTimeout(() => component.activate(), 0);
+                    }
+                }
+            });
+            lucide.createIcons();
+        });
+    </script>
+</body>
+
+</html>
