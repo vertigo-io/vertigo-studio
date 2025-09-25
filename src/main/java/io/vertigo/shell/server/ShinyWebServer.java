@@ -317,7 +317,6 @@ public class ShinyWebServer extends WebSocketServer {
 					break;
 				case "xlist":
 					var mars = Shiny.list()
-							.withTitle("mars")
 							.withType(ShinyListType.UNORDERED)
 							.addItem("Bleue")
 							.addItem("Rouge")
@@ -325,7 +324,7 @@ public class ShinyWebServer extends WebSocketServer {
 							.build();
 					var list = Shiny.list()
 							.withTitle("planetes")
-							.withType(ShinyListType.DASHED)
+							.withType(ShinyListType.UNORDERED)
 							.addItem("Uranus")
 							.addList(mars)
 							.addItem("Saturn")

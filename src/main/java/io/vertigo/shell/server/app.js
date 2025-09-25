@@ -36,7 +36,7 @@ function print(parsed) {
 		error: ErrorComponent,
 		//---data
 		json: ChakraJsonComponent,
-		list: ListComponent,
+		list: ChakraListComponent,
 		chakraTable: ChakraTableComponent,
 		table: TableComponent,
 		tree: ChakraTreeComponent,
