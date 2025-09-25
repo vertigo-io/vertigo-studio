@@ -42,17 +42,12 @@ import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.components.core.container.ShinyContainer;
 import io.vertigo.shiny.components.core.error.ShinyError;
-import io.vertigo.shiny.components.data.chakra.ShinyChakraTable;
 import io.vertigo.shiny.components.data.json.ShinyJson;
 import io.vertigo.shiny.components.data.list.ShinyList;
 import io.vertigo.shiny.components.data.list.ShinyListType;
 import io.vertigo.shiny.components.data.table.ShinyTable;
 import io.vertigo.shiny.components.data.tree.ShinyTree;
 import io.vertigo.shiny.components.dataviz.barchart.ShinyBarChart;
-import io.vertigo.shiny.components.dataviz.chakra.ShinyChakraAreaChart;
-import io.vertigo.shiny.components.dataviz.chakra.ShinyChakraDonutChart;
-import io.vertigo.shiny.components.dataviz.chakra.ShinyChakraPieChart;
-import io.vertigo.shiny.components.dataviz.chakra.ShinyChakraSparkLine;
 import io.vertigo.shiny.components.dataviz.gauge.ShinyGauge;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRating;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingScale;
@@ -321,10 +316,18 @@ public class ShinyWebServer extends WebSocketServer {
 							mapper.writeValueAsString(new LiveComponent(id, "complete", -1)));
 					break;
 				case "xlist":
+					var mars = Shiny.list()
+							.withTitle("mars")
+							.withType(ShinyListType.UNORDERED)
+							.addItem("Bleue")
+							.addItem("Rouge")
+							.addItem("Verte")
+							.build();
 					var list = Shiny.list()
 							.withTitle("planetes")
 							.withType(ShinyListType.DASHED)
 							.addItem("Uranus")
+							.addList(mars)
 							.addItem("Saturn")
 							.addItem("Venus")
 							.build();
@@ -438,15 +441,6 @@ public class ShinyWebServer extends WebSocketServer {
 							.build();
 					sendMessage(webSocket, chakraTable);
 					break;
-				case "xChakraList":
-					var chakraList = Shiny.chakraList()
-							.withTitle("Chakra List")
-							.addItem("Item 1")
-							.addItem("Item 2")
-							.addItem("Item 3")
-							.build();
-					sendMessage(webSocket, chakraList);
-					break;
 				default:
 					sendMessage(webSocket, "text", "nada");
 			}
@@ -488,11 +482,7 @@ public class ShinyWebServer extends WebSocketServer {
 			case ShinyContainer c -> "container";
 			case ShinyFiglet c -> "figlet";
 			case ShinyTree c -> "tree";
-			case ShinyChakraSparkLine c -> "chakraSparkLine";
-			case ShinyChakraPieChart c -> "chakraPieChart";
-			case ShinyChakraDonutChart c -> "chakraDonutChart";
-			case ShinyChakraAreaChart c -> "chakraAreaChart";
-			case ShinyChakraTable c -> "chakraTable";
+			//	case ShinyChart c -> "chakraChart";
 			default -> throw new IllegalArgumentException("Unknown component type: " + component.getClass());
 		};
 		try {

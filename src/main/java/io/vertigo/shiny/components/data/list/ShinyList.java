@@ -6,6 +6,6 @@ import io.vertigo.shiny.components.ShinyComponent;
 
 public record ShinyList(
 		String title,
-		List<Object> items,
+		List<Object> items, //String || ShinyList
 		ShinyListType type) implements ShinyComponent {
 }
