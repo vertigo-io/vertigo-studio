@@ -316,17 +316,17 @@ public class ShinyWebServer extends WebSocketServer {
 							mapper.writeValueAsString(new LiveComponent(id, "complete", -1)));
 					break;
 				case "xlist":
-					var mars = Shiny.list()
-							.withType(ShinyListType.UNORDERED)
-							.addItem("Bleue")
-							.addItem("Rouge")
-							.addItem("Verte")
-							.build();
 					var list = Shiny.list()
 							.withTitle("planetes")
 							.withType(ShinyListType.UNORDERED)
 							.addItem("Uranus")
-							.addList(mars)
+							.addList(Shiny.list()
+									.withTitle("Mars")//<< Item 
+									.withType(ShinyListType.UNORDERED)
+									.addItem("Bleue")
+									.addItem("Rouge")
+									.addItem("Verte")
+									.build())
 							.addItem("Saturn")
 							.addItem("Venus")
 							.build();
