@@ -32,13 +32,13 @@ public final class DbAnalyzeCommand implements ShellCommand {
 		final List<String[]> rows = new ArrayList<>();
 		rows.add(result);
 
-		Shiny.table()
-				.withTitle("Objects in the database:")
-				.withNoDataFound("No object found in the database.")
-				.withHeader("Table", "Column", "Relations")
-				.addAllRows(rows)
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.table()
+						.withTitle("Objects in the database:")
+						.withNoDataFound("No object found in the database.")
+						.withHeader("Table", "Column", "Relations")
+						.addAllRows(rows)
+						.build());
 		//
 		final int complexity = (10 * tables + 1 * columns + relations * 3) / tables;
 		writer.println("Complexity :" + complexity);
@@ -56,11 +56,11 @@ public final class DbAnalyzeCommand implements ShellCommand {
 			dependencies.add(new String[] { t, "" + stats.fanIn(), "" + stats.fanOut(), "" + stats.transitiveFanIn() });
 		});
 
-		Shiny.table()
-				.withTitle("Dependency stats")
-				.withHeader("table", "in", "out", "transitive Fan In")
-				.addAllRows(dependencies)
-				.build()
-				.render(writer);
+		Shiny.render(
+				Shiny.table()
+						.withTitle("Dependency stats")
+						.withHeader("table", "in", "out", "transitive Fan In")
+						.addAllRows(dependencies)
+						.build());
 	}
 }

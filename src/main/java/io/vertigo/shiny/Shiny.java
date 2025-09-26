@@ -7,7 +7,6 @@ import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.components.core.container.ShinyContainerBuilder;
 import io.vertigo.shiny.components.core.error.ShinyErrorBuilder;
 import io.vertigo.shiny.components.data.calendar.ShinyCalendarBuilder;
-import io.vertigo.shiny.components.data.chakra.ShinyChakraListBuilder;
 import io.vertigo.shiny.components.data.chakra.ShinyChakraTableBuilder;
 import io.vertigo.shiny.components.data.json.ShinyJsonBuilder;
 import io.vertigo.shiny.components.data.list.ShinyListBuilder;
@@ -115,10 +114,6 @@ public final class Shiny {
 
 	public static ShinyListBuilder list() {
 		return new ShinyListBuilder();
-	}
-
-	public static ShinyChakraListBuilder chakraList() {
-		return new ShinyChakraListBuilder();
 	}
 
 	public static ShinyTitleBuilder title() {

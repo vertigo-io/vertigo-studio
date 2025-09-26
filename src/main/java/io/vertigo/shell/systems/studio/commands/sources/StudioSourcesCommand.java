@@ -6,7 +6,7 @@ import java.util.List;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.studio.StudioContext;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.ShinyWriter;
+import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.studio.source.Source;
 import picocli.CommandLine.Command;
 
@@ -14,9 +14,7 @@ import picocli.CommandLine.Command;
 public final class StudioSourcesCommand implements ShellCommand {
 
 	@Override
-	public void run() {
-		final ShinyWriter writer = Shiny.writer();
-
+	public ShinyComponent build() {
 		final List<Source> sources = StudioContext.notebookConfig.sources();
 		final List<String[]> rows = new ArrayList<>();
 		for (final Source source : sources) {
@@ -25,13 +23,12 @@ public final class StudioSourcesCommand implements ShellCommand {
 			row[1] = source.path();
 			rows.add(row);
 		}
-		Shiny.table()
+		return Shiny.table()
 				.withTitle("List of sources:")
 				.withNoDataFound("No source found")
 				.withHeader("Type", "Path")
 				.addAllRows(rows)
-				.build()
-				.render(writer);
+				.build();
 	}
 
 	@Override
