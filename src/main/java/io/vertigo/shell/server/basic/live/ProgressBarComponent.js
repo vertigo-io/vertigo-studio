@@ -11,7 +11,11 @@ class ProgressBarComponent extends LiveComponent {
 
 	toHtml() {
 		const percentage = Math.min((this.value / this.total) * 100, 100);
-		return `<div class="progress-container" id="${this.id}"><div class="progress-bar" style="width: ${percentage}%"></div><div class="progress-text">${Math.round(percentage)}%</div></div>`;
+		return `
+		<div class="progress-container" id="${this.id}">
+			<div class="progress-bar" style="width: ${Math.round(percentage)}%"></div>
+			<div class="progress-text">${Math.round(percentage)}%</div>
+		</div>`;
 	}
 
 	update(value) {

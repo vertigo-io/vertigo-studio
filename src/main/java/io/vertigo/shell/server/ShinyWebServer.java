@@ -298,7 +298,9 @@ public class ShinyWebServer extends WebSocketServer {
 					break;
 				case "xpb":
 					String id;
-					var progressBar = Shiny.progressBar().withTotal(10).build();
+					var progressBar = Shiny.progressBar()
+							.withTotal(10)
+							.build();
 					id = progressBar.id;
 					sendMessage(webSocket, "progressBar",
 							mapper.writeValueAsString(progressBar));
