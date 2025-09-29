@@ -7,8 +7,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import org.java_websocket.WebSocket;
+import java.util.function.Consumer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -61,7 +60,7 @@ final class BansheeHandler {
 	public static record LiveComponent(String id, String action, int value) {
 	}
 
-	void handle(WebSocket webSocket, String message) {
+	void handle(Consumer<String> webSocket, String message) {
 		try {
 			switch (message) {
 				//			// Parser le message JSON
@@ -436,7 +435,7 @@ final class BansheeHandler {
 
 	}
 
-	private static void sendMessage(WebSocket webSocket, ShinyComponent component) {
+	private static void sendMessage(Consumer<String> webSocket, ShinyComponent component) {
 		Assertion.check()
 				.isNotNull(webSocket)
 				.isNotNull(component);
@@ -473,7 +472,7 @@ final class BansheeHandler {
 	}
 
 	private static void sendMessage(
-			WebSocket webSocket,
+			Consumer<String> webSocket,
 			BansheeAction action,
 			String type,
 			String data) {
@@ -483,7 +482,7 @@ final class BansheeHandler {
 		}
 		final String json = buildMessage(action, type, id, data);
 		System.out.println(">>> send : " + json);
-		webSocket.send(json);
+		webSocket.accept(json);
 	}
 
 }

@@ -9,12 +9,11 @@ import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
-public class BansheeWebSocketServer extends WebSocketServer {
+public final class BansheeWebSocketServer extends WebSocketServer {
 	private static final Set<WebSocket> connections = Collections.synchronizedSet(new HashSet<>());;
 	private final BansheeHandler handler = new BansheeHandler();
 
-	public BansheeWebSocketServer(
-			int port) {
+	public BansheeWebSocketServer(int port) {
 		super(new InetSocketAddress(port));
 	}
 
@@ -35,7 +34,7 @@ public class BansheeWebSocketServer extends WebSocketServer {
 	@Override
 	public void onMessage(WebSocket webSocket, String message) {
 		System.out.println("<<< receive : " + message);
-		handler.handle(webSocket, message);
+		handler.handle((s) -> webSocket.send(s), message);
 	}
 
 	@Override
