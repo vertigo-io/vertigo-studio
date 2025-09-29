@@ -10,11 +10,13 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -24,7 +26,7 @@ import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shell.Shell;
+import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shell.systems.core.commands.ip.IpCommand;
 import io.vertigo.shell.systems.core.commands.uptime.UptimeCommand;
 import io.vertigo.shell.systems.db.commands.connect.DbConnectCommand;
@@ -61,10 +63,10 @@ import io.vertigo.shiny.components.text.paragraph.ShinyParagraph;
 import io.vertigo.shiny.components.text.textpath.ShinyTextPath;
 import io.vertigo.shiny.components.text.title.ShinyTitle;
 
-public class ShinyWebServer extends WebSocketServer {
+public class BansheeWebSocketServer extends WebSocketServer {
 	private static final Set<WebSocket> connections = Collections.synchronizedSet(new HashSet<>());
 
-	public ShinyWebServer(int port) {
+	public BansheeWebSocketServer(int port) {
 		super(new InetSocketAddress(port));
 	}
 
@@ -73,12 +75,12 @@ public class ShinyWebServer extends WebSocketServer {
 		connections.add(webSocket);
 		System.out.println("New connection from " + webSocket.getRemoteSocketAddress().getAddress().getHostAddress());
 
-		final PipedInputStream in = new PipedInputStream();
+		final BansheePipedInputStream in = new BansheePipedInputStream();
 
-		System.setIn(in);
-
-		final Shell shell = new Shell();
-		new Thread(shell).start();
+		//		System.setIn(in);
+		//
+		//		final Shell shell = new Shell();
+		//		new Thread(shell).start();
 
 		webSocket.setAttachment(in);
 	}
@@ -89,7 +91,7 @@ public class ShinyWebServer extends WebSocketServer {
 		System.out.println("Closed connection to " + webSocket.getRemoteSocketAddress().getAddress().getHostAddress());
 	}
 
-	private final ObjectMapper mapper = new ObjectMapper();
+	private static final ObjectMapper MAPPER = new ObjectMapper();
 
 	public static record LiveComponent(String id, String action, int value) {
 	}
@@ -100,7 +102,7 @@ public class ShinyWebServer extends WebSocketServer {
 		try {
 			switch (message) {
 				//			// Parser le message JSON
-				//			WebSocketMessage wsMessage = mapper.readValue(message, WebSocketMessage.class);
+				//			WebSocketMessage wsMessage = MAPPER.readValue(message, WebSocketMessage.class);
 				//			if ("prompt".equals(wsMessage.type())) {
 				//				// Traiter la saisie utilisateur
 				//				String userInput = wsMessage.data();
@@ -164,20 +166,20 @@ public class ShinyWebServer extends WebSocketServer {
 							items.add(item);
 						}
 						ShinyRssData rssData = new ShinyRssData(feed.getTitle(), items);
-						sendMessage(webSocket, "rssFeed", mapper.writeValueAsString(rssData));
+						sendMessage(webSocket, BansheeAction.create, "rssFeed", MAPPER.writeValueAsString(rssData));
 					} catch (final Exception e) {
 						e.printStackTrace();
-						sendMessage(webSocket, "text", "\"Erreur lors de la récupération du flux RSS : " + e.getMessage() + "\"");
+						sendMessage(webSocket, BansheeAction.create, "text", "\"Erreur lors de la récupération du flux RSS : " + e.getMessage() + "\"");
 					}
 					break;
 				case "xcontainer":
-					ObjectNode child1Data = mapper.createObjectNode()
+					ObjectNode child1Data = MAPPER.createObjectNode()
 							.put("type", "sparkLine")
 							.putPOJO("data", Shiny.sparkline()
 									.withTitle("Ventes par produit")
 									.withValues(156, 450, 300, 200, 100, 23)
 									.build());
-					ObjectNode child2Data = mapper.createObjectNode()
+					ObjectNode child2Data = MAPPER.createObjectNode()
 							.put("type", "list")
 							.putPOJO("data", Shiny.list()
 									.withTitle("planetes")
@@ -186,15 +188,15 @@ public class ShinyWebServer extends WebSocketServer {
 									.addItem("Saturn")
 									.addItem("Venus")
 									.build());
-					ArrayNode children = mapper.createArrayNode()
+					ArrayNode children = MAPPER.createArrayNode()
 							.add(child1Data)
 							.add(child2Data);
 
-					ObjectNode containerData = mapper.createObjectNode()
+					ObjectNode containerData = MAPPER.createObjectNode()
 							.put("title", "premier conteneur")
 							.set("children", children);
 
-					sendMessage(webSocket, "container", mapper.writeValueAsString(containerData));
+					sendMessage(webSocket, BansheeAction.create, "container", MAPPER.writeValueAsString(containerData));
 					break;
 				case "xtable":
 					final List<String[]> rows = new ArrayList<>();
@@ -263,7 +265,7 @@ public class ShinyWebServer extends WebSocketServer {
 							"longitude":2.2945
 							}
 							""";
-					sendMessage(webSocket, "geoMap", geoMap);
+					sendMessage(webSocket, BansheeAction.create, "geoMap", geoMap);
 					break;
 				case "xsankey":
 					final var jsonSankey = """
@@ -287,7 +289,7 @@ public class ShinyWebServer extends WebSocketServer {
 							]
 														}
 														""";
-					sendMessage(webSocket, "sankey", jsonSankey);
+					sendMessage(webSocket, BansheeAction.create, "sankey", jsonSankey);
 					break;
 				case "xtree":
 					var tree = Shiny.tree("Files").build();
@@ -302,11 +304,11 @@ public class ShinyWebServer extends WebSocketServer {
 							.withTotal(10)
 							.build();
 					id = progressBar.id;
-					sendMessage(webSocket, "progressBar",
-							mapper.writeValueAsString(progressBar));
+					sendMessage(webSocket, BansheeAction.create, "progressBar",
+							MAPPER.writeValueAsString(progressBar));
 					for (int i = 0; i <= 10; i += 1) {
-						sendMessage(webSocket, "live",
-								mapper.writeValueAsString(new LiveComponent(progressBar.id, "update", i + 1)));
+						sendMessage(webSocket, BansheeAction.create, "live",
+								MAPPER.writeValueAsString(new LiveComponent(progressBar.id, "update", i + 1)));
 						//							progressBar.liveUpdate(i + 1);
 						try {
 							Thread.sleep(500);
@@ -314,8 +316,8 @@ public class ShinyWebServer extends WebSocketServer {
 							Thread.currentThread().interrupt();
 						}
 					}
-					sendMessage(webSocket, "live",
-							mapper.writeValueAsString(new LiveComponent(id, "complete", -1)));
+					sendMessage(webSocket, BansheeAction.create, "live",
+							MAPPER.writeValueAsString(new LiveComponent(id, "complete", -1)));
 					break;
 				case "xlist":
 					var list = Shiny.list()
@@ -353,17 +355,17 @@ public class ShinyWebServer extends WebSocketServer {
 					sendMessage(webSocket, json);
 					break;
 				case "xyoutube":
-					ObjectNode youtubeData = mapper.createObjectNode()
+					ObjectNode youtubeData = MAPPER.createObjectNode()
 							.put("title", "Rick Astley - Never Gonna Give You Up")
 							.put("videoId", "dQw4w9WgXcQ");
-					sendMessage(webSocket, "youtube", mapper.writeValueAsString(youtubeData));
+					sendMessage(webSocket, BansheeAction.create, "youtube", MAPPER.writeValueAsString(youtubeData));
 					break;
 				case "xphoto":
-					ObjectNode photoData = mapper.createObjectNode()
+					ObjectNode photoData = MAPPER.createObjectNode()
 							.put("title", "Random image from picsum")
 							.put("url", "https://picsum.photos/800/600")
 							.put("alt", "Random image from picsum");
-					sendMessage(webSocket, "photo", mapper.writeValueAsString(photoData));
+					sendMessage(webSocket, BansheeAction.create, "photo", MAPPER.writeValueAsString(photoData));
 					break;
 				case "xfiglet":
 					var figlet = Shiny.figlet()
@@ -443,7 +445,7 @@ public class ShinyWebServer extends WebSocketServer {
 					sendMessage(webSocket, chakraTable);
 					break;
 				default:
-					sendMessage(webSocket, "text", "nada");
+					sendMessage(webSocket, BansheeAction.create, "text", "nada");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -453,20 +455,29 @@ public class ShinyWebServer extends WebSocketServer {
 		}
 	}
 
-	private String buildMessage(String type, String data) {
-		return String.format("""
-				{
-				"type": "%s",
-				"data": %s
-				}
-				""", type, data);
+	private static String buildMessage(BansheeAction action, final String type, UUID id, String data) {
+		var message = new BansheeMessage(action, type, id, data);
+		try {
+			return MAPPER.writeValueAsString(message);
+		} catch (JsonProcessingException e) {
+			throw new VSystemException(e, "Error while using Jackson");
+		}
 	}
 
-	private void sendMessage(WebSocket webSocket, ShinyComponent component) {
+	private static void sendMessage(WebSocket webSocket, ShinyComponent component) {
 		Assertion.check()
 				.isNotNull(webSocket)
 				.isNotNull(component);
 		//---
+		final String type = getType(component);
+		try {
+			sendMessage(webSocket, BansheeAction.create, type, MAPPER.writeValueAsString(component));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static String getType(ShinyComponent component) {
 		final String type = switch (component) {
 			case ShinyTable c -> "table";
 			case ShinyTextPath c -> "textPath";
@@ -486,15 +497,15 @@ public class ShinyWebServer extends WebSocketServer {
 			//	case ShinyChart c -> "chakraChart";
 			default -> throw new IllegalArgumentException("Unknown component type: " + component.getClass());
 		};
-		try {
-			sendMessage(webSocket, type, mapper.writeValueAsString(component));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		return type;
 	}
 
-	private void sendMessage(WebSocket webSocket, String type, String data) {
-		final String json = buildMessage(type, data);
+	private static void sendMessage(WebSocket webSocket, BansheeAction action, String type, String data) {
+		UUID id = null;
+		if (action == BansheeAction.create) {
+			id = UUID.randomUUID();
+		}
+		final String json = buildMessage(action, type, id, data);
 		System.out.println(">>> send : " + json);
 		webSocket.send(json);
 	}
@@ -506,24 +517,7 @@ public class ShinyWebServer extends WebSocketServer {
 
 	@Override
 	public void onStart() {
-		System.out.println("ShinyWebServer started on port " + getPort());
-	}
-
-	public void broadcast(String message) {
-		synchronized (connections) {
-			for (WebSocket conn : connections) {
-				if (conn.isOpen()) {
-					conn.send(message);
-				}
-			}
-		}
-	}
-
-	// Supposons que cette classe représente ta table
-	public static record JsonData(
-			String title,
-			String noDataFound,
-			String json) {
+		System.out.println("BansheeWebSocketServer started on port " + getPort());
 	}
 
 	public static void main(String[] args) {
@@ -531,6 +525,6 @@ public class ShinyWebServer extends WebSocketServer {
 		if (args.length > 0) {
 			port = Integer.parseInt(args[0]);
 		}
-		new ShinyWebServer(port).start();
+		new BansheeWebSocketServer(port).start();
 	}
 }

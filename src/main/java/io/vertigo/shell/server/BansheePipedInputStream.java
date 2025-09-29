@@ -6,7 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-class PipedInputStream extends InputStream {
+final class BansheePipedInputStream extends InputStream {
 	private final BlockingQueue<Byte> buffer = new LinkedBlockingQueue<>();
 
 	@Override

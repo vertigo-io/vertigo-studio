@@ -12,7 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class WebServer {
+public class BansheeWebServer {
 
     public static void main(String[] args) throws IOException {
         int port = 8081; // Using port 8081 to avoid conflict
