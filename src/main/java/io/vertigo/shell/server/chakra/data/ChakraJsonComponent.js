@@ -9,16 +9,18 @@ class ChakraJsonComponent extends Component {
     toHtml() {
         // Chakra-inspired styling for dark theme
         return `<div id="${this.divId}" class="chakra-json-container" style="background-color: #1A202C; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 0.9em;">
-                    <h3 class="chakra-json-title" style="color: #CBD5E0; margin-bottom: 10px;">${this.title}</h3>
-                    <pre class="chakra-json-content" style="white-space: pre-wrap; word-wrap: break-word; color: #A0AEC0;"></pre>
-                </div>`;
+			<h3 class="chakra-json-title" style="color: #CBD5E0; margin-bottom: 10px;">
+				${this.title}
+			</h3>
+            <pre class="chakra-json-content" style="white-space: pre-wrap; word-wrap: break-word; color: #A0AEC0;">
+			${this.buildContent()}		
+			</pre>
+		</div>`;
     }
 
-    activate() {
-        const container = document.getElementById(this.divId);
-        const preElement = container.querySelector('.chakra-json-content');
-        if (!preElement) return;
-
+    buildContent() {
+ //       const container = document.getElementById(this.divId);
+//        const preElement = container.querySelector('.chakra-json-content');
         try {
             const obj = JSON.parse(this.json);
             const formattedJson = JSON.stringify(obj, null, 2);
@@ -32,11 +34,11 @@ class ChakraJsonComponent extends Component {
                 .replace(/\b(true|false)\b/g, '<span style="color: #805AD5;">$1"</span>') // Booleans (booleanColor)
                 .replace(/\b(null)\b/g, '<span style="color: #E53E3E;">$1"</span>'); // Null (nullColor)
 
-            preElement.innerHTML = highlightedJson;
+            return highlightedJson;
 
         } catch (e) {
-            preElement.textContent = `Error parsing JSON: ${e.message}\n${this.json}`;
-            preElement.style.color = 'red';
+            return  `Error parsing JSON: ${e.message}\n${this.json}`;
+//            preElement.style.color = 'red';
         }
     }
 }

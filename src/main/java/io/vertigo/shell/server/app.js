@@ -66,11 +66,14 @@ function print(parsed) {
 		/*spotify: SpotifyComponent,*/
 		youtube: YouTubeComponent,
 	};
-
-	if (componentMap[parsed.type]) {
+	if (parsed.action==="update") {
+		const component = new componentMap[parsed.type](parsed.data);
+		const div = document.getElementById(parsed.id);
+		div.innerHTML = component.toHtml();
+	} else if (componentMap[parsed.type]) {
 		const component = new componentMap[parsed.type](parsed.data);
 		
-		addCollapsible(parsed.type, component.title, component.toHtml());
+		addCollapsible(parsed.id, parsed.type, component.title, component.toHtml());
 		setTimeout(() => component.activate(), 0);
 		if (component instanceof LiveComponent) {
 			liveMap.set(component.id, component);
@@ -174,7 +177,7 @@ function getDataTypeIcon(type) {
 	return iconMap[type] || 'traffic-cone';
 }
 
-function addCollapsible(type, title, content) {
+function addCollapsible(id, type, title, content) {
 	const iconName = getDataTypeIcon(type);
 
 	const html = `<div class="table-title" onclick="toggleCollapse(this)">
@@ -184,7 +187,7 @@ function addCollapsible(type, title, content) {
           	</div>
           	<i data-lucide="chevron-down" class="collapse-icon"></i>
         		</div>
-			<div class="collapsible-content">${content}</div>`;
+			<div id ="${id}" class="collapsible-content">${content}</div>`;
 
 	const div = document.createElement("div");
 	div.className = "chat-message response-message";

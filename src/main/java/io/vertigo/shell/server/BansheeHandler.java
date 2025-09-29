@@ -316,6 +316,19 @@ final class BansheeHandler {
 							.build();
 					sendMessage(webSocket, json);
 					break;
+				case "xjson2":
+					var json2Content = """
+							{
+							  "title": "Barry Lindon",
+							  "director": "Stanley Kubrick"
+							}
+															""";
+					var json2 = Shiny.json()
+							.withJson(json2Content)
+							.withTitle("Fiche de Barry Lindon")
+							.build();
+					sendMessage(webSocket, json2);
+					break;
 				case "xyoutube":
 					ObjectNode youtubeData = MAPPER.createObjectNode()
 							.put("title", "Rick Astley - Never Gonna Give You Up")
@@ -442,7 +455,12 @@ final class BansheeHandler {
 		//---
 		final String type = getType(component);
 		try {
-			sendMessage(webSocket, BansheeAction.create, type, MAPPER.writeValueAsString(component));
+			var data = MAPPER.writeValueAsString(component);
+			if (data.contains("arry")) {
+				sendMessage(webSocket, BansheeAction.update, type, data);
+			} else {
+				sendMessage(webSocket, BansheeAction.create, type, data);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -471,6 +489,8 @@ final class BansheeHandler {
 		return type;
 	}
 
+	private static UUID last = null;
+
 	private static void sendMessage(
 			Consumer<String> webSocket,
 			BansheeAction action,
@@ -479,6 +499,9 @@ final class BansheeHandler {
 		UUID id = null;
 		if (action == BansheeAction.create) {
 			id = UUID.randomUUID();
+			last = id;
+		} else {
+			id = last;
 		}
 		final String json = buildMessage(action, type, id, data);
 		System.out.println(">>> send : " + json);
