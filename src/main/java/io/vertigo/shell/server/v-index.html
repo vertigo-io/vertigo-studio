@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta charset="UTF-8">
+	<title>v-BANSHEE</title>
+
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+
+	<!-- Lucide Icons -->
+	<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+	<!-- Chart JS -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-sankey"></script>
+
+	<!-- Gauge JS -->
+	<script src="https://bernii.github.io/gauge.js/dist/gauge.min.js"></script>
+	
+	<!-- Leaflet -->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+	<!-- Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.min.js"></script>
+
+	<link rel="stylesheet" href="style.css">
+	<link rel="icon" type="image/png" href="./favicon.png">
+</head>
+
+<body>
+    <div id="app">
+        <div class="header-container">
+            <h1>
+                BAN<span class="yellow">SHEE</span>
+            </h1>
+            <div :class="statusClass">
+                <div class="status-dot"></div>
+                <span>{{ statusText }}</span>
+            </div>
+        </div>
+
+        <main>
+            <div style="margin-bottom: 1em;">
+                <a href="basic/samples/samples.html" style="margin-right: 1em;">Basic Samples</a>
+                <a href="chakra/samples/chakra-samples.html" style="margin-right: 1em;">Chakra Samples</a>
+                <a href="shoelace/samples/shoelace-samples.html">Shoelace Samples</a>
+            </div>
+            <div class="chat-container" id="chat">
+                <div v-for="message in messages" :class="message.cssClass">
+                    <component v-if="message.isComponent" :is="message.content" :data="message.data"></component>
+                    <div v-else>{{ message.content }}</div>
+                </div>
+            </div>
+        </main>
+
+        <form class="prompt-container" @submit.prevent="sendMessage">
+            <input type="text" v-model="prompt" placeholder="Écrivez un message...">
+            <button type-="submit">Envoyer</button>
+        </form>
+    </div>
+	
+    <script src="v-components/v-table-component.js"></script>
+    <script src="v-components/v-chakra-tree-component.js"></script>
+    <script src="v-components/v-chakra-bar-chart-component.js"></script>
+    <script src="v-components/v-gauge-component.js"></script>
+    <script src="v-components/v-progress-bar-component.js"></script>
+    <script src="v-components/v-rating-component.js"></script>
+    <script src="v-components/v-spark-line-component.js"></script>
+    <script src="v-components/v-chakra-pie-chart-component.js"></script>
+    <script src="v-components/v-chakra-donut-chart-component.js"></script>
+    <script src="v-components/v-chakra-area-chart-component.js"></script>
+    <script src="v-components/v-status-component.js"></script>
+    <script src="v-components/v-chakra-paragraph-component.js"></script>
+    <script src="v-components/v-text-path-component.js"></script>
+    <script src="v-components/v-chakra-title-component.js"></script>
+    <script src="v-components/v-chakra-card-component.js"></script>
+    <script src="v-components/v-chakra-video-component.js"></script>
+    <script src="v-components/v-geo-map-component.js"></script>
+    <script src="v-components/v-photo-component.js"></script>
+    <script src="v-components/v-rss-component.js"></script>
+    <script src="v-components/v-sankey-component.js"></script>
+    <script src="v-components/v-youtube-component.js"></script>
+	<script src="v-components/v-chakra-table-component.js"></script>
+	<script src="v-components/v-chakra-list-component.js"></script>
+	<script src="v-components/v-chakra-json-component.js"></script>
+	<script src="v-components/v-figlet-component.js"></script>
+	<script src="v-app.js"></script>
+</body>
+</html>
