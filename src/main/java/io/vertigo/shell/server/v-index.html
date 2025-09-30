@@ -42,11 +42,6 @@
         </div>
 
         <main>
-            <div style="margin-bottom: 1em;">
-                <a href="basic/samples/samples.html" style="margin-right: 1em;">Basic Samples</a>
-                <a href="chakra/samples/chakra-samples.html" style="margin-right: 1em;">Chakra Samples</a>
-                <a href="shoelace/samples/shoelace-samples.html">Shoelace Samples</a>
-            </div>
             <div class="chat-container" id="chat">
                 <div v-for="message in messages" :class="message.cssClass">
                     <component v-if="message.isComponent" :is="message.content" :data="message.data"></component>
