@@ -44,6 +44,7 @@ function print(parsed) {
 		barChart: ChakraBarChartComponent,
 		gauge: GaugeComponent,
 		progressBar: ProgressBarComponent,
+		radar: RadarChartComponent,
 		rating: RatingComponent,
 		sparkLine: SparkLineComponent,
 		chakraPieChart: ChakraPieChartComponent,
