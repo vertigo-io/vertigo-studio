@@ -18,6 +18,7 @@ import io.vertigo.shiny.components.dataviz.chakra.ShinyChakraDonutChartBuilder;
 import io.vertigo.shiny.components.dataviz.chakra.ShinyChakraPieChartBuilder;
 import io.vertigo.shiny.components.dataviz.chakra.ShinyChakraSparkLineBuilder;
 import io.vertigo.shiny.components.dataviz.gauge.ShinyGaugeBuilder;
+import io.vertigo.shiny.components.dataviz.radar.ShinyRadarChartBuilder;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingBuilder;
 import io.vertigo.shiny.components.dataviz.sparkline.ShinySparklineBuilder;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatusBuilder;
@@ -90,6 +91,10 @@ public final class Shiny {
 
 	public static ShinySparklineBuilder sparkline() {
 		return new ShinySparklineBuilder();
+	}
+
+	public static ShinyRadarChartBuilder radarChart() {
+		return new ShinyRadarChartBuilder();
 	}
 
 	public static ShinyStatusBuilder status() {
