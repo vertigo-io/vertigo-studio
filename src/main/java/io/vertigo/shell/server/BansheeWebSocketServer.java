@@ -38,7 +38,7 @@ public final class BansheeWebSocketServer extends WebSocketServer {
 	}
 
 	@Override
-	public void onError(WebSocket conn, Exception ex) {
+	public void onError(WebSocket webSocket, Exception ex) {
 		ex.printStackTrace();
 	}
 

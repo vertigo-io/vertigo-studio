@@ -1,9 +1,9 @@
 class ChakraRadarChartComponent extends Component {
-    constructor({ title, labels, datasets }) {
+    constructor({ title, labels, series }) {
         super();
         this.title = title || 'Chakra Radar Chart';
         this.labels = labels || [];
-        this.datasets = datasets || [];
+        this.series = series || [];
         this.canvasId = `chakra-radarchart-${Math.random().toString(36).substr(2, 9)}`;
     }
 
@@ -16,19 +16,22 @@ class ChakraRadarChartComponent extends Component {
 
     activate() {
         const ctx = document.getElementById(this.canvasId).getContext('2d');
+        const datasets = this.series.map((serie, index) => {
+            const color = ['#3182CE', '#63B3ED', '#4299E1', '#319795', '#81E6D9'][index % 5];
+            return {
+                label: serie.name,
+                data: serie.data,
+                backgroundColor: color + '80', // Add alpha transparency
+                borderColor: color,
+                borderWidth: 1
+            };
+        });
+
         new Chart(ctx, {
             type: 'radar',
             data: {
                 labels: this.labels,
-                datasets: this.datasets.map(dataset => ({
-                    ...dataset,
-                    backgroundColor: 'rgba(144, 205, 244, 0.2)',
-                    borderColor: 'rgba(144, 205, 244, 1)',
-                    pointBackgroundColor: 'rgba(144, 205, 244, 1)',
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: 'rgba(144, 205, 244, 1)'
-                }))
+                datasets: datasets
             },
             options: {
                 scales: {
@@ -44,7 +47,7 @@ class ChakraRadarChartComponent extends Component {
                         },
                         ticks: {
                             color: '#A0AEC0',
-                            backdropColor: 'transparent'
+                            backdropColor: '#1A202C'
                         }
                     }
                 },

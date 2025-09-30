@@ -42,6 +42,7 @@ import io.vertigo.shiny.components.data.table.ShinyTable;
 import io.vertigo.shiny.components.data.tree.ShinyTree;
 import io.vertigo.shiny.components.dataviz.barchart.ShinyBarChart;
 import io.vertigo.shiny.components.dataviz.gauge.ShinyGauge;
+import io.vertigo.shiny.components.dataviz.radar.ShinyRadarChart;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRating;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingScale;
 import io.vertigo.shiny.components.dataviz.sparkline.ShinySparkline;
@@ -218,6 +219,15 @@ final class BansheeHandler {
 							.withData(10, 20, 15)
 							.build();
 					sendMessage(webSocket, areaChart);
+					break;
+				case "xradar":
+					var radarChart = Shiny.radarChart()
+							.withTitle("Final Fantasy VII Stats")
+							.withLabels("Attack", "Defense", "Magic Attack", "Magic Defense", "Speed", "Luck")
+							.addSeries("Cloud", 85.0, 70.0, 80.0, 60.0, 90.0, 75.0)
+							.addSeries("Sephiroth", 95.0, 80.0, 98.0, 85.0, 92.0, 88.0)
+							.build();
+					sendMessage(webSocket, radarChart);
 					break;
 				case "xmap":
 					var geoMap = """
@@ -482,6 +492,7 @@ final class BansheeHandler {
 			case ShinyRating c -> "rating";
 			case ShinyContainer c -> "container";
 			case ShinyFiglet c -> "figlet";
+			case ShinyRadarChart c -> "radar";
 			case ShinyTree c -> "tree";
 			//	case ShinyChart c -> "chakraChart";
 			default -> throw new IllegalArgumentException("Unknown component type: " + component.getClass());

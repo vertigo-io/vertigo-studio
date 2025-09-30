@@ -18,6 +18,7 @@ new Vue({
             gauge: 'v-gauge-component',
             progressBar: 'v-progress-bar-component',
             rating: 'v-rating-component',
+			radar: 'v-chakra-radar-chart-component',
             sparkLine: 'v-spark-line-component',
             chakraPieChart: 'v-chakra-pie-chart-component',
             chakraDonutChart: 'v-chakra-donut-chart-component',
@@ -71,15 +72,12 @@ new Vue({
             try {
                 const parsed = JSON.parse(event.data);
 				if (parsed.action==="update") {
-					const component = new componentMap[parsed.type](parsed.data);
-					const div = document.getElementById(parsed.id);
-					div.innerHTML = component.toHtml();
-				}	
-                if (this.componentMap[parsed.type]) {
+					this.updateMessage(parsed.id, parsed.data);
+				}else if (this.componentMap[parsed.type]) {
                     const componentName = this.componentMap[parsed.type];
                     // We will need to implement the component loading and rendering
                     // For now, let's just display the component type
-                    this.addMessage(componentName, 'response-message', true, parsed.data);
+                    this.addMessage(componentName, 'response-message', parsed.id, true, parsed.data);
                 } else {
                     this.addMessage(event.data, 'response-message');
                 }
@@ -88,10 +86,19 @@ new Vue({
                 this.addMessage(event.data, 'response-message');
             }
         },
-        addMessage(content, cssClass, isComponent = false, data = {}) {
+		updateMessage(id, data) {
+		    const message = this.messages.find(msg => msg.id === id);
+		    if (message) {
+		        message.data = { ...message.data, ...data };
+		    } else {
+		        console.warn(`Message with id ${id} not found`);
+		    }
+		},
+		addMessage(content, cssClass, id, isComponent = false, data = {}) {
             this.messages.push({ 
                 content: content, 
                 cssClass: `chat-message ${cssClass}`,
+				id : id, 
                 isComponent: isComponent,
                 data: data
             });
