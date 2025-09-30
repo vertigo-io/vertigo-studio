@@ -1,5 +1,6 @@
 new Vue({
     el: '#app',
+    vuetify: new Vuetify(),
     data: {
         statusClass: 'status-disconnected',
         statusText: 'Connecting',
@@ -7,6 +8,10 @@ new Vue({
         prompt: '',
         ws: null,
         componentMap: {
+            // ---core
+            container: 'v-container-component',
+            error: 'v-error-component',
+            form: 'v-form-component',
             // ---data
             json: 'v-chakra-json-component',
             list: 'v-chakra-list-component',

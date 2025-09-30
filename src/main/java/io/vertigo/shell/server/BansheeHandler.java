@@ -48,6 +48,9 @@ import io.vertigo.shiny.components.dataviz.rating.ShinyRatingScale;
 import io.vertigo.shiny.components.dataviz.sparkline.ShinySparkline;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatus;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatusType;
+import io.vertigo.shiny.components.form.ShinyForm;
+import io.vertigo.shiny.components.form.ShinyFormField;
+import io.vertigo.shiny.components.form.ShinyFormFieldType;
 import io.vertigo.shiny.components.media.rss.ShinyRssData;
 import io.vertigo.shiny.components.media.rss.ShinyRssItem;
 import io.vertigo.shiny.components.text.figlet.ShinyFiglet;
@@ -429,6 +432,47 @@ final class BansheeHandler {
 							.build();
 					sendMessage(webSocket, chakraTable);
 					break;
+				case "xf1":
+					var form1 = Shiny.form()
+							.withTitle("Person Details")
+							.addSection("Personal Info", List.of(
+									new ShinyFormField("firstName", "First Name", ShinyFormFieldType.STRING, "John"),
+									new ShinyFormField("lastName", "Last Name", ShinyFormFieldType.STRING, "Doe"),
+									new ShinyFormField("age", "Age", ShinyFormFieldType.NUMBER, 30),
+									new ShinyFormField("birthDate", "Birth Date", ShinyFormFieldType.DATE, "1990-01-01"),
+									new ShinyFormField("isActive", "Is Active", ShinyFormFieldType.BOOLEAN, true)))
+							.addSection("Contact Info", List.of(
+									new ShinyFormField("email", "Email", ShinyFormFieldType.STRING, "john.doe@example.com"),
+									new ShinyFormField("phone", "Phone", ShinyFormFieldType.STRING, "+1-555-123-4567")))
+							.build();
+					sendMessage(webSocket, form1);
+					break;
+				case "xf2":
+					var form2 = Shiny.form()
+							.withTitle("Product Details")
+							.addSection("Product Info", List.of(
+									new ShinyFormField("productName", "Product Name", ShinyFormFieldType.STRING, "Smartphone X"),
+									new ShinyFormField("price", "Price", ShinyFormFieldType.NUMBER, 799.99),
+									new ShinyFormField("description", "Description", ShinyFormFieldType.STRING, "Latest model with advanced features."),
+									new ShinyFormField("imageUrl", "Image", ShinyFormFieldType.IMAGE, "https://picsum.photos/id/237/200/300"),
+									new ShinyFormField("inStock", "In Stock", ShinyFormFieldType.BOOLEAN, true)))
+							.build();
+					sendMessage(webSocket, form2);
+					break;
+				case "xf3":
+					var form3 = Shiny.form()
+							.withTitle("Photo Metadata")
+							.addSection("File Info", List.of(
+									new ShinyFormField("fileName", "File Name", ShinyFormFieldType.STRING, "IMG_001.jpg"),
+									new ShinyFormField("fileSize", "File Size (KB)", ShinyFormFieldType.NUMBER, 2048),
+									new ShinyFormField("dateTaken", "Date Taken", ShinyFormFieldType.DATE, "2023-04-15"),
+									new ShinyFormField("isPublic", "Public", ShinyFormFieldType.BOOLEAN, false)))
+							.addSection("Location", List.of(
+									new ShinyFormField("latitude", "Latitude", ShinyFormFieldType.NUMBER, 34.0522),
+									new ShinyFormField("longitude", "Longitude", ShinyFormFieldType.NUMBER, -118.2437)))
+							.build();
+					sendMessage(webSocket, form3);
+					break;
 				default:
 					sendMessage(webSocket, BansheeAction.create, "text", "nada");
 			}
@@ -493,6 +537,7 @@ final class BansheeHandler {
 			case ShinyContainer c -> "container";
 			case ShinyFiglet c -> "figlet";
 			case ShinyRadarChart c -> "radar";
+			case ShinyForm c -> "form";
 			case ShinyTree c -> "tree";
 			//	case ShinyChart c -> "chakraChart";
 			default -> throw new IllegalArgumentException("Unknown component type: " + component.getClass());

@@ -22,6 +22,7 @@ import io.vertigo.shiny.components.dataviz.radar.ShinyRadarChartBuilder;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingBuilder;
 import io.vertigo.shiny.components.dataviz.sparkline.ShinySparklineBuilder;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatusBuilder;
+import io.vertigo.shiny.components.form.ShinyFormBuilder;
 import io.vertigo.shiny.components.input.multiselection.ShinyMultiSelectionBuilder;
 import io.vertigo.shiny.components.input.text.ShinyInputTextBuilder;
 import io.vertigo.shiny.components.live.progressbar.ShinyProgressBarBuilder;
@@ -91,6 +92,10 @@ public final class Shiny {
 
 	public static ShinySparklineBuilder sparkline() {
 		return new ShinySparklineBuilder();
+	}
+
+	public static ShinyFormBuilder form() {
+		return new ShinyFormBuilder();
 	}
 
 	public static ShinyRadarChartBuilder radarChart() {
