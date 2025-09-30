@@ -42,8 +42,8 @@ public class BansheeWebServer {
 				requestedPath = "/choice.html";
 			}
 
-			Path filePath = Paths.get(rootDir, requestedPath.substring(1)).toAbsolutePath();
-			File file = filePath.toFile();
+			final Path filePath = Paths.get(rootDir, requestedPath.substring(1)).toAbsolutePath();
+			final File file = filePath.toFile();
 
 			if (file.exists() && !file.isDirectory()) {
 				String contentType = "application/octet-stream";

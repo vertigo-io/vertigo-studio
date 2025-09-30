@@ -1,6 +1,6 @@
 package io.vertigo.shell.server;
 
-public enum BansheeAction {
+enum BansheeAction {
 	create,
 	update
 }

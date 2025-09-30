@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 
-public record BansheeMessage(
+record BansheeMessage(
 		BansheeAction action,
 		String type,
 		UUID id, //may be null

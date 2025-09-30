@@ -19,7 +19,7 @@ final class BansheePipedInputStream extends InputStream {
 		}
 	}
 
-	public void append(String text) throws IOException {
+	void append(String text) throws IOException {
 		for (byte b : text.getBytes(StandardCharsets.UTF_8)) {
 			try {
 				buffer.put(b);
