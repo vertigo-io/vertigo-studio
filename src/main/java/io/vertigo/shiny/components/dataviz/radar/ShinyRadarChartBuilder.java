@@ -5,11 +5,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.shiny.components.dataviz.ShinyChartSerie;
 
 public final class ShinyRadarChartBuilder {
 	private String _title;
 	private List<String> _labels = new ArrayList<>();
-	private List<ShinyRadarSeries> _series = new ArrayList<>();
+	private List<ShinyChartSerie> _series = new ArrayList<>();
 
 	public ShinyRadarChartBuilder withTitle(final String title) {
 		this._title = title;
@@ -28,7 +29,7 @@ public final class ShinyRadarChartBuilder {
 				.isNotBlank(name)
 				.isNotNull(data);
 		//---
-		this._series.add(new ShinyRadarSeries(name, data));
+		this._series.add(new ShinyChartSerie(name, data));
 		return this;
 	}
 
@@ -37,7 +38,7 @@ public final class ShinyRadarChartBuilder {
 				.isNotBlank(name)
 				.isNotNull(data);
 		//---
-		this._series.add(new ShinyRadarSeries(name, Arrays.asList(data)));
+		this._series.add(new ShinyChartSerie(name, Arrays.asList(data)));
 		return this;
 	}
 
