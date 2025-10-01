@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.ShinyComponent;
-import io.vertigo.shiny.components.dataviz.ShinyChartSerie;
+import io.vertigo.shiny.components.dataviz.chart.ShinyChartSerie;
 
 public final class ShinyComposer {
 	private static final ObjectMapper MAPPER = new ObjectMapper();

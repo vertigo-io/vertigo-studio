@@ -13,7 +13,7 @@ import io.vertigo.shell.systems.db.DbModel.JdbcSchema;
 import io.vertigo.shell.systems.db.DbModel.JdbcTable;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.ShinyComponent;
-import io.vertigo.shiny.components.dataviz.ShinyChartSerie;
+import io.vertigo.shiny.components.dataviz.chart.ShinyChartSerie;
 import picocli.CommandLine.Command;
 
 @Command(name = "stats", description = "List stats")

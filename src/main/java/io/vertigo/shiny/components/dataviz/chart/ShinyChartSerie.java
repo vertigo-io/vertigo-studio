@@ -1,4 +1,4 @@
-package io.vertigo.shiny.components.dataviz;
+package io.vertigo.shiny.components.dataviz.chart;
 
 import java.util.List;
 

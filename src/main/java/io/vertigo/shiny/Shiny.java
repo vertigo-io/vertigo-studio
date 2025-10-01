@@ -3,7 +3,6 @@ package io.vertigo.shiny;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
-import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.components.core.container.ShinyContainerBuilder;
 import io.vertigo.shiny.components.core.error.ShinyErrorBuilder;
 import io.vertigo.shiny.components.data.calendar.ShinyCalendarBuilder;
@@ -12,12 +11,9 @@ import io.vertigo.shiny.components.data.json.ShinyJsonBuilder;
 import io.vertigo.shiny.components.data.list.ShinyListBuilder;
 import io.vertigo.shiny.components.data.table.ShinyTableBuilder;
 import io.vertigo.shiny.components.data.tree.ShinyTreeBuilder;
-import io.vertigo.shiny.components.dataviz.area.ShinyAreaChartBuilder;
-import io.vertigo.shiny.components.dataviz.bar.ShinyBarChartBuilder;
-import io.vertigo.shiny.components.dataviz.donut.ShinyDonutChartBuilder;
+import io.vertigo.shiny.components.dataviz.chart.ShinyChartBuilder;
+import io.vertigo.shiny.components.dataviz.chart.ShinyChartType;
 import io.vertigo.shiny.components.dataviz.gauge.ShinyGaugeBuilder;
-import io.vertigo.shiny.components.dataviz.pie.ShinyPieChartBuilder;
-import io.vertigo.shiny.components.dataviz.radar.ShinyRadarChartBuilder;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingBuilder;
 import io.vertigo.shiny.components.dataviz.sparkline.ShinySparklineBuilder;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatusBuilder;
@@ -32,7 +28,6 @@ import io.vertigo.shiny.components.text.textpath.ShinyTextPathBuilder;
 import io.vertigo.shiny.components.text.title.ShinyTitleBuilder;
 import io.vertigo.shiny.components.text.toggle.ShinyToggleBuilder;
 import io.vertigo.shiny.mermaid.ShinyMermaidServer;
-import io.vertigo.shiny.renderers.ShinySuperRenderer;
 
 public final class Shiny {
 	private PrintWriter writer = new PrintWriter(System.out, true, StandardCharsets.UTF_8);
@@ -150,24 +145,24 @@ public final class Shiny {
 	//	}
 
 	//---dataviz
-	public static ShinyBarChartBuilder barChart() {
-		return new ShinyBarChartBuilder();
+	public static ShinyChartBuilder barChart() {
+		return new ShinyChartBuilder(ShinyChartType.bar);
 	}
 
-	public static ShinyRadarChartBuilder radarChart() {
-		return new ShinyRadarChartBuilder();
+	public static ShinyChartBuilder radarChart() {
+		return new ShinyChartBuilder(ShinyChartType.radar);
 	}
 
-	public static ShinyAreaChartBuilder areaChart() {
-		return new ShinyAreaChartBuilder();
+	public static ShinyChartBuilder areaChart() {
+		return new ShinyChartBuilder(ShinyChartType.area);
 	}
 
-	public static ShinyDonutChartBuilder donutChart() {
-		return new ShinyDonutChartBuilder();
+	public static ShinyChartBuilder donutChart() {
+		return new ShinyChartBuilder(ShinyChartType.donut);
 	}
 
-	public static ShinyPieChartBuilder pieChart() {
-		return new ShinyPieChartBuilder();
+	public static ShinyChartBuilder pieChart() {
+		return new ShinyChartBuilder(ShinyChartType.pie);
 	}
 
 	public static ShinyTheme theme() {
@@ -183,9 +178,9 @@ public final class Shiny {
 		return new ShinyMermaidServer(INSTANCE, 5656);
 	}
 
-	private static ShinySuperRenderer RENDERER = new ShinySuperRenderer();
+	//<	private static ShinySuperRenderer RENDERER = new ShinySuperRenderer();
 
-	public static <S extends ShinyComponent> void render(S component) {
-		RENDERER.render(component);
-	}
+	//	public static <S extends ShinyComponent> void render(S component) {
+	//		RENDERER.render(component);
+	//	}
 }
