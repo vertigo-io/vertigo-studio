@@ -51,6 +51,8 @@ import io.vertigo.shiny.components.dataviz.status.ShinyStatusType;
 import io.vertigo.shiny.components.form.ShinyForm;
 import io.vertigo.shiny.components.form.ShinyFormField;
 import io.vertigo.shiny.components.form.ShinyFormFieldType;
+import io.vertigo.shiny.components.form.ShinyFormFieldValidator;
+import io.vertigo.shiny.components.form.ShinyFormOption;
 import io.vertigo.shiny.components.media.rss.ShinyRssData;
 import io.vertigo.shiny.components.media.rss.ShinyRssItem;
 import io.vertigo.shiny.components.text.figlet.ShinyFiglet;
@@ -227,8 +229,8 @@ final class BansheeHandler {
 					var radarChart = Shiny.radarChart()
 							.withTitle("Final Fantasy VII Stats")
 							.withLabels("Attack", "Defense", "Magic Attack", "Magic Defense", "Speed", "Luck")
-							.addSeries("Cloud", 85.0, 70.0, 80.0, 60.0, 90.0, 75.0)
-							.addSeries("Sephiroth", 95.0, 80.0, 98.0, 85.0, 92.0, 88.0)
+							.addSerie("Cloud", 85.0, 70.0, 80.0, 60.0, 90.0, 75.0)
+							.addSerie("Sephiroth", 95.0, 80.0, 98.0, 85.0, 92.0, 88.0)
 							.build();
 					sendMessage(webSocket, radarChart);
 					break;
@@ -436,14 +438,14 @@ final class BansheeHandler {
 					var form1 = Shiny.form()
 							.withTitle("Person Details")
 							.addSection("Personal Info", List.of(
-									new ShinyFormField("firstName", "First Name", ShinyFormFieldType.STRING, "John"),
-									new ShinyFormField("lastName", "Last Name", ShinyFormFieldType.STRING, "Doe"),
-									new ShinyFormField("age", "Age", ShinyFormFieldType.NUMBER, 30),
-									new ShinyFormField("birthDate", "Birth Date", ShinyFormFieldType.DATE, "1990-01-01"),
-									new ShinyFormField("isActive", "Is Active", ShinyFormFieldType.BOOLEAN, true)))
+									new ShinyFormField("firstName", "First Name", ShinyFormFieldType.STRING, "John", true, "Enter first name", "", null, null, null, false),
+									new ShinyFormField("lastName", "Last Name", ShinyFormFieldType.STRING, "Doe", true, "Enter last name", "", null, null, null, false),
+									new ShinyFormField("age", "Age", ShinyFormFieldType.NUMBER, 30, false, "", "", null, null, new ShinyFormFieldValidator(null, null, null, 0, 120), false),
+									new ShinyFormField("birthDate", "Birth Date", ShinyFormFieldType.DATE, "1990-01-01", false, "", "", null, null, null, false),
+									new ShinyFormField("isActive", "Is Active", ShinyFormFieldType.BOOLEAN, true, false, "", "", null, null, null, false)), true, false)
 							.addSection("Contact Info", List.of(
-									new ShinyFormField("email", "Email", ShinyFormFieldType.STRING, "john.doe@example.com"),
-									new ShinyFormField("phone", "Phone", ShinyFormFieldType.STRING, "+1-555-123-4567")))
+									new ShinyFormField("email", "Email", ShinyFormFieldType.STRING, "john.doe@example.com", true, "", "", null, null, new ShinyFormFieldValidator("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$", null, null, null, null), false),
+									new ShinyFormField("phone", "Phone", ShinyFormFieldType.STRING, "+1-555-123-4567", false, "", "", null, null, new ShinyFormFieldValidator("^\\+?[0-9]{1,3}?[ -]?[0-9]{3}?[ -]?[0-9]{3}?[ -]?[0-9]{4}$", null, null, null, null), false)), false, true)
 							.build();
 					sendMessage(webSocket, form1);
 					break;
@@ -451,11 +453,15 @@ final class BansheeHandler {
 					var form2 = Shiny.form()
 							.withTitle("Product Details")
 							.addSection("Product Info", List.of(
-									new ShinyFormField("productName", "Product Name", ShinyFormFieldType.STRING, "Smartphone X"),
-									new ShinyFormField("price", "Price", ShinyFormFieldType.NUMBER, 799.99),
-									new ShinyFormField("description", "Description", ShinyFormFieldType.STRING, "Latest model with advanced features."),
-									new ShinyFormField("imageUrl", "Image", ShinyFormFieldType.IMAGE, "https://picsum.photos/id/237/200/300"),
-									new ShinyFormField("inStock", "In Stock", ShinyFormFieldType.BOOLEAN, true)))
+									new ShinyFormField("productName", "Product Name", ShinyFormFieldType.STRING, "Smartphone X", true, "", "", null, null, null, false),
+									new ShinyFormField("price", "Price", ShinyFormFieldType.NUMBER, 799.99, true, "", "", null, null, new ShinyFormFieldValidator(null, null, null, 0, 10000), false),
+									new ShinyFormField("description", "Description", ShinyFormFieldType.TEXTAREA, "Latest model with advanced features.", false, "", "", null, null, null, false),
+									new ShinyFormField("imageUrl", "Image", ShinyFormFieldType.IMAGE, "https://picsum.photos/id/237/200/300", false, "", "", null, null, null, false),
+									new ShinyFormField("inStock", "In Stock", ShinyFormFieldType.BOOLEAN, true, false, "", "", null, null, null, false),
+									new ShinyFormField("category", "Category", ShinyFormFieldType.SELECT, "Electronics", true, "", "", null, List.of(
+											new ShinyFormOption("Electronics", "Electronics"),
+											new ShinyFormOption("Books", "Books"),
+											new ShinyFormOption("Home", "Home")), null, false)))
 							.build();
 					sendMessage(webSocket, form2);
 					break;
@@ -463,15 +469,56 @@ final class BansheeHandler {
 					var form3 = Shiny.form()
 							.withTitle("Photo Metadata")
 							.addSection("File Info", List.of(
-									new ShinyFormField("fileName", "File Name", ShinyFormFieldType.STRING, "IMG_001.jpg"),
-									new ShinyFormField("fileSize", "File Size (KB)", ShinyFormFieldType.NUMBER, 2048),
-									new ShinyFormField("dateTaken", "Date Taken", ShinyFormFieldType.DATE, "2023-04-15"),
-									new ShinyFormField("isPublic", "Public", ShinyFormFieldType.BOOLEAN, false)))
+									new ShinyFormField("fileName", "File Name", ShinyFormFieldType.STRING, "IMG_001.jpg", true, "", "", null, null, null, true),
+									new ShinyFormField("fileSize", "File Size (KB)", ShinyFormFieldType.NUMBER, 2048, false, "", "", null, null, null, true),
+									new ShinyFormField("dateTaken", "Date Taken", ShinyFormFieldType.DATE, "2023-04-15", false, "", "", null, null, null, true),
+									new ShinyFormField("isPublic", "Public", ShinyFormFieldType.BOOLEAN, false, false, "", "", null, null, null, false)))
 							.addSection("Location", List.of(
-									new ShinyFormField("latitude", "Latitude", ShinyFormFieldType.NUMBER, 34.0522),
-									new ShinyFormField("longitude", "Longitude", ShinyFormFieldType.NUMBER, -118.2437)))
+									new ShinyFormField("latitude", "Latitude", ShinyFormFieldType.NUMBER, 34.0522, false, "", "", null, null, null, true),
+									new ShinyFormField("longitude", "Longitude", ShinyFormFieldType.NUMBER, -118.2437, false, "", "", null, null, null, true)))
 							.build();
 					sendMessage(webSocket, form3);
+					break;
+				case "xf4":
+					var form4 = Shiny.form()
+							.withTitle("Critique de film")
+							.addSection("Détails du film", List.of(
+									new ShinyFormField("movie", "Film", ShinyFormFieldType.SELECT, "LOTR1", true, "", "", null, List.of(
+											new ShinyFormOption("Star Wars", "Star Wars"),
+											new ShinyFormOption("LOTR1", "Le Seigneur des Anneaux : La Communauté de l'anneau"),
+											new ShinyFormOption("LOTR2", "Le Seigneur des Anneaux : Les Deux Tours"),
+											new ShinyFormOption("LOTR3", "Le Seigneur des Anneaux : Le Retour du roi")), null, false),
+									new ShinyFormField("rating", "Note", ShinyFormFieldType.NUMBER, 3, true, "", "Note sur 5", null, null, null, false),
+									new ShinyFormField("review", "Critique", ShinyFormFieldType.TEXTAREA, "Un film incroyable !", false, "Écrivez votre critique ici", "", null, null, null, false)), true, false)
+							.build();
+					sendMessage(webSocket, form4);
+					break;
+				case "xf5":
+					var form5 = Shiny.form()
+							.withTitle("Commande de produit")
+							.addSection("Détails du produit", List.of(
+									new ShinyFormField("product", "Produit", ShinyFormFieldType.STRING, "T-shirt Vertigo", true, "", "", null, null, null, true),
+									new ShinyFormField("size", "Taille", ShinyFormFieldType.RADIO, "M", true, "", "", null, List.of(
+											new ShinyFormOption("S", "Small"),
+											new ShinyFormOption("M", "Medium"),
+											new ShinyFormOption("L", "Large")), null, false),
+									new ShinyFormField("gift", "Emballage cadeau", ShinyFormFieldType.CHECKBOX_GROUP, true, false, "", "", null, null, null, false)), true, false)
+							.build();
+					sendMessage(webSocket, form5);
+					break;
+				case "xf6":
+					var form6 = Shiny.form()
+							.withTitle("Ajout de film")
+							.addSection("Informations sur le film", List.of(
+									new ShinyFormField("title", "Titre", ShinyFormFieldType.STRING, "Inception", true, "Titre du film", "", null, null, null, false),
+									new ShinyFormField("genres", "Genres", ShinyFormFieldType.CHECKBOX_GROUP, List.of("SF", "Action"), true, "", "", null, List.of(
+											new ShinyFormOption("SF", "Science-Fiction"),
+											new ShinyFormOption("Action", "Action"),
+											new ShinyFormOption("Drama", "Drame"),
+											new ShinyFormOption("Comedy", "Comédie")), null, false)),
+									true, false)
+							.build();
+					sendMessage(webSocket, form6);
 					break;
 				default:
 					sendMessage(webSocket, BansheeAction.create, "text", "nada");
@@ -563,5 +610,4 @@ final class BansheeHandler {
 		System.out.println(">>> send : " + json);
 		webSocket.accept(json);
 	}
-
 }

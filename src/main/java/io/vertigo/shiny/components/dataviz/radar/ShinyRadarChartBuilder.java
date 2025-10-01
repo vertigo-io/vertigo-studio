@@ -23,7 +23,16 @@ public final class ShinyRadarChartBuilder {
 		return this;
 	}
 
-	public ShinyRadarChartBuilder addSeries(final String name, final Double... data) {
+	public ShinyRadarChartBuilder addSerie(final String name, final List<Double> data) {
+		Assertion.check()
+				.isNotBlank(name)
+				.isNotNull(data);
+		//---
+		this._series.add(new ShinyRadarSeries(name, data));
+		return this;
+	}
+
+	public ShinyRadarChartBuilder addSerie(final String name, final Double... data) {
 		Assertion.check()
 				.isNotBlank(name)
 				.isNotNull(data);

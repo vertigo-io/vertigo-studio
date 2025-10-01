@@ -5,5 +5,9 @@ public enum ShinyFormFieldType {
     NUMBER,
     DATE,
     BOOLEAN,
-    IMAGE
+    IMAGE,
+    SELECT,
+    RADIO,
+    CHECKBOX_GROUP,
+    TEXTAREA
 }

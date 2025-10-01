@@ -15,12 +15,15 @@ public final class ShinyFormBuilder implements Builder<ShinyForm> {
 		return this;
 	}
 
-	public ShinyFormBuilder addSection(final String sectionTitle, final List<ShinyFormField> fields) {
-		Assertion.check().isNotBlank(sectionTitle).isNotNull(fields);
-		this.sections.add(new ShinyFormSection(sectionTitle, fields));
-		return this;
-	}
-
+	    public ShinyFormBuilder addSection(final String sectionTitle, final List<ShinyFormField> fields) {
+	        return addSection(sectionTitle, fields, false, false); // Default to not collapsible and not initially collapsed
+	    }
+	
+	    public ShinyFormBuilder addSection(final String sectionTitle, final List<ShinyFormField> fields, final boolean collapsible, final boolean initiallyCollapsed) {
+	        Assertion.check().isNotBlank(sectionTitle).isNotNull(fields);
+	        this.sections.add(new ShinyFormSection(sectionTitle, fields, collapsible, initiallyCollapsed));
+	        return this;
+	    }
 	public ShinyForm build() {
 		return new ShinyForm(_title, sections);
 	}
