@@ -3,7 +3,9 @@ Vue.component('v-chakra-donut-chart-component', {
     template: `
     <div class="chakra-donutchart-container" style="background-color: #1A202C; padding: 15px; border-radius: 8px;">
         <h3 class="chakra-donutchart-title" style="color: #CBD5E0; margin-bottom: 10px;">{{ data.title || 'Chakra Donut Chart' }}</h3>
-        <canvas :id="canvasId"></canvas>
+        <div style="max-width: 50%; margin: auto;">
+            <canvas :id="canvasId"></canvas>
+        </div>
     </div>
     `,
     data() {
@@ -13,14 +15,32 @@ Vue.component('v-chakra-donut-chart-component', {
     },
     mounted() {
         const ctx = document.getElementById(this.canvasId).getContext('2d');
+        const baseColors = ['#3182CE', '#63B3ED', '#4299E1', '#319795', '#81E6D9', '#F6AD55', '#F6E05E', '#FEB2B2', '#BEE3F8', '#C6F6D5'];
+
+        let datasetsConfig;
+
+        if (this.data.series && this.data.series.length > 0) {
+            datasetsConfig = this.data.series.map((serie, serieIndex) => ({
+                label: serie.name,
+                data: serie.data || [],
+                backgroundColor: baseColors.map(color => color.replace('1', (0.8 - serieIndex * 0.1).toFixed(1))),
+                borderColor: baseColors.map(color => color.replace('1', (1 - serieIndex * 0.1).toFixed(1))),
+                borderWidth: 1,
+            }));
+        } else {
+            datasetsConfig = [{
+                data: [],
+                backgroundColor: baseColors,
+                borderColor: baseColors.map(color => color.replace('0.8', '1')),
+                borderWidth: 1
+            }];
+        }
+
         new Chart(ctx, {
             type: 'doughnut',
             data: {
                 labels: this.data.labels,
-                datasets: [{
-                    data: this.data.series[0].data,
-                    backgroundColor: ['#3182CE', '#63B3ED', '#4299E1', '#319795', '#81E6D9'],
-                }]
+                datasets: datasetsConfig
             },
             options: {
                 plugins: {

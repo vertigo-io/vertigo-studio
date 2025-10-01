@@ -209,15 +209,27 @@ final class BansheeHandler {
 					var pieChart = Shiny.pieChart()
 							.withTitle("Répartition des ventes")
 							.withLabels("Téléphones", "Ordinateurs", "Livres")
-							.addSerie("Ventes", 40.0, 20.0, 15.0)
+							.addSerie("Ventes 2023", 40.0, 20.0, 15.0)
 							.build();
 					sendMessage(webSocket, pieChart);
+					break;
+				case "xpie2":
+					var pie2Chart = Shiny.pieChart()
+							.withTitle("Répartition des ventes")
+							.withLabels("Téléphones", "Ordinateurs", "Livres")
+							.addSerie("Ventes 2023", 40.0, 20.0, 15.0)
+							.addSerie("Ventes 2024", 45.0, 18.0, 16.0)
+							.addSerie("Ventes 2025", 44.0, 16.0, 17.0)
+							.build();
+					sendMessage(webSocket, pie2Chart);
 					break;
 				case "xdonut":
 					var donutChart = Shiny.donutChart()
 							.withTitle("Répartition des ventes")
 							.withLabels("Téléphones", "Ordinateurs", "Livres")
-							.addSerie("Ventes", 40.0, 20.0, 15.0)
+							.addSerie("Ventes 2023", 40.0, 20.0, 15.0)
+							.addSerie("Ventes 2024", 45.0, 18.0, 16.0)
+							.addSerie("Ventes 2025", 44.0, 16.0, 17.0)
 							.build();
 					sendMessage(webSocket, donutChart);
 					break;
