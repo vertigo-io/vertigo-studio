@@ -13,6 +13,7 @@ import io.vertigo.shell.systems.db.DbModel.JdbcSchema;
 import io.vertigo.shell.systems.db.DbModel.JdbcTable;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.components.dataviz.ShinyChartSerie;
 import picocli.CommandLine.Command;
 
 @Command(name = "stats", description = "List stats")
@@ -22,7 +23,7 @@ public final class DbStatsCommand implements ShellCommand {
 	public ShinyComponent build() {
 
 		final List<String> tableNames = new ArrayList<>();
-		final List<Integer> tableCounts = new ArrayList<>();
+		final List<Double> tableCounts = new ArrayList<>();
 
 		for (final JdbcSchema schema : DbContext.model().schemas()) {
 			for (final JdbcTable table : schema.tables()) {
@@ -31,7 +32,7 @@ public final class DbStatsCommand implements ShellCommand {
 					try (ResultSet rs = stmt.executeQuery(query)) {
 						rs.next();
 						tableNames.add(table.name());
-						tableCounts.add(rs.getInt(1));
+						tableCounts.add(rs.getDouble(1));
 					}
 				} catch (final SQLException e) {
 					throw new VSystemException(e, "Failed to execute SQL query: {0}", e.getMessage());
@@ -41,8 +42,8 @@ public final class DbStatsCommand implements ShellCommand {
 
 		return Shiny.barChart()
 				.withTitle("Tables Row Count")
-				.withHeader(tableNames)
-				.withValues(tableCounts)
+				.withLabels(tableNames)
+				.addSerie(new ShinyChartSerie("count", tableCounts))
 				.build();
 	}
 

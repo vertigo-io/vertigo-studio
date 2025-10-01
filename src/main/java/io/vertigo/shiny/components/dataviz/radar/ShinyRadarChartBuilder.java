@@ -24,6 +24,13 @@ public final class ShinyRadarChartBuilder {
 		return this;
 	}
 
+	public ShinyRadarChartBuilder withLabels(final List<String> labels) {
+		Assertion.check().isNotNull(labels);
+		//---
+		this._labels.addAll(labels);
+		return this;
+	}
+
 	public ShinyRadarChartBuilder addSerie(final String name, final List<Double> data) {
 		Assertion.check()
 				.isNotBlank(name)
@@ -39,6 +46,20 @@ public final class ShinyRadarChartBuilder {
 				.isNotNull(data);
 		//---
 		this._series.add(new ShinyChartSerie(name, Arrays.asList(data)));
+		return this;
+	}
+
+	public ShinyRadarChartBuilder addSerie(final ShinyChartSerie serie) {
+		Assertion.check().isNotNull(serie);
+		//---
+		this._series.add(serie);
+		return this;
+	}
+
+	public ShinyRadarChartBuilder addAllSeries(final List<ShinyChartSerie> series) {
+		Assertion.check().isNotNull(series);
+		//---
+		this._series.addAll(series);
 		return this;
 	}
 

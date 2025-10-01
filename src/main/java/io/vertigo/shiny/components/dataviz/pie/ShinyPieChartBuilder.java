@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 import io.vertigo.shiny.components.dataviz.ShinyChartSerie;
 
@@ -18,11 +19,15 @@ public final class ShinyPieChartBuilder implements Builder<ShinyPieChart> {
 	}
 
 	public ShinyPieChartBuilder withLabels(final String... labels) {
+		Assertion.check().isNotNull(labels);
+		//---
 		this._labels.addAll(Arrays.asList(labels));
 		return this;
 	}
 
 	public ShinyPieChartBuilder withLabels(final List<String> labels) {
+		Assertion.check().isNotNull(labels);
+		//---
 		this._labels.addAll(labels);
 		return this;
 	}
@@ -33,7 +38,16 @@ public final class ShinyPieChartBuilder implements Builder<ShinyPieChart> {
 	}
 
 	public ShinyPieChartBuilder addSerie(final ShinyChartSerie serie) {
+		Assertion.check().isNotNull(serie);
+		//---
 		this._series.add(serie);
+		return this;
+	}
+
+	public ShinyPieChartBuilder addAllSeries(final List<ShinyChartSerie> series) {
+		Assertion.check().isNotNull(series);
+		//---
+		this._series.addAll(series);
 		return this;
 	}
 

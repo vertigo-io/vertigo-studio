@@ -145,6 +145,10 @@ public final class Shiny {
 		return new ShinyInputTextBuilder();
 	}
 
+	//	public static ShinyComposer composer() {
+	//		return new ShinyComposer();
+	//	}
+
 	//---dataviz
 	public static ShinyBarChartBuilder barChart() {
 		return new ShinyBarChartBuilder();

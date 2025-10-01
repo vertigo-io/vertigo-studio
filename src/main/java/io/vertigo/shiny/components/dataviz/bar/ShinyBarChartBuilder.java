@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 import io.vertigo.shiny.components.dataviz.ShinyChartSerie;
 
@@ -33,7 +34,16 @@ public final class ShinyBarChartBuilder implements Builder<ShinyBarChart> {
 	}
 
 	public ShinyBarChartBuilder addSerie(final ShinyChartSerie serie) {
+		Assertion.check().isNotNull(serie);
+		//---
 		this._series.add(serie);
+		return this;
+	}
+
+	public ShinyBarChartBuilder addAllSeries(final List<ShinyChartSerie> series) {
+		Assertion.check().isNotNull(series);
+		//---
+		this._series.addAll(series);
 		return this;
 	}
 

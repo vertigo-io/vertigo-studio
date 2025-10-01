@@ -71,6 +71,11 @@ final class BansheeHandler {
 
 	void handle(Consumer<String> webSocket, String message) {
 		try {
+			if (message.startsWith("llm")) {
+				ShinyComponent sc = new HalloweenCommand().llm(message.substring(3));
+				sendMessage(webSocket, sc);
+				return;
+			}
 			switch (message) {
 				//			// Parser le message JSON
 				//			WebSocketMessage wsMessage = MAPPER.readValue(message, WebSocketMessage.class);
@@ -584,13 +589,21 @@ final class BansheeHandler {
 
 	private static String getType(ShinyComponent component) {
 		final String type = switch (component) {
+			//---data
 			case ShinyTable c -> "table";
+			case ShinyList c -> "list";
+			case ShinyJson c -> "json";
+			case ShinyTree c -> "tree";
+
+			//---text
 			case ShinyTextPath c -> "textPath";
 			case ShinyParagraph c -> "paragraph";
 			case ShinyTitle c -> "title";
+			case ShinyFiglet c -> "figlet";
+
+			//---core
 			case ShinyError c -> "error";
-			case ShinyList c -> "list";
-			case ShinyJson c -> "json";
+
 			//---dataviz
 			case ShinyBarChart c -> "barChart";
 			case ShinyRadarChart c -> "radarChart";
@@ -603,10 +616,7 @@ final class BansheeHandler {
 			case ShinyStatus c -> "status";
 			case ShinyRating c -> "rating";
 			case ShinyContainer c -> "container";
-			case ShinyFiglet c -> "figlet";
 			case ShinyForm c -> "form";
-			case ShinyTree c -> "tree";
-			//	case ShinyChart c -> "chakraChart";
 			default -> throw new IllegalArgumentException("Unknown component type: " + component.getClass());
 		};
 		return type;
