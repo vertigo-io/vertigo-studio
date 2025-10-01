@@ -20,14 +20,14 @@ new Vue({
             tree: 'v-chakra-tree-component',
             // ---dataviz
             barChart: 'v-chakra-bar-chart-component',
+			radarChart: 'v-chakra-radar-chart-component',
+			chakraPieChart: 'v-chakra-pie-chart-component',
+			chakraDonutChart: 'v-chakra-donut-chart-component',
+			chakraAreaChart: 'v-chakra-area-chart-component',
             gauge: 'v-gauge-component',
             progressBar: 'v-progress-bar-component',
             rating: 'v-rating-component',
-			radar: 'v-chakra-radar-chart-component',
             sparkLine: 'v-spark-line-component',
-            chakraPieChart: 'v-chakra-pie-chart-component',
-            chakraDonutChart: 'v-chakra-donut-chart-component',
-            chakraAreaChart: 'v-chakra-area-chart-component',
             status: 'v-status-component',
             // ---text
             figlet: 'v-figlet-component',

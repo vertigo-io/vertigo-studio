@@ -181,8 +181,9 @@ final class BansheeHandler {
 				case "xbar":
 					var barchart = Shiny.barChart()
 							.withTitle("Ventes par produit")
-							.withHeader("telephones", "ordinateurs", "livres")
-							.withValues(156, 34, 55)
+							.withLabels("telephones", "ordinateurs", "livres")
+							.addSerie("Ventes 2023", 156.0, 34.0, 55.0)
+							.addSerie("Ventes 2024", 180.0, 45.0, 65.0)
 							.build();
 					sendMessage(webSocket, barchart);
 					break;
@@ -558,6 +559,11 @@ final class BansheeHandler {
 		try {
 			var data = MAPPER.writeValueAsString(component);
 			if (data.contains("arry")) {
+				//TEST 
+				//TEST 
+				//TEST 
+				//TEST 
+				//TEST 
 				sendMessage(webSocket, BansheeAction.update, type, data);
 			} else {
 				sendMessage(webSocket, BansheeAction.create, type, data);
@@ -577,13 +583,13 @@ final class BansheeHandler {
 			case ShinyList c -> "list";
 			case ShinyJson c -> "json";
 			case ShinyBarChart c -> "barChart";
+			case ShinyRadarChart c -> "radarChart";
 			case ShinyGauge c -> "gauge";
 			case ShinySparkline c -> "sparkLine";
 			case ShinyStatus c -> "status";
 			case ShinyRating c -> "rating";
 			case ShinyContainer c -> "container";
 			case ShinyFiglet c -> "figlet";
-			case ShinyRadarChart c -> "radar";
 			case ShinyForm c -> "form";
 			case ShinyTree c -> "tree";
 			//	case ShinyChart c -> "chakraChart";

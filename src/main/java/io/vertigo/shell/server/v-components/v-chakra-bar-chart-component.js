@@ -12,18 +12,26 @@ Vue.component('v-chakra-bar-chart-component', {
         };
     },
     mounted() {
+        const colors = [
+            'rgba(144, 205, 244, 0.8)', // blue
+            'rgba(160, 217, 144, 0.8)', // green
+            'rgba(244, 144, 144, 0.8)', // red
+            'rgba(244, 224, 144, 0.8)', // yellow
+            'rgba(192, 144, 244, 0.8)', // purple
+        ];
+
         const ctx = document.getElementById(this.canvasId).getContext('2d');
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: this.data.header || [],
-                datasets: [{
-                    label: this.data.title,
-                    data: this.data.values || [],
-                    backgroundColor: 'rgba(144, 205, 244, 0.8)',
-                    borderColor: 'rgba(144, 205, 244, 1)',
+                labels: this.data.labels || [],
+                datasets: this.data.series.map((serie, index) => ({
+                    label: serie.name,
+                    data: serie.data || [],
+                    backgroundColor: colors[index % colors.length],
+                    borderColor: colors[index % colors.length].replace('0.8', '1'),
                     borderWidth: 1
-                }]
+                }))
             },
             options: {
                 scales: {
