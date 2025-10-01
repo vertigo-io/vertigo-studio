@@ -1,4 +1,4 @@
-package io.vertigo.shiny.components.dataviz.barchart;
+package io.vertigo.shiny.components.dataviz.bar;
 
 import java.util.ArrayList;
 import java.util.Arrays;

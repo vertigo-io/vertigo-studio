@@ -1,4 +1,4 @@
-package io.vertigo.shiny.components.dataviz.barchart;
+package io.vertigo.shiny.components.dataviz.bar;
 
 public enum ShinySortMode {
 	NO,

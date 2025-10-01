@@ -6,7 +6,7 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.components.ShinyComponent; // New import
-import io.vertigo.shiny.components.dataviz.barchart.ShinyBarChart;
+import io.vertigo.shiny.components.dataviz.bar.ShinyBarChart;
 import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 
 public final class ShinyBarChartRenderer implements ShinyComponentRenderer<ShinyBarChart> {

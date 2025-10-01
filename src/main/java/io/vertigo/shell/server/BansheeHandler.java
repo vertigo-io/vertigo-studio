@@ -40,7 +40,7 @@ import io.vertigo.shiny.components.data.list.ShinyList;
 import io.vertigo.shiny.components.data.list.ShinyListType;
 import io.vertigo.shiny.components.data.table.ShinyTable;
 import io.vertigo.shiny.components.data.tree.ShinyTree;
-import io.vertigo.shiny.components.dataviz.barchart.ShinyBarChart;
+import io.vertigo.shiny.components.dataviz.bar.ShinyBarChart;
 import io.vertigo.shiny.components.dataviz.gauge.ShinyGauge;
 import io.vertigo.shiny.components.dataviz.radar.ShinyRadarChart;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRating;

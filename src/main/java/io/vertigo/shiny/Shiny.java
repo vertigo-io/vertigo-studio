@@ -12,7 +12,7 @@ import io.vertigo.shiny.components.data.json.ShinyJsonBuilder;
 import io.vertigo.shiny.components.data.list.ShinyListBuilder;
 import io.vertigo.shiny.components.data.table.ShinyTableBuilder;
 import io.vertigo.shiny.components.data.tree.ShinyTreeBuilder;
-import io.vertigo.shiny.components.dataviz.barchart.ShinyBarChartBuilder;
+import io.vertigo.shiny.components.dataviz.bar.ShinyBarChartBuilder;
 import io.vertigo.shiny.components.dataviz.chakra.ShinyChakraAreaChartBuilder;
 import io.vertigo.shiny.components.dataviz.chakra.ShinyChakraDonutChartBuilder;
 import io.vertigo.shiny.components.dataviz.chakra.ShinyChakraPieChartBuilder;
