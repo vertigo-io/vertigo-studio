@@ -18,7 +18,7 @@ Vue.component('v-chakra-donut-chart-component', {
             data: {
                 labels: this.data.labels,
                 datasets: [{
-                    data: this.data.data,
+                    data: this.data.series[0].data,
                     backgroundColor: ['#3182CE', '#63B3ED', '#4299E1', '#319795', '#81E6D9'],
                 }]
             },

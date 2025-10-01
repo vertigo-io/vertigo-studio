@@ -25,7 +25,7 @@ public final class ShinyBarChartRenderer implements ShinyComponentRenderer<Shiny
 		final int maxCount = Arrays.stream(shinyBarChart.values()).max().orElse(1);
 
 		// Déterminer la longueur maximale du nom de catégorie pour l'alignement
-		final int maxLabelLength = Arrays.stream(shinyBarChart.header())
+		final int maxLabelLength = shinyBarChart.labels().stream()
 				.mapToInt(String::length)
 				.max()
 				.orElse(10);
@@ -35,15 +35,17 @@ public final class ShinyBarChartRenderer implements ShinyComponentRenderer<Shiny
 				//	shiny.getWriter().println("Total des observations : " + total);
 				.println("----------------------------------------");
 
-		for (int i = 0; i < shinyBarChart.header().length; i++) {
-			final String category = shinyBarChart.header()[i] != null ? shinyBarChart.header()[i] : "Catégorie " + (i + 1);
+		for (int i = 0; i < shinyBarChart.labels().size(); i++) {
+			final String label = shinyBarChart.labels().get(i) != null
+					? shinyBarChart.labels().get(i)
+					: "Catégorie " + (i + 1);
 			final int count = shinyBarChart.values()[i];
 			// Normaliser la longueur de la barre
 			final int barLength = (int) ((double) count / maxCount * style.maxLength());
 			final String bar = "█".repeat(Math.max(0, barLength)); // Utiliser le caractère carré plein █
 			final String coloredBar = style.colors()[i % style.colors().length].fg(bar);
 			String content = "%-" + maxLabelLength + "s | %-50s (%d)%n";
-			writer.print(String.format(content, category, coloredBar, count));
+			writer.print(String.format(content, label, coloredBar, count));
 		}
 
 		writer

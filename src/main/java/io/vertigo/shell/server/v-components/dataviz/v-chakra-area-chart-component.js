@@ -12,17 +12,26 @@ Vue.component('v-chakra-area-chart-component', {
         };
     },
     mounted() {
+        const colors = [
+            'rgba(49, 130, 206, 0.8)', // blue
+            'rgba(72, 187, 120, 0.8)', // green
+            'rgba(229, 62, 62, 0.8)', // red
+            'rgba(237, 137, 54, 0.8)', // orange
+            'rgba(159, 64, 255, 0.8)', // purple
+        ];
+
         const ctx = document.getElementById(this.canvasId).getContext('2d');
         new Chart(ctx, {
             type: 'line',
             data: {
-                labels: this.data.labels,
-                datasets: [{
-                    data: this.data.data,
-                    borderColor: '#3182CE',
-                    backgroundColor: 'rgba(49, 130, 206, 0.2)',
+                labels: this.data.labels || [],
+                datasets: this.data.series.map((serie, index) => ({
+                    label: serie.name,
+                    data: serie.data || [],
+                    borderColor: colors[index % colors.length].replace('0.8', '1'),
+                    backgroundColor: colors[index % colors.length].replace('0.8', '0.2'),
                     fill: true,
-                }]
+                }))
             },
             options: {
                 scales: {

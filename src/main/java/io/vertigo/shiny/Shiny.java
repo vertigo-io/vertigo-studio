@@ -12,12 +12,11 @@ import io.vertigo.shiny.components.data.json.ShinyJsonBuilder;
 import io.vertigo.shiny.components.data.list.ShinyListBuilder;
 import io.vertigo.shiny.components.data.table.ShinyTableBuilder;
 import io.vertigo.shiny.components.data.tree.ShinyTreeBuilder;
+import io.vertigo.shiny.components.dataviz.area.ShinyAreaChartBuilder;
 import io.vertigo.shiny.components.dataviz.bar.ShinyBarChartBuilder;
-import io.vertigo.shiny.components.dataviz.chakra.ShinyChakraAreaChartBuilder;
-import io.vertigo.shiny.components.dataviz.chakra.ShinyChakraDonutChartBuilder;
-import io.vertigo.shiny.components.dataviz.chakra.ShinyChakraPieChartBuilder;
-import io.vertigo.shiny.components.dataviz.chakra.ShinyChakraSparkLineBuilder;
+import io.vertigo.shiny.components.dataviz.donut.ShinyDonutChartBuilder;
 import io.vertigo.shiny.components.dataviz.gauge.ShinyGaugeBuilder;
+import io.vertigo.shiny.components.dataviz.pie.ShinyPieChartBuilder;
 import io.vertigo.shiny.components.dataviz.radar.ShinyRadarChartBuilder;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingBuilder;
 import io.vertigo.shiny.components.dataviz.sparkline.ShinySparklineBuilder;
@@ -70,10 +69,6 @@ public final class Shiny {
 		return new ShinyChakraTableBuilder();
 	}
 
-	public static ShinyBarChartBuilder barChart() {
-		return new ShinyBarChartBuilder();
-	}
-
 	public static ShinyProgressBarBuilder progressBar() {
 		return new ShinyProgressBarBuilder();
 	}
@@ -96,10 +91,6 @@ public final class Shiny {
 
 	public static ShinyFormBuilder form() {
 		return new ShinyFormBuilder();
-	}
-
-	public static ShinyRadarChartBuilder radarChart() {
-		return new ShinyRadarChartBuilder();
 	}
 
 	public static ShinyStatusBuilder status() {
@@ -154,20 +145,25 @@ public final class Shiny {
 		return new ShinyInputTextBuilder();
 	}
 
-	public static ShinyChakraSparkLineBuilder chakraSparkLine() {
-		return new ShinyChakraSparkLineBuilder();
+	//---dataviz
+	public static ShinyBarChartBuilder barChart() {
+		return new ShinyBarChartBuilder();
 	}
 
-	public static ShinyChakraPieChartBuilder chakraPieChart() {
-		return new ShinyChakraPieChartBuilder();
+	public static ShinyRadarChartBuilder radarChart() {
+		return new ShinyRadarChartBuilder();
 	}
 
-	public static ShinyChakraDonutChartBuilder chakraDonutChart() {
-		return new ShinyChakraDonutChartBuilder();
+	public static ShinyAreaChartBuilder areaChart() {
+		return new ShinyAreaChartBuilder();
 	}
 
-	public static ShinyChakraAreaChartBuilder chakraAreaChart() {
-		return new ShinyChakraAreaChartBuilder();
+	public static ShinyDonutChartBuilder donutChart() {
+		return new ShinyDonutChartBuilder();
+	}
+
+	public static ShinyPieChartBuilder pieChart() {
+		return new ShinyPieChartBuilder();
 	}
 
 	public static ShinyTheme theme() {
