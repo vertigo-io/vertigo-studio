@@ -68,17 +68,19 @@ new Vue({
         },
         sendMessage() {
             if (this.prompt.trim()) {
-                this.addMessage(this.prompt, 'user-message');
-                this.ws.send(this.prompt);
+				if ("clear"=== this.prompt){
+					this.clearMessages();
+				} else {
+                		this.addMessage(this.prompt, 'user-message');
+                		this.ws.send(this.prompt);
+				}
                 this.prompt = '';
             }
         },
         handleIncomingMessage(event) {
             try {
                 const parsed = JSON.parse(event.data);
-				if (parsed.action==="update") {
-					this.updateMessage(parsed.id, parsed.data);
-				}else if (this.componentMap[parsed.type]) {
+				if (this.componentMap[parsed.type]) {
                     const componentName = this.componentMap[parsed.type];
                     // We will need to implement the component loading and rendering
                     // For now, let's just display the component type
@@ -91,6 +93,9 @@ new Vue({
                 this.addMessage(event.data, 'response-message');
             }
         },
+		clearMessages() {
+		    this.messages = [];
+		},
 		updateMessage(id, data) {
 		    const message = this.messages.find(msg => msg.id === id);
 		    if (message) {

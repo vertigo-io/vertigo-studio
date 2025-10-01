@@ -424,21 +424,14 @@ final class BansheeHandler {
 							.build();
 					sendMessage(webSocket, rating);
 					break;
-				case "xchakratree":
+				case "xtree2":
 					var chakraTree = Shiny.tree("Chakra Tree").build();
 					chakraTree.getRoot().addChild("src", FOLDER_OPEN)
 							.addChild("main", FOLDER_OPEN)
 							.addChild("file.txt", FILE);
 					sendMessage(webSocket, chakraTree);
 					break;
-				case "xchakrajson":
-					var chakraJson = Shiny.json()
-							.withJson("{\"name\": \"Chakra UI\", \"version\": \"1.0.0\"}")
-							.withTitle("Chakra JSON")
-							.build();
-					sendMessage(webSocket, chakraJson);
-					break;
-				case "xchakratable":
+				case "xtable2":
 					final List<String[]> chakraRows = new ArrayList<>();
 					chakraRows.add(new String[] { "Chakra", "UI" });
 					chakraRows.add(new String[] { "React", "Components" });
