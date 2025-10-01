@@ -7,6 +7,8 @@ new Vue({
         messages: [],
         prompt: '',
         ws: null,
+        isListening: false, // New data property
+        recognition: null, // SpeechRecognition object
         componentMap: {
             // ---core
             container: 'v-container-component',
@@ -45,6 +47,48 @@ new Vue({
         }
     },
     methods: {
+        toggleSpeechToText() {
+            if (!('webkitSpeechRecognition' in window)) {
+                alert('Speech recognition not supported in this browser. Please use Chrome.');
+                return;
+            }
+
+            if (!this.recognition) {
+                this.recognition = new webkitSpeechRecognition();
+                this.recognition.continuous = false;
+                this.recognition.interimResults = false;
+                this.recognition.lang = 'fr-FR'; // Set language to French
+
+                this.recognition.onstart = () => {
+                    this.isListening = true;
+                    console.log('Speech recognition started');
+                };
+
+                this.recognition.onresult = (event) => {
+                    const transcript = Array.from(event.results)
+                        .map(result => result[0].transcript)
+                        .join('');
+                    this.prompt = transcript;
+                    console.log('Speech recognition result:', transcript);
+                };
+
+                this.recognition.onerror = (event) => {
+                    console.error('Speech recognition error:', event.error);
+                    this.isListening = false;
+                };
+
+                this.recognition.onend = () => {
+                    this.isListening = false;
+                    console.log('Speech recognition ended');
+                };
+            }
+
+            if (this.isListening) {
+                this.recognition.stop();
+            } else {
+                this.recognition.start();
+            }
+        },
         connectWebSocket() {
             this.ws = new WebSocket('ws://localhost:8080');
 
