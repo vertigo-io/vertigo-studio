@@ -191,65 +191,21 @@
 		    background: #FFC107;
 		}
 
-		.table-title {
-		    display: flex;
-		    align-items: center;
-		    justify-content: space-between;
-		    gap: 8px;
-		    margin-bottom: 12px;
-		    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-		    font-size: 14px;
-		    font-weight: 500;
-		    color: var(--assistant-text);
-		    padding: 8px 12px;
-		    background: rgba(255, 255, 255, 0.03);
-		    border-radius: 6px;
-		    cursor: pointer;
-		    transition: all 0.2s ease;
-		    user-select: none;
-		}
+
 
 		.table-title:hover {
 		    background: rgba(255, 255, 255, 0.06);
 		}
 
-		.table-title-content {
-		    display: flex;
-		    align-items: center;
-		    gap: 8px;
-		}
 
-		.collapse-icon {
-		    width: 14px;
-		    height: 14px;
-		    stroke: #9CA3AF;
-		    stroke-width: 2;
-		    transition: transform 0.2s ease;
-		}
 
-		.collapsed .collapse-icon {
-		    transform: rotate(-90deg);
-		}
 
-		.table-icon {
-		    width: 16px;
-		    height: 16px;
-		    stroke: #9CA3AF;
-		    stroke-width: 2;
-		    opacity: 0.7;
-		    flex-shrink: 0;
-		}
 
-		.collapsible-content {
-		    overflow: hidden;
-		    transition: all 0.3s ease;
-		}
 
-		.collapsible-content.collapsed {
-		    max-height: 0;
-		    opacity: 0;
-		    margin-top: 0;
-		}
+
+
+
+
 
 		table {
 		    width: 100%;
@@ -323,10 +279,7 @@
 		    white-space: pre;
 		}
 
-		.json-container::-webkit-scrollbar {
-		    width: 10px;
-		    height: 10px;
-		}
+
 
 		.json-container::-webkit-scrollbar-track {
 		    background: var(--general-bg);
