@@ -52,6 +52,7 @@ import io.vertigo.shiny.components.form.ShinyFormField;
 import io.vertigo.shiny.components.form.ShinyFormFieldType;
 import io.vertigo.shiny.components.form.ShinyFormFieldValidator;
 import io.vertigo.shiny.components.form.ShinyFormOption;
+import io.vertigo.shiny.components.media.pdf.ShinyPdfComponent;
 import io.vertigo.shiny.components.media.rss.ShinyRssData;
 import io.vertigo.shiny.components.media.rss.ShinyRssItem;
 import io.vertigo.shiny.components.text.figlet.ShinyFiglet;
@@ -531,6 +532,22 @@ final class BansheeHandler {
 							.build();
 					sendMessage(webSocket, form6);
 					break;
+				case "xpdf":
+					try {
+						var pdf = Shiny.pdf()
+								.withTitle("Arthur Rimbaud - Poèmes")
+								.withPath("sample-report.pdf")
+								.build();
+						sendMessage(webSocket, pdf);
+					} catch (Exception e) {
+						e.printStackTrace();
+						// Send an error message to the client if download fails
+						var err = Shiny.error()
+								.withText("Failed to download PDF: " + e.getMessage())
+								.build();
+						sendMessage(webSocket, err);
+					}
+					break;
 				default:
 					sendMessage(webSocket, BansheeAction.create, "text", "nada");
 			}
@@ -599,6 +616,7 @@ final class BansheeHandler {
 
 			//---core
 			case ShinyError c -> "error";
+			case ShinyContainer c -> "container";
 
 			//---dataviz
 			case ShinyChart c -> switch (c.chartType()) {
@@ -612,7 +630,9 @@ final class BansheeHandler {
 			case ShinySparkline c -> "sparkLine";
 			case ShinyStatus c -> "status";
 			case ShinyRating c -> "rating";
-			case ShinyContainer c -> "container";
+			//---media
+			case ShinyPdfComponent c -> "pdf";
+
 			case ShinyForm c -> "form";
 			default -> throw new IllegalArgumentException("Unknown component type: " + component.getClass());
 		};

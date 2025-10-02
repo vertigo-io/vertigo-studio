@@ -44,6 +44,7 @@ new Vue({
             rssFeed: 'v-rss-component',
             sankey: 'v-sankey-component',
             youtube: 'v-youtube-component',
+			pdf: 'v-pdf-component'
         }
     },
     methods: {
