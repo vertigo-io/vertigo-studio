@@ -1,8 +1,8 @@
 Vue.component('v-chakra-list-component', {
     props: ['data'],
     template: `
-    <div style="background-color: #1A202C; padding: 15px; border-radius: 8px; margin-top: 1em;">
-      <h3 style="color: #CBD5E0; margin-bottom: 10px;">{{ data.title || 'Chakra List' }}</h3>
+    <div class="chakra-list-container">
+      <h3 class="chakra-component-title">{{ data.title || 'Chakra List' }}</h3>
       <div v-html="itemsHtml"></div>
     </div>
     `,

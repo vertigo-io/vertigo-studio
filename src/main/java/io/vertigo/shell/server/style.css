@@ -1,5 +1,4 @@
-
-		:root {
+:root {
 		    --general-bg: #1A1D21;
 		    --general-surface: #24282D;
 		    --general-text: #E6E8EA;
@@ -823,4 +822,63 @@
 .chakra-card-title {
     font-weight: bold;
     margin-bottom: 10px;
+}
+
+.chakra-list-container {
+    background-color: #1A202C;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 1em;
+}
+
+.chakra-table-container {
+    background-color: #1A202C;
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+.chakra-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.chakra-table-th {
+    padding: 8px 12px;
+    border-bottom: 2px solid #4A5568;
+    text-align: left;
+    color: #CBD5E0;
+    background-color: #2D3748;
+}
+
+.chakra-table-td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #4A5568;
+    color: #E2E8F0;
+}
+
+.chakra-table-no-data {
+    text-align: center;
+    color: #A0AEC0;
+    padding: 8px;
+}
+
+.chakra-tree {
+    color: #CBD5E0;
+    background-color: #1A202C;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.chakra-tree-node {
+    margin-left: 15px;
+}
+
+.chakra-tree-node-label {
+    font-weight: bold;
+    color: #90CDF4;
+}
+
+.chakra-tree-node-children {
+    margin-left: 10px;
 }
