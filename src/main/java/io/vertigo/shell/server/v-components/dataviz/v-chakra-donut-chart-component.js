@@ -1,9 +1,9 @@
 Vue.component('v-chakra-donut-chart-component', {
     props: ['data'],
     template: `
-    <div class="chakra-donutchart-container" style="background-color: #1A202C; padding: 15px; border-radius: 8px;">
-        <h3 class="chakra-donutchart-title" style="color: #CBD5E0; margin-bottom: 10px;">{{ data.title || 'Chakra Donut Chart' }}</h3>
-        <div style="max-width: 50%; margin: auto;">
+    <div class="chakra-chart-container">
+        <h3 class="chakra-component-title">{{ data.title || 'Chakra Donut Chart' }}</h3>
+        <div class="chart-canvas-wrapper">
             <canvas :id="canvasId"></canvas>
         </div>
     </div>

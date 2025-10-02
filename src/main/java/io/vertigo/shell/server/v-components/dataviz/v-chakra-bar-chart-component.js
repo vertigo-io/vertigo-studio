@@ -1,8 +1,8 @@
 Vue.component('v-chakra-bar-chart-component', {
     props: ['data'],
     template: `
-    <div class="chakra-barchart-container" style="background-color: #1A202C; padding: 15px; border-radius: 8px;">
-        <h3 class="chakra-barchart-title" style="color: #CBD5E0; margin-bottom: 10px;">{{ data.title || 'Chakra Bar Chart' }}</h3>
+    <div class="chakra-chart-container">
+        <h3 class="chakra-component-title">{{ data.title || 'Chakra Bar Chart' }}</h3>
         <canvas :id="canvasId"></canvas>
     </div>
     `,

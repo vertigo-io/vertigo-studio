@@ -755,3 +755,72 @@
         max-height: 150px;
     }
 }
+
+.error-message {
+    color: orange;
+}
+
+.chakra-paragraph {
+    color: #A0AEC0;
+    line-height: 1.5;
+}
+
+.chakra-title {
+    color: #CBD5E0;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+.path-root {
+    color: green;
+}
+
+.path-node {
+    color: yellow;
+}
+
+.path-leaf {
+    color: #87CEEB; /* skyblue */
+}
+
+.path-separator {
+    color: red;
+}
+
+.chakra-chart-container {
+    background-color: #1A202C;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.chakra-component-title {
+    color: #CBD5E0;
+    margin-bottom: 10px;
+}
+
+.chart-canvas-wrapper {
+    max-width: 50%;
+    margin: auto;
+}
+
+.chakra-card {
+    background-color: #2D3748;
+    border-radius: 8px;
+    overflow: hidden;
+    color: #CBD5E0;
+    max-width: 300px;
+}
+
+.chakra-card-image {
+    width: 100%;
+    height: auto;
+}
+
+.chakra-card-body {
+    padding: 15px;
+}
+
+.chakra-card-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
