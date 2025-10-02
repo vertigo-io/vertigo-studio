@@ -256,6 +256,11 @@ td {
     transition: all 0.2s ease;
 }
 
+.json-container::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
 .json-container {
     background-color: var(--json-bg);
     border-radius: 8px;
@@ -268,8 +273,6 @@ td {
     overflow-x: auto;
     white-space: pre;
 }
-
-
 
 .json-container::-webkit-scrollbar-track {
     background: var(--general-bg);
