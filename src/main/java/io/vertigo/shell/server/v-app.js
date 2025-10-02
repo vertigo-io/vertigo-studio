@@ -17,8 +17,7 @@ new Vue({
             // ---data
             json: 'v-chakra-json-component',
             list: 'v-chakra-list-component',
-            chakraTable: 'v-chakra-table-component',
-            table: 'v-table-component',
+            table: 'v-chakra-table-component',
             tree: 'v-chakra-tree-component',
             // ---dataviz
             barChart: 'v-chakra-bar-chart-component',
