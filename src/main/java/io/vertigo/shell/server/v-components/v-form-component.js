@@ -32,9 +32,9 @@ Vue.component('v-form-component', {
         };
     },
     template: `
-        <v-card-title class="text-h5 font-weight-bold primary--text">{{ data.title }}</v-card-title>
-        <v-card-text class="pa-2">
-            <v-expansion-panels flat multiple>
+    <v-card class="form-card" dark>
+        <v-card-title class="text-h5 font-weight-bold primary--text form-title" style="border-bottom: 1px solid #FFC107 !important; padding-bottom: 0px !important;">{{ data.title }}</v-card-title>
+        <v-card-text style="padding: 0px 0px 0px 0px !important;">
             <v-expansion-panels flat multiple v-model="openPanels">
                 <v-expansion-panel
                     v-for="(section, sectionIndex) in data.sections"
