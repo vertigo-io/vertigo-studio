@@ -163,6 +163,7 @@ h1 span.yellow {
 }
 
 .loading-dot.active {
+    animation: l28 2s infinite linear;
 }
 
 @keyframes l28 {

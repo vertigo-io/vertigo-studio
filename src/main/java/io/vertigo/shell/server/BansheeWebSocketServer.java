@@ -9,11 +9,11 @@ import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
-public final class BansheeWebSocketServer extends WebSocketServer {
+final class BansheeWebSocketServer extends WebSocketServer {
 	private static final Set<WebSocket> connections = Collections.synchronizedSet(new HashSet<>());;
 	private final BansheeHandler handler = new BansheeHandler();
 
-	public BansheeWebSocketServer(int port) {
+	BansheeWebSocketServer(int port) {
 		super(new InetSocketAddress(port));
 	}
 
@@ -47,11 +47,4 @@ public final class BansheeWebSocketServer extends WebSocketServer {
 		System.out.println("BansheeWebSocketServer started on port " + getPort());
 	}
 
-	public static void main(String[] args) {
-		int port = 8080;
-		if (args.length > 0) {
-			port = Integer.parseInt(args[0]);
-		}
-		new BansheeWebSocketServer(port).start();
-	}
 }

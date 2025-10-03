@@ -12,19 +12,32 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
-public class BansheeWebServer {
+import io.vertigo.core.lang.Builder;
+import io.vertigo.core.lang.VSystemException;
 
-	public static void main(String[] args) throws IOException {
-		int port = 8081; // Using port 8081 to avoid conflict
-		String rootDir = "src/main/java/io/vertigo/shell/server/";
+final class BansheeWebServerBuilder implements Builder<HttpServer> {
+	private int _port;
+	private String _rootDir;
 
-		HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
-		System.out.println("Web server started on port " + port);
-		System.out.println("Serving files from: " + new File(rootDir).getAbsolutePath());
+	BansheeWebServerBuilder(int port, String rootDir) throws IOException {
+		this._port = port;
+		this._rootDir = rootDir;
+	}
 
-		server.createContext("/", new FileHandler(rootDir));
+	public HttpServer build() {
+		final HttpServer server;
+		try {
+			server = HttpServer.create(new InetSocketAddress(_port), 0);
+		} catch (IOException e) {
+			throw new VSystemException(e, "Unable to create an HttpServer");
+
+		}
+		System.out.println("Web server started on port " + _port);
+		System.out.println("Serving files from: " + new File(_rootDir).getAbsolutePath());
+
+		server.createContext("/", new FileHandler(_rootDir));
 		server.setExecutor(null);
-		server.start();
+		return server;
 	}
 
 	static class FileHandler implements HttpHandler {
