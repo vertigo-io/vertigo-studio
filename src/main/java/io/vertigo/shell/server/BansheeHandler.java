@@ -461,14 +461,14 @@ final class BansheeHandler {
 					var form1 = Shiny.form()
 							.withTitle("Person Details")
 							.addSection("Personal Info", List.of(
-									new ShinyFormField("firstName", "First Name", ShinyFormFieldType.STRING, "John", true, "Enter first name", "", null, null, null, false),
-									new ShinyFormField("lastName", "Last Name", ShinyFormFieldType.STRING, "Doe", true, "Enter last name", "", null, null, null, false),
-									new ShinyFormField("age", "Age", ShinyFormFieldType.NUMBER, 30, false, "", "", null, null, new ShinyFormFieldValidator(null, null, null, 0, 120), false),
-									new ShinyFormField("birthDate", "Birth Date", ShinyFormFieldType.DATE, "1990-01-01", false, "", "", null, null, null, false),
-									new ShinyFormField("isActive", "Is Active", ShinyFormFieldType.BOOLEAN, true, false, "", "", null, null, null, false)), true, false)
+									new ShinyFormField("firstName", "First Name", ShinyFormFieldType.STRING, "John", true, "Enter first name", "", null, null, null, true),
+									new ShinyFormField("lastName", "Last Name", ShinyFormFieldType.STRING, "Doe", true, "Enter last name", "", null, null, null, true),
+									new ShinyFormField("age", "Age", ShinyFormFieldType.NUMBER, 30, false, "", "", null, null, new ShinyFormFieldValidator(null, null, null, 0, 120), true),
+									new ShinyFormField("birthDate", "Birth Date", ShinyFormFieldType.DATE, "1990-01-01", false, "", "", null, null, null, true),
+									new ShinyFormField("isActive", "Is Active", ShinyFormFieldType.BOOLEAN, true, false, "", "", null, null, null, false)), true, true)
 							.addSection("Contact Info", List.of(
-									new ShinyFormField("email", "Email", ShinyFormFieldType.STRING, "john.doe@example.com", true, "", "", null, null, new ShinyFormFieldValidator("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$", null, null, null, null), false),
-									new ShinyFormField("phone", "Phone", ShinyFormFieldType.STRING, "+1-555-123-4567", false, "", "", null, null, new ShinyFormFieldValidator("^\\+?[0-9]{1,3}?[ -]?[0-9]{3}?[ -]?[0-9]{3}?[ -]?[0-9]{4}$", null, null, null, null), false)), false, true)
+									new ShinyFormField("email", "Email", ShinyFormFieldType.STRING, "john.doe@example.com", true, "", "", null, null, new ShinyFormFieldValidator("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$", null, null, null, null), true),
+									new ShinyFormField("phone", "Phone", ShinyFormFieldType.STRING, "+1-555-123-4567", false, "", "", null, null, new ShinyFormFieldValidator("^\\+?[0-9]{1,3}?[ -]?[0-9]{3}?[ -]?[0-9]{3}?[ -]?[0-9]{4}$", null, null, null, null), true)), false, true)
 							.build();
 					sendMessage(webSocket, form1);
 					break;
