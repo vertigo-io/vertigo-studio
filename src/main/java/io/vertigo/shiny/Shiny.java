@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import io.vertigo.shiny.components.core.container.ShinyContainerBuilder;
 import io.vertigo.shiny.components.core.error.ShinyErrorBuilder;
 import io.vertigo.shiny.components.data.calendar.ShinyCalendarBuilder;
+import io.vertigo.shiny.components.data.card.ShinyCardBuilder;
 import io.vertigo.shiny.components.data.chakra.ShinyChakraTableBuilder;
 import io.vertigo.shiny.components.data.json.ShinyJsonBuilder;
 import io.vertigo.shiny.components.data.list.ShinyListBuilder;
@@ -28,7 +29,6 @@ import io.vertigo.shiny.components.text.textpath.ShinyTextPathBuilder;
 import io.vertigo.shiny.components.text.title.ShinyTitleBuilder;
 import io.vertigo.shiny.components.text.toggle.ShinyToggleBuilder;
 import io.vertigo.shiny.components.media.pdf.ShinyPdfComponentBuilder;
-import io.vertigo.shiny.components.card.ShinyCardBuilder;
 import io.vertigo.shiny.mermaid.ShinyMermaidServer;
 
 public final class Shiny {

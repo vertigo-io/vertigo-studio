@@ -1,4 +1,4 @@
-package io.vertigo.shiny.components.card;
+package io.vertigo.shiny.components.data.card;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
