@@ -41,7 +41,7 @@ new Vue({
             chakraVideo: 'v-chakra-video-component',
             geoMap: 'v-geo-map-component',
             photo: 'v-photo-component',
-            rssFeed: 'v-rss-component',
+            rss: 'v-rss-component',
             sankey: 'v-sankey-component',
             youtube: 'v-youtube-component',
 			pdf: 'v-pdf-component',

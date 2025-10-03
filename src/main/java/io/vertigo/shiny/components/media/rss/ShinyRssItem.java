@@ -7,4 +7,5 @@ public record ShinyRssItem(
 		String image,
 		String pubDate,
 		String author) {
+
 }

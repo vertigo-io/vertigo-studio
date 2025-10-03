@@ -25,6 +25,7 @@ import io.vertigo.shiny.components.live.spinner.ShinySpinnerBuilder;
 import io.vertigo.shiny.components.media.geomap.ShinyGeoMapBuilder;
 import io.vertigo.shiny.components.media.pdf.ShinyPdfComponentBuilder;
 import io.vertigo.shiny.components.media.photo.ShinyPhotoBuilder;
+import io.vertigo.shiny.components.media.rss.ShinyRssBuilder;
 import io.vertigo.shiny.components.media.youtube.ShinyYoutubeBuilder;
 import io.vertigo.shiny.components.text.figlet.ShinyFigletBuilder;
 import io.vertigo.shiny.components.text.paragraph.ShinyParagraphBuilder;
@@ -200,8 +201,12 @@ public final class Shiny {
 		return new ShinyYoutubeBuilder();
 	}
 
-	//<	private static ShinySuperRenderer RENDERER = new ShinySuperRenderer();
+	public static ShinyRssBuilder rss() {
+		return new ShinyRssBuilder();
+	}
 
+	//	private static ShinySuperRenderer RENDERER = new ShinySuperRenderer();
+	//
 	//	public static <S extends ShinyComponent> void render(S component) {
 	//		RENDERER.render(component);
 	//	}

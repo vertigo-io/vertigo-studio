@@ -3,7 +3,6 @@ package io.vertigo.shell.server;
 import static io.vertigo.shiny.components.data.tree.ShinyIcon.FILE;
 import static io.vertigo.shiny.components.data.tree.ShinyIcon.FOLDER_OPEN;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -12,10 +11,6 @@ import java.util.function.Consumer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.rometools.rome.feed.synd.SyndEntry;
-import com.rometools.rome.feed.synd.SyndFeed;
-import com.rometools.rome.io.SyndFeedInput;
-import com.rometools.rome.io.XmlReader;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.server.commands.ChartSamples.AreaSample;
@@ -31,6 +26,8 @@ import io.vertigo.shell.server.commands.FormSamples.FormSample3;
 import io.vertigo.shell.server.commands.FormSamples.FormSample4;
 import io.vertigo.shell.server.commands.FormSamples.FormSample5;
 import io.vertigo.shell.server.commands.FormSamples.FormSample6;
+import io.vertigo.shell.server.commands.MediaSamples.PdfSample;
+import io.vertigo.shell.server.commands.MediaSamples.RssSample;
 import io.vertigo.shell.systems.core.commands.ip.IpCommand;
 import io.vertigo.shell.systems.core.commands.uptime.UptimeCommand;
 import io.vertigo.shell.systems.db.commands.connect.DbConnectCommand;
@@ -53,8 +50,6 @@ import io.vertigo.shiny.components.dataviz.chart.ShinyChart;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingScale;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatusType;
 import io.vertigo.shiny.components.media.geomap.ShinyGeoPoint;
-import io.vertigo.shiny.components.media.rss.ShinyRssData;
-import io.vertigo.shiny.components.media.rss.ShinyRssItem;
 
 final class BansheeHandler {
 	private static final ObjectMapper MAPPER = new ObjectMapper();
@@ -84,51 +79,51 @@ final class BansheeHandler {
 				case "db show model" -> new DbShowModelCommand().build();
 				case "java load" -> new JavaLoadCommand().build();
 				case "java show model" -> new JavaShowModelCommand().build();
-				case "xbar" -> new BarSample().execute();
-				case "xpie" -> new PieSample().execute();
-				case "xpie2" -> new PieSample2().execute();
-				case "xdonut" -> new DonutSample().execute();
-				case "xarea" -> new AreaSample().execute();
-				case "xline" -> new LineSample().execute();
-				case "xradar" -> new RadarSample().execute();
-				case "xf1" -> new FormSample1().execute();
-				case "xf2" -> new FormSample2().execute();
-				case "xf3" -> new FormSample3().execute();
-				case "xf4" -> new FormSample4().execute();
-				case "xf5" -> new FormSample5().execute();
-				case "xf6" -> new FormSample6().execute();
-				case "xfiglet" -> Shiny.figlet()
+				case "bar" -> new BarSample().execute();
+				case "pie" -> new PieSample().execute();
+				case "pie2" -> new PieSample2().execute();
+				case "donut" -> new DonutSample().execute();
+				case "area" -> new AreaSample().execute();
+				case "line" -> new LineSample().execute();
+				case "radar" -> new RadarSample().execute();
+				case "f1" -> new FormSample1().execute();
+				case "f2" -> new FormSample2().execute();
+				case "f3" -> new FormSample3().execute();
+				case "f4" -> new FormSample4().execute();
+				case "f5" -> new FormSample5().execute();
+				case "f6" -> new FormSample6().execute();
+				case "figlet" -> Shiny.figlet()
 						.withText("Hello Vertigo")
 						.build();
-				case "xtp" -> Shiny.textPath()
+				case "textpath", "tp" -> Shiny.textPath()
 						.withPath("root/node/leaf")
 						.withSeparator("/")
 						.build();
-				case "xerror" -> Shiny.error()
+				case "error" -> Shiny.error()
 						.withText("This is an error message")
 						.build();
-				case "xtitle" -> Shiny.title()
+				case "title" -> Shiny.title()
 						.withText("This is a title")
 						.withLevel(2)
 						.build();
-				case "xparagraph" -> Shiny.paragraph()
+				case "paragraph" -> Shiny.paragraph()
 						.withText("This is a paragraph.")
 						.build();
-				case "xgauge" -> Shiny.gauge()
+				case "gauge" -> Shiny.gauge()
 						.withTitle("Ventes par produit")
 						.withValue(156)
 						.withMaxValue(450)
 						.build();
-				case "xsparkline" -> Shiny.sparkline()
+				case "sparkline" -> Shiny.sparkline()
 						.withTitle("S.p.a.r.k.l.i.n.e")
 						.withValues(156, 450, 300, 200, 100, 23)
 						.build();
-				case "xphoto" -> Shiny.photo()
+				case "photo" -> Shiny.photo()
 						.withTitle("Random image from picsum")
 						.withUrl("https://picsum.photos/800/600")
 						.withAlt("Random image from picsum")
 						.build();
-				case "xcard" -> Shiny.card()
+				case "card" -> Shiny.card()
 						.withTitle("Mon Titre de Carte")
 						.withSubtitle("Un sous-titre pour le contexte")
 						.withDescription("Ceci est le contenu principal de ma carte. Il peut être plus long et contenir des informations détaillées sur le sujet de la carte.")
@@ -139,7 +134,7 @@ final class BansheeHandler {
 						.withBadge("Nouveau", "blue")
 						.withFormat(ShinyCardFormat.M) // Format de la carte (S, M, L)
 						.build();
-				case "xlist" -> Shiny.list()
+				case "list" -> Shiny.list()
 						.withTitle("planetes")
 						.withType(ShinyListType.UNORDERED)
 						.addItem("Uranus")
@@ -153,19 +148,19 @@ final class BansheeHandler {
 						.addItem("Saturn")
 						.addItem("Venus")
 						.build();
-				case "xstatus" -> Shiny.status()
+				case "status" -> Shiny.status()
 						.withTitle("Component Status")
 						.addType(ShinyStatusType.SUCCESS)
 						.addType(ShinyStatusType.ERROR)
 						.addType(ShinyStatusType.WARNING)
 						.build();
-				case "xrating" -> Shiny.rating()
+				case "rating" -> Shiny.rating()
 						.withLabel("User satisfaction")
 						.withValue(3.5)
 						.withScale(ShinyRatingScale.SCALE_5)
 						.withAllowHalfRating(true)
 						.build();
-				case "xjson" -> Shiny.json()
+				case "json" -> Shiny.json()
 						.withJson("""
 								{
 								  "title": "The Shining",
@@ -179,7 +174,7 @@ final class BansheeHandler {
 								""")
 						.withTitle("Fiche de Shinning")
 						.build();
-				case "xjson2" -> Shiny.json()
+				case "json2" -> Shiny.json()
 						.withJson("""
 								{
 								  "title": "Barry Lindon",
@@ -188,15 +183,17 @@ final class BansheeHandler {
 								""")
 						.withTitle("Fiche de Barry Lindon")
 						.build();
-				case "xyoutube" -> Shiny.youtube()
+				case "youtube" -> Shiny.youtube()
 						.withTitle("Rick Astley - Never Gonna Give You Up")
 						.withVideoId("dQw4w9WgXcQ")
 						.build();
-				case "xmap" -> Shiny.geoMap()
+				case "map" -> Shiny.geoMap()
 						.withTitle("Tour Eiffel & Saint Germain")
 						.addGeoPoint(ShinyGeoPoint.of(48.8584, 2.2945, "Tour Eiffel"))
 						.addGeoPoint(ShinyGeoPoint.of(48.901022, 2.100765, "Saint Germain en Laye"))
 						.build();
+				case "rss" -> new RssSample().execute();
+				case "pdf" -> new PdfSample().execute();
 				default -> null;
 			};
 
@@ -206,29 +203,6 @@ final class BansheeHandler {
 			}
 
 			switch (message) {
-				case "rss":
-					try {
-						final URL feedUrl = new URL("https://www.francetvinfo.fr/titres.rss");
-						final SyndFeedInput input = new SyndFeedInput();
-						final SyndFeed feed = input.build(new XmlReader(feedUrl));
-						List<ShinyRssItem> items = new ArrayList<>();
-						for (final SyndEntry entry : feed.getEntries()) {
-							ShinyRssItem item = new ShinyRssItem(
-									entry.getTitle(),
-									entry.getLink(),
-									entry.getDescription().getValue(),
-									entry.getEnclosures().getFirst().getUrl(),
-									entry.getPublishedDate().toString(),
-									entry.getAuthor());
-							items.add(item);
-						}
-						ShinyRssData rssData = new ShinyRssData(feed.getTitle(), items);
-						sendMessage(webSocket, BansheeAction.create, "rssFeed", MAPPER.writeValueAsString(rssData));
-					} catch (final Exception e) {
-						e.printStackTrace();
-						sendMessage(webSocket, BansheeAction.create, "text", "\"Erreur lors de la récupération du flux RSS : " + e.getMessage() + "\"");
-					}
-					break;
 				case "xcontainer":
 					ObjectNode child1Data = MAPPER.createObjectNode()
 							.put("type", "sparkLine")
@@ -342,22 +316,6 @@ final class BansheeHandler {
 				case "xwait":
 					Thread.sleep(2000);
 					sendMessage(webSocket, Shiny.figlet().withText("attente 2s").build());
-				case "xpdf":
-					try {
-						var pdf = Shiny.pdf()
-								.withTitle("Arthur Rimbaud - Poèmes")
-								.withPath("sample-report.pdf")
-								.build();
-						sendMessage(webSocket, pdf);
-					} catch (Exception e) {
-						e.printStackTrace();
-						// Send an error message to the client if download fails
-						var err = Shiny.error()
-								.withText("Failed to download PDF: " + e.getMessage())
-								.build();
-						sendMessage(webSocket, err);
-					}
-					break;
 				default:
 					sendMessage(webSocket, BansheeAction.create, "text", "nada");
 			}
