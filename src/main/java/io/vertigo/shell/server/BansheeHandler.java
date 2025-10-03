@@ -645,6 +645,7 @@ final class BansheeHandler {
 			case ShinyChart c -> switch (c.chartType()) {
 				case bar -> "barChart";
 				case area -> "areaChart";
+				case line -> "lineChart";
 				case radar -> "radarChart";
 				case donut -> "donutChart";
 				case pie -> "pieChart";
