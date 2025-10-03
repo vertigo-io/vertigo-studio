@@ -26,19 +26,24 @@ Vue.component('v-form-component', {
             }
         }
     },
+    data() {
+        return {
+            openPanels: this.data.sections.map((_, index) => index)
+        };
+    },
     template: `
-    <v-card class="form-card" max-width="800" dark>
         <v-card-title class="text-h5 font-weight-bold primary--text">{{ data.title }}</v-card-title>
         <v-card-text class="pa-2">
             <v-expansion-panels flat multiple>
+            <v-expansion-panels flat multiple v-model="openPanels">
                 <v-expansion-panel
                     v-for="(section, sectionIndex) in data.sections"
                     :key="sectionIndex"
-                    class="form-section-panel mb-2"
-                    :value="section.initiallyCollapsed ? null : 0"
+                    class="form-section-panel"
+                    style="margin-bottom: 0px !important;"
                 >
-                    <v-expansion-panel-header class="text-h6 font-weight-medium white--text">{{ section.title }}</v-expansion-panel-header>
-                    <v-expansion-panel-content class="pa-2">
+                    <v-expansion-panel-header class="text-h6 font-weight-medium white--text" style="padding-left: 16px !important;padding-top: 0px !important;padding-bottom: 0px !important;">{{ section.title }}</v-expansion-panel-header>
+                    <v-expansion-panel-content class="pa-2" style="padding-bottom: 0px !important;padding-top: 0px !important;">
                         <v-row dense>
                             <v-col cols="12" sm="6" md="4" v-for="(field, fieldIndex) in section.fields" :key="fieldIndex">
                                 <template v-if="field.type === 'STRING'">
@@ -180,15 +185,6 @@ Vue.component('v-form-component', {
             </v-expansion-panels>
         </v-card-text>
     </v-card>
-    <style scoped>
-    .form-card {
-        margin-top: 1em;
-        background-color: #2D3748 !important; /* Override Vuetify default */
-    }
-    .form-section-panel {
-        background-color: #1A202C !important; /* Override Vuetify default */
-    }
-    </style>
     `,
     methods: {
         getFieldRules(field) {
