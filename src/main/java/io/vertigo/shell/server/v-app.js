@@ -9,6 +9,7 @@ new Vue({
         ws: null,
         isListening: false, // New data property
         recognition: null, // SpeechRecognition object
+        isLoading: false, // New loading indicator
         componentMap: {
             // ---core
             container: 'v-container-component',
@@ -118,11 +119,13 @@ new Vue({
 				} else {
                 		this.addMessage(this.prompt, 'user-message');
                 		this.ws.send(this.prompt);
+                        this.isLoading = true; // Start loading animation
 				}
                 this.prompt = '';
             }
         },
         handleIncomingMessage(event) {
+            this.isLoading = false; // Stop loading animation
             try {
                 const parsed = JSON.parse(event.data);
 				if (this.componentMap[parsed.type]) {

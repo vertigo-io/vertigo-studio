@@ -97,13 +97,6 @@ h1 span.yellow {
 	color: var(--yellow-accent);
 }
 
-h1::after {
-	content: '●';
-	color: var(--yellow-accent);
-	font-size: 24px;
-	margin-left: 10px;
-	vertical-align: baseline;
-}
 
 #status {
 	position: absolute;
@@ -156,6 +149,37 @@ h1::after {
 	}
 }
 
+/* Animation of dot when waiting response */	
+.loading-dot {
+    width: 12px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--yellow-accent);
+    clip-path: inset(-220%);
+    animation: none; /* Default to no animation */
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.loading-dot.active {
+}
+
+@keyframes l28 {
+    0%  {box-shadow:0 0 0 0   , 40px 0,-40px 0,0 40px,0 -40px}
+    10% {box-shadow:0 0 0 0   , 12px 0,-40px 0,0 40px,0 -40px}
+    20% {box-shadow:0 0 0 4px , 0px  0,-40px 0,0 40px,0 -40px}
+    30% {box-shadow:0 0 0 4px , 0px  0,-12px 0,0 40px,0 -40px}
+    40% {box-shadow:0 0 0 8px , 0px  0,  0px 0,0 40px,0 -40px}
+    50% {box-shadow:0 0 0 8px , 0px  0,  0px 0,0 12px,0 -40px}
+    60% {box-shadow:0 0 0 12px, 0px  0,  0px 0,0  0px,0 -40px}
+    70% {box-shadow:0 0 0 12px, 0px  0,  0px 0,0  0px,0 -12px}
+    80% {box-shadow:0 0 0 16px, 0px  0,  0px 0,0  0px,0  0px }
+    90%,
+    100%{box-shadow:0 0 0 0   , 40px 0,-40px 0,0 40px,0 -40px}
+}
+
+/* Chat */
 .chat-container {
 	max-width: 900px;
 	margin: 0 auto;
