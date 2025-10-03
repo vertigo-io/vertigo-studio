@@ -559,19 +559,20 @@ final class BansheeHandler {
 						sendMessage(webSocket, err);
 					}
 					break;
-				case "xcard":
-					var card = Shiny.card()
-							.withTitle("Mon Titre de Carte")
-							.withDescription("""
-									Ceci est le contenu de ma carte. Il peut être plus
-									long et contenir des informations détaillées.
-									  """)
-							.withImageUrl("https://picsum.photos/id/237/200/300")
-							.withFormat(ShinyCardFormat.M)
-							.build();
-					sendMessage(webSocket, card);
-					break;
-				default:
+				                case "xcard":
+				                    var card = Shiny.card()
+				                            .withTitle("Mon Titre de Carte")
+				                            .withSubtitle("Un sous-titre pour le contexte")
+				                            .withDescription("Ceci est le contenu principal de ma carte. Il peut être plus long et contenir des informations détaillées sur le sujet de la carte.")
+				                            .withImageUrl("https://picsum.photos/id/237/200/300")
+				                            .withImageAlt("Image aléatoire de Picsum")
+				                            .withLink("https://www.vertigo.io")
+				                            .withIcon("star") // Exemple d'icône Lucide
+				                            .withBadge("Nouveau", "blue")
+				                            .withFormat(ShinyCardFormat.M) // Format de la carte (S, M, L)
+				                            .build();
+				                    sendMessage(webSocket, card);
+				                    break;				default:
 					sendMessage(webSocket, BansheeAction.create, "text", "nada");
 			}
 		} catch (Exception e) {
