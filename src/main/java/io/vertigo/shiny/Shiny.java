@@ -7,7 +7,6 @@ import io.vertigo.shiny.components.core.container.ShinyContainerBuilder;
 import io.vertigo.shiny.components.core.error.ShinyErrorBuilder;
 import io.vertigo.shiny.components.data.calendar.ShinyCalendarBuilder;
 import io.vertigo.shiny.components.data.card.ShinyCardBuilder;
-import io.vertigo.shiny.components.data.chakra.ShinyChakraTableBuilder;
 import io.vertigo.shiny.components.data.json.ShinyJsonBuilder;
 import io.vertigo.shiny.components.data.list.ShinyListBuilder;
 import io.vertigo.shiny.components.data.table.ShinyTableBuilder;
@@ -60,10 +59,6 @@ public final class Shiny {
 
 	public static ShinyTableBuilder table() {
 		return new ShinyTableBuilder();
-	}
-
-	public static ShinyChakraTableBuilder chakraTable() {
-		return new ShinyChakraTableBuilder();
 	}
 
 	public static ShinyProgressBarBuilder progressBar() {

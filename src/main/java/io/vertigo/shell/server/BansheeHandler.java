@@ -18,6 +18,19 @@ import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.shell.server.commands.ChartSamples.AreaSample;
+import io.vertigo.shell.server.commands.ChartSamples.BarSample;
+import io.vertigo.shell.server.commands.ChartSamples.DonutSample;
+import io.vertigo.shell.server.commands.ChartSamples.LineSample;
+import io.vertigo.shell.server.commands.ChartSamples.PieSample;
+import io.vertigo.shell.server.commands.ChartSamples.PieSample2;
+import io.vertigo.shell.server.commands.ChartSamples.RadarSample;
+import io.vertigo.shell.server.commands.FormSamples.FormSample1;
+import io.vertigo.shell.server.commands.FormSamples.FormSample2;
+import io.vertigo.shell.server.commands.FormSamples.FormSample3;
+import io.vertigo.shell.server.commands.FormSamples.FormSample4;
+import io.vertigo.shell.server.commands.FormSamples.FormSample5;
+import io.vertigo.shell.server.commands.FormSamples.FormSample6;
 import io.vertigo.shell.systems.core.commands.ip.IpCommand;
 import io.vertigo.shell.systems.core.commands.uptime.UptimeCommand;
 import io.vertigo.shell.systems.db.commands.connect.DbConnectCommand;
@@ -39,10 +52,6 @@ import io.vertigo.shiny.components.data.list.ShinyListType;
 import io.vertigo.shiny.components.dataviz.chart.ShinyChart;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingScale;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatusType;
-import io.vertigo.shiny.components.form.ShinyFormField;
-import io.vertigo.shiny.components.form.ShinyFormFieldType;
-import io.vertigo.shiny.components.form.ShinyFormFieldValidator;
-import io.vertigo.shiny.components.form.ShinyFormOption;
 import io.vertigo.shiny.components.media.rss.ShinyRssData;
 import io.vertigo.shiny.components.media.rss.ShinyRssItem;
 
@@ -59,55 +68,69 @@ final class BansheeHandler {
 				sendMessage(webSocket, sc);
 				return;
 			}
+
+			ShinyComponent component = switch (message) {
+				case "ls" -> new FileLsCommand().build();
+				case "pwd" -> new FilePwdCommand().build();
+				case "env list" -> new EnvListCommand().build();
+				case "uptime" -> new UptimeCommand().build();
+				case "ip" -> new IpCommand().build();
+				case "db connect" -> new DbConnectCommand().build();
+				case "db disconnect" -> new DbDisconnectCommand().build();
+				case "db load" -> new DbLoadCommand().build();
+				case "db read" -> new DbReadCommand().build();
+				case "db show tables" -> new DbShowTablesCommand().build();
+				case "db show model" -> new DbShowModelCommand().build();
+				case "java load" -> new JavaLoadCommand().build();
+				case "java show model" -> new JavaShowModelCommand().build();
+				case "xbar" -> new BarSample().execute();
+				case "xpie" -> new PieSample().execute();
+				case "xpie2" -> new PieSample2().execute();
+				case "xdonut" -> new DonutSample().execute();
+				case "xarea" -> new AreaSample().execute();
+				case "xline" -> new LineSample().execute();
+				case "xradar" -> new RadarSample().execute();
+				case "xf1" -> new FormSample1().execute();
+				case "xf2" -> new FormSample2().execute();
+				case "xf3" -> new FormSample3().execute();
+				case "xf4" -> new FormSample4().execute();
+				case "xf5" -> new FormSample5().execute();
+				case "xf6" -> new FormSample6().execute();
+				case "xfiglet" -> Shiny.figlet()
+						.withText("Hello Vertigo")
+						.build();
+				case "xtp" -> Shiny.textPath()
+						.withPath("root/node/leaf")
+						.withSeparator("/")
+						.build();
+				case "xerror" -> Shiny.error()
+						.withText("This is an error message")
+						.build();
+				case "xtitle" -> Shiny.title()
+						.withText("This is a title")
+						.withLevel(2)
+						.build();
+				case "xparagraph" -> Shiny.paragraph()
+						.withText("This is a paragraph.")
+						.build();
+				case "xgauge" -> Shiny.gauge()
+						.withTitle("Ventes par produit")
+						.withValue(156)
+						.withMaxValue(450)
+						.build();
+				case "xsparkline" -> Shiny.sparkline()
+						.withTitle("Chakra Sparkline")
+						.withValues(156, 450, 300, 200, 100, 23)
+						.build();
+				default -> null;
+			};
+
+			if (component != null) {
+				sendMessage(webSocket, component);
+				return;
+			}
+
 			switch (message) {
-				//			// Parser le message JSON
-				//			WebSocketMessage wsMessage = MAPPER.readValue(message, WebSocketMessage.class);
-				//			if ("prompt".equals(wsMessage.type())) {
-				//				// Traiter la saisie utilisateur
-				//				String userInput = wsMessage.data();
-				//				System.out.println("Prompt reçu : " + userInput);
-				case "ls":
-					sendMessage(webSocket, new FileLsCommand().build());
-					break;
-				case "pwd":
-					sendMessage(webSocket, new FilePwdCommand().build());
-					break;
-				case "env list":
-					sendMessage(webSocket, new EnvListCommand().build());
-					break;
-				case "uptime":
-					sendMessage(webSocket, new UptimeCommand().build());
-					break;
-				case "ip":
-					sendMessage(webSocket, new IpCommand().build());
-					break;
-				case "db connect":
-					sendMessage(webSocket, new DbConnectCommand().build());
-					break;
-				case "db disconnect":
-					sendMessage(webSocket, new DbDisconnectCommand().build());
-					break;
-				case "db load":
-					sendMessage(webSocket, new DbLoadCommand().build());
-					break;
-				case "db read":
-					sendMessage(webSocket, new DbReadCommand().build());
-					break;
-				case "db show tables":
-					sendMessage(webSocket, new DbShowTablesCommand().build());
-					break;
-				case "db show model":
-					sendMessage(webSocket, new DbShowModelCommand().build());
-					break;
-				//				case "db describe":
-				//					sendMessage(webSocket, new DbDescribeCommand().build());
-				//					break;
-				case "java load":
-					sendMessage(webSocket, new JavaLoadCommand().build());
-					break;
-				case "java show model":
-					sendMessage(webSocket, new JavaShowModelCommand().build());
-					break;
 				case "rss":
 					try {
 						final URL feedUrl = new URL("https://www.francetvinfo.fr/titres.rss");
@@ -168,85 +191,6 @@ final class BansheeHandler {
 							.addAllRows(rows)
 							.build();
 					sendMessage(webSocket, table);
-					break;
-				case "xbar":
-					var barchart = Shiny.barChart()
-							.withTitle("Ventes par produit")
-							.withLabels("telephones", "ordinateurs", "livres")
-							.addSerie("Ventes 2023", 156.0, 34.0, 55.0)
-							.addSerie("Ventes 2024", 180.0, 45.0, 65.0)
-							.build();
-					sendMessage(webSocket, barchart);
-					break;
-				case "xgauge":
-					var gauge = Shiny.gauge()
-							.withTitle("Ventes par produit")
-							.withValue(156)
-							.withMaxValue(450)
-							.build();
-					sendMessage(webSocket, gauge);
-					break;
-				case "xsparkline":
-					var sparkLine = Shiny.sparkline()
-							.withTitle("Chakra Sparkline")
-							.withValues(156, 450, 300, 200, 100, 23)
-							.build();
-					sendMessage(webSocket, sparkLine);
-					break;
-				case "xpie":
-					var pieChart = Shiny.pieChart()
-							.withTitle("Répartition des ventes")
-							.withLabels("Téléphones", "Ordinateurs", "Livres")
-							.addSerie("Ventes 2023", 40.0, 20.0, 15.0)
-							.build();
-					sendMessage(webSocket, pieChart);
-					break;
-				case "xpie2":
-					var pie2Chart = Shiny.pieChart()
-							.withTitle("Répartition des ventes")
-							.withLabels("Téléphones", "Ordinateurs", "Livres")
-							.addSerie("Ventes 2023", 40.0, 20.0, 15.0)
-							.addSerie("Ventes 2024", 45.0, 18.0, 16.0)
-							.addSerie("Ventes 2025", 44.0, 16.0, 17.0)
-							.build();
-					sendMessage(webSocket, pie2Chart);
-					break;
-				case "xdonut":
-					var donutChart = Shiny.donutChart()
-							.withTitle("Répartition des ventes")
-							.withLabels("Téléphones", "Ordinateurs", "Livres")
-							.addSerie("Ventes 2023", 40.0, 20.0, 15.0)
-							.addSerie("Ventes 2024", 45.0, 18.0, 16.0)
-							.addSerie("Ventes 2025", 44.0, 16.0, 17.0)
-							.build();
-					sendMessage(webSocket, donutChart);
-					break;
-				case "xarea":
-					var areaChart = Shiny.areaChart()
-							.withTitle("Ventes par mois")
-							.withLabels("Jan", "Fev", "Mar", "Avr", "Mai", "Juin")
-							.addSerie("Ventes 2023", 120.0, 150.0, 170.0, 200.0, 220.0, 240.0)
-							.addSerie("Ventes 2024", 130.0, 160.0, 180.0, 210.0, 230.0, 250.0)
-							.build();
-					sendMessage(webSocket, areaChart);
-					break;
-				case "xline":
-					var lineChart = Shiny.lineChart()
-							.withTitle("Ventes par mois")
-							.withLabels("Jan", "Fev", "Mar", "Avr", "Mai", "Juin")
-							.addSerie("Ventes 2023", 120.0, 150.0, 170.0, 200.0, 220.0, 240.0)
-							.addSerie("Ventes 2024", 130.0, 160.0, 180.0, 210.0, 230.0, 250.0)
-							.build();
-					sendMessage(webSocket, lineChart);
-					break;
-				case "xradar":
-					var radarChart = Shiny.radarChart()
-							.withTitle("Final Fantasy VII Stats")
-							.withLabels("Attack", "Defense", "Magic Attack", "Magic Defense", "Speed", "Luck")
-							.addSerie("Cloud", 85.0, 70.0, 80.0, 60.0, 90.0, 75.0)
-							.addSerie("Sephiroth", 95.0, 80.0, 98.0, 85.0, 92.0, 88.0)
-							.build();
-					sendMessage(webSocket, radarChart);
 					break;
 				case "xmap":
 					var geoMap = """
@@ -371,38 +315,6 @@ final class BansheeHandler {
 							.put("alt", "Random image from picsum");
 					sendMessage(webSocket, BansheeAction.create, "photo", MAPPER.writeValueAsString(photoData));
 					break;
-				case "xfiglet":
-					var figlet = Shiny.figlet()
-							.withText("Hello Vertigo")
-							.build();
-					sendMessage(webSocket, figlet);
-					break;
-				case "xtp":
-					var textPath = Shiny.textPath()
-							.withPath("root/node/leaf")
-							.withSeparator("/")
-							.build();
-					sendMessage(webSocket, textPath);
-					break;
-				case "xerror":
-					var error = Shiny.error()
-							.withText("This is an error message")
-							.build();
-					sendMessage(webSocket, error);
-					break;
-				case "xtitle":
-					var title = Shiny.title()
-							.withText("This is a title")
-							.withLevel(2)
-							.build();
-					sendMessage(webSocket, title);
-					break;
-				case "xparagraph":
-					var paragraph = Shiny.paragraph()
-							.withText("This is a paragraph.")
-							.build();
-					sendMessage(webSocket, paragraph);
-					break;
 				case "xstatus":
 					var status = Shiny.status()
 							.withTitle("Component Status")
@@ -432,7 +344,7 @@ final class BansheeHandler {
 					final List<String[]> chakraRows = new ArrayList<>();
 					chakraRows.add(new String[] { "Chakra", "UI" });
 					chakraRows.add(new String[] { "React", "Components" });
-					var chakraTable = Shiny.chakraTable()
+					var chakraTable = Shiny.table()
 							.withTitle("Chakra Table")
 							.withNoDataFound("No Chakra data found")
 							.withHeader("Framework", "Library")
@@ -440,92 +352,6 @@ final class BansheeHandler {
 							.addAllRows(chakraRows)
 							.build();
 					sendMessage(webSocket, chakraTable);
-					break;
-				case "xf1":
-					var form1 = Shiny.form()
-							.withTitle("Person Details")
-							.addSection("Personal Info", List.of(
-									new ShinyFormField("firstName", "First Name", ShinyFormFieldType.STRING, "John", true, "Enter first name", "", null, null, null, true),
-									new ShinyFormField("lastName", "Last Name", ShinyFormFieldType.STRING, "Doe", true, "Enter last name", "", null, null, null, true),
-									new ShinyFormField("age", "Age", ShinyFormFieldType.NUMBER, 30, false, "", "", null, null, new ShinyFormFieldValidator(null, null, null, 0, 120), true),
-									new ShinyFormField("birthDate", "Birth Date", ShinyFormFieldType.DATE, "1990-01-01", false, "", "", null, null, null, true),
-									new ShinyFormField("isActive", "Is Active", ShinyFormFieldType.BOOLEAN, true, false, "", "", null, null, null, false)), true, true)
-							.addSection("Contact Info", List.of(
-									new ShinyFormField("email", "Email", ShinyFormFieldType.STRING, "john.doe@example.com", true, "", "", null, null, new ShinyFormFieldValidator("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$", null, null, null, null), true),
-									new ShinyFormField("phone", "Phone", ShinyFormFieldType.STRING, "+1-555-123-4567", false, "", "", null, null, new ShinyFormFieldValidator("^\\+?[0-9]{1,3}?[ -]?[0-9]{3}?[ -]?[0-9]{3}?[ -]?[0-9]{4}$", null, null, null, null), true)), false, true)
-							.build();
-					sendMessage(webSocket, form1);
-					break;
-				case "xf2":
-					var form2 = Shiny.form()
-							.withTitle("Product Details")
-							.addSection("Product Info", List.of(
-									new ShinyFormField("productName", "Product Name", ShinyFormFieldType.STRING, "Smartphone X", true, "", "", null, null, null, false),
-									new ShinyFormField("price", "Price", ShinyFormFieldType.NUMBER, 799.99, true, "", "", null, null, new ShinyFormFieldValidator(null, null, null, 0, 10000), false),
-									new ShinyFormField("description", "Description", ShinyFormFieldType.TEXTAREA, "Latest model with advanced features.", false, "", "", null, null, null, false),
-									new ShinyFormField("imageUrl", "Image", ShinyFormFieldType.IMAGE, "https://picsum.photos/id/237/200/300", false, "", "", null, null, null, false),
-									new ShinyFormField("inStock", "In Stock", ShinyFormFieldType.BOOLEAN, true, false, "", "", null, null, null, false),
-									new ShinyFormField("category", "Category", ShinyFormFieldType.SELECT, "Electronics", true, "", "", null, List.of(
-											new ShinyFormOption("Electronics", "Electronics"),
-											new ShinyFormOption("Books", "Books"),
-											new ShinyFormOption("Home", "Home")), null, false)))
-							.build();
-					sendMessage(webSocket, form2);
-					break;
-				case "xf3":
-					var form3 = Shiny.form()
-							.withTitle("Photo Metadata")
-							.addSection("File Info", List.of(
-									new ShinyFormField("fileName", "File Name", ShinyFormFieldType.STRING, "IMG_001.jpg", true, "", "", null, null, null, true),
-									new ShinyFormField("fileSize", "File Size (KB)", ShinyFormFieldType.NUMBER, 2048, false, "", "", null, null, null, true),
-									new ShinyFormField("dateTaken", "Date Taken", ShinyFormFieldType.DATE, "2023-04-15", false, "", "", null, null, null, true),
-									new ShinyFormField("isPublic", "Public", ShinyFormFieldType.BOOLEAN, false, false, "", "", null, null, null, false)))
-							.addSection("Location", List.of(
-									new ShinyFormField("latitude", "Latitude", ShinyFormFieldType.NUMBER, 34.0522, false, "", "", null, null, null, true),
-									new ShinyFormField("longitude", "Longitude", ShinyFormFieldType.NUMBER, -118.2437, false, "", "", null, null, null, true)))
-							.build();
-					sendMessage(webSocket, form3);
-					break;
-				case "xf4":
-					var form4 = Shiny.form()
-							.withTitle("Critique de film")
-							.addSection("Détails du film", List.of(
-									new ShinyFormField("movie", "Film", ShinyFormFieldType.SELECT, "LOTR1", true, "", "", null, List.of(
-											new ShinyFormOption("Star Wars", "Star Wars"),
-											new ShinyFormOption("LOTR1", "Le Seigneur des Anneaux : La Communauté de l'anneau"),
-											new ShinyFormOption("LOTR2", "Le Seigneur des Anneaux : Les Deux Tours"),
-											new ShinyFormOption("LOTR3", "Le Seigneur des Anneaux : Le Retour du roi")), null, false),
-									new ShinyFormField("rating", "Note", ShinyFormFieldType.NUMBER, 3, true, "", "Note sur 5", null, null, null, false),
-									new ShinyFormField("review", "Critique", ShinyFormFieldType.TEXTAREA, "Un film incroyable !", false, "Écrivez votre critique ici", "", null, null, null, false)), true, false)
-							.build();
-					sendMessage(webSocket, form4);
-					break;
-				case "xf5":
-					var form5 = Shiny.form()
-							.withTitle("Commande de produit")
-							.addSection("Détails du produit", List.of(
-									new ShinyFormField("product", "Produit", ShinyFormFieldType.STRING, "T-shirt Vertigo", true, "", "", null, null, null, true),
-									new ShinyFormField("size", "Taille", ShinyFormFieldType.RADIO, "M", true, "", "", null, List.of(
-											new ShinyFormOption("S", "Small"),
-											new ShinyFormOption("M", "Medium"),
-											new ShinyFormOption("L", "Large")), null, false),
-									new ShinyFormField("gift", "Emballage cadeau", ShinyFormFieldType.CHECKBOX_GROUP, true, false, "", "", null, null, null, false)), true, false)
-							.build();
-					sendMessage(webSocket, form5);
-					break;
-				case "xf6":
-					var form6 = Shiny.form()
-							.withTitle("Ajout de film")
-							.addSection("Informations sur le film", List.of(
-									new ShinyFormField("title", "Titre", ShinyFormFieldType.STRING, "Inception", true, "Titre du film", "", null, null, null, false),
-									new ShinyFormField("genres", "Genres", ShinyFormFieldType.CHECKBOX_GROUP, List.of("SF", "Action"), true, "", "", null, List.of(
-											new ShinyFormOption("SF", "Science-Fiction"),
-											new ShinyFormOption("Action", "Action"),
-											new ShinyFormOption("Drama", "Drame"),
-											new ShinyFormOption("Comedy", "Comédie")), null, false)),
-									true, false)
-							.build();
-					sendMessage(webSocket, form6);
 					break;
 				case "xwait":
 					Thread.sleep(2000);
@@ -563,7 +389,9 @@ final class BansheeHandler {
 				default:
 					sendMessage(webSocket, BansheeAction.create, "text", "nada");
 			}
-		} catch (Exception e) {
+		} catch (
+
+		Exception e) {
 			e.printStackTrace();
 			//			System.out.println("Erreur de parsing : " + e.getMessage());
 			//			// Envoie une erreur au client
