@@ -821,28 +821,6 @@ td {
 	margin: auto;
 }
 
-.chakra-card {
-	background-color: var(--chakra-card-bg);
-	border-radius: 8px;
-	overflow: hidden;
-	color: var(--chakra-title-text);
-	max-width: 300px;
-}
-
-.chakra-card-image {
-	width: 100%;
-	height: auto;
-}
-
-.chakra-card-body {
-	padding: 15px;
-}
-
-.chakra-card-title {
-	font-weight: bold;
-	margin-bottom: 10px;
-}
-
 .chakra-list-container {
 	background-color: var(--chakra-bg);
 	padding: 15px;
