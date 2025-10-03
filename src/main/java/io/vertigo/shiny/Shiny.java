@@ -22,8 +22,10 @@ import io.vertigo.shiny.components.input.multiselection.ShinyMultiSelectionBuild
 import io.vertigo.shiny.components.input.text.ShinyInputTextBuilder;
 import io.vertigo.shiny.components.live.progressbar.ShinyProgressBarBuilder;
 import io.vertigo.shiny.components.live.spinner.ShinySpinnerBuilder;
+import io.vertigo.shiny.components.media.geomap.ShinyGeoMapBuilder;
 import io.vertigo.shiny.components.media.pdf.ShinyPdfComponentBuilder;
 import io.vertigo.shiny.components.media.photo.ShinyPhotoBuilder;
+import io.vertigo.shiny.components.media.youtube.ShinyYoutubeBuilder;
 import io.vertigo.shiny.components.text.figlet.ShinyFigletBuilder;
 import io.vertigo.shiny.components.text.paragraph.ShinyParagraphBuilder;
 import io.vertigo.shiny.components.text.textpath.ShinyTextPathBuilder;
@@ -177,6 +179,10 @@ public final class Shiny {
 		return new ShinyPhotoBuilder();
 	}
 
+	public static ShinyGeoMapBuilder geoMap() {
+		return new ShinyGeoMapBuilder();
+	}
+
 	public static ShinyTheme theme() {
 		return INSTANCE.theme;
 	}
@@ -188,6 +194,10 @@ public final class Shiny {
 	//-----
 	public static ShinyMermaidServer mermaid() {
 		return new ShinyMermaidServer(INSTANCE, 5656);
+	}
+
+	public static ShinyYoutubeBuilder youtube() {
+		return new ShinyYoutubeBuilder();
 	}
 
 	//<	private static ShinySuperRenderer RENDERER = new ShinySuperRenderer();

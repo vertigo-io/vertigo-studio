@@ -52,6 +52,7 @@ import io.vertigo.shiny.components.data.list.ShinyListType;
 import io.vertigo.shiny.components.dataviz.chart.ShinyChart;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingScale;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatusType;
+import io.vertigo.shiny.components.media.geomap.ShinyGeoPoint;
 import io.vertigo.shiny.components.media.rss.ShinyRssData;
 import io.vertigo.shiny.components.media.rss.ShinyRssItem;
 
@@ -187,6 +188,15 @@ final class BansheeHandler {
 								""")
 						.withTitle("Fiche de Barry Lindon")
 						.build();
+				case "xyoutube" -> Shiny.youtube()
+						.withTitle("Rick Astley - Never Gonna Give You Up")
+						.withVideoId("dQw4w9WgXcQ")
+						.build();
+				case "xmap" -> Shiny.geoMap()
+						.withTitle("Tour Eiffel & Saint Germain")
+						.addGeoPoint(ShinyGeoPoint.of(48.8584, 2.2945, "Tour Eiffel"))
+						.addGeoPoint(ShinyGeoPoint.of(48.901022, 2.100765, "Saint Germain en Laye"))
+						.build();
 				default -> null;
 			};
 
@@ -257,16 +267,6 @@ final class BansheeHandler {
 							.build();
 					sendMessage(webSocket, table);
 					break;
-				case "xmap":
-					var geoMap = """
-							{
-							"title" : "Tour Eiffel",
-							"latitude":48.8584,
-							"longitude":2.2945
-							}
-							""";
-					sendMessage(webSocket, BansheeAction.create, "geoMap", geoMap);
-					break;
 				case "xsankey":
 					final var jsonSankey = """
 														{
@@ -318,12 +318,6 @@ final class BansheeHandler {
 					}
 					sendMessage(webSocket, BansheeAction.create, "live",
 							MAPPER.writeValueAsString(new LiveComponent(id, "complete", -1)));
-					break;
-				case "xyoutube":
-					ObjectNode youtubeData = MAPPER.createObjectNode()
-							.put("title", "Rick Astley - Never Gonna Give You Up")
-							.put("videoId", "dQw4w9WgXcQ");
-					sendMessage(webSocket, BansheeAction.create, "youtube", MAPPER.writeValueAsString(youtubeData));
 					break;
 				case "xtree2":
 					var chakraTree = Shiny.tree("Chakra Tree").build();
@@ -421,8 +415,7 @@ final class BansheeHandler {
 	private static String getType(ShinyComponent component) {
 		Assertion.check().isNotNull(component);
 		//---
-		final Class<? extends ShinyComponent> componentClass = component.getClass();
-		final ShinyType shinyType = componentClass.getAnnotation(ShinyType.class);
+		final ShinyType shinyType = component.getClass().getAnnotation(ShinyType.class);
 
 		if (shinyType == null) {
 			throw new IllegalArgumentException("Unknown component type: " + component.getClass());

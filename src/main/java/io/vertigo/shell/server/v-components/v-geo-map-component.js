@@ -11,15 +11,30 @@ Vue.component('v-geo-map-component', {
         if (!mapContainer) {
             return;
         }
-        const map = L.map(this.mapId).setView([this.data.latitude, this.data.longitude], 12);
+
+        let initialLat = 0;
+        let initialLng = 0;
+        if (this.data.geoPoints && this.data.geoPoints.length > 0) {
+            initialLat = this.data.geoPoints[0].latitude;
+            initialLng = this.data.geoPoints[0].longitude;
+        }
+
+        const map = L.map(this.mapId).setView([initialLat, initialLng], 12);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             maxZoom: 18,
             tileSize: 256
         }).addTo(map);
-        const marker = L.marker([this.data.latitude, this.data.longitude]).addTo(map);
-        if (this.data.label) {
-            marker.bindPopup(this.data.label).openPopup();
+
+        if (this.data.geoPoints) {
+            this.data.geoPoints.forEach(geoPoint => {
+                const marker = L.marker([geoPoint.latitude, geoPoint.longitude]).addTo(map);
+                if (geoPoint.label) {
+                    marker.bindPopup(geoPoint.label).openPopup();
+                } else if (this.data.title) {
+                    marker.bindPopup(this.data.title).openPopup();
+                }
+            });
         }
     }
 });
