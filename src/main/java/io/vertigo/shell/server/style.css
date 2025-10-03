@@ -10,7 +10,7 @@
 	--table-row-odd: #2E3439; /* Fond des lignes impaires */
 	--table-hover: #212529; /* Fond au survol des lignes */
 	--chakra-bg: #1A202C; /* Fond des conteneurs Chakra */
-	--chakra-card-bg: #2D3748; /* Fond des cartes Chakra */
+	--shiny-card-bg: #2D3748; /* Fond des cartes Chakra */
 
 	/* Couleurs de texte */
 	--general-text: #E6E8EA; /* Texte général */
@@ -845,7 +845,7 @@ td {
 	border-bottom: 2px solid var(--chakra-table-border);
 	text-align: left;
 	color: var(--chakra-title-text);
-	background-color: var(--chakra-card-bg);
+	background-color: var(--shiny-card-bg);
 }
 
 .chakra-table-td {
