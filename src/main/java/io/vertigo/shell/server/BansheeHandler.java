@@ -33,6 +33,8 @@ import io.vertigo.shell.systems.java.commands.load.JavaLoadCommand;
 import io.vertigo.shell.systems.java.commands.show.JavaShowModelCommand;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.components.card.ShinyCardComponent;
+import io.vertigo.shiny.components.card.ShinyCardFormat;
 import io.vertigo.shiny.components.core.container.ShinyContainer;
 import io.vertigo.shiny.components.core.error.ShinyError;
 import io.vertigo.shiny.components.data.json.ShinyJson;
@@ -548,6 +550,18 @@ final class BansheeHandler {
 						sendMessage(webSocket, err);
 					}
 					break;
+				case "xcard":
+					var card = Shiny.card()
+							.withTitle("Mon Titre de Carte")
+							.withDescription("""
+									Ceci est le contenu de ma carte. Il peut être plus
+									long et contenir des informations détaillées.
+									  """)
+							.withImageUrl("https://picsum.photos/id/237/200/300")
+							.withFormat(ShinyCardFormat.M)
+							.build();
+					sendMessage(webSocket, card);
+					break;
 				default:
 					sendMessage(webSocket, BansheeAction.create, "text", "nada");
 			}
@@ -632,6 +646,7 @@ final class BansheeHandler {
 			case ShinyRating c -> "rating";
 			//---media
 			case ShinyPdfComponent c -> "pdf";
+			case ShinyCardComponent c -> "card";
 
 			case ShinyForm c -> "form";
 			default -> throw new IllegalArgumentException("Unknown component type: " + component.getClass());

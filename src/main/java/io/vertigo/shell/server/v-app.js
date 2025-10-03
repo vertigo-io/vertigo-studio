@@ -43,7 +43,8 @@ new Vue({
             rssFeed: 'v-rss-component',
             sankey: 'v-sankey-component',
             youtube: 'v-youtube-component',
-			pdf: 'v-pdf-component'
+			pdf: 'v-pdf-component',
+			card: 'v-shiny-card-component',
         }
     },
     methods: {

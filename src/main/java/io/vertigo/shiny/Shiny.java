@@ -28,6 +28,7 @@ import io.vertigo.shiny.components.text.textpath.ShinyTextPathBuilder;
 import io.vertigo.shiny.components.text.title.ShinyTitleBuilder;
 import io.vertigo.shiny.components.text.toggle.ShinyToggleBuilder;
 import io.vertigo.shiny.components.media.pdf.ShinyPdfComponentBuilder;
+import io.vertigo.shiny.components.card.ShinyCardBuilder;
 import io.vertigo.shiny.mermaid.ShinyMermaidServer;
 
 public final class Shiny {
@@ -141,10 +142,13 @@ public final class Shiny {
 	        return new ShinyInputTextBuilder();
 	    }
 	
-	    public static ShinyPdfComponentBuilder pdf() {
-	        return new ShinyPdfComponentBuilder();
-	    }
-	//	public static ShinyComposer composer() {
+	        public static ShinyPdfComponentBuilder pdf() {
+	            return new ShinyPdfComponentBuilder();
+	        }
+	    
+	        public static ShinyCardBuilder card() {
+	            return new ShinyCardBuilder();
+	        }	//	public static ShinyComposer composer() {
 	//		return new ShinyComposer();
 	//	}
 
