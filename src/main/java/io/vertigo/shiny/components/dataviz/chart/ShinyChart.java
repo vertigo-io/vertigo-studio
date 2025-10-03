@@ -5,6 +5,9 @@ import java.util.List;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.components.ShinyComponent;
 
+import io.vertigo.shiny.ShinyType;
+
+@ShinyType("chart")
 public record ShinyChart(
 		String title,
 		ShinyChartType chartType,
