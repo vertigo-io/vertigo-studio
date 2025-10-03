@@ -36,7 +36,6 @@ new Vue({
             textPath: 'v-text-path-component',
             title: 'v-chakra-title-component',
             // ---media
-            chakraCard: 'v-chakra-card-component',
             chakraVideo: 'v-chakra-video-component',
             geoMap: 'v-geo-map-component',
             photo: 'v-photo-component',
