@@ -23,6 +23,7 @@ import io.vertigo.shiny.components.input.text.ShinyInputTextBuilder;
 import io.vertigo.shiny.components.live.progressbar.ShinyProgressBarBuilder;
 import io.vertigo.shiny.components.live.spinner.ShinySpinnerBuilder;
 import io.vertigo.shiny.components.media.pdf.ShinyPdfComponentBuilder;
+import io.vertigo.shiny.components.media.photo.ShinyPhotoBuilder;
 import io.vertigo.shiny.components.text.figlet.ShinyFigletBuilder;
 import io.vertigo.shiny.components.text.paragraph.ShinyParagraphBuilder;
 import io.vertigo.shiny.components.text.textpath.ShinyTextPathBuilder;
@@ -170,6 +171,10 @@ public final class Shiny {
 
 	public static ShinyChartBuilder pieChart() {
 		return new ShinyChartBuilder(ShinyChartType.pie);
+	}
+
+	public static ShinyPhotoBuilder photo() {
+		return new ShinyPhotoBuilder();
 	}
 
 	public static ShinyTheme theme() {

@@ -119,8 +119,73 @@ final class BansheeHandler {
 						.withMaxValue(450)
 						.build();
 				case "xsparkline" -> Shiny.sparkline()
-						.withTitle("Chakra Sparkline")
+						.withTitle("S.p.a.r.k.l.i.n.e")
 						.withValues(156, 450, 300, 200, 100, 23)
+						.build();
+				case "xphoto" -> Shiny.photo()
+						.withTitle("Random image from picsum")
+						.withUrl("https://picsum.photos/800/600")
+						.withAlt("Random image from picsum")
+						.build();
+				case "xcard" -> Shiny.card()
+						.withTitle("Mon Titre de Carte")
+						.withSubtitle("Un sous-titre pour le contexte")
+						.withDescription("Ceci est le contenu principal de ma carte. Il peut être plus long et contenir des informations détaillées sur le sujet de la carte.")
+						.withImageUrl("https://picsum.photos/id/237/200/300")
+						.withImageAlt("Image aléatoire de Picsum")
+						.withLink("https://www.vertigo.io")
+						.withIcon("star") // Exemple d'icône Lucide
+						.withBadge("Nouveau", "blue")
+						.withFormat(ShinyCardFormat.M) // Format de la carte (S, M, L)
+						.build();
+				case "xlist" -> Shiny.list()
+						.withTitle("planetes")
+						.withType(ShinyListType.UNORDERED)
+						.addItem("Uranus")
+						.addList(Shiny.list()
+								.withTitle("Mars")//<< Item 
+								.withType(ShinyListType.UNORDERED)
+								.addItem("Bleue")
+								.addItem("Rouge")
+								.addItem("Verte")
+								.build())
+						.addItem("Saturn")
+						.addItem("Venus")
+						.build();
+				case "xstatus" -> Shiny.status()
+						.withTitle("Component Status")
+						.addType(ShinyStatusType.SUCCESS)
+						.addType(ShinyStatusType.ERROR)
+						.addType(ShinyStatusType.WARNING)
+						.build();
+				case "xrating" -> Shiny.rating()
+						.withLabel("User satisfaction")
+						.withValue(3.5)
+						.withScale(ShinyRatingScale.SCALE_5)
+						.withAllowHalfRating(true)
+						.build();
+				case "xjson" -> Shiny.json()
+						.withJson("""
+								{
+								  "title": "The Shining",
+								  "director": "Stanley Kubrick",
+								  "release_year": 1980,
+								  "genre": ["Horror", "Thriller"],
+								  "duration": "2h 26m",
+								  "cast": ["Jack Nicholson", "Shelley Duvall", "Danny Lloyd"],
+								  "synopsis": "A family heads to an isolated hotel for the winter where a sinister presence influences the father into violence."
+								}
+								""")
+						.withTitle("Fiche de Shinning")
+						.build();
+				case "xjson2" -> Shiny.json()
+						.withJson("""
+								{
+								  "title": "Barry Lindon",
+								  "director": "Stanley Kubrick"
+								}
+								""")
+						.withTitle("Fiche de Barry Lindon")
 						.build();
 				default -> null;
 			};
@@ -254,84 +319,11 @@ final class BansheeHandler {
 					sendMessage(webSocket, BansheeAction.create, "live",
 							MAPPER.writeValueAsString(new LiveComponent(id, "complete", -1)));
 					break;
-				case "xlist":
-					var list = Shiny.list()
-							.withTitle("planetes")
-							.withType(ShinyListType.UNORDERED)
-							.addItem("Uranus")
-							.addList(Shiny.list()
-									.withTitle("Mars")//<< Item 
-									.withType(ShinyListType.UNORDERED)
-									.addItem("Bleue")
-									.addItem("Rouge")
-									.addItem("Verte")
-									.build())
-							.addItem("Saturn")
-							.addItem("Venus")
-							.build();
-					sendMessage(webSocket, list);
-					break;
-				case "xjson":
-					var jsonContent = """
-							{
-							  "title": "The Shining",
-							  "director": "Stanley Kubrick",
-							  "release_year": 1980,
-							  "genre": ["Horror", "Thriller"],
-							  "duration": "2h 26m",
-							  "cast": ["Jack Nicholson", "Shelley Duvall", "Danny Lloyd"],
-							  "synopsis": "A family heads to an isolated hotel for the winter where a sinister presence influences the father into violence."
-							}
-															""";
-					var json = Shiny.json()
-							.withJson(jsonContent)
-							.withTitle("Fiche de Shinning")
-							.build();
-					sendMessage(webSocket, json);
-					break;
-				case "xjson2":
-					var json2Content = """
-							{
-							  "title": "Barry Lindon",
-							  "director": "Stanley Kubrick"
-							}
-															""";
-					var json2 = Shiny.json()
-							.withJson(json2Content)
-							.withTitle("Fiche de Barry Lindon")
-							.build();
-					sendMessage(webSocket, json2);
-					break;
 				case "xyoutube":
 					ObjectNode youtubeData = MAPPER.createObjectNode()
 							.put("title", "Rick Astley - Never Gonna Give You Up")
 							.put("videoId", "dQw4w9WgXcQ");
 					sendMessage(webSocket, BansheeAction.create, "youtube", MAPPER.writeValueAsString(youtubeData));
-					break;
-				case "xphoto":
-					ObjectNode photoData = MAPPER.createObjectNode()
-							.put("title", "Random image from picsum")
-							.put("url", "https://picsum.photos/800/600")
-							.put("alt", "Random image from picsum");
-					sendMessage(webSocket, BansheeAction.create, "photo", MAPPER.writeValueAsString(photoData));
-					break;
-				case "xstatus":
-					var status = Shiny.status()
-							.withTitle("Component Status")
-							.addType(ShinyStatusType.SUCCESS)
-							.addType(ShinyStatusType.ERROR)
-							.addType(ShinyStatusType.WARNING)
-							.build();
-					sendMessage(webSocket, status);
-					break;
-				case "xrating":
-					var rating = Shiny.rating()
-							.withLabel("User satisfaction")
-							.withValue(3.5)
-							.withScale(ShinyRatingScale.SCALE_5)
-							.withAllowHalfRating(true)
-							.build();
-					sendMessage(webSocket, rating);
 					break;
 				case "xtree2":
 					var chakraTree = Shiny.tree("Chakra Tree").build();
@@ -371,20 +363,6 @@ final class BansheeHandler {
 								.build();
 						sendMessage(webSocket, err);
 					}
-					break;
-				case "xcard":
-					var card = Shiny.card()
-							.withTitle("Mon Titre de Carte")
-							.withSubtitle("Un sous-titre pour le contexte")
-							.withDescription("Ceci est le contenu principal de ma carte. Il peut être plus long et contenir des informations détaillées sur le sujet de la carte.")
-							.withImageUrl("https://picsum.photos/id/237/200/300")
-							.withImageAlt("Image aléatoire de Picsum")
-							.withLink("https://www.vertigo.io")
-							.withIcon("star") // Exemple d'icône Lucide
-							.withBadge("Nouveau", "blue")
-							.withFormat(ShinyCardFormat.M) // Format de la carte (S, M, L)
-							.build();
-					sendMessage(webSocket, card);
 					break;
 				default:
 					sendMessage(webSocket, BansheeAction.create, "text", "nada");
