@@ -9,6 +9,9 @@ import io.vertigo.shiny.components.ShinyComponent;
  * Represents a table that can be printed in a terminal with colors,
  * borders and formatted numeric values.
  */
+import io.vertigo.shiny.ShinyType;
+
+@ShinyType("table")
 public record ShinyTable(
 		String title,
 		String noDataFound,

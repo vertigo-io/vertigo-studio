@@ -6,6 +6,9 @@ import java.util.List;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
+import io.vertigo.shiny.ShinyType;
+
+@ShinyType("form")
 public final class ShinyFormBuilder implements Builder<ShinyForm> {
 	private String _title;
 	private final List<ShinyFormSection> sections = new ArrayList<>();

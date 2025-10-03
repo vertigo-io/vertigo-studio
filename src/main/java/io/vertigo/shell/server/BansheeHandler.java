@@ -32,35 +32,19 @@ import io.vertigo.shell.systems.file.commands.pwd.FilePwdCommand;
 import io.vertigo.shell.systems.java.commands.load.JavaLoadCommand;
 import io.vertigo.shell.systems.java.commands.show.JavaShowModelCommand;
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyType;
 import io.vertigo.shiny.components.ShinyComponent;
-import io.vertigo.shiny.components.core.container.ShinyContainer;
-import io.vertigo.shiny.components.core.error.ShinyError;
-import io.vertigo.shiny.components.data.card.ShinyCardComponent;
 import io.vertigo.shiny.components.data.card.ShinyCardFormat;
-import io.vertigo.shiny.components.data.json.ShinyJson;
-import io.vertigo.shiny.components.data.list.ShinyList;
 import io.vertigo.shiny.components.data.list.ShinyListType;
-import io.vertigo.shiny.components.data.table.ShinyTable;
-import io.vertigo.shiny.components.data.tree.ShinyTree;
 import io.vertigo.shiny.components.dataviz.chart.ShinyChart;
-import io.vertigo.shiny.components.dataviz.gauge.ShinyGauge;
-import io.vertigo.shiny.components.dataviz.rating.ShinyRating;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingScale;
-import io.vertigo.shiny.components.dataviz.sparkline.ShinySparkline;
-import io.vertigo.shiny.components.dataviz.status.ShinyStatus;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatusType;
-import io.vertigo.shiny.components.form.ShinyForm;
 import io.vertigo.shiny.components.form.ShinyFormField;
 import io.vertigo.shiny.components.form.ShinyFormFieldType;
 import io.vertigo.shiny.components.form.ShinyFormFieldValidator;
 import io.vertigo.shiny.components.form.ShinyFormOption;
-import io.vertigo.shiny.components.media.pdf.ShinyPdfComponent;
 import io.vertigo.shiny.components.media.rss.ShinyRssData;
 import io.vertigo.shiny.components.media.rss.ShinyRssItem;
-import io.vertigo.shiny.components.text.figlet.ShinyFiglet;
-import io.vertigo.shiny.components.text.paragraph.ShinyParagraph;
-import io.vertigo.shiny.components.text.textpath.ShinyTextPath;
-import io.vertigo.shiny.components.text.title.ShinyTitle;
 
 final class BansheeHandler {
 	private static final ObjectMapper MAPPER = new ObjectMapper();
@@ -629,25 +613,18 @@ final class BansheeHandler {
 	}
 
 	private static String getType(ShinyComponent component) {
-		final String type = switch (component) {
-			//---data
-			case ShinyTable c -> "table";
-			case ShinyList c -> "list";
-			case ShinyJson c -> "json";
-			case ShinyTree c -> "tree";
+		Assertion.check().isNotNull(component);
+		//---
+		final Class<? extends ShinyComponent> componentClass = component.getClass();
+		final ShinyType shinyType = componentClass.getAnnotation(ShinyType.class);
 
-			//---text
-			case ShinyTextPath c -> "textPath";
-			case ShinyParagraph c -> "paragraph";
-			case ShinyTitle c -> "title";
-			case ShinyFiglet c -> "figlet";
-
-			//---core
-			case ShinyError c -> "error";
-			case ShinyContainer c -> "container";
-
-			//---dataviz
-			case ShinyChart c -> switch (c.chartType()) {
+		if (shinyType == null) {
+			throw new IllegalArgumentException("Unknown component type: " + component.getClass());
+		}
+		if (component instanceof ShinyChart c) {
+			// Special handling for ShinyChart 
+			//to get the specific chart type
+			return switch (c.chartType()) {
 				case bar -> "barChart";
 				case area -> "areaChart";
 				case line -> "lineChart";
@@ -655,18 +632,9 @@ final class BansheeHandler {
 				case donut -> "donutChart";
 				case pie -> "pieChart";
 			};
-			case ShinyGauge c -> "gauge";
-			case ShinySparkline c -> "sparkLine";
-			case ShinyStatus c -> "status";
-			case ShinyRating c -> "rating";
-			//---media
-			case ShinyPdfComponent c -> "pdf";
-			case ShinyCardComponent c -> "card";
-
-			case ShinyForm c -> "form";
-			default -> throw new IllegalArgumentException("Unknown component type: " + component.getClass());
-		};
-		return type;
+		} else {
+			return shinyType.value();
+		}
 	}
 
 	private static UUID last = null;

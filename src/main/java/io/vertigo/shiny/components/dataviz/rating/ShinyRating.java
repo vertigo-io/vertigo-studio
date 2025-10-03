@@ -2,6 +2,9 @@ package io.vertigo.shiny.components.dataviz.rating;
 
 import io.vertigo.shiny.components.ShinyComponent;
 
+import io.vertigo.shiny.ShinyType;
+
+@ShinyType("rating")
 public record ShinyRating(
 		String label,
 		double value,

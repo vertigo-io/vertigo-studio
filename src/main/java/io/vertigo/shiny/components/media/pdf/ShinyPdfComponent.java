@@ -6,6 +6,9 @@ import io.vertigo.shiny.components.ShinyComponent;
 /**
  * Represents a PDF component to be rendered in the UI.
  */
+import io.vertigo.shiny.ShinyType;
+
+@ShinyType("pdf")
 public record ShinyPdfComponent(
         String title,
         String pdfPath,
