@@ -29,16 +29,16 @@ Vue.component('v-form-component', {
     template: `
     <v-card class="form-card" max-width="800" dark>
         <v-card-title class="text-h5 font-weight-bold primary--text">{{ data.title }}</v-card-title>
-        <v-card-text>
+        <v-card-text class="pa-2">
             <v-expansion-panels flat multiple>
                 <v-expansion-panel
                     v-for="(section, sectionIndex) in data.sections"
                     :key="sectionIndex"
-                    class="form-section-panel mb-4"
+                    class="form-section-panel mb-2"
                     :value="section.initiallyCollapsed ? null : 0"
                 >
                     <v-expansion-panel-header class="text-h6 font-weight-medium white--text">{{ section.title }}</v-expansion-panel-header>
-                    <v-expansion-panel-content>
+                    <v-expansion-panel-content class="pa-2">
                         <v-row dense>
                             <v-col cols="12" sm="6" md="4" v-for="(field, fieldIndex) in section.fields" :key="fieldIndex">
                                 <template v-if="field.type === 'STRING'">
@@ -53,6 +53,7 @@ Vue.component('v-form-component', {
                                         dark
                                         dense
                                         color="primary"
+                                        hide-details
                                     ></v-text-field>
                                 </template>
                                 <template v-else-if="field.type === 'NUMBER'">
@@ -68,6 +69,7 @@ Vue.component('v-form-component', {
                                         dense
                                         type="number"
                                         color="primary"
+                                        hide-details
                                     ></v-text-field>
                                 </template>
                                 <template v-else-if="field.type === 'DATE'">
@@ -82,6 +84,7 @@ Vue.component('v-form-component', {
                                         dark
                                         dense
                                         color="primary"
+                                        hide-details
                                     ></v-text-field>
                                 </template>
                                 <template v-else-if="field.type === 'BOOLEAN'">
@@ -117,6 +120,7 @@ Vue.component('v-form-component', {
                                         dark
                                         dense
                                         color="primary"
+                                        hide-details
                                     ></v-select>
                                 </template>
                                 <template v-else-if="field.type === 'RADIO'">
@@ -165,6 +169,7 @@ Vue.component('v-form-component', {
                                         dark
                                         dense
                                         color="primary"
+                                        hide-details
                                     ></v-textarea>
                                 </template>
                                 <div v-if="field.helpText" class="text-caption grey--text text--lighten-1">{{ field.helpText }}</div>
