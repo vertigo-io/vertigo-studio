@@ -23,7 +23,7 @@ public final class HalloweenCommand {
 				}
 
 				Il est important que le json soit "valide" sans commentaires et respecte bien la structure json standard.
-				Tu as le choix comme template entre uniquement les 5 choix suivants : 'bar', 'pie', 'area', 'donut' et 'radar'.
+				Tu as le choix comme 'template' entre uniquement les 6 choix suivants : 'bar', 'pie', 'area', 'line', 'donut' ou  'radar'.
 				Choisis le plus adapté des graphiques.
 				Tu peux avoir plusieurs séries.
 

@@ -25,6 +25,7 @@ new Vue({
 			pieChart: 'v-chakra-pie-chart-component',
 			donutChart: 'v-chakra-donut-chart-component',
 			areaChart: 'v-chakra-area-chart-component',
+			lineChart: 'v-chakra-line-chart-component',
             gauge: 'v-gauge-component',
             progressBar: 'v-progress-bar-component',
             rating: 'v-rating-component',

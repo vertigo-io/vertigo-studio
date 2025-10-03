@@ -10,17 +10,10 @@ import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.components.dataviz.chart.ShinyChartSerie;
+import io.vertigo.shiny.components.dataviz.chart.ShinyChartType;
 
 public final class ShinyComposer {
 	private static final ObjectMapper MAPPER = new ObjectMapper();
-
-	private enum Chart {
-		pie,
-		area,
-		radar,
-		bar,
-		donut
-	}
 
 	public ShinyComponent compose(final String jsonInput) {
 		System.out.println(">> before " + jsonInput);
@@ -54,9 +47,10 @@ public final class ShinyComposer {
 				}
 			}
 
-			return switch (Chart.valueOf(template.toLowerCase())) {
+			return switch (ShinyChartType.valueOf(template.toLowerCase())) {
 				case bar -> Shiny.barChart().withTitle(title).withLabels(labels).addAllSeries(series).build();
 				case area -> Shiny.areaChart().withTitle(title).withLabels(labels).addAllSeries(series).build();
+				case line -> Shiny.lineChart().withTitle(title).withLabels(labels).addAllSeries(series).build();
 				case pie -> Shiny.pieChart().withTitle(title).withLabels(labels).addAllSeries(series).build();
 				case donut -> Shiny.donutChart().withTitle(title).withLabels(labels).addAllSeries(series).build();
 				case radar -> Shiny.radarChart().withTitle(title).withLabels(labels).addAllSeries(series).build();

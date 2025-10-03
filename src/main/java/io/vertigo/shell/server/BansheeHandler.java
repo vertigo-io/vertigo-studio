@@ -246,6 +246,15 @@ final class BansheeHandler {
 							.build();
 					sendMessage(webSocket, areaChart);
 					break;
+				case "xline":
+					var lineChart = Shiny.lineChart()
+							.withTitle("Ventes par mois")
+							.withLabels("Jan", "Fev", "Mar", "Avr", "Mai", "Juin")
+							.addSerie("Ventes 2023", 120.0, 150.0, 170.0, 200.0, 220.0, 240.0)
+							.addSerie("Ventes 2024", 130.0, 160.0, 180.0, 210.0, 230.0, 250.0)
+							.build();
+					sendMessage(webSocket, lineChart);
+					break;
 				case "xradar":
 					var radarChart = Shiny.radarChart()
 							.withTitle("Final Fantasy VII Stats")

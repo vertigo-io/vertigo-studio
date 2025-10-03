@@ -23,12 +23,12 @@ import io.vertigo.shiny.components.input.multiselection.ShinyMultiSelectionBuild
 import io.vertigo.shiny.components.input.text.ShinyInputTextBuilder;
 import io.vertigo.shiny.components.live.progressbar.ShinyProgressBarBuilder;
 import io.vertigo.shiny.components.live.spinner.ShinySpinnerBuilder;
+import io.vertigo.shiny.components.media.pdf.ShinyPdfComponentBuilder;
 import io.vertigo.shiny.components.text.figlet.ShinyFigletBuilder;
 import io.vertigo.shiny.components.text.paragraph.ShinyParagraphBuilder;
 import io.vertigo.shiny.components.text.textpath.ShinyTextPathBuilder;
 import io.vertigo.shiny.components.text.title.ShinyTitleBuilder;
 import io.vertigo.shiny.components.text.toggle.ShinyToggleBuilder;
-import io.vertigo.shiny.components.media.pdf.ShinyPdfComponentBuilder;
 import io.vertigo.shiny.mermaid.ShinyMermaidServer;
 
 public final class Shiny {
@@ -138,19 +138,19 @@ public final class Shiny {
 		return new ShinyMultiSelectionBuilder();
 	}
 
-	    public static ShinyInputTextBuilder inputText() {
-	        return new ShinyInputTextBuilder();
-	    }
-	
-	        public static ShinyPdfComponentBuilder pdf() {
-	            return new ShinyPdfComponentBuilder();
-	        }
-	    
-	        public static ShinyCardBuilder card() {
-	            return new ShinyCardBuilder();
-	        }	//	public static ShinyComposer composer() {
-	//		return new ShinyComposer();
-	//	}
+	public static ShinyInputTextBuilder inputText() {
+		return new ShinyInputTextBuilder();
+	}
+
+	public static ShinyPdfComponentBuilder pdf() {
+		return new ShinyPdfComponentBuilder();
+	}
+
+	public static ShinyCardBuilder card() {
+		return new ShinyCardBuilder();
+	} //	public static ShinyComposer composer() {
+		//		return new ShinyComposer();
+		//	}
 
 	//---dataviz
 	public static ShinyChartBuilder barChart() {
@@ -163,6 +163,10 @@ public final class Shiny {
 
 	public static ShinyChartBuilder areaChart() {
 		return new ShinyChartBuilder(ShinyChartType.area);
+	}
+
+	public static ShinyChartBuilder lineChart() {
+		return new ShinyChartBuilder(ShinyChartType.line);
 	}
 
 	public static ShinyChartBuilder donutChart() {
