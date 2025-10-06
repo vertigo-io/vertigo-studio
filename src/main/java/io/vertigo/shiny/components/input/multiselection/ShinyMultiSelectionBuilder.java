@@ -10,19 +10,19 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinyMultiSelectionBuilder implements Builder<ShinyMultiSelection> {
-	private String multiselectionTitle;
-	private final List<String> multiselectionOptions = new ArrayList<>();
-	private final Set<Integer> selectedIndices = new HashSet<>();
+	private String _title;
+	private final List<String> _options = new ArrayList<>();
+	private final Set<Integer> _selectedIndices = new HashSet<>();
 
 	public ShinyMultiSelectionBuilder withTitle(final String title) {
-		this.multiselectionTitle = title;
+		this._title = title;
 		return this;
 	}
 
 	public ShinyMultiSelectionBuilder withOptions(final List<String> options) {
 		Assertion.check().isNotNull(options);
-		this.multiselectionOptions.clear();
-		this.multiselectionOptions.addAll(options);
+		this._options.clear();
+		this._options.addAll(options);
 		return this;
 	}
 
@@ -33,11 +33,11 @@ public final class ShinyMultiSelectionBuilder implements Builder<ShinyMultiSelec
 
 	public ShinyMultiSelectionBuilder withSelected(final List<String> initialSelected) {
 		Assertion.check().isNotNull(initialSelected);
-		this.selectedIndices.clear();
+		this._selectedIndices.clear();
 		for (final String selectedOption : initialSelected) {
-			final int index = multiselectionOptions.indexOf(selectedOption);
+			final int index = _options.indexOf(selectedOption);
 			if (index != -1) {
-				selectedIndices.add(index);
+				_selectedIndices.add(index);
 			}
 		}
 		return this;
@@ -47,6 +47,6 @@ public final class ShinyMultiSelectionBuilder implements Builder<ShinyMultiSelec
 	public ShinyMultiSelection build() {
 		// Perform any final validations here before building the object
 		//---
-		return new ShinyMultiSelection(multiselectionTitle, multiselectionOptions, selectedIndices);
+		return new ShinyMultiSelection(_title, _options, _selectedIndices);
 	}
 }
