@@ -3,15 +3,15 @@ package io.vertigo.shiny.components.core.error;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinyErrorBuilder implements Builder<ShinyError> {
-	private String errorText;
+	private String _text;
 
 	public ShinyErrorBuilder withText(final String text) {
-		this.errorText = text;
+		this._text = text;
 		return this;
 	}
 
 	@Override
 	public ShinyError build() {
-		return new ShinyError(errorText);
+		return new ShinyError(_text);
 	}
 }

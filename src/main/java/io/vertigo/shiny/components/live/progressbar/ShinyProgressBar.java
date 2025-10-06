@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.components.live.ShinyLiveComponent;
 import io.vertigo.shiny.renderers.live.ShinyProgressBarRenderer;
 
@@ -17,12 +16,8 @@ public final class ShinyProgressBar extends ShinyLiveComponent<ShinyProgressBar>
 	public final String id = UUID.randomUUID().toString();
 
 	// Package-private constructor, only accessible by the Builder
-	ShinyProgressBar(ShinyProgressBarBuilder builder) {
-		super();
-		Assertion.check()
-				.isNotNull(builder);
-		//---
-		this.total = builder.total;
+	ShinyProgressBar(final int total) {
+		this.total = total;
 	}
 
 	public int getTotal() {
