@@ -15,6 +15,7 @@ import io.vertigo.shiny.components.dataviz.chart.ShinyChartBuilder;
 import io.vertigo.shiny.components.dataviz.chart.ShinyChartType;
 import io.vertigo.shiny.components.dataviz.gauge.ShinyGaugeBuilder;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingBuilder;
+import io.vertigo.shiny.components.dataviz.sankey.ShinySankeyBuilder;
 import io.vertigo.shiny.components.dataviz.sparkline.ShinySparklineBuilder;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatusBuilder;
 import io.vertigo.shiny.components.form.ShinyFormBuilder;
@@ -203,6 +204,10 @@ public final class Shiny {
 
 	public static ShinyRssBuilder rss() {
 		return new ShinyRssBuilder();
+	}
+
+	public static ShinySankeyBuilder sankey() {
+		return new ShinySankeyBuilder();
 	}
 
 	//	private static ShinySuperRenderer RENDERER = new ShinySuperRenderer();

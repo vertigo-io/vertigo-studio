@@ -241,31 +241,24 @@ final class BansheeHandler {
 							.build();
 					sendMessage(webSocket, table);
 					break;
-				case "xsankey":
-					final var jsonSankey = """
-														{
-														"title": "Flux d'énergie",
-														"data": [
-							  { "from": "Nucléaire", "to": "Réseau électrique", "flow": 120 },
-							  { "from": "Hydraulique", "to": "Réseau électrique", "flow": 80 },
-							  { "from": "Éolien", "to": "Réseau électrique", "flow": 60 },
-							  { "from": "Solaire", "to": "Réseau électrique", "flow": 40 },
-							  { "from": "Charbon", "to": "Réseau électrique", "flow": 100 },
-
-							  { "from": "Réseau électrique", "to": "Industrie", "flow": 150 },
-							  { "from": "Réseau électrique", "to": "Transport", "flow": 70 },
-							  { "from": "Réseau électrique", "to": "Résidentiel", "flow": 100 },
-							  { "from": "Réseau électrique", "to": "Pertes réseau", "flow": 20 },
-
-							  { "from": "Résidentiel", "to": "Chauffage", "flow": 40 },
-							  { "from": "Résidentiel", "to": "Électroménager", "flow": 30 },
-							  { "from": "Résidentiel", "to": "Informatique", "flow": 30 }
-							]
-														}
-														""";
-					sendMessage(webSocket, BansheeAction.create, "sankey", jsonSankey);
-					break;
-				case "xtree":
+				                case "xsankey":
+									var sankey = Shiny.sankey()
+											.withTitle("Flux d'énergie")
+											.addLink("Nucléaire", "Réseau électrique", 120.0)
+											.addLink("Hydraulique", "Réseau électrique", 80.0)
+											.addLink("Éolien", "Réseau électrique", 60.0)
+											.addLink("Solaire", "Réseau électrique", 40.0)
+											.addLink("Charbon", "Réseau électrique", 100.0)
+											.addLink("Réseau électrique", "Industrie", 150.0)
+											.addLink("Réseau électrique", "Transport", 70.0)
+											.addLink("Réseau électrique", "Résidentiel", 100.0)
+											.addLink("Réseau électrique", "Pertes réseau", 20.0)
+											.addLink("Résidentiel", "Chauffage", 40.0)
+											.addLink("Résidentiel", "Électroménager", 30.0)
+											.addLink("Résidentiel", "Informatique", 30.0)
+											.build();
+									sendMessage(webSocket, sankey);
+									break;				case "xtree":
 					var tree = Shiny.tree("Files").build();
 					tree.getRoot().addChild("src", FOLDER_OPEN)
 							.addChild("main", FOLDER_OPEN)
