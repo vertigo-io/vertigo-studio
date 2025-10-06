@@ -3,8 +3,6 @@ package io.vertigo.shell.server;
 import static io.vertigo.shiny.components.data.tree.ShinyIcon.FILE;
 import static io.vertigo.shiny.components.data.tree.ShinyIcon.FOLDER_OPEN;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -42,11 +40,9 @@ import io.vertigo.shell.systems.file.commands.pwd.FilePwdCommand;
 import io.vertigo.shell.systems.java.commands.load.JavaLoadCommand;
 import io.vertigo.shell.systems.java.commands.show.JavaShowModelCommand;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.ShinyType;
 import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.components.data.card.ShinyCardFormat;
 import io.vertigo.shiny.components.data.list.ShinyListType;
-import io.vertigo.shiny.components.dataviz.chart.ShinyChart;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingScale;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatusType;
 import io.vertigo.shiny.components.media.geomap.ShinyGeoPoint;
@@ -193,6 +189,21 @@ final class BansheeHandler {
 						.addGeoPoint(ShinyGeoPoint.of(48.901022, 2.100765, "Saint Germain en Laye"))
 						.build();
 				case "rss" -> new RssSample().execute();
+				case "table" -> Shiny.table()
+						.withTitle("carnet d'adresses")
+						.withNoDataFound("no files found")
+						.withHeader("Prénom", "Nom")
+						.addRow("Arthur", "Penn")
+						.addRow("Marilyn", "Pinson")
+						.build();
+				case "table2" -> Shiny.table()
+						.withTitle("Chakra Table")
+						.withNoDataFound("No Chakra data found")
+						.withHeader("Framework", "Library")
+						.withSortable(true)
+						.addRow("Chakra", "UI")
+						.addRow("React", "Components")
+						.build();
 				case "pdf" -> new PdfSample().execute();
 				case "xsankey" -> Shiny.sankey()
 						.withTitle("Flux d'énergie")
@@ -244,18 +255,6 @@ final class BansheeHandler {
 
 					sendMessage(webSocket, BansheeAction.create, "container", MAPPER.writeValueAsString(containerData));
 					break;
-				case "xtable":
-					final List<String[]> rows = new ArrayList<>();
-					rows.add(new String[] { "Arthur", "Penn" });
-					rows.add(new String[] { "Marilyn", "Pinson" });
-					var table = Shiny.table()
-							.withTitle("carnet d'adresses")
-							.withNoDataFound("no files found")
-							.withHeader("Prénom", "Nom")
-							.addAllRows(rows)
-							.build();
-					sendMessage(webSocket, table);
-					break;
 				case "xtree":
 					var tree = Shiny.tree("Files").build();
 					tree.getRoot().addChild("src", FOLDER_OPEN)
@@ -290,19 +289,6 @@ final class BansheeHandler {
 							.addChild("main", FOLDER_OPEN)
 							.addChild("file.txt", FILE);
 					sendMessage(webSocket, chakraTree);
-					break;
-				case "xtable2":
-					final List<String[]> chakraRows = new ArrayList<>();
-					chakraRows.add(new String[] { "Chakra", "UI" });
-					chakraRows.add(new String[] { "React", "Components" });
-					var chakraTable = Shiny.table()
-							.withTitle("Chakra Table")
-							.withNoDataFound("No Chakra data found")
-							.withHeader("Framework", "Library")
-							.withSortable(true)
-							.addAllRows(chakraRows)
-							.build();
-					sendMessage(webSocket, chakraTable);
 					break;
 				case "xwait":
 					Thread.sleep(2000);
@@ -343,6 +329,7 @@ final class BansheeHandler {
 				.isNotNull(webSocket)
 				.isNotNull(component);
 		//---
+		final String type = component.type();
 		try {
 			var data = MAPPER.writeValueAsString(component);
 			if (data.contains("arry")) {
@@ -357,30 +344,6 @@ final class BansheeHandler {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-	}
-
-	private static String getType(ShinyComponent component) {
-		Assertion.check().isNotNull(component);
-		//---
-		final ShinyType shinyType = component.getClass().getAnnotation(ShinyType.class);
-
-		if (shinyType == null) {
-			throw new IllegalArgumentException("Unknown component type: " + component.getClass());
-		}
-		if (component instanceof ShinyChart c) {
-			// Special handling for ShinyChart 
-			//to get the specific chart type
-			return switch (c.chartType()) {
-				case bar -> "barChart";
-				case area -> "areaChart";
-				case line -> "lineChart";
-				case radar -> "radarChart";
-				case donut -> "donutChart";
-				case pie -> "pieChart";
-			};
-		} else {
-			return shinyType.value();
 		}
 	}
 
