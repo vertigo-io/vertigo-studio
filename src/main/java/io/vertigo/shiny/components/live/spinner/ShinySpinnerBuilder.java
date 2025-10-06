@@ -3,10 +3,10 @@ package io.vertigo.shiny.components.live.spinner;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinySpinnerBuilder implements Builder<ShinySpinner> {
-	String message;
+	private String _message;
 
-	public ShinySpinnerBuilder withMessage(final String msg) {
-		this.message = msg;
+	public ShinySpinnerBuilder withMessage(final String message) {
+		this._message = message;
 		return this;
 	}
 
@@ -14,6 +14,6 @@ public final class ShinySpinnerBuilder implements Builder<ShinySpinner> {
 	public ShinySpinner build() {
 		// Perform any final validations here before building the object
 		//---
-		return new ShinySpinner(this);
+		return new ShinySpinner(_message);
 	}
 }

@@ -7,25 +7,25 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinyStatusBuilder implements Builder<ShinyStatus> {
-	private String statusTitle;
-	private final List<ShinyStatusType> statusTypes = new ArrayList<>();
+	private String _title;
+	private final List<ShinyStatusType> _statusTypes = new ArrayList<>();
 
 	public ShinyStatusBuilder withTitle(final String title) {
-		this.statusTitle = title;
+		this._title = title;
 		return this;
 	}
 
 	public ShinyStatusBuilder addType(final ShinyStatusType type) {
 		Assertion.check().isNotNull(type);
 		//---
-		this.statusTypes.add(type);
+		this._statusTypes.add(type);
 		return this;
 	}
 
 	public ShinyStatusBuilder addAllTypes(final List<ShinyStatusType> types) {
 		Assertion.check().isNotNull(types);
 		//---
-		this.statusTypes.addAll(types);
+		this._statusTypes.addAll(types);
 		return this;
 	}
 
@@ -37,6 +37,6 @@ public final class ShinyStatusBuilder implements Builder<ShinyStatus> {
 
 	@Override
 	public ShinyStatus build() {
-		return new ShinyStatus(statusTitle, statusTypes);
+		return new ShinyStatus(_title, _statusTypes);
 	}
 }

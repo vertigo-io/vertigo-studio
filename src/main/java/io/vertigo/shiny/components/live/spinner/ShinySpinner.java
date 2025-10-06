@@ -12,12 +12,12 @@ public final class ShinySpinner extends ShinyLiveComponent<ShinySpinner> {
 	private volatile int frameIndex = 0;
 
 	// Package-private constructor, only accessible by the Builder
-	ShinySpinner(ShinySpinnerBuilder builder) {
+	ShinySpinner(String message) {
 		super();
 		Assertion.check()
-				.isNotNull(builder);
+				.isNotBlank(message);
 		//---
-		this.message = builder.message;
+		this.message = message;
 	}
 
 	public String getMessage() {

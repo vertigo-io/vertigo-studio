@@ -7,38 +7,38 @@ import java.util.List;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinyCalendarBuilder implements Builder<ShinyCalendar> {
-	private final List<LocalDate> highlightedDates = new ArrayList<>();
-	private int calendarYear;
-	private int calendarMonth;
+	private final List<LocalDate> _highlightedDates = new ArrayList<>();
+	private int _year;
+	private int _month;
 
 	public ShinyCalendarBuilder() {
 		final LocalDate now = LocalDate.now();
-		this.calendarYear = now.getYear();
-		this.calendarMonth = now.getMonthValue();
+		this._year = now.getYear();
+		this._month = now.getMonthValue();
 	}
 
 	public ShinyCalendarBuilder withYear(final int year) {
-		this.calendarYear = year;
+		this._year = year;
 		return this;
 	}
 
 	public ShinyCalendarBuilder withMonth(final java.time.Month month) {
-		this.calendarMonth = month.getValue();
+		this._month = month.getValue();
 		return this;
 	}
 
 	public ShinyCalendarBuilder withMonth(final int month) {
-		this.calendarMonth = month;
+		this._month = month;
 		return this;
 	}
 
 	public ShinyCalendarBuilder addHighlightedDate(final LocalDate date) {
-		highlightedDates.add(date);
+		_highlightedDates.add(date);
 		return this;
 	}
 
 	@Override
 	public ShinyCalendar build() {
-		return new ShinyCalendar(calendarYear, calendarMonth);
+		return new ShinyCalendar(_year, _month);
 	}
 }
