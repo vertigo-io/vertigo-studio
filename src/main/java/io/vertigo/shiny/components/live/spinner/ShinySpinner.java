@@ -52,4 +52,9 @@ public final class ShinySpinner extends ShinyLiveComponent<ShinySpinner> {
 	synchronized protected void draw() {
 		new ShinySpinnerRenderer().render(this);
 	}
+
+	@Override
+	public String type() {
+		return "spinner";
+	}
 }

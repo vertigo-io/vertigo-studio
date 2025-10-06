@@ -35,14 +35,14 @@ public final class ShinyListRenderer implements ShinyComponentRenderer<ShinyList
 			if (item instanceof String s) {
 				final String prefix = getPrefix(shinyList, number);
 				writer.println(indent + style.bulletColor().fg(prefix) + style.itemColor().fg(s));
-				if (shinyList.type() == ShinyListType.ORDERED) { // Changed from NUMBERED
+				if (shinyList.listType() == ShinyListType.ORDERED) { // Changed from NUMBERED
 					number++;
 				}
 			} else if (item instanceof ShinyList list) {
 				final String prefix = getPrefix(shinyList, number);
 				writer.println(indent + style.bulletColor().fg(prefix) + style.itemColor().fg("Nested List:"));
 				print(list, style, writer, indentLevel + 1); // Recursive call for nested lists
-				if (shinyList.type() == ShinyListType.ORDERED) { // Changed from NUMBERED
+				if (shinyList.listType() == ShinyListType.ORDERED) { // Changed from NUMBERED
 					number++;
 				}
 			}
@@ -50,7 +50,7 @@ public final class ShinyListRenderer implements ShinyComponentRenderer<ShinyList
 	}
 
 	private static String getPrefix(final ShinyList shinyList, final int number) {
-		return switch (shinyList.type()) {
+		return switch (shinyList.listType()) {
 			case UNORDERED -> "• ";
 			case ORDERED -> number + ". ";
 			case DASHED -> "- ";

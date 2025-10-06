@@ -343,7 +343,6 @@ final class BansheeHandler {
 				.isNotNull(webSocket)
 				.isNotNull(component);
 		//---
-		final String type = getType(component);
 		try {
 			var data = MAPPER.writeValueAsString(component);
 			if (data.contains("arry")) {

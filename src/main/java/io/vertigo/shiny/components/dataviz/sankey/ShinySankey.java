@@ -3,13 +3,17 @@ package io.vertigo.shiny.components.dataviz.sankey;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.ShinyType;
 import io.vertigo.shiny.components.ShinyComponent;
 
-@ShinyType("sankey")
 public record ShinySankey(
 		String title,
 		List<ShinySankeyLink> data) implements ShinyComponent {
+
+	@Override
+	public String type() {
+		return "sankey";
+	}
+
 
 	public ShinySankey {
 		Assertion.check()

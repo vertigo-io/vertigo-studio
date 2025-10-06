@@ -44,4 +44,9 @@ public final class ShinyProgressBar extends ShinyLiveComponent<ShinyProgressBar>
 		new ShinyProgressBarRenderer().render(this);
 	}
 
+	@Override
+	public String type() {
+		return "progressBar";
+	}
+
 }

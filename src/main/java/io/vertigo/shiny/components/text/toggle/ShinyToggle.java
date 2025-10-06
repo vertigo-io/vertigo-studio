@@ -5,8 +5,12 @@ import io.vertigo.shiny.components.ShinyComponent;
 public record ShinyToggle(
 		String label,
 		boolean value,
-		ShinyToggleType type,
+		ShinyToggleType toggleType,
 		String onText,
 		String offText,
 		boolean showText) implements ShinyComponent {
+
+	public String type() {
+		return "toggle";
+	}
 }

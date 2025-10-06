@@ -4,9 +4,12 @@ import java.util.List;
 
 import io.vertigo.shiny.components.ShinyComponent;
 
-import io.vertigo.shiny.ShinyType;
-
-@ShinyType("container")
 public record ShinyContainer(
 		List<ShinyComponent> components) implements ShinyComponent {
+
+	@Override
+	public String type() {
+		return "container";
+	}
+
 }

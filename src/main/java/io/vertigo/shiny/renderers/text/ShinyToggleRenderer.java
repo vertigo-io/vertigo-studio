@@ -23,7 +23,7 @@ public final class ShinyToggleRenderer implements ShinyComponentRenderer<ShinyTo
 		final ShinyToggleStyle style = Shiny.theme().toggleStyle();
 		final ShinyWriter writer = Shiny.writer();
 
-		final String icon = shinyToggle.value() ? shinyToggle.type().getOnIcon() : shinyToggle.type().getOffIcon();
+		final String icon = shinyToggle.value() ? shinyToggle.toggleType().getOnIcon() : shinyToggle.toggleType().getOffIcon();
 		final ShinyColor color = shinyToggle.value()
 				? style.onColor()
 				: style.offColor();

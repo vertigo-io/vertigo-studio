@@ -13,4 +13,9 @@ public record ShinyInputText(
 		List<String> suggestions,
 		String defaultValue,
 		ShinyMagicBox<String> value) implements ShinyComponent {
+
+	@Override
+	public String type() {
+		return "inputText";
+	}
 }

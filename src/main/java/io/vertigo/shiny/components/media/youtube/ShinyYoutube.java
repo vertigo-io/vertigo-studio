@@ -1,13 +1,17 @@
 package io.vertigo.shiny.components.media.youtube;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.ShinyType;
 import io.vertigo.shiny.components.ShinyComponent;
 
-@ShinyType("youtube")
 public record ShinyYoutube(
 		String title,
 		String videoId) implements ShinyComponent {
+
+	@Override
+	public String type() {
+		return "youtube";
+	}
+
 
 	public ShinyYoutube {
 		Assertion.check()

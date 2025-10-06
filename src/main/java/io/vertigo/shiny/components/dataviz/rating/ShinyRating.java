@@ -2,9 +2,6 @@ package io.vertigo.shiny.components.dataviz.rating;
 
 import io.vertigo.shiny.components.ShinyComponent;
 
-import io.vertigo.shiny.ShinyType;
-
-@ShinyType("rating")
 public record ShinyRating(
 		String label,
 		double value,
@@ -15,4 +12,10 @@ public record ShinyRating(
 		boolean showBox,
 		String separator,
 		boolean allowHalfRating) implements ShinyComponent {
+
+	@Override
+	public String type() {
+		return "rating";
+	}
+
 }

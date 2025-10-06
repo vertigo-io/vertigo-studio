@@ -3,13 +3,17 @@ package io.vertigo.shiny.components.media.geomap;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.ShinyType;
 import io.vertigo.shiny.components.ShinyComponent;
 
-@ShinyType("geoMap")
 public record ShinyGeoMap(
 		String title,
 		List<ShinyGeoPoint> geoPoints) implements ShinyComponent {
+
+	@Override
+	public String type() {
+		return "geoMap";
+	}
+
 
 	public ShinyGeoMap {
 		Assertion.check()

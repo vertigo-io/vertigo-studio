@@ -3,51 +3,51 @@ package io.vertigo.shiny.components.text.toggle;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinyToggleBuilder implements Builder<ShinyToggle> {
-	private String toggleLabel;
-	private boolean toggleValue;
-	private ShinyToggleType toggleType = ShinyToggleType.TOGGLE;
-	private String onText = "ON";
-	private String offText = "OFF";
-	private boolean showText = true;
+	private String _label;
+	private boolean _value;
+	private ShinyToggleType _toggleType = ShinyToggleType.TOGGLE;
+	private String _onText = "ON";
+	private String _offText = "OFF";
+	private boolean _showText = true;
 
 	public ShinyToggleBuilder withLabel(final String label) {
-		this.toggleLabel = label;
+		this._label = label;
 		return this;
 	}
 
 	public ShinyToggleBuilder withValue(final boolean value) {
-		this.toggleValue = value;
+		this._value = value;
 		return this;
 	}
 
-	public ShinyToggleBuilder withType(final ShinyToggleType type) {
-		this.toggleType = type;
+	public ShinyToggleBuilder withType(final ShinyToggleType toggleType) {
+		this._toggleType = toggleType;
 		return this;
 	}
 
 	public ShinyToggleBuilder withOnText(final String text) {
-		this.onText = text;
+		this._onText = text;
 		return this;
 	}
 
 	public ShinyToggleBuilder withOffText(final String text) {
-		this.offText = text;
+		this._offText = text;
 		return this;
 	}
 
 	public ShinyToggleBuilder withShowText(final boolean text) {
-		this.showText = text;
+		this._showText = text;
 		return this;
 	}
 
 	@Override
 	public ShinyToggle build() {
 		return new ShinyToggle(
-				toggleLabel,
-				toggleValue,
-				toggleType,
-				onText,
-				offText,
-				showText);
+				_label,
+				_value,
+				_toggleType,
+				_onText,
+				_offText,
+				_showText);
 	}
 }
