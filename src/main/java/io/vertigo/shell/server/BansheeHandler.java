@@ -194,6 +194,21 @@ final class BansheeHandler {
 						.build();
 				case "rss" -> new RssSample().execute();
 				case "pdf" -> new PdfSample().execute();
+				case "xsankey" -> Shiny.sankey()
+						.withTitle("Flux d'énergie")
+						.addLink("Nucléaire", "Réseau électrique", 120.0)
+						.addLink("Hydraulique", "Réseau électrique", 80.0)
+						.addLink("Éolien", "Réseau électrique", 60.0)
+						.addLink("Solaire", "Réseau électrique", 40.0)
+						.addLink("Charbon", "Réseau électrique", 100.0)
+						.addLink("Réseau électrique", "Industrie", 150.0)
+						.addLink("Réseau électrique", "Transport", 70.0)
+						.addLink("Réseau électrique", "Résidentiel", 100.0)
+						.addLink("Réseau électrique", "Pertes réseau", 20.0)
+						.addLink("Résidentiel", "Chauffage", 40.0)
+						.addLink("Résidentiel", "Électroménager", 30.0)
+						.addLink("Résidentiel", "Informatique", 30.0)
+						.build();
 				default -> null;
 			};
 
@@ -241,24 +256,7 @@ final class BansheeHandler {
 							.build();
 					sendMessage(webSocket, table);
 					break;
-				                case "xsankey":
-									var sankey = Shiny.sankey()
-											.withTitle("Flux d'énergie")
-											.addLink("Nucléaire", "Réseau électrique", 120.0)
-											.addLink("Hydraulique", "Réseau électrique", 80.0)
-											.addLink("Éolien", "Réseau électrique", 60.0)
-											.addLink("Solaire", "Réseau électrique", 40.0)
-											.addLink("Charbon", "Réseau électrique", 100.0)
-											.addLink("Réseau électrique", "Industrie", 150.0)
-											.addLink("Réseau électrique", "Transport", 70.0)
-											.addLink("Réseau électrique", "Résidentiel", 100.0)
-											.addLink("Réseau électrique", "Pertes réseau", 20.0)
-											.addLink("Résidentiel", "Chauffage", 40.0)
-											.addLink("Résidentiel", "Électroménager", 30.0)
-											.addLink("Résidentiel", "Informatique", 30.0)
-											.build();
-									sendMessage(webSocket, sankey);
-									break;				case "xtree":
+				case "xtree":
 					var tree = Shiny.tree("Files").build();
 					tree.getRoot().addChild("src", FOLDER_OPEN)
 							.addChild("main", FOLDER_OPEN)
