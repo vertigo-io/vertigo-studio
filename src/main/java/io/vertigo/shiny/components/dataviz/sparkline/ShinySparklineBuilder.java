@@ -8,30 +8,30 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinySparklineBuilder implements Builder<ShinySparkline> {
-	private String sparkLineTitle;
-	private List<Double> sparkLineValues;
+	private String _title;
+	private List<Double> _values;
 
 	public ShinySparklineBuilder withTitle(final String title) {
-		this.sparkLineTitle = title;
+		this._title = title;
 		return this;
 	}
 
 	public ShinySparklineBuilder withValues(final List<Double> values) {
 		Assertion.check().isNotNull(values);
 		//---
-		this.sparkLineValues = values;
+		this._values = values;
 		return this;
 	}
 
 	public ShinySparklineBuilder withValues(final double... values) {
 		Assertion.check().isNotNull(values);
 		//---
-		this.sparkLineValues = Arrays.stream(values).boxed().collect(Collectors.toList());
+		this._values = Arrays.stream(values).boxed().collect(Collectors.toList());
 		return this;
 	}
 
 	@Override
 	public ShinySparkline build() {
-		return new ShinySparkline(sparkLineTitle, sparkLineValues);
+		return new ShinySparkline(_title, _values);
 	}
 }

@@ -11,7 +11,7 @@ import io.vertigo.shiny.ShinyType;
 @ShinyType("form")
 public final class ShinyFormBuilder implements Builder<ShinyForm> {
 	private String _title;
-	private final List<ShinyFormSection> sections = new ArrayList<>();
+	private final List<ShinyFormSection> _sections = new ArrayList<>();
 
 	public ShinyFormBuilder withTitle(final String title) {
 		this._title = title;
@@ -24,10 +24,10 @@ public final class ShinyFormBuilder implements Builder<ShinyForm> {
 	
 	    public ShinyFormBuilder addSection(final String sectionTitle, final List<ShinyFormField> fields, final boolean collapsible, final boolean initiallyCollapsed) {
 	        Assertion.check().isNotBlank(sectionTitle).isNotNull(fields);
-	        this.sections.add(new ShinyFormSection(sectionTitle, fields, collapsible, initiallyCollapsed));
+	        this._sections.add(new ShinyFormSection(sectionTitle, fields, collapsible, initiallyCollapsed));
 	        return this;
 	    }
 	public ShinyForm build() {
-		return new ShinyForm(_title, sections);
+		return new ShinyForm(_title, _sections);
 	}
 }
