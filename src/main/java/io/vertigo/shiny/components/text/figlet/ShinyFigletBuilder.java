@@ -3,15 +3,15 @@ package io.vertigo.shiny.components.text.figlet;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinyFigletBuilder implements Builder<ShinyFiglet> {
-	private String figletText;
+	private String _text;
 
 	public ShinyFigletBuilder withText(final String text) {
-		this.figletText = text;
+		this._text = text;
 		return this;
 	}
 
 	@Override
 	public ShinyFiglet build() {
-		return new ShinyFiglet(figletText);
+		return new ShinyFiglet(_text);
 	}
 }
