@@ -202,19 +202,19 @@ final class BansheeHandler {
 						.addRow("React", "Components")
 						.build();
 				case "pdf" -> new PdfSample().execute();
-				                case "xtree2":
-					var chakraTree = Shiny.tree().withRoot("Chakra Tree", FOLDER_OPEN)
-							.addChild("src", FOLDER_OPEN)
-							.addChild("main", FOLDER_OPEN)
-							.addChild("file.txt", FILE)
-							.up()
-							.up()
-							.up()
-							.addChild("test", FOLDER_OPEN)
-							.addChild("testFile.txt", FILE)
-							.build();
-					sendMessage(webSocket, chakraTree);
-					break;				case "xsankey" -> Shiny.sankey()
+				case "tree" -> Shiny.tree()
+						.withLabel("my directory")
+						.addTree("Files")
+						.addLeaf("src")
+						.addTree("main")
+						.addLeaf("file.txt")
+						.up() // Go up to main
+						.up() // Go up to src
+						.addTree("test")
+						.addLeaf("testFile.txt")
+						.root()
+						.build();
+				case "xsankey" -> Shiny.sankey()
 						.withTitle("Flux d'énergie")
 						.addLink("Nucléaire", "Réseau électrique", 120.0)
 						.addLink("Hydraulique", "Réseau électrique", 80.0)
