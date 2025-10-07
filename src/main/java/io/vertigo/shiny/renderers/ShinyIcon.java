@@ -1,4 +1,4 @@
-package io.vertigo.shiny.components.data.tree;
+package io.vertigo.shiny.renderers;
 
 public enum ShinyIcon {
 	FOLDER_OPEN("\uf07c"),

@@ -1,7 +1,7 @@
 package io.vertigo.shiny.components;
 
-import static io.vertigo.shiny.components.data.tree.ShinyIcon.FILE;
-import static io.vertigo.shiny.components.data.tree.ShinyIcon.FOLDER_OPEN;
+import static io.vertigo.shiny.renderers.ShinyIcon.FILE;
+import static io.vertigo.shiny.renderers.ShinyIcon.FOLDER_OPEN;
 import static io.vertigo.shiny.style.ShinyColors.BLUE_BRIGHT;
 import static io.vertigo.shiny.style.ShinyColors.CYAN;
 import static io.vertigo.shiny.style.ShinyColors.YELLOW;

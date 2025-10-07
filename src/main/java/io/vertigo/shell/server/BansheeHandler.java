@@ -1,7 +1,7 @@
 package io.vertigo.shell.server;
 
-import static io.vertigo.shiny.components.data.tree.ShinyIcon.FILE;
-import static io.vertigo.shiny.components.data.tree.ShinyIcon.FOLDER_OPEN;
+import static io.vertigo.shiny.renderers.ShinyIcon.FILE;
+import static io.vertigo.shiny.renderers.ShinyIcon.FOLDER_OPEN;
 
 import java.util.UUID;
 import java.util.function.Consumer;
