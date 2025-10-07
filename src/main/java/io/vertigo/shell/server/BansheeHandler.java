@@ -1,14 +1,9 @@
 package io.vertigo.shell.server;
 
-import static io.vertigo.shiny.renderers.ShinyIcon.FILE;
-import static io.vertigo.shiny.renderers.ShinyIcon.FOLDER_OPEN;
-
 import java.util.UUID;
 import java.util.function.Consumer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.server.commands.ChartSamples.AreaSample;
@@ -41,6 +36,8 @@ import io.vertigo.shell.systems.java.commands.load.JavaLoadCommand;
 import io.vertigo.shell.systems.java.commands.show.JavaShowModelCommand;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.components.core.container.ShinyContainerBuilder;
+import io.vertigo.shiny.components.core.error.ShinyErrorBuilder;
 import io.vertigo.shiny.components.data.card.ShinyCardFormat;
 import io.vertigo.shiny.components.data.list.ShinyListType;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingScale;
@@ -205,7 +202,19 @@ final class BansheeHandler {
 						.addRow("React", "Components")
 						.build();
 				case "pdf" -> new PdfSample().execute();
-				case "xsankey" -> Shiny.sankey()
+				                case "xtree2":
+					var chakraTree = Shiny.tree().withRoot("Chakra Tree", FOLDER_OPEN)
+							.addChild("src", FOLDER_OPEN)
+							.addChild("main", FOLDER_OPEN)
+							.addChild("file.txt", FILE)
+							.up()
+							.up()
+							.up()
+							.addChild("test", FOLDER_OPEN)
+							.addChild("testFile.txt", FILE)
+							.build();
+					sendMessage(webSocket, chakraTree);
+					break;				case "xsankey" -> Shiny.sankey()
 						.withTitle("Flux d'énergie")
 						.addLink("Nucléaire", "Réseau électrique", 120.0)
 						.addLink("Hydraulique", "Réseau électrique", 80.0)
@@ -220,7 +229,21 @@ final class BansheeHandler {
 						.addLink("Résidentiel", "Électroménager", 30.0)
 						.addLink("Résidentiel", "Informatique", 30.0)
 						.build();
-				default -> null;
+				case "wait" -> wait(Shiny.figlet().withText("attente 2s").build(), 2000);
+				case "xcontainer" -> new ShinyContainerBuilder()
+						.addComponent(Shiny.sparkline()
+								.withTitle("Ventes par produit")
+								.withValues(156, 450, 300, 200, 100, 23)
+								.build())
+						.addComponent(Shiny.list()
+								.withTitle("planetes")
+								.withType(ShinyListType.DASHED)
+								.addItem("Uranus")
+								.addItem("Saturn")
+								.addItem("Venus")
+								.build())
+						.build();
+				default -> new ShinyErrorBuilder().withText("unknown command :" + message).build();
 			};
 
 			if (component != null) {
@@ -228,82 +251,42 @@ final class BansheeHandler {
 				return;
 			}
 
-			switch (message) {
-				case "xcontainer":
-					ObjectNode child1Data = MAPPER.createObjectNode()
-							.put("type", "sparkLine")
-							.putPOJO("data", Shiny.sparkline()
-									.withTitle("Ventes par produit")
-									.withValues(156, 450, 300, 200, 100, 23)
-									.build());
-					ObjectNode child2Data = MAPPER.createObjectNode()
-							.put("type", "list")
-							.putPOJO("data", Shiny.list()
-									.withTitle("planetes")
-									.withType(ShinyListType.DASHED)
-									.addItem("Uranus")
-									.addItem("Saturn")
-									.addItem("Venus")
-									.build());
-					ArrayNode children = MAPPER.createArrayNode()
-							.add(child1Data)
-							.add(child2Data);
-
-					ObjectNode containerData = MAPPER.createObjectNode()
-							.put("title", "premier conteneur")
-							.set("children", children);
-
-					sendMessage(webSocket, BansheeAction.create, "container", MAPPER.writeValueAsString(containerData));
-					break;
-				case "xtree":
-					var tree = Shiny.tree("Files").build();
-					tree.getRoot().addChild("src", FOLDER_OPEN)
-							.addChild("main", FOLDER_OPEN)
-							.addChild("file.txt", FILE);
-					sendMessage(webSocket, tree);
-					break;
-				case "xpb":
-					String id;
-					var progressBar = Shiny.progressBar()
-							.withTotal(10)
-							.build();
-					id = progressBar.id;
-					sendMessage(webSocket, BansheeAction.create, "progressBar",
-							MAPPER.writeValueAsString(progressBar));
-					for (int i = 0; i <= 10; i += 1) {
-						sendMessage(webSocket, BansheeAction.create, "live",
-								MAPPER.writeValueAsString(new LiveComponent(progressBar.id, "update", i + 1)));
-						//							progressBar.liveUpdate(i + 1);
-						try {
-							Thread.sleep(500);
-						} catch (final InterruptedException e) {
-							Thread.currentThread().interrupt();
-						}
-					}
-					sendMessage(webSocket, BansheeAction.create, "live",
-							MAPPER.writeValueAsString(new LiveComponent(id, "complete", -1)));
-					break;
-				case "xtree2":
-					var chakraTree = Shiny.tree("Chakra Tree").build();
-					chakraTree.getRoot().addChild("src", FOLDER_OPEN)
-							.addChild("main", FOLDER_OPEN)
-							.addChild("file.txt", FILE);
-					sendMessage(webSocket, chakraTree);
-					break;
-				case "xwait":
-					Thread.sleep(2000);
-					sendMessage(webSocket, Shiny.figlet().withText("attente 2s").build());
-				default:
-					sendMessage(webSocket, BansheeAction.create, "text", "nada");
-			}
-		} catch (
-
-		Exception e) {
+			//				case "xpb":
+			//					String id;
+			//					var progressBar = Shiny.progressBar()
+			//							.withTotal(10)
+			//							.build();
+			//					id = progressBar.id;
+			//					sendMessage(webSocket, BansheeAction.create, "progressBar",
+			//							MAPPER.writeValueAsString(progressBar));
+			//					for (int i = 0; i <= 10; i += 1) {
+			//						sendMessage(webSocket, BansheeAction.create, "live",
+			//								MAPPER.writeValueAsString(new LiveComponent(progressBar.id, "update", i + 1)));
+			//						//							progressBar.liveUpdate(i + 1);
+			//						try {
+			//							Thread.sleep(500);
+			//						} catch (final InterruptedException e) {
+			//							Thread.currentThread().interrupt();
+			//						}
+			//					}
+			//					sendMessage(webSocket, BansheeAction.create, "live",
+			//							MAPPER.writeValueAsString(new LiveComponent(id, "complete", -1)));
+			//					break;
+		} catch (Exception e) {
 			e.printStackTrace();
 			//			System.out.println("Erreur de parsing : " + e.getMessage());
 			//			// Envoie une erreur au client
 			//			session.getBasicRemote().sendText("{\"type\": \"error\", \"message\": \"Erreur de traitement : " + e.getMessage() + "\"}");
 		}
+	}
+
+	private static ShinyComponent wait(ShinyComponent component, int timeInMillis) {
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
+		return component;
 	}
 
 	private static String buildMessage(BansheeAction action, final String type, UUID id, String data) {
