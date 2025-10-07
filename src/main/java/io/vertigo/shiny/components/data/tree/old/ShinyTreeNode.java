@@ -1,9 +1,10 @@
-package io.vertigo.shiny.components.data.tree;
+package io.vertigo.shiny.components.data.tree.old;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.shiny.renderers.ShinyIcon;
 
 public final class ShinyTreeNode {
 	private final ShinyTreeNode parent;
