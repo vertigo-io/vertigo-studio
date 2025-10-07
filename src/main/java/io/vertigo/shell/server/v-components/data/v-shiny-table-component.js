@@ -1,4 +1,4 @@
-Vue.component('v-chakra-table-component', {
+Vue.component('v-shiny-table-component', {
     props: ['data'],
     template: `
     <div :id="divId" class="chakra-table-container">

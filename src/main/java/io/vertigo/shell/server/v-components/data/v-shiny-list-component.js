@@ -1,4 +1,4 @@
-Vue.component('v-chakra-list-component', {
+Vue.component('v-shiny-list-component', {
     props: ['data'],
     template: `
     <div class="chakra-list-container">

@@ -1,4 +1,4 @@
-Vue.component('v-chakra-tree-component', {
+Vue.component('v-shiny-tree-component', {
   props: ['data'],
   template: `
     <div class="chakra-tree">
@@ -7,7 +7,7 @@ Vue.component('v-chakra-tree-component', {
         <i v-else data-lucide="folder" class="chakra-tree-node-icon"></i>
         <span class="chakra-tree-node-label">{{ data.label }}</span>
         <div v-if="data.children && data.children.length > 0" class="chakra-tree-node-children">
-          <v-chakra-tree-component v-for="(child, index) in data.children" :key="index" :data="child"></v-chakra-tree-component>
+          <v-shiny-tree-component v-for="(child, index) in data.children" :key="index" :data="child"></v-chakra-tree-component>
         </div>
       </div>
     </div>

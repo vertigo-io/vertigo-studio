@@ -1,4 +1,4 @@
-Vue.component('v-chakra-json-component', {
+Vue.component('v-shiny-json-component', {
     props: ['data'],
     template: '<div class="json-container" v-html="highlightedJson"></div>',
     computed: {

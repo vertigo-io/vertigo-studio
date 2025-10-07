@@ -1,14 +1,14 @@
-Vue.component('v-chakra-area-chart-component', {
+Vue.component('v-shiny-line-chart-component', {
     props: ['data'],
     template: `
     <div class="chakra-chart-container">
-        <h3 class="chakra-component-title">{{ data.title || 'Chakra Area Chart' }}</h3>
+        <h3 class="chakra-component-title">{{ data.title || 'Chakra Line Chart' }}</h3>
         <canvas :id="canvasId"></canvas>
     </div>
     `,
     data() {
         return {
-            canvasId: `chakra-areachart-${Math.random().toString(36).substr(2, 9)}`
+            canvasId: `chakra-linechart-${Math.random().toString(36).substr(2, 9)}`
         };
     },
     mounted() {
@@ -30,7 +30,7 @@ Vue.component('v-chakra-area-chart-component', {
                     data: serie.data || [],
                     borderColor: colors[index % colors.length].replace('0.8', '1'),
                     backgroundColor: colors[index % colors.length].replace('0.8', '0.2'),
-                    fill: true,
+                    fill: false,
                 }))
             },
             options: {

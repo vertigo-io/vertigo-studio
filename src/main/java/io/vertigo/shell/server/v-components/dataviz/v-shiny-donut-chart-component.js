@@ -1,4 +1,4 @@
-Vue.component('v-chakra-donut-chart-component', {
+Vue.component('v-shiny-donut-chart-component', {
     props: ['data'],
     template: `
     <div class="chakra-chart-container">

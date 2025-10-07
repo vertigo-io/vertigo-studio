@@ -1,36 +1,36 @@
-Vue.component('v-chakra-line-chart-component', {
+Vue.component('v-shiny-bar-chart-component', {
     props: ['data'],
     template: `
     <div class="chakra-chart-container">
-        <h3 class="chakra-component-title">{{ data.title || 'Chakra Line Chart' }}</h3>
+        <h3 class="chakra-component-title">{{ data.title || 'Chakra Bar Chart' }}</h3>
         <canvas :id="canvasId"></canvas>
     </div>
     `,
     data() {
         return {
-            canvasId: `chakra-linechart-${Math.random().toString(36).substr(2, 9)}`
+            canvasId: `chakra-barchart-${Math.random().toString(36).substr(2, 9)}`
         };
     },
     mounted() {
         const colors = [
-            'rgba(49, 130, 206, 0.8)', // blue
-            'rgba(72, 187, 120, 0.8)', // green
-            'rgba(229, 62, 62, 0.8)', // red
-            'rgba(237, 137, 54, 0.8)', // orange
-            'rgba(159, 64, 255, 0.8)', // purple
+            'rgba(144, 205, 244, 0.8)', // blue
+            'rgba(160, 217, 144, 0.8)', // green
+            'rgba(244, 144, 144, 0.8)', // red
+            'rgba(244, 224, 144, 0.8)', // yellow
+            'rgba(192, 144, 244, 0.8)', // purple
         ];
 
         const ctx = document.getElementById(this.canvasId).getContext('2d');
         new Chart(ctx, {
-            type: 'line',
+            type: 'bar',
             data: {
                 labels: this.data.labels || [],
                 datasets: this.data.series.map((serie, index) => ({
                     label: serie.name,
                     data: serie.data || [],
+                    backgroundColor: colors[index % colors.length],
                     borderColor: colors[index % colors.length].replace('0.8', '1'),
-                    backgroundColor: colors[index % colors.length].replace('0.8', '0.2'),
-                    fill: false,
+                    borderWidth: 1
                 }))
             },
             options: {

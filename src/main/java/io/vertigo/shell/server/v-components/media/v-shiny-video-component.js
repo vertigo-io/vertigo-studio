@@ -1,4 +1,4 @@
-Vue.component('v-chakra-video-component', {
+Vue.component('v-shiny-video-component', {
     props: ['data'],
     template: `
     <div class="chakra-chart-container">
