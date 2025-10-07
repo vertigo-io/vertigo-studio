@@ -74,8 +74,8 @@ public final class Shiny {
 		return new ShinySpinnerBuilder();
 	}
 
-	public static ShinyTreeBuilder tree(final String label) {
-		return new ShinyTreeBuilder().withLabel(label);
+	public static ShinyTreeBuilder tree() {
+		return new ShinyTreeBuilder();
 	}
 
 	public static ShinyGaugeBuilder gauge() {

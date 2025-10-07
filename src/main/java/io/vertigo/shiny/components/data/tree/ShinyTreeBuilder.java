@@ -37,8 +37,8 @@ public final class ShinyTreeBuilder implements Builder<ShinyTree> {
 		return this;
 	}
 
-	public ShinyTreeBuilder addTree() {
-		return new ShinyTreeBuilder(this);
+	public ShinyTreeBuilder addTree(String label) {
+		return new ShinyTreeBuilder(this).withLabel(label);
 	}
 
 	public ShinyTreeBuilder up() {
