@@ -1,4 +1,4 @@
-package io.vertigo.shiny.components.form;
+package io.vertigo.shiny.components.data.form;
 
 import java.util.regex.Pattern;
 
