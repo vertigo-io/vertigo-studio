@@ -52,7 +52,7 @@ final class BansheeWebServerBuilder implements Builder<HttpServer> {
 			String requestedPath = exchange.getRequestURI().getPath();
 
 			if (requestedPath.equals("/")) {
-				requestedPath = "/choice.html";
+				requestedPath = "/index.html";
 			}
 
 			final Path filePath = Paths.get(rootDir, requestedPath.substring(1)).toAbsolutePath();
