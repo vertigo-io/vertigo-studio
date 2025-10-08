@@ -18,7 +18,7 @@ new Vue({
             // ---data
             json: 'v-shiny-json-component',
             list: 'v-shiny-list-component',
-            table: 'v-table-component',
+            table: 'v-shiny-table-component',
             tree: 'v-shiny-tree-component',
             // ---dataviz
             barChart: 'v-shiny-bar-chart-component',
