@@ -1,4 +1,4 @@
-Vue.component('v-spark-line-component', {
+Vue.component('v-shiny-spark-line-component', {
     props: ['data'],
     template: '<canvas :id="canvasId" class="sparkline-canvas"></canvas>',
     data() {

@@ -1,4 +1,4 @@
-Vue.component('v-rating-component', {
+Vue.component('v-shiny-rating-component', {
     props: ['data'],
     template: `
     <div :class="containerClasses">

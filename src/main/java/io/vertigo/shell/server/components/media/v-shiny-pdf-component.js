@@ -1,4 +1,4 @@
-Vue.component('v-pdf-component', {
+Vue.component('v-shiny-pdf-component', {
   props: ['data'],
   
   data() {

@@ -1,4 +1,4 @@
-Vue.component('v-gauge-component', {
+Vue.component('v-shiny-gauge-component', {
     props: ['data'],
     template: '<canvas :id="canvasId" class="gauge-canvas"></canvas>',
     data() {

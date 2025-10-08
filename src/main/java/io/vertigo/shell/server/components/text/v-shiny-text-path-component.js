@@ -1,4 +1,4 @@
-Vue.component('v-text-path-component', {
+Vue.component('v-shiny-text-path-component', {
     props: ['data'],
     template: '<div class="text-path" v-html="pathHtml"></div>',
     computed: {

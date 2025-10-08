@@ -1,4 +1,4 @@
-Vue.component('v-figlet-component', {
+Vue.component('v-shiny-figlet-component', {
     props: ['data'],
     template: '<svg :id="svgId" class="figlet-svg"></svg>',
     data() {

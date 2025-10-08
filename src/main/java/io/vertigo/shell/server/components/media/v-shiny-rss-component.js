@@ -1,4 +1,4 @@
-Vue.component('v-rss-component', {
+Vue.component('v-shiny-rss-component', {
     props: ['data'],
     template: `
     <div class="rss-feed">

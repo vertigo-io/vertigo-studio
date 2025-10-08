@@ -1,4 +1,4 @@
-Vue.component('v-geo-map-component', {
+Vue.component('v-shiny-geo-map-component', {
     props: ['data'],
     template: '<div :id="mapId" class="map-canvas"></div>',
     data() {

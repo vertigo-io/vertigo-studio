@@ -1,4 +1,4 @@
-Vue.component('v-sankey-component', {
+Vue.component('v-shiny-sankey-component', {
     props: ['data'],
     template: '<canvas :id="canvasId" class="sankey-canvas"></canvas>',
     data() {

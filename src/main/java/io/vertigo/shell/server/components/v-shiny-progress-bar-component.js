@@ -1,4 +1,4 @@
-Vue.component('v-progress-bar-component', {
+Vue.component('v-shiny-progress-bar-component', {
     props: ['data'],
     template: `
     <div class="progress-container" :id="data.id">

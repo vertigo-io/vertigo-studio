@@ -1,4 +1,4 @@
-Vue.component('v-status-component', {
+Vue.component('v-shiny-status-component', {
     props: ['data'],
     template: `
     <div class="status-container">

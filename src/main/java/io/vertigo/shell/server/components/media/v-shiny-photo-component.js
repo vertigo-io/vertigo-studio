@@ -1,4 +1,4 @@
-Vue.component('v-photo-component', {
+Vue.component('v-shiny-photo-component', {
     props: ['data'],
     template: `
     <div class="photo-container">

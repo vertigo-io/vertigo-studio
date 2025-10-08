@@ -1,4 +1,4 @@
-Vue.component('v-youtube-component', {
+Vue.component('v-shiny-youtube-component', {
     props: ['data'],
     template: `
     <div class="youtube-container">

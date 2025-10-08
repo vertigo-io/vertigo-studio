@@ -1,4 +1,4 @@
-Vue.component('v-form-component', {
+Vue.component('v-shiny-form-component', {
     props: {
         data: {
             type: Object,
