@@ -1,10 +1,10 @@
 <template>
-  <div class="shiny-video-container">
-    <h3 class="shiny-component-title">{{ data.title || 'Shiny Video' }}</h3>
-    <div class="video-player-wrapper">
+  <div class="youtube-container">
+    <div class="table-title">{{ data.title || 'Video' }}</div>
+    <div class="youtube-container">
       <iframe
         v-if="data.videoId"
-        class="video-player"
+        class="youtube-player"
         width="100%"
         height="315"
         :src="'https://www.youtube.com/embed/' + data.videoId"
@@ -32,38 +32,11 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.shiny-video-container {
-  background-color: #1A202C;
-  padding: 15px;
-  border-radius: 8px;
-  color: #CBD5E0;
-  text-align: center;
-}
-
-.shiny-component-title {
-  color: #E2E8F0;
-  margin-bottom: 15px;
-}
-
-.video-player-wrapper {
-  position: relative;
-  width: 100%;
-  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-  height: 0;
-}
-
-.video-player {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 8px;
-}
-
+/* All styles are now handled by the global style.css */
 .no-video-message {
-  color: #A0AEC0;
+  color: var(--chakra-paragraph-text);
   font-style: italic;
   padding: 20px;
+  text-align: center;
 }
 </style>

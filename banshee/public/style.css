@@ -225,19 +225,18 @@ h1 span.yellow {
 	display: flex;
 	gap: 10px;
 	margin-top: 15px;
-	max-width: 900px;
-	margin-left: auto;
-	margin-right: auto;
+	max-width: 900px; /* Match chat-container width */
+	margin: 15px auto 0 auto; /* Center it and add top margin */
 }
 
 .prompt-container input {
 	flex: 1;
-	padding: 10px;
+	padding: 12px 15px; /* Increased padding */
 	border-radius: 8px;
 	border: 1px solid var(--assistant-bg);
 	background: var(--general-surface);
 	color: var(--general-text);
-	font-size: 16px;
+	font-size: 18px; /* Increased font size */
 }
 
 .prompt-container button {

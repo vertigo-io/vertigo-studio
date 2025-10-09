@@ -1,11 +1,11 @@
 <template>
-  <div class="shiny-figlet-container">
+  <div class="chart-container">
     <svg :id="svgId" class="shiny-figlet-svg"></svg>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted } from 'vue';
 
 interface FigletCharSet {
   [key: string]: number[][];
@@ -19,19 +19,13 @@ export default defineComponent({
       required: true,
     },
   },
-  data() {
-    return {
-      svgId: `figlet-${Math.random().toString(36).substr(2, 9)}`,
-    };
-  },
-  mounted() {
-    this.renderFiglet();
-  },
-  methods: {
-    renderFiglet() {
-      const svg = document.getElementById(this.svgId) as SVGElement | null;
+  setup() {
+    const svgId = `figlet-${Math.random().toString(36).substr(2, 9)}`;
+
+    const renderFiglet = () => {
+      const svg = document.getElementById(svgId) as SVGElement | null;
       if (!svg) {
-        console.error(`SVG element not found for ID: ${this.svgId}`);
+        console.error(`SVG element not found for ID: ${svgId}`);
         return;
       }
 
@@ -79,7 +73,7 @@ export default defineComponent({
       const charHeight = 5;
       const pixelSize = 4;
       const charSpacing = 1;
-      const text = (this.data.text || '').toUpperCase();
+      const text = (props.data.text || '').toUpperCase();
 
       let svgWidth = 0;
       if (text.length > 0) {
@@ -111,22 +105,19 @@ export default defineComponent({
         }
         currentX += (charWidth + charSpacing) * pixelSize;
       }
-    },
+    };
+
+    onMounted(() => {
+      renderFiglet();
+    });
+
+    return { svgId };
   },
 });
 </script>
 
 <style scoped>
-.shiny-figlet-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  background-color: #1A202C;
-  border-radius: 8px;
-  color: #90CDF4; /* Default color for the figlet text */
-}
-
+/* All styles are now handled by the global style.css */
 .shiny-figlet-svg {
   /* SVG will scale based on its viewBox and parent container */
   max-width: 100%;

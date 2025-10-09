@@ -30,16 +30,12 @@
 
         <span class="mx-2">{{ Math.round(scale * 100) }}%</span>
 
-        <v-btn icon size="small" @click="zoomIn" :disabled="scale >= 3">
-          <v-icon>mdi-plus</v-icon>
-        </v-btn>
-
         <v-btn icon size="small" @click="resetZoom" class="ml-2">
           <v-icon>mdi-restore</v-icon>
         </v-btn>
       </div>
 
-      <div class="pdf-container flex-grow-1" style="overflow: auto; position: relative; background-color: #525659;">
+      <div class="pdf-container flex-grow-1" style="overflow: auto; position: relative; background-color: var(--general-bg);">
         <v-progress-circular
           v-if="loading"
           indeterminate
@@ -142,8 +138,6 @@ export default defineComponent({
       } catch (err: any) {
         this.error = `Erreur lors du chargement du PDF: ${err.message}`;
         console.error(err);
-      } finally {
-        this.loading = false;
       }
     },
     async renderPage() {
@@ -207,26 +201,26 @@ export default defineComponent({
 
 <style scoped>
 .shiny-pdf-card {
-  background-color: #1A202C !important;
-  color: #CBD5E0 !important;
+  background-color: var(--general-surface) !important;
+  color: var(--general-text) !important;
 }
 
 .shiny-pdf-card-title {
-  background-color: #2D3748 !important;
-  color: #E2E8F0 !important;
+  background-color: var(--assistant-bg) !important;
+  color: var(--assistant-text) !important;
   padding: 10px 15px;
   display: flex;
   align-items: center;
 }
 
 .shiny-pdf-card-text {
-  background-color: #1A202C !important;
+  background-color: var(--general-bg) !important;
 }
 
 .shiny-pdf-controls {
-  background-color: #2D3748 !important;
-  color: #CBD5E0 !important;
-  border-bottom: 1px solid #4A5568;
+  background-color: var(--assistant-bg) !important;
+  color: var(--general-text) !important;
+  border-bottom: 1px solid var(--assistant-accent);
 }
 
 .pdf-container {

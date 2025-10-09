@@ -1,6 +1,6 @@
 <template>
-  <div class="shiny-paragraph-container">
-    <p class="shiny-paragraph">{{ data.text }}</p>
+  <div class="chart-container">
+    <p class="chakra-paragraph">{{ data.text }}</p>
   </div>
 </template>
 
@@ -19,15 +19,5 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.shiny-paragraph-container {
-  background-color: #1A202C;
-  padding: 15px;
-  border-radius: 8px;
-  color: #CBD5E0;
-}
-
-.shiny-paragraph {
-  font-size: 1em;
-  line-height: 1.6;
-}
+/* All styles are now handled by the global style.css */
 </style>

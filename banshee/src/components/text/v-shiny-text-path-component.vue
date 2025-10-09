@@ -1,6 +1,6 @@
 <template>
-  <div class="shiny-text-path-container">
-    <h3 class="shiny-component-title">{{ data.title || 'Shiny Text Path' }}</h3>
+  <div class="chart-container">
+    <div class="table-title">{{ data.title || 'Text Path' }}</div>
     <div class="shiny-text-path" v-html="pathHtml"></div>
   </div>
 </template>
@@ -39,42 +39,12 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.shiny-text-path-container {
-  background-color: #1A202C;
-  padding: 15px;
-  border-radius: 8px;
-  color: #CBD5E0;
-}
-
-.shiny-component-title {
-  color: #E2E8F0;
-  margin-bottom: 10px;
-}
-
+/* All styles are now handled by the global style.css */
 .shiny-text-path {
   font-family: monospace;
   font-size: 1.1em;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-}
-
-.path-node {
-  color: #90CDF4; /* Light blue */
-}
-
-.path-root {
-  font-weight: bold;
-  color: #4FD1C5; /* Teal */
-}
-
-.path-leaf {
-  font-style: italic;
-  color: #F6AD55; /* Orange */
-}
-
-.path-separator {
-  margin: 0 5px;
-  color: #A0AEC0; /* Gray */
 }
 </style>

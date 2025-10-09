@@ -1,6 +1,6 @@
 <template>
-  <div class="shiny-title-container">
-    <component :is="`h${data.level || 1}`" class="shiny-title">{{ data.text }}</component>
+  <div class="chart-container">
+    <component :is="`h${data.level || 1}`" class="table-title">{{ data.text }}</component>
   </div>
 </template>
 
@@ -19,17 +19,5 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.shiny-title-container {
-  background-color: #1A202C;
-  padding: 15px;
-  border-radius: 8px;
-  color: #E2E8F0;
-  text-align: center;
-}
-
-.shiny-title {
-  margin: 0;
-  padding: 0;
-  font-weight: bold;
-}
+/* All styles are now handled by the global style.css */
 </style>
