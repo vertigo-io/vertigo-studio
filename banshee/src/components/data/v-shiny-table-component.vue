@@ -2,7 +2,12 @@
   <div class="collapsible-content">
     <div class="table-title">
       <div class="table-title-content">
-        <svg class="table-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h.01"/><path d="M17.5 20h.01"/><path d="M4.5 20h.01"/><path d="M20 15.5v.01"/><path d="M20 10.5v.01"/><path d="M20 5.5v.01"/><path d="M15.5 4v.01"/><path d="M10.5 4v.01"/><path d="M5.5 4v.01"/><path d="M4 20v-5.5"/><path d="M20 4v5.5"/><path d="M4 4h5.5"/><path d="M14.5 20H9a.5.5 0 0 0-.5.5v0A.5.5 0 0 0 9 21h1.5"/><path d="M20 20h-5.5"/><path d="M4 14.5V9a.5.5 0 0 1 .5-.5h0A.5.5 0 0 1 5 9v1.5"/></svg>
+        <svg class="table-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3v18"/>
+        <rect width="18" height="18" x="3" y="3" rx="2"/>
+        <path d="M3 9h18"/>
+        <path d="M3 15h18"/>
+      </svg>
         <span>{{ data.title || 'Table' }}</span>
       </div>
     </div>
