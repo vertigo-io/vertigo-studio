@@ -1,7 +1,7 @@
 <template>
-  <div class="shiny-json-container">
-    <h3 class="shiny-component-title">{{ data.title || 'Shiny JSON' }}</h3>
-    <div class="json-display" v-html="highlightedJson"></div>
+  <div class="json-container">
+    <div class="table-title">{{ data.title || 'JSON Viewer' }}</div>
+    <pre v-html="highlightedJson"></pre>
   </div>
 </template>
 
@@ -22,16 +22,19 @@ export default defineComponent({
       if (typeof json !== 'string') {
         json = JSON.stringify(json, null, 2);
       }
-      return json.replace(/("(\u[a-zA-Z0-9]{4}|\\.[^u]|[^\\"])*"(?:\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
-        let escapedMatch = match.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      // Basic HTML escaping
+      const escapedJson = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      
+      // Regex to find JSON parts and wrap them in spans with corresponding classes
+      return escapedJson.replace(/("(\u[a-zA-Z0-9]{4}|\\[^u]|[^\\\"])*"(\s*)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
         if (/^"/.test(match)) {
-          return /:$/.test(match) ? `<span class="json-key">${escapedMatch}</span>` : `<span class="json-string">${escapedMatch}</span>`;
+          return /:$/.test(match) ? `<span class="json-key">${match}</span>` : `<span class="json-string">${match}</span>`;
         } else if (/true|false/.test(match)) {
-          return `<span class="json-boolean">${escapedMatch}</span>`;
+          return `<span class="json-boolean">${match}</span>`;
         } else if (/null/.test(match)) {
-          return `<span class="json-null">${escapedMatch}</span>`;
+          return `<span class="json-null">${match}</span>`;
         } else {
-          return `<span class="json-number">${escapedMatch}</span>`;
+          return `<span class="json-number">${match}</span>`;
         }
       });
     },
@@ -40,43 +43,5 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.shiny-json-container {
-  background-color: #1A202C;
-  padding: 15px;
-  border-radius: 8px;
-  color: #CBD5E0;
-}
-
-.shiny-component-title {
-  color: #E2E8F0;
-  margin-bottom: 15px;
-  text-align: center;
-}
-
-.json-display {
-  font-family: 'Courier New', Courier, monospace;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  text-align: left;
-}
-
-.json-key {
-  color: #90CDF4; /* Light blue */
-}
-
-.json-string {
-  color: #9AE6B4; /* Light green */
-}
-
-.json-boolean {
-  color: #F6AD55; /* Orange */
-}
-
-.json-null {
-  color: #FC8181; /* Red */
-}
-
-.json-number {
-  color: #B794F4; /* Purple */
-}
+/* All styles are now handled by the global style.css */
 </style>

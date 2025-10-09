@@ -89,10 +89,10 @@ export default defineComponent({
 
 <style scoped>
 .shiny-card {
-  background-color: #2D3748 !important;
-  color: #CBD5E0 !important;
+  background-color: var(--shiny-card-bg) !important;
+  color: var(--chakra-text) !important;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px var(--general-shadow);
 }
 
 .shiny-card--s {
@@ -108,16 +108,16 @@ export default defineComponent({
 }
 
 .v-card__title {
-  background-color: #1A202C !important;
-  color: #E2E8F0 !important;
+  background-color: var(--general-bg) !important;
+  color: var(--chakra-title-text) !important;
 }
 
 .v-card__subtitle {
-  color: #A0AEC0 !important;
+  color: var(--chakra-paragraph-text) !important;
 }
 
 .v-card__text {
-  color: #CBD5E0 !important;
+  color: var(--chakra-text) !important;
 }
 
 .v-btn {

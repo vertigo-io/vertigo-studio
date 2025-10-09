@@ -1,16 +1,14 @@
 <template>
-  <div class="shiny-chart-container">
-    <h3 class="shiny-component-title">{{ data.title || 'Shiny Line Chart' }}</h3>
-    <canvas :id="canvasId"></canvas>
+  <div class="chart-container">
+    <div class="table-title">{{ data.title || 'Line Chart' }}</div>
+    <canvas :id="canvasId" class="chart-canvas"></canvas>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-// Assuming 'Chart' is an external library, you might need to import it like:
-// import { Chart } from 'chart.js'; // Adjust path as necessary
+import { defineComponent, onMounted } from 'vue';
 
-declare const Chart: any; // Declare Chart to avoid TypeScript errors if not imported
+declare const Chart: any;
 
 export default defineComponent({
   name: 'VShinyLineChartComponent',
@@ -20,86 +18,63 @@ export default defineComponent({
       required: true,
     },
   },
-  data() {
-    return {
-      canvasId: `shiny-linechart-${Math.random().toString(36).substr(2, 9)}`,
-    };
-  },
-  mounted() {
-    const colors = [
-      'rgba(49, 130, 206, 0.8)', // blue
-      'rgba(72, 187, 120, 0.8)', // green
-      'rgba(229, 62, 62, 0.8)', // red
-      'rgba(237, 137, 54, 0.8)', // orange
-      'rgba(159, 64, 255, 0.8)', // purple
-    ];
+  setup(props) {
+    const canvasId = `shiny-linechart-${Math.random().toString(36).substr(2, 9)}`;
 
-    const ctx = document.getElementById(this.canvasId) as HTMLCanvasElement | null;
-    if (!ctx) {
-      console.error(`Canvas element not found for ID: ${this.canvasId}`);
-      return;
-    }
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: this.data.labels || [],
-        datasets: this.data.series.map((serie: any, index: number) => ({
-          label: serie.name,
-          data: serie.data || [],
-          borderColor: colors[index % colors.length].replace('0.8', '1'),
-          backgroundColor: colors[index % colors.length].replace('0.8', '0.2'),
-          fill: false,
-        })),
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              color: '#A0AEC0',
+    onMounted(() => {
+      const style = getComputedStyle(document.documentElement);
+      const colors = [
+        style.getPropertyValue('--json-key').trim(),
+        style.getPropertyValue('--json-boolean').trim(),
+        style.getPropertyValue('--json-string').trim(),
+        style.getPropertyValue('--json-number').trim(),
+        style.getPropertyValue('--status-error').trim(),
+      ];
+
+      const textColor = style.getPropertyValue('--chakra-paragraph-text').trim();
+      const gridColor = style.getPropertyValue('--assistant-accent').trim();
+
+      const ctx = document.getElementById(canvasId) as HTMLCanvasElement | null;
+      if (!ctx) return;
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: props.data.labels || [],
+          datasets: props.data.series.map((serie: any, index: number) => ({
+            label: serie.name,
+            data: serie.data || [],
+            borderColor: colors[index % colors.length],
+            backgroundColor: colors[index % colors.length] + '33', // Add alpha transparency
+            fill: false,
+          })),
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { color: textColor },
+              grid: { color: gridColor },
             },
-            grid: {
-              color: '#2D3748',
+            x: {
+              ticks: { color: textColor },
+              grid: { color: gridColor },
             },
           },
-          x: {
-            ticks: {
-              color: '#A0AEC0',
-            },
-            grid: {
-              color: '#2D3748',
+          plugins: {
+            legend: {
+              labels: { color: textColor },
             },
           },
         },
-        plugins: {
-          legend: {
-            labels: {
-              color: '#A0AEC0',
-            },
-          },
-        },
-      },
+      });
     });
+
+    return { canvasId };
   },
 });
 </script>
 
 <style scoped>
-.shiny-chart-container {
-  background-color: #1A202C;
-  padding: 15px;
-  border-radius: 8px;
-  color: #CBD5E0;
-  text-align: center;
-}
-
-.shiny-component-title {
-  color: #E2E8F0;
-  margin-bottom: 15px;
-}
-
-canvas {
-  max-width: 100%;
-  height: auto;
-}
+/* All styles are now handled by the global style.css */
 </style>

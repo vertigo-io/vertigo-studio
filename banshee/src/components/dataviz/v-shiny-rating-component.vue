@@ -1,13 +1,13 @@
 <template>
-  <div :class="containerClasses" class="shiny-rating-container">
-    <span class="shiny-rating-label">{{ data.label }}</span>
+  <div :class="containerClasses" class="chart-container">
+    <div class="table-title">{{ data.label || 'Rating' }}</div>
     <div class="shiny-rating-stars" v-html="stars"></div>
     <span class="shiny-rating-value">{{ valueText }}</span>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, computed } from 'vue';
 
 export default defineComponent({
   name: 'VShinyRatingComponent',
@@ -17,88 +17,63 @@ export default defineComponent({
       required: true,
     },
   },
-  computed: {
-    containerClasses(): string {
-      let classes = 'rating-container';
-      if (this.data.showBox) {
+  setup(props) {
+    const style = getComputedStyle(document.documentElement);
+    const filledColor = style.getPropertyValue('--yellow-accent').trim();
+    const emptyColor = style.getPropertyValue('--general-text').trim();
+
+    const containerClasses = computed(() => {
+      let classes = '';
+      if (props.data.showBox) {
         classes += ' rating-box';
       }
       return classes;
-    },
-    maxValue(): number {
-      if (this.data.customMaxValue !== -1) {
-        return this.data.customMaxValue;
+    });
+
+    const maxValue = computed(() => {
+      if (props.data.customMaxValue !== -1) {
+        return props.data.customMaxValue;
       }
-      switch (this.data.scale) {
-        case 'SCALE_10':
-          return 10;
-        case 'SCALE_100':
-          return 100;
-        default:
-          return 5;
+      switch (props.data.scale) {
+        case 'SCALE_10': return 10;
+        case 'SCALE_100': return 100;
+        default: return 5;
       }
-    },
-    stars(): string {
-      const filledColor = 'gold';
-      const emptyColor = 'lightgray';
+    });
+
+    const stars = computed(() => {
       const filledIcon = '★';
       const emptyIcon = '☆';
       const halfIcon = '½';
       let starsHtml = '';
-      for (let i = 1; i <= this.maxValue; i++) {
-        if (i <= this.data.value) {
+      for (let i = 1; i <= maxValue.value; i++) {
+        if (i <= props.data.value) {
           starsHtml += `<span style="color: ${filledColor}">${filledIcon}</span>`;
-        } else if (this.data.allowHalfRating && i - 0.5 === this.data.value) {
+        } else if (props.data.allowHalfRating && i - 0.5 === props.data.value) {
           starsHtml += `<span style="color: ${filledColor}">${halfIcon}</span>`;
         } else {
           starsHtml += `<span style="color: ${emptyColor}">${emptyIcon}</span>`;
         }
       }
       return starsHtml;
-    },
-    valueText(): string {
-      if (this.data.showValue) {
-        let text = this.data.value;
-        if (this.data.showPercentage) {
+    });
+
+    const valueText = computed(() => {
+      if (props.data.showValue) {
+        let text = props.data.value;
+        if (props.data.showPercentage) {
           text += '%';
         }
-        return ` ${this.data.separator || '/'} ${text}`;
+        return ` ${props.data.separator || '/'} ${text}`;
       }
       return '';
-    },
+    });
+
+    return { containerClasses, stars, valueText };
   },
 });
 </script>
 
 <style scoped>
-.shiny-rating-container {
-  display: flex;
-  align-items: center;
-  background-color: #1A202C;
-  padding: 15px;
-  border-radius: 8px;
-  color: #CBD5E0;
-}
-
-.shiny-rating-container.rating-box {
-  border: 1px solid #4A5568;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.shiny-rating-label {
-  margin-right: 10px;
-  font-weight: bold;
-  color: #E2E8F0;
-}
-
-.shiny-rating-stars span {
-  font-size: 1.5em;
-  line-height: 1;
-}
-
-.shiny-rating-value {
-  margin-left: 10px;
-  font-weight: bold;
-  color: #90CDF4;
-}
+/* All styles are now handled by the global style.css */
 </style>

@@ -1,18 +1,16 @@
 <template>
-  <div class="shiny-chart-container">
-    <h3 class="shiny-component-title">{{ data.title || 'Shiny Pie Chart' }}</h3>
+  <div class="chart-container">
+    <div class="table-title">{{ data.title || 'Pie Chart' }}</div>
     <div class="chart-canvas-wrapper">
-      <canvas :id="canvasId"></canvas>
+      <canvas :id="canvasId" class="chart-canvas"></canvas>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-// Assuming 'Chart' is an external library, you might need to import it like:
-// import { Chart } from 'chart.js'; // Adjust path as necessary
+import { defineComponent, onMounted } from 'vue';
 
-declare const Chart: any; // Declare Chart to avoid TypeScript errors if not imported
+declare const Chart: any;
 
 export default defineComponent({
   name: 'VShinyPieChartComponent',
@@ -22,128 +20,102 @@ export default defineComponent({
       required: true,
     },
   },
-  data() {
-    return {
-      canvasId: `shiny-piechart-${Math.random().toString(36).substr(2, 9)}`,
-    };
-  },
-  mounted() {
-    const ctx = document.getElementById(this.canvasId) as HTMLCanvasElement | null;
-    if (!ctx) {
-      console.error(`Canvas element not found for ID: ${this.canvasId}`);
-      return;
-    }
-    const baseColors = [
-      '#3182CE', '#63B3ED', '#4299E1', '#319795', '#81E6D9',
-      '#F6AD55', '#F6E05E', '#FEB2B2', '#BEE3F8', '#C6F6D5'
-    ];
+  setup(props) {
+    const canvasId = `shiny-piechart-${Math.random().toString(36).substr(2, 9)}`;
 
-    let chartType: string;
-    let datasetsConfig: any[];
+    onMounted(() => {
+      const style = getComputedStyle(document.documentElement);
+      const colors = [
+        style.getPropertyValue('--json-key').trim(),
+        style.getPropertyValue('--json-boolean').trim(),
+        style.getPropertyValue('--json-string').trim(),
+        style.getPropertyValue('--json-number').trim(),
+        style.getPropertyValue('--status-error').trim(),
+        style.getPropertyValue('--x-neon-blue').trim(),
+      ];
+      const textColor = style.getPropertyValue('--chakra-paragraph-text').trim();
+      const generalBg = style.getPropertyValue('--general-bg').trim();
 
-    if (this.data.series && this.data.series.length > 1) {
-      // Multi-series: utiliser des doughnuts concentriques
-      chartType = 'doughnut';
-      const seriesCount = this.data.series.length;
+      const ctx = document.getElementById(canvasId) as HTMLCanvasElement | null;
+      if (!ctx) return;
 
-      datasetsConfig = this.data.series.map((serie: any, serieIndex: number) => {
-        // Calculer le cutout pour créer des anneaux concentriques
-        const cutoutPercentage = 30 + (serieIndex * (50 / seriesCount));
+      let chartType: string;
+      let datasetsConfig: any[];
 
-        // Générer des couleurs distinctes pour chaque série
-        const colorOffset = serieIndex * Math.floor(baseColors.length / seriesCount);
-        const serieColors = serie.data.map((_: any, index: number) => {
-          const colorIndex = (colorOffset + index) % baseColors.length;
-          return baseColors[colorIndex];
+      if (props.data.series && props.data.series.length > 1) {
+        chartType = 'doughnut';
+        const seriesCount = props.data.series.length;
+
+        datasetsConfig = props.data.series.map((serie: any, serieIndex: number) => {
+          const cutoutPercentage = 30 + (serieIndex * (50 / seriesCount));
+          const colorOffset = serieIndex * Math.floor(colors.length / seriesCount);
+          const serieColors = serie.data.map((_: any, index: number) => {
+            const colorIndex = (colorOffset + index) % colors.length;
+            return colors[colorIndex];
+          });
+
+          return {
+            label: serie.name,
+            data: serie.data || [],
+            backgroundColor: serieColors,
+            borderColor: generalBg,
+            borderWidth: 2,
+            weight: 1,
+          };
         });
-
-        return {
-          label: serie.name,
-          data: serie.data || [],
-          backgroundColor: serieColors,
-          borderColor: '#1A202C',
+      } else if (props.data.series && props.data.series.length === 1) {
+        chartType = 'pie';
+        datasetsConfig = [{
+          data: props.data.series[0].data || [],
+          backgroundColor: colors.slice(0, props.data.series[0].data.length),
+          borderColor: generalBg,
           borderWidth: 2,
-          // Configurer le rayon pour chaque dataset
-          weight: 1,
-        };
-      });
-    } else if (this.data.series && this.data.series.length === 1) {
-      // Single series: pie chart standard
-      chartType = 'pie';
-      datasetsConfig = [{
-        data: this.data.series[0].data || [],
-        backgroundColor: baseColors.slice(0, this.data.series[0].data.length),
-        borderColor: '#1A202C',
-        borderWidth: 2,
-      }];
-    } else {
-      // Cas par défaut
-      chartType = 'pie';
-      datasetsConfig = [{
-        data: [],
-        backgroundColor: baseColors,
-        borderColor: '#1A202C',
-        borderWidth: 2,
-      }];
-    }
+        }];
+      } else {
+        chartType = 'pie';
+        datasetsConfig = [{
+          data: [],
+          backgroundColor: colors,
+          borderColor: generalBg,
+          borderWidth: 2,
+        }];
+      }
 
-    new Chart(ctx, {
-      type: chartType,
-      data: {
-        labels: this.data.labels,
-        datasets: datasetsConfig,
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: true,
-        plugins: {
-          legend: {
-            position: 'right',
-            labels: {
-              color: '#A0AEC0',
-              padding: 15,
-              font: {
-                size: 12,
+      new Chart(ctx, {
+        type: chartType,
+        data: {
+          labels: props.data.labels,
+          datasets: datasetsConfig,
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: {
+              position: 'right',
+              labels: {
+                color: textColor,
+                padding: 15,
+                font: { size: 12 },
               },
             },
-          },
-          tooltip: {
-            backgroundColor: '#2D3748',
-            titleColor: '#E2E8F0',
-            bodyColor: '#CBD5E0',
-            borderColor: '#4A5568',
-            borderWidth: 1,
+            tooltip: {
+              backgroundColor: style.getPropertyValue('--assistant-bg').trim(),
+              titleColor: style.getPropertyValue('--assistant-text').trim(),
+              bodyColor: style.getPropertyValue('--general-text').trim(),
+              borderColor: style.getPropertyValue('--assistant-accent').trim(),
+              borderWidth: 1,
+            },
           },
         },
-      },
+      });
     });
+
+    return { canvasId };
   },
 });
 </script>
 
 <style scoped>
-.shiny-chart-container {
-  background-color: #1A202C;
-  padding: 15px;
-  border-radius: 8px;
-  color: #CBD5E0;
-  text-align: center;
-}
-
-.shiny-component-title {
-  color: #E2E8F0;
-  margin-bottom: 15px;
-}
-
-.chart-canvas-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 400px; /* Adjust as needed */
-  margin: 0 auto;
-}
-
-canvas {
-  max-width: 100%;
-  height: auto;
-}
+/* All styles are now handled by the global style.css */
 </style>

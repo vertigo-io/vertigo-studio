@@ -1,14 +1,14 @@
 <template>
-  <div class="shiny-status-container">
-    <h3 class="shiny-component-title">{{ data.title || 'Shiny Status' }}</h3>
+  <div class="chart-container">
+    <div class="table-title">{{ data.title || 'Status' }}</div>
     <div class="shiny-status-indicators">
-      <div v-for="(type, index) in data.types" :key="index" class="shiny-status-indicator" :style="{ backgroundColor: colorMap[type] || 'gray' }"></div>
+      <div v-for="(type, index) in data.types" :key="index" class="shiny-status-indicator" :style="{ backgroundColor: colorMap[type] }"></div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted } from 'vue';
 
 interface ShinyStatusData {
   title?: string;
@@ -23,34 +23,31 @@ export default defineComponent({
       required: true,
     },
   },
-  data() {
-    return {
-      colorMap: {
-        SUCCESS: 'green',
-        ERROR: 'red',
-        WARNING: 'orange',
-        INFO: 'blue',
-        NEUTRAL: 'gray',
-      },
+  setup() {
+    const colorMap = {
+      SUCCESS: '',
+      ERROR: '',
+      WARNING: '',
+      INFO: '',
+      NEUTRAL: '',
     };
+
+    onMounted(() => {
+      const style = getComputedStyle(document.documentElement);
+      colorMap.SUCCESS = style.getPropertyValue('--status-connected').trim();
+      colorMap.ERROR = style.getPropertyValue('--status-error').trim();
+      colorMap.WARNING = style.getPropertyValue('--yellow-accent').trim(); // Using yellow for warning
+      colorMap.INFO = style.getPropertyValue('--x-neon-blue').trim(); // Using neon blue for info
+      colorMap.NEUTRAL = style.getPropertyValue('--general-text').trim(); // Using general text color for neutral
+    });
+
+    return { colorMap };
   },
 });
 </script>
 
 <style scoped>
-.shiny-status-container {
-  background-color: #1A202C;
-  padding: 15px;
-  border-radius: 8px;
-  color: #CBD5E0;
-  text-align: center;
-}
-
-.shiny-component-title {
-  color: #E2E8F0;
-  margin-bottom: 15px;
-}
-
+/* All styles are now handled by the global style.css */
 .shiny-status-indicators {
   display: flex;
   justify-content: center;
@@ -61,6 +58,6 @@ export default defineComponent({
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: 1px solid #4A5568;
+  border: 1px solid var(--status-border);
 }
 </style>
