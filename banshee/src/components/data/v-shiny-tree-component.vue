@@ -1,24 +1,20 @@
 <template>
   <div class="tree-container">
-    <node :node="data.rootNode"></node>
+    <TreeNode :node="data.rootNode"></TreeNode>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted } from 'vue';
+import TreeNode from './TreeNode.vue'; // Import the new TreeNode component
+import { ShinyTree } from '../../models/ShinyTree';
 
 // Define interfaces for better type checking
-interface ShinyTreeNode {
-  label: string;
-  icon?: string; // Assuming icon is a string like 'folder-open', 'file', or 'none'
-  children?: ShinyTreeNode[];
-}
-
 interface ShinyTreeData {
-  rootNode: ShinyTreeNode;
+  rootNode: ShinyTree;
 }
 
-declare const lucide: any; // Declare lucide to avoid TypeScript errors
+declare const lucide: any;
 
 export default defineComponent({
   name: 'VShinyTreeComponent',
@@ -29,30 +25,7 @@ export default defineComponent({
     },
   },
   components: {
-    // Define the recursive 'node' component locally
-    node: defineComponent({
-      name: 'TreeNode',
-      props: {
-        node: {
-          type: Object as () => ShinyTreeNode,
-          required: true,
-        },
-      },
-      template: `
-        <div class="tree-node">
-          <i v-if="node.icon && node.icon.toLowerCase() !== 'none'" :data-lucide="node.icon.toLowerCase()" class="tree-icon"></i>
-          <span class="node-label">{{ node.label }}</span>
-          <div v-if="node.children && node.children.length > 0" class="tree-nodes">
-            <TreeNode v-for="(child, index) in node.children" :key="index" :node="child"></TreeNode>
-          </div>
-        </div>
-      `,
-      mounted() {
-        if (this.node.icon && this.node.icon.toLowerCase() !== 'none' && typeof lucide !== 'undefined') {
-          lucide.createIcons();
-        }
-      }
-    }),
+    TreeNode, // Register the imported component
   },
   mounted() {
     if (this.data.rootNode.icon && this.data.rootNode.icon.toLowerCase() !== 'none' && typeof lucide !== 'undefined') {

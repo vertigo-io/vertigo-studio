@@ -57,6 +57,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { ShinyCardComponent } from '../../models/ShinyCardComponent';
+import { ShinyCardFormat } from '../../models/ShinyCardFormat';
 
 declare const lucide: any; // Declare lucide to avoid TypeScript errors
 
@@ -64,16 +66,16 @@ export default defineComponent({
   name: 'VShinyCardComponent',
   props: {
     data: {
-      type: Object,
+      type: Object as () => ShinyCardComponent,
       required: true,
     },
   },
   computed: {
     cardWidth(): string {
       switch (this.data.format) {
-        case 'S': return '250px';
-        case 'M': return '350px';
-        case 'L': return '450px';
+        case ShinyCardFormat.S: return '250px';
+        case ShinyCardFormat.M: return '350px';
+        case ShinyCardFormat.L: return '450px';
         default: return '350px';
       }
     },

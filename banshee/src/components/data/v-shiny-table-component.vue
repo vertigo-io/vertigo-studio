@@ -39,12 +39,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { ShinyTable } from '../../models/ShinyTable';
 
 export default defineComponent({
   name: 'VShinyTableComponent',
   props: {
     data: {
-      type: Object,
+      type: Object as () => ShinyTable,
       required: true,
     },
   },

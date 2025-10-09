@@ -7,45 +7,37 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-
-interface ShinyListItem {
-  title?: string;
-  type?: 'ORDERED' | 'UNORDERED' | 'DASHED';
-  items?: (string | ShinyListItem)[];
-}
-
-interface ShinyListData {
-  title?: string;
-  type?: 'ORDERED' | 'UNORDERED' | 'DASHED';
-  items: (string | ShinyListItem)[];
-}
+import { ShinyList } from '../../models/ShinyList';
+import { ShinyListType } from '../../models/ShinyListType';
 
 export default defineComponent({
   name: 'VShinyListComponent',
   props: {
     data: {
-      type: Object as () => ShinyListData,
+      type: Object as () => ShinyList,
       required: true,
     },
   },
   computed: {
     itemsHtml(): string {
-      return this.generateItemsHtml(this.data.items, this.data.type || 'UNORDERED');
+      return this.generateItemsHtml(this.data.items, this.data.listType);
     },
   },
   methods: {
-    generateItemsHtml(items: (string | ShinyListItem)[], listType: string): string {
-      const tag = listType === 'ORDERED' ? 'ol' : 'ul';
-      const listClass = listType === 'DASHED' ? 'class="dashed-list"' : '';
+    generateItemsHtml(items: (string | ShinyList)[],
+ listType: ShinyListType): string {
+      const tag = listType === ShinyListType.ORDERED ? 'ol' : 'ul';
+      const listClass = listType === ShinyListType.DASHED ? 'class="dashed-list"' : '';
 
       const itemsHtml = items.map(item => {
         let itemContent: string;
-        if (typeof item === 'object' && item !== null && item.items) {
-          // Nested list
-          const title = item.title ? `<span class="nested-title">${item.title}</span>` : '';
-          itemContent = title + this.generateItemsHtml(item.items, item.type || 'UNORDERED');
+        if (typeof item === 'object' && item !== null && 'items' in item) {
+          // This is a nested ShinyList
+          const nestedList = item as ShinyList;
+          const title = nestedList.title ? `<span class="nested-title">${nestedList.title}</span>` : '';
+          itemContent = title + this.generateItemsHtml(nestedList.items, nestedList.listType);
         } else {
-          // Simple item
+          // Simple string item
           itemContent = item as string;
         }
         return `<li>${itemContent}</li>`;

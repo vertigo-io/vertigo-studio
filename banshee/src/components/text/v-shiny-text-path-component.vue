@@ -7,12 +7,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { ShinyTextPath } from '../../models/ShinyTextPath';
 
 export default defineComponent({
   name: 'VShinyTextPathComponent',
   props: {
     data: {
-      type: Object,
+      type: Object as () => ShinyTextPath,
       required: true,
     },
   },

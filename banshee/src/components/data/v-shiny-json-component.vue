@@ -7,12 +7,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { ShinyJson } from '../../models/ShinyJson';
 
 export default defineComponent({
   name: 'VShinyJsonComponent',
   props: {
     data: {
-      type: Object,
+      type: Object as () => ShinyJson,
       required: true,
     },
   },

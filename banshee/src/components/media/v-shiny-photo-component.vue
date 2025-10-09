@@ -10,12 +10,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { ShinyPhoto } from '../../models/ShinyPhoto';
 
 export default defineComponent({
   name: 'VShinyPhotoComponent',
   props: {
     data: {
-      type: Object,
+      type: Object as () => ShinyPhoto,
       required: true,
     },
   },

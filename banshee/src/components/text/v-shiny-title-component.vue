@@ -1,17 +1,18 @@
 <template>
   <div class="chart-container">
-    <component :is="`h${data.level || 1}`" class="component-title">{{ data.text || 'Default Title' }}</component>
+    <component :is="`h${data.level || 1}`" class="component-title">{{ data.title || 'Default Title' }}</component>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { ShinyTitle } from '../../models/ShinyTitle';
 
 export default defineComponent({
   name: 'VShinyTitleComponent',
   props: {
     data: {
-      type: Object,
+      type: Object as () => ShinyTitle,
       required: true,
     },
   },

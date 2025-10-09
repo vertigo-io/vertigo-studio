@@ -152,6 +152,7 @@
 <script lang="ts">
 // Script content remains the same
 import { defineComponent } from 'vue';
+import { ShinyForm } from '../../models/ShinyForm';
 
 interface ShinyFormField {
   name: string;
@@ -177,16 +178,11 @@ interface ShinyFormSection {
   initiallyCollapsed?: boolean;
 }
 
-interface ShinyFormData {
-  title: string;
-  sections: ShinyFormSection[];
-}
-
 export default defineComponent({
   name: 'VShinyFormComponent',
   props: {
     data: {
-      type: Object as () => ShinyFormData,
+      type: Object as () => ShinyForm,
       required: true,
     },
   },

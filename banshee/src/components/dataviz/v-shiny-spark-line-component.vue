@@ -7,6 +7,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
+import { ShinySparkline } from '../../models/ShinySparkline';
 
 declare const Chart: any;
 
@@ -14,7 +15,7 @@ export default defineComponent({
   name: 'VShinySparkLineComponent',
   props: {
     data: {
-      type: Object,
+      type: Object as () => ShinySparkline,
       required: true,
     },
   },

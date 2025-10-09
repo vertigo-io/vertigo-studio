@@ -8,12 +8,14 @@
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
+import { ShinyRating } from '../../models/ShinyRating';
+import { ShinyRatingScale, getShinyRatingMaxValue } from '../../models/ShinyRatingScale';
 
 export default defineComponent({
   name: 'VShinyRatingComponent',
   props: {
     data: {
-      type: Object,
+      type: Object as () => ShinyRating,
       required: true,
     },
   },
@@ -31,14 +33,7 @@ export default defineComponent({
     });
 
     const maxValue = computed(() => {
-      if (props.data.customMaxValue !== -1) {
-        return props.data.customMaxValue;
-      }
-      switch (props.data.scale) {
-        case 'SCALE_10': return 10;
-        case 'SCALE_100': return 100;
-        default: return 5;
-      }
+      return props.data.getMaxValue();
     });
 
     const stars = computed(() => {

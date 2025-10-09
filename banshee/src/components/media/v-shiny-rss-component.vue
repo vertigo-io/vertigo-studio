@@ -23,12 +23,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { ShinyRss } from '../../models/ShinyRss';
 
 export default defineComponent({
   name: 'VShinyRssComponent',
   props: {
     data: {
-      type: Object,
+      type: Object as () => ShinyRss,
       required: true,
     },
   },

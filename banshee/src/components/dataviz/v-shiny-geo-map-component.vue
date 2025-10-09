@@ -7,6 +7,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
+import { ShinyGeoMap } from '../../models/ShinyGeoMap';
 
 declare const L: any; // Declare L (Leaflet) to avoid TypeScript errors
 
@@ -14,7 +15,7 @@ export default defineComponent({
   name: 'VShinyGeoMapComponent',
   props: {
     data: {
-      type: Object,
+      type: Object as () => ShinyGeoMap,
       required: true,
     },
   },

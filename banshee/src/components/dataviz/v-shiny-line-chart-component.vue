@@ -7,6 +7,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
+import { ShinyChart } from '../../models/ShinyChart';
 
 declare const Chart: any;
 
@@ -14,7 +15,7 @@ export default defineComponent({
   name: 'VShinyLineChartComponent',
   props: {
     data: {
-      type: Object,
+      type: Object as () => ShinyChart,
       required: true,
     },
   },

@@ -9,36 +9,32 @@
 
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
-
-interface ShinyStatusData {
-  title?: string;
-  types: ('SUCCESS' | 'ERROR' | 'WARNING' | 'INFO' | 'NEUTRAL')[];
-}
+import { ShinyStatus } from '../../models/ShinyStatus';
+import { ShinyStatusType, getShinyStatusColor } from '../../models/ShinyStatusType';
 
 export default defineComponent({
   name: 'VShinyStatusComponent',
   props: {
     data: {
-      type: Object as () => ShinyStatusData,
+      type: Object as () => ShinyStatus,
       required: true,
     },
   },
   setup() {
-    const colorMap = {
-      SUCCESS: '',
-      ERROR: '',
-      WARNING: '',
-      INFO: '',
-      NEUTRAL: '',
+    const colorMap: Record<ShinyStatusType, string> = {
+      [ShinyStatusType.SUCCESS]: '',
+      [ShinyStatusType.ERROR]: '',
+      [ShinyStatusType.WARNING]: '',
+      [ShinyStatusType.INFO]: '',
+      [ShinyStatusType.NEUTRAL]: '',
     };
 
     onMounted(() => {
-      const style = getComputedStyle(document.documentElement);
-      colorMap.SUCCESS = style.getPropertyValue('--status-connected').trim();
-      colorMap.ERROR = style.getPropertyValue('--status-error').trim();
-      colorMap.WARNING = style.getPropertyValue('--yellow-accent').trim(); // Using yellow for warning
-      colorMap.INFO = style.getPropertyValue('--x-neon-blue').trim(); // Using neon blue for info
-      colorMap.NEUTRAL = style.getPropertyValue('--general-text').trim(); // Using general text color for neutral
+      colorMap.SUCCESS = getShinyStatusColor(ShinyStatusType.SUCCESS);
+      colorMap.ERROR = getShinyStatusColor(ShinyStatusType.ERROR);
+      colorMap.WARNING = getShinyStatusColor(ShinyStatusType.WARNING);
+      colorMap.INFO = getShinyStatusColor(ShinyStatusType.INFO);
+      colorMap.NEUTRAL = getShinyStatusColor(ShinyStatusType.NEUTRAL);
     });
 
     return { colorMap };

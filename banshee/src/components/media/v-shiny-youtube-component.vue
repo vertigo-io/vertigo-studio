@@ -17,12 +17,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { ShinyYoutube } from '../../models/ShinyYoutube';
 
 export default defineComponent({
   name: 'VShinyYoutubeComponent',
   props: {
     data: {
-      type: Object,
+      type: Object as () => ShinyYoutube,
       required: true,
     },
   },

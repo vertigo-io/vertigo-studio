@@ -7,6 +7,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
+import { ShinySankey } from '../../models/ShinySankey';
 
 declare const Chart: any;
 
@@ -14,7 +15,7 @@ export default defineComponent({
   name: 'VShinySankeyComponent',
   props: {
     data: {
-      type: Object,
+      type: Object as () => ShinySankey,
       required: true,
     },
   },

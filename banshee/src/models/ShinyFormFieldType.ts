@@ -1,0 +1,11 @@
+export enum ShinyFormFieldType {
+  STRING = 'STRING',
+  NUMBER = 'NUMBER',
+  DATE = 'DATE',
+  BOOLEAN = 'BOOLEAN',
+  IMAGE = 'IMAGE',
+  SELECT = 'SELECT',
+  RADIO = 'RADIO',
+  CHECKBOX_GROUP = 'CHECKBOX_GROUP',
+  TEXTAREA = 'TEXTAREA',
+}
