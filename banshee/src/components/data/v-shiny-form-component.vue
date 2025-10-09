@@ -13,7 +13,133 @@
           <v-expansion-panel-content class="pa-2" style="padding: 0 !important;">
             <v-row dense>
               <v-col cols="12" sm="6" md="4" v-for="(field, fieldIndex) in section.fields" :key="fieldIndex">
-                <!-- Fields remain the same, Vuetify's 'dark' prop and theme should handle most styling -->
+                <template v-if="field.type === 'STRING'">
+                  <v-text-field
+                    :label="field.label"
+                    :value="field.value"
+                    :readonly="field.readOnly"
+                    :required="field.required"
+                    :placeholder="field.placeholder"
+                    :rules="getFieldRules(field)"
+                    filled
+                    dark
+                    dense
+                    color="primary"
+                  ></v-text-field>
+                </template>
+                <template v-else-if="field.type === 'NUMBER'">
+                  <v-text-field
+                    :label="field.label"
+                    :value="field.value"
+                    :readonly="field.readOnly"
+                    :required="field.required"
+                    :placeholder="field.placeholder"
+                    :rules="getFieldRules(field)"
+                    filled
+                    dark
+                    dense
+                    type="number"
+                    color="primary"
+                  ></v-text-field>
+                </template>
+                <template v-else-if="field.type === 'DATE'">
+                  <v-text-field
+                    :label="field.label"
+                    :value="field.value"
+                    :readonly="field.readOnly"
+                    :required="field.required"
+                    :placeholder="field.placeholder"
+                    :rules="getFieldRules(field)"
+                    filled
+                    dark
+                    dense
+                    color="primary"
+                  ></v-text-field>
+                </template>
+                <template v-else-if="field.type === 'BOOLEAN'">
+                  <v-switch
+                    :label="field.label"
+                    :input-value="field.value"
+                    :readonly="field.readOnly"
+                    :required="field.required"
+                    inset
+                    color="primary"
+                  ></v-switch>
+                </template>
+                <template v-else-if="field.type === 'IMAGE'">
+                  <v-img
+                    :src="field.value"
+                    :alt="field.label"
+                    contain
+                    max-height="150"
+                    class="mb-2"
+                  ></v-img>
+                  <div class="text-caption white--text">{{ field.label }}</div>
+                </template>
+                <template v-else-if="field.type === 'SELECT'">
+                  <v-select
+                    :label="field.label"
+                    :value="field.value"
+                    :readonly="field.readOnly"
+                    :required="field.required"
+                    :items="field.options"
+                    item-text="label"
+                    item-value="value"
+                    filled
+                    dark
+                    dense
+                    color="primary"
+                  ></v-select>
+                </template>
+                <template v-else-if="field.type === 'RADIO'">
+                  <v-radio-group
+                    :label="field.label"
+                    :value="field.value"
+                    :readonly="field.readOnly"
+                    :required="field.required"
+                    dark
+                    dense
+                    color="primary"
+                  >
+                    <v-radio
+                      v-for="(option, optionIndex) in field.options"
+                      :key="optionIndex"
+                      :label="option.label"
+                      :value="option.value"
+                    ></v-radio>
+                  </v-radio-group>
+                </template>
+                <template v-else-if="field.type === 'CHECKBOX_GROUP'">
+                  <v-container fluid class="pa-0">
+                    <v-subheader dark>{{ field.label }}</v-subheader>
+                    <v-checkbox
+                      v-for="(option, optionIndex) in field.options"
+                      :key="optionIndex"
+                      :label="option.label"
+                      :input-value="field.value && field.value.includes(option.value)"
+                      :readonly="field.readOnly"
+                      :required="field.required"
+                      dark
+                      dense
+                      color="primary"
+                    ></v-checkbox>
+                  </v-container>
+                </template>
+                <template v-else-if="field.type === 'TEXTAREA'">
+                  <v-textarea
+                    :label="field.label"
+                    :value="field.value"
+                    :readonly="field.readOnly"
+                    :required="field.required"
+                    :placeholder="field.placeholder"
+                    :rules="getFieldRules(field)"
+                    filled
+                    dark
+                    dense
+                    color="primary"
+                  ></v-textarea>
+                </template>
+                <div v-if="field.helpText" class="text-caption grey--text text--lighten-1">{{ field.helpText }}</div>
               </v-col>
             </v-row>
           </v-expansion-panel-content>
