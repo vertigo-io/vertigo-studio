@@ -1,9 +1,4 @@
-export class ShinyFormOption {
+export interface ShinyFormOption {
   label: string;
   value: any;
-
-  constructor(label: string, value: any) {
-    this.label = label;
-    this.value = value;
-  }
 }

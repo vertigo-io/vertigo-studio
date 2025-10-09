@@ -1,12 +1,7 @@
 import { ShinyComponent } from '../../../ShinyComponent';
 
-export class ShinyJson implements ShinyComponent {
+export interface ShinyJson extends ShinyComponent {
   title: string;
   json: string;
-  type: string = 'json';
-
-  constructor(title: string, json: string) {
-    this.title = title;
-    this.json = json;
-  }
+  type: string;
 }

@@ -1,10 +1,6 @@
 import { ShinyComponent } from '../../../ShinyComponent';
 
-export class ShinyFiglet implements ShinyComponent {
+export interface ShinyFiglet extends ShinyComponent {
   text: string;
-  type: string = 'figlet';
-
-  constructor(text: string) {
-    this.text = text;
-  }
+  type: string;
 }

@@ -1,10 +1,6 @@
 import { ShinyComponent } from '../../ShinyComponent';
 
-export class ShinyContainer implements ShinyComponent {
+export interface ShinyContainer extends ShinyComponent {
   components: ShinyComponent[];
-  type: string = 'container';
-
-  constructor(components: ShinyComponent[]) {
-    this.components = components;
-  }
+  type: string;
 }

@@ -1,12 +1,7 @@
 import { ShinyComponent } from '../../../ShinyComponent';
 
-export class ShinyCalendar implements ShinyComponent {
+export interface ShinyCalendar extends ShinyComponent {
   year: number;
   month: number;
-  type: string = 'calendar';
-
-  constructor(year: number, month: number) {
-    this.year = year;
-    this.month = month;
-  }
+  type: string;
 }

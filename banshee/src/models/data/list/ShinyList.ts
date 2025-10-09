@@ -1,15 +1,9 @@
 import { ShinyComponent } from '../../../ShinyComponent';
 import { ShinyListType } from './ShinyListType';
 
-export class ShinyList implements ShinyComponent {
+export interface ShinyList extends ShinyComponent {
   title: string;
   items: (string | ShinyList)[];
   listType: ShinyListType;
-  type: string = 'list';
-
-  constructor(title: string, items: (string | ShinyList)[], listType: ShinyListType) {
-    this.title = title;
-    this.items = items;
-    this.listType = listType;
-  }
+  type: string;
 }

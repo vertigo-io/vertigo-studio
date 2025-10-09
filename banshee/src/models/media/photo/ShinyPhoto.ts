@@ -1,14 +1,8 @@
 import { ShinyComponent } from '../../../ShinyComponent';
 
-export class ShinyPhoto implements ShinyComponent {
+export interface ShinyPhoto extends ShinyComponent {
   title?: string;
   url: string;
   alt?: string;
-  type: string = 'photo';
-
-  constructor(title: string, url: string, alt: string) {
-    this.title = title;
-    this.url = url;
-    this.alt = alt;
-  }
+  type: string;
 }

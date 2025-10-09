@@ -1,10 +1,6 @@
 import { ShinyComponent } from '../../../ShinyComponent';
 
-export class ShinyParagraph implements ShinyComponent {
+export interface ShinyParagraph extends ShinyComponent {
   text: string;
-  type: string = 'paragraph';
-
-  constructor(text: string) {
-    this.text = text;
-  }
+  type: string;
 }

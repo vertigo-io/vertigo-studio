@@ -1,13 +1,8 @@
 import { ShinyComponent } from '../../../ShinyComponent';
 import { ShinyStatusType } from './ShinyStatusType';
 
-export class ShinyStatus implements ShinyComponent {
+export interface ShinyStatus extends ShinyComponent {
   title: string;
   types: ShinyStatusType[];
-  type: string = 'status';
-
-  constructor(title: string, types: ShinyStatusType[]) {
-    this.title = title;
-    this.types = types;
-  }
+  type: string;
 }

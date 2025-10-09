@@ -1,10 +1,6 @@
 import { ShinyComponent } from '../../ShinyComponent';
 
-export class ShinyError implements ShinyComponent {
+export interface ShinyError extends ShinyComponent {
   text: string;
-  type: string = 'error';
-
-  constructor(text: string) {
-    this.text = text;
-  }
+  type: string;
 }
