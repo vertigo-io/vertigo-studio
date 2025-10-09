@@ -1,6 +1,6 @@
 <template>
   <div class="chart-container">
-    <component :is="`h${data.level || 1}`" class="table-title">{{ data.text }}</component>
+    <component :is="`h${data.level || 1}`" class="component-title">{{ data.text || 'Default Title' }}</component>
   </div>
 </template>
 
@@ -19,5 +19,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
-/* All styles are now handled by the global style.css */
+.component-title {
+  color: var(--assistant-text);
+  margin: 0;
+  padding: 0;
+}
 </style>

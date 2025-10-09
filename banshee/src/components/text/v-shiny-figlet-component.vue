@@ -19,7 +19,7 @@ export default defineComponent({
       required: true,
     },
   },
-  setup() {
+  setup(props) {
     const svgId = `figlet-${Math.random().toString(36).substr(2, 9)}`;
 
     const renderFiglet = () => {

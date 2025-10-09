@@ -510,6 +510,13 @@ td {
 	border-radius: 8px;
 	box-shadow: 0 4px 16px var(--general-shadow);
 	border: 1px solid var(--assistant-accent);
+	color: var(--assistant-text); /* Explicitly set text color for content */
+	text-align: center; /* Center content like Figlet SVG */
+}
+
+.shiny-figlet-svg {
+  max-width: 100%;
+  height: auto;
 }
 
 .chart-container .chart-canvas {
