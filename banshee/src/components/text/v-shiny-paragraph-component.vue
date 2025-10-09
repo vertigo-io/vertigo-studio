@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { ShinyParagraph } from '../../models/ShinyParagraph';
+import { ShinyParagraph } from '../../models/text/paragraph/ShinyParagraph';
 
 export default defineComponent({
   name: 'VShinyParagraphComponent',

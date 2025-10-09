@@ -57,8 +57,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { ShinyCardComponent } from '../../models/ShinyCardComponent';
-import { ShinyCardFormat } from '../../models/ShinyCardFormat';
+import { ShinyCardComponent } from '../../models/data/card/ShinyCardComponent';
+import { ShinyCardFormat } from '../../models/data/card/ShinyCardFormat';
 
 declare const lucide: any; // Declare lucide to avoid TypeScript errors
 

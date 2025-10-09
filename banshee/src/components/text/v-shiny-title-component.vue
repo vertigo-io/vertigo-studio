@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { ShinyTitle } from '../../models/ShinyTitle';
+import { ShinyTitle } from '../../models/text/title/ShinyTitle';
 
 export default defineComponent({
   name: 'VShinyTitleComponent',

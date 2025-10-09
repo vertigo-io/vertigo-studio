@@ -62,7 +62,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { ShinyPdfComponent } from '../../models/ShinyPdfComponent';
+import { ShinyPdfComponent } from '../../models/media/pdf/ShinyPdfComponent';
 
 // Declare PDF.js types if not available globally
 declare global {

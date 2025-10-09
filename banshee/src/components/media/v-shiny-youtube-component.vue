@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { ShinyYoutube } from '../../models/ShinyYoutube';
+import { ShinyYoutube } from '../../models/media/youtube/ShinyYoutube';
 
 export default defineComponent({
   name: 'VShinyYoutubeComponent',

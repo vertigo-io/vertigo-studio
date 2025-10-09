@@ -152,7 +152,7 @@
 <script lang="ts">
 // Script content remains the same
 import { defineComponent } from 'vue';
-import { ShinyForm } from '../../models/ShinyForm';
+import { ShinyForm } from '../../models/data/form/ShinyForm';
 
 interface ShinyFormField {
   name: string;

@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
-import { ShinySparkline } from '../../models/ShinySparkline';
+import { ShinySparkline } from '../../models/dataviz/sparkline/ShinySparkline';
 
 declare const Chart: any;
 

@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { ShinyJson } from '../../models/ShinyJson';
+import { ShinyJson } from '../../models/data/json/ShinyJson';
 
 export default defineComponent({
   name: 'VShinyJsonComponent',

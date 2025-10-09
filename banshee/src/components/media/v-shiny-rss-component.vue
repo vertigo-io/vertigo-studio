@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { ShinyRss } from '../../models/ShinyRss';
+import { ShinyRss } from '../../models/media/rss/ShinyRss';
 
 export default defineComponent({
   name: 'VShinyRssComponent',

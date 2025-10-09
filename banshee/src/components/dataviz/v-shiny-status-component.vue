@@ -9,8 +9,8 @@
 
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
-import { ShinyStatus } from '../../models/ShinyStatus';
-import { ShinyStatusType, getShinyStatusColor } from '../../models/ShinyStatusType';
+import { ShinyStatus } from '../../models/dataviz/status/ShinyStatus';
+import { ShinyStatusType, getShinyStatusColor } from '../../models/dataviz/status/ShinyStatusType';
 
 export default defineComponent({
   name: 'VShinyStatusComponent',

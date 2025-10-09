@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { ShinyPhoto } from '../../models/ShinyPhoto';
+import { ShinyPhoto } from '../../models/media/photo/ShinyPhoto';
 
 export default defineComponent({
   name: 'VShinyPhotoComponent',

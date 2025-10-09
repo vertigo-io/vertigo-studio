@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
-import { ShinyTree } from '../../models/ShinyTree';
+import { ShinyTree } from '../../models/data/tree/ShinyTree';
 
 interface ShinyTreeNode {
   label: string;

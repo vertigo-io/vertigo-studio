@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
-import { ShinyFiglet } from '../../models/ShinyFiglet';
+import { ShinyFiglet } from '../../models/text/figlet/ShinyFiglet';
 
 interface FigletCharSet {
   [key: string]: number[][];

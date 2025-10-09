@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { ShinyError } from '../../models/ShinyError';
+import { ShinyError } from '../../models/core/error/ShinyError';
 
 export default defineComponent({
   name: 'VShinyErrorComponent',

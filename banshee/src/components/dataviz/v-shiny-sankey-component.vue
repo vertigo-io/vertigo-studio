@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
-import { ShinySankey } from '../../models/ShinySankey';
+import { ShinySankey } from '../../models/dataviz/sankey/ShinySankey';
 
 declare const Chart: any;
 

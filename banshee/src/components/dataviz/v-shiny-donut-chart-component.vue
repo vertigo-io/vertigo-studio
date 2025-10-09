@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
-import { ShinyChart } from '../../models/ShinyChart';
+import { ShinyChart } from '../../models/dataviz/chart/ShinyChart';
 
 declare const Chart: any;
 

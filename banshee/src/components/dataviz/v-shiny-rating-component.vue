@@ -8,8 +8,8 @@
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
-import { ShinyRating } from '../../models/ShinyRating';
-import { ShinyRatingScale, getShinyRatingMaxValue } from '../../models/ShinyRatingScale';
+import { ShinyRating } from '../../models/dataviz/rating/ShinyRating';
+import { ShinyRatingScale, getShinyRatingMaxValue } from '../../models/dataviz/rating/ShinyRatingScale';
 
 export default defineComponent({
   name: 'VShinyRatingComponent',

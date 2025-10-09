@@ -7,7 +7,7 @@
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
 import TreeNode from './TreeNode.vue'; // Import the new TreeNode component
-import { ShinyTree } from '../../models/ShinyTree';
+import { ShinyTree } from '../../models/data/tree/ShinyTree';
 
 // Define interfaces for better type checking
 interface ShinyTreeData {

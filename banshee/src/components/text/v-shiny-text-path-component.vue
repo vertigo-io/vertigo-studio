@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { ShinyTextPath } from '../../models/ShinyTextPath';
+import { ShinyTextPath } from '../../models/text/textpath/ShinyTextPath';
 
 export default defineComponent({
   name: 'VShinyTextPathComponent',

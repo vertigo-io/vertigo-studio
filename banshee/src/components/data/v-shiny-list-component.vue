@@ -7,8 +7,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { ShinyList } from '../../models/ShinyList';
-import { ShinyListType } from '../../models/ShinyListType';
+import { ShinyList } from '../../models/data/list/ShinyList';
+import { ShinyListType } from '../../models/data/list/ShinyListType';
 
 export default defineComponent({
   name: 'VShinyListComponent',
