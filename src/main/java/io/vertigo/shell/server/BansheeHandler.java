@@ -302,6 +302,19 @@ final class BansheeHandler {
 								.addItem("Saturn")
 								.addItem("Venus")
 								.build())
+						.addComponent(Shiny.chip()
+								.withText("Beatles")
+								.withColor("red")
+								.withVariant(ShinyChipVariant.ELEVATED)
+								.withIcon("mdi-vuetify")
+								.withClosable(true)
+								.build())
+						.addComponent(Shiny.chip()
+								.withText("Kinks")
+								.withColor("pink")
+								.withVariant(ShinyChipVariant.ELEVATED)
+								.withIcon("mdi-vuetify")
+								.build())
 						.build();
 				default -> new ShinyErrorBuilder().withText("unknown command :" + message).build();
 			};
