@@ -241,7 +241,7 @@ final class BansheeHandler {
 						.build();
 				case "chip" -> Shiny.chip()
 						.withText("Vuetify")
-						.withColor("blue")
+						.withColor("red")
 						.withVariant(ShinyChipVariant.ELEVATED)
 						.withIcon("mdi-vuetify")
 						.withClosable(true)
