@@ -39,9 +39,11 @@ import io.vertigo.shiny.components.ShinyComponent;
 import io.vertigo.shiny.components.core.container.ShinyContainerBuilder;
 import io.vertigo.shiny.components.core.error.ShinyErrorBuilder;
 import io.vertigo.shiny.components.data.card.ShinyCardFormat;
+import io.vertigo.shiny.components.data.chip.ShinyChipVariant;
 import io.vertigo.shiny.components.data.list.ShinyListType;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingScale;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatusType;
+import io.vertigo.shiny.components.feedback.alert.ShinyAlertType;
 import io.vertigo.shiny.components.media.geomap.ShinyGeoPoint;
 
 final class BansheeHandler {
@@ -201,6 +203,64 @@ final class BansheeHandler {
 						.addRow("Chakra", "UI")
 						.addRow("React", "Components")
 						.build();
+				case "timeline", "tl" -> Shiny.timeline()
+						.withTitle("Project Timeline")
+						.addItem("Step 1: Conception", "Defining project goals and scope.", "blue", "mdi-lightbulb-on-outline")
+						.addItem("Step 2: Development", "Building the core features.", "green", "mdi-code-braces")
+						.addItem("Step 3: Testing", "Ensuring quality and stability.", "orange", "mdi-flask-empty-outline")
+						.addItem("Step 4: Deployment", "Releasing to production.", "purple", "mdi-rocket-launch-outline")
+						.build();
+				case "slider" -> Shiny.slider()
+						.withLabel("Volume")
+						.withMin(0)
+						.withMax(100)
+						.withStep(1)
+						.withValue(45)
+						.withColor("orange")
+						.withThumbLabel(true)
+						.build();
+				case "alert" -> Shiny.alert()
+						.withAlertType(ShinyAlertType.INFO)
+						.withTitle("Information")
+						.withContent("This is an informational message.")
+						.withClosable(true)
+						.build();
+				case "alert-success" -> Shiny.alert()
+						.withAlertType(ShinyAlertType.SUCCESS)
+						.withTitle("Success")
+						.withContent("The operation completed successfully!")
+						.build();
+				case "alert-warning" -> Shiny.alert()
+						.withAlertType(ShinyAlertType.WARNING)
+						.withContent("This is a warning message, please be careful.")
+						.build();
+				case "alert-error" -> Shiny.alert()
+						.withAlertType(ShinyAlertType.ERROR)
+						.withTitle("Error")
+						.withContent("An error occurred while processing your request.")
+						.build();
+				case "chip" -> Shiny.chip()
+						.withText("Vuetify")
+						.withColor("blue")
+						.withVariant(ShinyChipVariant.ELEVATED)
+						.withIcon("mdi-vuetify")
+						.withClosable(true)
+						.build();
+				case "org" -> Shiny.organization()
+						.addNode("1", null, "John Doe", "CEO", "https://randomuser.me/api/portraits/men/1.jpg")
+						.addNode("2", "1", "Jane Smith", "CTO", "https://randomuser.me/api/portraits/women/2.jpg")
+						.addNode("3", "1", "Mike Johnson", "CFO", "https://randomuser.me/api/portraits/men/3.jpg")
+						.addNode("4", "2", "Emily Brown", "Lead Developer", "https://randomuser.me/api/portraits/women/4.jpg")
+						.addNode("5", "2", "David Wilson", "DevOps Engineer", "https://randomuser.me/api/portraits/men/5.jpg")
+						.addNode("6", "3", "Sarah Davis", "Accountant", "https://randomuser.me/api/portraits/women/6.jpg")
+						.build();
+				//				case "radar2" -> Shiny.chart()
+				//						.withType(ShinyChartType.radar)
+				//						.withLabels("Speed", "Strength", "Stamina", "Intelligence", "Wisdom", "Charisma")
+				//						.addSerie(ShinyChartSerie.of("Hero A", List.of(80, 90, 70, 60, 85, 75)))
+				//						.addSerie(ShinyChartSerie.of("Hero B", List.of(70, 80, 85, 75, 60, 90)))
+				//						.withColors("red", "blue")
+				//						.build();
 				case "pdf" -> new PdfSample().execute();
 				case "tree" -> Shiny.tree()
 						.withLabel("my directory")
@@ -291,6 +351,7 @@ final class BansheeHandler {
 
 	private static String buildMessage(BansheeAction action, final String type, UUID id, String data) {
 		//		var message = new BansheeMessage(action, type, id, data);
+		//		var message = new BansheeMessage(action, alertType, id, data);
 		//		try {
 		//			return MAPPER.writeValueAsString(message);
 		//		} catch (JsonProcessingException e) {

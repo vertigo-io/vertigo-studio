@@ -8,7 +8,7 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinyMarkDownBuilder implements Builder<ShinyMarkDown> {
-	private String markdownText; // Renamed from _markdownText
+	    private String _markdownText; // Renamed from _markdownText
 
 	// No public constructor, use ShinyMarkDown.builder()
 	ShinyMarkDownBuilder() {
@@ -17,28 +17,24 @@ public final class ShinyMarkDownBuilder implements Builder<ShinyMarkDown> {
 
 	public ShinyMarkDownBuilder withFile(final String path) {
 		try {
-			this.markdownText = Files.readString(Path.of(path));
-		} catch (final IOException e) {
+			        this._markdownText = Files.readString(Path.of(path));		} catch (final IOException e) {
 			throw new RuntimeException("Error reading file: " + path, e);
 		}
 		return this;
 	}
 
 	public ShinyMarkDownBuilder withText(final String text) {
-		this.markdownText = text;
-		return this;
+		        this._markdownText = text;		return this;
 	}
 
 	// Getter for the field, needed by the record constructor
-	String markdownText() {
-		return markdownText;
-	}
-
+	    String markdownText() {
+	        return _markdownText;
+	    }
 	@Override
 	public ShinyMarkDown build() {
 		// Perform any final validations here before building the object
-		Assertion.check().isNotNull(markdownText, "Markdown text not set. Use fromFile() or fromText().");
-		//---
+		        Assertion.check().isNotNull(_markdownText, "Markdown text not set. Use fromFile() or fromText().");		//---
 		return new ShinyMarkDown(this);
 	}
 }

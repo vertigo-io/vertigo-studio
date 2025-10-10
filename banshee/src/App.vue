@@ -67,9 +67,13 @@ const componentMap: { [key: string]: string } = {
   list: 'v-shiny-list-component',
   table: 'v-shiny-table-component',
   tree: 'v-shiny-tree-component',
+  timeline: 'v-shiny-timeline-component',
+  chip: 'v-shiny-chip-component',
+  organization: 'v-shiny-organization-component',
   // ---dataviz
   barChart: 'v-shiny-bar-chart-component',
-  radarChart: 'v-shiny-radar-chart-component',
+  'radar': 'v-shiny-radar-chart-component',
+  'radar2': 'v-shiny-radar2-component',
   pieChart: 'v-shiny-pie-chart-component',
   donutChart: 'v-shiny-donut-chart-component',
   areaChart: 'v-shiny-area-chart-component',
@@ -93,6 +97,12 @@ const componentMap: { [key: string]: string } = {
   youtube: 'v-shiny-youtube-component',
   pdf: 'v-shiny-pdf-component',
   card: 'v-shiny-card-component',
+  // ---input
+  slider: 'v-shiny-slider-component',
+  // ---feedback
+  alert: 'v-shiny-alert-component',
+
+
 };
 
 const toggleSpeechToText = () => {

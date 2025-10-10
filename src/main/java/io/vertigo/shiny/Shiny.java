@@ -7,9 +7,11 @@ import io.vertigo.shiny.components.core.container.ShinyContainerBuilder;
 import io.vertigo.shiny.components.core.error.ShinyErrorBuilder;
 import io.vertigo.shiny.components.data.calendar.ShinyCalendarBuilder;
 import io.vertigo.shiny.components.data.card.ShinyCardBuilder;
+import io.vertigo.shiny.components.data.chip.ShinyChipBuilder;
 import io.vertigo.shiny.components.data.form.ShinyFormBuilder;
 import io.vertigo.shiny.components.data.json.ShinyJsonBuilder;
 import io.vertigo.shiny.components.data.list.ShinyListBuilder;
+import io.vertigo.shiny.components.data.organization.ShinyOrganizationBuilder;
 import io.vertigo.shiny.components.data.table.ShinyTableBuilder;
 import io.vertigo.shiny.components.data.tree.ShinyTreeBuilder;
 import io.vertigo.shiny.components.dataviz.chart.ShinyChartBuilder;
@@ -19,7 +21,9 @@ import io.vertigo.shiny.components.dataviz.rating.ShinyRatingBuilder;
 import io.vertigo.shiny.components.dataviz.sankey.ShinySankeyBuilder;
 import io.vertigo.shiny.components.dataviz.sparkline.ShinySparklineBuilder;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatusBuilder;
+import io.vertigo.shiny.components.feedback.alert.ShinyAlertBuilder;
 import io.vertigo.shiny.components.input.multiselection.ShinyMultiSelectionBuilder;
+import io.vertigo.shiny.components.input.slider.ShinySliderBuilder;
 import io.vertigo.shiny.components.input.text.ShinyInputTextBuilder;
 import io.vertigo.shiny.components.live.progressbar.ShinyProgressBarBuilder;
 import io.vertigo.shiny.components.live.spinner.ShinySpinnerBuilder;
@@ -33,6 +37,7 @@ import io.vertigo.shiny.components.text.paragraph.ShinyParagraphBuilder;
 import io.vertigo.shiny.components.text.textpath.ShinyTextPathBuilder;
 import io.vertigo.shiny.components.text.title.ShinyTitleBuilder;
 import io.vertigo.shiny.components.text.toggle.ShinyToggleBuilder;
+import io.vertigo.shiny.data.timeline.ShinyTimelineBuilder;
 import io.vertigo.shiny.mermaid.ShinyMermaidServer;
 
 public final class Shiny {
@@ -56,6 +61,10 @@ public final class Shiny {
 
 	public static ShinyErrorBuilder error() {
 		return new ShinyErrorBuilder();
+	}
+
+	public static ShinyAlertBuilder alert() {
+		return new ShinyAlertBuilder();
 	}
 
 	public static ShinyContainerBuilder container() {
@@ -118,6 +127,10 @@ public final class Shiny {
 		return new ShinyTitleBuilder();
 	}
 
+	public static ShinyTimelineBuilder timeline() {
+		return new ShinyTimelineBuilder();
+	}
+
 	//	public static ShinyMarkDownBuilder markdown() {
 	//		return ShinyMarkDown.builder();
 	//	}
@@ -142,12 +155,24 @@ public final class Shiny {
 		return new ShinyInputTextBuilder();
 	}
 
+	public static ShinySliderBuilder slider() {
+		return new ShinySliderBuilder();
+	}
+
 	public static ShinyPdfComponentBuilder pdf() {
 		return new ShinyPdfComponentBuilder();
 	}
 
 	public static ShinyCardBuilder card() {
 		return new ShinyCardBuilder();
+	}
+
+	public static ShinyChipBuilder chip() {
+		return new ShinyChipBuilder();
+	}
+
+	public static ShinyOrganizationBuilder organization() {
+		return new ShinyOrganizationBuilder();
 	} //	public static ShinyComposer composer() {
 		//		return new ShinyComposer();
 		//	}
