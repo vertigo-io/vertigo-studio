@@ -1,4 +1,4 @@
-import { ShinyComponent } from '../../../ShinyComponent';
+import { ShinyComponent } from '../../ShinyComponent';
 
 export class ShinyTree implements ShinyComponent {
   label: string;
