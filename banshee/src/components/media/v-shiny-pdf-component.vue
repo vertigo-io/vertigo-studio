@@ -60,8 +60,8 @@
   </v-card>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { ref, onMounted, watch, onBeforeUnmount } from 'vue';
 import { ShinyPdfComponent } from '../../models/media/pdf/ShinyPdfComponent';
 
 // Declare PDF.js types if not available globally
@@ -77,119 +77,120 @@ interface PdfDocument {
   destroy(): void;
 }
 
-export default defineComponent({
-  name: 'VShinyPdfComponent',
-  props: {
-    data: {
-      type: Object as () => ShinyPdfComponent,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      pdfDoc: null as PdfDocument | null,
-      currentPage: 1,
-      numPages: 0,
-      scale: 1.0,
-      loading: true,
-      error: null as string | null,
-    };
-  },
-  mounted() {
-    this.currentPage = this.data.initialPage || 1;
-    this.loadPdf();
-  },
-  watch: {
-    'data.pdfPath'() {
-      this.loadPdf();
-    },
-    currentPage() {
-      this.renderPage();
-    },
-    scale() {
-      this.renderPage();
-    },
-  },
-  methods: {
-    async loadPdf() {
-      this.loading = true;
-      this.error = null;
+const props = defineProps<{
+  data: ShinyPdfComponent
+}>()
 
-      try {
-        if (typeof window.pdfjsLib === 'undefined') {
-          throw new Error('PDF.js n\'est pas chargé. Ajoutez le script dans votre index.html');
-        }
+const pdfDoc = ref<PdfDocument | null>(null);
+const currentPage = ref(1);
+const numPages = ref(0);
+const scale = ref(1.0);
+const loading = ref(true);
+const error = ref<string | null>(null);
+const pdfCanvas = ref<HTMLCanvasElement | null>(null);
 
-        const loadingTask = window.pdfjsLib.getDocument(this.data.pdfPath);
-        this.pdfDoc = await loadingTask.promise;
-        this.numPages = this.pdfDoc.numPages;
+const loadPdf = async () => {
+  loading.value = true;
+  error.value = null;
 
-        if (this.currentPage > this.numPages) {
-          this.currentPage = 1;
-        }
-
-        await this.renderPage();
-      } catch (err: any) {
-        this.error = `Erreur lors du chargement du PDF: ${err.message}`;
-        console.error(err);
-      }
-    },
-    async renderPage() {
-      if (!this.pdfDoc) return;
-
-      try {
-        const page = await this.pdfDoc.getPage(this.currentPage);
-        const canvas = this.$refs.pdfCanvas as HTMLCanvasElement;
-        const context = canvas.getContext('2d');
-
-        if (!context) {
-          throw new Error('Could not get 2D context for canvas');
-        }
-
-        const viewport = page.getViewport({ scale: this.scale });
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
-
-        const renderContext = {
-          canvasContext: context,
-          viewport: viewport,
-        };
-
-        await page.render(renderContext).promise;
-      } catch (err: any) {
-        this.error = `Erreur lors du rendu de la page: ${err.message}`;
-        console.error(err);
-      }
-    },
-    nextPage() {
-      if (this.currentPage < this.numPages) {
-        this.currentPage++;
-      }
-    },
-    prevPage() {
-      if (this.currentPage > 1) {
-        this.currentPage--;
-      }
-    },
-    zoomIn() {
-      if (this.scale < 3) {
-        this.scale += 0.25;
-      }
-    },
-    zoomOut() {
-      if (this.scale > 0.5) {
-        this.scale -= 0.25;
-      }
-    },
-    resetZoom() {
-      this.scale = 1.0;
-    },
-  },
-  beforeUnmount() {
-    if (this.pdfDoc) {
-      this.pdfDoc.destroy();
+  try {
+    if (typeof window.pdfjsLib === 'undefined') {
+      throw new Error('PDF.js n\'est pas chargé. Ajoutez le script dans votre index.html');
     }
-  },
+
+    const loadingTask = window.pdfjsLib.getDocument(props.data.pdfPath);
+    pdfDoc.value = await loadingTask.promise;
+    numPages.value = pdfDoc.value.numPages;
+
+    if (currentPage.value > numPages.value) {
+      currentPage.value = 1;
+    }
+
+    await renderPage();
+  } catch (err: any) {
+    error.value = `Erreur lors du chargement du PDF: ${err.message}`;
+    console.error(err);
+  } finally {
+    loading.value = false;
+  }
+};
+
+const renderPage = async () => {
+  if (!pdfDoc.value || !pdfCanvas.value) return;
+
+  try {
+    const page = await pdfDoc.value.getPage(currentPage.value);
+    const context = pdfCanvas.value.getContext('2d');
+
+    if (!context) {
+      throw new Error('Could not get 2D context for canvas');
+    }
+
+    const viewport = page.getViewport({ scale: scale.value });
+    pdfCanvas.value.height = viewport.height;
+    pdfCanvas.value.width = viewport.width;
+
+    const renderContext = {
+      canvasContext: context,
+      viewport: viewport,
+    };
+
+    await page.render(renderContext).promise;
+  } catch (err: any) {
+    error.value = `Erreur lors du rendu de la page: ${err.message}`;
+    console.error(err);
+  }
+};
+
+const nextPage = () => {
+  if (currentPage.value < numPages.value) {
+    currentPage.value++;
+  }
+};
+
+const prevPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--;
+  }
+};
+
+const zoomIn = () => {
+  if (scale.value < 3) {
+    scale.value += 0.25;
+  }
+};
+
+const zoomOut = () => {
+  if (scale.value > 0.5) {
+    scale.value -= 0.25;
+  }
+};
+
+const resetZoom = () => {
+  scale.value = 1.0;
+};
+
+onMounted(() => {
+  currentPage.value = props.data.initialPage || 1;
+  loadPdf();
+});
+
+watch(() => props.data.pdfPath, () => {
+  loadPdf();
+});
+
+watch(currentPage, () => {
+  renderPage();
+});
+
+watch(scale, () => {
+  renderPage();
+});
+
+onBeforeUnmount(() => {
+  if (pdfDoc.value) {
+    pdfDoc.value.destroy();
+  }
 });
 </script>
 

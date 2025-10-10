@@ -4,19 +4,12 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 import { ShinyTitle } from '../../models/text/title/ShinyTitle';
 
-export default defineComponent({
-  name: 'VShinyTitleComponent',
-  props: {
-    data: {
-      type: Object as () => ShinyTitle,
-      required: true,
-    },
-  },
-});
+defineProps<{
+  data: ShinyTitle
+}>()
 </script>
 
 <style scoped>

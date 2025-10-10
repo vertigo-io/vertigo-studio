@@ -7,38 +7,29 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted } from 'vue';
+<script setup lang="ts">
+import { onMounted, reactive } from 'vue';
 import { ShinyStatus } from '../../models/dataviz/status/ShinyStatus';
 import { ShinyStatusType, getShinyStatusColor } from '../../models/dataviz/status/ShinyStatusType';
 
-export default defineComponent({
-  name: 'VShinyStatusComponent',
-  props: {
-    data: {
-      type: Object as () => ShinyStatus,
-      required: true,
-    },
-  },
-  setup() {
-    const colorMap: Record<ShinyStatusType, string> = {
-      [ShinyStatusType.SUCCESS]: '',
-      [ShinyStatusType.ERROR]: '',
-      [ShinyStatusType.WARNING]: '',
-      [ShinyStatusType.INFO]: '',
-      [ShinyStatusType.NEUTRAL]: '',
-    };
+const props = defineProps<{
+  data: ShinyStatus
+}>()
 
-    onMounted(() => {
-      colorMap.SUCCESS = getShinyStatusColor(ShinyStatusType.SUCCESS);
-      colorMap.ERROR = getShinyStatusColor(ShinyStatusType.ERROR);
-      colorMap.WARNING = getShinyStatusColor(ShinyStatusType.WARNING);
-      colorMap.INFO = getShinyStatusColor(ShinyStatusType.INFO);
-      colorMap.NEUTRAL = getShinyStatusColor(ShinyStatusType.NEUTRAL);
-    });
+const colorMap: Record<ShinyStatusType, string> = reactive({
+  [ShinyStatusType.SUCCESS]: '',
+  [ShinyStatusType.ERROR]: '',
+  [ShinyStatusType.WARNING]: '',
+  [ShinyStatusType.INFO]: '',
+  [ShinyStatusType.NEUTRAL]: '',
+});
 
-    return { colorMap };
-  },
+onMounted(() => {
+  colorMap.SUCCESS = getShinyStatusColor(ShinyStatusType.SUCCESS);
+  colorMap.ERROR = getShinyStatusColor(ShinyStatusType.ERROR);
+  colorMap.WARNING = getShinyStatusColor(ShinyStatusType.WARNING);
+  colorMap.INFO = getShinyStatusColor(ShinyStatusType.INFO);
+  colorMap.NEUTRAL = getShinyStatusColor(ShinyStatusType.NEUTRAL);
 });
 </script>
 

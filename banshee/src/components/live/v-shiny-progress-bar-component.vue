@@ -5,22 +5,15 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { computed } from 'vue';
 
-export default defineComponent({
-  name: 'VShinyProgressBarComponent',
-  props: {
-    data: {
-      type: Object,
-      required: true,
-    },
-  },
-  computed: {
-    percentage(): number {
-      return Math.min((this.data.value / this.data.total) * 100, 100);
-    },
-  },
+const props = defineProps<{
+  data: { id: string; value: number; total: number }
+}>()
+
+const percentage = computed((): number => {
+  return Math.min((props.data.value / props.data.total) * 100, 100);
 });
 </script>
 

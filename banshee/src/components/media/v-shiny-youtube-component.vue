@@ -15,19 +15,12 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 import { ShinyYoutube } from '../../models/media/youtube/ShinyYoutube';
 
-export default defineComponent({
-  name: 'VShinyYoutubeComponent',
-  props: {
-    data: {
-      type: Object as () => ShinyYoutube,
-      required: true,
-    },
-  },
-});
+defineProps<{
+  data: ShinyYoutube
+}>()
 </script>
 
 <style scoped>

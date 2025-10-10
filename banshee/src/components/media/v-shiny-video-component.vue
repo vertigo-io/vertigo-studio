@@ -17,18 +17,11 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 
-export default defineComponent({
-  name: 'VShinyVideoComponent',
-  props: {
-    data: {
-      type: Object,
-      required: true,
-    },
-  },
-});
+defineProps<{
+  data: { title?: string; videoId?: string }
+}>()
 </script>
 
 <style scoped>

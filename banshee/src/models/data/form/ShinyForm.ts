@@ -1,4 +1,4 @@
-import { ShinyComponent } from '../../../ShinyComponent';
+import { ShinyComponent } from '../../ShinyComponent';
 import { ShinyFormSection } from './ShinyFormSection';
 
 export interface ShinyForm extends ShinyComponent {

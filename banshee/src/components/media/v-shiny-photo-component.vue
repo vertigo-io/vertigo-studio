@@ -8,19 +8,12 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 import { ShinyPhoto } from '../../models/media/photo/ShinyPhoto';
 
-export default defineComponent({
-  name: 'VShinyPhotoComponent',
-  props: {
-    data: {
-      type: Object as () => ShinyPhoto,
-      required: true,
-    },
-  },
-});
+defineProps<{
+  data: ShinyPhoto
+}>()
 </script>
 
 <style scoped>

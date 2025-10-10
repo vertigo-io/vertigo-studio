@@ -5,37 +5,30 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { computed } from 'vue';
 import { ShinyTextPath } from '../../models/text/textpath/ShinyTextPath';
 
-export default defineComponent({
-  name: 'VShinyTextPathComponent',
-  props: {
-    data: {
-      type: Object as () => ShinyTextPath,
-      required: true,
-    },
-  },
-  computed: {
-    pathHtml(): string {
-      const parts = (this.data.path || '').split(this.data.separator || '/');
-      let html = '';
-      parts.forEach((part: string, index: number) => {
-        let partClass = 'path-node';
-        if (index === 0) {
-          partClass = 'path-root';
-        } else if (index === parts.length - 1) {
-          partClass = 'path-leaf';
-        }
-        html += `<span class="${partClass}">${part}</span>`;
-        if (index < parts.length - 1) {
-          html += `<span class="path-separator">${this.data.separator || '/'}</span>`;
-        }
-      });
-      return html;
-    },
-  },
+const props = defineProps<{
+  data: ShinyTextPath
+}>()
+
+const pathHtml = computed((): string => {
+  const parts = (props.data.path || '').split(props.data.separator || '/');
+  let html = '';
+  parts.forEach((part: string, index: number) => {
+    let partClass = 'path-node';
+    if (index === 0) {
+      partClass = 'path-root';
+    } else if (index === parts.length - 1) {
+      partClass = 'path-leaf';
+    }
+    html += `<span class="${partClass}">${part}</span>`;
+    if (index < parts.length - 1) {
+      html += `<span class="path-separator">${props.data.separator || '/'}</span>`;
+    }
+  });
+  return html;
 });
 </script>
 
