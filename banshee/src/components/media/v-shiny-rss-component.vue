@@ -21,24 +21,16 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 import { ShinyRss } from '../../models/media/rss/ShinyRss';
 
-export default defineComponent({
-  name: 'VShinyRssComponent',
-  props: {
-    data: {
-      type: Object as () => ShinyRss,
-      required: true,
-    },
-  },
-  methods: {
-    summary(description: string): string {
-      return description && description.length > 150 ? description.substring(0, 150) + '...' : description;
-    },
-  },
-});
+const props = defineProps<{
+  data: ShinyRss
+}>()
+
+const summary = (description: string): string => {
+  return description && description.length > 150 ? description.substring(0, 150) + '...' : description;
+};
 </script>
 
 <style scoped>
