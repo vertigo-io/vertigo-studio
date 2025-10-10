@@ -72,8 +72,7 @@ const componentMap: { [key: string]: string } = {
   organization: 'v-shiny-organization-component',
   // ---dataviz
   barChart: 'v-shiny-bar-chart-component',
-  'radar': 'v-shiny-radar-chart-component',
-  'radar2': 'v-shiny-radar2-component',
+  radar: 'v-shiny-radar-chart-component',
   pieChart: 'v-shiny-pie-chart-component',
   donutChart: 'v-shiny-donut-chart-component',
   areaChart: 'v-shiny-area-chart-component',
@@ -203,16 +202,16 @@ const clearMessages = () => {
   messages.splice(0); // Clear reactive array
 };
 
-const updateMessage = (id: string, data: any) => {
+/*const updateMessage = (id: string, data: any) => {
   const message = messages.find(msg => msg.id === id);
   if (message) {
     message.data = { ...message.data, ...data };
   } else {
     console.warn(`Message with id ${id} not found`);
   }
-};
+};*/
 
-const addMessage = (content: string, cssClass: string, id: string, isComponent = false, data = {}) => {
+const addMessage = (content: string, cssClass: string, id: string = undefined, isComponent = false, data = {}) => {
   messages.push({
     content: content,
     cssClass: `chat-message ${cssClass}`,
