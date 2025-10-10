@@ -4,33 +4,20 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted } from 'vue';
+<script setup lang="ts">
+import { onMounted } from 'vue';
 import TreeNode from './TreeNode.vue'; // Import the new TreeNode component
 import { ShinyTree } from '../../models/data/tree/ShinyTree';
 
-// Define interfaces for better type checking
-interface ShinyTreeData {
-  rootNode: ShinyTree;
-}
-
 declare const lucide: any;
 
-export default defineComponent({
-  name: 'VShinyTreeComponent',
-  props: {
-    data: {
-      type: Object as () => ShinyTreeData,
-      required: true,
-    },
-  },
-  components: {
-    TreeNode, // Register the imported component
-  },
-  mounted() {
-    if (this.data.rootNode.icon && this.data.rootNode.icon.toLowerCase() !== 'none' && typeof lucide !== 'undefined') {
-      lucide.createIcons();
-    }
+const props = defineProps<{
+  data: { rootNode: ShinyTree }
+}>()
+
+onMounted(() => {
+  if (props.data.rootNode.icon && props.data.rootNode.icon.toLowerCase() !== 'none' && typeof lucide !== 'undefined') {
+    lucide.createIcons();
   }
 });
 </script>

@@ -5,58 +5,49 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted } from 'vue';
+<script setup lang="ts">
+import { onMounted } from 'vue';
 import { ShinyGeoMap } from '../../models/media/geomap/ShinyGeoMap';
 
 declare const L: any; // Declare L (Leaflet) to avoid TypeScript errors
 
-export default defineComponent({
-  name: 'VShinyGeoMapComponent',
-  props: {
-    data: {
-      type: Object as () => ShinyGeoMap,
-      required: true,
-    },
-  },
-  setup(props) {
-    const mapId = `map-${Math.random().toString(36).substr(2, 9)}`;
+const props = defineProps<{
+  data: ShinyGeoMap
+}>()
 
-    onMounted(() => {
-      const mapContainer = document.getElementById(mapId);
-      if (!mapContainer) {
-        console.error(`Map container not found for ID: ${mapId}`);
-        return;
-      }
+const mapId = `map-${Math.random().toString(36).substr(2, 9)}`;
 
-      let initialLat = 0;
-      let initialLng = 0;
-      if (props.data.geoPoints && props.data.geoPoints.length > 0) {
-        initialLat = props.data.geoPoints[0].latitude;
-        initialLng = props.data.geoPoints[0].longitude;
-      }
+onMounted(() => {
+  const mapContainer = document.getElementById(mapId);
+  if (!mapContainer) {
+    console.error(`Map container not found for ID: ${mapId}`);
+    return;
+  }
 
-      const map = L.map(mapId).setView([initialLat, initialLng], 12);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        maxZoom: 18,
-        tileSize: 256,
-      }).addTo(map);
+  let initialLat = 0;
+  let initialLng = 0;
+  if (props.data.geoPoints && props.data.geoPoints.length > 0) {
+    initialLat = props.data.geoPoints[0].latitude;
+    initialLng = props.data.geoPoints[0].longitude;
+  }
 
-      if (props.data.geoPoints) {
-        props.data.geoPoints.forEach((geoPoint: any) => {
-          const marker = L.marker([geoPoint.latitude, geoPoint.longitude]).addTo(map);
-          if (geoPoint.label) {
-            marker.bindPopup(geoPoint.label).openPopup();
-          } else if (props.data.title) {
-            marker.bindPopup(props.data.title).openPopup();
-          }
-        });
+  const map = L.map(mapId).setView([initialLat, initialLng], 12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 18,
+    tileSize: 256,
+  }).addTo(map);
+
+  if (props.data.geoPoints) {
+    props.data.geoPoints.forEach((geoPoint: any) => {
+      const marker = L.marker([geoPoint.latitude, geoPoint.longitude]).addTo(map);
+      if (geoPoint.label) {
+        marker.bindPopup(geoPoint.label).openPopup();
+      } else if (props.data.title) {
+        marker.bindPopup(props.data.title).openPopup();
       }
     });
-
-    return { mapId };
-  },
+  }
 });
 </script>
 

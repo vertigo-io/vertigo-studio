@@ -55,37 +55,31 @@
   </v-card>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { computed, onMounted } from 'vue';
 import { ShinyCardComponent } from '../../models/data/card/ShinyCardComponent';
 import { ShinyCardFormat } from '../../models/data/card/ShinyCardFormat';
 
 declare const lucide: any; // Declare lucide to avoid TypeScript errors
 
-export default defineComponent({
-  name: 'VShinyCardComponent',
-  props: {
-    data: {
-      type: Object as () => ShinyCardComponent,
-      required: true,
-    },
-  },
-  computed: {
-    cardWidth(): string {
-      switch (this.data.format) {
-        case ShinyCardFormat.S: return '250px';
-        case ShinyCardFormat.M: return '350px';
-        case ShinyCardFormat.L: return '450px';
-        default: return '350px';
-      }
-    },
-  },
-  mounted() {
-    // Initialize Lucide icons
-    if (this.data.icon) {
-      lucide.createIcons();
-    }
-  },
+const props = defineProps<{
+  data: ShinyCardComponent
+}>()
+
+const cardWidth = computed((): string => {
+  switch (props.data.format) {
+    case ShinyCardFormat.S: return '250px';
+    case ShinyCardFormat.M: return '350px';
+    case ShinyCardFormat.L: return '450px';
+    default: return '350px';
+  }
+});
+
+onMounted(() => {
+  // Initialize Lucide icons
+  if (props.data.icon) {
+    lucide.createIcons();
+  }
 });
 </script>
 

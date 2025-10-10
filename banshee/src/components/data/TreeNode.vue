@@ -8,35 +8,21 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted } from 'vue';
+<script setup lang="ts">
+import { onMounted } from 'vue';
 import { ShinyTree } from '../../models/data/tree/ShinyTree';
-
-interface ShinyTreeNode {
-  label: string;
-  icon?: string;
-  children?: ShinyTree[]; // Use ShinyTree for children
-}
 
 declare const lucide: any;
 
-export default defineComponent({
-  name: 'TreeNode',
-  props: {
-    node: {
-      type: Object as () => ShinyTree,
-      required: true,
-    },
-  },
-  setup(props) {
-    onMounted(() => {
-      console.log('TreeNode mounted, props.node:', props.node);
-      if (props.node.icon && props.node.icon.toLowerCase() !== 'none' && typeof lucide !== 'undefined') {
-        lucide.createIcons();
-      }
-    });
-    return { node: props.node }; // Expose node to template
-  },
+const props = defineProps<{
+  node: ShinyTree
+}>()
+
+onMounted(() => {
+  console.log('TreeNode mounted, props.node:', props.node);
+  if (props.node.icon && props.node.icon.toLowerCase() !== 'none' && typeof lucide !== 'undefined') {
+    lucide.createIcons();
+  }
 });
 </script>
 

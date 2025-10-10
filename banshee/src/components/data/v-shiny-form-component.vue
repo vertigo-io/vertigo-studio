@@ -149,74 +149,40 @@
   </v-card>
 </template>
 
-<script lang="ts">
-// Script content remains the same
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { ref } from 'vue';
 import { ShinyForm } from '../../models/data/form/ShinyForm';
+import { ShinyFormField } from '../../models/data/form/ShinyFormField';
 
-interface ShinyFormField {
-  name: string;
-  label: string;
-  type: string;
-  value: any;
-  readOnly: boolean;
-  required: boolean;
-  placeholder?: string;
-  rules?: any[];
-  minLength?: number;
-  maxLength?: number;
-  minValue?: number;
-  maxValue?: number;
-  pattern?: string;
-  options?: { label: string; value: any }[];
-  helpText?: string;
-}
+const props = defineProps<{
+  data: ShinyForm
+}>()
 
-interface ShinyFormSection {
-  title: string;
-  fields: ShinyFormField[];
-  initiallyCollapsed?: boolean;
-}
+const openPanels = ref(props.data.sections.map((_: any, index: number) => index));
 
-export default defineComponent({
-  name: 'VShinyFormComponent',
-  props: {
-    data: {
-      type: Object as () => ShinyForm,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      openPanels: this.data.sections.map((_: any, index: number) => index) as number[],
-    };
-  },
-  methods: {
-    getFieldRules(field: ShinyFormField): ((value: any) => boolean | string)[] {
-      const rules: ((value: any) => boolean | string)[] = [];
-      if (field.required) {
-        rules.push(v => !!v || 'This field is required');
-      }
-      if (field.minLength !== undefined) {
-        rules.push(v => (v && v.length >= field.minLength) || `Min length is ${field.minLength}`);
-      }
-      if (field.maxLength !== undefined) {
-        rules.push(v => (v && v.length <= field.maxLength) || `Max length is ${field.maxLength}`);
-      }
-      if (field.minValue !== undefined && (field.type === 'NUMBER' || field.type === 'DATE')) {
-        rules.push(v => (v >= field.minValue) || `Min value is ${field.minValue}`);
-      }
-      if (field.maxValue !== undefined && (field.type === 'NUMBER' || field.type === 'DATE')) {
-        rules.push(v => (v <= field.maxValue) || `Max value is ${field.maxValue}`);
-      }
-      if (field.pattern) {
-        const regex = new RegExp(field.pattern);
-        rules.push(v => regex.test(v) || 'Invalid format');
-      }
-      return rules;
-    },
-  },
-});
+const getFieldRules = (field: ShinyFormField): ((value: any) => boolean | string)[] => {
+  const rules: ((value: any) => boolean | string)[] = [];
+  if (field.required) {
+    rules.push(v => !!v || 'This field is required');
+  }
+  if (field.validator.minLength !== undefined) {
+    rules.push(v => (v && v.length >= field.validator.minLength) || `Min length is ${field.validator.minLength}`);
+  }
+  if (field.validator.maxLength !== undefined) {
+    rules.push(v => (v && v.length <= field.validator.maxLength) || `Max length is ${field.validator.maxLength}`);
+  }
+  if (field.validator.minValue !== undefined && (field.type === 'NUMBER' || field.type === 'DATE')) {
+    rules.push(v => (v >= field.validator.minValue) || `Min value is ${field.validator.minValue}`);
+  }
+  if (field.validator.maxValue !== undefined && (field.type === 'NUMBER' || field.type === 'DATE')) {
+    rules.push(v => (v <= field.validator.maxValue) || `Max value is ${field.validator.maxValue}`);
+  }
+  if (field.validator.pattern) {
+    const regex = new RegExp(field.validator.pattern);
+    rules.push(v => regex.test(v) || 'Invalid format');
+  }
+  return rules;
+};
 </script>
 
 <style scoped>

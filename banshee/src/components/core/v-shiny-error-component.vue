@@ -4,19 +4,12 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 import { ShinyError } from '../../models/core/error/ShinyError';
 
-export default defineComponent({
-  name: 'VShinyErrorComponent',
-  props: {
-    data: {
-      type: Object as () => ShinyError,
-      required: true,
-    },
-  },
-});
+defineProps<{
+  data: ShinyError
+}>()
 </script>
 
 <style scoped>
