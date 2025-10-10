@@ -7,5 +7,4 @@ export interface ShinyChart extends ShinyComponent {
   chartType: ShinyChartType;
   labels: string[];
   series: ShinyChartSerie[];
-  type: string;
 }

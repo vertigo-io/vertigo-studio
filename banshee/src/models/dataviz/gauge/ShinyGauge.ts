@@ -4,5 +4,4 @@ export interface ShinyGauge extends ShinyComponent {
   title: string;
   value: number;
   maxValue: number;
-  type: string;
 }

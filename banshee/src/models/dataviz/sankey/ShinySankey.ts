@@ -4,5 +4,4 @@ import { ShinySankeyLink } from './ShinySankeyLink';
 export interface ShinySankey extends ShinyComponent {
   title: string;
   data: ShinySankeyLink[];
-  type: string;
 }

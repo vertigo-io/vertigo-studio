@@ -7,5 +7,4 @@ export interface ShinyInputText extends ShinyComponent {
   suggestions?: string[];
   defaultValue?: string;
   value?: string;
-  type: string;
 }

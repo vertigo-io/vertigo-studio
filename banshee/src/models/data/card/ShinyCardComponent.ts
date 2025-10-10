@@ -12,5 +12,4 @@ export interface ShinyCardComponent extends ShinyComponent {
   badgeLabel?: string;
   badgeColor?: string;
   format: ShinyCardFormat;
-  type: string;
 }

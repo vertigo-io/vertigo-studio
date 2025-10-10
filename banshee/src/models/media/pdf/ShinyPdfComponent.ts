@@ -5,5 +5,4 @@ export interface ShinyPdfComponent extends ShinyComponent {
   pdfPath: string;
   initialPage: number;
   height: string;
-  type: string;
 }

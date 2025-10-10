@@ -8,5 +8,4 @@ export interface ShinyToggle extends ShinyComponent {
   onText?: string;
   offText?: string;
   showText: boolean;
-  type: string;
 }

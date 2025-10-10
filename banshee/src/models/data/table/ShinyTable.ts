@@ -9,5 +9,4 @@ export interface ShinyTable extends ShinyComponent {
   sortable: boolean;
   sortColumn: number;
   sortDirection: string;
-  type: string;
 }
