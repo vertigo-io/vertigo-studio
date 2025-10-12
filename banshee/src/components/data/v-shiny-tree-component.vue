@@ -1,27 +1,48 @@
 <template>
   <div class="tree-container">
-    <TreeNode :node="data.rootNode"></TreeNode>
+    <div class="table-title">{{ data.label || 'Tree View' }}</div>
+    <v-treeview
+      v-if="data"
+      :items="[data]"
+      item-key="label"
+      item-title="label"
+      open-on-click
+      activatable
+      return-object
+    >
+      <template v-slot:prepend="{ item, toggle, open }">
+        <v-icon v-if="item.children && item.children.length > 0" @click="toggle">
+          {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
+        </v-icon>
+        <v-icon v-else>
+          {{ item.icon || 'mdi-file-document-outline' }}
+        </v-icon>
+      </template>
+    </v-treeview>
+    <div v-else class="no-data-message">No tree data available.</div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import TreeNode from './TreeNode.vue'; // Import the new TreeNode component
 import { ShinyTree } from '../../models/data/tree/ShinyTree';
 
-declare const lucide: any;
-
 const props = defineProps<{
-  data: { rootNode: ShinyTree }
+  data: ShinyTree
 }>()
-
-onMounted(() => {
-  if (props.data.rootNode.icon && props.data.rootNode.icon.toLowerCase() !== 'none' && typeof lucide !== 'undefined') {
-    lucide.createIcons();
-  }
-});
 </script>
 
 <style scoped>
-/* All styles are now handled by the global style.css */
+/* Add any specific styles for the tree container if needed */
+.tree-container {
+  padding: 16px;
+  background-color: var(--general-surface);
+  border-radius: 8px;
+}
+
+.table-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: var(--chakra-title-text);
+}
 </style>
