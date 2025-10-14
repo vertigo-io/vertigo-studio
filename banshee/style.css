@@ -119,24 +119,7 @@ main {
   scroll-behavior: smooth;
 }
 
-.chat-message {
-  padding: 8px 12px;
-  border-radius: 5px;
-  max-width: 70%;
-  word-wrap: break-word;
-}
 
-.user-message {
-  align-self: flex-end;
-  background-color: #4A5568; /* User message background */
-  color: #E2E8F0;
-}
-
-.response-message {
-  align-self: flex-start;
-  background-color: #1A202C; /* Response message background */
-  color: #CBD5E0;
-}
 
 .prompt-container {
   display: flex;
