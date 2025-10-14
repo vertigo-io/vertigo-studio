@@ -72,13 +72,8 @@ const handleIncomingMessage = (event: MessageEvent) => {
   isLoading.value = false; // Stop loading animation
   try {
     const parsed = JSON.parse(event.data);
-    if (parsed.type) {
-      const component: ShinyComponent = { type: parsed.type, ...parsed.data };
-      // Assuming parsed.data contains the ShinyComponent data directly
-      addMessage(BansheeMessage.fromComponent(BansheeRole.ASSISTANT, component));
-    } else {
-      addMessage(BansheeMessage.fromContent(BansheeRole.ASSISTANT, event.data));
-    }
+    const component: ShinyComponent = { type: parsed.type, ...parsed.data };
+    addMessage(BansheeMessage.fromComponent(BansheeRole.ASSISTANT, component));
   } catch (error) {
     console.error('Error parsing message:', error);
     addMessage(BansheeMessage.fromContent(BansheeRole.SYSTEM, event.data));
