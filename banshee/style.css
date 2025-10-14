@@ -71,34 +71,6 @@ h1 .yellow {
   }
 }
 
-#status {
-  display: flex;
-  align-items: center;
-  font-size: 0.9em;
-}
-
-.status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  margin-right: 5px;
-}
-
-.status-disconnected .status-dot {
-  background-color: #E53E3E; /* Red */
-}
-
-.status-connected .status-dot {
-  background-color: #38A169; /* Green */
-}
-
-.status-error .status-dot {
-  background-color: #DD6B20; /* Orange */
-}
-
-#status-text {
-  color: #CBD5E0;
-}
 
 main {
   flex-grow: 1;
@@ -157,19 +129,3 @@ main {
   background-color: #2B6CB0; /* Darker blue on hover */
 }
 
-.microphone-button {
-  background-color: #ECC94B !important; /* Yellow for microphone */
-  color: #1A202C !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.microphone-button:hover {
-  background-color: #D69E2E !important; /* Darker yellow on hover */
-}
-
-.microphone-button svg {
-  width: 20px;
-  height: 20px;
-}

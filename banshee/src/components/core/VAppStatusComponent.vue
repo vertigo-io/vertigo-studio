@@ -71,4 +71,9 @@ onMounted(() => {
 #status.status-error .status-dot {
   background-color: orange;
 }
+
+#status-text {
+  color: #CBD5E0;
+}
+
 </style>

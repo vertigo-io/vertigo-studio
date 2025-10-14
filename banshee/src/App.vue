@@ -21,9 +21,7 @@
 
     <form class="prompt-container" @submit.prevent="sendMessage">
       <input type="text" v-model="prompt" placeholder="Écrivez un message...">
-      <button type="button" class="microphone-button" @click="toggleSpeechToText">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mic"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
-      </button>
+      <VSpeechToTextButton @transcript="handleTranscript" />
       <button type="submit">Envoyer</button>
     </form>
   </v-app>
@@ -32,6 +30,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, nextTick } from 'vue';
 import VAppStatusComponent from './components/core/VAppStatusComponent.vue';
+import VSpeechToTextButton from './components/input/VSpeechToTextButton.vue';
 import { BansheeRole } from './models/core/BansheeRole';
 import { BansheeMessage } from './models/core/BansheeMessage';
 import { BansheeStory } from './models/core/BansheeStory';
@@ -58,12 +57,13 @@ import VShinyDonutChartComponent from './components/dataviz/v-shiny-donut-chart-
 import VShinyGeoMapComponent from './components/dataviz/v-shiny-geo-map-component.vue';
 import VShinyLineChartComponent from './components/dataviz/v-shiny-line-chart-component.vue';
 import VShinyPieChartComponent from './components/dataviz/v-shiny-pie-chart-component.vue';
-import VShinyRadarComponent from './components/dataviz/v-shiny-radar-chart-component.vue';
-import VShinyFlowComponent from './components/dataviz/v-shiny-flow-component.vue';
+import VShinyRadarChartComponent from './components/dataviz/v-shiny-radar-chart-component.vue';
+import VShinyRadar2Component from './components/dataviz/v-shiny-radar2-component.vue';
 import VShinyRatingComponent from './components/dataviz/v-shiny-rating-component.vue';
 import VShinySankeyComponent from './components/dataviz/v-shiny-sankey-component.vue';
 import VShinySparkLineComponent from './components/dataviz/v-shiny-spark-line-component.vue';
 import VShinyStatusComponent from './components/dataviz/v-shiny-status-component.vue';
+import VShinyFlowComponent from './components/dataviz/v-shiny-flow-component.vue';
 // Feedback
 import VShinyAlertComponent from './components/feedback/v-shiny-alert-component.vue';
 // Input
@@ -81,7 +81,6 @@ import VShinyFigletComponent from './components/text/v-shiny-figlet-component.vu
 import VShinyParagraphComponent from './components/text/v-shiny-paragraph-component.vue';
 import VShinyTextPathComponent from './components/text/v-shiny-text-path-component.vue';
 import VShinyTitleComponent from './components/text/v-shiny-title-component.vue';
-import VShinyRadarChartComponent from './components/dataviz/v-shiny-radar-chart-component.vue';
 
 // Declare global types if not already defined
 declare global {
@@ -93,8 +92,6 @@ declare global {
 
 const story = reactive(new BansheeStory());
 const prompt = ref('');
-const isListening = ref(false);
-let recognition: any = null;
 const isLoading = ref(false);
 
 const componentMap: Record<string, any> = {
@@ -127,8 +124,6 @@ const componentMap: Record<string, any> = {
   ShinyAlert: VShinyAlertComponent,
   // ---input
   ShinySlider: VShinySliderComponent,
-  // ---live
-  // No specific model for progress bar, using component name directly
   // ---media
   ShinyPdfComponent: VShinyPdfComponent,
   ShinyPhoto: VShinyPhotoComponent,
@@ -152,47 +147,8 @@ const resolveComponent = (componentType: string) => {
   return component || 'div'; // Fallback to a div or a generic error component
 };
 
-const toggleSpeechToText = () => {
-  if (!('webkitSpeechRecognition' in window)) {
-    alert('Speech recognition not supported in this browser. Please use Chrome.');
-    return;
-  }
-
-  if (!recognition) {
-    recognition = new window.webkitSpeechRecognition();
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    recognition.lang = 'fr-FR'; // Set language to French
-
-    recognition.onstart = () => {
-      isListening.value = true;
-      console.log('Speech recognition started');
-    };
-
-    recognition.onresult = (event: any) => {
-      const transcript = Array.from(event.results)
-        .map((result: any) => result[0].transcript)
-        .join('');
-      prompt.value = transcript;
-      console.log('Speech recognition result:', transcript);
-    };
-
-    recognition.onerror = (event: any) => {
-      console.error('Speech recognition error:', event.error);
-      isListening.value = false;
-    };
-
-    recognition.onend = () => {
-      isListening.value = false;
-      console.log('Speech recognition ended');
-    };
-  }
-
-  if (isListening.value) {
-    recognition.stop();
-  } else {
-    recognition.start();
-  }
+const handleTranscript = (transcript: string) => {
+  prompt.value = transcript;
 };
 
 const sendMessage = () => {
@@ -201,7 +157,7 @@ const sendMessage = () => {
       story.clear();
     } else {
       addMessage(BansheeRole.USER, prompt.value);
-      window.ws?.send(prompt.value); // Use global ws
+      window.ws?.send(prompt.value);
       isLoading.value = true; // Start loading animation
     }
     prompt.value = '';
