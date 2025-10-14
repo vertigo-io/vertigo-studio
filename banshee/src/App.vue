@@ -60,7 +60,7 @@ const sendMessage = () => {
     if ("clear" === prompt.value) {
       story.clear();
     } else {
-      addMessage(BansheeRole.USER, prompt.value);
+      addMessage(BansheeMessage.fromContent(BansheeRole.USER, prompt.value));
       window.ws?.send(prompt.value);
       isLoading.value = true; // Start loading animation
     }
@@ -73,23 +73,20 @@ const handleIncomingMessage = (event: MessageEvent) => {
   try {
     const parsed = JSON.parse(event.data);
     if (parsed.type) {
+      const component: ShinyComponent = { type: parsed.type, ...parsed.data };
       // Assuming parsed.data contains the ShinyComponent data directly
-      addMessage(BansheeRole.ASSISTANT, undefined, { type: parsed.type, ...parsed.data });
+      addMessage(BansheeMessage.fromComponent(BansheeRole.ASSISTANT, component));
     } else {
-      addMessage(BansheeRole.ASSISTANT, event.data);
+      addMessage(BansheeMessage.fromContent(BansheeRole.ASSISTANT, event.data));
     }
   } catch (error) {
     console.error('Error parsing message:', error);
-    addMessage(BansheeRole.SYSTEM, event.data);
+    addMessage(BansheeMessage.fromContent(BansheeRole.SYSTEM, event.data));
   }
 };
 
-const addMessage = (role: BansheeRole, content?: string, component?: ShinyComponent) => {
-  if (content) {
-    story.pushMessage(BansheeMessage.fromContent(role, content));
-  } else if (component) {
-    story.pushMessage(BansheeMessage.fromComponent(role, component));
-  }
+const addMessage = (message : BansheeMessage ) => {
+  story.pushMessage(message);
   nextTick(() => {
     const chat = document.getElementById('chat');
     if (chat) {
