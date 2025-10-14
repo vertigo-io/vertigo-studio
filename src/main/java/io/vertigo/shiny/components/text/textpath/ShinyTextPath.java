@@ -9,9 +9,8 @@ public record ShinyTextPath(
 
 	@Override
 	public String type() {
-		return "textPath";
+		return "ShinyTextPath";
 	}
-
 
 	public ShinyTextPath {
 		Assertion.check().isNotBlank(path, "Path cannot be blank");

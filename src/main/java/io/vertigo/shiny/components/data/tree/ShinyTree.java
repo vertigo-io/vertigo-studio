@@ -23,6 +23,6 @@ public record ShinyTree(String label, List<ShinyTree> children) implements Shiny
 
 	@Override
 	public String type() {
-		return "tree";
+		return "ShinyTree";
 	}
 }

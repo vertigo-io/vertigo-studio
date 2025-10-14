@@ -9,9 +9,8 @@ public record ShinyJson(
 
 	@Override
 	public String type() {
-		return "json";
+		return "ShinyJson";
 	}
-
 
 	public ShinyJson {
 		Assertion.check().isNotBlank(json, "JSON string cannot be blank");

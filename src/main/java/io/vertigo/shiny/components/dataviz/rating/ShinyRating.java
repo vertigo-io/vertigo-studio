@@ -15,7 +15,7 @@ public record ShinyRating(
 
 	@Override
 	public String type() {
-		return "rating";
+		return "ShinyRating";
 	}
 
 }

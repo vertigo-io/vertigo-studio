@@ -3,7 +3,7 @@ package io.vertigo.shiny.components.data.card;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
-public final class ShinyCardBuilder implements Builder<ShinyCardComponent> {
+public final class ShinyCardBuilder implements Builder<ShinyCard> {
 	private String _title;
 	private String _subtitle;
 	private String _description;
@@ -68,8 +68,8 @@ public final class ShinyCardBuilder implements Builder<ShinyCardComponent> {
 	}
 
 	@Override
-	public ShinyCardComponent build() {
-		return new ShinyCardComponent(
+	public ShinyCard build() {
+		return new ShinyCard(
 				_title,
 				_subtitle,
 				_description,

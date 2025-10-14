@@ -14,7 +14,7 @@ public record ShinyPdfComponent(
 
 	@Override
 	public String type() {
-		return "pdf";
+		return "ShinyPdfComponent";
 	}
 
 

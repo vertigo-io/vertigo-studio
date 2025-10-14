@@ -9,7 +9,7 @@ public record ShinyContainer(
 
 	@Override
 	public String type() {
-		return "container";
+		return "ShinyContainer";
 	}
 
 }

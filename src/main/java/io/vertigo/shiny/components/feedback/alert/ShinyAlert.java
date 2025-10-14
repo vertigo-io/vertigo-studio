@@ -13,7 +13,7 @@ public record ShinyAlert(
 
 	@Override
 	public String type() {
-		return "alert";
+		return "ShinyAlert";
 	}
 
 	public ShinyAlert {

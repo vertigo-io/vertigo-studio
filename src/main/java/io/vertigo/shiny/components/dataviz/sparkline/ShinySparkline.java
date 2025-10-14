@@ -10,7 +10,7 @@ public record ShinySparkline(
 
 	@Override
 	public String type() {
-		return "sparkLine";
+		return "ShinySparkline";
 	}
 
 }

@@ -8,9 +8,8 @@ public record ShinyFiglet(
 
 	@Override
 	public String type() {
-		return "figlet";
+		return "ShinyFiglet";
 	}
-
 
 	public ShinyFiglet {
 		Assertion.check().isNotNull(text);

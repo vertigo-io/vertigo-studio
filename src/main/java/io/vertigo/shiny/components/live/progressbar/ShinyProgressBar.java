@@ -46,7 +46,7 @@ public final class ShinyProgressBar extends ShinyLiveComponent<ShinyProgressBar>
 
 	@Override
 	public String type() {
-		return "progressBar";
+		return "ShinyProgressBar";
 	}
 
 }

@@ -10,7 +10,7 @@ public record ShinyPhoto(
 
 	@Override
 	public String type() {
-		return "photo";
+		return "ShinyPhoto";
 	}
 
 	public ShinyPhoto {

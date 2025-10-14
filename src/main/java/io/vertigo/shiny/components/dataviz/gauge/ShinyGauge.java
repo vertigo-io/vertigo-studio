@@ -10,9 +10,8 @@ public record ShinyGauge(
 
 	@Override
 	public String type() {
-		return "gauge";
+		return "ShinyGauge";
 	}
-
 
 	public ShinyGauge {
 		Assertion.check().isNotBlank(title, "Title cannot be blank");

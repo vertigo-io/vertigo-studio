@@ -10,6 +10,6 @@ public record ShinyRss(
 
 	@Override
 	public String type() {
-		return "rss";
+		return "ShinyRss";
 	}
 }

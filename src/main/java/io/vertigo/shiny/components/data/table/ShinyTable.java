@@ -14,6 +14,6 @@ public record ShinyTable(
 
 	@Override
 	public String type() {
-		return "table";
+		return "ShinyTable";
 	}
 }

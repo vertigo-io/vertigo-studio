@@ -14,6 +14,6 @@ public record ShinyForm(String title, List<ShinyFormSection> sections) implement
 
 	@Override
 	public String type() {
-		return "form";
+		return "ShinyForm";
 	}
 }

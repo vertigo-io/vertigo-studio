@@ -10,7 +10,7 @@ public record ShinyStatus(
 
 	@Override
 	public String type() {
-		return "status";
+		return "ShinyStatus";
 	}
 
 }

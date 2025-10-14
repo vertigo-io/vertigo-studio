@@ -11,6 +11,6 @@ public record ShinyToggle(
 		boolean showText) implements ShinyComponent {
 
 	public String type() {
-		return "toggle";
+		return "ShinyToggle";
 	}
 }

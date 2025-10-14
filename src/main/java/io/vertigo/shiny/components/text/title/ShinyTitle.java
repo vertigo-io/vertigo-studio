@@ -9,7 +9,7 @@ public record ShinyTitle(
 
 	@Override
 	public String type() {
-		return "title";
+		return "ShinyTitle";
 	}
 
 

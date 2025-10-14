@@ -7,7 +7,7 @@ public record ShinyError(
 
 	@Override
 	public String type() {
-		return "error";
+		return "ShinyError";
 	}
 
 }

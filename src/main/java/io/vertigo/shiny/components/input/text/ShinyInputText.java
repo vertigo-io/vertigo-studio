@@ -16,6 +16,6 @@ public record ShinyInputText(
 
 	@Override
 	public String type() {
-		return "inputText";
+		return "ShinyInputText";
 	}
 }

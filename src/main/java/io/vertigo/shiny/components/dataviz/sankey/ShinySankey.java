@@ -11,7 +11,7 @@ public record ShinySankey(
 
 	@Override
 	public String type() {
-		return "sankey";
+		return "ShinySankey";
 	}
 
 

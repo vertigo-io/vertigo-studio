@@ -14,15 +14,14 @@ public record ShinyChart(
 	@Override
 	public String type() {
 		return switch (chartType) {
-			case bar -> "barChart";
-			case area -> "areaChart";
-			case line -> "lineChart";
-			case radar -> "radarChart";
-			case donut -> "donutChart";
-			case pie -> "pieChart";
+			case bar -> "ShinyBarChart";
+			case area -> "ShinyAreaChart";
+			case line -> "ShinyLineChart";
+			case radar -> "ShinyRadarChart";
+			case donut -> "ShinyDonutChart";
+			case pie -> "ShinyPieChart";
 		};
 	}
-
 
 	public ShinyChart {
 		Assertion.check()

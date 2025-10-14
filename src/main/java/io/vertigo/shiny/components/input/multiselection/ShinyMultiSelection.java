@@ -11,6 +11,11 @@ public record ShinyMultiSelection(
 		List<String> options,
 		Set<Integer> selectedIndices) implements ShinyComponent {
 
+	@Override
+	public String type() {
+		return "ShinyMultiSelection";
+	}
+
 	public List<String> getSelectedOptions() {
 		return selectedIndices.stream()
 				.sorted()

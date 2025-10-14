@@ -13,9 +13,8 @@ public record ShinySlider(
         boolean thumbLabel) implements ShinyComponent {
 
     @Override
-    public String type() {
-        return "slider";
-    }
+    	public String type() {
+    		return "ShinySlider";    }
 
     public ShinySlider {
         Assertion.check()

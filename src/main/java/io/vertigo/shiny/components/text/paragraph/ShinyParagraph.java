@@ -8,9 +8,8 @@ public record ShinyParagraph(
 
 	@Override
 	public String type() {
-		return "paragraph";
+		return "ShinyParagraph";
 	}
-
 
 	public ShinyParagraph {
 		Assertion.check().isNotNull(text, "Text cannot be null");

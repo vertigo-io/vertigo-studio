@@ -9,7 +9,7 @@ public record ShinyYoutube(
 
 	@Override
 	public String type() {
-		return "youtube";
+		return "ShinyYoutube";
 	}
 
 

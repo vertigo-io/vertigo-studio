@@ -12,7 +12,7 @@ public record ShinyList(
 
 	@Override
 	public String type() {
-		return "list";
+		return "ShinyList";
 	}
 
 	public ShinyList {

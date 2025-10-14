@@ -3,7 +3,7 @@ package io.vertigo.shiny.components.data.card;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.components.ShinyComponent;
 
-public record ShinyCardComponent(
+public record ShinyCard(
 		String title,
 		String subtitle,
 		String description,
@@ -17,11 +17,10 @@ public record ShinyCardComponent(
 
 	@Override
 	public String type() {
-		return "card";
+		return "ShinyCard";
 	}
 
-
-	public ShinyCardComponent {
+	public ShinyCard {
 		Assertion.check()
 				.isNotBlank(title, "Card title cannot be blank");
 	}

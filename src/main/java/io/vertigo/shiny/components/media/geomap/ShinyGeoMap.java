@@ -11,7 +11,7 @@ public record ShinyGeoMap(
 
 	@Override
 	public String type() {
-		return "geoMap";
+		return "ShinyGeoMap";
 	}
 
 
