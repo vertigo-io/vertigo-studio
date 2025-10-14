@@ -6,25 +6,21 @@ export class BansheeMessage {
   readonly role: BansheeRole;
   readonly content?: string;
   readonly component?: ShinyComponent;
-  readonly cssClass: string;
 
-  private constructor(id: string, role: BansheeRole, cssClass: string, content?: string, component?: ShinyComponent) {
+  private constructor(id: string, role: BansheeRole, content?: string, component?: ShinyComponent) {
     this.id = id;
     this.role = role;
-    this.cssClass = cssClass;
     this.content = content;
     this.component = component;
   }
 
   static fromContent(role: BansheeRole, content: string): BansheeMessage {
     const id = `msg-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    const cssClass = `chat-message ${role}-message`;
-    return new BansheeMessage(id, role, cssClass, content);
+    return new BansheeMessage(id, role, content);
   }
 
   static fromComponent(role: BansheeRole, component: ShinyComponent): BansheeMessage {
     const id = `msg-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    const cssClass = `chat-message ${role}-message`;
-    return new BansheeMessage(id, role, cssClass, undefined, component);
+    return new BansheeMessage(id, role, undefined, component);
   }
 }

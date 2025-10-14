@@ -11,8 +11,8 @@
     <main>
       <div class="chat-container" id="chat">
         <template v-for="message in story.messages" :key="message.id">
-          <div :class="message.cssClass">
-            <component v-if="message.component" :is="registry.resolveComponent(message.component.type)" :data="message.component"></component>
+          <div :class="`chat-message ${message.role}-message`">
+            <component v-if="message.component" :is="shinyRegistry.resolveComponent(message.component.type)" :data="message.component"></component>
             <div v-else-if="message.content">{{ message.content }}</div>
           </div>
         </template>
@@ -35,7 +35,6 @@ import { BansheeRole } from './models/core/BansheeRole';
 import { BansheeMessage } from './models/core/BansheeMessage';
 import { BansheeStory } from './models/core/BansheeStory';
 import { ShinyComponent } from './models/ShinyComponent';
-
 import { ShinyRegistry } from './models/core/ShinyRegistry';
 
 // Declare global types if not already defined
@@ -49,7 +48,8 @@ declare global {
 const story = reactive(new BansheeStory());
 const prompt = ref('');
 const isLoading = ref(false);
-const registry= new ShinyRegistry();
+
+const shinyRegistry = new ShinyRegistry();
 
 const handleTranscript = (transcript: string) => {
   prompt.value = transcript;
@@ -74,13 +74,13 @@ const handleIncomingMessage = (event: MessageEvent) => {
     const parsed = JSON.parse(event.data);
     if (parsed.type) {
       // Assuming parsed.data contains the ShinyComponent data directly
-      story.pushMessage(BansheeMessage.fromComponent(BansheeRole.ASSISTANT, { type: parsed.type, ...parsed.data }));
+      addMessage(BansheeRole.ASSISTANT, undefined, { type: parsed.type, ...parsed.data });
     } else {
-      story.pushMessage(BansheeMessage.fromContent(BansheeRole.ASSISTANT, event.data));
+      addMessage(BansheeRole.ASSISTANT, event.data);
     }
   } catch (error) {
     console.error('Error parsing message:', error);
-    story.pushMessage(BansheeMessage.fromContent(BansheeRole.SYSTEM, event.data));
+    addMessage(BansheeRole.SYSTEM, event.data);
   }
 };
 
