@@ -36,6 +36,7 @@ import { BansheeMessage } from './models/core/BansheeMessage';
 import { BansheeStory } from './models/core/BansheeStory';
 import { ShinyComponent } from './models/ShinyComponent';
 import { ShinyRegistry } from './models/core/ShinyRegistry';
+import { ShinyParagraph } from './models/text/paragraph/ShinyParagraph';
 
 // Declare global types if not already defined
 declare global {
@@ -60,7 +61,8 @@ const sendMessage = () => {
     if ("clear" === prompt.value) {
       story.clear();
     } else {
-      addMessage(BansheeMessage.fromContent(BansheeRole.USER, prompt.value));
+      const component: ShinyParagraph = { type:'ShinyParagraph', text : prompt.value };
+      addMessage(BansheeRole.USER, component);
       window.ws?.send(prompt.value);
       isLoading.value = true; // Start loading animation
     }
@@ -73,14 +75,16 @@ const handleIncomingMessage = (event: MessageEvent) => {
   try {
     const parsed = JSON.parse(event.data);
     const component: ShinyComponent = { type: parsed.type, ...parsed.data };
-    addMessage(BansheeMessage.fromComponent(BansheeRole.ASSISTANT, component));
+    addMessage(BansheeRole.ASSISTANT, component);
   } catch (error) {
     console.error('Error parsing message:', error);
-    addMessage(BansheeMessage.fromContent(BansheeRole.SYSTEM, event.data));
+    const component: ShinyComponent  ={  ...event.data, type: 'ShinyError' }
+    addMessage(BansheeRole.SYSTEM, component);
   }
 };
 
-const addMessage = (message : BansheeMessage ) => {
+const addMessage = (role: BansheeRole, component: ShinyComponent ) => {
+  const message = new BansheeMessage(role, component);
   story.pushMessage(message);
   nextTick(() => {
     const chat = document.getElementById('chat');
@@ -134,4 +138,5 @@ onMounted(() => {
   text-align: center;
   font-style: italic;
 }
+
 </style>

@@ -7,20 +7,10 @@ export class BansheeMessage {
   readonly content?: string;
   readonly component?: ShinyComponent;
 
-  private constructor(id: string, role: BansheeRole, content?: string, component?: ShinyComponent) {
-    this.id = id;
+  constructor( role: BansheeRole, component: ShinyComponent) {
+    this.id = `msg-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     this.role = role;
-    this.content = content;
     this.component = component;
   }
 
-  static fromContent(role: BansheeRole, content: string): BansheeMessage {
-    const id = `msg-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    return new BansheeMessage(id, role, content);
-  }
-
-  static fromComponent(role: BansheeRole, component: ShinyComponent): BansheeMessage {
-    const id = `msg-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    return new BansheeMessage(id, role, undefined, component);
-  }
 }
