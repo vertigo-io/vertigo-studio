@@ -4,7 +4,6 @@ import { ShinyComponent } from '../../models/ShinyComponent';
 export class BansheeMessage {
   readonly id: string;
   readonly role: BansheeRole;
-  readonly content?: string;
   readonly component?: ShinyComponent;
 
   constructor( role: BansheeRole, component: ShinyComponent) {

@@ -16,7 +16,6 @@ import VShinyGeoMapComponent from '../../components/dataviz/v-shiny-geo-map-comp
 import VShinyLineChartComponent from '../../components/dataviz/v-shiny-line-chart-component.vue';
 import VShinyPieChartComponent from '../../components/dataviz/v-shiny-pie-chart-component.vue';
 import VShinyRadarChartComponent from '../../components/dataviz/v-shiny-radar-chart-component.vue';
-import VShinyRadar2Component from '../../components/dataviz/v-shiny-radar2-component.vue';
 import VShinyRatingComponent from '../../components/dataviz/v-shiny-rating-component.vue';
 import VShinySankeyComponent from '../../components/dataviz/v-shiny-sankey-component.vue';
 import VShinySparkLineComponent from '../../components/dataviz/v-shiny-spark-line-component.vue';
@@ -34,58 +33,54 @@ import VShinyFigletComponent from '../../components/text/v-shiny-figlet-componen
 import VShinyParagraphComponent from '../../components/text/v-shiny-paragraph-component.vue';
 import VShinyTextPathComponent from '../../components/text/v-shiny-text-path-component.vue';
 import VShinyTitleComponent from '../../components/text/v-shiny-title-component.vue';
+import { ShinyComponent } from '../ShinyComponent';
 
 export class ShinyRegistry {
-  private componentMap: Record<string, any> = {
-    // ---core
-    ShinyContainer: VShinyContainerComponent,
-    ShinyError: VShinyErrorComponent,
-    ShinyForm: VShinyFormComponent,
-    // ---data
-    ShinyJson: VShinyJsonComponent,
-    ShinyList: VShinyListComponent,
-    ShinyTable: VShinyTableComponent,
-    ShinyTree: VShinyTreeComponent,
-    ShinyTimeline: VShinyTimelineComponent,
-    ShinyChip: VShinyChipComponent,
-    ShinyOrganization: VShinyOrganizationComponent,
-    // ---dataviz
-    ShinyBarChart: VShinyBarChartComponent,
-    ShinyRadarChart: VShinyRadarChartComponent,
-    ShinyPieChart: VShinyPieChartComponent,
-    ShinyDonutChart: VShinyDonutChartComponent,
-    ShinyAreaChart: VShinyAreaChartComponent,
-    ShinyLineChart: VShinyLineChartComponent,
+  private _componentMap: Record<string, any> = {};
 
-    ShinyProgressBar: VShinyProgressBarComponent,
-    ShinyRating: VShinyRatingComponent,
-    ShinySparkline: VShinySparkLineComponent,
-    ShinyStatus: VShinyStatusComponent,
-    ShinyFlow: VShinyFlowComponent,
-    // ---feedback
-    ShinyAlert: VShinyAlertComponent,
-    // ---input
-    ShinySlider: VShinySliderComponent,
-    // ---media
-    ShinyPdfComponent: VShinyPdfComponent,
-    ShinyPhoto: VShinyPhotoComponent,
-    ShinyRss: VShinyRssComponent,
-    ShinyVideo: VShinyVideoComponent,
-    ShinyYoutube: VShinyYoutubeComponent,
-    ShinyGeoMap: VShinyGeoMapComponent,
-    ShinyCard: VShinyCardComponent,
-    // ---text
-    ShinyFiglet: VShinyFigletComponent,
-    ShinyParagraph: VShinyParagraphComponent,
-    ShinyTextPath: VShinyTextPathComponent,
-    ShinyTitle: VShinyTitleComponent,
-  };
+  constructor() {
+    this.register('ShinyContainer', VShinyContainerComponent);
+    this.register('ShinyError', VShinyErrorComponent);
+    this.register('ShinyForm', VShinyFormComponent);
+    this.register('ShinyJson', VShinyJsonComponent);
+    this.register('ShinyList', VShinyListComponent);
+    this.register('ShinyTable', VShinyTableComponent);
+    this.register('ShinyTree', VShinyTreeComponent);
+    this.register('ShinyTimeline', VShinyTimelineComponent);
+    this.register('ShinyChip', VShinyChipComponent);
+    this.register('ShinyOrganization', VShinyOrganizationComponent);
+    this.register('ShinyBarChart', VShinyBarChartComponent);
+    this.register('ShinyRadarChart', VShinyRadarChartComponent);
+    this.register('ShinyPieChart', VShinyPieChartComponent);
+    this.register('ShinyDonutChart', VShinyDonutChartComponent);
+    this.register('ShinyAreaChart', VShinyAreaChartComponent);
+    this.register('ShinyLineChart', VShinyLineChartComponent);
+    this.register('ShinyProgressBar', VShinyProgressBarComponent);
+    this.register('ShinyRating', VShinyRatingComponent);
+    this.register('ShinySparkline', VShinySparkLineComponent);
+    this.register('ShinyStatus', VShinyStatusComponent);
+    this.register('ShinyFlow', VShinyFlowComponent);
+    this.register('ShinyAlert', VShinyAlertComponent);
+    this.register('ShinySlider', VShinySliderComponent);
+    this.register('ShinyPdfComponent', VShinyPdfComponent);
+    this.register('ShinyPhoto', VShinyPhotoComponent);
+    this.register('ShinyRss', VShinyRssComponent);
+    this.register('ShinyVideo', VShinyVideoComponent);
+    this.register('ShinyYoutube', VShinyYoutubeComponent);
+    this.register('ShinyGeoMap', VShinyGeoMapComponent);
+    this.register('ShinyCard', VShinyCardComponent);
+    this.register('ShinyFiglet', VShinyFigletComponent);
+    this.register('ShinyParagraph', VShinyParagraphComponent);
+    this.register('ShinyTextPath', VShinyTextPathComponent);
+    this.register('ShinyTitle', VShinyTitleComponent);
+  }
+ 
+  register(modelType: string, componentType: any): void {
+    this._componentMap[modelType] = componentType;
+  }
 
-  resolveComponent(componentType: string): any {
-    const component = this.componentMap[componentType];
-    if (!component) {
-      console.warn(`Component not found for type: ${componentType}`);
-    }
-    return component || 'div'; // Fallback to a div or a generic error component
+  resolve(modelType: string): any {
+    const component = this._componentMap[modelType];
+    return component;
   }
 }

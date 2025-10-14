@@ -12,8 +12,8 @@
       <div class="chat-container" id="chat">
         <template v-for="message in story.messages" :key="message.id">
           <div :class="`chat-message ${message.role}-message`">
-            <component v-if="message.component" :is="shinyRegistry.resolveComponent(message.component.type)" :data="message.component"></component>
-            <div v-else-if="message.content">{{ message.content }}</div>
+            <component :is="shinyRegistry.resolve(message.component.type)" 
+            :data="message.component"></component>
           </div>
         </template>
       </div>
@@ -49,7 +49,6 @@ declare global {
 const story = reactive(new BansheeStory());
 const prompt = ref('');
 const isLoading = ref(false);
-
 const shinyRegistry = new ShinyRegistry();
 
 const handleTranscript = (transcript: string) => {
