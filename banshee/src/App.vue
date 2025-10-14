@@ -59,7 +59,6 @@ import VShinyGeoMapComponent from './components/dataviz/v-shiny-geo-map-componen
 import VShinyLineChartComponent from './components/dataviz/v-shiny-line-chart-component.vue';
 import VShinyPieChartComponent from './components/dataviz/v-shiny-pie-chart-component.vue';
 import VShinyRadarChartComponent from './components/dataviz/v-shiny-radar-chart-component.vue';
-import VShinyRadar2Component from './components/dataviz/v-shiny-radar2-component.vue';
 import VShinyRatingComponent from './components/dataviz/v-shiny-rating-component.vue';
 import VShinySankeyComponent from './components/dataviz/v-shiny-sankey-component.vue';
 import VShinySparkLineComponent from './components/dataviz/v-shiny-spark-line-component.vue';
