@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, nextTick } from 'vue';
+import { ref, reactive, onMounted, nextTick, provide } from 'vue';
 import VAppStatusComponent from './components/core/VAppStatusComponent.vue';
 import VSpeechToTextButton from './components/input/VSpeechToTextButton.vue';
 import { BansheeRole } from './models/core/BansheeRole';
@@ -36,7 +36,6 @@ import { BansheeMessage } from './models/core/BansheeMessage';
 import { BansheeStory } from './models/core/BansheeStory';
 import { ShinyComponent } from './models/ShinyComponent';
 import { ShinyRegistry } from './models/core/ShinyRegistry';
-import { ShinyParagraph } from './models/text/paragraph/ShinyParagraph';
 
 // Declare global types if not already defined
 declare global {
@@ -49,7 +48,9 @@ declare global {
 const story = reactive(new BansheeStory());
 const prompt = ref('');
 const isLoading = ref(false);
+
 const shinyRegistry = new ShinyRegistry();
+provide('shinyRegistry', shinyRegistry);
 
 const handleTranscript = (transcript: string) => {
   prompt.value = transcript;
