@@ -1,6 +1,5 @@
 package io.vertigo.shell.server;
 
-import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -42,9 +41,6 @@ import io.vertigo.shiny.components.core.error.ShinyErrorBuilder;
 import io.vertigo.shiny.components.data.card.ShinyCardFormat;
 import io.vertigo.shiny.components.data.chip.ShinyChipVariant;
 import io.vertigo.shiny.components.data.list.ShinyListType;
-import io.vertigo.shiny.components.dataviz.flow.FlowConnection;
-import io.vertigo.shiny.components.dataviz.flow.FlowNode;
-import io.vertigo.shiny.components.dataviz.flow.ShinyFlow;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingScale;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatusType;
 import io.vertigo.shiny.components.feedback.alert.ShinyAlertType;
@@ -320,18 +316,17 @@ final class BansheeHandler {
 								.withIcon("mdi-vuetify")
 								.build())
 						.build();
-				case "flow" -> new ShinyFlow(
-						"My Sample Flow",
-						List.of(
-								new FlowNode("1", "Start", 100, 100),
-								new FlowNode("2", "Process A", 300, 100),
-								new FlowNode("3", "Process B", 300, 300),
-								new FlowNode("4", "End", 500, 200)),
-						List.of(
-								new FlowConnection("1", "2"),
-								new FlowConnection("2", "4"),
-								new FlowConnection("1", "3"),
-								new FlowConnection("3", "4")));
+				case "flow" -> Shiny.flow()
+						.withTitle("My Sample Flow")
+						.addNode("1", "Start", 100, 100)
+						.addNode("2", "Process A", 300, 100)
+						.addNode("3", "Process B", 300, 300)
+						.addNode("4", "End", 500, 200)
+						.addConnection("1", "2")
+						.addConnection("2", "4")
+						.addConnection("1", "3")
+						.addConnection("3", "4")
+						.build();
 				default -> new ShinyErrorBuilder().withText("unknown command :" + message).build();
 			};
 
@@ -420,20 +415,18 @@ final class BansheeHandler {
 		}
 	}
 
-	private static UUID last = null;
+	//	private static UUID last = null;
 
 	private static void sendMessage(
 			Consumer<String> webSocket,
 			BansheeAction action,
 			String type,
 			String data) {
-		UUID id = null;
-		if (action == BansheeAction.create) {
-			id = UUID.randomUUID();
-			last = id;
-		} else {
-			id = last;
-		}
+		UUID id = UUID.randomUUID();
+		//			last = id;
+		//		} else {
+		//			id = last;
+		//		}
 		final String json = buildMessage(action, type, id, data);
 		System.out.println(">>> send : " + json);
 		webSocket.accept(json);

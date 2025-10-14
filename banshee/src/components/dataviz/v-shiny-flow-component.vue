@@ -24,8 +24,15 @@ type Schemes = Classic.Schemes & {
 class MyNode extends Classic.Node {
   width = 180;
   height = 120;
+  input: Classic.Input<Classic.Socket>;
+  output: Classic.Output<Classic.Socket>;
+
   constructor(label: string) {
     super(label);
+    this.input = new Classic.Input(new Classic.Socket('default'));
+    this.output = new Classic.Output(new Classic.Socket('default'));
+    this.addInput('input', this.input);
+    this.addOutput('output', this.output);
   }
 }
 
@@ -46,7 +53,7 @@ onMounted(async () => {
   const connection = new ConnectionPlugin<Schemes, AreaExtensions.AreaExtra<Schemes>>();
   const render = new VuePlugin<Schemes, VueArea2D<Schemes>>();
 
-  AreaExtensions.selectableNodes(area, AreaExtensions.selector());
+  AreaExtensions.selectableNodes(area, AreaExtensions.selector(), {});
 
   render.addPreset(VuePresets.classic.setup());
   connection.addPreset(ConnectionPresets.classic.setup());
@@ -67,16 +74,13 @@ onMounted(async () => {
     const fromNode = editor.getNode(connData.from);
     const toNode = editor.getNode(connData.to);
     if (fromNode && toNode) {
-      // Assuming simple input/output for now
-      // You would need to define inputs/outputs on your MyNode class
-      // For this example, we'll just create a connection without specific ports
-      await editor.addConnection(new MyConnection(fromNode, 'output', toNode, 'input'));
+      await editor.addConnection(new MyConnection(fromNode, fromNode.outputs.get('output'), toNode, toNode.inputs.get('input')));
     }
   }
 
   AreaExtensions.zoomAt(area, editor.getNodes());
 
-  await editor.render();
+  // await editor.render(); // Removed as editor.render is not a function
 });
 
 onBeforeUnmount(() => {
@@ -99,11 +103,11 @@ watch(() => props.data, async (newData) => {
       const fromNode = editor.getNode(connData.from);
       const toNode = editor.getNode(connData.to);
       if (fromNode && toNode) {
-        await editor.addConnection(new MyConnection(fromNode, 'output', toNode, 'input'));
+        await editor.addConnection(new MyConnection(fromNode, fromNode.outputs.get('output'), toNode, toNode.inputs.get('input')));
       }
     }
     AreaExtensions.zoomAt(area, editor.getNodes());
-    await editor.render();
+    // await editor.render(); // Removed as editor.render is not a function
   }
 }, { deep: true });
 </script>
@@ -128,5 +132,15 @@ watch(() => props.data, async (newData) => {
   border: 1px solid var(--assistant-accent);
   border-radius: 8px;
   background-color: var(--general-bg);
+}
+
+.rete-editor .node.vue-flow__node:hover {
+  background: yellow !important;
+}
+
+/* Temporary CSS for debugging connections */
+.connection {
+  stroke: red !important;
+  stroke-width: 3px !important;
 }
 </style>
