@@ -58,7 +58,8 @@ import VShinyDonutChartComponent from './components/dataviz/v-shiny-donut-chart-
 import VShinyGeoMapComponent from './components/dataviz/v-shiny-geo-map-component.vue';
 import VShinyLineChartComponent from './components/dataviz/v-shiny-line-chart-component.vue';
 import VShinyPieChartComponent from './components/dataviz/v-shiny-pie-chart-component.vue';
-import VShinyRadarChartComponent from './components/dataviz/v-shiny-radar-chart-component.vue';
+import VShinyRadarComponent from './components/dataviz/v-shiny-radar-chart-component.vue';
+import VShinyFlowComponent from './components/dataviz/v-shiny-flow-component.vue';
 import VShinyRatingComponent from './components/dataviz/v-shiny-rating-component.vue';
 import VShinySankeyComponent from './components/dataviz/v-shiny-sankey-component.vue';
 import VShinySparkLineComponent from './components/dataviz/v-shiny-spark-line-component.vue';
@@ -80,6 +81,7 @@ import VShinyFigletComponent from './components/text/v-shiny-figlet-component.vu
 import VShinyParagraphComponent from './components/text/v-shiny-paragraph-component.vue';
 import VShinyTextPathComponent from './components/text/v-shiny-text-path-component.vue';
 import VShinyTitleComponent from './components/text/v-shiny-title-component.vue';
+import VShinyRadarChartComponent from './components/dataviz/v-shiny-radar-chart-component.vue';
 
 // Declare global types if not already defined
 declare global {
@@ -120,6 +122,7 @@ const componentMap: Record<string, any> = {
   ShinyRating: VShinyRatingComponent,
   ShinySparkline: VShinySparkLineComponent,
   ShinyStatus: VShinyStatusComponent,
+  ShinyFlow: VShinyFlowComponent,
   // ---feedback
   ShinyAlert: VShinyAlertComponent,
   // ---input
