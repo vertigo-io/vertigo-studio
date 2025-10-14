@@ -21,8 +21,8 @@
     "rete": "^2.0.0-alpha.13",
     "rete-area-plugin": "^2.0.0-alpha.13",
     "rete-connection-plugin": "^2.0.0-alpha.13",
-    "rete-vue-plugin": "^2.0.0-alpha.13",
     "rete-render-utils": "^2.0.0-alpha.13",
+    "rete-vue-plugin": "^2.0.0-alpha.13",
     "vue": "^3.3.11",
     "vuetify": "^3.4.9"
   },
@@ -32,7 +32,7 @@
     "eslint": "^8.49.0",
     "eslint-plugin-vue": "^9.17.0",
     "typescript": "^5.3.3",
-    "vite": "^7.1.9",
+    "vite": "^7.1.10",
     "vite-plugin-vue-devtools": "^7.0.25",
     "vue-tsc": "^3.1.1"
   },

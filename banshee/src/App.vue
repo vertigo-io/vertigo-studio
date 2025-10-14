@@ -19,7 +19,7 @@
       </div>
     </main>
 
-    <form class="prompt-container" @submit.prevent="sendMessage">
+    <form class="prompt-container" @submit.prevent="submitPrompt">
       <input type="text" v-model="prompt" placeholder="Écrivez un message...">
       <VSpeechToTextButton @transcript="handleTranscript" />
       <button type="submit">Envoyer</button>
@@ -55,7 +55,7 @@ const handleTranscript = (transcript: string) => {
   prompt.value = transcript;
 };
 
-const sendMessage = () => {
+const submitPrompt = () => {
   if (prompt.value.trim()) {
     if ("clear" === prompt.value) {
       story.clear();
@@ -69,7 +69,7 @@ const sendMessage = () => {
   }
 };
 
-const handleIncomingMessage = (event: MessageEvent) => {
+const handleIncomingEvent = (event: MessageEvent) => {
   isLoading.value = false; // Stop loading animation
   try {
     const parsed = JSON.parse(event.data);
@@ -98,7 +98,7 @@ onMounted(() => {
   // This assumes VAppStatusComponent will set window.ws
   const checkWsInterval = setInterval(() => {
     if (window.ws) {
-      window.ws.onmessage = handleIncomingMessage;
+      window.ws.onmessage = handleIncomingEvent;
       clearInterval(checkWsInterval);
     }
   }, 100);
