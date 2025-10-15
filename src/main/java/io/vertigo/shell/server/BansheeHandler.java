@@ -291,7 +291,7 @@ final class BansheeHandler {
 						.addLink("Résidentiel", "Informatique", 30.0)
 						.build();
 				case "wait" -> wait(Shiny.figlet().withText("attente 2s").build(), 2000);
-				case "xcontainer" -> new ShinyContainerBuilder()
+				case "container" -> new ShinyContainerBuilder()
 						.addComponent(Shiny.sparkline()
 								.withTitle("Ventes par produit")
 								.withValues(156, 450, 300, 200, 100, 23)
@@ -316,17 +316,6 @@ final class BansheeHandler {
 								.withVariant(ShinyChipVariant.ELEVATED)
 								.withIcon("mdi-vuetify")
 								.build())
-						.build();
-				case "flow" -> Shiny.flow()
-						.withTitle("My Sample Flow")
-						.addNode("1", "Start", 100, 100)
-						.addNode("2", "Process A", 300, 100)
-						.addNode("3", "Process B", 300, 300)
-						.addNode("4", "End", 500, 200)
-						.addConnection("1", "2")
-						.addConnection("2", "4")
-						.addConnection("1", "3")
-						.addConnection("3", "4")
 						.build();
 				case "mindmap" -> Shiny.mindMap()
 						.withTitle("Mouvements Artistiques")
