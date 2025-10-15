@@ -41,6 +41,7 @@ import io.vertigo.shiny.components.core.error.ShinyErrorBuilder;
 import io.vertigo.shiny.components.data.card.ShinyCardFormat;
 import io.vertigo.shiny.components.data.chip.ShinyChipVariant;
 import io.vertigo.shiny.components.data.list.ShinyListType;
+import io.vertigo.shiny.components.dataviz.mindmap.ShinyMindMapNode;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingScale;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatusType;
 import io.vertigo.shiny.components.feedback.alert.ShinyAlertType;
@@ -326,6 +327,31 @@ final class BansheeHandler {
 						.addConnection("2", "4")
 						.addConnection("1", "3")
 						.addConnection("3", "4")
+						.build();
+				case "mindmap" -> Shiny.mindMap()
+						.withTitle("Mouvements Artistiques")
+						.withRootNode(ShinyMindMapNode.of("root", "Mouvements Artistiques")
+								.addChildren(
+										ShinyMindMapNode.of("classicisme", "Classicisme")
+												.withDirection("left")
+												.addChildren(
+														ShinyMindMapNode.of("renaissance", "Renaissance"),
+														ShinyMindMapNode.of("baroque", "Baroque")),
+										ShinyMindMapNode.of("romantisme", "Romantisme")
+												.withDirection("right")
+												.addChildren(
+														ShinyMindMapNode.of("pre_raphaelite", "Préraphaélisme"),
+														ShinyMindMapNode.of("symbolisme", "Symbolisme")),
+										ShinyMindMapNode.of("moderne", "Art Moderne")
+												.withDirection("left")
+												.addChildren(
+														ShinyMindMapNode.of("impressionnisme", "Impressionnisme"),
+														ShinyMindMapNode.of("cubisme", "Cubisme")),
+										ShinyMindMapNode.of("contemporain", "Art Contemporain")
+												.withDirection("right")
+												.addChildren(
+														ShinyMindMapNode.of("pop_art", "Pop Art"),
+														ShinyMindMapNode.of("minimalisme", "Minimalisme"))))
 						.build();
 				default -> new ShinyErrorBuilder().withText("unknown command :" + message).build();
 			};

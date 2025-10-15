@@ -8,24 +8,24 @@ import io.vertigo.core.lang.Builder;
 import io.vertigo.shiny.components.ShinyComponent;
 
 public final class ShinyContainerBuilder implements Builder<ShinyContainer> {
-	private List<ShinyComponent> containerComponents = new ArrayList<>();
+	private List<ShinyComponent> _components = new ArrayList<>();
 
 	public ShinyContainerBuilder addComponent(final ShinyComponent component) {
 		Assertion.check().isNotNull(component);
 		//---
-		this.containerComponents.add(component);
+		this._components.add(component);
 		return this;
 	}
 
 	public ShinyContainerBuilder addAllComponents(final ShinyComponent... components) {
 		Assertion.check().isNotNull(components);
 		//---
-		this.containerComponents.addAll(containerComponents);
+		this._components.addAll(List.of(components));
 		return this;
 	}
 
 	@Override
 	public ShinyContainer build() {
-		return new ShinyContainer(containerComponents);
+		return new ShinyContainer(_components);
 	}
 }
