@@ -7,11 +7,11 @@ export class BansheeStory {
     return this._messages;
   }
 
-  pushMessage(message: BansheeMessage) {
+  pushMessage(message: BansheeMessage) : void {
     this._messages.push(message);
   }
 
-  clear() {
+  clear() :void {
     this._messages.splice(0);
   }
 }

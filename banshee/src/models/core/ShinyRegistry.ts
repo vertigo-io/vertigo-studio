@@ -14,6 +14,7 @@ import VShinyBarChartComponent from '../../components/dataviz/v-shiny-bar-chart-
 import VShinyDonutChartComponent from '../../components/dataviz/v-shiny-donut-chart-component.vue';
 import VShinyGeoMapComponent from '../../components/dataviz/v-shiny-geo-map-component.vue';
 import VShinyLineChartComponent from '../../components/dataviz/v-shiny-line-chart-component.vue';
+import VShinyMindMapComponent from '../../components/dataviz/v-shiny-mindmap-component.vue';
 import VShinyPieChartComponent from '../../components/dataviz/v-shiny-pie-chart-component.vue';
 import VShinyRadarChartComponent from '../../components/dataviz/v-shiny-radar-chart-component.vue';
 import VShinyRatingComponent from '../../components/dataviz/v-shiny-rating-component.vue';
@@ -60,6 +61,7 @@ export class ShinyRegistry {
     this.register('ShinySparkline', VShinySparkLineComponent);
     this.register('ShinyStatus', VShinyStatusComponent);
     this.register('ShinyFlow', VShinyFlowComponent);
+    this.register('ShinyMindMap', VShinyMindMapComponent);
     this.register('ShinyAlert', VShinyAlertComponent);
     this.register('ShinySlider', VShinySliderComponent);
     this.register('ShinyPdfComponent', VShinyPdfComponent);

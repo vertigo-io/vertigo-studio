@@ -20,9 +20,6 @@ public final class ShinyMindMapBuilder implements Builder<ShinyMindMap> {
 	}
 
 	public ShinyMindMap build() {
-		Assertion.check()
-				.isNotBlank(_title, "Title is required")
-				.isNotNull(_rootNode, "Root node is required");
 		return new ShinyMindMap(_title, _rootNode);
 	}
 }
