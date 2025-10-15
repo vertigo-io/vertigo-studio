@@ -7,8 +7,8 @@ import io.vertigo.shiny.components.ShinyComponent;
 
 public record ShinyFlow(
 		String title,
-		List<FlowNode> nodes,
-		List<FlowConnection> connections) implements ShinyComponent {
+		List<ShinyFlowNode> nodes,
+		List<ShinyFlowConnection> connections) implements ShinyComponent {
 
 	@Override
 	public String type() {
