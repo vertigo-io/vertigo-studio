@@ -170,15 +170,6 @@ final class BansheeHandler {
 								""")
 						.withTitle("Fiche de Shinning")
 						.build();
-				case "json2" -> Shiny.json()
-						.withJson("""
-								{
-								  "title": "Barry Lindon",
-								  "director": "Stanley Kubrick"
-								}
-								""")
-						.withTitle("Fiche de Barry Lindon")
-						.build();
 				case "youtube" -> Shiny.youtube()
 						.withTitle("Rick Astley - Never Gonna Give You Up")
 						.withVideoId("dQw4w9WgXcQ")
@@ -193,16 +184,9 @@ final class BansheeHandler {
 						.withTitle("carnet d'adresses")
 						.withNoDataFound("no files found")
 						.withHeader("Prénom", "Nom")
+						.withSortable(true)
 						.addRow("Arthur", "Penn")
 						.addRow("Marilyn", "Pinson")
-						.build();
-				case "table2" -> Shiny.table()
-						.withTitle("Chakra Table")
-						.withNoDataFound("No Chakra data found")
-						.withHeader("Framework", "Library")
-						.withSortable(true)
-						.addRow("Chakra", "UI")
-						.addRow("React", "Components")
 						.build();
 				case "timeline", "tl" -> Shiny.timeline()
 						.withTitle("Project Timeline")
@@ -275,7 +259,7 @@ final class BansheeHandler {
 						.addLeaf("testFile.txt")
 						.root()
 						.build();
-				case "xsankey" -> Shiny.sankey()
+				case "sankey" -> Shiny.sankey()
 						.withTitle("Flux d'énergie")
 						.addLink("Nucléaire", "Réseau électrique", 120.0)
 						.addLink("Hydraulique", "Réseau électrique", 80.0)
@@ -395,13 +379,6 @@ final class BansheeHandler {
 	}
 
 	private static String buildMessage(BansheeAction action, final String type, UUID id, String data) {
-		//		var message = new BansheeMessage(action, type, id, data);
-		//		var message = new BansheeMessage(action, alertType, id, data);
-		//		try {
-		//			return MAPPER.writeValueAsString(message);
-		//		} catch (JsonProcessingException e) {
-		//			throw new VSystemException(e, "Error while using Jackson");
-		//		}
 		return String.format("""
 				{
 				"action": "%s",
@@ -410,7 +387,6 @@ final class BansheeHandler {
 				"data": %s
 				}
 				""", action, type, id, data);
-
 	}
 
 	private static void sendMessage(Consumer<String> webSocket, ShinyComponent component) {
@@ -444,10 +420,6 @@ final class BansheeHandler {
 			String type,
 			String data) {
 		UUID id = UUID.randomUUID();
-		//			last = id;
-		//		} else {
-		//			id = last;
-		//		}
 		final String json = buildMessage(action, type, id, data);
 		System.out.println(">>> send : " + json);
 		webSocket.accept(json);
