@@ -16,22 +16,22 @@ import '@vue-flow/core/dist/style.css';
 import '@vue-flow/core/dist/theme-default.css';
 import { ShinyFlow } from '../../models/dataviz/flow/ShinyFlow';
 
-const props = defineProps<{ shinyFlow: ShinyFlow }>();
+const props = defineProps<{ data: ShinyFlow }>();
 
 const { fitView } = useVueFlow();
 
 const elements = ref<Elements>([]);
 
 watchEffect(() => {
-  if (props.shinyFlow) {
+  if (props.data) {
     const newElements: Elements = [
-      ...props.shinyFlow.nodes.map(node => ({
+      ...props.data.nodes.map(node => ({
         id: node.id,
         position: node.position,
         type: node.type || 'default',
         data: { label: node.label }, // Move label inside data
       })),
-      ...props.shinyFlow.edges.map(edge => ({
+      ...props.data.edges.map(edge => ({
         id: edge.id,
         source: edge.source,
         target: edge.target,
@@ -40,8 +40,6 @@ watchEffect(() => {
       })),
     ];
     elements.value = newElements;
-    // Use nextTick to ensure elements are rendered before fitting view
-    // This might need a slight delay or a more robust way to ensure rendering
     setTimeout(() => {
       fitView();
     }, 50);
