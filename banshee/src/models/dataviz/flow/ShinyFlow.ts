@@ -1,20 +1,7 @@
-import { ShinyComponent } from "../../ShinyComponent";
+import { ShinyFlowEdge } from './ShinyFlowEdge';
+import { ShinyFlowNode } from './ShinyFlowNode';
 
-export interface ShinyFlowNode {
-    id: string;
-    label: string;
-    position: { x: number; y: number };
-    type?: string;
-    style?: any;
-}
-
-export interface ShinyFlowEdge {
-    id: string;
-    source: string;
-    target: string;
-}
-
-export interface ShinyFlow extends ShinyComponent {
-    nodes: ShinyFlowNode[];
-    edges: ShinyFlowEdge[];
+export interface ShinyFlow {
+  nodes: ShinyFlowNode[];
+  edges: ShinyFlowEdge[];
 }

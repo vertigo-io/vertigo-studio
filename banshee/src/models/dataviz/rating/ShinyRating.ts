@@ -1,4 +1,4 @@
-import { ShinyComponent } from '../../../ShinyComponent';
+import { ShinyComponent } from '../../ShinyComponent';
 import { ShinyRatingScale, getShinyRatingMaxValue } from './ShinyRatingScale';
 
 export class ShinyRating implements ShinyComponent {

@@ -237,12 +237,12 @@ public final class Shiny {
 		return new ShinySankeyBuilder();
 	}
 
-	public static ShinyFlowBuilder flow() {
-		return new ShinyFlowBuilder();
-	}
-
 	public static ShinyMindMapBuilder mindMap() {
 		return new ShinyMindMapBuilder();
+	}
+
+	public static ShinyFlowBuilder flow() {
+		return new ShinyFlowBuilder();
 	}
 
 	//	private static ShinySuperRenderer RENDERER = new ShinySuperRenderer();
