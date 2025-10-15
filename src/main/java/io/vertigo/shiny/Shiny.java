@@ -18,6 +18,7 @@ import io.vertigo.shiny.components.dataviz.chart.ShinyChartBuilder;
 import io.vertigo.shiny.components.dataviz.chart.ShinyChartType;
 import io.vertigo.shiny.components.dataviz.flow.ShinyFlowBuilder;
 import io.vertigo.shiny.components.dataviz.gauge.ShinyGaugeBuilder;
+import io.vertigo.shiny.components.dataviz.mindmap.ShinyMindMapBuilder;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingBuilder;
 import io.vertigo.shiny.components.dataviz.sankey.ShinySankeyBuilder;
 import io.vertigo.shiny.components.dataviz.sparkline.ShinySparklineBuilder;
@@ -238,6 +239,10 @@ public final class Shiny {
 
 	public static ShinyFlowBuilder flow() {
 		return new ShinyFlowBuilder();
+	}
+
+	public static ShinyMindMapBuilder mindMap() {
+		return new ShinyMindMapBuilder();
 	}
 
 	//	private static ShinySuperRenderer RENDERER = new ShinySuperRenderer();

@@ -1,10 +1,11 @@
 package io.vertigo.shiny.components.dataviz.mindmap;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.Builder;
 
-public final class ShinyMindMapBuilder {
+public final class ShinyMindMapBuilder implements Builder<ShinyMindMap> {
 	private String _title;
-	private MindMapNode _rootNode;
+	private ShinyMindMapNode _rootNode;
 
 	public ShinyMindMapBuilder withTitle(final String title) {
 		Assertion.check().isNotBlank(title, "Title cannot be blank");
@@ -12,7 +13,7 @@ public final class ShinyMindMapBuilder {
 		return this;
 	}
 
-	public ShinyMindMapBuilder withRootNode(final MindMapNode rootNode) {
+	public ShinyMindMapBuilder withRootNode(final ShinyMindMapNode rootNode) {
 		Assertion.check().isNotNull(rootNode, "Root node cannot be null");
 		this._rootNode = rootNode;
 		return this;

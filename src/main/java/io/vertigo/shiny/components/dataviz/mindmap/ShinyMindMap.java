@@ -14,8 +14,7 @@ public record ShinyMindMap(
 
 	public ShinyMindMap {
 		Assertion.check()
-				.isNotBlank(title, "Title cannot be blank");
-		Assertion.check()
+				.isNotBlank(title, "Title cannot be blank")
 				.isNotNull(rootNode, "Root node cannot be null");
 	}
 }
