@@ -30,11 +30,12 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, nextTick, provide } from 'vue';
 import VAppStatusComponent from './components/core/VAppStatusComponent.vue';
-import VSpeechToTextButton from './components/input/VSpeechToTextButton.vue';
 import { BansheeRole } from './models/core/BansheeRole';
 import { BansheeMessage } from './models/core/BansheeMessage';
 import { BansheeStory } from './models/core/BansheeStory';
+import { ShinyParagraph } from './models/text/paragraph/ShinyParagraph';
 import { ShinyComponent } from './models/ShinyComponent';
+
 import { ShinyRegistry } from './models/core/ShinyRegistry';
 
 // Declare global types if not already defined
