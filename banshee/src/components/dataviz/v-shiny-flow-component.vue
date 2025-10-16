@@ -1,7 +1,7 @@
 <template>
   <div class="workflow-dark">
-    <VueFlow v-model="elements" :fit-view-on-init="true">
-      <Background variant="dots" :gap="20" :size="1" color="#2d3748" />
+    <VueFlow v-model="elements" :fit-view-on-init="true" :node-types="nodeTypes">
+      <Background variant="dots" :gap="20" :size="1" color="#4A4A4A" />
       <Controls />
     </VueFlow>
 
@@ -17,20 +17,34 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
+import { ref, watchEffect, onMounted } from 'vue' // Import onMounted
 import { VueFlow, useVueFlow, type Elements } from '@vue-flow/core'
 import { Background } from '@vue-flow/background'
 import { Controls } from '@vue-flow/controls'
-import dagre from '@dagrejs/dagre'
+import dagre from '@dagrejs/dagre' // dagre import
+import { Graph } from '@dagrejs/graphlib' // Graph import
+import FlowLRNode from './flow/FlowLRNode.vue'; // Import custom node component
+import FlowTBNode from './flow/FlowTBNode.vue'; // Import custom node component
+import FlowLLNode from './flow/FlowLLNode.vue'; // Import custom node component
+import FlowRRNode from './flow/FlowRRNode.vue'; // Import custom node component
 import '@vue-flow/core/dist/style.css'
 import '@vue-flow/core/dist/theme-default.css'
 import { ShinyFlow } from '../../models/dataviz/flow/ShinyFlow'
 import { ShinyFlowNode } from '@/models/dataviz/flow/ShinyFlowNode'
 import { ShinyFlowEdge } from '@/models/dataviz/flow/ShinyFlowEdge'
+import { NodeType } from '../../models/dataviz/flow/NodeType'; // Import NodeType enum
 
 const props = defineProps<{ data: ShinyFlow }>()
-const { fitView } = useVueFlow()
+const { fitView } = useVueFlow(); // Only destructure fitView
 const elements = ref<Elements>([])
+
+// Define nodeTypes object
+const nodeTypes = {
+  [NodeType.LR]: FlowLRNode,
+  [NodeType.TB]: FlowTBNode,
+  [NodeType.LL]: FlowLLNode,
+  [NodeType.RR]: FlowRRNode,
+};
 
 // 🎨 Palette Make-like
 const nodeColors = [
@@ -40,6 +54,9 @@ const nodeColors = [
   '#ef4444', // Red
   '#3b82f6', // Blue
 ]
+// ... rest of script ...
+
+
 
 // 🧠 Fonction de layout avec Dagre
 function layoutElements(nodes: ShinyFlowNode[], edges: ShinyFlowEdge[], direction = 'LR') {
@@ -62,19 +79,29 @@ function layoutElements(nodes: ShinyFlowNode[], edges: ShinyFlowEdge[], directio
 
 // 🧩 Création initiale
 watchEffect(() => {
+  // 🎨 Palette Make-like
+  const nodeColors = [
+    '#6366f1', // Indigo
+    '#10b981', // Emerald
+    '#f59e0b', // Amber
+    '#ef4444', // Red
+    '#3b82f6', // Blue
+  ]
+
+  // Icons for nodes
+  const nodeIcons = ['📦', '💳', '🚚', '🧾', '✅']; // Example icons
+
   if (props.data) {
     const nodes = props.data.nodes.map((node, i) => ({
       id: node.id,
       position: { x: 0, y: 0 },
-      type: node.type || 'default',
-      data: { label: node.label },
-      style: {
-        backgroundColor: nodeColors[i % nodeColors.length],
-        color: '#fff',
-        border: '1px solid #1f2937',
-        borderRadius: '8px',
-        padding: '10px',
+      type: node.nodeType, // Use nodeType from backend
+      data: {
+        label: node.label,
+        icon: nodeIcons[i % nodeIcons.length], // Assign icon
+        iconColor: nodeColors[i % nodeColors.length], // Assign icon color
       },
+      // Remove class and style here, as they are handled by custom node components
     }))
 
     const edges = props.data.edges.map(edge => ({

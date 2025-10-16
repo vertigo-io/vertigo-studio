@@ -41,9 +41,8 @@ import io.vertigo.shiny.components.core.error.ShinyErrorBuilder;
 import io.vertigo.shiny.components.data.card.ShinyCardFormat;
 import io.vertigo.shiny.components.data.chip.ShinyChipVariant;
 import io.vertigo.shiny.components.data.list.ShinyListType;
-import io.vertigo.shiny.components.dataviz.flow.ShinyFlowEdge;
-import io.vertigo.shiny.components.dataviz.flow.ShinyFlowNode;
-import io.vertigo.shiny.components.dataviz.flow.ShinyFlowPosition;
+import io.vertigo.shiny.components.dataviz.flow.NodeType;
+import io.vertigo.shiny.components.dataviz.flow.ShinyFlowBuilder;
 import io.vertigo.shiny.components.dataviz.mindmap.ShinyMindMapNodeBuilder;
 import io.vertigo.shiny.components.dataviz.rating.ShinyRatingScale;
 import io.vertigo.shiny.components.dataviz.status.ShinyStatusType;
@@ -277,16 +276,16 @@ final class BansheeHandler {
 						.addLink("Résidentiel", "Électroménager", 30.0)
 						.addLink("Résidentiel", "Informatique", 30.0)
 						.build();
-				case "flow" -> Shiny.flow()
-						.withNode(new ShinyFlowNode("1", "Order Received", new ShinyFlowPosition(100, 50), null))
-						.withNode(new ShinyFlowNode("2", "Payment Processed", new ShinyFlowPosition(300, 50), null))
-						.withNode(new ShinyFlowNode("3", "Items Shipped", new ShinyFlowPosition(500, 50), null))
-						.withNode(new ShinyFlowNode("4", "Invoice Generated", new ShinyFlowPosition(300, 200), null))
-						.withNode(new ShinyFlowNode("5", "Billing Completed", new ShinyFlowPosition(500, 200), null))
-						.withEdge(new ShinyFlowEdge("e1-2", "1", "2", "Process Payment"))
-						.withEdge(new ShinyFlowEdge("e2-3", "2", "3", "Ship Items"))
-						.withEdge(new ShinyFlowEdge("e2-4", "2", "4", "Generate Invoice"))
-						.withEdge(new ShinyFlowEdge("e4-5", "4", "5", "Finalize Billing"))
+				case "flow" -> new ShinyFlowBuilder()
+						.withNode("1", "Order Received", 100, 50, NodeType.RR)
+						.withNode("2", "Payment Processed", 300, 50, NodeType.LR)
+						.withNode("3", "Items Shipped", 500, 50, NodeType.TB)
+						.withNode("4", "Invoice Generated", 300, 200, NodeType.LR)
+						.withNode("5", "Billing Completed", 500, 200, NodeType.LL)
+						.withEdge("e1-2", "1", "2", "Process Payment")
+						.withEdge("e2-3", "2", "3", "Ship Items")
+						.withEdge("e2-4", "2", "4", "Generate Invoice")
+						.withEdge("e4-5", "4", "5", "Finalize Billing")
 						.build();
 				case "wait" -> wait(Shiny.figlet().withText("attente 2s").build(), 2000);
 				case "container" -> new ShinyContainerBuilder()

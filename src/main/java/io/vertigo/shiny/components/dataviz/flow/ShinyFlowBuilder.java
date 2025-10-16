@@ -20,19 +20,36 @@ package io.vertigo.shiny.components.dataviz.flow;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.vertigo.core.lang.Builder;
+import io.vertigo.shiny.components.dataviz.flow.ShinyFlowNode.Position;
 
-public final class ShinyFlowBuilder implements Builder<ShinyFlow> {
+public final class ShinyFlowBuilder {
+
 	private final List<ShinyFlowNode> _nodes = new ArrayList<>();
 	private final List<ShinyFlowEdge> _edges = new ArrayList<>();
 
-	public ShinyFlowBuilder withNode(ShinyFlowNode node) {
-		_nodes.add(node);
+	public ShinyFlowBuilder withNode(final String id, final String label, final int x, final int y, final NodeType nodeType) { // Added NodeType
+		_nodes.add(new ShinyFlowNode(id, label, new Position(x, y), nodeType));
 		return this;
 	}
 
-	public ShinyFlowBuilder withEdge(ShinyFlowEdge edge) {
-		_edges.add(edge);
+	// Removed the old withNode methods as they are now replaced by the one with NodeType
+	// public ShinyFlowBuilder withNode(final String id, final String label, final int x, final int y) {
+	// 	_nodes.add(new ShinyFlowNode(id, label, new Position(x, y), null));
+	// 	return this;
+	// }
+
+	// public ShinyFlowBuilder withNode(final String id, final String label, final int x, final int int y, final String type) {
+	// 	_nodes.add(new ShinyFlowNode(id, label, new Position(x, y), type));
+	// 	return this;
+	// }
+
+	public ShinyFlowBuilder withEdge(final String id, final String source, final String target) {
+		_edges.add(new ShinyFlowEdge(id, source, target, null));
+		return this;
+	}
+
+	public ShinyFlowBuilder withEdge(final String id, final String source, final String target, final String label) {
+		_edges.add(new ShinyFlowEdge(id, source, target, label));
 		return this;
 	}
 
