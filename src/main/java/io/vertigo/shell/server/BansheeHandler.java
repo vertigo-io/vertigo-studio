@@ -58,7 +58,7 @@ final class BansheeHandler {
 
 	void handle(Consumer<String> webSocket, String message) {
 		try {
-			if (message.startsWith("llm")) {
+			if (message.toLowerCase().startsWith("llm")) {
 				ShinyComponent sc = new HalloweenCommand().llm(message.substring(3));
 				sendMessage(webSocket, sc);
 				return;
