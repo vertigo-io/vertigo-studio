@@ -393,17 +393,6 @@ td {
 	margin-bottom: 0.5em;
 }
 
-.chakra-chart-container {
-	background-color: var(--chakra-bg);
-	padding: 15px;
-	border-radius: 8px;
-}
-
-.chakra-component-title {
-	color: var(--chakra-title-text);
-	margin-bottom: 10px;
-}
-
 .chart-canvas-wrapper {
 	max-width: 50%;
 	margin: auto;
