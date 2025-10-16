@@ -242,7 +242,7 @@ td {
 .chart-container .chart-canvas {
 	width: 100%;
 	min-height: 300px; /* Hauteur augmentée pour barres horizontales */
-	max-height: 400px;
+	/*max-height: 400px;*/
 	display: block;
 }
 
