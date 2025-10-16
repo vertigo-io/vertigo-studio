@@ -83,4 +83,13 @@ export default defineComponent({
   color: var(--chakra-paragraph-text);
   padding: 1rem;
 }
+
+.table-icon {
+	width: 16px;
+	height: 16px;
+	stroke: var(--icon-stroke);
+	stroke-width: 2;
+	opacity: 0.7;
+	flex-shrink: 0;
+}
 </style>

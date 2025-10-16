@@ -52,5 +52,10 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* All styles are now handled by the global style.css */
+
+.map-canvas {
+	width: 100%;
+	height: 300px; /* Default height for the map */
+	display: block;
+}
 </style>
