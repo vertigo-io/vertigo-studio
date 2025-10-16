@@ -484,20 +484,6 @@ td {
 	height: 100%;
 }
 
-.photo-container {
-	width: 100%;
-	max-width: 100%;
-	overflow: hidden;
-	border-radius: 8px;
-	box-shadow: 0 4px 16px var(--general-shadow);
-}
-
-.photo-image {
-	width: 100%;
-	height: auto;
-	display: block;
-}
-
 .container-content {
 	padding: 10px;
 	border: 1px dashed var(--assistant-accent);

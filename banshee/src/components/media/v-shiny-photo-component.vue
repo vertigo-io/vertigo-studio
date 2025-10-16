@@ -24,4 +24,18 @@ defineProps<{
   padding: 20px;
   text-align: center;
 }
+
+.photo-container {
+	width: 100%;
+	max-width: 100%;
+	overflow: hidden;
+	border-radius: 8px;
+	box-shadow: 0 4px 16px var(--general-shadow);
+}
+
+.photo-image {
+	width: 100%;
+	height: auto;
+	display: block;
+}
 </style>
