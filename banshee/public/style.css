@@ -221,39 +221,6 @@ h1 span.yellow {
 	border: 1px solid var(--assistant-border);
 }
 
-.prompt-container {
-	display: flex;
-	gap: 10px;
-	margin-top: 15px;
-	max-width: 900px; /* Match chat-container width */
-	margin: 15px auto 0 auto; /* Center it and add top margin */
-}
-
-.prompt-container input {
-	flex: 1;
-	padding: 12px 15px; /* Increased padding */
-	border-radius: 8px;
-	border: 1px solid var(--assistant-bg);
-	background: var(--general-surface);
-	color: var(--general-text);
-	font-size: 18px; /* Increased font size */
-}
-
-.prompt-container button {
-	padding: 10px 18px;
-	border: none;
-	border-radius: 8px;
-	background: var(--assistant-bg);
-	color: var(--general-text);
-	cursor: pointer;
-	font-weight: bold;
-	transition: background 0.2s ease;
-}
-
-.prompt-container button:hover {
-	background: var(--yellow-accent);
-}
-
 .table-title {
 	display: flex;
 	align-items: center;

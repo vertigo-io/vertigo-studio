@@ -165,89 +165,83 @@ const toggleFullscreen = (messageId: string) => {
 }
 
 .system-message {
-
   background-color: var(--system-message-bg);
-
   color: var(--system-message-text);
-
   align-self: center;
-
   margin-left: auto;
-
   margin-right: auto;
-
   text-align: center;
-
   font-style: italic;
-
 }
 
 
 
 .message-content-wrapper {
-
   position: relative;
-
   /* Ensure content takes full width/height of wrapper */
-
   width: 100%;
-
   height: 100%;
-
 }
 
 
 
 .fullscreen-button {
-
   position: absolute;
-
   top: 8px;
-
   right: 8px;
-
   background-color: rgba(0, 0, 0, 0.6);
-
   border: none;
-
   border-radius: 4px;
-
   padding: 4px;
-
   cursor: pointer;
-
   color: white;
-
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
   opacity: 0; /* Hidden by default */
-
   transition: opacity 0.2s ease-in-out;
-
   z-index: 10; /* Ensure it's above content */
-
 }
-
-
 
 .chat-message:hover .fullscreen-button {
-
   opacity: 1; /* Show on hover */
-
 }
-
-
 
 .fullscreen-button svg {
-
   width: 18px;
-
   height: 18px;
-
 }
 
+.prompt-container {
+	display: flex;
+	gap: 10px;
+	margin-top: 15px;
+	max-width: 900px; /* Match chat-container width */
+	margin: 15px auto 0 auto; /* Center it and add top margin */
+}
+
+.prompt-container input {
+	flex: 1;
+	padding: 12px 15px; /* Increased padding */
+	border-radius: 8px;
+	border: 1px solid var(--assistant-bg);
+	background: var(--general-surface);
+	color: var(--general-text);
+	font-size: 18px; /* Increased font size */
+}
+
+.prompt-container button {
+	padding: 10px 18px;
+	border: none;
+	border-radius: 8px;
+	background: var(--assistant-bg);
+	color: var(--general-text);
+	cursor: pointer;
+	font-weight: bold;
+	transition: background 0.2s ease;
+}
+
+.prompt-container button:hover {
+	background: var(--yellow-accent);
+}
 </style>
