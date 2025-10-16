@@ -41,4 +41,20 @@ const pathHtml = computed((): string => {
   align-items: center;
   flex-wrap: wrap;
 }
+
+.path-root {
+	color: var(--path-root);
+}
+
+.path-node {
+	color: var(--path-node);
+}
+
+.path-leaf {
+	color: var(--path-leaf);
+}
+
+.path-separator {
+	color: var(--path-separator);
+}
 </style>

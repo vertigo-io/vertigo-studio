@@ -567,22 +567,6 @@ td {
 	margin-bottom: 0.5em;
 }
 
-.path-root {
-	color: var(--path-root);
-}
-
-.path-node {
-	color: var(--path-node);
-}
-
-.path-leaf {
-	color: var(--path-leaf);
-}
-
-.path-separator {
-	color: var(--path-separator);
-}
-
 .chakra-chart-container {
 	background-color: var(--chakra-bg);
 	padding: 15px;
