@@ -34,5 +34,92 @@ const summary = (description: string): string => {
 </script>
 
 <style scoped>
-/* All styles are now handled by the global style.css */
+
+.rss-feed {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.rss-card {
+	display: flex;
+	background-color: var(--rss-card-bg);
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 2px 4px var(--general-shadow);
+	padding: 10px;
+	gap: 10px;
+	align-items: flex-start;
+}
+
+.rss-image, .rss-image-placeholder {
+	flex-shrink: 0;
+	width: 120px;
+	height: 120px; /* Hauteur fixe pour cohérence */
+}
+
+.rss-image img {
+	width: 100%;
+	height: 100%;
+	border-radius: 6px;
+	object-fit: cover;
+	display: block;
+}
+
+.rss-image-placeholder {
+	background-color: var(--rss-image-placeholder);
+	border-radius: 6px;
+}
+
+.rss-content {
+	flex-grow: 1;
+}
+
+.rss-headline {
+	font-size: 1em;
+	font-weight: 400;
+	margin: 0 0 8px 0;
+}
+
+.rss-headline a {
+	color: var(--general-text);
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+
+.rss-headline a:hover {
+	color: var(--link-hover);
+	text-decoration: underline;
+}
+
+.rss-summary {
+	font-size: 0.75em;
+	font-weight: 400;
+	color: var(--rss-summary-text);
+	margin: 0 0 8px 0;
+	line-height: 1.4;
+}
+
+.rss-meta {
+	font-size: 0.7em;
+	font-weight: 400;
+	color: var(--rss-meta-text);
+	display: flex;
+	gap: 8px;
+}
+
+.rss-date, .rss-author {
+	display: inline-block;
+}
+
+@media (max-width: 600px) {
+	.rss-card {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	.rss-image, .rss-image-placeholder {
+		width: 100%;
+		max-height: 150px;
+	}
+}
 </style>
