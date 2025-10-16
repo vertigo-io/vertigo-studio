@@ -96,56 +96,6 @@ h1 span.yellow {
 }
 
 
-#status {
-	position: absolute;
-	right: 0;
-	top: 50%;
-	transform: translateY(-50%);
-	font-size: 11px;
-	font-weight: 500;
-	color: var(--general-text);
-	text-transform: uppercase;
-	letter-spacing: 1px;
-	display: flex;
-	align-items: center;
-	gap: 6px;
-	padding: 4px 8px;
-	background: var(--status-bg);
-	border-radius: 12px;
-	backdrop-filter: blur(10px);
-	border: 1px solid var(--status-border);
-}
-
-.status-dot {
-	width: 8px;
-	height: 8px;
-	border-radius: 50%;
-	animation: pulse 2s infinite;
-}
-
-.status-connected .status-dot {
-	background: var(--status-connected);
-	box-shadow: 0 0 8px var(--status-connected);
-}
-
-.status-disconnected .status-dot {
-	background: var(--status-disconnected);
-	box-shadow: 0 0 8px var(--status-disconnected);
-}
-
-.status-error .status-dot {
-	background: var(--status-error);
-	box-shadow: 0 0 8px var(--status-error);
-}
-
-@keyframes pulse {
-	0%, 100% {
-		opacity: 1;
-	}
-	50% {
-		opacity: 0.6;
-	}
-}
 
 /* Animation of dot when waiting response */
 .loading-dot {
@@ -199,25 +149,6 @@ h1 span.yellow {
 	backdrop-filter: blur(10px);
 }
 
-.user-message {
-	background: var(--user-bg);
-	color: var(--user-text);
-	margin-left: auto;
-	text-align: right;
-	max-width: 90%;
-	box-shadow: 0 6px 20px var(--general-shadow), 0 0 15px var(--user-shadow-glow);
-	border: 1px solid var(--user-border);
-}
-
-.response-message {
-	background: var(--assistant-bg);
-	color: var(--assistant-text);
-	margin-right: auto;
-	text-align: left;
-	max-width: 90%;
-	box-shadow: 0 6px 20px var(--general-shadow), 0 0 15px var(--assistant-shadow-glow);
-	border: 1px solid var(--assistant-border);
-}
 
 .table-title {
 	display: flex;
@@ -336,25 +267,6 @@ tbody tr:hover {
 
 td {
 	transition: all 0.2s ease;
-}
-
-.chat-container::-webkit-scrollbar {
-	width: 10px;
-}
-
-.chat-container::-webkit-scrollbar-track {
-	background: var(--general-bg);
-	border-radius: 10px;
-}
-
-.chat-container::-webkit-scrollbar-thumb {
-	background: var(--assistant-bg);
-	border-radius: 10px;
-	border: 2px solid var(--general-bg);
-}
-
-.chat-container::-webkit-scrollbar-thumb:hover {
-	background: var(--assistant-accent);
 }
 
 /* Styles pour les graphiques dans les conteneurs collapsible */

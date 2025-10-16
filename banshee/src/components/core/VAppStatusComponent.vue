@@ -43,37 +43,65 @@ onMounted(() => {
 </script>
 
 <style scoped>
+
 /* Styles for the status component */
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 8px currentColor;
+  }
+  50% {
+    box-shadow: 0 0 12px currentColor;
+  }
+}
+
 #status {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.9em;
+  gap: 6px;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 500;
   color: var(--general-text);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: var(--status-bg);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--status-border);
 }
 
 .status-dot {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background-color: grey;
   transition: background-color 0.3s ease;
+  animation: pulse 2s infinite;
 }
 
-#status.status-connected .status-dot {
-  background-color: green;
+#status.status-connected .status-dot,
+.status-connected .status-dot {
+  background-color: var(--status-connected, green);
+  box-shadow: 0 0 8px var(--status-connected, green);
 }
 
-#status.status-disconnected .status-dot {
-  background-color: red;
+#status.status-disconnected .status-dot,
+.status-disconnected .status-dot {
+  background-color: var(--status-disconnected, red);
+  box-shadow: 0 0 8px var(--status-disconnected, red);
 }
 
-#status.status-error .status-dot {
-  background-color: orange;
+#status.status-error .status-dot,
+.status-error .status-dot {
+  background-color: var(--status-error, orange);
+  box-shadow: 0 0 8px var(--status-error, orange);
 }
 
 #status-text {
   color: #CBD5E0;
 }
-
 </style>
