@@ -11,9 +11,20 @@
     <main>
       <div class="chat-container" id="chat">
         <template v-for="message in story.messages" :key="message.id">
-          <div :class="`chat-message ${message.role}-message`">
-            <component :is="shinyRegistry.resolve(message.component.type)" 
-            :data="message.component"></component>
+          <div :class="`chat-message ${message.role}-message`"
+               @mouseover="hoveredMessageId = message.id"
+               @mouseleave="hoveredMessageId = null">
+            <div class="message-content-wrapper" :ref="el => message.id && (messageRefs[message.id] = el)">
+              <component :is="shinyRegistry.resolve(message.component.type)" 
+              :data="message.component"></component>
+              <button v-if="hoveredMessageId === message.id" 
+                      @click="toggleFullscreen(message.id)" 
+                      class="fullscreen-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-maximize">
+                  <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3m-18 0v3a2 2 0 0 0 2 2h3"></path>
+                </svg>
+              </button>
+            </div>
           </div>
         </template>
       </div>
@@ -105,6 +116,29 @@ onMounted(() => {
     }
   }, 100);
 });
+
+const messageRefs = ref({}); // To store references to message content wrappers
+const hoveredMessageId = ref<string | null>(null);
+
+const toggleFullscreen = (messageId: string) => {
+  const element = messageRefs.value[messageId];
+  if (element) {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+      // Dispatch event when exiting fullscreen
+      const event = new CustomEvent('fullscreen-toggled', { detail: { messageId, isFullscreen: false } });
+      window.dispatchEvent(event);
+    } else {
+      element.requestFullscreen().then(() => {
+        // Dispatch event when entering fullscreen
+        const event = new CustomEvent('fullscreen-toggled', { detail: { messageId, isFullscreen: true } });
+        window.dispatchEvent(event);
+      }).catch((err: Error) => {
+        console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+      });
+    }
+  }
+};
 </script>
 
 <style scoped>
@@ -131,13 +165,89 @@ onMounted(() => {
 }
 
 .system-message {
+
   background-color: var(--system-message-bg);
+
   color: var(--system-message-text);
+
   align-self: center;
+
   margin-left: auto;
+
   margin-right: auto;
+
   text-align: center;
+
   font-style: italic;
+
+}
+
+
+
+.message-content-wrapper {
+
+  position: relative;
+
+  /* Ensure content takes full width/height of wrapper */
+
+  width: 100%;
+
+  height: 100%;
+
+}
+
+
+
+.fullscreen-button {
+
+  position: absolute;
+
+  top: 8px;
+
+  right: 8px;
+
+  background-color: rgba(0, 0, 0, 0.6);
+
+  border: none;
+
+  border-radius: 4px;
+
+  padding: 4px;
+
+  cursor: pointer;
+
+  color: white;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  opacity: 0; /* Hidden by default */
+
+  transition: opacity 0.2s ease-in-out;
+
+  z-index: 10; /* Ensure it's above content */
+
+}
+
+
+
+.chat-message:hover .fullscreen-button {
+
+  opacity: 1; /* Show on hover */
+
+}
+
+
+
+.fullscreen-button svg {
+
+  width: 18px;
+
+  height: 18px;
+
 }
 
 </style>
