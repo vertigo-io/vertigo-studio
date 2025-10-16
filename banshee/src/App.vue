@@ -174,16 +174,12 @@ const toggleFullscreen = (messageId: string) => {
   font-style: italic;
 }
 
-
-
 .message-content-wrapper {
   position: relative;
   /* Ensure content takes full width/height of wrapper */
   width: 100%;
   height: 100%;
 }
-
-
 
 .fullscreen-button {
   position: absolute;
@@ -205,6 +201,25 @@ const toggleFullscreen = (messageId: string) => {
 
 .chat-message:hover .fullscreen-button {
   opacity: 1; /* Show on hover */
+}
+
+.chat-container::-webkit-scrollbar {
+	width: 10px;
+}
+
+.chat-container::-webkit-scrollbar-track {
+	background: var(--general-bg);
+	border-radius: 10px;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+	background: var(--assistant-bg);
+	border-radius: 10px;
+	border: 2px solid var(--general-bg);
+}
+
+.chat-container::-webkit-scrollbar-thumb:hover {
+	background: var(--assistant-accent);
 }
 
 .fullscreen-button svg {

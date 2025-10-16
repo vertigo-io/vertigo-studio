@@ -26,7 +26,6 @@
 	--chakra-text: #E2E8F0; /* Texte principal Chakra */
 	--chakra-title-text: #CBD5E0; /* Texte des titres Chakra */
 	--chakra-paragraph-text: #A0AEC0; /* Texte des paragraphes Chakra */
-	--chakra-tree-node-label: #90CDF4; /* Texte des étiquettes de nœuds Chakra */
 
 	/* Couleurs d'accentuation */
 	--assistant-accent: #3C4047; /* Accentuation assistant */
@@ -46,7 +45,6 @@
 	--status-bg: rgba(255, 255, 255, 0.05); /* Fond du conteneur de statut */
 	--status-border: rgba(255, 255, 255, 0.1); /* Bordure du conteneur de statut */
 	--table-border: rgba(255, 255, 255, 0.05); /* Bordure des lignes de tableau */
-	--chakra-table-border: #4A5568; /* Bordure des tableaux Chakra */
 	--tree-border: rgba(255, 255, 255, 0.1); /* Bordure des sous-listes d'arbre */
 	--progress-glow: rgba(29, 161, 242, 0.5); /* Ombre néon de la barre de progression */
 	--progress-completed-glow: rgba(80, 250, 123, 0.7); /* Ombre néon complétée */
@@ -466,7 +464,7 @@ td {
 	display: block;
 }
 
-.youtube-container, .spotify-container {
+.youtube-container {
 	position: relative;
 	width: 100%;
 	padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
@@ -476,7 +474,7 @@ td {
 	background: #000;
 }
 
-.youtube-player, .spotify-player {
+.youtube-player {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -520,56 +518,4 @@ td {
 .chart-canvas-wrapper {
 	max-width: 50%;
 	margin: auto;
-}
-
-.chakra-table-container {
-	background-color: var(--chakra-bg);
-	padding: 15px;
-	border-radius: 8px;
-	overflow-x: auto;
-}
-
-.chakra-table {
-	width: 100%;
-	border-collapse: collapse;
-}
-
-.chakra-table-th {
-	padding: 8px 12px;
-	border-bottom: 2px solid var(--chakra-table-border);
-	text-align: left;
-	color: var(--chakra-title-text);
-	background-color: var(--shiny-card-bg);
-}
-
-.chakra-table-td {
-	padding: 8px 12px;
-	border-bottom: 1px solid var(--chakra-table-border);
-	color: var(--chakra-text);
-}
-
-.chakra-table-no-data {
-	text-align: center;
-	color: var(--chakra-paragraph-text);
-	padding: 8px;
-}
-
-.chakra-tree {
-	color: var(--chakra-title-text);
-	background-color: var(--chakra-bg);
-	padding: 10px;
-	border-radius: 8px;
-}
-
-.chakra-tree-node {
-	margin-left: 15px;
-}
-
-.chakra-tree-node-label {
-	font-weight: bold;
-	color: var(--chakra-tree-node-label);
-}
-
-.chakra-tree-node-children {
-	margin-left: 10px;
 }
