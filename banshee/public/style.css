@@ -514,11 +514,6 @@ td {
 	text-align: center; /* Center content like Figlet SVG */
 }
 
-.shiny-figlet-svg {
-  max-width: 100%;
-  height: auto;
-}
-
 .chart-container .chart-canvas {
 	width: 100%;
 	min-height: 300px; /* Hauteur augmentée pour barres horizontales */
