@@ -62,5 +62,17 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* All styles are now handled by the global style.css */
+.sparkline-canvas {
+	width: 100%;
+	height: 50px; /* Typical height for a sparkline */
+	max-height: 50px;
+	display: block;
+}
+
+.sparkline-container {
+	width: 200px;
+	height: 50px; /* Hauteur fixe */
+	max-height: 50px;
+	position: relative;
+}
 </style>
