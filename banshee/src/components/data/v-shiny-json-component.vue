@@ -37,5 +37,61 @@ const highlightedJson = computed((): string => {
 </script>
 
 <style scoped>
-/* All styles are now handled by the global style.css */
+
+.json-container {
+	background-color: var(--json-bg);
+	border-radius: 8px;
+	padding: 16px;
+	margin-top: 10px;
+	border: 1px solid var(--assistant-bg);
+	font-family: 'Fira Code', 'Courier New', monospace;
+	font-size: 14px;
+	line-height: 1.5;
+	overflow-x: auto;
+	white-space: pre;
+}
+
+.json-container::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+
+.json-container::-webkit-scrollbar-track {
+	background: var(--general-bg);
+	border-radius: 10px;
+}
+
+.json-container::-webkit-scrollbar-thumb {
+	background: var(--assistant-bg);
+	border-radius: 10px;
+	border: 2px solid var(--json-bg);
+}
+
+.json-container::-webkit-scrollbar-thumb:hover {
+	background: var(--assistant-accent);
+}
+
+.json-container::-webkit-scrollbar-corner {
+	background: var(--json-bg);
+}
+
+.json-key {
+	color: var(--json-key);
+}
+
+.json-string {
+	color: var(--json-string);
+}
+
+.json-number {
+	color: var(--json-number);
+}
+
+.json-boolean {
+	color: var(--json-boolean);
+}
+
+.json-null {
+	color: var(--json-null);
+}
 </style>
