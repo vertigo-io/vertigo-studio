@@ -23,10 +23,7 @@ import { Background } from '@vue-flow/background'
 import { Controls } from '@vue-flow/controls'
 import dagre from '@dagrejs/dagre' // dagre import
 import { Graph } from '@dagrejs/graphlib' // Graph import
-import FlowLRNode from './flow/FlowLRNode.vue'; // Import custom node component
-import FlowTBNode from './flow/FlowTBNode.vue'; // Import custom node component
-import FlowLLNode from './flow/FlowLLNode.vue'; // Import custom node component
-import FlowRRNode from './flow/FlowRRNode.vue'; // Import custom node component
+import FlowCustomNode from './flow/FlowCustomNode.vue'; // Import custom node component
 import '@vue-flow/core/dist/style.css'
 import '@vue-flow/core/dist/theme-default.css'
 import { ShinyFlow } from '../../models/dataviz/flow/ShinyFlow'
@@ -40,10 +37,10 @@ const elements = ref<Elements>([])
 
 // Define nodeTypes object
 const nodeTypes = {
-  [NodeType.LR]: FlowLRNode,
-  [NodeType.TB]: FlowTBNode,
-  [NodeType.LL]: FlowLLNode,
-  [NodeType.RR]: FlowRRNode,
+  [NodeType.LR]: FlowCustomNode,
+  [NodeType.TB]: FlowCustomNode,
+  [NodeType.LL]: FlowCustomNode,
+  [NodeType.RR]: FlowCustomNode,
 };
 
 // 🎨 Palette Make-like
@@ -64,14 +61,28 @@ function layoutElements(nodes: ShinyFlowNode[], edges: ShinyFlowEdge[], directio
   dagreGraph.setDefaultEdgeLabel(() => ({}))
   dagreGraph.setGraph({ rankdir: direction, nodesep: 80, ranksep: 100 })
 
-  nodes.forEach(node => dagreGraph.setNode(node.id, { width: 120, height: 120 }))
+  nodes.forEach(node => {
+    let nodeWidth = 120;
+    let nodeHeight = 120;
+    if (node.nodeType === NodeType.LR || node.nodeType === NodeType.LL || node.nodeType === NodeType.RR) {
+      nodeWidth = 180;
+      nodeHeight = 60;
+    }
+    dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
+  });
   edges.forEach(edge => dagreGraph.setEdge(edge.source, edge.target))
 
   dagre.layout(dagreGraph)
 
   nodes.forEach(node => {
     const pos = dagreGraph.node(node.id)
-    node.position = { x: pos.x - 100, y: pos.y - 30 }
+    let nodeWidth = 120;
+    let nodeHeight = 120;
+    if (node.nodeType === NodeType.LR || node.nodeType === NodeType.LL || node.nodeType === NodeType.RR) {
+      nodeWidth = 180;
+      nodeHeight = 60;
+    }
+    node.position = { x: pos.x - nodeWidth / 2, y: pos.y - nodeHeight / 2 }
   })
 
   return { nodes, edges }
@@ -100,6 +111,7 @@ watchEffect(() => {
         label: node.label,
         icon: nodeIcons[i % nodeIcons.length], // Assign icon
         iconColor: nodeColors[i % nodeColors.length], // Assign icon color
+        nodeType: node.nodeType, // Pass nodeType to custom node component
       },
       // Remove class and style here, as they are handled by custom node components
     }))
