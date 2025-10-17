@@ -55,15 +55,6 @@ const nodeColors = [
 
 // 🧩 Création initiale
 watchEffect(() => {
-  // 🎨 Palette Make-like
-  const nodeColors = [
-    '#6366f1', // Indigo
-    '#10b981', // Emerald
-    '#f59e0b', // Amber
-    '#ef4444', // Red
-    '#3b82f6', // Blue
-  ]
-
   // Icons for nodes
   const nodeIcons = ['📦', '💳', '🚚', '🧾', '✅']; // Example icons
 
