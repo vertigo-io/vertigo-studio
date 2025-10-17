@@ -2,18 +2,20 @@
   <div :class="nodeTypeClass">
     <!-- Handles based on node type -->
     <template v-if="data.nodeType === NodeType.LR">
-      <Handle type="target" :position="Position.Left" />
-      <Handle type="source" :position="Position.Right" />
+      <Handle type="target" :position="Position.Left" class="flow-handle round" />
+      <Handle type="source" :position="Position.Right" class="flow-handle round" />
+      <Handle type="source" :position="Position.Bottom" class="flow-handle rectangle" />
+      <Handle type="source" :position="Position.Top" class="flow-handle rectangle" />
     </template>
     <template v-else-if="data.nodeType === NodeType.TB">
-      <Handle type="target" :position="Position.Top" />
-      <Handle type="source" :position="Position.Bottom" />
+      <Handle type="target" :position="Position.Top" class="flow-handle round" />
+      <Handle type="source" :position="Position.Bottom" class="flow-handle round" />
     </template>
     <template v-else-if="data.nodeType === NodeType.LL">
-      <Handle type="target" :position="Position.Left" />
+      <Handle type="target" :position="Position.Left" class="flow-handle round" />
     </template>
     <template v-else-if="data.nodeType === NodeType.RR">
-      <Handle type="source" :position="Position.Right" />
+      <Handle type="source" :position="Position.Right" class="flow-handle round" />
     </template>
 
     <div class="node-icon" :style="{ backgroundColor: iconBgColor }">
@@ -173,5 +175,23 @@ const nodeTypeClass = computed(() => {
 }
 .flow-rr-node .node-icon {
   margin-left: 8px; /* Icon on the right for RR */
+}
+
+/* Style pour un handle en forme de rond gris clair, taille d'un "O" (~12px) */
+.flow-handle.round {
+  background: #d3d3d3; /* Gris clair */
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+/* Style pour un handle en forme de rectangle horizontal, deux fois plus long que large */
+.flow-handle.rectangle {
+  background: #d3d3d3; /* Gris clair */
+  width: 20px; /* Deux fois plus long */
+  height: 15px; /* Largeur de base */
+  border-radius: 2px; /* Coins légèrement arrondis */
+  z-index: -1;
 }
 </style>
