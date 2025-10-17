@@ -121,7 +121,7 @@ watchEffect(() => {
       source: edge.source,
       target: edge.target,
       label: edge.label,
-      type: edge.type || 'smoothstep',
+      type: 'smoothstep',
       animated: true,
       style: { stroke: '#818cf8', strokeWidth: 2 },
       labelStyle: { fill: '#a5b4fc', fontWeight: 500, fontSize: '12px' },
