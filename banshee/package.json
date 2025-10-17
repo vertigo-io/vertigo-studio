@@ -10,6 +10,7 @@
     "lint:css": "stylelint \"**/*.{css,vue}\""
   },
   "dependencies": {
+    "@dagrejs/dagre": "^1.1.5",
     "@mdi/font": "^7.4.47",
     "@vue-flow/background": "^1.3.2",
     "@vue-flow/controls": "^1.1.3",

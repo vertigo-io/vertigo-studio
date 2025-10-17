@@ -17,13 +17,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watchEffect, onMounted } from 'vue' // Import onMounted
+import { ref, watchEffect, onMounted } from 'vue'
 import { VueFlow, useVueFlow, type Elements } from '@vue-flow/core'
 import { Background } from '@vue-flow/background'
 import { Controls } from '@vue-flow/controls'
-import dagre from '@dagrejs/dagre' // dagre import
-import { Graph } from '@dagrejs/graphlib' // Graph import
 import FlowCustomNode from './flow/FlowCustomNode.vue'; // Import custom node component
+import { FlowLayout } from './flow/FlowLayout';
 import '@vue-flow/core/dist/style.css'
 import '@vue-flow/core/dist/theme-default.css'
 import { ShinyFlow } from '../../models/dataviz/flow/ShinyFlow'
@@ -54,40 +53,6 @@ const nodeColors = [
 // ... rest of script ...
 
 
-
-// 🧠 Fonction de layout avec Dagre
-function layoutElements(nodes: ShinyFlowNode[], edges: ShinyFlowEdge[], direction = 'LR') {
-  const dagreGraph = new dagre.graphlib.Graph()
-  dagreGraph.setDefaultEdgeLabel(() => ({}))
-  dagreGraph.setGraph({ rankdir: direction, nodesep: 80, ranksep: 100 })
-
-  nodes.forEach(node => {
-    let nodeWidth = 120;
-    let nodeHeight = 120;
-    if (node.nodeType === NodeType.LR || node.nodeType === NodeType.LL || node.nodeType === NodeType.RR) {
-      nodeWidth = 180;
-      nodeHeight = 60;
-    }
-    dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
-  });
-  edges.forEach(edge => dagreGraph.setEdge(edge.source, edge.target))
-
-  dagre.layout(dagreGraph)
-
-  nodes.forEach(node => {
-    const pos = dagreGraph.node(node.id)
-    let nodeWidth = 120;
-    let nodeHeight = 120;
-    if (node.nodeType === NodeType.LR || node.nodeType === NodeType.LL || node.nodeType === NodeType.RR) {
-      nodeWidth = 180;
-      nodeHeight = 60;
-    }
-    node.position = { x: pos.x - nodeWidth / 2, y: pos.y - nodeHeight / 2 }
-  })
-
-  return { nodes, edges }
-}
-
 // 🧩 Création initiale
 watchEffect(() => {
   // 🎨 Palette Make-like
@@ -102,43 +67,42 @@ watchEffect(() => {
   // Icons for nodes
   const nodeIcons = ['📦', '💳', '🚚', '🧾', '✅']; // Example icons
 
-  if (props.data) {
-    const nodes = props.data.nodes.map((node, i) => ({
-      id: node.id,
-      position: { x: 0, y: 0 },
-      type: node.nodeType, // Use nodeType from backend
-      data: {
-        label: node.label,
-        icon: nodeIcons[i % nodeIcons.length], // Assign icon
-        iconColor: nodeColors[i % nodeColors.length], // Assign icon color
-        nodeType: node.nodeType, // Pass nodeType to custom node component
-      },
-      // Remove class and style here, as they are handled by custom node components
-    }))
+  const nodes = props.data.nodes.map((node, i) => ({
+    id: node.id,
+    position: { x: 0, y: 0 },
+    type: node.nodeType, // Use nodeType from backend
+    data: {
+      label: node.label,
+      icon: nodeIcons[i % nodeIcons.length], // Assign icon
+      iconColor: nodeColors[i % nodeColors.length], // Assign icon color
+      nodeType: node.nodeType, // Pass nodeType to custom node component
+    },
+    // Remove class and style here, as they are handled by custom node components
+  }))
 
-    const edges = props.data.edges.map(edge => ({
-      id: edge.id,
-      source: edge.source,
-      target: edge.target,
-      label: edge.label,
-      type: 'smoothstep',
-      animated: true,
-      style: { stroke: '#818cf8', strokeWidth: 2 },
-      labelStyle: { fill: '#a5b4fc', fontWeight: 500, fontSize: '12px' },
-    }))
+  const edges = props.data.edges.map(edge => ({
+    id: edge.id,
+    source: edge.source,
+    target: edge.target,
+    label: edge.label,
+    type: 'smoothstep',
+    animated: true,
+    style: { stroke: '#818cf8', strokeWidth: 2 },
+    labelStyle: { fill: '#a5b4fc', fontWeight: 500, fontSize: '12px' },
+  }))
 
-    const layouted = layoutElements(nodes, edges, 'LR')
-    elements.value = [...layouted.nodes, ...layouted.edges]
+  const layouted = FlowLayout.layoutElements(nodes, edges, 'LR')
+  elements.value = [...layouted.nodes, ...layouted.edges]
 
-    setTimeout(() => fitView(), 80)
-  }
+  setTimeout(() => fitView(), 80)
 })
 
 // ⚙️ Bouton manuel
 function autoLayout() {
   const nodes = elements.value.filter(e => e.position)
   const edges = elements.value.filter(e => e.source)
-  const layouted = layoutElements(nodes, edges, 'LR')
+
+  const layouted = FlowLayout.layoutElements(nodes, edges, 'LR')
   elements.value = [...layouted.nodes, ...layouted.edges]
   fitView()
 }
