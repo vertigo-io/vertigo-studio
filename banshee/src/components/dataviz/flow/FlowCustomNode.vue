@@ -1,5 +1,5 @@
 <template>
-  <div :class="['flow-custom-node', nodeTypeClass]">
+  <div :class="nodeTypeClass">
     <!-- Handles based on node type -->
     <template v-if="data.nodeType === NodeType.LR">
       <Handle type="target" :position="Position.Left" />
@@ -57,22 +57,7 @@ const nodeTypeClass = computed(() => {
 </script>
 
 <style scoped>
-/* Base styles for all custom nodes */
-.flow-custom-node {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-size: 0.9em;
-  font-weight: bold;
-  color: #FFFFFF; /* White text */
-  background-color: #2E3338; /* Dark gray background */
-  border: 3px solid #E0E0E0; /* Thinner, light gray border */
-  padding: 10px;
-  box-sizing: border-box;
-  position: relative; /* For handle positioning */
-}
-
+/* Base styles for icon and label, common to all nodes */
 .node-icon {
   width: 30px;
   height: 30px;
@@ -94,9 +79,21 @@ const nodeTypeClass = computed(() => {
 
 /* Specific styles for LR node */
 .flow-lr-node {
-  flex-direction: row;
-  width: 180px;
-  height: 60px;
+  display: flex;
+  flex-direction: row; /* Arrange icon and label horizontally */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.9em;
+  font-weight: bold;
+  color: #FFFFFF; /* White text */
+  background-color: #2E3338; /* Dark gray background */
+  border: 3px solid #E0E0E0; /* Thinner, light gray border */
+  padding: 10px;
+  box-sizing: border-box;
+  position: relative; /* For handle positioning */
+  width: 180px; /* Wider for rectangle */
+  height: 60px; /* Shorter for rectangle */
   border-radius: 15px; /* Rounded rectangle */
 }
 .flow-lr-node .node-icon {
@@ -105,9 +102,21 @@ const nodeTypeClass = computed(() => {
 
 /* Specific styles for TB node */
 .flow-tb-node {
-  flex-direction: column;
-  width: 120px;
-  height: 120px;
+  display: flex;
+  flex-direction: column; /* Arrange icon and label vertically */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.9em;
+  font-weight: bold;
+  color: #FFFFFF; /* White text */
+  background-color: #2E3338; /* Dark gray background */
+  border: 3px solid #E0E0E0; /* Thinner, light gray border */
+  padding: 10px;
+  box-sizing: border-box;
+  position: relative; /* For handle positioning */
+  width: 120px; /* Fixed width for circle */
+  height: 120px; /* Fixed height for circle */
   border-radius: 50%; /* Circular */
 }
 .flow-tb-node .node-icon {
@@ -116,13 +125,25 @@ const nodeTypeClass = computed(() => {
 
 /* Specific styles for LL node */
 .flow-ll-node {
-  flex-direction: row;
-  width: 180px;
-  height: 60px;
-  border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px;
-  border-top-right-radius: 9999px;
-  border-bottom-right-radius: 9999px;
+  display: flex;
+  flex-direction: row; /* Arrange icon and label horizontally */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.9em;
+  font-weight: bold;
+  color: #FFFFFF; /* White text */
+  background-color: #2E3338; /* Dark gray background */
+  border: 3px solid #E0E0E0; /* Thinner, light gray border */
+  padding: 10px;
+  box-sizing: border-box;
+  position: relative; /* For handle positioning */
+  width: 180px; /* Wider for rectangle */
+  height: 60px; /* Shorter for rectangle */
+  border-top-left-radius: 15px; /* Rectangular left */
+  border-bottom-left-radius: 15px; /* Rectangular left */
+  border-top-right-radius: 9999px; /* Very rounded right */
+  border-bottom-right-radius: 9999px; /* Very rounded right */
 }
 .flow-ll-node .node-icon {
   margin-right: 8px;
@@ -130,13 +151,25 @@ const nodeTypeClass = computed(() => {
 
 /* Specific styles for RR node */
 .flow-rr-node {
-  flex-direction: row;
-  width: 180px;
-  height: 60px;
-  border-top-left-radius: 9999px;
-  border-bottom-left-radius: 9999px;
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;
+  display: flex;
+  flex-direction: row; /* Arrange icon and label horizontally */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.9em;
+  font-weight: bold;
+  color: #FFFFFF; /* White text */
+  background-color: #2E3338; /* Dark gray background */
+  border: 3px solid #E0E0E0; /* Thinner, light gray border */
+  padding: 10px;
+  box-sizing: border-box;
+  position: relative; /* For handle positioning */
+  width: 180px; /* Wider for rectangle */
+  height: 60px; /* Shorter for rectangle */
+  border-top-left-radius: 9999px; /* Very rounded left */
+  border-bottom-left-radius: 9999px; /* Very rounded left */
+  border-top-right-radius: 15px; /* Rectangular right */
+  border-bottom-right-radius: 15px; /* Rectangular right */
 }
 .flow-rr-node .node-icon {
   margin-left: 8px; /* Icon on the right for RR */
