@@ -1,7 +1,7 @@
 <template>
   <div class="workflow-dark">
-    <VueFlow v-model="elements" :fit-view-on-init="true" :node-types="nodeTypes">
-      <Background variant="dots" :gap="20" :size="1" color="#4A4A4A" />
+    <VueFlow v-model="elements" :fit-view-on-init="true" :node-types="nodeTypes" :snap-to-grid="true" :snap-grid="[15, 15]">
+      <Background variant="dots" :gap="20" :size="1" color="#888888" /> <!-- Lighter gray for dots -->
       <Controls />
     </VueFlow>
 
