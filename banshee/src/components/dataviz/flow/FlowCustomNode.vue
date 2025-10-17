@@ -194,4 +194,24 @@ const nodeTypeClass = computed(() => {
   border-radius: 2px; /* Coins légèrement arrondis */
   z-index: -1;
 }
+/* Positionnement pour deux handles centrés en bas */
+.flow-lr-dual-node.handle-1 {
+  left: calc(50% - 20px); /* Décalage à gauche du centre */
+}
+.flow-lr-dual-node.handle-2 {
+  left: calc(50% + 20px); /* Décalage à droite du centre */
+}
+
+/* Positionnement pour trois handles centrés en bas */
+.flow-lr-triple-node .handle-1 {
+}
+
+.flow-lr-triple-node .handle-2 {
+  left: 50%; /* Centre exact */
+  transform: translateX(-50%); /* Ajustement pour centrer parfaitement */
+}
+.flow-lr-triple-node handle-3 {
+  left: calc(50% ); /* Centre */
+  transform: translateX(+50%); /* Ajustement pour centrer parfaitement */
+}
 </style>
