@@ -1,8 +1,8 @@
-import { NodeType } from './NodeType'; // Import NodeType
+import { NodeType } from './NodeType';
 
 export interface ShinyFlowNode {
   id: string;
   label: string;
   position: { x: number; y: number };
-  nodeType: NodeType; // Changed 'type' to 'nodeType' and its type to NodeType
+  nodeType: NodeType; 
 }
