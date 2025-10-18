@@ -1,13 +1,24 @@
 package io.vertigo.shiny.models.text.title;
 
+import java.util.UUID;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinyTitleBuilder implements Builder<ShinyTitle> {
+	private UUID _id;
 	private String _text;
 	private int _level = 1; // Default to Level 1
 
+	public ShinyTitleBuilder withId(final UUID id) {
+		Assertion.check().isNotNull(id);
+		//---
+		_id = id;
+		return this;
+	}
+
 	public ShinyTitleBuilder withText(final String text) {
+		Assertion.check().isNotBlank(text);
 		this._text = text;
 		return this;
 	}
@@ -21,6 +32,7 @@ public final class ShinyTitleBuilder implements Builder<ShinyTitle> {
 
 	@Override
 	public ShinyTitle build() {
-		return new ShinyTitle(_text, _level);
+		_id = _id == null ? UUID.randomUUID() : _id;
+		return new ShinyTitle(_id, _text, _level);
 	}
 }

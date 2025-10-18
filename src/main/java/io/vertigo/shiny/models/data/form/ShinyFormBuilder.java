@@ -2,13 +2,22 @@ package io.vertigo.shiny.models.data.form;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinyFormBuilder implements Builder<ShinyForm> {
+	private UUID _id;
 	private String _title;
 	private final List<ShinyFormSection> _sections = new ArrayList<>();
+
+	public ShinyFormBuilder withId(final UUID id) {
+		Assertion.check().isNotNull(id);
+		//---
+		_id = id;
+		return this;
+	}
 
 	public ShinyFormBuilder withTitle(final String title) {
 		this._title = title;
@@ -25,6 +34,7 @@ public final class ShinyFormBuilder implements Builder<ShinyForm> {
 	        return this;
 	    }
 	public ShinyForm build() {
-		return new ShinyForm(_title, _sections);
+		_id = _id == null ? UUID.randomUUID() : _id;
+		return new ShinyForm(_id, _title, _sections);
 	}
 }

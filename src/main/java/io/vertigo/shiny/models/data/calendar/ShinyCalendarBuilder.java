@@ -3,10 +3,13 @@ package io.vertigo.shiny.models.data.calendar;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
+import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinyCalendarBuilder implements Builder<ShinyCalendar> {
+	private UUID _id;
 	private final List<LocalDate> _highlightedDates = new ArrayList<>();
 	private int _year;
 	private int _month;
@@ -15,6 +18,13 @@ public final class ShinyCalendarBuilder implements Builder<ShinyCalendar> {
 		final LocalDate now = LocalDate.now();
 		this._year = now.getYear();
 		this._month = now.getMonthValue();
+	}
+
+	public ShinyCalendarBuilder withId(final UUID id) {
+		Assertion.check().isNotNull(id);
+		//---
+		_id = id;
+		return this;
 	}
 
 	public ShinyCalendarBuilder withYear(final int year) {
@@ -39,6 +49,7 @@ public final class ShinyCalendarBuilder implements Builder<ShinyCalendar> {
 
 	@Override
 	public ShinyCalendar build() {
-		return new ShinyCalendar(_year, _month);
+		_id = _id == null ? UUID.randomUUID() : _id;
+		return new ShinyCalendar(_id, _year, _month);
 	}
 }

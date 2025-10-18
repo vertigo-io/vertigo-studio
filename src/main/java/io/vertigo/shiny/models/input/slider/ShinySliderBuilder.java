@@ -9,6 +9,8 @@ public final class ShinySliderBuilder {
 	private String _color;
 	private boolean _thumbLabel;
 
+	public ShinySliderBuilder withId(final UUID id) {
+		Assertion.check().isNotNull(id);
 	public ShinySliderBuilder withLabel(final String label) {
 		this._label = label;
 		return this;
@@ -45,6 +47,6 @@ public final class ShinySliderBuilder {
 	}
 
 	public ShinySlider build() {
-		return new ShinySlider(_label, _min, _max, _step, _value, _color, _thumbLabel);
+		_id = _id == null ? UUID.randomUUID() : _id;
 	}
 }

@@ -1,9 +1,12 @@
 package io.vertigo.shiny.models.data.card;
 
+import java.util.UUID;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinyCardBuilder implements Builder<ShinyCard> {
+	private UUID _id;
 	private String _title;
 	private String _subtitle;
 	private String _description;
@@ -14,6 +17,13 @@ public final class ShinyCardBuilder implements Builder<ShinyCard> {
 	private String _badgeLabel;
 	private String _badgeColor;
 	private ShinyCardFormat _format = ShinyCardFormat.M; // Default format
+
+	public ShinyCardBuilder withId(final UUID id) {
+		Assertion.check().isNotNull(id);
+		//---
+		_id = id;
+		return this;
+	}
 
 	public ShinyCardBuilder withTitle(final String title) {
 		Assertion.check().isNotBlank(title);
@@ -69,7 +79,9 @@ public final class ShinyCardBuilder implements Builder<ShinyCard> {
 
 	@Override
 	public ShinyCard build() {
+		_id = _id == null ? UUID.randomUUID() : _id;
 		return new ShinyCard(
+				_id,
 				_title,
 				_subtitle,
 				_description,

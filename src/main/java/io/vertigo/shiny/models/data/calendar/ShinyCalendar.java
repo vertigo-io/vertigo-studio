@@ -1,11 +1,18 @@
 package io.vertigo.shiny.models.data.calendar;
 
+import java.util.UUID;
+
+import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyModel;
 
 public record ShinyCalendar(
-		//private final List<LocalDate> highlightedDates;
+		UUID id,
 		int year,
 		int month) implements ShinyModel {
+
+	public ShinyCalendar {
+		Assertion.check().isNotNull(id);
+	}
 
 	@Override
 	public String shinyType() {
