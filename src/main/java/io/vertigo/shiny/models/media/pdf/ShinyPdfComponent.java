@@ -1,12 +1,14 @@
 package io.vertigo.shiny.models.media.pdf;
 
-import io.vertigo.core.lang.Assertion;
+import java.util.UUID;
+
 import io.vertigo.shiny.models.ShinyModel;
 
 /**
  * Represents a PDF component to be rendered in the UI.
  */
 public record ShinyPdfComponent(
+		UUID id,
         String title,
         String pdfPath,
         int initialPage,

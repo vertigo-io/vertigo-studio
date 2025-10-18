@@ -17,7 +17,5 @@ public interface ShinyModel {
 		return List.of();
 	}
 
-	default UUID id() {
-		return UUID.randomUUID();
-	}
+	UUID id();
 }

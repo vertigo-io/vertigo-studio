@@ -1,9 +1,11 @@
 package io.vertigo.shiny.models.text.paragraph;
 
-import io.vertigo.core.lang.Assertion;
+import java.util.UUID;
+
 import io.vertigo.shiny.models.ShinyModel;
 
 public record ShinyParagraph(
+		UUID id,
 		String text) implements ShinyModel {
 
 	@Override

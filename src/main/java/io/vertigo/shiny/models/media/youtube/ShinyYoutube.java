@@ -1,9 +1,11 @@
 package io.vertigo.shiny.models.media.youtube;
 
-import io.vertigo.core.lang.Assertion;
+import java.util.UUID;
+
 import io.vertigo.shiny.models.ShinyModel;
 
 public record ShinyYoutube(
+		UUID id,
 		String title,
 		String videoId) implements ShinyModel {
 
