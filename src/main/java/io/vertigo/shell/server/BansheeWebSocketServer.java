@@ -32,9 +32,9 @@ final class BansheeWebSocketServer extends WebSocketServer {
 	}
 
 	@Override
-	public void onMessage(WebSocket webSocket, String message) {
-		System.out.println("<<< receive : " + message);
-		handler.handle((s) -> webSocket.send(s), message);
+	public void onMessage(WebSocket webSocket, String event) {
+		System.out.println("<<< receive : " + event);
+		handler.handle((s) -> webSocket.send(s), event);
 	}
 
 	@Override

@@ -91,9 +91,10 @@ export default defineComponent({
         },
       };
       if ((this as any).$root.ws) {
-        (this as any).$root.ws.send(JSON.stringify(message));
+      if ((window as any).ws) {
+        (window as any).ws.send(JSON.stringify(message));
       } else {
-        console.error("WebSocket connection not found on root instance.");
+        console.error("WebSocket connection not found on window instance.");
       }
     },
     updatePage() {
@@ -105,10 +106,10 @@ export default defineComponent({
         shinyType: 'ShinyTable',
         props: this.data.props
       };
-      if ((this as any).$root.ws) {
-        (this as any).$root.ws.send(JSON.stringify(bansheeEvent));
+      if ((window as any).ws) {
+        (window as any).ws.send(JSON.stringify(bansheeEvent));
       } else {
-        console.error("WebSocket connection not found on root instance.");
+        console.error("WebSocket connection not found on window instance.");
       }
     },
   },

@@ -52,14 +52,26 @@ import io.vertigo.shiny.models.media.geomap.ShinyGeoPoint;
 final class BansheeHandler {
 	private static final ObjectMapper MAPPER = new ObjectMapper();
 
+	//	if (event.toLowerCase().startsWith("llm")) {
+	//		ShinyModel sc = new HalloweenCommand().llm(event.substring(3));
+	//		sendEvent(webSocket, sc);
+	//		return;
+	//	}
 	void handle(Consumer<String> webSocket, String event) {
-		if (event.toLowerCase().startsWith("llm")) {
-			ShinyModel sc = new HalloweenCommand().llm(event.substring(3));
-			sendEvent(webSocket, sc);
-			return;
-		}
+		//1.
+		final ShinyModel model = execute(event);
+		//2.
+		sendEvent(webSocket, new BansheeEvent(
+				BansheeAction.create,
+				UUID.randomUUID(),
+				model));
+	}
 
-		final ShinyModel model = switch (event) {
+	private ShinyModel execute(String event) {
+		if (event.toLowerCase().startsWith("llm")) {
+			return new HalloweenCommand().llm(event.substring(3));
+		}
+		return switch (event) {
 			case "ls" -> new FileLsCommand().build();
 			case "pwd" -> new FilePwdCommand().build();
 			case "env list" -> new EnvListCommand().build();
@@ -354,7 +366,6 @@ final class BansheeHandler {
 					.build();
 			default -> new ShinyErrorBuilder().withText("unknown command :" + event).build();
 		};
-		sendEvent(webSocket, model);
 	}
 
 	private static ShinyModel wait(ShinyModel model, int timeInMillis) {
@@ -366,27 +377,13 @@ final class BansheeHandler {
 		return model;
 	}
 
-	private static String buildEvent(BansheeAction action, UUID id, String modelAsJson) {
-		return String.format("""
-				{
-				"action": "%s",
-				"id": "%s",
-				"model": %s
-				}
-				""", action, id, modelAsJson);
-	}
-
-	private static void sendEvent(Consumer<String> webSocket, ShinyModel model) {
+	private static void sendEvent(Consumer<String> webSocket, BansheeEvent event) {
 		Assertion.check()
 				.isNotNull(webSocket)
-				.isNotNull(model);
+				.isNotNull(event);
 		//---
 		try {
-			var modelAsJson = MAPPER.writeValueAsString(model);
-			UUID id = UUID.randomUUID();
-			final String json = buildEvent(BansheeAction.create, id, modelAsJson);
-			System.out.println(">>> send : " + json);
-			webSocket.accept(json);
+			webSocket.accept(MAPPER.writeValueAsString(event));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
