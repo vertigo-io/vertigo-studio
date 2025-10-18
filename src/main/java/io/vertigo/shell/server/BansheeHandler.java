@@ -61,7 +61,7 @@ final class BansheeHandler {
 		//1.
 		final ShinyModel model = execute(event);
 		//2.
-		sendEvent(webSocket, new BansheeEvent(
+		sendEvent(webSocket, new BansheeSentEvent(
 				BansheeAction.create,
 				UUID.randomUUID(),
 				model));
@@ -377,7 +377,7 @@ final class BansheeHandler {
 		return model;
 	}
 
-	private static void sendEvent(Consumer<String> webSocket, BansheeEvent event) {
+	private static void sendEvent(Consumer<String> webSocket, BansheeSentEvent event) {
 		Assertion.check()
 				.isNotNull(webSocket)
 				.isNotNull(event);

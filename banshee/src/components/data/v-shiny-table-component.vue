@@ -90,7 +90,6 @@ export default defineComponent({
           sortDirection: newSortDirection,
         },
       };
-      if ((this as any).$root.ws) {
       if ((window as any).ws) {
         (window as any).ws.send(JSON.stringify(message));
       } else {
@@ -101,9 +100,8 @@ export default defineComponent({
       // The v-model binding for 'page' already updates the prop value.
       // We just need to send the update event.
       const bansheeEvent = {
-        type: 'update',
+        command : 'table-change-page',
         id: this.data.id,
-        shinyType: 'ShinyTable',
         props: this.data.props
       };
       if ((window as any).ws) {

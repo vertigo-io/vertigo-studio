@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import io.vertigo.shiny.models.ShinyModel;
 
-public record BansheeEvent(
+public record BansheeSentEvent(
 		BansheeAction action,
 		UUID id,
 		ShinyModel model) {
