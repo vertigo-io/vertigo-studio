@@ -1,11 +1,21 @@
 package io.vertigo.shiny.models.dataviz.mindmap;
 
+import java.util.UUID;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinyMindMapBuilder implements Builder<ShinyMindMap> {
+	private UUID _id;
 	private String _title;
 	private ShinyMindMapNode _rootNode;
+
+	public ShinyMindMapBuilder withId(final UUID id) {
+		Assertion.check().isNotNull(id);
+		//---
+		_id = id;
+		return this;
+	}
 
 	public ShinyMindMapBuilder withTitle(final String title) {
 		Assertion.check().isNotBlank(title, "Title cannot be blank");
@@ -20,6 +30,7 @@ public final class ShinyMindMapBuilder implements Builder<ShinyMindMap> {
 	}
 
 	public ShinyMindMap build() {
-		return new ShinyMindMap(_title, _rootNode);
+		_id = _id == null ? UUID.randomUUID() : _id;
+		return new ShinyMindMap(_id, _title, _rootNode);
 	}
 }

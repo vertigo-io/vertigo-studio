@@ -15,6 +15,7 @@ public final class ShinyRatingBuilder implements Builder<ShinyRating> {
 	private boolean _allowHalfRating = false;
 
 	public ShinyRatingBuilder withLabel(final String label) {
+		Assertion.check().isNotBlank(label);
 		this._label = label;
 		return this;
 	}
@@ -25,6 +26,7 @@ public final class ShinyRatingBuilder implements Builder<ShinyRating> {
 	}
 
 	public ShinyRatingBuilder withScale(final ShinyRatingScale scale) {
+		Assertion.check().isNotNull(scale);
 		this._scale = scale;
 		this._customMaxValue = -1; // Reset custom maxValue when using scale
 		return this;

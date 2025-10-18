@@ -1,9 +1,11 @@
 package io.vertigo.shiny.models.dataviz.gauge;
 
-import io.vertigo.core.lang.Assertion;
+import java.util.UUID;
+
 import io.vertigo.shiny.models.ShinyModel;
 
 public record ShinyGauge(
+		UUID id,
 		String title,
 		double value,
 		double maxValue) implements ShinyModel {

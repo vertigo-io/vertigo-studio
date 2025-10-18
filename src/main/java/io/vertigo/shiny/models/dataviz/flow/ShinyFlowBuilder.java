@@ -19,13 +19,24 @@ package io.vertigo.shiny.models.dataviz.flow;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.Builder;
 import io.vertigo.shiny.models.dataviz.flow.ShinyFlowNode.Position;
 
-public final class ShinyFlowBuilder {
+public final class ShinyFlowBuilder implements Builder<ShinyFlow> {
 
+	private UUID _id;
 	private final List<ShinyFlowNode> _nodes = new ArrayList<>();
 	private final List<ShinyFlowEdge> _edges = new ArrayList<>();
+
+	public ShinyFlowBuilder withId(final UUID id) {
+		Assertion.check().isNotNull(id);
+		//---
+		_id = id;
+		return this;
+	}
 
 	public ShinyFlowBuilder withNode(final String id, final String label, final int x, final int y, final NodeType nodeType) { // Added NodeType
 		_nodes.add(new ShinyFlowNode(id, label, new Position(x, y), nodeType));
@@ -53,7 +64,12 @@ public final class ShinyFlowBuilder {
 		return this;
 	}
 
+	@Override
 	public ShinyFlow build() {
-		return new ShinyFlow(_nodes, _edges);
+		Assertion.check()
+				.isNotNull(_nodes)
+				.isNotNull(_edges);
+		_id = _id == null ? UUID.randomUUID() : _id;
+		return new ShinyFlow(_id, _nodes, _edges);
 	}
 }

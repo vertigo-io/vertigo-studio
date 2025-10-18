@@ -1,9 +1,12 @@
 package io.vertigo.shiny.models.input.slider;
 
+import java.util.UUID;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyModel;
 
 public record ShinySlider(
+		UUID id,
         String label,
         double min,
         double max,
@@ -17,6 +20,7 @@ public record ShinySlider(
     		return "ShinySlider";    }
 
     public ShinySlider {
+		Assertion.check().isNotNull(id);
         Assertion.check()
                 .isNotBlank(label, "Label cannot be blank")
                 .isTrue(max > min, "Max must be greater than min")

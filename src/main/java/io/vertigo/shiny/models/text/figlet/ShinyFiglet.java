@@ -1,9 +1,11 @@
 package io.vertigo.shiny.models.text.figlet;
 
-import io.vertigo.core.lang.Assertion;
+import java.util.UUID;
+
 import io.vertigo.shiny.models.ShinyModel;
 
 public record ShinyFiglet(
+		UUID id,
 		String text) implements ShinyModel {
 
 	@Override

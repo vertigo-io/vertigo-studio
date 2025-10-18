@@ -1,8 +1,11 @@
 package io.vertigo.shiny.models.dataviz.rating;
 
+import java.util.UUID;
+
 import io.vertigo.shiny.models.ShinyModel;
 
 public record ShinyRating(
+		UUID id,
 		String label,
 		double value,
 		ShinyRatingScale scale,
