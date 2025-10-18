@@ -100,7 +100,7 @@ export default defineComponent({
       // The v-model binding for 'page' already updates the prop value.
       // We just need to send the update event.
       const bansheeEvent = {
-        command : 'table-change-page',
+        command : 'table2',
         id: this.data.id,
         props: this.data.props
       };
