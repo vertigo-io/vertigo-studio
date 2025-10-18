@@ -1,7 +1,7 @@
-import { ShinyComponent } from '../../ShinyComponent';
+import { ShinyModel } from '../../ShinyModel';
 import { ShinyCardFormat } from './ShinyCardFormat';
 
-export interface ShinyCardComponent extends ShinyComponent {
+export interface ShinyCardComponent extends ShinyModel {
   title: string;
   subtitle?: string;
   description?: string;

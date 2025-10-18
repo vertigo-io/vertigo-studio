@@ -45,7 +45,7 @@ import { BansheeRole } from './models/core/BansheeRole';
 import { BansheeMessage } from './models/core/BansheeMessage';
 import { BansheeStory } from './models/core/BansheeStory';
 import { ShinyParagraph } from './models/text/paragraph/ShinyParagraph';
-import { ShinyComponent } from './models/ShinyComponent';
+import { ShinyModel } from './models/ShinyModel';
 
 import { ShinyRegistry } from './models/core/ShinyRegistry';
 
@@ -86,17 +86,17 @@ const handleIncomingEvent = (event: MessageEvent) => {
   isLoading.value = false; // Stop loading animation
   try {
     const parsed = JSON.parse(event.data);
-    const model: ShinyComponent = { type: parsed.model.shinyType, ...parsed.model };
+    const model: ShinyModel = { type: parsed.model.shinyType, ...parsed.model };
     addMessage(BansheeRole.ASSISTANT, model);
   } catch (error) {
     console.error('Error parsing message:', error);
     //il faut absolument mettre le type après sinon on récupère le type préesnt de dtaa s'il existe
-    const component: ShinyComponent  ={  ...event.data, type: 'ShinyError' }
+    const component: ShinyModel  ={  ...event.data, type: 'ShinyError' }
     addMessage(BansheeRole.SYSTEM, component);
   }
 };
 
-const addMessage = (role: BansheeRole, model: ShinyComponent ) => {
+const addMessage = (role: BansheeRole, model: ShinyModel ) => {
   const message = new BansheeMessage(role, model);
   story.pushMessage(message);
   nextTick(() => {

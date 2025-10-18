@@ -47,7 +47,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { ShinyTable } from '../../models/data/table/ShinyTable';
-import { ShinyProps } from '../../models/style/ShinyProps';
+import { ShinyProps } from '../../models/ShinyProps';
 
 export default defineComponent({
   name: 'VShinyTableComponent',
@@ -59,6 +59,7 @@ export default defineComponent({
   },
   computed: {
     pageProp(): ShinyProps | undefined {
+
       console.log("props >> " +this.data.props);
       return this.data.props?.find(p => p.key === 'page');
     },

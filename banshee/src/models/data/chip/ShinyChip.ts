@@ -1,7 +1,7 @@
-import { ShinyComponent } from '../../ShinyComponent';
+import { ShinyModel } from '../../ShinyModel';
 import type { ShinyChipVariant } from "./ShinyChipVariant";
 
-export interface ShinyChip extends ShinyComponent {
+export interface ShinyChip extends ShinyModel {
     text: string;
     color?: string;
     variant?: ShinyChipVariant;

@@ -1,7 +1,7 @@
-import { ShinyComponent } from '../../../ShinyComponent';
+import { ShinyModel } from '../../ShinyModel';
 import { ShinySankeyLink } from './ShinySankeyLink';
 
-export interface ShinySankey extends ShinyComponent {
+export interface ShinySankey extends ShinyModel {
   title: string;
   data: ShinySankeyLink[];
 }

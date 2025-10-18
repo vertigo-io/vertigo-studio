@@ -34,7 +34,7 @@ import VShinyFigletComponent from '../../components/text/v-shiny-figlet-componen
 import VShinyParagraphComponent from '../../components/text/v-shiny-paragraph-component.vue';
 import VShinyTextPathComponent from '../../components/text/v-shiny-text-path-component.vue';
 import VShinyTitleComponent from '../../components/text/v-shiny-title-component.vue';
-import { ShinyComponent } from '../ShinyComponent';
+import { ShinyModel } from '../ShinyModel';
 
 export class ShinyRegistry {
   private _componentMap: Record<string, any> = {};

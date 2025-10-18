@@ -1,6 +1,6 @@
-import { ShinyComponent } from '../../ShinyComponent';
+import { ShinyModel } from '../../ShinyModel';
 
-export class ShinyTree implements ShinyComponent {
+export class ShinyTree implements ShinyModel {
   label: string;
   children: ShinyTree[];
   type: string = 'tree';

@@ -1,6 +1,6 @@
-import { ShinyComponent } from '../../../ShinyComponent';
+import { ShinyModel } from '../../ShinyModel';
 
-export interface ShinyTitle extends ShinyComponent {
+export interface ShinyTitle extends ShinyModel {
   title: string;
   level: number;
 }

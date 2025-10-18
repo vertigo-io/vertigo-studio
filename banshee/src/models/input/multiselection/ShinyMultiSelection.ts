@@ -1,6 +1,6 @@
-import { ShinyComponent } from '../../../ShinyComponent';
+import { ShinyModel } from '../../ShinyModel';
 
-export class ShinyMultiSelection implements ShinyComponent {
+export class ShinyMultiSelection implements ShinyModel {
   title: string;
   options: string[];
   selectedIndices: Set<number>;

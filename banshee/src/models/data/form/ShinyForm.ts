@@ -1,7 +1,7 @@
-import { ShinyComponent } from '../../ShinyComponent';
+import { ShinyModel } from '../../ShinyModel';
 import { ShinyFormSection } from './ShinyFormSection';
 
-export interface ShinyForm extends ShinyComponent {
+export interface ShinyForm extends ShinyModel {
   title: string;
   sections: ShinyFormSection[];
 }

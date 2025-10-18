@@ -1,7 +1,7 @@
-import { ShinyComponent } from '../../ShinyComponent';
+import { ShinyModel } from '../../ShinyModel';
 import type { ShinyTimelineItem } from "./ShinyTimelineItem";
 
-export interface ShinyTimeline extends ShinyComponent{
+export interface ShinyTimeline extends ShinyModel{
     title?: string;
     items: ShinyTimelineItem[];
 }

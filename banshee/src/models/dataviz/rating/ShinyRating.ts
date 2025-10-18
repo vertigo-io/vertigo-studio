@@ -1,7 +1,7 @@
-import { ShinyComponent } from '../../ShinyComponent';
+import { ShinyModel } from '../../ShinyModel';
 import { ShinyRatingScale, getShinyRatingMaxValue } from './ShinyRatingScale';
 
-export class ShinyRating implements ShinyComponent {
+export class ShinyRating implements ShinyModel {
   label: string;
   value: number;
   scale: ShinyRatingScale;

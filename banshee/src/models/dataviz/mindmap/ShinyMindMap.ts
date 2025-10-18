@@ -1,4 +1,4 @@
-import { ShinyComponent } from '../../ShinyComponent';
+import { ShinyModel } from '../../ShinyModel';
 
 export interface MindMapNode {
   id: string;
@@ -10,7 +10,7 @@ export interface MindMapNode {
   children: MindMapNode[];
 }
 
-export interface ShinyMindMap extends ShinyComponent {
+export interface ShinyMindMap extends ShinyModel {
   title: string;
   rootNode: MindMapNode;
 }
