@@ -2,11 +2,13 @@ package io.vertigo.shiny.models.data.tree;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinyTreeBuilder implements Builder<ShinyTree> {
+	private UUID _id;
 	private String _label;
 	private final List<ShinyTree> _children = new ArrayList<>();
 	private final ShinyTreeBuilder _parent;
@@ -18,6 +20,13 @@ public final class ShinyTreeBuilder implements Builder<ShinyTree> {
 	public ShinyTreeBuilder() {
 		//root has no parent
 		this(null);
+	}
+
+	public ShinyTreeBuilder withId(final UUID id) {
+		Assertion.check().isNotNull(id);
+		//---
+		_id = id;
+		return this;
 	}
 
 	public ShinyTreeBuilder withLabel(String label) {
@@ -58,13 +67,15 @@ public final class ShinyTreeBuilder implements Builder<ShinyTree> {
 
 	private ShinyTree internalBuild() {
 		Assertion.check().isNotNull(_parent, "internalBuild must be called only for sub trees");
-		return new ShinyTree(_label, _children);
+		_id = _id == null ? UUID.randomUUID() : _id;
+		return new ShinyTree(_id, _label, _children);
 	}
 
 	public ShinyTree build() {
 		Assertion.check().isNull(_parent, "build must be called on the root");
 		//---
-		return new ShinyTree(_label, _children);
+		_id = _id == null ? UUID.randomUUID() : _id;
+		return new ShinyTree(_id, _label, _children);
 	}
 
 }

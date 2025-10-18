@@ -2,9 +2,21 @@ package io.vertigo.shiny.models.data.organization;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-public final class ShinyOrganizationBuilder {
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.Builder;
+
+public final class ShinyOrganizationBuilder implements Builder<ShinyOrganization> {
+	private UUID _id;
     private final List<ShinyOrganizationNode> _nodes = new ArrayList<>();
+
+	public ShinyOrganizationBuilder withId(final UUID id) {
+		Assertion.check().isNotNull(id);
+		//---
+		_id = id;
+		return this;
+	}
 
     public ShinyOrganizationBuilder addNode(final ShinyOrganizationNode node) {
         _nodes.add(node);
@@ -17,6 +29,7 @@ public final class ShinyOrganizationBuilder {
     }
 
     public ShinyOrganization build() {
-        return new ShinyOrganization(_nodes);
+		_id = _id == null ? UUID.randomUUID() : _id;
+        return new ShinyOrganization(_id, _nodes);
     }
 }

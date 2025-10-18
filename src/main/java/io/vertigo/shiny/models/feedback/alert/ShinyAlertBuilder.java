@@ -1,12 +1,25 @@
 package io.vertigo.shiny.models.feedback.alert;
 
-public final class ShinyAlertBuilder {
+import java.util.UUID;
+
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.Builder;
+
+public final class ShinyAlertBuilder implements Builder<ShinyAlert> {
+	private UUID _id;
     private ShinyAlertType _alertType = ShinyAlertType.INFO;
     private String _title;
     private String _content;
     private boolean _closable;
     private String _icon;
     private boolean _prominent;
+
+	public ShinyAlertBuilder withId(final UUID id) {
+		Assertion.check().isNotNull(id);
+		//---
+		_id = id;
+		return this;
+	}
 
     public ShinyAlertBuilder withAlertType(final ShinyAlertType alertType) {
         this._alertType = alertType;
@@ -39,6 +52,7 @@ public final class ShinyAlertBuilder {
     }
 
     public ShinyAlert build() {
-        return new ShinyAlert(_alertType, _title, _content, _closable, _icon, _prominent);
+		_id = _id == null ? UUID.randomUUID() : _id;
+        return new ShinyAlert(_id, _alertType, _title, _content, _closable, _icon, _prominent);
     }
 }

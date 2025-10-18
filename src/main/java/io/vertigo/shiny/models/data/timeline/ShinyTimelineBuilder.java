@@ -2,10 +2,22 @@ package io.vertigo.shiny.models.data.timeline;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-public final class ShinyTimelineBuilder {
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.Builder;
+
+public final class ShinyTimelineBuilder implements Builder<ShinyTimeline> {
+	private UUID _id;
 	private String _title;
 	private final List<ShinyTimelineItem> _items = new ArrayList<>();
+
+	public ShinyTimelineBuilder withId(final UUID id) {
+		Assertion.check().isNotNull(id);
+		//---
+		_id = id;
+		return this;
+	}
 
 	public ShinyTimelineBuilder withTitle(final String title) {
 		this._title = title;
@@ -31,6 +43,7 @@ public final class ShinyTimelineBuilder {
 	}
 
 	public ShinyTimeline build() {
-		return new ShinyTimeline(_title, _items);
+		_id = _id == null ? UUID.randomUUID() : _id;
+		return new ShinyTimeline(_id, _title, _items);
 	}
 }

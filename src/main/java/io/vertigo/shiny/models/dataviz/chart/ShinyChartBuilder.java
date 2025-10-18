@@ -3,11 +3,13 @@ package io.vertigo.shiny.models.dataviz.chart;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinyChartBuilder implements Builder<ShinyChart> {
+	private UUID _id;
 	private final ShinyChartType _chartType;
 	private String _title;
 	private List<String> _labels = new ArrayList<>();
@@ -17,6 +19,13 @@ public final class ShinyChartBuilder implements Builder<ShinyChart> {
 		Assertion.check().isNotNull(chartType);
 		//---
 		this._chartType = chartType;
+	}
+
+	public ShinyChartBuilder withId(final UUID id) {
+		Assertion.check().isNotNull(id);
+		//---
+		_id = id;
+		return this;
 	}
 
 	public ShinyChartBuilder withTitle(final String title) {
@@ -55,6 +64,7 @@ public final class ShinyChartBuilder implements Builder<ShinyChart> {
 
 	@Override
 	public ShinyChart build() {
-		return new ShinyChart(_title, _chartType, _labels, _series);
+		_id = _id == null ? UUID.randomUUID() : _id;
+		return new ShinyChart(_id, _title, _chartType, _labels, _series);
 	}
 }
