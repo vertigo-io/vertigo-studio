@@ -2,12 +2,14 @@ package io.vertigo.shiny.models.data.table;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 import io.vertigo.shiny.models.ShinyProp;
 
 public final class ShinyTableBuilder implements Builder<ShinyTable> {
+	private UUID _id;
 	private String _title;
 	private String _noDataFound;
 	private String[] _header;
@@ -16,6 +18,13 @@ public final class ShinyTableBuilder implements Builder<ShinyTable> {
 	private int _sortColumn = -1;
 	private String _sortDirection = "asc"; // "asc" or "desc"
 	private List<ShinyProp> _props = null;//par défaut pas de pagination
+
+	public ShinyTableBuilder withId(final UUID id) {
+		Assertion.check().isNotNull(id);
+		//---
+		this._id = id;
+		return this;
+	}
 
 	public ShinyTableBuilder withTitle(final String title) {
 		Assertion.check().isNotBlank(title);
@@ -77,6 +86,9 @@ public final class ShinyTableBuilder implements Builder<ShinyTable> {
 	}
 
 	public ShinyTable build() {
-		return new ShinyTable(_title, _noDataFound, _header, _rows.toArray(String[][]::new), _sortable, _sortColumn, _sortDirection, _props);
+		_id = _id == null
+				? UUID.randomUUID()
+				: _id;
+		return new ShinyTable(_id, _title, _noDataFound, _header, _rows.toArray(String[][]::new), _sortable, _sortColumn, _sortDirection, _props);
 	}
 }

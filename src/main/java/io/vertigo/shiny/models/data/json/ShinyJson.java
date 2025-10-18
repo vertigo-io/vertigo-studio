@@ -1,9 +1,11 @@
 package io.vertigo.shiny.models.data.json;
 
-import io.vertigo.core.lang.Assertion;
+import java.util.UUID;
+
 import io.vertigo.shiny.models.ShinyModel;
 
 public record ShinyJson(
+		UUID id,
 		String title,
 		String json) implements ShinyModel {
 
