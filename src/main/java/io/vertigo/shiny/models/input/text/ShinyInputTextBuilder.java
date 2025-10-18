@@ -2,6 +2,7 @@ package io.vertigo.shiny.models.input.text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 import io.vertigo.core.lang.Assertion;
@@ -9,6 +10,7 @@ import io.vertigo.core.lang.Builder;
 import io.vertigo.shiny.ShinyMagicBox;
 
 public final class ShinyInputTextBuilder implements Builder<ShinyInputText> {
+	private UUID _id;
 	private String _label;
 	private boolean _required = false;
 	private Pattern _validationPattern;
@@ -16,7 +18,15 @@ public final class ShinyInputTextBuilder implements Builder<ShinyInputText> {
 	private String _defaultValue;
 	private boolean _secret = false;
 
+	public ShinyInputTextBuilder withId(final UUID id) {
+		Assertion.check().isNotNull(id);
+		//---
+		_id = id;
+		return this;
+	}
+
 	public ShinyInputTextBuilder withLabel(final String label) {
+		Assertion.check().isNotBlank(label);
 		this._label = label;
 		return this;
 	}
@@ -84,7 +94,9 @@ public final class ShinyInputTextBuilder implements Builder<ShinyInputText> {
 		Assertion.check()
 				.when(_required, () -> Assertion.check().isNotBlank(_label, "Label is required when input is required."));
 		//---
+		_id = _id == null ? UUID.randomUUID() : _id;
 		return new ShinyInputText(
+				_id,
 				_label,
 				_required,
 				_validationPattern,

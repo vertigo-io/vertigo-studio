@@ -1,6 +1,12 @@
 package io.vertigo.shiny.models.input.slider;
 
-public final class ShinySliderBuilder {
+import java.util.UUID;
+
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.Builder;
+
+public final class ShinySliderBuilder implements Builder<ShinySlider> {
+	private UUID _id;
 	private String _label;
 	private int _min;
 	private int _max;
@@ -11,6 +17,11 @@ public final class ShinySliderBuilder {
 
 	public ShinySliderBuilder withId(final UUID id) {
 		Assertion.check().isNotNull(id);
+		//---
+		_id = id;
+		return this;
+	}
+
 	public ShinySliderBuilder withLabel(final String label) {
 		this._label = label;
 		return this;
@@ -48,5 +59,6 @@ public final class ShinySliderBuilder {
 
 	public ShinySlider build() {
 		_id = _id == null ? UUID.randomUUID() : _id;
+		return new ShinySlider(_id, _label, _min, _max, _step, _value, _color, _thumbLabel);
 	}
 }
