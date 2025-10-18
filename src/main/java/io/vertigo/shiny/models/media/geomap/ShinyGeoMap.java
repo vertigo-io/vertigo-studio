@@ -3,6 +3,7 @@ package io.vertigo.shiny.models.media.geomap;
 import java.util.List;
 import java.util.UUID;
 
+import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyModel;
 
 public record ShinyGeoMap(
@@ -15,11 +16,9 @@ public record ShinyGeoMap(
 		return "ShinyGeoMap";
 	}
 
-
 	public ShinyGeoMap {
 		Assertion.check()
-				.isNotBlank(title, "Title cannot be blank");
-		Assertion.check()
+				.isNotBlank(title, "Title cannot be blank")
 				.isNotNull(geoPoints, "GeoPoints list cannot be null");
 	}
 }

@@ -2,6 +2,7 @@ package io.vertigo.shiny.models.text.textpath;
 
 import java.util.UUID;
 
+import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyModel;
 
 public record ShinyTextPath(

@@ -1,17 +1,10 @@
 package io.vertigo.shiny.components.text.markdown;
 
-import java.util.Collections;
-
-import org.commonmark.ext.gfm.tables.TablesExtension;
-import org.commonmark.node.Node;
-import org.commonmark.parser.Parser;
-
-import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.models.ShinyComponent;
+import io.vertigo.shiny.models.ShinyModel;
 
 public record ShinyMarkDown(
-		String markdownText) implements ShinyComponent {
+		String markdownText) implements ShinyModel {
 
 	// Package-private constructor, only accessible by the Builder
 	ShinyMarkDown(ShinyMarkDownBuilder builder) {

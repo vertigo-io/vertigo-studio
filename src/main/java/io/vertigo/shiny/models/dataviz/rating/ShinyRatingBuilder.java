@@ -1,9 +1,12 @@
 package io.vertigo.shiny.models.dataviz.rating;
 
+import java.util.UUID;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinyRatingBuilder implements Builder<ShinyRating> {
+	private UUID _id;
 	private String _label;
 	private double _value = 0;
 	private ShinyRatingScale _scale = ShinyRatingScale.SCALE_5;
@@ -13,6 +16,13 @@ public final class ShinyRatingBuilder implements Builder<ShinyRating> {
 	private boolean _showBox = false;
 	private String _separator = "";
 	private boolean _allowHalfRating = false;
+
+	public ShinyRatingBuilder withId(final UUID id) {
+		Assertion.check().isNotNull(id);
+		//---
+		_id = id;
+		return this;
+	}
 
 	public ShinyRatingBuilder withLabel(final String label) {
 		Assertion.check().isNotBlank(label);
@@ -66,7 +76,9 @@ public final class ShinyRatingBuilder implements Builder<ShinyRating> {
 
 	@Override
 	public ShinyRating build() {
+		_id = _id == null ? UUID.randomUUID() : _id;
 		return new ShinyRating(
+				_id,
 				_label,
 				_value,
 				_scale,

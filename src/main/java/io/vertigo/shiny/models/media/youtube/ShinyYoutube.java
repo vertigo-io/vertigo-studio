@@ -2,6 +2,7 @@ package io.vertigo.shiny.models.media.youtube;
 
 import java.util.UUID;
 
+import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyModel;
 
 public record ShinyYoutube(
@@ -13,7 +14,6 @@ public record ShinyYoutube(
 	public String shinyType() {
 		return "ShinyYoutube";
 	}
-
 
 	public ShinyYoutube {
 		Assertion.check()
