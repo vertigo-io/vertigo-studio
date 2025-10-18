@@ -5,14 +5,14 @@ import java.util.List;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.ShinyComponent; // New import
-import io.vertigo.shiny.components.data.tree.ShinyTree;
-import io.vertigo.shiny.components.data.tree.ShinyTreeNode;
+import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.data.tree.ShinyTree;
+import io.vertigo.shiny.models.data.tree.ShinyTreeNode;
 import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 
 public final class ShinyTreeRenderer implements ShinyComponentRenderer<ShinyTree> {
 	@Override
-	public boolean accept(final ShinyComponent component) {
+	public boolean accept(final ShinyModel component) {
 		return component instanceof ShinyTree;
 	}
 

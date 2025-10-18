@@ -4,7 +4,7 @@ import java.util.List;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.dataviz.status.ShinyStatusType;
+import io.vertigo.shiny.models.dataviz.status.ShinyStatusType;
 import io.vertigo.shiny.renderers.dataviz.ShinyStatusShape;
 import io.vertigo.shiny.style.ShinyColors;
 

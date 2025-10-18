@@ -1,11 +1,11 @@
 package io.vertigo.shell.server.commands;
 
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.models.ShinyModel;
 
 public class ChartSamples {
 	public static class BarSample {
-		public ShinyComponent execute() {
+		public ShinyModel execute() {
 			return Shiny.barChart()
 					.withTitle("Ventes par produit")
 					.withLabels("telephones", "ordinateurs", "livres")
@@ -16,7 +16,7 @@ public class ChartSamples {
 	}
 
 	public static class PieSample {
-		public ShinyComponent execute() {
+		public ShinyModel execute() {
 			return Shiny.pieChart()
 					.withTitle("Répartition des ventes")
 					.withLabels("Téléphones", "Ordinateurs", "Livres")
@@ -26,7 +26,7 @@ public class ChartSamples {
 	}
 
 	public static class PieSample2 {
-		public ShinyComponent execute() {
+		public ShinyModel execute() {
 			return Shiny.pieChart()
 					.withTitle("Répartition des ventes")
 					.withLabels("Téléphones", "Ordinateurs", "Livres")
@@ -38,7 +38,7 @@ public class ChartSamples {
 	}
 
 	public static class DonutSample {
-		public ShinyComponent execute() {
+		public ShinyModel execute() {
 			return Shiny.donutChart()
 					.withTitle("Répartition des ventes")
 					.withLabels("Téléphones", "Ordinateurs", "Livres")
@@ -50,7 +50,7 @@ public class ChartSamples {
 	}
 
 	public static class AreaSample {
-		public ShinyComponent execute() {
+		public ShinyModel execute() {
 			return Shiny.areaChart()
 					.withTitle("Ventes par mois")
 					.withLabels("Jan", "Fev", "Mar", "Avr", "Mai", "Juin")
@@ -61,7 +61,7 @@ public class ChartSamples {
 	}
 
 	public static class LineSample {
-		public ShinyComponent execute() {
+		public ShinyModel execute() {
 			return Shiny.lineChart()
 					.withTitle("Ventes par mois")
 					.withLabels("Jan", "Fev", "Mar", "Avr", "Mai", "Juin")
@@ -72,7 +72,7 @@ public class ChartSamples {
 	}
 
 	public static class RadarSample {
-		public ShinyComponent execute() {
+		public ShinyModel execute() {
 			return Shiny.radarChart()
 					.withTitle("Final Fantasy VII Stats")
 					.withLabels("Attack", "Defense", "Magic Attack", "Magic Defense", "Speed", "Luck")

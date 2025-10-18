@@ -3,13 +3,13 @@ package io.vertigo.shiny.renderers.dataviz;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.ShinyComponent; // New import
-import io.vertigo.shiny.components.dataviz.gauge.ShinyGauge;
+import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.dataviz.gauge.ShinyGauge;
 import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 
 public final class ShinyGaugeRenderer implements ShinyComponentRenderer<ShinyGauge> {
 	@Override
-	public boolean accept(final ShinyComponent component) {
+	public boolean accept(final ShinyModel component) {
 		return component instanceof ShinyGauge;
 	}
 

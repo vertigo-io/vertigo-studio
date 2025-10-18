@@ -10,8 +10,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.ShinyComponent; // New import
-import io.vertigo.shiny.components.data.json.ShinyJson;
+import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.data.json.ShinyJson;
 import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 import io.vertigo.shiny.style.ShinyColors;
 
@@ -19,7 +19,7 @@ public final class ShinyJsonRenderer implements ShinyComponentRenderer<ShinyJson
 	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
 	@Override
-	public boolean accept(final ShinyComponent component) {
+	public boolean accept(final ShinyModel component) {
 		return component instanceof ShinyJson;
 	}
 

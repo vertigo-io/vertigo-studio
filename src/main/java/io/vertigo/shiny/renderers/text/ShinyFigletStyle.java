@@ -1,7 +1,7 @@
 package io.vertigo.shiny.renderers.text;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.components.text.figlet.ShinyFigletFont;
+import io.vertigo.shiny.models.text.figlet.ShinyFigletFont;
 import io.vertigo.shiny.style.ShinyColor;
 import io.vertigo.shiny.style.ShinyColors;
 

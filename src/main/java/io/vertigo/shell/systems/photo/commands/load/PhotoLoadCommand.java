@@ -28,7 +28,7 @@ import io.vertigo.shell.systems.photo.PhotoType;
 import io.vertigo.shell.systems.photo.PhotoVar;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.live.progressbar.ShinyProgressBar;
+import io.vertigo.shiny.models.live.progressbar.ShinyProgressBar;
 import picocli.CommandLine.Command;
 
 @Command(name = "load", description = "Load photos from the directory defined in the context.")

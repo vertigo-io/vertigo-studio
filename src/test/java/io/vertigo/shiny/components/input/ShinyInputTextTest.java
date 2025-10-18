@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.components.input.text.ShinyInputText;
+import io.vertigo.shiny.models.input.text.ShinyInputText;
 
 public class ShinyInputTextTest {
 

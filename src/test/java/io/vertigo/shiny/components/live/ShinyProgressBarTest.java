@@ -2,7 +2,7 @@ package io.vertigo.shiny.components.live;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.live.progressbar.ShinyProgressBar;
+import io.vertigo.shiny.models.live.progressbar.ShinyProgressBar;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyProgressBarTest {

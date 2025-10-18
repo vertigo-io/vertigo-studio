@@ -5,14 +5,14 @@ import java.sql.SQLException;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.db.DbContext;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.style.ShinyColors;
 import picocli.CommandLine.Command;
 
 @Command(name = "disconnect", description = "Disconnects from the JDBC database")
 public final class DbDisconnectCommand implements ShellCommand {
 	@Override
-	public ShinyComponent build() {
+	public ShinyModel build() {
 		try {
 			DbContext.disconnect();
 			return Shiny.paragraph()

@@ -2,7 +2,7 @@ package io.vertigo.shiny.components.text;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.text.toggle.ShinyToggleType;
+import io.vertigo.shiny.models.text.toggle.ShinyToggleType;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyToggleTest {

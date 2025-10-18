@@ -3,44 +3,44 @@ package io.vertigo.shiny;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
-import io.vertigo.shiny.components.core.container.ShinyContainerBuilder;
-import io.vertigo.shiny.components.core.error.ShinyErrorBuilder;
-import io.vertigo.shiny.components.data.calendar.ShinyCalendarBuilder;
-import io.vertigo.shiny.components.data.card.ShinyCardBuilder;
-import io.vertigo.shiny.components.data.chip.ShinyChipBuilder;
-import io.vertigo.shiny.components.data.form.ShinyFormBuilder;
-import io.vertigo.shiny.components.data.json.ShinyJsonBuilder;
-import io.vertigo.shiny.components.data.list.ShinyListBuilder;
-import io.vertigo.shiny.components.data.organization.ShinyOrganizationBuilder;
-import io.vertigo.shiny.components.data.table.ShinyTableBuilder;
-import io.vertigo.shiny.components.data.tree.ShinyTreeBuilder;
-import io.vertigo.shiny.components.dataviz.chart.ShinyChartBuilder;
-import io.vertigo.shiny.components.dataviz.chart.ShinyChartType;
-import io.vertigo.shiny.components.dataviz.flow.ShinyFlowBuilder;
-import io.vertigo.shiny.components.dataviz.gauge.ShinyGaugeBuilder;
-import io.vertigo.shiny.components.dataviz.mindmap.ShinyMindMapBuilder;
-import io.vertigo.shiny.components.dataviz.rating.ShinyRatingBuilder;
-import io.vertigo.shiny.components.dataviz.sankey.ShinySankeyBuilder;
-import io.vertigo.shiny.components.dataviz.sparkline.ShinySparklineBuilder;
-import io.vertigo.shiny.components.dataviz.status.ShinyStatusBuilder;
-import io.vertigo.shiny.components.feedback.alert.ShinyAlertBuilder;
-import io.vertigo.shiny.components.input.multiselection.ShinyMultiSelectionBuilder;
-import io.vertigo.shiny.components.input.slider.ShinySliderBuilder;
-import io.vertigo.shiny.components.input.text.ShinyInputTextBuilder;
-import io.vertigo.shiny.components.live.progressbar.ShinyProgressBarBuilder;
-import io.vertigo.shiny.components.live.spinner.ShinySpinnerBuilder;
-import io.vertigo.shiny.components.media.geomap.ShinyGeoMapBuilder;
-import io.vertigo.shiny.components.media.pdf.ShinyPdfComponentBuilder;
-import io.vertigo.shiny.components.media.photo.ShinyPhotoBuilder;
-import io.vertigo.shiny.components.media.rss.ShinyRssBuilder;
-import io.vertigo.shiny.components.media.youtube.ShinyYoutubeBuilder;
-import io.vertigo.shiny.components.text.figlet.ShinyFigletBuilder;
-import io.vertigo.shiny.components.text.paragraph.ShinyParagraphBuilder;
-import io.vertigo.shiny.components.text.textpath.ShinyTextPathBuilder;
-import io.vertigo.shiny.components.text.title.ShinyTitleBuilder;
-import io.vertigo.shiny.components.text.toggle.ShinyToggleBuilder;
 import io.vertigo.shiny.data.timeline.ShinyTimelineBuilder;
 import io.vertigo.shiny.mermaid.ShinyMermaidServer;
+import io.vertigo.shiny.models.core.container.ShinyContainerBuilder;
+import io.vertigo.shiny.models.core.error.ShinyErrorBuilder;
+import io.vertigo.shiny.models.data.calendar.ShinyCalendarBuilder;
+import io.vertigo.shiny.models.data.card.ShinyCardBuilder;
+import io.vertigo.shiny.models.data.chip.ShinyChipBuilder;
+import io.vertigo.shiny.models.data.form.ShinyFormBuilder;
+import io.vertigo.shiny.models.data.json.ShinyJsonBuilder;
+import io.vertigo.shiny.models.data.list.ShinyListBuilder;
+import io.vertigo.shiny.models.data.organization.ShinyOrganizationBuilder;
+import io.vertigo.shiny.models.data.table.ShinyTableBuilder;
+import io.vertigo.shiny.models.data.tree.ShinyTreeBuilder;
+import io.vertigo.shiny.models.dataviz.chart.ShinyChartBuilder;
+import io.vertigo.shiny.models.dataviz.chart.ShinyChartType;
+import io.vertigo.shiny.models.dataviz.flow.ShinyFlowBuilder;
+import io.vertigo.shiny.models.dataviz.gauge.ShinyGaugeBuilder;
+import io.vertigo.shiny.models.dataviz.mindmap.ShinyMindMapBuilder;
+import io.vertigo.shiny.models.dataviz.rating.ShinyRatingBuilder;
+import io.vertigo.shiny.models.dataviz.sankey.ShinySankeyBuilder;
+import io.vertigo.shiny.models.dataviz.sparkline.ShinySparklineBuilder;
+import io.vertigo.shiny.models.dataviz.status.ShinyStatusBuilder;
+import io.vertigo.shiny.models.feedback.alert.ShinyAlertBuilder;
+import io.vertigo.shiny.models.input.multiselection.ShinyMultiSelectionBuilder;
+import io.vertigo.shiny.models.input.slider.ShinySliderBuilder;
+import io.vertigo.shiny.models.input.text.ShinyInputTextBuilder;
+import io.vertigo.shiny.models.live.progressbar.ShinyProgressBarBuilder;
+import io.vertigo.shiny.models.live.spinner.ShinySpinnerBuilder;
+import io.vertigo.shiny.models.media.geomap.ShinyGeoMapBuilder;
+import io.vertigo.shiny.models.media.pdf.ShinyPdfComponentBuilder;
+import io.vertigo.shiny.models.media.photo.ShinyPhotoBuilder;
+import io.vertigo.shiny.models.media.rss.ShinyRssBuilder;
+import io.vertigo.shiny.models.media.youtube.ShinyYoutubeBuilder;
+import io.vertigo.shiny.models.text.figlet.ShinyFigletBuilder;
+import io.vertigo.shiny.models.text.paragraph.ShinyParagraphBuilder;
+import io.vertigo.shiny.models.text.textpath.ShinyTextPathBuilder;
+import io.vertigo.shiny.models.text.title.ShinyTitleBuilder;
+import io.vertigo.shiny.models.text.toggle.ShinyToggleBuilder;
 
 public final class Shiny {
 	private PrintWriter writer = new PrintWriter(System.out, true, StandardCharsets.UTF_8);
@@ -247,7 +247,7 @@ public final class Shiny {
 
 	//	private static ShinySuperRenderer RENDERER = new ShinySuperRenderer();
 	//
-	//	public static <S extends ShinyComponent> void render(S component) {
+	//	public static <S extends ShinyModel> void render(S component) {
 	//		RENDERER.render(component);
 	//	}
 }

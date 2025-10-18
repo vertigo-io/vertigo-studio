@@ -3,14 +3,14 @@ package io.vertigo.shiny.renderers.data;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.ShinyComponent; // New import
-import io.vertigo.shiny.components.data.list.ShinyList;
-import io.vertigo.shiny.components.data.list.ShinyListType;
+import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.data.list.ShinyList;
+import io.vertigo.shiny.models.data.list.ShinyListType;
 import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 
 public final class ShinyListRenderer implements ShinyComponentRenderer<ShinyList> {
 	@Override
-	public boolean accept(final ShinyComponent component) {
+	public boolean accept(final ShinyModel component) {
 		return component instanceof ShinyList;
 	}
 

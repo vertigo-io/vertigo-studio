@@ -2,13 +2,13 @@ package io.vertigo.shell.server;
 
 import io.vertigo.shell.ai.Agent;
 import io.vertigo.shell.ai.AgentBuilder;
-import io.vertigo.shiny.components.ShinyComponent;
-import io.vertigo.shiny.components.composer.ShinyComposer;
+import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.composer.ShinyComposer;
 
 public final class HalloweenCommand {
 	private final Agent agent = new AgentBuilder().build();
 
-	public ShinyComponent llm(String Q) {
+	public ShinyModel llm(String Q) {
 		final String query = """
 								Crée un json conforme à l'exemple suivant :
 

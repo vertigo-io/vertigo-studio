@@ -10,12 +10,12 @@ import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.components.ShinyComponent;
-import io.vertigo.shiny.components.media.rss.ShinyRssItem;
+import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.media.rss.ShinyRssItem;
 
 public class MediaSamples {
 	public static class PdfSample {
-		public ShinyComponent execute() {
+		public ShinyModel execute() {
 			try {
 				return Shiny.pdf()
 						.withTitle("Arthur Rimbaud - Poèmes")
@@ -30,7 +30,7 @@ public class MediaSamples {
 	}
 
 	public static class RssSample {
-		public ShinyComponent execute() {
+		public ShinyModel execute() {
 			try {
 				final URL feedUrl = new URL("https://www.francetvinfo.fr/titres.rss");
 				final SyndFeedInput input = new SyndFeedInput();

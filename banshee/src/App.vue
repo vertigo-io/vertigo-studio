@@ -86,17 +86,18 @@ const handleIncomingEvent = (event: MessageEvent) => {
   isLoading.value = false; // Stop loading animation
   try {
     const parsed = JSON.parse(event.data);
-    const component: ShinyComponent = { type: parsed.type, ...parsed.data };
-    addMessage(BansheeRole.ASSISTANT, component);
+    const model: ShinyComponent = { type: parsed.model.shinyType, ...parsed.model };
+    addMessage(BansheeRole.ASSISTANT, model);
   } catch (error) {
     console.error('Error parsing message:', error);
+    //il faut absolument mettre le type après sinon on récupère le type préesnt de dtaa s'il existe
     const component: ShinyComponent  ={  ...event.data, type: 'ShinyError' }
     addMessage(BansheeRole.SYSTEM, component);
   }
 };
 
-const addMessage = (role: BansheeRole, component: ShinyComponent ) => {
-  const message = new BansheeMessage(role, component);
+const addMessage = (role: BansheeRole, model: ShinyComponent ) => {
+  const message = new BansheeMessage(role, model);
   story.pushMessage(message);
   nextTick(() => {
     const chat = document.getElementById('chat');

@@ -10,14 +10,14 @@ import java.util.stream.Stream;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.file.FileContext;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.models.ShinyModel;
 import picocli.CommandLine.Command;
 
 @Command(name = "ls", description = "List files and directories.")
 public final class FileLsCommand implements ShellCommand {
 
 	@Override
-	public ShinyComponent build() {
+	public ShinyModel build() {
 		final FileContext fileContext = FileContext.get();
 		final Path path = fileContext.getCurrentAbsolutePath();
 

@@ -10,7 +10,7 @@ import java.util.List;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.db.DbContext;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.models.ShinyModel;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
@@ -20,8 +20,8 @@ public final class DbQueryCommand implements ShellCommand {
 	private String query;
 
 	@Override
-	public ShinyComponent build() {
-		final ShinyComponent component;
+	public ShinyModel build() {
+		final ShinyModel component;
 		try (Statement stmt = DbContext.connection().createStatement()) {
 			if (query.trim().toLowerCase().startsWith("select")) {
 				try (ResultSet rs = stmt.executeQuery(query)) {
@@ -42,7 +42,7 @@ public final class DbQueryCommand implements ShellCommand {
 		return component;
 	}
 
-	private ShinyComponent buildResultSet(final ResultSet rs) throws SQLException {
+	private ShinyModel buildResultSet(final ResultSet rs) throws SQLException {
 		final ResultSetMetaData rsmd = rs.getMetaData();
 		final int columnsNumber = rsmd.getColumnCount();
 

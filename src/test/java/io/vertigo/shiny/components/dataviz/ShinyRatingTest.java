@@ -2,7 +2,7 @@ package io.vertigo.shiny.components.dataviz;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.dataviz.rating.ShinyRatingScale;
+import io.vertigo.shiny.models.dataviz.rating.ShinyRatingScale;
 import io.vertigo.shiny.renderers.dataviz.ShinyRatingStyle;
 import io.vertigo.shiny.renderers.dataviz.ShinyRatingType;
 import io.vertigo.shiny.style.ShinyColors;

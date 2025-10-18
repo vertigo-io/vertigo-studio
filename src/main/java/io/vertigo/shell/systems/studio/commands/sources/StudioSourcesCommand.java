@@ -6,7 +6,7 @@ import java.util.List;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.studio.StudioContext;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.studio.source.Source;
 import picocli.CommandLine.Command;
 
@@ -14,7 +14,7 @@ import picocli.CommandLine.Command;
 public final class StudioSourcesCommand implements ShellCommand {
 
 	@Override
-	public ShinyComponent build() {
+	public ShinyModel build() {
 		final List<Source> sources = StudioContext.notebookConfig.sources();
 		final List<String[]> rows = new ArrayList<>();
 		for (final Source source : sources) {

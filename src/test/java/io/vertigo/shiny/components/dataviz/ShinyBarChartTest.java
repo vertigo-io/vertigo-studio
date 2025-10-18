@@ -2,7 +2,7 @@ package io.vertigo.shiny.components.dataviz;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.dataviz.bar.ShinySortMode;
+import io.vertigo.shiny.models.dataviz.bar.ShinySortMode;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyBarChartTest {

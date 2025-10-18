@@ -9,7 +9,7 @@ import io.vertigo.shell.systems.db.DbModel;
 import io.vertigo.shell.systems.db.DbModel.JdbcSchema;
 import io.vertigo.shell.systems.db.DbModel.JdbcTable;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.models.ShinyModel;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
@@ -19,7 +19,7 @@ public final class DbDescribeCommand implements ShellCommand {
 	public String tableName;
 
 	@Override
-	public ShinyComponent build() {
+	public ShinyModel build() {
 		if (tableName == null) {
 			return Shiny.error()
 					.withText("Please specify a valid table name.")
@@ -28,7 +28,7 @@ public final class DbDescribeCommand implements ShellCommand {
 		return describeTable();
 	}
 
-	private ShinyComponent describeTable() {
+	private ShinyModel describeTable() {
 		JdbcTable table = null;
 		final List<String[]> columns = new ArrayList<>();
 		for (final JdbcSchema schema : DbContext.model().schemas()) {

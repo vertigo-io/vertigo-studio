@@ -7,7 +7,7 @@ import io.vertigo.shell.systems.db.DbContext;
 import io.vertigo.shell.systems.db.DbVar;
 import io.vertigo.shell.systems.env.Env;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.style.ShinyColors;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -24,7 +24,7 @@ public final class DbConnectCommand implements ShellCommand {
 	private String password;
 
 	@Override
-	public ShinyComponent build() {
+	public ShinyModel build() {
 		if (DbContext.isConnected()) {
 			return Shiny.error()
 					.withText("Already connected. Disconnect first.")
@@ -44,7 +44,7 @@ public final class DbConnectCommand implements ShellCommand {
 		return connect(url, user, password);
 	}
 
-	public static ShinyComponent connect(final String url, String user, String password) {
+	public static ShinyModel connect(final String url, String user, String password) {
 		try {
 			DbContext.connect(url, user, password);
 			return Shiny.paragraph()

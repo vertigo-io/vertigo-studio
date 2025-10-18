@@ -12,7 +12,7 @@ import io.vertigo.shell.systems.db.DbModel;
 import io.vertigo.shell.systems.db.DbVar;
 import io.vertigo.shell.systems.env.Env;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.style.ShinyColors;
 import picocli.CommandLine.Command;
 
@@ -29,7 +29,7 @@ public final class DbReadCommand implements ShellCommand {
 	}
 
 	@Override
-	public ShinyComponent build() {
+	public ShinyModel build() {
 		try {
 			DbModel model = read();
 			DbContext.model(model);

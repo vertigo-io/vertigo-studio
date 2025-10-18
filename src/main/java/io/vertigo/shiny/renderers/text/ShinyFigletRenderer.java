@@ -8,14 +8,14 @@ import com.github.dtmo.jfiglet.FigletRenderer;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.ShinyComponent;
-import io.vertigo.shiny.components.text.figlet.ShinyFiglet;
+import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.text.figlet.ShinyFiglet;
 import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 
 public final class ShinyFigletRenderer implements ShinyComponentRenderer<ShinyFiglet> {
 
 	@Override
-	public boolean accept(ShinyComponent component) {
+	public boolean accept(ShinyModel component) {
 		return component instanceof ShinyFiglet;
 	}
 

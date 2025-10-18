@@ -6,14 +6,14 @@ import java.time.Instant;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.ShellContext;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.models.ShinyModel;
 import picocli.CommandLine.Command;
 
 @Command(name = "uptime", description = "Displays the shell uptime.")
 public class UptimeCommand implements ShellCommand {
 
 	@Override
-	public ShinyComponent build() {
+	public ShinyModel build() {
 		final Duration uptime = Duration.between(ShellContext.startTime, Instant.now());
 		var text = String.format("Uptime: %d minutes, %d seconds%n",
 				uptime.toMinutes(),

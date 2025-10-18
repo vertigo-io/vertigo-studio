@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.studio.StudioContext;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.notebook.Sketch;
 import io.vertigo.studio.tools.VertigoStudioMda;
@@ -34,7 +34,7 @@ public final class StudioListCommand implements ShellCommand {
 	private boolean t = false;
 
 	@Override
-	public ShinyComponent build() {
+	public ShinyModel build() {
 		final Notebook notebook = VertigoStudioMda.read(StudioContext.notebookConfig);
 		final List<Sketch> sketches = notebook.getAll()
 				.stream()

@@ -2,7 +2,7 @@ package io.vertigo.shiny.components.text;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.text.figlet.ShinyFigletFont;
+import io.vertigo.shiny.models.text.figlet.ShinyFigletFont;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyFigletTest {

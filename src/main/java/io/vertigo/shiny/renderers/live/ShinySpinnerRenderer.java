@@ -2,14 +2,14 @@ package io.vertigo.shiny.renderers.live;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.components.ShinyComponent;
-import io.vertigo.shiny.components.live.spinner.ShinySpinner;
+import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.live.spinner.ShinySpinner;
 import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 
 public final class ShinySpinnerRenderer implements ShinyComponentRenderer<ShinySpinner> {
 
 	@Override
-	public boolean accept(final ShinyComponent component) {
+	public boolean accept(final ShinyModel component) {
 		return component instanceof ShinySpinner;
 	}
 

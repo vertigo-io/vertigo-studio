@@ -6,19 +6,19 @@ import io.vertigo.shell.systems.java.JavaModel.JavaClass;
 import io.vertigo.shell.systems.java.JavaModel.JavaImport;
 import io.vertigo.shell.systems.java.JavaModel.JavaPackage;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.components.ShinyComponent;
-import io.vertigo.shiny.components.data.tree.ShinyTree;
-import io.vertigo.shiny.components.data.tree.ShinyTreeNode;
+import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.data.tree.ShinyTree;
+import io.vertigo.shiny.models.data.tree.ShinyTreeNode;
 import picocli.CommandLine.Command;
 
 @Command(name = "model", description = "Show the java model")
 public final class JavaShowModelCommand implements ShellCommand {
 	@Override
-	public ShinyComponent build() {
+	public ShinyModel build() {
 		return listAll();
 	}
 
-	private ShinyComponent listAll() {
+	private ShinyModel listAll() {
 		//To avoid java keyword
 		//Class => clazz
 		//package => jpackage

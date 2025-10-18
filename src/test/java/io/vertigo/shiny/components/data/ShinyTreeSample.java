@@ -1,7 +1,7 @@
 package io.vertigo.shiny.components.data;
 
-import io.vertigo.shiny.components.data.tree.ShinyTree;
-import io.vertigo.shiny.components.data.tree.ShinyTreeBuilder;
+import io.vertigo.shiny.models.data.tree.ShinyTree;
+import io.vertigo.shiny.models.data.tree.ShinyTreeBuilder;
 
 public class ShinyTreeSample {
 	public static void main(String[] args) {

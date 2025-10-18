@@ -3,15 +3,15 @@ package io.vertigo.shiny.renderers.core;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.ShinyComponent; // New import
-import io.vertigo.shiny.components.core.error.ShinyError;
+import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.core.error.ShinyError;
 import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyErrorRenderer implements ShinyComponentRenderer<ShinyError> {
 
 	@Override
-	public boolean accept(final ShinyComponent component) {
+	public boolean accept(final ShinyModel component) {
 		return component instanceof ShinyError;
 	}
 

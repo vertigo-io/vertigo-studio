@@ -5,15 +5,15 @@ import java.util.regex.Pattern;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.ShinyComponent; // New import
-import io.vertigo.shiny.components.text.textpath.ShinyTextPath;
+import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.text.textpath.ShinyTextPath;
 import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 import io.vertigo.shiny.style.ShinyColor;
 
 public final class ShinyTextPathRenderer implements ShinyComponentRenderer<ShinyTextPath> {
 
 	@Override
-	public boolean accept(final ShinyComponent component) {
+	public boolean accept(final ShinyModel component) {
 		return component instanceof ShinyTextPath;
 	}
 

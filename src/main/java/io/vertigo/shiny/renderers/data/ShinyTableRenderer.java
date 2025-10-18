@@ -7,13 +7,13 @@ import java.util.List;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.ShinyComponent;
-import io.vertigo.shiny.components.data.table.ShinyTable;
+import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.data.table.ShinyTable;
 import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 
 public final class ShinyTableRenderer implements ShinyComponentRenderer<ShinyTable> {
 	@Override
-	public boolean accept(final ShinyComponent component) {
+	public boolean accept(final ShinyModel component) {
 		return component instanceof ShinyTable;
 	}
 

@@ -13,9 +13,9 @@ import java.util.Scanner;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.dataviz.bar.ShinySortMode;
-import io.vertigo.shiny.components.dataviz.status.ShinyStatusType;
-import io.vertigo.shiny.components.input.multiselection.ShinyMultiSelection;
+import io.vertigo.shiny.models.dataviz.bar.ShinySortMode;
+import io.vertigo.shiny.models.dataviz.status.ShinyStatusType;
+import io.vertigo.shiny.models.input.multiselection.ShinyMultiSelection;
 
 public class ShinyAllComponentsTest {
 

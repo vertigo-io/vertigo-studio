@@ -5,13 +5,13 @@ import java.util.stream.Collectors;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.ShinyComponent; // New import
-import io.vertigo.shiny.components.dataviz.status.ShinyStatus;
+import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.dataviz.status.ShinyStatus;
 import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 
 public final class ShinyStatusRenderer implements ShinyComponentRenderer<ShinyStatus> {
 	@Override
-	public boolean accept(final ShinyComponent component) {
+	public boolean accept(final ShinyModel component) {
 		return component instanceof ShinyStatus;
 	}
 

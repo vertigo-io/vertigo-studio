@@ -6,9 +6,9 @@ import io.vertigo.shell.systems.db.DbModel.JdbcColumn;
 import io.vertigo.shell.systems.db.DbModel.JdbcSchema;
 import io.vertigo.shell.systems.db.DbModel.JdbcTable;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.components.ShinyComponent;
-import io.vertigo.shiny.components.data.tree.ShinyTree;
-import io.vertigo.shiny.components.data.tree.ShinyTreeNode;
+import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.data.tree.ShinyTree;
+import io.vertigo.shiny.models.data.tree.ShinyTreeNode;
 import io.vertigo.shiny.style.ShinyColors;
 import io.vertigo.shiny.style.ShinyEffects;
 import picocli.CommandLine.Command;
@@ -16,11 +16,11 @@ import picocli.CommandLine.Command;
 @Command(name = "model", description = "Display elements of the model")
 public final class DbShowModelCommand implements ShellCommand {
 	@Override
-	public ShinyComponent build() {
+	public ShinyModel build() {
 		return showModel();
 	}
 
-	private ShinyComponent showModel() {
+	private ShinyModel showModel() {
 		final ShinyTree tree = Shiny.tree("model").build();
 		for (final JdbcSchema schema : DbContext.model().schemas()) {
 			final ShinyTreeNode schemaNode = tree.getRoot().addChild("schema : " + schema.name());

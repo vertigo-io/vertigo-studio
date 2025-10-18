@@ -4,17 +4,17 @@ import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.db.DbContext;
 import io.vertigo.shell.systems.db.DbModel;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.components.ShinyComponent;
-import io.vertigo.shiny.components.data.tree.ShinyIcon;
-import io.vertigo.shiny.components.data.tree.ShinyTree;
-import io.vertigo.shiny.components.data.tree.ShinyTreeNode;
+import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.data.tree.ShinyIcon;
+import io.vertigo.shiny.models.data.tree.ShinyTree;
+import io.vertigo.shiny.models.data.tree.ShinyTreeNode;
 import picocli.CommandLine.Command;
 
 @Command(name = "scan", description = "Scans DB model for columns potentially containing sensitive data.")
 public class DbScanCommand implements ShellCommand {
 
 	@Override
-	public ShinyComponent build() {
+	public ShinyModel build() {
 		final DbModel mockDbModel = DbContext.model();
 		final ShinyTree resultsTree = Shiny.tree("Sensitive Data Scan Results").build();
 		final ShinyTreeNode root = resultsTree.getRoot();

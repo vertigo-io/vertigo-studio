@@ -10,14 +10,14 @@ import io.vertigo.shell.systems.file.FileContext;
 import io.vertigo.shell.systems.java.JavaVar;
 import io.vertigo.shell.systems.photo.PhotoVar;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.models.ShinyModel;
 import picocli.CommandLine.Command;
 
 @Command(name = "list", description = "Display env properties.")
 public final class EnvListCommand implements ShellCommand {
 
 	@Override
-	public ShinyComponent build() {
+	public ShinyModel build() {
 		final List<String[]> rows = new ArrayList<>();
 
 		// File Context

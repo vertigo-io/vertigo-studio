@@ -5,8 +5,8 @@ import static io.vertigo.shiny.style.ShinyColors.RED;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.data.list.ShinyList;
-import io.vertigo.shiny.components.data.list.ShinyListType;
+import io.vertigo.shiny.models.data.list.ShinyList;
+import io.vertigo.shiny.models.data.list.ShinyListType;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyListTest {

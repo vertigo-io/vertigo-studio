@@ -4,7 +4,7 @@ import java.util.List;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.input.multiselection.ShinyMultiSelection;
+import io.vertigo.shiny.models.input.multiselection.ShinyMultiSelection;
 
 public class ShinyMultiSelectionTest {
 	public static void main(final String[] args) {

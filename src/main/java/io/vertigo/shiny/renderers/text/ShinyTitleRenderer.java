@@ -3,14 +3,14 @@ package io.vertigo.shiny.renderers.text;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.ShinyComponent; // New import
-import io.vertigo.shiny.components.text.title.ShinyTitle;
+import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.text.title.ShinyTitle;
 import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 import io.vertigo.shiny.style.ShinyColors;
 
 public final class ShinyTitleRenderer implements ShinyComponentRenderer<ShinyTitle> {
 	@Override
-	public boolean accept(final ShinyComponent component) {
+	public boolean accept(final ShinyModel component) {
 		return component instanceof ShinyTitle;
 	}
 

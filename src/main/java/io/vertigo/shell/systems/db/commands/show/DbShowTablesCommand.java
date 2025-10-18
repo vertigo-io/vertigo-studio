@@ -8,17 +8,17 @@ import io.vertigo.shell.systems.db.DbContext;
 import io.vertigo.shell.systems.db.DbModel.JdbcSchema;
 import io.vertigo.shell.systems.db.DbModel.JdbcTable;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.models.ShinyModel;
 import picocli.CommandLine.Command;
 
 @Command(name = "tables", description = "Display all tables of the model")
 public final class DbShowTablesCommand implements ShellCommand {
 	@Override
-	public ShinyComponent build() {
+	public ShinyModel build() {
 		return listTables();
 	}
 
-	private ShinyComponent listTables() {
+	private ShinyModel listTables() {
 		final List<String[]> rows = new ArrayList<>();
 		for (final JdbcSchema schema : DbContext.model().schemas()) {
 			for (final JdbcTable table : schema.tables()) {

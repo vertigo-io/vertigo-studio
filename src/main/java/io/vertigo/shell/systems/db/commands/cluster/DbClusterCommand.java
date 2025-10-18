@@ -6,8 +6,8 @@ import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.db.DbContext;
 import io.vertigo.shell.systems.db.commands.cluster.DbCluster.JdbcCluster;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.components.ShinyComponent;
-import io.vertigo.shiny.components.data.tree.ShinyTree;
+import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.data.tree.ShinyTree;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
@@ -20,7 +20,7 @@ public final class DbClusterCommand implements ShellCommand {
 	private DbClusterStrategy strategy;
 
 	@Override
-	public ShinyComponent build() {
+	public ShinyModel build() {
 		final List<JdbcCluster> clusters = DbCluster.analyze(DbContext.model(), DbClusterStrategy.STRONGLY_CONNECTED_COMPONENTS);
 
 		final ShinyTree tree = Shiny.tree("Clusters").build();

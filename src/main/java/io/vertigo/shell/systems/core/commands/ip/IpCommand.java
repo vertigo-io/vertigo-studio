@@ -5,7 +5,7 @@ import java.net.UnknownHostException;
 
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.models.ShinyModel;
 import picocli.CommandLine.Command;
 
 @Command(name = "ip", description = "Displays the local host's IP address.")
@@ -13,7 +13,7 @@ import picocli.CommandLine.Command;
 public class IpCommand implements ShellCommand {
 
 	@Override
-	public ShinyComponent build() {
+	public ShinyModel build() {
 		try {
 			final InetAddress localHost = InetAddress.getLocalHost();
 			return Shiny.paragraph()

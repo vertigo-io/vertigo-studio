@@ -8,7 +8,7 @@ import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.db.DbContext;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.live.progressbar.ShinyProgressBar;
+import io.vertigo.shiny.models.live.progressbar.ShinyProgressBar;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 

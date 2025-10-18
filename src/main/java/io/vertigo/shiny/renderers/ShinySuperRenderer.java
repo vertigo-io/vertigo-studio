@@ -3,7 +3,7 @@ package io.vertigo.shiny.renderers;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.renderers.core.ShinyContainerRenderer;
 import io.vertigo.shiny.renderers.core.ShinyErrorRenderer;
 import io.vertigo.shiny.renderers.data.ShinyCalendarRenderer;
@@ -56,7 +56,7 @@ public final class ShinySuperRenderer {
 				new ShinyToggleRenderer());
 	}
 
-	public void render(final ShinyComponent component) {
+	public void render(final ShinyModel component) {
 		Assertion.check().isNotNull(component);
 		//---
 		for (final ShinyComponentRenderer renderer : renderers) {

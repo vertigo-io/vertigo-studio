@@ -3,16 +3,16 @@ package io.vertigo.shell.server.commands;
 import java.util.List;
 
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.components.ShinyComponent;
-import io.vertigo.shiny.components.data.form.ShinyFormField;
-import io.vertigo.shiny.components.data.form.ShinyFormFieldType;
-import io.vertigo.shiny.components.data.form.ShinyFormFieldValidator;
-import io.vertigo.shiny.components.data.form.ShinyFormOption;
+import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.data.form.ShinyFormField;
+import io.vertigo.shiny.models.data.form.ShinyFormFieldType;
+import io.vertigo.shiny.models.data.form.ShinyFormFieldValidator;
+import io.vertigo.shiny.models.data.form.ShinyFormOption;
 
 public class FormSamples {
 
 	public static class FormSample1 {
-		public ShinyComponent execute() {
+		public ShinyModel execute() {
 			return Shiny.form()
 					.withTitle("Person Details")
 					.addSection("Personal Info", List.of(
@@ -29,7 +29,7 @@ public class FormSamples {
 	}
 
 	public static class FormSample2 {
-		public ShinyComponent execute() {
+		public ShinyModel execute() {
 			return Shiny.form()
 					.withTitle("Product Details")
 					.addSection("Product Info", List.of(
@@ -47,7 +47,7 @@ public class FormSamples {
 	}
 
 	public static class FormSample3 {
-		public ShinyComponent execute() {
+		public ShinyModel execute() {
 			return Shiny.form()
 					.withTitle("Photo Metadata")
 					.addSection("File Info", List.of(
@@ -63,7 +63,7 @@ public class FormSamples {
 	}
 
 	public static class FormSample4 {
-		public ShinyComponent execute() {
+		public ShinyModel execute() {
 			return Shiny.form()
 					.withTitle("Critique de film")
 					.addSection("Détails du film", List.of(
@@ -79,7 +79,7 @@ public class FormSamples {
 	}
 
 	public static class FormSample5 {
-		public ShinyComponent execute() {
+		public ShinyModel execute() {
 			return Shiny.form()
 					.withTitle("Commande de produit")
 					.addSection("Détails du produit", List.of(
@@ -94,7 +94,7 @@ public class FormSamples {
 	}
 
 	public static class FormSample6 {
-		public ShinyComponent execute() {
+		public ShinyModel execute() {
 			return Shiny.form()
 					.withTitle("Ajout de film")
 					.addSection("Informations sur le film", List.of(

@@ -10,13 +10,13 @@ import java.util.Locale;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.components.ShinyComponent; // New import
-import io.vertigo.shiny.components.data.calendar.ShinyCalendar;
+import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.data.calendar.ShinyCalendar;
 import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 
 public final class ShinyCalendarRenderer implements ShinyComponentRenderer<ShinyCalendar> {
 	@Override
-	public boolean accept(final ShinyComponent component) {
+	public boolean accept(final ShinyModel component) {
 		return component instanceof ShinyCalendar;
 	}
 

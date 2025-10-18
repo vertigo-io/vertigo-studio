@@ -3,15 +3,15 @@ package io.vertigo.shiny.renderers.dataviz;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.ShinyComponent; // New import
-import io.vertigo.shiny.components.dataviz.rating.ShinyRating;
-import io.vertigo.shiny.components.dataviz.rating.ShinyRatingScale;
+import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.dataviz.rating.ShinyRating;
+import io.vertigo.shiny.models.dataviz.rating.ShinyRatingScale;
 import io.vertigo.shiny.renderers.ShinyComponentRenderer;
 import io.vertigo.shiny.style.ShinyEffects;
 
 public final class ShinyRatingRenderer implements ShinyComponentRenderer<ShinyRating> {
 	@Override
-	public boolean accept(final ShinyComponent component) {
+	public boolean accept(final ShinyModel component) {
 		return component instanceof ShinyRating;
 	}
 

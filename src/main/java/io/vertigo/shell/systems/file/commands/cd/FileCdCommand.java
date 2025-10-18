@@ -5,7 +5,7 @@ import java.nio.file.Path;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.file.FileContext;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.models.ShinyModel;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
@@ -16,11 +16,11 @@ public final class FileCdCommand implements ShellCommand {
 	private String newDirectory;
 
 	@Override
-	public ShinyComponent build() {
+	public ShinyModel build() {
 		return changeDirectory();
 	}
 
-	private ShinyComponent changeDirectory() {
+	private ShinyModel changeDirectory() {
 		try {
 			final FileContext fileContext = FileContext.get();
 

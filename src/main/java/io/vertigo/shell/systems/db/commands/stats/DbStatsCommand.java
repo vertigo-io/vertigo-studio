@@ -12,15 +12,15 @@ import io.vertigo.shell.systems.db.DbContext;
 import io.vertigo.shell.systems.db.DbModel.JdbcSchema;
 import io.vertigo.shell.systems.db.DbModel.JdbcTable;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.components.ShinyComponent;
-import io.vertigo.shiny.components.dataviz.chart.ShinyChartSerie;
+import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.dataviz.chart.ShinyChartSerie;
 import picocli.CommandLine.Command;
 
 @Command(name = "stats", description = "List stats")
 public final class DbStatsCommand implements ShellCommand {
 
 	@Override
-	public ShinyComponent build() {
+	public ShinyModel build() {
 
 		final List<String> tableNames = new ArrayList<>();
 		final List<Double> tableCounts = new ArrayList<>();
