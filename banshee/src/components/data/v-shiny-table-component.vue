@@ -47,7 +47,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { ShinyTable } from '../../models/data/table/ShinyTable';
-import { ShinyProps } from '../../models/ShinyProps';
+import { ShinyProp } from '../../models/ShinyProp';
 
 export default defineComponent({
   name: 'VShinyTableComponent',
@@ -58,9 +58,7 @@ export default defineComponent({
     },
   },
   computed: {
-    pageProp(): ShinyProps | undefined {
-
-      console.log("props >> " +this.data.props);
+    pageProp(): ShinyProp | undefined {
       return this.data.props?.find(p => p.key === 'page');
     },
     page: {
@@ -73,20 +71,9 @@ export default defineComponent({
         }
       }
     },
-    rowsPerPage(): number {
-      const prop = this.data.props?.find(p => p.key === 'rows-per-page');
-      // Default to 10 if not provided, Vuetify default is 10
-      return prop ? parseInt(prop.value, 10) : 10;
-    },
-    count(): number {
-      // The user specified that 'count' is available on 'data'
-      return (this.data as any).count || 0;
-    },
     pageCount(): number {
-      if (this.count === 0) {
-        return 1;
-      }
-      return Math.ceil(this.count / this.rowsPerPage);
+      const pageCountProp = this.data.props?.find(p => p.key === 'pageCount');
+      return pageCountProp ? parseInt(pageCountProp.value, 0) : 0;
     }
   },
   methods: {
@@ -111,17 +98,15 @@ export default defineComponent({
     },
     updatePage() {
       // The v-model binding for 'page' already updates the prop value.
-      // We just need to send the update message.
-      const message = {
-        type: 'updateShinyComponent',
-        data: {
-          id: this.data.id,
-          type: 'ShinyTable',
-          props: this.data.props
-        }
+      // We just need to send the update event.
+      const bansheeEvent = {
+        type: 'update',
+        id: this.data.id,
+        shinyType: 'ShinyTable',
+        props: this.data.props
       };
       if ((this as any).$root.ws) {
-        (this as any).$root.ws.send(JSON.stringify(message));
+        (this as any).$root.ws.send(JSON.stringify(bansheeEvent));
       } else {
         console.error("WebSocket connection not found on root instance.");
       }

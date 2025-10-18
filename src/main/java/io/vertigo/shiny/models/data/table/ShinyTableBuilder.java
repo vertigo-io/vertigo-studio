@@ -82,11 +82,10 @@ public final class ShinyTableBuilder implements Builder<ShinyTable> {
 		return this;
 	}
 
-	public ShinyTableBuilder withPage(final int page, int rpp, int count) {
+	public ShinyTableBuilder withPage(final int page, int pageCount) {
 		_props = List.of(
 				ShinyProp.of("page", page),
-				ShinyProp.of("rows-per-page", rpp),
-				ShinyProp.of("count", count));
+				ShinyProp.of("pageCount", pageCount));
 		return this;
 	}
 

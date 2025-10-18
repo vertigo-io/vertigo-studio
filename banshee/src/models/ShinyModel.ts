@@ -1,6 +1,6 @@
-import { ShinyProps } from "./ShinyProps";
+import { ShinyProp } from "./ShinyProp";
 
 export interface ShinyModel {
   type: string;
-  props?: ShinyProps[];
+  props?: ShinyProp[];
 }

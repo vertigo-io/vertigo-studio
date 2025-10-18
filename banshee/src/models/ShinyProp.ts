@@ -1,4 +1,4 @@
-export interface ShinyProps {
+export interface ShinyProp {
     key: string;
     value: string;
 }

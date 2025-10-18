@@ -195,7 +195,7 @@ final class BansheeHandler {
 					//						.addRow("P").addRow("Q").addRow("R").addRow("S").addRow("T")
 					//						.addRow("U").addRow("V").addRow("W").addRow("X").addRow("Y")
 					//						.addRow("Z")
-					.withPage(1, 5, 26)
+					.withPage(1, 6)
 					.build();
 			case "timeline", "tl" -> Shiny.timeline()
 					.withTitle("Project Timeline")
