@@ -77,12 +77,12 @@ export class ShinyRegistry {
     this.register('ShinyTitle', VShinyTitleComponent);
   }
  
-  register(modelType: string, componentType: any): void {
-    this._componentMap[modelType] = componentType;
+  register(shinyType: string, componentType: any): void {
+    this._componentMap[shinyType] = componentType;
   }
 
-  resolve(modelType: string): any {
-    const component = this._componentMap[modelType];
+  resolve(shinyType: string): any {
+    const component = this._componentMap[shinyType];
     return component;
   }
 }

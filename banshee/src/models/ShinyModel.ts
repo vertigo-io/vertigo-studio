@@ -1,7 +1,7 @@
 import { ShinyProp } from "./ShinyProp";
 
 export interface ShinyModel {
-  id : string ;
+  id : string|undefined ;
   shinyType: string;
   props?: ShinyProp[];
 }

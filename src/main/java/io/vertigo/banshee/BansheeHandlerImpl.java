@@ -68,7 +68,6 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 			action = receivedEvent.id() == null
 					? BansheeAction.create
 					: BansheeAction.update;
-
 			sendEvent(webSocket, new BansheeResult(
 					action,
 					model));
@@ -86,6 +85,9 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 			ShinyTableBuilder tableBuilder = Shiny.table()
 					.withTitle("alphabet")
 					.withHeader("Lettre de A à Z");
+			if (event.id() != null) {
+				tableBuilder.withId(event.id());
+			}
 			String page = event.props() == null
 					? "1"
 					: event.props()

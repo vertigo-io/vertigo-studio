@@ -15,7 +15,7 @@
                @mouseover="hoveredMessageId = message.id"
                @mouseleave="hoveredMessageId = null">
             <div class="message-content-wrapper" :ref="el => message.id && (messageRefs[message.id] = el)">
-              <component :is="shinyRegistry.resolve(message.component.type)" 
+              <component :is="shinyRegistry.resolve(message.component.shinyType)" 
               :data="message.component"></component>
               <button v-if="hoveredMessageId === message.id" 
                       @click="toggleFullscreen(message.id)" 
@@ -86,8 +86,6 @@ const handleIncomingEvent = (event: MessageEvent) => {
   isLoading.value = false; // Stop loading animation
   try {
     const parsed = JSON.parse(event.data);
-    const model: ShinyModel = { type: parsed.model.shinyType, ...parsed.model };
-    addMessage(BansheeRole.ASSISTANT, model);
   } catch (error) {
     console.error('Error parsing message:', error);
     //il faut absolument mettre le type après sinon on récupère le type préesnt de dtaa s'il existe
