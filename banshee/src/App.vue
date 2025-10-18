@@ -73,9 +73,10 @@ const submitPrompt = () => {
     if ("clear" === prompt.value) {
       story.clear();
     } else {
-      const component: ShinyParagraph = { type:'ShinyParagraph', text : prompt.value };
+      const component: ShinyParagraph = { id :undefined, shinyType:'ShinyParagraph', text : prompt.value };
       addMessage(BansheeRole.USER, component);
-      window.ws?.send(prompt.value);
+      
+      window.ws?.send(JSON.stringify({command: prompt.value}));
       isLoading.value = true; // Start loading animation
     }
     prompt.value = '';
@@ -86,6 +87,15 @@ const handleIncomingEvent = (event: MessageEvent) => {
   isLoading.value = false; // Stop loading animation
   try {
     const parsed = JSON.parse(event.data);
+    //in all cases we must have a model
+    if (parsed.action ==='create'){
+      const model: ShinyModel = { type: parsed.model.shinyType, ...parsed.model };
+      addMessage(BansheeRole.ASSISTANT, model);
+    }
+    if (parsed.action ==='update'){
+      const model: ShinyModel = { type: parsed.model.shinyType, ...parsed.model };
+      story.updateMessage( parsed.model);
+    }
   } catch (error) {
     console.error('Error parsing message:', error);
     //il faut absolument mettre le type après sinon on récupère le type préesnt de dtaa s'il existe
