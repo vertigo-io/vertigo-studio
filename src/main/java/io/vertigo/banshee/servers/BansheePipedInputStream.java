@@ -1,4 +1,4 @@
-package io.vertigo.shell.server;
+package io.vertigo.banshee.servers;
 
 import java.io.IOException;
 import java.io.InputStream;

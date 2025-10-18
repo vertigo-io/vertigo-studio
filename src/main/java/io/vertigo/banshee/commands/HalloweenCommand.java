@@ -1,4 +1,4 @@
-package io.vertigo.shell.server;
+package io.vertigo.banshee.commands;
 
 import io.vertigo.shell.ai.Agent;
 import io.vertigo.shell.ai.AgentBuilder;

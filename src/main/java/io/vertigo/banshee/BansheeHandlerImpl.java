@@ -1,26 +1,30 @@
-package io.vertigo.shell.server;
+package io.vertigo.banshee;
 
-import java.util.UUID;
 import java.util.function.Consumer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.vertigo.banshee.com.BansheeAction;
+import io.vertigo.banshee.com.BansheeCommand;
+import io.vertigo.banshee.com.BansheeResult;
+import io.vertigo.banshee.commands.ChartSamples.AreaSample;
+import io.vertigo.banshee.commands.ChartSamples.BarSample;
+import io.vertigo.banshee.commands.ChartSamples.DonutSample;
+import io.vertigo.banshee.commands.ChartSamples.LineSample;
+import io.vertigo.banshee.commands.ChartSamples.PieSample;
+import io.vertigo.banshee.commands.ChartSamples.PieSample2;
+import io.vertigo.banshee.commands.ChartSamples.RadarSample;
+import io.vertigo.banshee.commands.FormSamples.FormSample1;
+import io.vertigo.banshee.commands.FormSamples.FormSample2;
+import io.vertigo.banshee.commands.FormSamples.FormSample3;
+import io.vertigo.banshee.commands.FormSamples.FormSample4;
+import io.vertigo.banshee.commands.FormSamples.FormSample5;
+import io.vertigo.banshee.commands.FormSamples.FormSample6;
+import io.vertigo.banshee.commands.HalloweenCommand;
+import io.vertigo.banshee.commands.MediaSamples.PdfSample;
+import io.vertigo.banshee.commands.MediaSamples.RssSample;
+import io.vertigo.banshee.servers.BansheeHandler;
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shell.server.commands.ChartSamples.AreaSample;
-import io.vertigo.shell.server.commands.ChartSamples.BarSample;
-import io.vertigo.shell.server.commands.ChartSamples.DonutSample;
-import io.vertigo.shell.server.commands.ChartSamples.LineSample;
-import io.vertigo.shell.server.commands.ChartSamples.PieSample;
-import io.vertigo.shell.server.commands.ChartSamples.PieSample2;
-import io.vertigo.shell.server.commands.ChartSamples.RadarSample;
-import io.vertigo.shell.server.commands.FormSamples.FormSample1;
-import io.vertigo.shell.server.commands.FormSamples.FormSample2;
-import io.vertigo.shell.server.commands.FormSamples.FormSample3;
-import io.vertigo.shell.server.commands.FormSamples.FormSample4;
-import io.vertigo.shell.server.commands.FormSamples.FormSample5;
-import io.vertigo.shell.server.commands.FormSamples.FormSample6;
-import io.vertigo.shell.server.commands.MediaSamples.PdfSample;
-import io.vertigo.shell.server.commands.MediaSamples.RssSample;
 import io.vertigo.shell.systems.core.commands.ip.IpCommand;
 import io.vertigo.shell.systems.core.commands.uptime.UptimeCommand;
 import io.vertigo.shell.systems.db.commands.connect.DbConnectCommand;
@@ -36,11 +40,13 @@ import io.vertigo.shell.systems.java.commands.load.JavaLoadCommand;
 import io.vertigo.shell.systems.java.commands.show.JavaShowModelCommand;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.ShinyProp;
 import io.vertigo.shiny.models.core.container.ShinyContainerBuilder;
 import io.vertigo.shiny.models.core.error.ShinyErrorBuilder;
 import io.vertigo.shiny.models.data.card.ShinyCardFormat;
 import io.vertigo.shiny.models.data.chip.ShinyChipVariant;
 import io.vertigo.shiny.models.data.list.ShinyListType;
+import io.vertigo.shiny.models.data.table.ShinyTableBuilder;
 import io.vertigo.shiny.models.dataviz.flow.NodeType;
 import io.vertigo.shiny.models.dataviz.flow.ShinyFlowBuilder;
 import io.vertigo.shiny.models.dataviz.mindmap.ShinyMindMapNodeBuilder;
@@ -49,29 +55,81 @@ import io.vertigo.shiny.models.dataviz.status.ShinyStatusType;
 import io.vertigo.shiny.models.feedback.alert.ShinyAlertType;
 import io.vertigo.shiny.models.media.geomap.ShinyGeoPoint;
 
-final class BansheeHandler {
+public final class BansheeHandlerImpl implements BansheeHandler {
 	private static final ObjectMapper MAPPER = new ObjectMapper();
 
-	//	if (event.toLowerCase().startsWith("llm")) {
-	//		ShinyModel sc = new HalloweenCommand().llm(event.substring(3));
-	//		sendEvent(webSocket, sc);
-	//		return;
-	//	}
-	void handle(Consumer<String> webSocket, String event) {
-		//1.
-		final ShinyModel model = execute(event);
-		//2.
-		sendEvent(webSocket, new BansheeSentEvent(
-				BansheeAction.create,
-				UUID.randomUUID(),
-				model));
+	public void handle(Consumer<String> webSocket, String event) {
+		try {
+			final BansheeCommand receivedEvent = MAPPER.readValue(event, BansheeCommand.class);
+			//1.
+			final ShinyModel model = execute(receivedEvent);
+			//2.
+			final BansheeAction action;
+			action = receivedEvent.id() == null
+					? BansheeAction.create
+					: BansheeAction.update;
+
+			sendEvent(webSocket, new BansheeResult(
+					action,
+					model));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
-	private ShinyModel execute(String event) {
-		if (event.toLowerCase().startsWith("llm")) {
-			return new HalloweenCommand().llm(event.substring(3));
+	private ShinyModel execute(BansheeCommand event) {
+		if (event.command().startsWith("llm")) {
+			return new HalloweenCommand().llm(event.command().substring(3));
 		}
-		return switch (event) {
+		if (event.command().equals("table2")) {
+			ShinyTableBuilder tableBuilder = Shiny.table()
+					.withTitle("alphabet")
+					.withHeader("Lettre de A à Z");
+			String page = event.props() == null
+					? "1"
+					: event.props()
+							.stream()
+							.filter(p -> "page".equals(p.key()))
+							.findFirst()
+							.orElseGet(() -> ShinyProp.of("page", 1))
+							.value();
+
+			switch (page) {
+				case "1":
+					tableBuilder
+							.addRow("A").addRow("B").addRow("C").addRow("D").addRow("E");
+					break;
+				case "2":
+					tableBuilder
+							.addRow("F").addRow("G").addRow("H").addRow("I").addRow("J");
+					break;
+				case "3":
+					tableBuilder
+							.addRow("K").addRow("L").addRow("M").addRow("N").addRow("O");
+					break;
+				case "4":
+					tableBuilder
+							.addRow("P").addRow("Q").addRow("R").addRow("S").addRow("T");
+					break;
+				case "5":
+					tableBuilder
+							.addRow("U").addRow("V").addRow("W").addRow("X").addRow("Y");
+					break;
+				case "6":
+					tableBuilder
+							.addRow("Z");
+					break;
+				default:
+					tableBuilder
+							.withNoDataFound("No data Found");
+			}
+			return tableBuilder
+					.withPage(Integer.valueOf(page), 6)
+					.build();
+		}
+
+		return switch (event.command()) {
 			case "ls" -> new FileLsCommand().build();
 			case "pwd" -> new FilePwdCommand().build();
 			case "env list" -> new EnvListCommand().build();
@@ -197,17 +255,6 @@ final class BansheeHandler {
 					.withSortable(true)
 					.addRow("Arthur", "Penn")
 					.addRow("Marilyn", "Pinson")
-					.build();
-			case "table2" -> Shiny.table()
-					.withTitle("alphabet")
-					.withHeader("Lettre de A à Z")
-					.addRow("A").addRow("B").addRow("C").addRow("D").addRow("E")
-					//						.addRow("F").addRow("G").addRow("H").addRow("I").addRow("J")
-					//						.addRow("K").addRow("L").addRow("M").addRow("N").addRow("O")
-					//						.addRow("P").addRow("Q").addRow("R").addRow("S").addRow("T")
-					//						.addRow("U").addRow("V").addRow("W").addRow("X").addRow("Y")
-					//						.addRow("Z")
-					.withPage(1, 6)
 					.build();
 			case "timeline", "tl" -> Shiny.timeline()
 					.withTitle("Project Timeline")
@@ -377,13 +424,15 @@ final class BansheeHandler {
 		return model;
 	}
 
-	private static void sendEvent(Consumer<String> webSocket, BansheeSentEvent event) {
+	private static void sendEvent(Consumer<String> webSocket, BansheeResult event) {
 		Assertion.check()
 				.isNotNull(webSocket)
 				.isNotNull(event);
 		//---
 		try {
-			webSocket.accept(MAPPER.writeValueAsString(event));
+			final String json = MAPPER.writeValueAsString(event);
+			webSocket.accept(json);
+			System.out.println("<<< sent : " + json);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

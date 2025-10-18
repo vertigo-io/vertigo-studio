@@ -1,4 +1,4 @@
-package io.vertigo.shell.server;
+package io.vertigo.banshee.servers;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,11 +15,11 @@ import com.sun.net.httpserver.HttpServer;
 import io.vertigo.core.lang.Builder;
 import io.vertigo.core.lang.VSystemException;
 
-final class BansheeWebServerBuilder implements Builder<HttpServer> {
+public final class BansheeWebServerBuilder implements Builder<HttpServer> {
 	private int _port;
 	private String _rootDir;
 
-	BansheeWebServerBuilder(int port, String rootDir) throws IOException {
+	public BansheeWebServerBuilder(int port, String rootDir) throws IOException {
 		this._port = port;
 		this._rootDir = rootDir;
 	}

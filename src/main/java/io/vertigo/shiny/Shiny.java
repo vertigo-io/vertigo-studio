@@ -3,7 +3,6 @@ package io.vertigo.shiny;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
-import io.vertigo.shiny.data.timeline.ShinyTimelineBuilder;
 import io.vertigo.shiny.mermaid.ShinyMermaidServer;
 import io.vertigo.shiny.models.core.container.ShinyContainerBuilder;
 import io.vertigo.shiny.models.core.error.ShinyErrorBuilder;
@@ -15,6 +14,7 @@ import io.vertigo.shiny.models.data.json.ShinyJsonBuilder;
 import io.vertigo.shiny.models.data.list.ShinyListBuilder;
 import io.vertigo.shiny.models.data.organization.ShinyOrganizationBuilder;
 import io.vertigo.shiny.models.data.table.ShinyTableBuilder;
+import io.vertigo.shiny.models.data.timeline.ShinyTimelineBuilder;
 import io.vertigo.shiny.models.data.tree.ShinyTreeBuilder;
 import io.vertigo.shiny.models.dataviz.chart.ShinyChartBuilder;
 import io.vertigo.shiny.models.dataviz.chart.ShinyChartType;

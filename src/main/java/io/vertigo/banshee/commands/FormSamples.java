@@ -1,4 +1,4 @@
-package io.vertigo.shell.server.commands;
+package io.vertigo.banshee.commands;
 
 import java.util.List;
 

@@ -1,6 +1,9 @@
-package io.vertigo.shell.server;
+package io.vertigo.banshee;
 
 import java.io.IOException;
+
+import io.vertigo.banshee.servers.BansheeWebServerBuilder;
+import io.vertigo.banshee.servers.BansheeWebSocketServer;
 
 public class Banshee {
 
@@ -10,6 +13,6 @@ public class Banshee {
 		String rootDir = "src/main/java/io/vertigo/shell/server/";
 
 		new BansheeWebServerBuilder(webServerPort, rootDir).build().start();
-		new BansheeWebSocketServer(webSocketPort).start();
+		new BansheeWebSocketServer(webSocketPort, new BansheeHandlerImpl()).start();
 	}
 }

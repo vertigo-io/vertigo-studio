@@ -6,7 +6,6 @@ import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.ShinyProp;
 
 public record ShinyTable(
-		String id,
 		String title,
 		String noDataFound,
 		String[] header,

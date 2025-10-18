@@ -1,4 +1,4 @@
-package io.vertigo.shell.server.commands;
+package io.vertigo.banshee.commands;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.models.ShinyModel;
