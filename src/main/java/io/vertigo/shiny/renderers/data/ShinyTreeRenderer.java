@@ -8,9 +8,9 @@ import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.data.tree.ShinyTree;
 import io.vertigo.shiny.models.data.tree.ShinyTreeNode;
-import io.vertigo.shiny.renderers.ShinyComponentRenderer;
+import io.vertigo.shiny.renderers.ShinyModelRenderer;
 
-public final class ShinyTreeRenderer implements ShinyComponentRenderer<ShinyTree> {
+public final class ShinyTreeRenderer implements ShinyModelRenderer<ShinyTree> {
 	@Override
 	public boolean accept(final ShinyModel component) {
 		return component instanceof ShinyTree;

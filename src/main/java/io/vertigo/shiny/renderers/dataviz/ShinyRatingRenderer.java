@@ -6,10 +6,10 @@ import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.dataviz.rating.ShinyRating;
 import io.vertigo.shiny.models.dataviz.rating.ShinyRatingScale;
-import io.vertigo.shiny.renderers.ShinyComponentRenderer;
+import io.vertigo.shiny.renderers.ShinyModelRenderer;
 import io.vertigo.shiny.style.ShinyEffects;
 
-public final class ShinyRatingRenderer implements ShinyComponentRenderer<ShinyRating> {
+public final class ShinyRatingRenderer implements ShinyModelRenderer<ShinyRating> {
 	@Override
 	public boolean accept(final ShinyModel component) {
 		return component instanceof ShinyRating;

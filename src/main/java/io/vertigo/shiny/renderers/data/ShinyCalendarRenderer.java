@@ -12,9 +12,9 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.data.calendar.ShinyCalendar;
-import io.vertigo.shiny.renderers.ShinyComponentRenderer;
+import io.vertigo.shiny.renderers.ShinyModelRenderer;
 
-public final class ShinyCalendarRenderer implements ShinyComponentRenderer<ShinyCalendar> {
+public final class ShinyCalendarRenderer implements ShinyModelRenderer<ShinyCalendar> {
 	@Override
 	public boolean accept(final ShinyModel component) {
 		return component instanceof ShinyCalendar;

@@ -12,10 +12,10 @@ import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.data.json.ShinyJson;
-import io.vertigo.shiny.renderers.ShinyComponentRenderer;
+import io.vertigo.shiny.renderers.ShinyModelRenderer;
 import io.vertigo.shiny.style.ShinyColors;
 
-public final class ShinyJsonRenderer implements ShinyComponentRenderer<ShinyJson> {
+public final class ShinyJsonRenderer implements ShinyModelRenderer<ShinyJson> {
 	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
 	@Override

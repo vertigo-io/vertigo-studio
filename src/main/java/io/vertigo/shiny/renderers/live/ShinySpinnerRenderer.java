@@ -4,9 +4,9 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.live.spinner.ShinySpinner;
-import io.vertigo.shiny.renderers.ShinyComponentRenderer;
+import io.vertigo.shiny.renderers.ShinyModelRenderer;
 
-public final class ShinySpinnerRenderer implements ShinyComponentRenderer<ShinySpinner> {
+public final class ShinySpinnerRenderer implements ShinyModelRenderer<ShinySpinner> {
 
 	@Override
 	public boolean accept(final ShinyModel component) {

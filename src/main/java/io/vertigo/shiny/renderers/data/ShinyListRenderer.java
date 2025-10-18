@@ -6,9 +6,9 @@ import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.data.list.ShinyList;
 import io.vertigo.shiny.models.data.list.ShinyListType;
-import io.vertigo.shiny.renderers.ShinyComponentRenderer;
+import io.vertigo.shiny.renderers.ShinyModelRenderer;
 
-public final class ShinyListRenderer implements ShinyComponentRenderer<ShinyList> {
+public final class ShinyListRenderer implements ShinyModelRenderer<ShinyList> {
 	@Override
 	public boolean accept(final ShinyModel component) {
 		return component instanceof ShinyList;

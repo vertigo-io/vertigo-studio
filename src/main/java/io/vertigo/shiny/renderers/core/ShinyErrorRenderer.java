@@ -5,10 +5,10 @@ import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.core.error.ShinyError;
-import io.vertigo.shiny.renderers.ShinyComponentRenderer;
+import io.vertigo.shiny.renderers.ShinyModelRenderer;
 import io.vertigo.shiny.style.ShinyColors;
 
-public final class ShinyErrorRenderer implements ShinyComponentRenderer<ShinyError> {
+public final class ShinyErrorRenderer implements ShinyModelRenderer<ShinyError> {
 
 	@Override
 	public boolean accept(final ShinyModel component) {

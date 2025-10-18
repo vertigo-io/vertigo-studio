@@ -9,7 +9,7 @@ import org.commonmark.parser.Parser;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.ShinyRenderer; // New import
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.ShinyComponent; // New import
+import io.vertigo.shiny.models.ShinyComponent;
 
 public final class ShinyMarkDownRenderer implements ShinyRenderer<ShinyMarkDown> {
 

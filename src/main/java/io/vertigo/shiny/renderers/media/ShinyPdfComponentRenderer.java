@@ -5,10 +5,10 @@ import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.media.pdf.ShinyPdfComponent;
-import io.vertigo.shiny.renderers.ShinyComponentRenderer;
+import io.vertigo.shiny.renderers.ShinyModelRenderer;
 import io.vertigo.shiny.style.ShinyColors;
 
-public final class ShinyPdfComponentRenderer implements ShinyComponentRenderer<ShinyPdfComponent> {
+public final class ShinyPdfComponentRenderer implements ShinyModelRenderer<ShinyPdfComponent> {
 
     @Override
     public boolean accept(final ShinyModel component) {

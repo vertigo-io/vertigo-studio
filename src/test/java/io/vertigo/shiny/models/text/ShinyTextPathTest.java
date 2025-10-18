@@ -1,4 +1,4 @@
-package io.vertigo.shiny.components.text;
+package io.vertigo.shiny.models.text;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;

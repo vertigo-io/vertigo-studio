@@ -7,10 +7,10 @@ import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.text.textpath.ShinyTextPath;
-import io.vertigo.shiny.renderers.ShinyComponentRenderer;
+import io.vertigo.shiny.renderers.ShinyModelRenderer;
 import io.vertigo.shiny.style.ShinyColor;
 
-public final class ShinyTextPathRenderer implements ShinyComponentRenderer<ShinyTextPath> {
+public final class ShinyTextPathRenderer implements ShinyModelRenderer<ShinyTextPath> {
 
 	@Override
 	public boolean accept(final ShinyModel component) {

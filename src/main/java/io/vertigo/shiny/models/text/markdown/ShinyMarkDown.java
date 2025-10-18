@@ -8,7 +8,7 @@ import org.commonmark.parser.Parser;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.components.ShinyComponent;
+import io.vertigo.shiny.models.ShinyComponent;
 
 public record ShinyMarkDown(
 		String markdownText) implements ShinyComponent {

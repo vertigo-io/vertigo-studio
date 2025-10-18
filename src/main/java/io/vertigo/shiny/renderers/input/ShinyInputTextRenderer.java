@@ -10,10 +10,10 @@ import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.input.text.ShinyInputText;
-import io.vertigo.shiny.renderers.ShinyComponentRenderer;
+import io.vertigo.shiny.renderers.ShinyModelRenderer;
 import io.vertigo.shiny.style.ShinyColors;
 
-public final class ShinyInputTextRenderer implements ShinyComponentRenderer<ShinyInputText> {
+public final class ShinyInputTextRenderer implements ShinyModelRenderer<ShinyInputText> {
 	@Override
 	public boolean accept(final ShinyModel component) {
 		return component instanceof ShinyInputText;

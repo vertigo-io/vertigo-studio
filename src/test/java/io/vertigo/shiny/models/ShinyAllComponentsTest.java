@@ -1,4 +1,4 @@
-package io.vertigo.shiny.components;
+package io.vertigo.shiny.models;
 
 import static io.vertigo.shiny.renderers.ShinyIcon.FILE;
 import static io.vertigo.shiny.renderers.ShinyIcon.FOLDER_OPEN;

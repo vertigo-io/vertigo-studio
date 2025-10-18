@@ -10,9 +10,9 @@ import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.text.figlet.ShinyFiglet;
-import io.vertigo.shiny.renderers.ShinyComponentRenderer;
+import io.vertigo.shiny.renderers.ShinyModelRenderer;
 
-public final class ShinyFigletRenderer implements ShinyComponentRenderer<ShinyFiglet> {
+public final class ShinyFigletRenderer implements ShinyModelRenderer<ShinyFiglet> {
 
 	@Override
 	public boolean accept(ShinyModel component) {

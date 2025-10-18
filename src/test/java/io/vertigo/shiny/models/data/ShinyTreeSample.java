@@ -1,4 +1,4 @@
-package io.vertigo.shiny.components.data;
+package io.vertigo.shiny.models.data;
 
 import io.vertigo.shiny.models.data.tree.ShinyTree;
 import io.vertigo.shiny.models.data.tree.ShinyTreeBuilder;

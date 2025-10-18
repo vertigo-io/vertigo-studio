@@ -26,7 +26,7 @@ import io.vertigo.shiny.renderers.text.ShinyToggleRenderer;
 
 public final class ShinySuperRenderer {
 
-	private final List<? extends ShinyComponentRenderer> renderers;
+	private final List<? extends ShinyModelRenderer> renderers;
 
 	public ShinySuperRenderer() {
 		this.renderers = List.of(
@@ -56,16 +56,16 @@ public final class ShinySuperRenderer {
 				new ShinyToggleRenderer());
 	}
 
-	public void render(final ShinyModel component) {
-		Assertion.check().isNotNull(component);
+	public void render(final ShinyModel model) {
+		Assertion.check().isNotNull(model);
 		//---
-		for (final ShinyComponentRenderer renderer : renderers) {
-			if (renderer.accept(component)) {
+		for (final ShinyModelRenderer renderer : renderers) {
+			if (renderer.accept(model)) {
 				// We know the type is correct because accept returned true
-				renderer.render(component);
+				renderer.render(model);
 				return;
 			}
 		}
-		throw new IllegalArgumentException("No renderer found for component type: " + component.getClass().getName());
+		throw new IllegalArgumentException("No renderer found for component type: " + model.getClass().getName());
 	}
 }

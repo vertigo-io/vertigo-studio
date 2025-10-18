@@ -4,9 +4,9 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.live.progressbar.ShinyProgressBar;
-import io.vertigo.shiny.renderers.ShinyComponentRenderer;
+import io.vertigo.shiny.renderers.ShinyModelRenderer;
 
-public final class ShinyProgressBarRenderer implements ShinyComponentRenderer<ShinyProgressBar> {
+public final class ShinyProgressBarRenderer implements ShinyModelRenderer<ShinyProgressBar> {
 	@Override
 	public boolean accept(final ShinyModel component) {
 		return component instanceof ShinyProgressBar;

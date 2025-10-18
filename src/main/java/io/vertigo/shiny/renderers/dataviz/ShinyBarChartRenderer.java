@@ -7,9 +7,9 @@ import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.dataviz.bar.ShinyBarChart;
-import io.vertigo.shiny.renderers.ShinyComponentRenderer;
+import io.vertigo.shiny.renderers.ShinyModelRenderer;
 
-public final class ShinyBarChartRenderer implements ShinyComponentRenderer<ShinyBarChart> {
+public final class ShinyBarChartRenderer implements ShinyModelRenderer<ShinyBarChart> {
 	@Override
 	public boolean accept(final ShinyModel component) {
 		return component instanceof ShinyBarChart;

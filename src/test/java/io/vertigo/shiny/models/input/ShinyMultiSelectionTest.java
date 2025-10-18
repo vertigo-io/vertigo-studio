@@ -1,4 +1,4 @@
-package io.vertigo.shiny.components.input;
+package io.vertigo.shiny.models.input;
 
 import java.util.List;
 

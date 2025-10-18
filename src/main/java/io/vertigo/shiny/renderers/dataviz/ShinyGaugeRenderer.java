@@ -5,9 +5,9 @@ import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.dataviz.gauge.ShinyGauge;
-import io.vertigo.shiny.renderers.ShinyComponentRenderer;
+import io.vertigo.shiny.renderers.ShinyModelRenderer;
 
-public final class ShinyGaugeRenderer implements ShinyComponentRenderer<ShinyGauge> {
+public final class ShinyGaugeRenderer implements ShinyModelRenderer<ShinyGauge> {
 	@Override
 	public boolean accept(final ShinyModel component) {
 		return component instanceof ShinyGauge;

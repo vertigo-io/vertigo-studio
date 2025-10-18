@@ -9,9 +9,9 @@ import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.data.table.ShinyTable;
-import io.vertigo.shiny.renderers.ShinyComponentRenderer;
+import io.vertigo.shiny.renderers.ShinyModelRenderer;
 
-public final class ShinyTableRenderer implements ShinyComponentRenderer<ShinyTable> {
+public final class ShinyTableRenderer implements ShinyModelRenderer<ShinyTable> {
 	@Override
 	public boolean accept(final ShinyModel component) {
 		return component instanceof ShinyTable;

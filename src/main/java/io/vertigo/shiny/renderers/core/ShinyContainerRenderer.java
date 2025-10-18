@@ -5,9 +5,9 @@ import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.core.container.ShinyContainer;
-import io.vertigo.shiny.renderers.ShinyComponentRenderer;
+import io.vertigo.shiny.renderers.ShinyModelRenderer;
 
-public final class ShinyContainerRenderer implements ShinyComponentRenderer<ShinyContainer> {
+public final class ShinyContainerRenderer implements ShinyModelRenderer<ShinyContainer> {
 
 	@Override
 	public boolean accept(final ShinyModel component) {
