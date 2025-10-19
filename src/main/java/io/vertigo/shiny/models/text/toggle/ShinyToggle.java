@@ -13,7 +13,4 @@ public record ShinyToggle(
 		String offText,
 		boolean showText) implements ShinyModel {
 
-	public String shinyType() {
-		return "ShinyToggle";
-	}
 }

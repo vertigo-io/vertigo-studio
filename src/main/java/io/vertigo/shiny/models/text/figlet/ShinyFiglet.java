@@ -9,11 +9,6 @@ public record ShinyFiglet(
 		UUID id,
 		String text) implements ShinyModel {
 
-	@Override
-	public String shinyType() {
-		return "ShinyFiglet";
-	}
-
 	public ShinyFiglet {
 		Assertion.check().isNotNull(text);
 	}

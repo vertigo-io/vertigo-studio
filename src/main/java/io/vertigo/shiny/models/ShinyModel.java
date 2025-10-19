@@ -11,7 +11,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public interface ShinyModel {
 	@JsonProperty
-	String shinyType();
+	default String shinyType() {
+		return this.getClass().getSimpleName();
+	}
 
 	default List<ShinyProp> props() {
 		return List.of();

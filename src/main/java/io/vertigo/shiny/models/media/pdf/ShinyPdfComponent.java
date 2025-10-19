@@ -15,11 +15,6 @@ public record ShinyPdfComponent(
 		int initialPage,
 		String height) implements ShinyModel {
 
-	@Override
-	public String shinyType() {
-		return "ShinyPdfComponent";
-	}
-
 	public ShinyPdfComponent {
 		Assertion.check()
 				.isNotBlank(pdfPath, "PDF path cannot be blank")

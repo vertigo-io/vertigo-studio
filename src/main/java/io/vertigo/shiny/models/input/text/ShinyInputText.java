@@ -15,9 +15,4 @@ public record ShinyInputText(
 		List<String> suggestions,
 		String defaultValue,
 		ShinyMagicBox<String> value) implements ShinyModel {
-
-	@Override
-	public String shinyType() {
-		return "ShinyInputText";
-	}
 }

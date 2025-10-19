@@ -10,11 +10,6 @@ public record ShinyMindMap(
 		String title,
 		ShinyMindMapNode rootNode) implements ShinyModel {
 
-	@Override
-	public String shinyType() {
-		return "ShinyMindMap";
-	}
-
 	public ShinyMindMap {
 		Assertion.check().isNotNull(id);
 		Assertion.check()

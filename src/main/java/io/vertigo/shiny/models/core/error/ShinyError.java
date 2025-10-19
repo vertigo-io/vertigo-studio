@@ -12,10 +12,4 @@ public record ShinyError(
 	public ShinyError {
 		Assertion.check().isNotNull(id);
 	}
-
-	@Override
-	public String shinyType() {
-		return "ShinyError";
-	}
-
 }

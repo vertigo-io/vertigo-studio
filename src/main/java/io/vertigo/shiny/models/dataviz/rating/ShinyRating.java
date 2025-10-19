@@ -15,10 +15,4 @@ public record ShinyRating(
 		boolean showBox,
 		String separator,
 		boolean allowHalfRating) implements ShinyModel {
-
-	@Override
-	public String shinyType() {
-		return "ShinyRating";
-	}
-
 }

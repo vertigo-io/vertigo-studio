@@ -33,9 +33,4 @@ public record ShinyFlow(
 				.isNotNull(nodes)
 				.isNotNull(edges);
 	}
-
-	@Override
-	public String shinyType() {
-		return "ShinyFlow";
-	}
 }

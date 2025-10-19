@@ -18,11 +18,6 @@ public record ShinyCard(
 		String badgeColor,
 		ShinyCardFormat format) implements ShinyModel {
 
-	@Override
-	public String shinyType() {
-		return "ShinyCard";
-	}
-
 	public ShinyCard {
 		Assertion.check().isNotNull(id);
 		Assertion.check()

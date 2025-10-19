@@ -18,10 +18,4 @@ public record ShinyChip(
 		Assertion.check()
 				.isNotBlank(text, "Text cannot be blank");
 	}
-
-	@Override
-	public String shinyType() {
-		return "ShinyChip";
-	}
-
 }

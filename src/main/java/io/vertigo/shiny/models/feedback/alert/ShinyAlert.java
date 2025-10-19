@@ -20,10 +20,4 @@ public record ShinyAlert(
 				.isNotNull(alertType, "Type cannot be null")
 				.isNotBlank(content, "Content cannot be blank");
 	}
-
-	@Override
-	public String shinyType() {
-		return "ShinyAlert";
-	}
-
 }

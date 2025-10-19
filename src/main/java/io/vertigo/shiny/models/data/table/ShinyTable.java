@@ -17,9 +17,4 @@ public record ShinyTable(
 		String sortDirection,
 		List<ShinyProp> props) implements ShinyModel {
 
-	@Override
-	public String shinyType() {
-		return "ShinyTable";
-	}
-
 }

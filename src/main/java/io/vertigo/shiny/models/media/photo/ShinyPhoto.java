@@ -10,9 +10,4 @@ public record ShinyPhoto(
 		String url,
 		String alt) implements ShinyModel {
 
-	@Override
-	public String shinyType() {
-		return "ShinyPhoto";
-	}
-
 }

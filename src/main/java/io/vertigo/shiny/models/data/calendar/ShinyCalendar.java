@@ -13,9 +13,4 @@ public record ShinyCalendar(
 	public ShinyCalendar {
 		Assertion.check().isNotNull(id);
 	}
-
-	@Override
-	public String shinyType() {
-		return "calendar";
-	}
 }

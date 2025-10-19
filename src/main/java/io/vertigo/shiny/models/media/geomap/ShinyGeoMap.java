@@ -11,11 +11,6 @@ public record ShinyGeoMap(
 		String title,
 		List<ShinyGeoPoint> geoPoints) implements ShinyModel {
 
-	@Override
-	public String shinyType() {
-		return "ShinyGeoMap";
-	}
-
 	public ShinyGeoMap {
 		Assertion.check()
 				.isNotBlank(title, "Title cannot be blank")

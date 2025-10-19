@@ -11,12 +11,6 @@ public record ShinySankey(
 		String title,
 		List<ShinySankeyLink> data) implements ShinyModel {
 
-	@Override
-	public String shinyType() {
-		return "ShinySankey";
-	}
-
-
 	public ShinySankey {
 		Assertion.check().isNotNull(id);
 		Assertion.check()

@@ -13,10 +13,4 @@ public record ShinyContainer(
 	public ShinyContainer {
 		Assertion.check().isNotNull(id);
 	}
-
-	@Override
-	public String shinyType() {
-		return "ShinyContainer";
-	}
-
 }

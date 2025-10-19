@@ -10,8 +10,4 @@ public record ShinyRss(
 		String title,
 		List<ShinyRssItem> items) implements ShinyModel {
 
-	@Override
-	public String shinyType() {
-		return "ShinyRss";
-	}
 }

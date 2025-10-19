@@ -13,11 +13,6 @@ public record ShinyMultiSelection(
 		List<String> options,
 		Set<Integer> selectedIndices) implements ShinyModel {
 
-	@Override
-	public String shinyType() {
-		return "ShinyMultiSelection";
-	}
-
 	public List<String> getSelectedOptions() {
 		return selectedIndices.stream()
 				.sorted()

@@ -11,11 +11,6 @@ public record ShinyGauge(
 		double value,
 		double maxValue) implements ShinyModel {
 
-	@Override
-	public String shinyType() {
-		return "ShinyGauge";
-	}
-
 	public ShinyGauge {
 		Assertion.check().isNotBlank(title, "Title cannot be blank");
 	}

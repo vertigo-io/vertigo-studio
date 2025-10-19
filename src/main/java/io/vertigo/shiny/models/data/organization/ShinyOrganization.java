@@ -13,9 +13,4 @@ public record ShinyOrganization(
 	public ShinyOrganization {
 		Assertion.check().isNotNull(id);
 	}
-
-	@Override
-	public String shinyType() {
-		return "ShinyOrganization";
-	}
 }

@@ -22,9 +22,4 @@ public record ShinyTree(UUID id, String label, List<ShinyTree> children) impleme
 	public boolean isLeaf() {
 		return children.isEmpty();
 	}
-
-	@Override
-	public String shinyType() {
-		return "ShinyTree";
-	}
 }

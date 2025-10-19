@@ -12,11 +12,6 @@ public record ShinyList(
 		List<Object> items, //String || ShinyList
 		ShinyListType listType) implements ShinyModel {
 
-	@Override
-	public String shinyType() {
-		return "ShinyList";
-	}
-
 	public ShinyList {
 		Assertion.check().isNotNull(id);
 		Assertion.check()

@@ -7,24 +7,20 @@ import io.vertigo.shiny.models.ShinyModel;
 
 public record ShinySlider(
 		UUID id,
-        String label,
-        double min,
-        double max,
-        double step,
-        double value,
-        String color,
-        boolean thumbLabel) implements ShinyModel {
+		String label,
+		double min,
+		double max,
+		double step,
+		double value,
+		String color,
+		boolean thumbLabel) implements ShinyModel {
 
-    @Override
-    	public String shinyType() {
-    		return "ShinySlider";    }
-
-    public ShinySlider {
+	public ShinySlider {
 		Assertion.check().isNotNull(id);
-        Assertion.check()
-                .isNotBlank(label, "Label cannot be blank")
-                .isTrue(max > min, "Max must be greater than min")
-                .isTrue(step > 0, "Step must be positive")
-                .isTrue(value >= min && value <= max, "Value must be between min and max");
-    }
+		Assertion.check()
+				.isNotBlank(label, "Label cannot be blank")
+				.isTrue(max > min, "Max must be greater than min")
+				.isTrue(step > 0, "Step must be positive")
+				.isTrue(value >= min && value <= max, "Value must be between min and max");
+	}
 }

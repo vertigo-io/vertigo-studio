@@ -15,9 +15,4 @@ public record ShinySparkline(
 		Assertion.check().isNotNull(id);
 	}
 
-	@Override
-	public String shinyType() {
-		return "ShinySparkline";
-	}
-
 }

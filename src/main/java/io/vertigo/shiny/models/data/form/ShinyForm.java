@@ -13,9 +13,4 @@ public record ShinyForm(UUID id, String title, List<ShinyFormSection> sections) 
 				.isNotBlank(title)
 				.isNotNull(sections);
 	}
-
-	@Override
-	public String shinyType() {
-		return "ShinyForm";
-	}
 }
