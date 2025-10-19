@@ -6,6 +6,9 @@ import java.nio.charset.StandardCharsets;
 import io.vertigo.shiny.mermaid.ShinyMermaidServer;
 import io.vertigo.shiny.models.core.container.ShinyContainerBuilder;
 import io.vertigo.shiny.models.core.error.ShinyErrorBuilder;
+import io.vertigo.shiny.models.data.board.ShinyBoardBuilder;
+import io.vertigo.shiny.models.data.board.ShinyBoardCardBuilder;
+import io.vertigo.shiny.models.data.board.ShinyBoardListBuilder;
 import io.vertigo.shiny.models.data.calendar.ShinyCalendarBuilder;
 import io.vertigo.shiny.models.data.card.ShinyCardBuilder;
 import io.vertigo.shiny.models.data.chip.ShinyChipBuilder;
@@ -243,6 +246,18 @@ public final class Shiny {
 
 	public static ShinyFlowBuilder flow() {
 		return new ShinyFlowBuilder();
+	}
+
+	public static ShinyBoardBuilder board() {
+		return new ShinyBoardBuilder();
+	}
+
+	public static ShinyBoardListBuilder boardList() {
+		return new ShinyBoardListBuilder();
+	}
+
+	public static ShinyBoardCardBuilder boardCard() {
+		return new ShinyBoardCardBuilder();
 	}
 
 	//	private static ShinySuperRenderer RENDERER = new ShinySuperRenderer();

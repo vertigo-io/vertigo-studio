@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.vertigo.banshee.com.BansheeAction;
 import io.vertigo.banshee.com.BansheeCommand;
 import io.vertigo.banshee.com.BansheeResult;
+import io.vertigo.banshee.commands.BoardSamples.CrmInstallationBoard;
 import io.vertigo.banshee.commands.ChartSamples.AreaSample;
 import io.vertigo.banshee.commands.ChartSamples.BarSample;
 import io.vertigo.banshee.commands.ChartSamples.DonutSample;
@@ -435,6 +436,7 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 													.build())
 									.build())
 					.build();
+			case "board" -> new CrmInstallationBoard().execute();
 			default -> new ShinyErrorBuilder().withText("unknown command :" + command).build();
 		};
 	}

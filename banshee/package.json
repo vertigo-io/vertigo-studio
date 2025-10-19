@@ -26,6 +26,7 @@
     "pdfjs-dist": "^5.4.296",
     "stylelint": "^16.25.0",
     "vue": "^3.3.11",
+    "vuedraggable": "^4.1.0",
     "vuetify": "^3.4.9"
   },
   "devDependencies": {
