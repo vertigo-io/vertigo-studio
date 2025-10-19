@@ -41,7 +41,7 @@ public class MediaSamples {
 						imageUrl = entry.getEnclosures().getFirst().getUrl();
 					} else {
 						imageUrl = entry.getForeignMarkup().stream()
-								.filter(element -> "thumbnail".equals(element.getName()) && "http://search.yahoo.com/mrss/".equals(element.getNamespaceURI()))
+								.filter(element -> ("thumbnail".equals(element.getName()) || "content".equals(element.getName())) && "http://search.yahoo.com/mrss/".equals(element.getNamespaceURI()))
 								.map(element -> element.getAttribute("url").getValue())
 								.findFirst().orElse(null);
 					}
