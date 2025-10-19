@@ -11,6 +11,8 @@ public record ShinyTextPath(
 		String separator) implements ShinyModel {
 
 	public ShinyTextPath {
-		Assertion.check().isNotBlank(path, "Path cannot be blank");
+		Assertion.check()
+				.isNotBlank(path, "Path is required")
+				.isNotBlank(separator, "Separator is required");
 	}
 }

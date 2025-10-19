@@ -30,18 +30,26 @@ public class MediaSamples {
 	}
 
 	public static class RssSample {
-		public ShinyModel execute() {
+		public ShinyModel execute(final URL feedUrl) {
 			try {
-				final URL feedUrl = new URL("https://www.francetvinfo.fr/titres.rss");
 				final SyndFeedInput input = new SyndFeedInput();
 				final SyndFeed feed = input.build(new XmlReader(feedUrl));
 				List<ShinyRssItem> items = new ArrayList<>();
 				for (final SyndEntry entry : feed.getEntries()) {
+					String imageUrl = null;
+					if (!entry.getEnclosures().isEmpty()) {
+						imageUrl = entry.getEnclosures().getFirst().getUrl();
+					} else {
+						imageUrl = entry.getForeignMarkup().stream()
+								.filter(element -> "thumbnail".equals(element.getName()) && "http://search.yahoo.com/mrss/".equals(element.getNamespaceURI()))
+								.map(element -> element.getAttribute("url").getValue())
+								.findFirst().orElse(null);
+					}
 					items.add(new ShinyRssItem(
 							entry.getTitle(),
 							entry.getLink(),
 							entry.getDescription().getValue(),
-							entry.getEnclosures().isEmpty() ? null : entry.getEnclosures().getFirst().getUrl(),
+							imageUrl,
 							entry.getPublishedDate().toString(),
 							entry.getAuthor()));
 				}

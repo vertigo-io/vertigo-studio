@@ -11,6 +11,6 @@ public record ShinyTitle(
 		int level) implements ShinyModel {
 
 	public ShinyTitle {
-		Assertion.check().isNotBlank(title, "Title cannot be blank");
+		Assertion.check().isNotBlank(title, "Title is required");
 	}
 }
