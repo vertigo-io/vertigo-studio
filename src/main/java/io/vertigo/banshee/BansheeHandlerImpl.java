@@ -1,6 +1,5 @@
 package io.vertigo.banshee;
 
-import java.net.URL;
 import java.util.function.Consumer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,8 +21,6 @@ import io.vertigo.banshee.commands.FormSamples.FormSample4;
 import io.vertigo.banshee.commands.FormSamples.FormSample5;
 import io.vertigo.banshee.commands.FormSamples.FormSample6;
 import io.vertigo.banshee.commands.HalloweenCommand;
-import io.vertigo.banshee.commands.MediaSamples.PdfSample;
-import io.vertigo.banshee.commands.MediaSamples.RssSample;
 import io.vertigo.banshee.servers.BansheeHandler;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.systems.core.commands.ip.IpCommand;
@@ -263,9 +260,15 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 					.addGeoPoint(ShinyGeoPoint.of(48.8584, 2.2945, "Tour Eiffel"))
 					.addGeoPoint(ShinyGeoPoint.of(48.901022, 2.100765, "Saint Germain en Laye"))
 					.build();
-			case "rss", "rss franceinfo", "rss france info" -> new RssSample().execute(new URL("https://www.francetvinfo.fr/titres.rss"));
-			case "bbc", "rss bbc" -> new RssSample().execute(new URL("https://feeds.bbci.co.uk/news/world/rss.xml"));
-			case "lemonde", "le monde", "rss lemonde" -> new RssSample().execute(new URL("https://www.lemonde.fr/rss/une.xml"));
+			case "rss", "rss franceinfo", "rss france info" -> Shiny.rss()
+					.withFeed("https://www.francetvinfo.fr/titres.rss")
+					.build();
+			case "bbc", "rss bbc" -> Shiny.rss()
+					.withFeed("https://feeds.bbci.co.uk/news/world/rss.xml")
+					.build();
+			case "lemonde", "le monde", "rss lemonde" -> Shiny.rss()
+					.withFeed("https://www.lemonde.fr/rss/une.xml")
+					.build();
 			case "table" -> Shiny.table()
 					.withTitle("carnet d'adresses")
 					.withNoDataFound("no files found")
@@ -332,7 +335,10 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 			//						.addSerie(ShinyChartSerie.of("Hero B", List.of(70, 80, 85, 75, 60, 90)))
 			//						.withColors("red", "blue")
 			//						.build();
-			case "pdf" -> new PdfSample().execute();
+			case "pdf" -> Shiny.pdf()
+					.withTitle("Arthur Rimbaud - Poèmes")
+					.withPath("sample-report.pdf")
+					.build();
 			case "tree" -> Shiny.tree()
 					.withLabel("my directory")
 					.addTree("Files")
