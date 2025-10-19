@@ -1,5 +1,6 @@
 package io.vertigo.banshee;
 
+import java.net.URL;
 import java.util.function.Consumer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -58,6 +59,20 @@ import io.vertigo.shiny.models.media.geomap.ShinyGeoPoint;
 public final class BansheeHandlerImpl implements BansheeHandler {
 	private static final ObjectMapper MAPPER = new ObjectMapper();
 
+	private static void sendEvent(Consumer<String> webSocket, BansheeResult event) {
+		Assertion.check()
+				.isNotNull(webSocket)
+				.isNotNull(event);
+		//---
+		try {
+			final String json = MAPPER.writeValueAsString(event);
+			webSocket.accept(json);
+			System.out.println("<<< sent : " + json);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void handle(Consumer<String> webSocket, String event) {
 		try {
 			final BansheeCommand receivedEvent = MAPPER.readValue(event, BansheeCommand.class);
@@ -74,23 +89,22 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 
-	private ShinyModel execute(BansheeCommand event) {
-		if (event.command().startsWith("llm")) {
-			return new HalloweenCommand().llm(event.command().substring(3));
+	private ShinyModel execute(BansheeCommand command) throws Exception {
+		if (command.command().startsWith("llm")) {
+			return new HalloweenCommand().llm(command.command().substring(3));
 		}
-		if (event.command().equals("table2")) {
+		if (command.command().equals("table2")) {
 			ShinyTableBuilder tableBuilder = Shiny.table()
 					.withTitle("alphabet")
 					.withHeader("Lettre de A à Z");
-			if (event.id() != null) {
-				tableBuilder.withId(event.id());
+			if (command.id() != null) {
+				tableBuilder.withId(command.id());
 			}
-			String page = event.props() == null
+			String page = command.props() == null
 					? "1"
-					: event.props()
+					: command.props()
 							.stream()
 							.filter(p -> "page".equals(p.key()))
 							.findFirst()
@@ -131,7 +145,7 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 					.build();
 		}
 
-		return switch (event.command()) {
+		return switch (command.command()) {
 			case "ls" -> new FileLsCommand().build();
 			case "pwd" -> new FilePwdCommand().build();
 			case "env list" -> new EnvListCommand().build();
@@ -249,7 +263,9 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 					.addGeoPoint(ShinyGeoPoint.of(48.8584, 2.2945, "Tour Eiffel"))
 					.addGeoPoint(ShinyGeoPoint.of(48.901022, 2.100765, "Saint Germain en Laye"))
 					.build();
-			case "rss" -> new RssSample().execute();
+			case "rss", "rss franceinfo", "rss france info" -> new RssSample().execute(new URL("https://www.francetvinfo.fr/titres.rss"));
+			case "bbc", "rss bbc" -> new RssSample().execute(new URL("https://feeds.bbci.co.uk/news/world/rss.xml"));
+			case "lemonde", "le monde", "rss lemonde" -> new RssSample().execute(new URL("https://www.lemonde.fr/rss/une.xml"));
 			case "table" -> Shiny.table()
 					.withTitle("carnet d'adresses")
 					.withNoDataFound("no files found")
@@ -413,7 +429,7 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 													.build())
 									.build())
 					.build();
-			default -> new ShinyErrorBuilder().withText("unknown command :" + event).build();
+			default -> new ShinyErrorBuilder().withText("unknown command :" + command).build();
 		};
 	}
 
@@ -426,17 +442,4 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 		return model;
 	}
 
-	private static void sendEvent(Consumer<String> webSocket, BansheeResult event) {
-		Assertion.check()
-				.isNotNull(webSocket)
-				.isNotNull(event);
-		//---
-		try {
-			final String json = MAPPER.writeValueAsString(event);
-			webSocket.accept(json);
-			System.out.println("<<< sent : " + json);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 }
