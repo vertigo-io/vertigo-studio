@@ -1,7 +1,5 @@
 package io.vertigo.banshee.commands;
 
-import java.util.UUID;
-
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.data.board.ShinyBoardCard;
