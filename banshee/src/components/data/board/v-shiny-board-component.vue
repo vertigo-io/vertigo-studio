@@ -3,42 +3,44 @@
     <h2 class="board-title">{{ data.name }}</h2>
     <p class="board-description">{{ data.description }}</p>
 
-    <draggable
-      v-model="lists"
-      group="lists"
-      item-key="id"
-      class="d-flex flex-row board-lists"
-      handle=".list-handle"
-    >
-      <template #item="{ element: list }">
-        <v-card class="board-list ma-2" :style="{ backgroundColor: list.color || '#424242' }">
-          <v-card-title class="list-handle d-flex justify-space-between align-center">
-            <span>{{ list.name }}</span>
-            <v-icon small>mdi-drag</v-icon>
-          </v-card-title>
-          <v-card-text class="list-cards-container">
-            <draggable
-              v-model="list.cards"
-              group="cards"
-              item-key="id"
-              class="list-cards"
-            >
-              <template #item="{ element: card }">
-                <v-card class="board-card pa-2 mb-2">
-                  <v-card-title class="card-title">{{ card.title }}</v-card-title>
-                  <v-card-text class="card-description">{{ card.description }}</v-card-text>
-                </v-card>
-              </template>
-            </draggable>
-          </v-card-text>
-        </v-card>
-      </template>
-    </draggable>
+    <div class="board-lists-wrapper">
+      <draggable
+        v-model="lists"
+        group="lists"
+        item-key="id"
+        class="board-lists"
+        handle=".list-handle"
+      >
+        <template #item="{ element: list }">
+          <v-card class="board-list ma-2" :style="{ backgroundColor: list.color || '#424242' }">
+            <v-card-title class="list-handle d-flex justify-space-between align-center">
+              <span>{{ list.name }}</span>
+              <v-icon size="small">mdi-drag</v-icon>
+            </v-card-title>
+            <v-card-text class="list-cards-container">
+              <draggable
+                v-model="list.cards"
+                group="cards"
+                item-key="id"
+                class="list-cards"
+              >
+                <template #item="{ element: card }">
+                  <v-card class="board-card pa-2 mb-2">
+                    <v-card-title class="card-title">{{ card.title }}</v-card-title>
+                    <v-card-text class="card-description">{{ card.description }}</v-card-text>
+                  </v-card>
+                </template>
+              </draggable>
+            </v-card-text>
+          </v-card>
+        </template>
+      </draggable>
+    </div>
   </v-container>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted, onUnmounted } from 'vue';
 import draggable from 'vuedraggable';
 import { ShinyBoard } from '../../../models/data/board/ShinyBoard';
 import { ShinyBoardList } from '../../../models/data/board/ShinyBoardList';
@@ -48,9 +50,22 @@ const props = defineProps<{
 }>();
 
 const lists = ref<ShinyBoardList[]>(props.data.lists);
+const isFullscreen = ref(false);
 
 watch(() => props.data.lists, (newLists) => {
   lists.value = newLists;
+});
+
+const handleFullscreenChange = () => {
+  isFullscreen.value = !!document.fullscreenElement;
+};
+
+onMounted(() => {
+  document.addEventListener('fullscreenchange', handleFullscreenChange);
+});
+
+onUnmounted(() => {
+  document.removeEventListener('fullscreenchange', handleFullscreenChange);
 });
 </script>
 
@@ -59,6 +74,8 @@ watch(() => props.data.lists, (newLists) => {
   background-color: #1a1a1a; /* Dark background */
   min-height: calc(100vh - 64px); /* Adjust based on your app's header/footer */
   padding: 16px;
+  display: flex;
+  flex-direction: column;
 }
 
 .board-title {
@@ -74,14 +91,23 @@ watch(() => props.data.lists, (newLists) => {
   margin-bottom: 16px;
 }
 
+.board-lists-wrapper {
+  flex-grow: 1;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  padding-bottom: 16px; /* Space for scrollbar */
+}
+
 .board-lists {
+  display: flex;
+  flex-direction: row; /* Default horizontal layout */
   align-items: flex-start;
   gap: 16px;
+  height: 100%; /* Occupy full height of wrapper */
 }
 
 .board-list {
   flex: 0 0 300px; /* Fixed width for lists */
-  max-height: calc(100vh - 120px); /* Adjust to fit screen */
+  max-height: 100%; /* Occupy full height of wrapper */
   display: flex;
   flex-direction: column;
   border-radius: 8px;
@@ -93,7 +119,6 @@ watch(() => props.data.lists, (newLists) => {
   cursor: grab;
   padding: 12px;
   font-weight: bold;
-  /* background-color: rgba(0, 0, 0, 0.05); */ /* Removed to let list color show */
 }
 
 .list-cards-container {
@@ -123,5 +148,34 @@ watch(() => props.data.lists, (newLists) => {
 .card-description {
   font-size: 14px;
   color: rgba(255, 255, 255, 0.7); /* Lighter text for description */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .board-lists {
+    flex-direction: column; /* Stack lists vertically on small screens */
+    align-items: stretch; /* Stretch to full width */
+    overflow-x: hidden; /* Disable horizontal scroll in vertical layout */
+  }
+
+  .board-list {
+    flex: 0 0 auto; /* Allow lists to take natural height */
+    width: 100%; /* Full width */
+    max-height: none; /* Remove max-height constraint */
+    margin-bottom: 16px; /* Add space between vertical lists */
+  }
+}
+
+/* Fullscreen specific styles */
+:fullscreen .board-lists-wrapper {
+  overflow-x: auto; /* Ensure horizontal scroll in fullscreen */
+}
+
+:fullscreen .board-lists {
+  flex-wrap: nowrap; /* Prevent wrapping in fullscreen */
+}
+
+:fullscreen .board-list {
+  flex-shrink: 0; /* Prevent shrinking in fullscreen */
 }
 </style>
