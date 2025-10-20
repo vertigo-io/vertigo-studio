@@ -11,6 +11,7 @@ public final class ShinyBoardListBuilder implements Builder<ShinyBoardList> {
 	private UUID _id;
 	private String _name;
 	private int _position;
+	private String _color;
 	private final List<ShinyBoardCard> _cards = new ArrayList<>();
 
 	public ShinyBoardListBuilder withId(final UUID id) {
@@ -32,6 +33,13 @@ public final class ShinyBoardListBuilder implements Builder<ShinyBoardList> {
 		return this;
 	}
 
+	public ShinyBoardListBuilder withColor(final String color) {
+		Assertion.check().isNotBlank(color);
+		//---
+		_color = color;
+		return this;
+	}
+
 	public ShinyBoardListBuilder addCard(final ShinyBoardCard card) {
 		Assertion.check().isNotNull(card);
 		//---
@@ -49,6 +57,6 @@ public final class ShinyBoardListBuilder implements Builder<ShinyBoardList> {
 	@Override
 	public ShinyBoardList build() {
 		_id = _id == null ? UUID.randomUUID() : _id;
-		return new ShinyBoardList(_id, _name, _position, _cards);
+		return new ShinyBoardList(_id, _name, _position, _color, _cards);
 	}
 }

@@ -1,3 +1,4 @@
+import VShinyBoardComponent from '../../components/data/board/v-shiny-board-component.vue';
 import VShinyContainerComponent from '../../components/core/v-shiny-container-component.vue';
 import VShinyErrorComponent from '../../components/core/v-shiny-error-component.vue';
 import VShinyCardComponent from '../../components/data/v-shiny-card-component.vue';
@@ -40,6 +41,7 @@ export class ShinyRegistry {
   private _componentMap: Record<string, any> = {};
 
   constructor() {
+    this.register('ShinyBoard', VShinyBoardComponent);
     this.register('ShinyContainer', VShinyContainerComponent);
     this.register('ShinyError', VShinyErrorComponent);
     this.register('ShinyForm', VShinyFormComponent);

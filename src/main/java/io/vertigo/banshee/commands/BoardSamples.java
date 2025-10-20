@@ -27,6 +27,7 @@ public class BoardSamples {
 			final ShinyBoardList todoList = Shiny.boardList()
 					.withName("À faire")
 					.withPosition(1)
+					.withColor("#424242") // Dark grey
 					.addCard(card1)
 					.addCard(card2)
 					.addCard(card3)
@@ -45,6 +46,7 @@ public class BoardSamples {
 			final ShinyBoardList inProgressList = Shiny.boardList()
 					.withName("En cours")
 					.withPosition(2)
+					.withColor("#212121") // Even darker grey
 					.addCard(card4)
 					.addCard(card5)
 					.build();
@@ -57,13 +59,14 @@ public class BoardSamples {
 			final ShinyBoardList doneList = Shiny.boardList()
 					.withName("Terminé")
 					.withPosition(3)
+					.withColor("#000000") // Black
 					.addCard(card6)
 					.build();
 
 			return Shiny.board()
 					.withName("Installation CRM")
 					.withDescription("Tableau de bord pour le suivi de l'installation du nouveau CRM.")
-					.withBackgroundColor("#0079bf")
+					.withBackgroundColor("#1a1a1a") // Overall dark background
 					.addList(todoList)
 					.addList(inProgressList)
 					.addList(doneList)

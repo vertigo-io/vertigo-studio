@@ -9,6 +9,7 @@ public record ShinyBoardList(
 		UUID id,
 		String name,
 		int position,
+		String color,
 		List<ShinyBoardCard> cards) implements ShinyModel {
 
 	@Override

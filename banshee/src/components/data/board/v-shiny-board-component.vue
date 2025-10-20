@@ -11,7 +11,7 @@
       handle=".list-handle"
     >
       <template #item="{ element: list }">
-        <v-card class="board-list ma-2" :style="{ backgroundColor: data.backgroundColor || '#f4f5f7' }">
+        <v-card class="board-list ma-2" :style="{ backgroundColor: list.color || '#424242' }">
           <v-card-title class="list-handle d-flex justify-space-between align-center">
             <span>{{ list.name }}</span>
             <v-icon small>mdi-drag</v-icon>
@@ -56,7 +56,7 @@ watch(() => props.data.lists, (newLists) => {
 
 <style scoped>
 .board-container {
-  background-color: #0079bf; /* Trello-like blue background */
+  background-color: #1a1a1a; /* Dark background */
   min-height: calc(100vh - 64px); /* Adjust based on your app's header/footer */
   padding: 16px;
 }
@@ -86,13 +86,14 @@ watch(() => props.data.lists, (newLists) => {
   flex-direction: column;
   border-radius: 8px;
   overflow: hidden;
+  color: white; /* Text color for list title */
 }
 
 .list-handle {
   cursor: grab;
   padding: 12px;
   font-weight: bold;
-  background-color: rgba(0, 0, 0, 0.05); /* Slightly darker for handle */
+  /* background-color: rgba(0, 0, 0, 0.05); */ /* Removed to let list color show */
 }
 
 .list-cards-container {
@@ -106,10 +107,11 @@ watch(() => props.data.lists, (newLists) => {
 }
 
 .board-card {
-  background-color: white;
+  background-color: #333333; /* Darker card background */
   border-radius: 4px;
   box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
   cursor: pointer;
+  color: white; /* Text color for card */
 }
 
 .card-title {
@@ -120,6 +122,6 @@ watch(() => props.data.lists, (newLists) => {
 
 .card-description {
   font-size: 14px;
-  color: #5e6c84;
+  color: rgba(255, 255, 255, 0.7); /* Lighter text for description */
 }
 </style>
