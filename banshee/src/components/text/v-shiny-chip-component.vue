@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ShinyChip } from '@/models/data/chip/ShinyChip';
+import type { ShinyChip } from '@/models/text/chip/ShinyChip';
 
 defineProps<{
   data: ShinyChip
