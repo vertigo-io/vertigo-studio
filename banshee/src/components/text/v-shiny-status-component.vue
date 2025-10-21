@@ -9,8 +9,8 @@
 
 <script setup lang="ts">
 import { onMounted, reactive } from 'vue';
-import { ShinyStatus } from '../../models/dataviz/status/ShinyStatus';
-import { ShinyStatusType, getShinyStatusColor } from '../../models/dataviz/status/ShinyStatusType';
+import { ShinyStatus } from '../../models/text/status/ShinyStatus';
+import { ShinyStatusType, getShinyStatusColor } from '../../models/text/status/ShinyStatusType';
 
 const props = defineProps<{
   data: ShinyStatus
