@@ -24,7 +24,7 @@ import VShinySparkLineComponent from '../../components/text/v-shiny-spark-line-c
 import VShinyStatusComponent from '../../components/text/v-shiny-status-component.vue';
 import VShinyFlowComponent from '../../components/dataviz/v-shiny-flow-component.vue';
 import VShinyAlertComponent from '../../components/feedback/v-shiny-alert-component.vue';
-import VShinySliderComponent from '../../components/input/v-shiny-slider-component.vue';
+import VShinySliderComponent from '../../components/form/v-shiny-slider-component.vue';
 import VShinyProgressBarComponent from '../../components/live/v-shiny-progress-bar-component.vue';
 import VShinyPdfComponent from '../../components/media/v-shiny-pdf.vue';
 import VShinyImageComponent from '../../components/media/v-shiny-image-component.vue';
