@@ -8,8 +8,8 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { ShinyRating } from '../../models/dataviz/rating/ShinyRating';
-import { ShinyRatingScale, getShinyRatingMaxValue } from '../../models/dataviz/rating/ShinyRatingScale';
+import { ShinyRating } from '../../models/text/rating/ShinyRating';
+import { ShinyRatingScale, getShinyRatingMaxValue } from '../../models/text/rating/ShinyRatingScale';
 
 const props = defineProps<{
   data: ShinyRating

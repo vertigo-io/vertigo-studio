@@ -36,7 +36,7 @@ import io.vertigo.shiny.models.live.progressbar.ShinyProgressBarBuilder;
 import io.vertigo.shiny.models.live.spinner.ShinySpinnerBuilder;
 import io.vertigo.shiny.models.media.geomap.ShinyGeoMapBuilder;
 import io.vertigo.shiny.models.media.pdf.ShinyPdfBuilder;
-import io.vertigo.shiny.models.media.photo.ShinyPhotoBuilder;
+import io.vertigo.shiny.models.media.image.ShinyImageBuilder;
 import io.vertigo.shiny.models.media.rss.ShinyRssBuilder;
 import io.vertigo.shiny.models.media.youtube.ShinyYoutubeBuilder;
 import io.vertigo.shiny.models.text.figlet.ShinyFigletBuilder;
@@ -207,8 +207,8 @@ public final class Shiny {
 		return new ShinyChartBuilder(ShinyChartType.pie);
 	}
 
-	public static ShinyPhotoBuilder photo() {
-		return new ShinyPhotoBuilder();
+	public static ShinyImageBuilder image() {
+		return new ShinyImageBuilder();
 	}
 
 	public static ShinyGeoMapBuilder geoMap() {
