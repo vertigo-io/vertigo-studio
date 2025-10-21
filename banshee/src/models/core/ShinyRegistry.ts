@@ -27,7 +27,7 @@ import VShinyAlertComponent from '../../components/feedback/v-shiny-alert-compon
 import VShinySliderComponent from '../../components/input/v-shiny-slider-component.vue';
 import VShinyProgressBarComponent from '../../components/live/v-shiny-progress-bar-component.vue';
 import VShinyPdfComponent from '../../components/media/v-shiny-pdf.vue';
-import VShinyPhotoComponent from '../../components/media/v-shiny-image-component.vue';
+import VShinyImageComponent from '../../components/media/v-shiny-image-component.vue';
 import VShinyRssComponent from '../../components/media/v-shiny-rss-component.vue';
 import VShinyVideoComponent from '../../components/media/v-shiny-video-component.vue';
 import VShinyYoutubeComponent from '../../components/media/v-shiny-youtube-component.vue';
@@ -78,7 +78,7 @@ export class ShinyRegistry {
     this.register('ShinyAlert', VShinyAlertComponent);
     this.register('ShinySlider', VShinySliderComponent);
     this.register('ShinyPdfComponent', VShinyPdfComponent);
-    this.register('ShinyPhoto', VShinyPhotoComponent);
+    this.register('ShinyImage', VShinyImageComponent);
     this.register('ShinyRss', VShinyRssComponent);
     this.register('ShinyVideo', VShinyVideoComponent);
     this.register('ShinyYoutube', VShinyYoutubeComponent);

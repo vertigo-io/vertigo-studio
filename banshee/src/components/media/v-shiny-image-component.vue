@@ -1,8 +1,8 @@
 <template>
-  <div class="photo-container">
-    <div class="table-title">{{ data.title || 'Photo' }}</div>
-    <div class="photo-wrapper">
-      <img v-if="data.url" :src="data.url" :alt="data.alt" class="photo-image">
+  <div class="image-container">
+    <div class="table-title">{{ data.title || 'Image' }}</div>
+    <div class="image-wrapper">
+      <img v-if="data.url" :src="data.url" :alt="data.alt" class="image-image">
       <div v-else class="no-image-message">No image URL provided.</div>
     </div>
   </div>
