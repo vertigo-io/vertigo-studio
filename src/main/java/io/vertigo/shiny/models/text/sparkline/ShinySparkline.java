@@ -1,4 +1,4 @@
-package io.vertigo.shiny.models.dataviz.sparkline;
+package io.vertigo.shiny.models.text.sparkline;
 
 import java.util.List;
 import java.util.UUID;

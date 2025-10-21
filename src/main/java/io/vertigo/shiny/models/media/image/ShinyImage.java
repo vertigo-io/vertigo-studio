@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import io.vertigo.shiny.models.ShinyModel;
 
-public record ShinyPhoto(
+public record ShinyImage(
 		UUID id,
 		String title,
 		String url,

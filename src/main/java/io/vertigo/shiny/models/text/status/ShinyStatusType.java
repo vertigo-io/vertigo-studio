@@ -1,4 +1,4 @@
-package io.vertigo.shiny.models.dataviz.status;
+package io.vertigo.shiny.models.text.status;
 
 import io.vertigo.shiny.style.ShinyColor;
 import io.vertigo.shiny.style.ShinyColors;

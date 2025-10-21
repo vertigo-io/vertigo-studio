@@ -1,4 +1,4 @@
-package io.vertigo.shiny.models.data.chip;
+package io.vertigo.shiny.models.text.chip;
 
 import java.util.UUID;
 

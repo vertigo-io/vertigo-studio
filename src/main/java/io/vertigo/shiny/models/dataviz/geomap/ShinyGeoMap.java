@@ -1,4 +1,4 @@
-package io.vertigo.shiny.models.media.geomap;
+package io.vertigo.shiny.models.dataviz.geomap;
 
 import java.util.List;
 import java.util.UUID;

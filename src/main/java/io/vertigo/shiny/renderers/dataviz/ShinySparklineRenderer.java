@@ -6,7 +6,7 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
-import io.vertigo.shiny.models.dataviz.sparkline.ShinySparkline;
+import io.vertigo.shiny.models.text.sparkline.ShinySparkline;
 import io.vertigo.shiny.renderers.ShinyModelRenderer;
 
 public final class ShinySparklineRenderer implements ShinyModelRenderer<ShinySparkline> {

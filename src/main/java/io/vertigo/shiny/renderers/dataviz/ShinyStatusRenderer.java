@@ -6,7 +6,7 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
-import io.vertigo.shiny.models.dataviz.status.ShinyStatus;
+import io.vertigo.shiny.models.text.status.ShinyStatus;
 import io.vertigo.shiny.renderers.ShinyModelRenderer;
 
 public final class ShinyStatusRenderer implements ShinyModelRenderer<ShinyStatus> {

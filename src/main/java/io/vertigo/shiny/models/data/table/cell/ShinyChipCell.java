@@ -3,7 +3,7 @@ package io.vertigo.shiny.models.data.table.cell;
 import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.models.data.chip.ShinyChipVariant;
+import io.vertigo.shiny.models.text.chip.ShinyChipVariant;
 
 public record ShinyChipCell(
 		UUID id,

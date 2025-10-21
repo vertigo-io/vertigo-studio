@@ -1,4 +1,4 @@
-package io.vertigo.shiny.models.dataviz.status;
+package io.vertigo.shiny.models.text.status;
 
 import java.util.ArrayList;
 import java.util.List;

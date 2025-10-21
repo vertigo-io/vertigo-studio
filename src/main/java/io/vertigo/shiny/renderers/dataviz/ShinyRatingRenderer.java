@@ -4,8 +4,8 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
-import io.vertigo.shiny.models.dataviz.rating.ShinyRating;
-import io.vertigo.shiny.models.dataviz.rating.ShinyRatingScale;
+import io.vertigo.shiny.models.text.rating.ShinyRating;
+import io.vertigo.shiny.models.text.rating.ShinyRatingScale;
 import io.vertigo.shiny.renderers.ShinyModelRenderer;
 import io.vertigo.shiny.style.ShinyEffects;
 

@@ -1,4 +1,4 @@
-package io.vertigo.shiny.models.dataviz.rating;
+package io.vertigo.shiny.models.text.rating;
 
 public enum ShinyRatingScale {
 	SCALE_5(5),

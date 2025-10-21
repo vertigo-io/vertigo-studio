@@ -3,7 +3,7 @@ package io.vertigo.shiny.models.data.table.cell;
 import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.models.dataviz.rating.ShinyRatingScale;
+import io.vertigo.shiny.models.text.rating.ShinyRatingScale;
 
 public record ShinyRatingCell(
 		UUID id,
