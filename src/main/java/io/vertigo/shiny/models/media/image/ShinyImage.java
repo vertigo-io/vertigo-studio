@@ -1,4 +1,4 @@
-package io.vertigo.shiny.models.media.photo;
+package io.vertigo.shiny.models.media.image;
 
 import java.util.UUID;
 

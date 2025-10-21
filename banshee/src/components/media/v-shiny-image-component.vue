@@ -9,10 +9,10 @@
 </template>
 
 <script setup lang="ts">
-import { ShinyPhoto } from '../../models/media/photo/ShinyPhoto';
+import { ShinyImage } from '../../models/media/image/ShinyImage';
 
 defineProps<{
-  data: ShinyPhoto
+  data: ShinyImage
 }>()
 </script>
 
