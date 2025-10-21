@@ -1,5 +1,6 @@
 package io.vertigo.banshee;
 
+import java.util.UUID;
 import java.util.function.Consumer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -46,13 +47,21 @@ import io.vertigo.shiny.models.data.card.ShinyCardFormat;
 import io.vertigo.shiny.models.data.chip.ShinyChipVariant;
 import io.vertigo.shiny.models.data.list.ShinyListType;
 import io.vertigo.shiny.models.data.table.ShinyTableBuilder;
+import io.vertigo.shiny.models.data.table.cell.ShinyAvatarCell;
+import io.vertigo.shiny.models.data.table.cell.ShinyBadgeCell;
+import io.vertigo.shiny.models.data.table.cell.ShinyButtonCell;
+import io.vertigo.shiny.models.data.table.cell.ShinyChipCell;
+import io.vertigo.shiny.models.data.table.cell.ShinyIconCell;
+import io.vertigo.shiny.models.data.table.cell.ShinyProgressBarCell;
+import io.vertigo.shiny.models.data.table.cell.ShinyRatingCell;
+import io.vertigo.shiny.models.data.table.cell.ShinyStringCell;
 import io.vertigo.shiny.models.dataviz.flow.NodeType;
 import io.vertigo.shiny.models.dataviz.flow.ShinyFlowBuilder;
 import io.vertigo.shiny.models.dataviz.mindmap.ShinyMindMapNodeBuilder;
 import io.vertigo.shiny.models.dataviz.rating.ShinyRatingScale;
 import io.vertigo.shiny.models.dataviz.status.ShinyStatusType;
 import io.vertigo.shiny.models.feedback.alert.ShinyAlertType;
-import io.vertigo.shiny.models.media.geomap.ShinyGeoPoint;
+import io.vertigo.shiny.models.media.pdf.ShinyPdfBuilder;
 
 public final class BansheeHandlerImpl implements BansheeHandler {
 	private static final ObjectMapper MAPPER = new ObjectMapper();
@@ -435,6 +444,37 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 															new ShinyMindMapNodeBuilder("minimalisme", "Minimalisme").build())
 													.build())
 									.build())
+					.build();
+			case "table3" -> Shiny.table()
+					.withTitle("Rich Content Table")
+					.withHeader("Name", "Status", "Progress", "Rating", "Action", "Avatar", "Icon", "Badge")
+					.addRow(
+							new ShinyStringCell(UUID.randomUUID(), "Alice"),
+							new ShinyChipCell(UUID.randomUUID(), "Active", "green", ShinyChipVariant.FLAT, false, null),
+							new ShinyProgressBarCell(UUID.randomUUID(), 75, 100, "blue"),
+							new ShinyRatingCell(UUID.randomUUID(), 4.5, ShinyRatingScale.SCALE_5, true),
+							new ShinyButtonCell(UUID.randomUUID(), "View", "primary", "viewAlice"),
+							new ShinyAvatarCell(UUID.randomUUID(), "https://randomuser.me/api/portraits/women/1.jpg", "Alice", "36px"),
+							new ShinyIconCell(UUID.randomUUID(), "mdi-check-circle", "green", "24px"),
+							new ShinyBadgeCell(UUID.randomUUID(), "New", "red"))
+					.addRow(
+							new ShinyStringCell(UUID.randomUUID(), "Bob"),
+							new ShinyChipCell(UUID.randomUUID(), "Inactive", "red", ShinyChipVariant.OUTLINED, false, null),
+							new ShinyProgressBarCell(UUID.randomUUID(), 25, 100, "red"),
+							new ShinyRatingCell(UUID.randomUUID(), 2.0, ShinyRatingScale.SCALE_5, false),
+							new ShinyButtonCell(UUID.randomUUID(), "Edit", "secondary", "editBob"),
+							new ShinyAvatarCell(UUID.randomUUID(), "https://randomuser.me/api/portraits/men/2.jpg", "Bob", "36px"),
+							new ShinyIconCell(UUID.randomUUID(), "mdi-alert-circle", "orange", "24px"),
+							new ShinyBadgeCell(UUID.randomUUID(), "Urgent", "orange"))
+					.addRow(
+							new ShinyStringCell(UUID.randomUUID(), "Charlie"),
+							new ShinyChipCell(UUID.randomUUID(), "Pending", "orange", ShinyChipVariant.ELEVATED, false, null),
+							new ShinyProgressBarCell(UUID.randomUUID(), 50, 100, "orange"),
+							new ShinyRatingCell(UUID.randomUUID(), 3.0, ShinyRatingScale.SCALE_5, true),
+							new ShinyButtonCell(UUID.randomUUID(), "Delete", "error", "deleteCharlie"),
+							new ShinyAvatarCell(UUID.randomUUID(), "https://randomuser.me/api/portraits/men/3.jpg", "Charlie", "36px"),
+							new ShinyIconCell(UUID.randomUUID(), "mdi-information", "blue", "24px"),
+							new ShinyBadgeCell(UUID.randomUUID(), "Info", "blue"))
 					.build();
 			case "board" -> new CrmInstallationBoard().execute();
 			default -> new ShinyErrorBuilder().withText("unknown command :" + command).build();

@@ -35,7 +35,7 @@ import io.vertigo.shiny.models.input.text.ShinyInputTextBuilder;
 import io.vertigo.shiny.models.live.progressbar.ShinyProgressBarBuilder;
 import io.vertigo.shiny.models.live.spinner.ShinySpinnerBuilder;
 import io.vertigo.shiny.models.media.geomap.ShinyGeoMapBuilder;
-import io.vertigo.shiny.models.media.pdf.ShinyPdfComponentBuilder;
+import io.vertigo.shiny.models.media.pdf.ShinyPdfBuilder;
 import io.vertigo.shiny.models.media.photo.ShinyPhotoBuilder;
 import io.vertigo.shiny.models.media.rss.ShinyRssBuilder;
 import io.vertigo.shiny.models.media.youtube.ShinyYoutubeBuilder;
@@ -164,8 +164,8 @@ public final class Shiny {
 		return new ShinySliderBuilder();
 	}
 
-	public static ShinyPdfComponentBuilder pdf() {
-		return new ShinyPdfComponentBuilder();
+	public static ShinyPdfBuilder pdf() {
+		return new ShinyPdfBuilder();
 	}
 
 	public static ShinyCardBuilder card() {

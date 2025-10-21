@@ -1,6 +1,7 @@
 import { ShinyModel } from '../../ShinyModel';
 
-export interface ShinyPdfComponent extends ShinyModel {
+export interface ShinyPdf extends ShinyModel {
+  id: string;
   title?: string;
   pdfPath: string;
   initialPage: number;
