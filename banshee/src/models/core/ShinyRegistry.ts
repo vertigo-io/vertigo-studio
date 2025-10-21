@@ -35,6 +35,17 @@ import VShinyFigletComponent from '../../components/text/v-shiny-figlet-componen
 import VShinyParagraphComponent from '../../components/text/v-shiny-paragraph-component.vue';
 import VShinyTextPathComponent from '../../components/text/v-shiny-text-path-component.vue';
 import VShinyTitleComponent from '../../components/text/v-shiny-title-component.vue';
+
+// Table Cell Components
+import VShinyStringCell from '../../components/data/table/cell/VShinyStringCell.vue';
+import VShinyChipCell from '../../components/data/table/cell/VShinyChipCell.vue';
+import VShinyIconCell from '../../components/data/table/cell/VShinyIconCell.vue';
+import VShinyButtonCell from '../../components/data/table/cell/VShinyButtonCell.vue';
+import VShinyAvatarCell from '../../components/data/table/cell/VShinyAvatarCell.vue';
+import VShinyProgressBarCell from '../../components/data/table/cell/VShinyProgressBarCell.vue';
+import VShinyBadgeCell from '../../components/data/table/cell/VShinyBadgeCell.vue';
+import VShinyRatingCell from '../../components/data/table/cell/VShinyRatingCell.vue';
+
 import { ShinyModel } from '../ShinyModel';
 
 export class ShinyRegistry {
@@ -77,6 +88,16 @@ export class ShinyRegistry {
     this.register('ShinyParagraph', VShinyParagraphComponent);
     this.register('ShinyTextPath', VShinyTextPathComponent);
     this.register('ShinyTitle', VShinyTitleComponent);
+
+    // Register Table Cell Components
+    this.register('ShinyStringCell', VShinyStringCell);
+    this.register('ShinyChipCell', VShinyChipCell);
+    this.register('ShinyIconCell', VShinyIconCell);
+    this.register('ShinyButtonCell', VShinyButtonCell);
+    this.register('ShinyAvatarCell', VShinyAvatarCell);
+    this.register('ShinyProgressBarCell', VShinyProgressBarCell);
+    this.register('ShinyBadgeCell', VShinyBadgeCell);
+    this.register('ShinyRatingCell', VShinyRatingCell);
   }
  
   register(shinyType: string, componentType: any): void {

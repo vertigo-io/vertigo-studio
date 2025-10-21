@@ -30,88 +30,89 @@
           <td :colspan="data.header ? data.header.length : 1" class="shiny-table-no-data">{{ data.noDataFound || 'No data found.' }}</td>
         </tr>
         <tr v-for="(row, rowIndex) in data.rows" :key="rowIndex">
-          <td v-for="(cell, cellIndex) in row" :key="cellIndex">{{ cell }}</td>
+          <td v-for="(cell, cellIndex) in row" :key="cellIndex">
+            <component :is="resolveCellComponent(cell.shinyType)" :data="cell"></component>
+          </td>
         </tr>
       </tbody>
     </table>
     <v-pagination
       v-if="pageProp"
       :length="pageCount"
-      v-model="page"
+      v-model="currentPage"
       @update:modelValue="updatePage"
       :total-visible="7"
     ></v-pagination>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { ref, computed, inject } from 'vue';
 import { ShinyTable } from '../../models/data/table/ShinyTable';
 import { ShinyProp } from '../../models/ShinyProp';
+import { ShinyRegistry } from '../../models/core/ShinyRegistry';
+import { ShinyTableCell } from '../../models/data/table/cell/ShinyTableCell';
 
-export default defineComponent({
-  name: 'VShinyTableComponent',
-  props: {
-    data: {
-      type: Object as () => ShinyTable,
-      required: true,
-    },
+const props = defineProps<{
+  data: ShinyTable;
+}>();
+
+const shinyRegistry = inject<ShinyRegistry>('shinyRegistry');
+
+const pageProp = computed(() => props.data.props?.find(p => p.key === 'page'));
+
+const currentPage = computed<number>({
+  get() {
+    return pageProp.value ? parseInt(pageProp.value.value, 10) : 1;
   },
-  computed: {
-    pageProp(): ShinyProp | undefined {
-      return this.data.props?.find(p => p.key === 'page');
-    },
-    page: {
-      get(): number {
-        return this.pageProp ? parseInt(this.pageProp.value, 10) : 1;
-      },
-      set(value: number) {
-        if (this.pageProp) {
-          this.pageProp.value = value.toString();
-        }
-      }
-    },
-    pageCount(): number {
-      const pageCountProp = this.data.props?.find(p => p.key === 'pageCount');
-      return pageCountProp ? parseInt(pageCountProp.value, 0) : 0;
+  set(value: number) {
+    if (pageProp.value) {
+      pageProp.value.value = value.toString();
     }
-  },
-  methods: {
-    sort(columnIndex: number) {
-      if (!this.data.sortable) {
-        return;
-      }
-      const newSortDirection = this.data.sortDirection === 'asc' ? 'desc' : 'asc';
-      const message = {
-        type: 'sortShinyTable',
-        data: {
-          id: this.data.id,
-          columnIndex: columnIndex,
-          sortDirection: newSortDirection,
-        },
-      };
-      if ((window as any).ws) {
-        (window as any).ws.send(JSON.stringify(message));
-      } else {
-        console.error("WebSocket connection not found on window instance.");
-      }
-    },
-    updatePage() {
-      // The v-model binding for 'page' already updates the prop value.
-      // We just need to send the update event.
-      const bansheeEvent = {
-        command : 'table2',
-        id: this.data.id,
-        props: this.data.props
-      };
-      if ((window as any).ws) {
-        (window as any).ws.send(JSON.stringify(bansheeEvent));
-      } else {
-        console.error("WebSocket connection not found on window instance.");
-      }
-    },
-  },
+  }
 });
+
+const pageCount = computed<number>(() => {
+  const pageCountProp = props.data.props?.find(p => p.key === 'pageCount');
+  return pageCountProp ? parseInt(pageCountProp.value, 0) : 0;
+});
+
+const sort = (columnIndex: number) => {
+  if (!props.data.sortable) {
+    return;
+  }
+  const newSortDirection = props.data.sortDirection === 'asc' ? 'desc' : 'asc';
+  const message = {
+    type: 'sortShinyTable',
+    data: {
+      id: props.data.id,
+      columnIndex: columnIndex,
+      sortDirection: newSortDirection,
+    },
+  };
+  if ((window as any).ws) {
+    (window as any).ws.send(JSON.stringify(message));
+  } else {
+    console.error("WebSocket connection not found on window instance.");
+  }
+};
+
+const updatePage = () => {
+  const bansheeEvent = {
+    command : 'table2',
+    id: props.data.id,
+    props: props.data.props
+  };
+  if ((window as any).ws) {
+    (window as any).ws.send(JSON.stringify(bansheeEvent));
+  } else {
+    console.error("WebSocket connection not found on window instance.");
+  }
+};
+
+const resolveCellComponent = (shinyType: string) => {
+  return shinyRegistry?.resolve(shinyType);
+};
 </script>
 
 <style scoped>

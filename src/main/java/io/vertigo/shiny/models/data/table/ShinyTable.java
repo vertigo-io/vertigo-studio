@@ -5,13 +5,14 @@ import java.util.UUID;
 
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.ShinyProp;
+import io.vertigo.shiny.models.data.table.cell.ShinyTableCell;
 
 public record ShinyTable(
 		UUID id,
 		String title,
 		String noDataFound,
 		String[] header,
-		String[][] rows,
+		List<List<ShinyTableCell>> rows,
 		boolean sortable,
 		int sortColumn,
 		String sortDirection,

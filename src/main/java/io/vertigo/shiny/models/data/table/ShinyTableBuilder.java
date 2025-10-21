@@ -7,13 +7,15 @@ import java.util.UUID;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 import io.vertigo.shiny.models.ShinyProp;
+import io.vertigo.shiny.models.data.table.cell.ShinyStringCell;
+import io.vertigo.shiny.models.data.table.cell.ShinyTableCell;
 
 public final class ShinyTableBuilder implements Builder<ShinyTable> {
 	private UUID _id;
 	private String _title;
 	private String _noDataFound;
 	private String[] _header;
-	private final List<String[]> _rows = new ArrayList<>();
+	private final List<List<ShinyTableCell>> _rows = new ArrayList<>();
 	private boolean _sortable;
 	private int _sortColumn = -1;
 	private String _sortDirection = "asc"; // "asc" or "desc"
@@ -47,14 +49,46 @@ public final class ShinyTableBuilder implements Builder<ShinyTable> {
 		return this;
 	}
 
-	public ShinyTableBuilder addRow(final String... row) {
+	public ShinyTableBuilder addRow(final String... cols) {
+		Assertion.check().isNotNull(cols);
+		//---
+		List<ShinyTableCell> row = new ArrayList<>();
+		for (String col : cols) {
+			row.add(new ShinyStringCell(UUID.randomUUID(), col));
+		}
+		this._rows.add(row);
+		return this;
+	}
+
+	//	public ShinyTableBuilder addAllRows(final List<String[]> rows) {
+	//		Assertion.check().isNotNull(rows);
+	//		//---
+	//		this._rows.addAll(rows.stream().map(r -> Stream.of(r).map(ShinyStringCell::new).collect(Collectors.toList())).collect(Collectors.toList()));
+	//		return this;
+	//	}
+
+	public ShinyTableBuilder addRow(final ShinyTableCell... row) {
+		Assertion.check().isNotNull(row);
+		//---
+		this._rows.add(List.of(row));
+		return this;
+	}
+
+	public ShinyTableBuilder addRow(final List<ShinyTableCell> row) {
 		Assertion.check().isNotNull(row);
 		//---
 		this._rows.add(row);
 		return this;
 	}
 
-	public ShinyTableBuilder addAllRows(final List<String[]> rows) {
+	//	public ShinyTableBuilder addAllRowsOfCells(final List<List<ShinyTableCell>> rows) {
+	//		Assertion.check().isNotNull(rows);
+	//		//---
+	//		this._rows.addAll(rows);
+	//		return this;
+	//	}
+
+	public ShinyTableBuilder addAllRowsOfCells(final List<List<ShinyTableCell>> rows) {
 		Assertion.check().isNotNull(rows);
 		//---
 		this._rows.addAll(rows);
@@ -89,6 +123,6 @@ public final class ShinyTableBuilder implements Builder<ShinyTable> {
 		_id = _id == null
 				? UUID.randomUUID()
 				: _id;
-		return new ShinyTable(_id, _title, _noDataFound, _header, _rows.toArray(String[][]::new), _sortable, _sortColumn, _sortDirection, _props);
+		return new ShinyTable(_id, _title, _noDataFound, _header, _rows, _sortable, _sortColumn, _sortDirection, _props);
 	}
 }
