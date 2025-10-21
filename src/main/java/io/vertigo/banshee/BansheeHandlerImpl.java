@@ -57,8 +57,8 @@ import io.vertigo.shiny.models.data.table.cell.ShinyIconCell;
 import io.vertigo.shiny.models.data.table.cell.ShinyProgressBarCell;
 import io.vertigo.shiny.models.data.table.cell.ShinyRatingCell;
 import io.vertigo.shiny.models.data.table.cell.ShinyStringCell;
+import io.vertigo.shiny.models.dataviz.geomap.ShinyGeoPoint;
 import io.vertigo.shiny.models.dataviz.mindmap.ShinyMindMapNodeBuilder;
-import io.vertigo.shiny.models.media.pdf.ShinyPdfBuilder;
 import io.vertigo.shiny.models.text.chip.ShinyChipVariant;
 import io.vertigo.shiny.models.text.rating.ShinyRatingScale;
 import io.vertigo.shiny.models.text.status.ShinyStatusType;
@@ -205,7 +205,7 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 					.withTitle("S.p.a.r.k.l.i.n.e")
 					.withValues(156, 450, 300, 200, 100, 23)
 					.build();
-			case "photo" -> Shiny.photo()
+			case "image", "photo" -> Shiny.image()
 					.withTitle("Random image from picsum")
 					.withUrl("https://picsum.photos/800/600")
 					.withAlt("Random image from picsum")

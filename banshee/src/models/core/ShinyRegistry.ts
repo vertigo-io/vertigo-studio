@@ -3,7 +3,7 @@ import VShinyContainerComponent from '../../components/core/v-shiny-container-co
 import VShinyErrorComponent from '../../components/core/v-shiny-error-component.vue';
 import VShinyCardComponent from '../../components/data/v-shiny-card-component.vue';
 import VShinyChipComponent from '../../components/text/v-shiny-chip-component.vue';
-import VShinyFormComponent from '../../components/form/v-shiny-form-component.vue';
+import VShinyFormComponent from '../../components/data/v-shiny-form-component.vue';
 import VShinyJsonComponent from '../../components/data/v-shiny-json-component.vue';
 import VShinyListComponent from '../../components/data/v-shiny-list-component.vue';
 import VShinyOrganizationComponent from '../../components/data/v-shiny-organization-component.vue';
@@ -24,10 +24,10 @@ import VShinySparkLineComponent from '../../components/text/v-shiny-spark-line-c
 import VShinyStatusComponent from '../../components/text/v-shiny-status-component.vue';
 import VShinyFlowComponent from '../../components/dataviz/v-shiny-flow-component.vue';
 import VShinyAlertComponent from '../../components/feedback/v-shiny-alert-component.vue';
-import VShinySliderComponent from '../../components/form/v-shiny-slider-component.vue';
+import VShinySliderComponent from '../../components/input/v-shiny-slider-component.vue';
 import VShinyProgressBarComponent from '../../components/live/v-shiny-progress-bar-component.vue';
-import VShinyPdfComponent from '../../components/media/v-shiny-pdf-component.vue';
-import VShinyPhotoComponent from '../../components/media/v-shiny-photo-component.vue';
+import VShinyPdfComponent from '../../components/media/v-shiny-pdf.vue';
+import VShinyPhotoComponent from '../../components/media/v-shiny-image-component.vue';
 import VShinyRssComponent from '../../components/media/v-shiny-rss-component.vue';
 import VShinyVideoComponent from '../../components/media/v-shiny-video-component.vue';
 import VShinyYoutubeComponent from '../../components/media/v-shiny-youtube-component.vue';
