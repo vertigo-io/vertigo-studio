@@ -1,4 +1,4 @@
-import { ShinyModel } from '../../ShinyModel';
+import { ShinyModel } from '../../../ShinyModel';
 
 export interface ShinyInputText extends ShinyModel {
   label: string;

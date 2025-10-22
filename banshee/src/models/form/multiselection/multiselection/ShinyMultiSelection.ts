@@ -1,4 +1,4 @@
-import { ShinyModel } from '../../ShinyModel';
+import { ShinyModel } from '../../../ShinyModel';
 
 export class ShinyMultiSelection implements ShinyModel {
   title: string;
