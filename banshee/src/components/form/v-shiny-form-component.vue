@@ -165,22 +165,27 @@ const getFieldRules = (field: ShinyFormField): ((value: any) => boolean | string
   if (field.required) {
     rules.push(v => !!v || 'This field is required');
   }
-  if (field.validator){
+  if (field.validator !== undefined){
     if (field.validator.minLength !== undefined) {
-      rules.push(v => (v && v.length >= field.validator.minLength) || `Min length is ${field.validator.minLength}`);
+      rules.push(v => (v && v.length >= field.validator.minLength) 
+      || `Min length is ${field.validator.minLength}`);
     }
     if (field.validator.maxLength !== undefined) {
-      rules.push(v => (v && v.length <= field.validator.maxLength) || `Max length is ${field.validator.maxLength}`);
+      rules.push(v => (v && v.length <= field.validator.maxLength) 
+      || `Max length is ${field.validator.maxLength}`);
     }
     if (field.validator.minValue !== undefined && (field.type === 'NUMBER' || field.type === 'DATE')) {
-      rules.push(v => (v >= field.validator.minValue) || `Min value is ${field.validator.minValue}`);
+      rules.push(v => (v >= field.validator.minValue) 
+      || `Min value is ${field.validator.minValue}`);
     }
     if (field.validator.maxValue !== undefined && (field.type === 'NUMBER' || field.type === 'DATE')) {
-      rules.push(v => (v <= field.validator.maxValue) || `Max value is ${field.validator.maxValue}`);
+      rules.push(v => (v <= field.validator.maxValue) 
+      || `Max value is ${field.validator.maxValue}`);
     }
     if (field.validator.pattern) {
       const regex = new RegExp(field.validator.pattern);
-      rules.push(v => regex.test(v) || 'Invalid format');
+      rules.push(v => regex.test(v) 
+      || 'Invalid format');
   }
 }
   return rules;

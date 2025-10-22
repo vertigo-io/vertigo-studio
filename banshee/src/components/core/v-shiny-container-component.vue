@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { inject } from 'vue';
 import { ShinyContainer } from '../../models/core/container/ShinyContainer';
-import { ShinyRegistry } from '../../models/core/ShinyRegistry';
+import { ShinyRegistry } from '../ShinyRegistry';
 
 const props = defineProps<{
   data: ShinyContainer

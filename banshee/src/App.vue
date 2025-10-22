@@ -47,7 +47,7 @@ import { BansheeStory } from './models/core/BansheeStory';
 import { ShinyParagraph } from './models/text/paragraph/ShinyParagraph';
 import { ShinyModel } from './models/ShinyModel';
 
-import { ShinyRegistry } from './models/core/ShinyRegistry';
+import { ShinyRegistry } from './components/ShinyRegistry';
 
 // Declare global types if not already defined
 declare global {

@@ -50,7 +50,7 @@
 import { ref, computed, inject } from 'vue';
 import { ShinyTable } from '../../models/data/table/ShinyTable';
 import { ShinyProp } from '../../models/ShinyProp';
-import { ShinyRegistry } from '../../models/core/ShinyRegistry';
+import { ShinyRegistry } from '../ShinyRegistry';
 import { ShinyTableCell } from '../../models/data/table/cell/ShinyTableCell';
 
 const props = defineProps<{
