@@ -15,16 +15,11 @@ import io.vertigo.core.lang.Builder;
 import io.vertigo.core.lang.VSystemException;
 
 public final class ShinyRssBuilder implements Builder<ShinyRss> {
-	private UUID _id;
+
 	private String _title;
 	private final List<ShinyRssItem> _items = new ArrayList<>();
 
-	public ShinyRssBuilder withId(final UUID id) {
-		Assertion.check().isNotNull(id);
-		//---
-		_id = id;
-		return this;
-	}
+
 
 	public ShinyRssBuilder withTitle(final String title) {
 		Assertion.check().isNotBlank(title);
@@ -81,7 +76,7 @@ public final class ShinyRssBuilder implements Builder<ShinyRss> {
 
 	@Override
 	public ShinyRss build() {
-		_id = _id == null ? UUID.randomUUID() : _id;
-		return new ShinyRss(_id, _title, _items);
+
+		return new ShinyRss(null, _title, _items);
 	}
 }

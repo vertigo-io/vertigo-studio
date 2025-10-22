@@ -11,6 +11,6 @@ public record ShinyOrganization(
 		List<ShinyOrganizationNode> nodes) implements ShinyModel {
 
 	public ShinyOrganization {
-		Assertion.check().isNotNull(id);
+
 	}
 }

@@ -9,7 +9,7 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinyChartBuilder implements Builder<ShinyChart> {
-	private UUID _id;
+
 	private final ShinyChartType _chartType;
 	private String _title;
 	private List<String> _labels = new ArrayList<>();
@@ -21,12 +21,7 @@ public final class ShinyChartBuilder implements Builder<ShinyChart> {
 		this._chartType = chartType;
 	}
 
-	public ShinyChartBuilder withId(final UUID id) {
-		Assertion.check().isNotNull(id);
-		//---
-		_id = id;
-		return this;
-	}
+
 
 	public ShinyChartBuilder withTitle(final String title) {
 		this._title = title;
@@ -64,7 +59,7 @@ public final class ShinyChartBuilder implements Builder<ShinyChart> {
 
 	@Override
 	public ShinyChart build() {
-		_id = _id == null ? UUID.randomUUID() : _id;
-		return new ShinyChart(_id, _title, _chartType, _labels, _series);
+
+		return new ShinyChart(null, _title, _chartType, _labels, _series);
 	}
 }

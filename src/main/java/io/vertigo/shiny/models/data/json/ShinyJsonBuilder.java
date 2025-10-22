@@ -6,16 +6,11 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinyJsonBuilder implements Builder<ShinyJson> {
-	private UUID _id;
+
 	private String _json;
 	private String _title;
 
-	public ShinyJsonBuilder withId(final UUID id) {
-		Assertion.check().isNotNull(id);
-		//---
-		_id = id;
-		return this;
-	}
+
 
 	public ShinyJsonBuilder withTitle(final String title) {
 		Assertion.check().isNotBlank(title);
@@ -32,7 +27,7 @@ public final class ShinyJsonBuilder implements Builder<ShinyJson> {
 
 	@Override
 	public ShinyJson build() {
-		_id = _id == null ? UUID.randomUUID() : _id;
-		return new ShinyJson(_id, _title, _json);
+
+		return new ShinyJson(null, _title, _json);
 	}
 }

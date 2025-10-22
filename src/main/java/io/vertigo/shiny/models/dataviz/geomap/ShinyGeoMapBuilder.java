@@ -8,16 +8,11 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinyGeoMapBuilder implements Builder<ShinyGeoMap> {
-	private UUID _id;
+
 	private String _title;
 	private final List<ShinyGeoPoint> _geoPoints = new ArrayList<>();
 
-	public ShinyGeoMapBuilder withId(final UUID id) {
-		Assertion.check().isNotNull(id);
-		//---
-		_id = id;
-		return this;
-	}
+
 
 	public ShinyGeoMapBuilder withTitle(final String title) {
 		Assertion.check().isNotBlank(title);
@@ -41,7 +36,7 @@ public final class ShinyGeoMapBuilder implements Builder<ShinyGeoMap> {
 
 	@Override
 	public ShinyGeoMap build() {
-		_id = _id == null ? UUID.randomUUID() : _id;
-		return new ShinyGeoMap(_id, _title, _geoPoints);
+
+		return new ShinyGeoMap(null, _title, _geoPoints);
 	}
 }

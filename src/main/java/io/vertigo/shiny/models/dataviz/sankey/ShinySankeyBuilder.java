@@ -8,16 +8,11 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinySankeyBuilder implements Builder<ShinySankey> {
-	private UUID _id;
+
 	private String _title;
 	private final List<ShinySankeyLink> _data = new ArrayList<>();
 
-	public ShinySankeyBuilder withId(final UUID id) {
-		Assertion.check().isNotNull(id);
-		//---
-		_id = id;
-		return this;
-	}
+
 
 	public ShinySankeyBuilder withTitle(final String title) {
 		this._title = title;
@@ -36,7 +31,7 @@ public final class ShinySankeyBuilder implements Builder<ShinySankey> {
 
 	@Override
 	public ShinySankey build() {
-		_id = _id == null ? UUID.randomUUID() : _id;
-		return new ShinySankey(_id, _title, _data);
+
+		return new ShinySankey(null, _title, _data);
 	}
 }

@@ -6,17 +6,12 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinyImageBuilder implements Builder<ShinyImage> {
-	private UUID _id;
+
 	private String _title;
 	private String _url;
 	private String _alt;
 
-	public ShinyImageBuilder withId(final UUID id) {
-		Assertion.check().isNotNull(id);
-		//---
-		_id = id;
-		return this;
-	}
+
 
 	public ShinyImageBuilder withTitle(final String title) {
 		this._title = title;
@@ -36,7 +31,7 @@ public final class ShinyImageBuilder implements Builder<ShinyImage> {
 
 	@Override
 	public ShinyImage build() {
-		_id = _id == null ? UUID.randomUUID() : _id;
-		return new ShinyImage(_id, _title, _url, _alt);
+
+		return new ShinyImage(null, _title, _url, _alt);
 	}
 }

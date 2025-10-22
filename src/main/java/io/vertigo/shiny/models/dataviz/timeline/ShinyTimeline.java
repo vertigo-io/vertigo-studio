@@ -12,7 +12,7 @@ public record ShinyTimeline(
 		List<ShinyTimelineItem> items) implements ShinyModel {
 
 	public ShinyTimeline {
-		Assertion.check().isNotNull(id);
+
 	}
 
 }

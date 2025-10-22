@@ -16,7 +16,7 @@ public record ShinyPdf(
 		String height) implements ShinyModel {
 
 	public ShinyPdf {
-		Assertion.check().isNotNull(id);
+
 		Assertion.check()
 				.isNotBlank(pdfPath, "PDF path cannot be blank");
 		Assertion.check()

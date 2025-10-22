@@ -12,7 +12,7 @@ public record ShinySparkline(
 		List<Double> values) implements ShinyModel {
 
 	public ShinySparkline {
-		Assertion.check().isNotNull(id);
+
 	}
 
 }

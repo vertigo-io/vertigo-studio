@@ -12,7 +12,7 @@ public record ShinySankey(
 		List<ShinySankeyLink> data) implements ShinyModel {
 
 	public ShinySankey {
-		Assertion.check().isNotNull(id);
+
 		Assertion.check()
 				.isNotBlank(title, "Title cannot be blank");
 		Assertion.check()

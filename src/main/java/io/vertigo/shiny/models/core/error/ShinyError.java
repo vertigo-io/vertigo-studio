@@ -10,6 +10,6 @@ public record ShinyError(
 		String text) implements ShinyModel {
 
 	public ShinyError {
-		Assertion.check().isNotNull(id);
+
 	}
 }

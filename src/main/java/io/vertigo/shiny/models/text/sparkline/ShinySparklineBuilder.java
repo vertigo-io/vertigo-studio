@@ -9,16 +9,11 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinySparklineBuilder implements Builder<ShinySparkline> {
-	private UUID _id;
+
 	private String _title;
 	private List<Double> _values;
 
-	public ShinySparklineBuilder withId(final UUID id) {
-		Assertion.check().isNotNull(id);
-		//---
-		_id = id;
-		return this;
-	}
+
 
 	public ShinySparklineBuilder withTitle(final String title) {
 		this._title = title;
@@ -41,7 +36,7 @@ public final class ShinySparklineBuilder implements Builder<ShinySparkline> {
 
 	@Override
 	public ShinySparkline build() {
-		_id = _id == null ? UUID.randomUUID() : _id;
-		return new ShinySparkline(_id, _title, _values);
+
+		return new ShinySparkline(null, _title, _values);
 	}
 }

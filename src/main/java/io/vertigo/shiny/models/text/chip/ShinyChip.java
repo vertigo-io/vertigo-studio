@@ -14,7 +14,7 @@ public record ShinyChip(
 		String icon) implements ShinyModel {
 
 	public ShinyChip {
-		Assertion.check().isNotNull(id);
+
 		Assertion.check()
 				.isNotBlank(text, "Text cannot be blank");
 	}

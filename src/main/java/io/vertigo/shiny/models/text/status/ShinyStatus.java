@@ -12,7 +12,7 @@ public record ShinyStatus(
 		List<ShinyStatusType> types) implements ShinyModel {
 
 	public ShinyStatus {
-		Assertion.check().isNotNull(id);
+
 	}
 
 }
