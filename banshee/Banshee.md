@@ -78,7 +78,7 @@ Ce modèle ne contient pas de propriétés directes ou elles n'ont pas pu être 
 
 ## `ShinyChip`
 
-**Fichier source**: `data\chip\ShinyChip.ts`
+**Fichier source**: `text\chip\ShinyChip.ts`
 
 | Propriété | Type | Obligatoire |
 |---|---|---|
@@ -93,7 +93,7 @@ Ce modèle ne contient pas de propriétés directes ou elles n'ont pas pu être 
 
 ## `ShinyChipVariant`
 
-**Fichier source**: `data\chip\ShinyChipVariant.ts`
+**Fichier source**: `text\chip\ShinyChipVariant.ts`
 
 Ce modèle ne contient pas de propriétés directes ou elles n'ont pas pu être extraites.
 
@@ -101,7 +101,7 @@ Ce modèle ne contient pas de propriétés directes ou elles n'ont pas pu être 
 
 ## `ShinyForm`
 
-**Fichier source**: `data\form\ShinyForm.ts`
+**Fichier source**: `form\ShinyForm.ts`
 
 | Propriété | Type | Obligatoire |
 |---|---|---|
@@ -113,7 +113,7 @@ Ce modèle ne contient pas de propriétés directes ou elles n'ont pas pu être 
 
 ## `ShinyFormField`
 
-**Fichier source**: `data\form\ShinyFormField.ts`
+**Fichier source**: `form\ShinyFormField.ts`
 
 | Propriété | Type | Obligatoire |
 |---|---|---|
@@ -133,7 +133,7 @@ Ce modèle ne contient pas de propriétés directes ou elles n'ont pas pu être 
 
 ## `ShinyFormFieldType`
 
-**Fichier source**: `data\form\ShinyFormFieldType.ts`
+**Fichier source**: `form\ShinyFormFieldType.ts`
 
 Ce modèle ne contient pas de propriétés directes ou elles n'ont pas pu être extraites.
 
@@ -141,7 +141,7 @@ Ce modèle ne contient pas de propriétés directes ou elles n'ont pas pu être 
 
 ## `ShinyFormFieldValidator`
 
-**Fichier source**: `data\form\ShinyFormFieldValidator.ts`
+**Fichier source**: `form\ShinyFormFieldValidator.ts`
 
 | Propriété | Type | Obligatoire |
 |---|---|---|
@@ -155,7 +155,7 @@ Ce modèle ne contient pas de propriétés directes ou elles n'ont pas pu être 
 
 ## `ShinyFormOption`
 
-**Fichier source**: `data\form\ShinyFormOption.ts`
+**Fichier source**: `form\ShinyFormOption.ts`
 
 | Propriété | Type | Obligatoire |
 |---|---|---|
@@ -166,7 +166,7 @@ Ce modèle ne contient pas de propriétés directes ou elles n'ont pas pu être 
 
 ## `ShinyFormSection`
 
-**Fichier source**: `data\form\ShinyFormSection.ts`
+**Fichier source**: `form\ShinyFormSection.ts`
 
 | Propriété | Type | Obligatoire |
 |---|---|---|
@@ -338,7 +338,7 @@ Ce modèle ne contient pas de propriétés directes ou elles n'ont pas pu être 
 
 ## `ShinyRating`
 
-**Fichier source**: `dataviz\rating\ShinyRating.ts`
+**Fichier source**: `text\rating\ShinyRating.ts`
 
 | Propriété | Type | Obligatoire |
 |---|---|---|
@@ -357,7 +357,7 @@ Ce modèle ne contient pas de propriétés directes ou elles n'ont pas pu être 
 
 ## `ShinyRatingScale`
 
-**Fichier source**: `dataviz\rating\ShinyRatingScale.ts`
+**Fichier source**: `text\rating\ShinyRatingScale.ts`
 
 Ce modèle ne contient pas de propriétés directes ou elles n'ont pas pu être extraites.
 
@@ -389,7 +389,7 @@ Ce modèle ne contient pas de propriétés directes ou elles n'ont pas pu être 
 
 ## `ShinySparkline`
 
-**Fichier source**: `dataviz\sparkline\ShinySparkline.ts`
+**Fichier source**: `text\sparkline\ShinySparkline.ts`
 
 | Propriété | Type | Obligatoire |
 |---|---|---|
@@ -401,7 +401,7 @@ Ce modèle ne contient pas de propriétés directes ou elles n'ont pas pu être 
 
 ## `ShinyStatus`
 
-**Fichier source**: `dataviz\status\ShinyStatus.ts`
+**Fichier source**: `text\status\ShinyStatus.ts`
 
 | Propriété | Type | Obligatoire |
 |---|---|---|
@@ -413,7 +413,7 @@ Ce modèle ne contient pas de propriétés directes ou elles n'ont pas pu être 
 
 ## `ShinyStatusType`
 
-**Fichier source**: `dataviz\status\ShinyStatusType.ts`
+**Fichier source**: `text\status\ShinyStatusType.ts`
 
 Ce modèle ne contient pas de propriétés directes ou elles n'ont pas pu être extraites.
 
@@ -444,7 +444,7 @@ Ce modèle ne contient pas de propriétés directes ou elles n'ont pas pu être 
 
 ## `ShinyMultiSelection`
 
-**Fichier source**: `input\multiselection\ShinyMultiSelection.ts`
+**Fichier source**: `form\multiselection\ShinyMultiSelection.ts`
 
 | Propriété | Type | Obligatoire |
 |---|---|---|
@@ -457,7 +457,7 @@ Ce modèle ne contient pas de propriétés directes ou elles n'ont pas pu être 
 
 ## `ShinySlider`
 
-**Fichier source**: `input\slider\ShinySlider.ts`
+**Fichier source**: `form\slider\ShinySlider.ts`
 
 | Propriété | Type | Obligatoire |
 |---|---|---|
@@ -525,9 +525,9 @@ Ce modèle ne contient pas de propriétés directes ou elles n'ont pas pu être 
 
 ---
 
-## `ShinyPhoto`
+## `ShinyImage`
 
-**Fichier source**: `media\photo\ShinyPhoto.ts`
+**Fichier source**: `media\image\ShinyImage.ts`
 
 | Propriété | Type | Obligatoire |
 |---|---|---|
@@ -636,7 +636,7 @@ Ce modèle ne contient pas de propriétés directes ou elles n'ont pas pu être 
 
 ## `ShinyToggle`
 
-**Fichier source**: `text\toggle\ShinyToggle.ts`
+**Fichier source**: `form\toggle\ShinyToggle.ts`
 
 | Propriété | Type | Obligatoire |
 |---|---|---|
@@ -652,7 +652,7 @@ Ce modèle ne contient pas de propriétés directes ou elles n'ont pas pu être 
 
 ## `ShinyToggleType`
 
-**Fichier source**: `text\toggle\ShinyToggleType.ts`
+**Fichier source**: `form\toggle\ShinyToggleType.ts`
 
 Ce modèle ne contient pas de propriétés directes ou elles n'ont pas pu être extraites.
 
