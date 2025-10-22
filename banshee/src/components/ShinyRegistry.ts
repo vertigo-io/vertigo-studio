@@ -3,7 +3,7 @@ import VShinyContainerComponent from './core/v-shiny-container-component.vue';
 import VShinyErrorComponent from './core/v-shiny-error-component.vue';
 import VShinyCardComponent from './data/v-shiny-card-component.vue';
 import VShinyChipComponent from './text/v-shiny-chip-component.vue';
-import VShinyFormComponent from './data/v-shiny-form-component.vue';
+import VShinyFormComponent from './form/v-shiny-form-component.vue';
 import VShinyJsonComponent from './data/v-shiny-json-component.vue';
 import VShinyListComponent from './data/v-shiny-list-component.vue';
 import VShinyOrganizationComponent from './data/v-shiny-organization-component.vue';
