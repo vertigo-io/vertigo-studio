@@ -1,4 +1,4 @@
-package io.vertigo.shiny.models.data.timeline;
+package io.vertigo.shiny.models.dataviz.timeline;
 
 import io.vertigo.core.lang.Assertion;
 

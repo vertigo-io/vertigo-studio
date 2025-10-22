@@ -11,7 +11,7 @@ import java.util.Locale;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.models.ShinyModel;
-import io.vertigo.shiny.models.data.calendar.ShinyCalendar;
+import io.vertigo.shiny.models.dataviz.calendar.ShinyCalendar;
 import io.vertigo.shiny.renderers.ShinyModelRenderer;
 
 public final class ShinyCalendarRenderer implements ShinyModelRenderer<ShinyCalendar> {

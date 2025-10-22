@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ShinyTimeline } from '@/models/data/timeline/ShinyTimeline';
+import type { ShinyTimeline } from '@/models/dataviz/timeline/ShinyTimeline';
 
 defineProps<{
   data: ShinyTimeline

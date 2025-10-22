@@ -15,11 +15,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.shiny.models.data.flow;
+package io.vertigo.shiny.models.dataviz.flow;
 
-public enum NodeType {
-	LR, // Left-Right: Rounded rectangle, handles left/right
-	TB, // Top-Bottom: Circular, handles top/bottom
-	LL, // Left-Left: Rectangular left, very rounded right, handle left
-	RR // Right-Right: Rectangular right, very rounded left, handle right
+import io.vertigo.core.lang.Assertion;
+
+public record ShinyFlowNode(String id, String label, ShinyFlowNode.Position position, NodeType nodeType) { // Changed 'type' to 'nodeType' and its type to NodeType
+
+	public record Position(int x, int y) {
+	}
+
+	public ShinyFlowNode {
+		Assertion.check()
+				.isNotBlank(id)
+				.isNotBlank(label)
+				.isNotNull(position)
+				.isNotNull(nodeType); // Added assertion for nodeType
+	}
 }

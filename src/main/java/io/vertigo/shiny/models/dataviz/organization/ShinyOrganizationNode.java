@@ -1,4 +1,4 @@
-package io.vertigo.shiny.models.data.organization;
+package io.vertigo.shiny.models.dataviz.organization;
 
 import io.vertigo.core.lang.Assertion;
 

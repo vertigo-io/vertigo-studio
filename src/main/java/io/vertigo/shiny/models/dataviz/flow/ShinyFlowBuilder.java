@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.shiny.models.data.flow;
+package io.vertigo.shiny.models.dataviz.flow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
-import io.vertigo.shiny.models.data.flow.ShinyFlowNode.Position;
+import io.vertigo.shiny.models.dataviz.flow.ShinyFlowNode.Position;
 
 public final class ShinyFlowBuilder implements Builder<ShinyFlow> {
 

@@ -1,4 +1,4 @@
-package io.vertigo.shiny.models.data.organization;
+package io.vertigo.shiny.models.dataviz.organization;
 
 import java.util.ArrayList;
 import java.util.List;

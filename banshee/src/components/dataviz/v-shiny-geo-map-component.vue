@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { ShinyGeoMap } from '../../models/media/geomap/ShinyGeoMap';
+import { ShinyGeoMap } from '../../models/dataviz/geomap/ShinyGeoMap';
 
 declare const L: any; // Declare L (Leaflet) to avoid TypeScript errors
 

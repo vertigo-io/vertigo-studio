@@ -1,4 +1,4 @@
-package io.vertigo.shiny.models.data.timeline;
+package io.vertigo.shiny.models.dataviz.timeline;
 
 import java.util.ArrayList;
 import java.util.List;

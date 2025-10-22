@@ -1,4 +1,4 @@
-package io.vertigo.shiny.models.data.calendar;
+package io.vertigo.shiny.models.dataviz.calendar;
 
 import java.util.UUID;
 

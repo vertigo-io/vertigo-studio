@@ -8,29 +8,18 @@
  * You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.shiny.models.data.flow;
+package io.vertigo.shiny.models.dataviz.flow;
 
-import java.util.List;
-import java.util.UUID;
-
-import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.models.ShinyModel;
-
-public record ShinyFlow(
-		UUID id,
-		List<ShinyFlowNode> nodes,
-		List<ShinyFlowEdge> edges) implements ShinyModel {
-
-	public ShinyFlow {
-		Assertion.check()
-				.isNotNull(nodes)
-				.isNotNull(edges);
-	}
+public enum NodeType {
+	LR, // Left-Right: Rounded rectangle, handles left/right
+	TB, // Top-Bottom: Circular, handles top/bottom
+	LL, // Left-Left: Rectangular left, very rounded right, handle left
+	RR // Right-Right: Rectangular right, very rounded left, handle right
 }
