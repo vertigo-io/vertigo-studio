@@ -17,10 +17,11 @@
 	--assistant-text: #F0F1F3; /* Texte des messages assistant */
 	--user-text: #FFFFFF; /* Texte des messages utilisateur */
 	--json-text: #C8CDD2; /* Texte général JSON */
-	--json-key: #8AB4F8; /* Clés JSON */
-	--json-string: #F1FA8C; /* Chaînes JSON */
-	--json-number: #FFB86C; /* Nombres JSON */
-	--json-boolean: #50FA7B; /* Booléens JSON */
+	--json-key: #9CDCFE; /* Clés JSON */
+	--json-separator: #D4D4D4; /* Séparateur JSON */
+	--json-string: #CE9178; /* Chaînes JSON */
+	--json-number: #B5CEA8; /* Nombres JSON */
+	--json-boolean: #569CD6; /* Booléens JSON */
 	--json-null: #FF5555; /* Valeurs null JSON */
 	--table-header-text: #9CA3AF; /* Texte des en-têtes de tableau */
 	--chakra-text: #E2E8F0; /* Texte principal Chakra */
