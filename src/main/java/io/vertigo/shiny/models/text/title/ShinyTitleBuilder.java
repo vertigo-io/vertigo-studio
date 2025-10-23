@@ -1,7 +1,5 @@
 package io.vertigo.shiny.models.text.title;
 
-import java.util.UUID;
-
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
@@ -9,8 +7,6 @@ public final class ShinyTitleBuilder implements Builder<ShinyTitle> {
 
 	private String _text;
 	private int _level = 1; // Default to Level 1
-
-
 
 	public ShinyTitleBuilder withText(final String text) {
 		Assertion.check().isNotBlank(text);

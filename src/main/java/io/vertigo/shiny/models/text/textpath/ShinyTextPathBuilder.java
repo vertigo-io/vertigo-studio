@@ -1,7 +1,6 @@
 package io.vertigo.shiny.models.text.textpath;
 
 import java.nio.file.Path;
-import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
@@ -10,8 +9,6 @@ public final class ShinyTextPathBuilder implements Builder<ShinyTextPath> {
 
 	private String _textPath;
 	private String _textPathSeparator = "/";
-
-
 
 	public ShinyTextPathBuilder withPath(final Path path) {
 		Assertion.check().isNotNull(path);

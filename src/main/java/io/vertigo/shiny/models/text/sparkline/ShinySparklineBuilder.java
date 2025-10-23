@@ -2,7 +2,6 @@ package io.vertigo.shiny.models.text.sparkline;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
@@ -12,8 +11,6 @@ public final class ShinySparklineBuilder implements Builder<ShinySparkline> {
 
 	private String _title;
 	private List<Double> _values;
-
-
 
 	public ShinySparklineBuilder withTitle(final String title) {
 		this._title = title;

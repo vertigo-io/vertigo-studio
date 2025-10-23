@@ -2,7 +2,6 @@ package io.vertigo.shiny.models.text.status;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
@@ -11,8 +10,6 @@ public final class ShinyStatusBuilder implements Builder<ShinyStatus> {
 
 	private String _title;
 	private final List<ShinyStatusType> _statusTypes = new ArrayList<>();
-
-
 
 	public ShinyStatusBuilder withTitle(final String title) {
 		this._title = title;
