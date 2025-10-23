@@ -23,7 +23,7 @@ import VShinySankeyComponent from './dataviz/v-shiny-sankey-component.vue';
 import VShinySparkLineComponent from './text/v-shiny-spark-line-component.vue';
 import VShinyStatusComponent from './text/v-shiny-status-component.vue';
 import VShinyFlowComponent from './dataviz/v-shiny-flow-component.vue';
-import VShinyAlertComponent from './feedback/v-shiny-alert-component.vue';
+import VShinyAlertComponent from './core/v-shiny-alert-component.vue';
 import VShinySliderComponent from './form/v-shiny-slider-component.vue';
 import VShinyProgressBarComponent from './live/v-shiny-progress-bar-component.vue';
 import VShinyPdfComponent from './media/v-shiny-pdf.vue';

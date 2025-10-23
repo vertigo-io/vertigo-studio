@@ -3,7 +3,6 @@ package io.vertigo.shiny.models.dataviz.chart;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
@@ -20,8 +19,6 @@ public final class ShinyChartBuilder implements Builder<ShinyChart> {
 		//---
 		this._chartType = chartType;
 	}
-
-
 
 	public ShinyChartBuilder withTitle(final String title) {
 		this._title = title;

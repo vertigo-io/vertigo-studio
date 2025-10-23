@@ -2,17 +2,13 @@ package io.vertigo.shiny.models.dataviz.sankey;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinySankeyBuilder implements Builder<ShinySankey> {
 
 	private String _title;
 	private final List<ShinySankeyLink> _data = new ArrayList<>();
-
-
 
 	public ShinySankeyBuilder withTitle(final String title) {
 		this._title = title;

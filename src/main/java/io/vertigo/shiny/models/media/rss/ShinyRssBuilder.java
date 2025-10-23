@@ -3,7 +3,6 @@ package io.vertigo.shiny.models.media.rss;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
@@ -18,8 +17,6 @@ public final class ShinyRssBuilder implements Builder<ShinyRss> {
 
 	private String _title;
 	private final List<ShinyRssItem> _items = new ArrayList<>();
-
-
 
 	public ShinyRssBuilder withTitle(final String title) {
 		Assertion.check().isNotBlank(title);

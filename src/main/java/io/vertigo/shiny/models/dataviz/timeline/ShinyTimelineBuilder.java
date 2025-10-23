@@ -2,17 +2,13 @@ package io.vertigo.shiny.models.dataviz.timeline;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinyTimelineBuilder implements Builder<ShinyTimeline> {
 
 	private String _title;
 	private final List<ShinyTimelineItem> _items = new ArrayList<>();
-
-
 
 	public ShinyTimelineBuilder withTitle(final String title) {
 		this._title = title;

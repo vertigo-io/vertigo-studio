@@ -1,7 +1,5 @@
 package io.vertigo.shiny.models.media.image;
 
-import java.util.UUID;
-
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
@@ -10,8 +8,6 @@ public final class ShinyImageBuilder implements Builder<ShinyImage> {
 	private String _title;
 	private String _url;
 	private String _alt;
-
-
 
 	public ShinyImageBuilder withTitle(final String title) {
 		this._title = title;

@@ -1,7 +1,5 @@
 package io.vertigo.shiny.models.media.youtube;
 
-import java.util.UUID;
-
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
@@ -9,8 +7,6 @@ public final class ShinyYoutubeBuilder implements Builder<ShinyYoutube> {
 
 	private String _title;
 	private String _videoId;
-
-
 
 	public ShinyYoutubeBuilder withTitle(final String title) {
 		Assertion.check().isNotBlank(title);
