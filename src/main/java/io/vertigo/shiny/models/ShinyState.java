@@ -1,7 +1,7 @@
 package io.vertigo.shiny.models;
 
-import java.util.List;
+import java.util.UUID;
 
 public interface ShinyState {
-    List<ShinyProp> getProps();
+	UUID id();
 }
