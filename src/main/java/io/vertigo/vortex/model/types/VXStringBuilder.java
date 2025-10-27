@@ -1,5 +1,7 @@
-package io.vertigo.vortex.model;
+package io.vertigo.vortex.model.types;
 
+import io.vertigo.vortex.model.AbstractVXDomainTypeBuilder;
+import io.vertigo.vortex.model.VXDataType;
 import io.vertigo.vortex.model.validators.VXEmailValidator;
 import io.vertigo.vortex.model.validators.VXMaxLengthValidator;
 import io.vertigo.vortex.model.validators.VXMinLengthValidator;

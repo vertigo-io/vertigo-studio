@@ -21,6 +21,7 @@ public final class VXDomainType {
 	}
 
 	@Override
+
 	public String toString() {
 		return "DomainType{name='%s', dataType='%s'}".formatted(name, dataType);
 	}

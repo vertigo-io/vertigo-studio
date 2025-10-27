@@ -1,4 +1,6 @@
-package io.vertigo.vortex.model;
+package io.vertigo.vortex.model.types;
+
+import io.vertigo.vortex.model.VXDomainType;
 
 public final class VXDomainTypes {
     private VXDomainTypes() {}

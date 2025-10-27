@@ -1,4 +1,6 @@
-package io.vertigo.vortex.model;
+package io.vertigo.vortex.model.types;
+
+import io.vertigo.vortex.model.VXDataType;
 
 public final class VX {
     private VX() {
