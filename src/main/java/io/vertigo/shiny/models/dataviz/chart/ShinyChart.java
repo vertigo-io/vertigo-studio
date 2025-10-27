@@ -1,12 +1,10 @@
 package io.vertigo.shiny.models.dataviz.chart;
 
 import java.util.List;
-import java.util.UUID;
 
 import io.vertigo.shiny.models.ShinyModel;
 
 public record ShinyChart(
-		UUID id,
 		String title,
 		ShinyChartType chartType,
 		List<String> labels,
@@ -23,5 +21,4 @@ public record ShinyChart(
 			case pie -> "ShinyPieChart";
 		};
 	}
-
 }

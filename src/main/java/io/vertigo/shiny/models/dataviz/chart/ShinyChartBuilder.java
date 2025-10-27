@@ -57,6 +57,6 @@ public final class ShinyChartBuilder implements Builder<ShinyChart> {
 	@Override
 	public ShinyChart build() {
 
-		return new ShinyChart(null, _title, _chartType, _labels, _series);
+		return new ShinyChart(_title, _chartType, _labels, _series);
 	}
 }

@@ -21,6 +21,6 @@ public final class ShinyOrganizationBuilder implements Builder<ShinyOrganization
 
 	public ShinyOrganization build() {
 
-		return new ShinyOrganization(null, _nodes);
+		return new ShinyOrganization(_nodes);
 	}
 }

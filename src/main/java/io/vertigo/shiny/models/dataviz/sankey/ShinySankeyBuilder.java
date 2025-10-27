@@ -28,6 +28,6 @@ public final class ShinySankeyBuilder implements Builder<ShinySankey> {
 	@Override
 	public ShinySankey build() {
 
-		return new ShinySankey(null, _title, _data);
+		return new ShinySankey(_title, _data);
 	}
 }
