@@ -23,7 +23,6 @@ public final class ShinyTitleBuilder implements Builder<ShinyTitle> {
 
 	@Override
 	public ShinyTitle build() {
-
-		return new ShinyTitle(null, _text, _level);
+		return new ShinyTitle(_text, _level);
 	}
 }

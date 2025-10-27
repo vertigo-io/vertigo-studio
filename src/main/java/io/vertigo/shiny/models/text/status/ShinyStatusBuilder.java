@@ -38,7 +38,6 @@ public final class ShinyStatusBuilder implements Builder<ShinyStatus> {
 
 	@Override
 	public ShinyStatus build() {
-
-		return new ShinyStatus(null, _title, _statusTypes);
+		return new ShinyStatus(_title, _statusTypes);
 	}
 }

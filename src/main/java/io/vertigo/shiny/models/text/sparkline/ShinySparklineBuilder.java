@@ -34,6 +34,6 @@ public final class ShinySparklineBuilder implements Builder<ShinySparkline> {
 	@Override
 	public ShinySparkline build() {
 
-		return new ShinySparkline(null, _title, _values);
+		return new ShinySparkline(_title, _values);
 	}
 }

@@ -3,7 +3,6 @@ package io.vertigo.shiny.models.text.chip;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinyChipBuilder implements Builder<ShinyChip> {
-
 	private String _text;
 	private String _color;
 	private ShinyChipVariant _variant;
@@ -36,7 +35,6 @@ public final class ShinyChipBuilder implements Builder<ShinyChip> {
 	}
 
 	public ShinyChip build() {
-
-		return new ShinyChip(null, _text, _color, _variant, _closable, _icon);
+		return new ShinyChip(_text, _color, _variant, _closable, _icon);
 	}
 }

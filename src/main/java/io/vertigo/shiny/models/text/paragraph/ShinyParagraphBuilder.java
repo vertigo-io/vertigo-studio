@@ -4,7 +4,6 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinyParagraphBuilder implements Builder<ShinyParagraph> {
-
 	private String _text;
 
 	public ShinyParagraphBuilder withText(final String text) {
@@ -15,7 +14,6 @@ public final class ShinyParagraphBuilder implements Builder<ShinyParagraph> {
 
 	@Override
 	public ShinyParagraph build() {
-
-		return new ShinyParagraph(null, _text);
+		return new ShinyParagraph(_text);
 	}
 }

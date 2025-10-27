@@ -30,7 +30,6 @@ public final class ShinyTextPathBuilder implements Builder<ShinyTextPath> {
 
 	@Override
 	public ShinyTextPath build() {
-
-		return new ShinyTextPath(null, _textPath, _textPathSeparator);
+		return new ShinyTextPath(_textPath, _textPathSeparator);
 	}
 }

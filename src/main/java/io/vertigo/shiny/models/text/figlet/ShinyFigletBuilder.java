@@ -4,7 +4,6 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 
 public final class ShinyFigletBuilder implements Builder<ShinyFiglet> {
-
 	private String _text;
 
 	public ShinyFigletBuilder withText(final String text) {
@@ -16,6 +15,6 @@ public final class ShinyFigletBuilder implements Builder<ShinyFiglet> {
 	@Override
 	public ShinyFiglet build() {
 
-		return new ShinyFiglet(null, _text);
+		return new ShinyFiglet(_text);
 	}
 }
