@@ -7,6 +7,6 @@ import io.vertigo.shiny.models.ShinyProp;
 
 public record BansheeCommand(
 		String command,
-		String id, //facultatif id d'un model
+		UUID id, //facultatif id d'un model
 		List<ShinyProp> props) {
 }
