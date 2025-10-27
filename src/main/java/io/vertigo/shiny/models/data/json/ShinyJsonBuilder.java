@@ -24,6 +24,6 @@ public final class ShinyJsonBuilder implements Builder<ShinyJson> {
 	@Override
 	public ShinyJson build() {
 
-		return new ShinyJson(null, _title, _json);
+		return new ShinyJson(_title, _json);
 	}
 }

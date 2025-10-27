@@ -34,6 +34,6 @@ public final class ShinyGeoMapBuilder implements Builder<ShinyGeoMap> {
 	@Override
 	public ShinyGeoMap build() {
 
-		return new ShinyGeoMap(null, _title, _geoPoints);
+		return new ShinyGeoMap(_title, _geoPoints);
 	}
 }

@@ -14,7 +14,6 @@ public final class ShinyErrorBuilder implements Builder<ShinyError> {
 
 	@Override
 	public ShinyError build() {
-
-		return new ShinyError(null, _text);
+		return new ShinyError(_text);
 	}
 }
