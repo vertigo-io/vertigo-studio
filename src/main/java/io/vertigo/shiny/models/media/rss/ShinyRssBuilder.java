@@ -74,6 +74,6 @@ public final class ShinyRssBuilder implements Builder<ShinyRss> {
 	@Override
 	public ShinyRss build() {
 
-		return new ShinyRss(null, _title, _items);
+		return new ShinyRss(_title, _items);
 	}
 }

@@ -22,7 +22,6 @@ public final class ShinyYoutubeBuilder implements Builder<ShinyYoutube> {
 
 	@Override
 	public ShinyYoutube build() {
-
-		return new ShinyYoutube(null, _title, _videoId);
+		return new ShinyYoutube(_title, _videoId);
 	}
 }

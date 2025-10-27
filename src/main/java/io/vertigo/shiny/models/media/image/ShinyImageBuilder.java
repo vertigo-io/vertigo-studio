@@ -27,7 +27,6 @@ public final class ShinyImageBuilder implements Builder<ShinyImage> {
 
 	@Override
 	public ShinyImage build() {
-
-		return new ShinyImage(null, _title, _url, _alt);
+		return new ShinyImage(_title, _url, _alt);
 	}
 }

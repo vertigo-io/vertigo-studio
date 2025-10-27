@@ -35,7 +35,6 @@ public final class ShinyPdfBuilder implements Builder<ShinyPdf> {
 
 	@Override
 	public ShinyPdf build() {
-
-		return new ShinyPdf(null, _title, _path, _page, _componentHeight);
+		return new ShinyPdf(_title, _path, _page, _componentHeight);
 	}
 }
