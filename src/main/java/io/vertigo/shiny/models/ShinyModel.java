@@ -1,8 +1,5 @@
 package io.vertigo.shiny.models;
 
-import java.util.List;
-import java.util.UUID;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -14,10 +11,4 @@ public interface ShinyModel {
 	default String shinyType() {
 		return this.getClass().getSimpleName();
 	}
-
-	default List<ShinyProp> props() {
-		return List.of();
-	}
-
-	UUID id();
 }
