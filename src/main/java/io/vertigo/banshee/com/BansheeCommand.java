@@ -1,12 +1,11 @@
 package io.vertigo.banshee.com;
 
-import java.util.List;
 import java.util.UUID;
 
-import io.vertigo.shiny.models.ShinyProp;
+import io.vertigo.shiny.models.ShinyState;
 
 public record BansheeCommand(
 		String command,
 		UUID id, //facultatif id d'un model
-		List<ShinyProp> props) {
+		ShinyState state) { //facultatif nouvel état d'affichage d'un modèle 
 }
