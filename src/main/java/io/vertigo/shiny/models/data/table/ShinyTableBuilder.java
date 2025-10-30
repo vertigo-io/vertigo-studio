@@ -10,11 +10,19 @@ import io.vertigo.shiny.models.data.table.cell.ShinyStringCell;
 import io.vertigo.shiny.models.data.table.cell.ShinyTableCell;
 
 public final class ShinyTableBuilder implements Builder<ShinyTable> {
+	private UUID _id;
 	private String _title;
 	private String _noDataFound;
 	private String[] _header;
 	private final List<List<ShinyTableCell>> _rows = new ArrayList<>();
 	private ShinyTableState _tableState;
+
+	public ShinyTableBuilder withId(final UUID id) {
+		Assertion.check().isNotNull(id);
+		//---
+		this._id = id;
+		return this;
+	}
 
 	public ShinyTableBuilder withTitle(final String title) {
 		Assertion.check().isNotBlank(title);
@@ -69,8 +77,16 @@ public final class ShinyTableBuilder implements Builder<ShinyTable> {
 		return this;
 	}
 
+	public ShinyTableBuilder withState(ShinyTableState tableState) {
+		Assertion.check().isNotNull(tableState);
+		//---
+		this._tableState = tableState;
+		return this;
+	}
+
 	public ShinyTable build() {
 		return new ShinyTable(
+				_id,
 				_title,
 				_noDataFound,
 				_header,
