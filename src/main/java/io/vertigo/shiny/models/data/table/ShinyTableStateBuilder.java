@@ -1,9 +1,13 @@
 package io.vertigo.shiny.models.data.table;
 
+import java.util.List;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
+import io.vertigo.shiny.models.ShinyProp;
+import io.vertigo.shiny.models.ShinyState;
 
-public final class ShinyTableStateBuilder implements Builder<ShinyTableState> {
+public final class ShinyTableStateBuilder implements Builder<ShinyState> {
 	private int _sortColumn = -1;
 	private String _sortDirection = "asc"; // "asc" or "desc"
 	private int _page = -1; // "
@@ -31,11 +35,11 @@ public final class ShinyTableStateBuilder implements Builder<ShinyTableState> {
 		return this;
 	}
 
-	public ShinyTableState build() {
-		return new ShinyTableState(
-				_sortColumn,
-				_sortDirection,
-				_page,
-				_pageCount);
+	public ShinyState build() {
+		return new ShinyState(List.of(
+				ShinyProp.of("sortColumn", _sortColumn),
+				ShinyProp.of("sortDirection", _sortDirection),
+				ShinyProp.of("page", _page),
+				ShinyProp.of("pageCount", _pageCount)));
 	}
 }

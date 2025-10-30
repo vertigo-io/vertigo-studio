@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
+import io.vertigo.shiny.models.ShinyState;
 import io.vertigo.shiny.models.data.table.cell.ShinyStringCell;
 import io.vertigo.shiny.models.data.table.cell.ShinyTableCell;
 
@@ -15,7 +16,7 @@ public final class ShinyTableBuilder implements Builder<ShinyTable> {
 	private String _noDataFound;
 	private String[] _header;
 	private final List<List<ShinyTableCell>> _rows = new ArrayList<>();
-	private ShinyTableState _tableState;
+	private ShinyState _state;
 
 	public ShinyTableBuilder withId(final UUID id) {
 		Assertion.check().isNotNull(id);
@@ -77,10 +78,10 @@ public final class ShinyTableBuilder implements Builder<ShinyTable> {
 		return this;
 	}
 
-	public ShinyTableBuilder withState(ShinyTableState tableState) {
-		Assertion.check().isNotNull(tableState);
+	public ShinyTableBuilder withState(ShinyState state) {
+		Assertion.check().isNotNull(state);
 		//---
-		this._tableState = tableState;
+		this._state = state;
 		return this;
 	}
 
@@ -91,6 +92,6 @@ public final class ShinyTableBuilder implements Builder<ShinyTable> {
 				_noDataFound,
 				_header,
 				_rows,
-				_tableState);
+				_state);
 	}
 }

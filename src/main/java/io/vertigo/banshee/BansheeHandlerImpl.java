@@ -40,13 +40,13 @@ import io.vertigo.shell.systems.java.commands.load.JavaLoadCommand;
 import io.vertigo.shell.systems.java.commands.show.JavaShowModelCommand;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.models.ShinyModel;
-import io.vertigo.shiny.models.ShinyProp;
 import io.vertigo.shiny.models.core.alert.ShinyAlertType;
 import io.vertigo.shiny.models.core.container.ShinyContainerBuilder;
 import io.vertigo.shiny.models.core.error.ShinyErrorBuilder;
 import io.vertigo.shiny.models.data.card.ShinyCardFormat;
 import io.vertigo.shiny.models.data.list.ShinyListType;
 import io.vertigo.shiny.models.data.table.ShinyTableBuilder;
+import io.vertigo.shiny.models.data.table.ShinyTableStateBuilder;
 import io.vertigo.shiny.models.data.table.cell.ShinyAvatarCell;
 import io.vertigo.shiny.models.data.table.cell.ShinyBadgeCell;
 import io.vertigo.shiny.models.data.table.cell.ShinyButtonCell;
@@ -106,17 +106,10 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 			ShinyTableBuilder tableBuilder = Shiny.table()
 					.withTitle("alphabet")
 					.withHeader("Lettre de A à Z");
-			if (command.id() != null) {
-				tableBuilder.withId(command.id());
-			}
-			String page = command.props() == null
+			String page = command.state() == null
 					? "1"
-					: command.props()
-							.stream()
-							.filter(p -> "page".equals(p.key()))
-							.findFirst()
-							.orElseGet(() -> ShinyProp.of("page", 1))
-							.value();
+					: command.state().getValue("page")
+							.orElseGet(() -> "1");
 
 			switch (page) {
 				case "1":
@@ -147,8 +140,16 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 					tableBuilder
 							.withNoDataFound("No data Found");
 			}
+			UUID id = command.id() != null
+					? command.id()
+					: UUID.randomUUID();
 			return tableBuilder
-					.withPage(Integer.valueOf(page), 6)
+					.withId(id)
+					.withState(new ShinyTableStateBuilder()
+							//.withId(id)
+							.withPageCount(6)
+							.withPage(Integer.valueOf(page).intValue())
+							.build())
 					.build();
 		}
 
@@ -283,7 +284,6 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 					.withTitle("carnet d'adresses")
 					.withNoDataFound("no files found")
 					.withHeader("Prénom", "Nom")
-					.withSortable(true)
 					.addRow("Arthur", "Penn")
 					.addRow("Marilyn", "Pinson")
 					.build();
