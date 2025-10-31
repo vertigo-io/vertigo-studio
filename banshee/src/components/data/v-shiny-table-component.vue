@@ -71,7 +71,6 @@ const state = computed(() => props.data?.state ? new ShinyState(props.data.state
 
 const currentPage = computed<number>({
   get(): number {
-    if (state.value) {
       return state.value?.getIntValue('page') ?? 1;
   },
   set(value: number) {
@@ -92,8 +91,8 @@ const updatePage = () => {
 
 
 const sort = (columnIndex: number) => {
-  if (props.data.state && (props.data.state.getBooleanValue('sortable')??false)) {
-    const newSortDirection = props.data.state.getValue('sortDirection') === 'asc' ? 'desc' : 'asc';
+  if (state.value && (state.value.getBooleanValue('sortable')??false)) {
+    const newSortDirection = state.value.getValue('sortDirection') === 'asc' ? 'desc' : 'asc';
     const command = new BansheeCommand('sort', props.data.id, new ShinyState([
       { key: 'columnIndex', value: columnIndex.toString() },
       { key: 'sortDirection', value: newSortDirection }
