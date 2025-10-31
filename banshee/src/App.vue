@@ -90,18 +90,20 @@ const submitPrompt = () => {
   }
 };
 
+
+
 const handleIncomingEvent = (event: MessageEvent) => {
   isLoading.value = false; // Stop loading animation
   try {
-    const parsed = JSON.parse(event.data);
+    const result: BansheeResult = JSON.parse(event.data);
     //in all cases we must have a model
-    if (parsed.action ==='create'){
-      const model: ShinyModel = { type: parsed.model.shinyType, ...parsed.model };
+    if (result.action ==='create'){
+      const model: ShinyModel = { type: result.model.shinyType, ...result.model };
       addMessage(BansheeRole.ASSISTANT, model);
     }
-    if (parsed.action ==='update'){
-      const model: ShinyModel = { type: parsed.model.shinyType, ...parsed.model };
-      story.updateMessage( parsed.model);
+    if (result.action ==='update'){
+      const model: ShinyModel = { type: result.model.shinyType, ...result.model };
+      story.updateMessage( result.model);
     }
   } catch (error) {
     console.error('Error parsing message:', error);
