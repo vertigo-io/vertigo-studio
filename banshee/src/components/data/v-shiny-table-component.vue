@@ -18,10 +18,10 @@
             v-for="(h, index) in data.header"
             :key="index"
             @click="sort(index)"
-            :style="data.state?.sortable ? 'cursor: pointer;' : ''"
+            :style="state?.getBooleanValue('sortable') ? 'cursor: pointer;' : ''"
           >
             {{ h }}
-            <span v-if="data.state?.sortable && data.state?.sortColumn === index">{{ data.state?.sortDirection === 'asc' ? ' ▲' : ' ▼' }}</span>
+            <span v-if="state?.getBooleanValue('sortable') && state?.getIntValue('sortColumn') === index">{{ state?.getValue('sortDirection') === 'asc' ? ' ▲' : ' ▼' }}</span>
           </th>
         </tr>
       </thead>
@@ -37,7 +37,7 @@
       </tbody>
     </table>
     <v-pagination
-      v-if="data.state?.pageCount > 0"
+      v-if="state?.getIntValue('pageCount') > 0"
       :length="pageCount"
       v-model="currentPage"
       @update:modelValue="updatePage"
@@ -52,40 +52,41 @@ import { ShinyTable } from '../../models/data/table/ShinyTable';
 import { ShinyRegistry } from '../ShinyRegistry';
 import { ShinyState } from '../../models/ShinyState';
 
-declare global {
-  interface Window {
-    ws: WebSocket | null;
-  }
-}
-
 const props = defineProps<{
   data: ShinyTable;
 }>();
 
 const shinyRegistry = inject<ShinyRegistry>('shinyRegistry');
 
-const  state = computed(() => props.data?.state);
+const state = computed(() => props.data?.state ? new ShinyState(props.data.state.props) : undefined);
 
 const currentPage = computed<number>({
-  get() {
-    return state.value ? state.value.page : 1;
+  get(): number {
+    if (state.value) {
+      return state.value.getIntValue('page') ?? 1;
+    } else {
+      return 1;
+    }
   },
   set(value: number) {
     if (state.value) {
-      state.value.page = value;
+        const pageProp = state.value.props.find(p => p.key === 'page');
+        if (pageProp) {
+            pageProp.value = value.toString();
+        }
     }
   }
 });
 
 const pageCount = computed<number>(() => {
-  return state.value ? state.value.pageCount : 0;
+  return state.value ? state.value.getIntValue('pageCount') ?? 0 : 0;
 });
 
 const sort = (columnIndex: number) => {
-  if (!state.value?.sortable) {
+  if (!state.value?.getBooleanValue('sortable')) {
     return;
   }
-  const newSortDirection = state.value?.sortDirection === 'asc' ? 'desc' : 'asc';
+  const newSortDirection = state.value?.getValue('sortDirection') === 'asc' ? 'desc' : 'asc';
   const message: { type: string; data: { id: string; columnIndex: number; sortDirection: string } } = {
     type: 'sortShinyTable',
     data: {

@@ -14,5 +14,21 @@ export class ShinyState {
         }
         return null;
     }
+
+    getIntValue(key: string): number | null {
+        const value = this.getValue(key);
+        if (value) {
+            return parseInt(value, 10);
+        }
+        return null;
+    }
+
+    getBooleanValue(key: string): boolean | null {
+        const value = this.getValue(key);
+        if (value) {
+            return value.toLowerCase() === 'true';
+        }
+        return null;
+    }
 }
 
