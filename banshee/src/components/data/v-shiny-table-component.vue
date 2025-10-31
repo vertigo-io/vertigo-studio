@@ -51,12 +51,14 @@ import { computed, inject } from 'vue';
 import { ShinyTable } from '../../models/data/table/ShinyTable';
 import { ShinyRegistry } from '../ShinyRegistry';
 import { ShinyState } from '../../models/ShinyState';
+import { BansheeCommand } from '../../models/core/BansheeCommand';
 
 const props = defineProps<{
   data: ShinyTable;
 }>();
 
 const shinyRegistry = inject<ShinyRegistry>('shinyRegistry');
+const send = inject<(command: BansheeCommand) => void>('send');
 
 const state = computed(() => props.data?.state ? new ShinyState(props.data.state.props) : undefined);
 
@@ -87,31 +89,23 @@ const sort = (columnIndex: number) => {
     return;
   }
   const newSortDirection = state.value?.getValue('sortDirection') === 'asc' ? 'desc' : 'asc';
-  const message: { type: string; data: { id: string; columnIndex: number; sortDirection: string } } = {
-    type: 'sortShinyTable',
-    data: {
-      id: props.data.id,
-      columnIndex: columnIndex,
-      sortDirection: newSortDirection,
-    },
-  };
-  if (window.ws) {
-    window.ws.send(JSON.stringify(message));
+  const command = new BansheeCommand('sort', props.data.id, new ShinyState([
+    { key: 'columnIndex', value: columnIndex.toString() },
+    { key: 'sortDirection', value: newSortDirection }
+  ]));
+  if (send) {
+    send(command);
   } else {
-    console.error("WebSocket connection not found on window instance.");
+    console.error("Send function not provided.");
   }
 };
 
 const updatePage = () => {
-  const bansheeEvent: { command: string; id: string; state: ShinyState | undefined } = {
-    command : 'table2',
-    id: props.data.id,
-    state: props.data.state
-  };
-  if (window.ws) {
-    window.ws.send(JSON.stringify(bansheeEvent));
+  const command = new BansheeCommand('table2', props.data.id, props.data.state);
+  if (send) {
+    send(command);
   } else {
-    console.error("WebSocket connection not found on window instance.");
+    console.error("Send function not provided.");
   }
 };
 

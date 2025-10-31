@@ -1,8 +1,14 @@
 
 import { ShinyState } from "../ShinyState";
 
-export interface BansheeCommand {
+export class BansheeCommand {
     command: string;
     id?: string;
     state?: ShinyState;
+
+    constructor(command: string, id?: string, state?: ShinyState) {
+        this.command = command;
+        this.id = id;
+        this.state = state;
+    }
 }

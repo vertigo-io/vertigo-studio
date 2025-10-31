@@ -64,7 +64,6 @@ const isLoading = ref(false);
 
 const shinyRegistry = new ShinyRegistry();
 provide('shinyRegistry', shinyRegistry);
-
 const handleTranscript = (transcript: string) => {
   prompt.value = transcript;
 };
@@ -73,6 +72,11 @@ const send = (command: BansheeCommand) => {
   window.ws?.send(JSON.stringify(command));
   isLoading.value = true; // Start loading animation
 }
+provide('send', send);
+
+const handleTranscript = (transcript: string) => {
+  prompt.value = transcript;
+};
 
 const submitPrompt = () => {
   if (prompt.value.trim()) {
@@ -82,7 +86,7 @@ const submitPrompt = () => {
       const component: ShinyParagraph = { id :undefined, shinyType:'ShinyParagraph', text : prompt.value };
       addMessage(BansheeRole.USER, component);
       
-      const command: BansheeCommand = { command: prompt.value };
+      const command = new BansheeCommand(prompt.value);
       send(command);
     }
     prompt.value = '';
