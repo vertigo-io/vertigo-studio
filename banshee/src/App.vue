@@ -58,22 +58,21 @@ declare global {
   }
 }
 
+import { BansheeManager } from './models/core/BansheeManager';
+
 const story = reactive(new BansheeStory());
 const prompt = ref('');
 const isLoading = ref(false);
 
 const shinyRegistry = new ShinyRegistry();
 provide('shinyRegistry', shinyRegistry);
+
+const bansheeManager = new BansheeManager();
+provide('bansheeManager', bansheeManager);
+
 const handleTranscript = (transcript: string) => {
   prompt.value = transcript;
 };
-
-const send = (command: BansheeCommand) => {
-  window.ws?.send(JSON.stringify(command));
-  isLoading.value = true; // Start loading animation
-}
-provide('send', send);
-
 
 const submitPrompt = () => {
   if (prompt.value.trim()) {
@@ -84,7 +83,8 @@ const submitPrompt = () => {
       addMessage(BansheeRole.USER, component);
       
       const command = new BansheeCommand(prompt.value);
-      send(command);
+      bansheeManager.send(command);
+      isLoading.value = true;
     }
     prompt.value = '';
   }
@@ -127,6 +127,7 @@ onMounted(() => {
   // This assumes VAppStatusComponent will set window.ws
   const checkWsInterval = setInterval(() => {
     if (window.ws) {
+      bansheeManager.setWebSocket(window.ws);
       window.ws.onmessage = handleIncomingEvent;
       clearInterval(checkWsInterval);
     }

@@ -52,13 +52,14 @@ import { ShinyTable } from '../../models/data/table/ShinyTable';
 import { ShinyRegistry } from '../ShinyRegistry';
 import { ShinyState } from '../../models/ShinyState';
 import { BansheeCommand } from '../../models/core/BansheeCommand';
+import { BansheeManager } from '../../models/core/BansheeManager';
 
 const props = defineProps<{
   data: ShinyTable;
 }>();
 
 const shinyRegistry = inject<ShinyRegistry>('shinyRegistry');
-const send = inject<(command: BansheeCommand) => void>('send');
+const bansheeManager = inject<BansheeManager>('bansheeManager');
 
 const state = computed(() => props.data?.state ? new ShinyState(props.data.state.props) : undefined);
 
@@ -93,19 +94,19 @@ const sort = (columnIndex: number) => {
     { key: 'columnIndex', value: columnIndex.toString() },
     { key: 'sortDirection', value: newSortDirection }
   ]));
-  if (send) {
-    send(command);
+  if (bansheeManager) {
+    bansheeManager.send(command);
   } else {
-    console.error("Send function not provided.");
+    console.error("BansheeManager not provided.");
   }
 };
 
 const updatePage = () => {
   const command = new BansheeCommand('table2', props.data.id, props.data.state);
-  if (send) {
-    send(command);
+  if (bansheeManager) {
+    bansheeManager.send(command);
   } else {
-    console.error("Send function not provided.");
+    console.error("BansheeManager not provided.");
   }
 };
 
