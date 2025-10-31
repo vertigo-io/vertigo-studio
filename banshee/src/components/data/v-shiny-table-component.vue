@@ -91,8 +91,18 @@ const updatePage = () => {
 
 
 const sort = (columnIndex: number) => {
-  if (state.value && (state.value.getBooleanValue('sortable')??false)) {
-    const newSortDirection = state.value.getValue('sortDirection') === 'asc' ? 'desc' : 'asc';
+  if (state.value) {
+    const isSortable = state.value.getBooleanValue('sortable') ?? false;
+    console.log('Is sortable:', isSortable);
+    if (!isSortable) {
+      return;
+    }
+    const currentSortColumn = state.value.getIntValue('sortColumn');
+    const currentSortDirection = state.value.getValue('sortDirection');
+    console.log('Current sort column:', currentSortColumn, 'Current sort direction:', currentSortDirection);
+
+    const newSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
+    console.log('Sorting column:', columnIndex, 'with direction:', newSortDirection);
     const command = new BansheeCommand('sort', props.data.id, new ShinyState([
       { key: 'columnIndex', value: columnIndex.toString() },
       { key: 'sortDirection', value: newSortDirection }
