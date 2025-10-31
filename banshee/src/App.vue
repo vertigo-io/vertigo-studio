@@ -74,9 +74,6 @@ const send = (command: BansheeCommand) => {
 }
 provide('send', send);
 
-const handleTranscript = (transcript: string) => {
-  prompt.value = transcript;
-};
 
 const submitPrompt = () => {
   if (prompt.value.trim()) {
