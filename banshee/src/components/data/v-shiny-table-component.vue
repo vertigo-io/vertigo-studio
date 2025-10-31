@@ -56,12 +56,9 @@ import { BansheeManager } from '../../models/core/BansheeManager';
 
 //Inject
 const shinyRegistry = inject<ShinyRegistry>('shinyRegistry');
-if (!shinyRegistry) {
-  throw new Error('ShinyRegistry was not provided via provide()');
-}
 const bansheeManager = inject<BansheeManager>('bansheeManager');
-if (!bansheeManager) {
-  throw new Error('bansheeManager was not provided via provide()');
+if (!shinyRegistry || !bansheeManager) {
+  throw new Error('shinyRegistry / bansheeManager must be provided');
 }
 //--
 
