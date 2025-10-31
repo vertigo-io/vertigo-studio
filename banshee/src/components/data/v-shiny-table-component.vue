@@ -37,7 +37,7 @@
       </tbody>
     </table>
     <v-pagination
-      v-if="state?.getIntValue('pageCount') > 0"
+      v-if="(state?.getIntValue('pageCount') ?? 0) > 0"
       :length="pageCount"
       v-model="currentPage"
       @update:modelValue="updatePage"
