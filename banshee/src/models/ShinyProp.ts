@@ -1,4 +1,4 @@
 export interface ShinyProp {
-    key: string;
-    value: string;
+  key: string;
+  value: string;
 }

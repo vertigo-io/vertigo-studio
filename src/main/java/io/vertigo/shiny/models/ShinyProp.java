@@ -9,4 +9,8 @@ public record ShinyProp(String key, String value) {
 	public static ShinyProp of(final String key, final int value) {
 		return new ShinyProp(key, String.valueOf(value));
 	}
+
+	public static ShinyProp of(final String key, final boolean value) {
+		return new ShinyProp(key, String.valueOf(value));
+	}
 }

@@ -46,6 +46,7 @@ import { BansheeMessage } from './models/core/BansheeMessage';
 import { BansheeStory } from './models/core/BansheeStory';
 import { ShinyParagraph } from './models/text/paragraph/ShinyParagraph';
 import { ShinyModel } from './models/ShinyModel';
+import { BansheeCommand } from './models/core/BansheeCommand';
 
 import { ShinyRegistry } from './components/ShinyRegistry';
 
@@ -68,6 +69,11 @@ const handleTranscript = (transcript: string) => {
   prompt.value = transcript;
 };
 
+const send = (command: BansheeCommand) => {
+  window.ws?.send(JSON.stringify(command));
+  isLoading.value = true; // Start loading animation
+}
+
 const submitPrompt = () => {
   if (prompt.value.trim()) {
     if ("clear" === prompt.value) {
@@ -76,8 +82,8 @@ const submitPrompt = () => {
       const component: ShinyParagraph = { id :undefined, shinyType:'ShinyParagraph', text : prompt.value };
       addMessage(BansheeRole.USER, component);
       
-      window.ws?.send(JSON.stringify({command: prompt.value}));
-      isLoading.value = true; // Start loading animation
+      const command: BansheeCommand = { command: prompt.value };
+      send(command);
     }
     prompt.value = '';
   }

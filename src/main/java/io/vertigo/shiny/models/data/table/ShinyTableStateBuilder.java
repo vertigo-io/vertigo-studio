@@ -8,12 +8,14 @@ import io.vertigo.shiny.models.ShinyProp;
 import io.vertigo.shiny.models.ShinyState;
 
 public final class ShinyTableStateBuilder implements Builder<ShinyState> {
+	private boolean _sortable = false;
 	private int _sortColumn = -1;
 	private String _sortDirection = "asc"; // "asc" or "desc"
 	private int _page = -1; // "
 	private int _pageCount;
 
 	public ShinyTableStateBuilder withSortColumn(final int sortColumn) {
+		this._sortable = true;
 		this._sortColumn = sortColumn;
 		return this;
 	}
@@ -37,6 +39,7 @@ public final class ShinyTableStateBuilder implements Builder<ShinyState> {
 
 	public ShinyState build() {
 		return new ShinyState(List.of(
+				ShinyProp.of("sortable", _sortable),
 				ShinyProp.of("sortColumn", _sortColumn),
 				ShinyProp.of("sortDirection", _sortDirection),
 				ShinyProp.of("page", _page),

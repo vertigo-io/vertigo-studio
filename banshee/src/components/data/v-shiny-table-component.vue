@@ -18,10 +18,10 @@
             v-for="(h, index) in data.header"
             :key="index"
             @click="sort(index)"
-            :style="data.sortable ? 'cursor: pointer;' : ''"
+            :style="data.state?.sortable ? 'cursor: pointer;' : ''"
           >
             {{ h }}
-            <span v-if="data.sortable && data.sortColumn === index">{{ data.sortDirection === 'asc' ? ' ▲' : ' ▼' }}</span>
+            <span v-if="data.state?.sortable && data.state?.sortColumn === index">{{ data.state?.sortDirection === 'asc' ? ' ▲' : ' ▼' }}</span>
           </th>
         </tr>
       </thead>
@@ -37,7 +37,7 @@
       </tbody>
     </table>
     <v-pagination
-      v-if="pageProp"
+      v-if="data.state?.pageCount > 0"
       :length="pageCount"
       v-model="currentPage"
       @update:modelValue="updatePage"
@@ -47,11 +47,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, inject } from 'vue';
+import { computed, inject } from 'vue';
 import { ShinyTable } from '../../models/data/table/ShinyTable';
-import { ShinyProp } from '../../models/ShinyProp';
 import { ShinyRegistry } from '../ShinyRegistry';
-import { ShinyTableCell } from '../../models/data/table/cell/ShinyTableCell';
+import { ShinyState } from '../../models/ShinyState';
+
+declare global {
+  interface Window {
+    ws: WebSocket | null;
+  }
+}
 
 const props = defineProps<{
   data: ShinyTable;
@@ -59,30 +64,29 @@ const props = defineProps<{
 
 const shinyRegistry = inject<ShinyRegistry>('shinyRegistry');
 
-const pageProp = computed(() => props.data.props?.find(p => p.key === 'page'));
+const  state = computed(() => props.data?.state);
 
 const currentPage = computed<number>({
   get() {
-    return pageProp.value ? parseInt(pageProp.value.value, 10) : 1;
+    return state.value ? state.value.page : 1;
   },
   set(value: number) {
-    if (pageProp.value) {
-      pageProp.value.value = value.toString();
+    if (state.value) {
+      state.value.page = value;
     }
   }
 });
 
 const pageCount = computed<number>(() => {
-  const pageCountProp = props.data.props?.find(p => p.key === 'pageCount');
-  return pageCountProp ? parseInt(pageCountProp.value, 0) : 0;
+  return state.value ? state.value.pageCount : 0;
 });
 
 const sort = (columnIndex: number) => {
-  if (!props.data.sortable) {
+  if (!state.value?.sortable) {
     return;
   }
-  const newSortDirection = props.data.sortDirection === 'asc' ? 'desc' : 'asc';
-  const message = {
+  const newSortDirection = state.value?.sortDirection === 'asc' ? 'desc' : 'asc';
+  const message: { type: string; data: { id: string; columnIndex: number; sortDirection: string } } = {
     type: 'sortShinyTable',
     data: {
       id: props.data.id,
@@ -90,21 +94,21 @@ const sort = (columnIndex: number) => {
       sortDirection: newSortDirection,
     },
   };
-  if ((window as any).ws) {
-    (window as any).ws.send(JSON.stringify(message));
+  if (window.ws) {
+    window.ws.send(JSON.stringify(message));
   } else {
     console.error("WebSocket connection not found on window instance.");
   }
 };
 
 const updatePage = () => {
-  const bansheeEvent = {
+  const bansheeEvent: { command: string; id: string; state: ShinyState | undefined } = {
     command : 'table2',
     id: props.data.id,
-    props: props.data.props
+    state: props.data.state
   };
-  if ((window as any).ws) {
-    (window as any).ws.send(JSON.stringify(bansheeEvent));
+  if (window.ws) {
+    window.ws.send(JSON.stringify(bansheeEvent));
   } else {
     console.error("WebSocket connection not found on window instance.");
   }
