@@ -47,6 +47,7 @@ import { BansheeStory } from './models/core/BansheeStory';
 import { ShinyParagraph } from './models/text/paragraph/ShinyParagraph';
 import { ShinyModel } from './models/ShinyModel';
 import { BansheeCommand } from './models/core/BansheeCommand';
+import { BansheeResult } from './models/core/BansheeResult';
 
 import { ShinyRegistry } from './components/ShinyRegistry';
 
@@ -98,17 +99,15 @@ const handleIncomingEvent = (event: MessageEvent) => {
     const result: BansheeResult = JSON.parse(event.data);
     //in all cases we must have a model
     if (result.action ==='create'){
-      const model: ShinyModel = { type: result.model.shinyType, ...result.model };
-      addMessage(BansheeRole.ASSISTANT, model);
+      addMessage(BansheeRole.ASSISTANT, result.model);
     }
     if (result.action ==='update'){
-      const model: ShinyModel = { type: result.model.shinyType, ...result.model };
       story.updateMessage( result.model);
     }
   } catch (error) {
     console.error('Error parsing message:', error);
     //il faut absolument mettre le type après sinon on récupère le type préesnt de dtaa s'il existe
-    const component: ShinyModel  ={  ...event.data, type: 'ShinyError' }
+    const component: ShinyModel  ={  ...event.data, shinyType: 'ShinyError' }
     addMessage(BansheeRole.SYSTEM, component);
   }
 };
