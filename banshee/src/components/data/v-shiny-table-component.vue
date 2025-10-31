@@ -72,40 +72,34 @@ const state = computed(() => props.data?.state ? new ShinyState(props.data.state
 const currentPage = computed<number>({
   get(): number {
     if (state.value) {
-      return state.value.getIntValue('page') ?? 1;
-    } else {
-      return 1;
-    }
+      return state.value?.getIntValue('page') ?? 1;
   },
   set(value: number) {
     if (state.value) {
-        const pageProp = state.value.props.find(p => p.key === 'page');
-        if (pageProp) {
-            pageProp.value = value.toString();
-        }
+       state.value.setIntValue('page', value);
     }
   }
 });
 
 const pageCount = computed<number>(() => {
-  return state.value ? state.value.getIntValue('pageCount') ?? 0 : 0;
+  return state.value?.getIntValue('pageCount') ?? 0;
 });
-
-const sort = (columnIndex: number) => {
-  if (!state.value?.getBooleanValue('sortable')) {
-    return;
-  }
-  const newSortDirection = state.value?.getValue('sortDirection') === 'asc' ? 'desc' : 'asc';
-  const command = new BansheeCommand('sort', props.data.id, new ShinyState([
-    { key: 'columnIndex', value: columnIndex.toString() },
-    { key: 'sortDirection', value: newSortDirection }
-  ]));
-  bansheeManager.send(command);
-};
 
 const updatePage = () => {
   const command = new BansheeCommand('table2', props.data.id, props.data.state);
   bansheeManager.send(command);
+};
+
+
+const sort = (columnIndex: number) => {
+  if (props.data.state && (props.data.state.getBooleanValue('sortable')??false)) {
+    const newSortDirection = props.data.state.getValue('sortDirection') === 'asc' ? 'desc' : 'asc';
+    const command = new BansheeCommand('sort', props.data.id, new ShinyState([
+      { key: 'columnIndex', value: columnIndex.toString() },
+      { key: 'sortDirection', value: newSortDirection }
+    ]));
+    bansheeManager.send(command);
+  }
 };
 
 const resolveCellComponent = (shinyType: string) => {

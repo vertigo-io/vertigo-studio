@@ -146,7 +146,7 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 			return tableBuilder
 					.withId(id)
 					.withState(new ShinyTableStateBuilder()
-							//.withId(id)
+							.withSortColumn(1)
 							.withPageCount(6)
 							.withPage(Integer.valueOf(page).intValue())
 							.build())
