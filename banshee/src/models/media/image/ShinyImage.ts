@@ -1,6 +1,6 @@
-import { ShinyModel } from '../../ShinyModel';
+import { ShinyBlock } from '../../ShinyBlock';
 
-export interface ShinyImage extends ShinyModel {
+export interface ShinyImage extends ShinyBlock {
   title?: string;
   url: string;
   alt?: string;

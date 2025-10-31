@@ -1,6 +1,6 @@
-import { ShinyModel } from '../../ShinyModel';
+import { ShinyElement } from '../../ShinyElement';
 
-export interface ShinyTextPath extends ShinyModel {
+export interface ShinyTextPath extends ShinyElement {
   path: string;
   separator?: string;
 }

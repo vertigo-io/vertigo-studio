@@ -1,6 +1,6 @@
-import { ShinyModel } from '../../ShinyModel';
+import { ShinyElement } from '../../ShinyElement';
 
-export interface ShinySlider extends ShinyModel {
+export interface ShinySlider extends ShinyElement {
     label: string;
     min: number;
     max: number;

@@ -1,7 +1,12 @@
-import { ShinyModel } from '../../ShinyModel';
+import { ShinyElement } from '../../ShinyElement';
 import { ShinyRatingScale, getShinyRatingMaxValue } from './ShinyRatingScale';
+import { ShinyState } from '../../ShinyState';
 
-export class ShinyRating implements ShinyModel {
+export class ShinyRating implements ShinyElement {
+  id?: string;
+  shinyType: string = 'rating';
+  state?: ShinyState;
+
   label: string;
   value: number;
   scale: ShinyRatingScale;
@@ -11,7 +16,6 @@ export class ShinyRating implements ShinyModel {
   showBox: boolean;
   separator: string;
   allowHalfRating: boolean;
-  type: string = 'rating';
 
   constructor(
     label: string,
@@ -22,7 +26,9 @@ export class ShinyRating implements ShinyModel {
     showPercentage: boolean,
     showBox: boolean,
     separator: string,
-    allowHalfRating: boolean
+    allowHalfRating: boolean,
+    id?: string,
+    state?: ShinyState
   ) {
     this.label = label;
     this.value = value;
@@ -33,6 +39,8 @@ export class ShinyRating implements ShinyModel {
     this.showBox = showBox;
     this.separator = separator;
     this.allowHalfRating = allowHalfRating;
+    this.id = id;
+    this.state = state;
   }
 
   getMaxValue(): number {

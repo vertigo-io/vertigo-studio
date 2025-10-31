@@ -1,6 +1,6 @@
-import { ShinyModel } from '../../ShinyModel';
+import { ShinyElement } from '../../ShinyElement';
 
-export interface ShinySparkline extends ShinyModel {
+export interface ShinySparkline extends ShinyElement {
   title: string;
   values: number[];
 }

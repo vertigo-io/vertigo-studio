@@ -1,6 +1,6 @@
-import { ShinyModel } from '../../ShinyModel';
+import { ShinyBlock } from '../../ShinyBlock';
 
-export interface ShinyCalendar extends ShinyModel {
+export interface ShinyCalendar extends ShinyBlock {
   year: number;
   month: number;
 }

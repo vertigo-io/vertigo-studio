@@ -1,6 +1,6 @@
-import { ShinyModel } from '../../ShinyModel';
+import { ShinyBlock } from '../../ShinyBlock';
 
-export interface ShinyPdf extends ShinyModel {
+export interface ShinyPdf extends ShinyBlock {
 
   title?: string;
   pdfPath: string;
