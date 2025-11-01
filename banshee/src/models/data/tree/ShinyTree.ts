@@ -1,13 +1,24 @@
-import { ShinyModel } from '../../ShinyModel';
+import { ShinyBlock } from '../../ShinyBlock';
+import { ShinyState } from '../../ShinyState';
 
-export class ShinyTree implements ShinyModel {
+export class ShinyTree implements ShinyBlock {
+  id?: string;
+  shinyType: string = 'tree';
+  state?: ShinyState;
+
   label: string;
   children: ShinyTree[];
-  type: string = 'tree';
 
-  constructor(label: string, children: ShinyTree[] = []) {
+  constructor(
+    label: string,
+    children: ShinyTree[] = [],
+    id?: string,
+    state?: ShinyState
+  ) {
     this.label = label;
     this.children = children;
+    this.id = id;
+    this.state = state;
   }
 
   isLeaf(): boolean {

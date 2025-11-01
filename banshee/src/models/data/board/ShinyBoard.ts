@@ -1,7 +1,7 @@
-import { ShinyModel } from "../../ShinyModel";
+import { ShinyBlock } from "../../ShinyBlock";
 import { ShinyBoardList } from "./ShinyBoardList";
 
-export interface ShinyBoard extends ShinyModel {
+export interface ShinyBoard extends ShinyBlock {
   id: string;
   name: string;
   description: string;

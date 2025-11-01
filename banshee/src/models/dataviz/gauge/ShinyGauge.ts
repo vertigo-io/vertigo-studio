@@ -1,6 +1,6 @@
-import { ShinyModel } from '../../ShinyModel';
+import { ShinyBlock } from '../../ShinyBlock';
 
-export interface ShinyGauge extends ShinyModel {
+export interface ShinyGauge extends ShinyBlock {
   title: string;
   value: number;
   maxValue: number;

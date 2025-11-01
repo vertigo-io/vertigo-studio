@@ -1,7 +1,7 @@
-import { ShinyModel } from '../../ShinyModel';
+import { ShinyBlock } from '../../ShinyBlock';
 import type { ShinyTimelineItem } from "./ShinyTimelineItem";
 
-export interface ShinyTimeline extends ShinyModel{
+export interface ShinyTimeline extends ShinyBlock{
     title?: string;
     items: ShinyTimelineItem[];
 }

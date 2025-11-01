@@ -1,7 +1,7 @@
-import { ShinyModel } from '../../ShinyModel';
+import { ShinyBlock } from '../../ShinyBlock';
 import { ShinyTableCell } from './cell/ShinyTableCell';
 
-export interface ShinyTable extends ShinyModel {
+export interface ShinyTable extends ShinyBlock {
   title: string;
   noDataFound: string;
   header: string[];

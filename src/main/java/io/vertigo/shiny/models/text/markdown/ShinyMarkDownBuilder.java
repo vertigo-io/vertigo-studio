@@ -1,4 +1,4 @@
-package io.vertigo.shiny.components.text.markdown;
+package io.vertigo.shiny.models.text.markdown;
 
 import java.io.IOException;
 import java.nio.file.Files;

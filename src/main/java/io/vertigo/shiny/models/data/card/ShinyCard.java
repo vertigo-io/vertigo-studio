@@ -3,7 +3,7 @@ package io.vertigo.shiny.models.data.card;
 import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.ShinyBlock;
 
 public record ShinyCard(
 		UUID id,
@@ -16,7 +16,7 @@ public record ShinyCard(
 		String icon,
 		String badgeLabel,
 		String badgeColor,
-		ShinyCardFormat format) implements ShinyModel {
+		ShinyCardFormat format) implements ShinyBlock {
 
 	public ShinyCard {
 		Assertion.check().isNotNull(id);

@@ -2,19 +2,13 @@ package io.vertigo.shiny.models.data.board;
 
 import java.util.UUID;
 
-import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.ShinyElement;
 
 public record ShinyBoardCard(
 		UUID id,
 		String title,
 		String description
-//		Instant createdAt,
-//		Instant dueDate,
-//		List<Label> labels,
-//		List<Checklist> checklists,
-//		List<Comment> comments,
-//		List<Attachment> attachments
-) implements ShinyModel {
+) implements ShinyElement {
 
 	@Override
 	public String shinyType() {

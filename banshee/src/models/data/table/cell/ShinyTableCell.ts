@@ -1,5 +1,5 @@
-import { ShinyModel } from "../../../ShinyModel";
+import { ShinyElement } from "../../../ShinyElement";
 
-export interface ShinyTableCell extends ShinyModel {
+export interface ShinyTableCell extends ShinyElement {
   shinyType: string;
 }

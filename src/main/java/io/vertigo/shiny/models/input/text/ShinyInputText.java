@@ -5,7 +5,7 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 
 import io.vertigo.shiny.ShinyMagicBox;
-import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.ShinyElement;
 
 public record ShinyInputText(
 		UUID id,
@@ -14,5 +14,5 @@ public record ShinyInputText(
 		Pattern validationPattern,
 		List<String> suggestions,
 		String defaultValue,
-		ShinyMagicBox<String> value) implements ShinyModel {
+		ShinyMagicBox<String> value) implements ShinyElement {
 }

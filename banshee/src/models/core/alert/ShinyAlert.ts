@@ -1,7 +1,7 @@
-import { ShinyModel } from '../../ShinyModel';
+import { ShinyBlock } from '../../ShinyBlock';
 import type { ShinyAlertType } from "./ShinyAlertType";
 
-export interface ShinyAlert extends ShinyModel {
+export interface ShinyAlert extends ShinyBlock {
     alertType: ShinyAlertType;
     title?: string;
     content: string;

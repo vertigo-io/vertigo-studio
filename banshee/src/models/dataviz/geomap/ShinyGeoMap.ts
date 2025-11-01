@@ -1,7 +1,7 @@
-import { ShinyModel } from '../../ShinyModel';
+import { ShinyBlock } from '../../ShinyBlock';
 import { ShinyGeoPoint } from './ShinyGeoPoint';
 
-export interface ShinyGeoMap extends ShinyModel {
+export interface ShinyGeoMap extends ShinyBlock {
   title: string;
   geoPoints: ShinyGeoPoint[];
 }

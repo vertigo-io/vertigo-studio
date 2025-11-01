@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.ShinyBlock;
 
-public record ShinyTree(UUID id, String label, List<ShinyTree> children) implements ShinyModel {
+public record ShinyTree(UUID id, String label, List<ShinyTree> children) implements ShinyBlock {
 
 	public ShinyTree {
 		Assertion.check()
