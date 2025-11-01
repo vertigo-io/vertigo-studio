@@ -2,7 +2,7 @@ package io.vertigo.shiny.models.text.rating;
 
 import java.util.UUID;
 
-import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.ShinyElement;
 
 public record ShinyRating(
 		UUID id,
@@ -14,5 +14,5 @@ public record ShinyRating(
 		boolean showPercentage,
 		boolean showBox,
 		String separator,
-		boolean allowHalfRating) implements ShinyModel {
+		boolean allowHalfRating) implements ShinyElement {
 }

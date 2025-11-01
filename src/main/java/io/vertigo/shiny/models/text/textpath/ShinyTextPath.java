@@ -1,11 +1,11 @@
 package io.vertigo.shiny.models.text.textpath;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.ShinyElement;
 
 public record ShinyTextPath(
 		String path,
-		String separator) implements ShinyModel {
+		String separator) implements ShinyElement {
 
 	public ShinyTextPath {
 		Assertion.check()
