@@ -1,7 +1,7 @@
-import { ShinyElement } from '../../../ShinyElement';
+import { ShinyModel } from '../../../ShinyModel';
 import { ShinyState } from '../../../ShinyState';
 
-export class ShinyMultiSelection implements ShinyElement {
+export class ShinyMultiSelection implements ShinyModel {
   id?: string;
   shinyType: string = 'multiSelection';
   state?: ShinyState;

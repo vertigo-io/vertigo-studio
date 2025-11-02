@@ -1,6 +1,6 @@
-import { ShinyElement } from '../../../ShinyElement';
+import { ShinyModel } from '../../../ShinyModel';
 
-export interface ShinyInputText extends ShinyElement {
+export interface ShinyInputText extends ShinyModel {
   label: string;
   required: boolean;
   validationPattern?: string;

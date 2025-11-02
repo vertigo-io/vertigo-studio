@@ -1,7 +1,7 @@
-import { ShinyElement } from '../../ShinyElement';
+import { ShinyModel } from '../../ShinyModel';
 import { ShinyStatusType } from './ShinyStatusType';
 
-export interface ShinyStatus extends ShinyElement {
+export interface ShinyStatus extends ShinyModel {
   title: string;
   types: ShinyStatusType[];
 }

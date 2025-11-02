@@ -1,8 +1,8 @@
-import { ShinyElement } from '../../ShinyElement';
+import { ShinyModel } from '../../ShinyModel';
 import { ShinyRatingScale, getShinyRatingMaxValue } from './ShinyRatingScale';
 import { ShinyState } from '../../ShinyState';
 
-export class ShinyRating implements ShinyElement {
+export class ShinyRating implements ShinyModel {
   id?: string;
   shinyType: string = 'rating';
   state?: ShinyState;

@@ -3,7 +3,7 @@ package io.vertigo.shiny.models.input.slider;
 import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.models.ShinyElement;
+import io.vertigo.shiny.models.ShinyModel;
 
 public record ShinySlider(
 		UUID id,
@@ -13,7 +13,7 @@ public record ShinySlider(
 		double step,
 		double value,
 		String color,
-		boolean thumbLabel) implements ShinyElement {
+		boolean thumbLabel) implements ShinyModel {
 
 	public ShinySlider {
 		Assertion.check().isNotNull(id);

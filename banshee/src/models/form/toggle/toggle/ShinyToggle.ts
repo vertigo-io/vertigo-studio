@@ -1,7 +1,7 @@
-import { ShinyElement } from '../../../ShinyElement';
+import { ShinyModel } from '../../../ShinyModel';
 import { ShinyToggleType } from './ShinyToggleType';
 
-export interface ShinyToggle extends ShinyElement {
+export interface ShinyToggle extends ShinyModel {
   label: string;
   value: boolean;
   toggleType: ShinyToggleType;

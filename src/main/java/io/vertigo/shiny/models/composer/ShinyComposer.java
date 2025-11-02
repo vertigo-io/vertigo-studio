@@ -8,14 +8,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shiny.Shiny;
-import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.ShinyBlock;
 import io.vertigo.shiny.models.dataviz.chart.ShinyChartSerie;
 import io.vertigo.shiny.models.dataviz.chart.ShinyChartType;
 
 public final class ShinyComposer {
 	private static final ObjectMapper MAPPER = new ObjectMapper();
 
-	public ShinyModel compose(final String jsonInput) {
+	public ShinyBlock compose(final String jsonInput) {
 		System.out.println(">> before " + jsonInput);
 		//clean
 		int start = jsonInput.indexOf('{');
