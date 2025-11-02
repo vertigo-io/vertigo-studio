@@ -476,6 +476,24 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 							new ShinyIconCell(UUID.randomUUID(), "mdi-information", "blue", "24px"),
 							new ShinyBadgeCell(UUID.randomUUID(), "Info", "blue"))
 					.build();
+			case "grid" -> Shiny.grid()
+					.withColumns(2)
+					.addContent(Shiny.card()
+							.withTitle("Card 1")
+							.withDescription("This is the first card in the grid.")
+							.build())
+					.addContent(Shiny.card()
+							.withTitle("Card 2")
+							.withDescription("This is the second card in the grid.")
+							.build())
+					.addContent(Shiny.paragraph()
+							.withText("This is a paragraph in the grid.")
+							.build())
+					.addContent(Shiny.alert()
+							.withAlertType(ShinyAlertType.WARNING)
+							.withContent("This is an alert in the grid.")
+							.build())
+					.build();
 			case "board" -> new CrmInstallationBoard().execute();
 			default -> new ShinyErrorBuilder().withText("unknown command :" + command).build();
 		};

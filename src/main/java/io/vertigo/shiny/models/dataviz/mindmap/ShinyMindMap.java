@@ -3,12 +3,12 @@ package io.vertigo.shiny.models.dataviz.mindmap;
 import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.ShinyBlock;
 
 public record ShinyMindMap(
 		UUID id,
 		String title,
-		ShinyMindMapNode rootNode) implements ShinyModel {
+		ShinyMindMapNode rootNode) implements ShinyBlock {
 
 	public ShinyMindMap {
 		Assertion.check().isNotNull(id);

@@ -3,11 +3,11 @@ package io.vertigo.shiny.models.dataviz.sankey;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.ShinyBlock;
 
 public record ShinySankey(
 		String title,
-		List<ShinySankeyLink> data) implements ShinyModel {
+		List<ShinySankeyLink> data) implements ShinyBlock {
 
 	public ShinySankey {
 		Assertion.check()

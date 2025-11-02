@@ -2,13 +2,13 @@ package io.vertigo.shiny.models.dataviz.chart;
 
 import java.util.List;
 
-import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.ShinyBlock;
 
 public record ShinyChart(
 		String title,
 		ShinyChartType chartType,
 		List<String> labels,
-		List<ShinyChartSerie> series) implements ShinyModel {
+		List<ShinyChartSerie> series) implements ShinyBlock {
 
 	@Override
 	public String shinyType() {

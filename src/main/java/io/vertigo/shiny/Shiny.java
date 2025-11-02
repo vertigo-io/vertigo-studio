@@ -178,7 +178,13 @@ public final class Shiny {
 
 	public static ShinyOrganizationBuilder organization() {
 		return new ShinyOrganizationBuilder();
-	} //	public static ShinyComposer composer() {
+	}
+
+	public static ShinyGridBuilder grid() {
+		return new ShinyGridBuilder();
+	}
+
+	//	public static ShinyComposer composer() {
 		//		return new ShinyComposer();
 		//	}
 
