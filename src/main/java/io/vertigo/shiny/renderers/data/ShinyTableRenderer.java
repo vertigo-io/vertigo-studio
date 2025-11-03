@@ -9,6 +9,7 @@ import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.data.table.ShinyTable;
+import io.vertigo.shiny.models.data.table.cell.ShinyTableCell;
 import io.vertigo.shiny.renderers.ShinyModelRenderer;
 
 public final class ShinyTableRenderer implements ShinyModelRenderer<ShinyTable> {
@@ -155,11 +156,11 @@ public final class ShinyTableRenderer implements ShinyModelRenderer<ShinyTable> 
 		writer.println(right);
 	}
 
-	private static boolean isColumnNumeric(final List<String[]> rows, final int columnIndex) {
+	private static boolean isColumnNumeric(final List<ShinyTableCell[]> rows, final int columnIndex) {
 		int numericCount = 0;
 		int totalNonNullValues = 0;
 
-		for (final String[] row : rows) {
+		for (final ShinyTableCell[] row : rows) {
 			if (columnIndex < row.length && row[columnIndex] != null && !row[columnIndex].trim().isEmpty()) {
 				totalNonNullValues++;
 				if (isNumeric(row[columnIndex])) {

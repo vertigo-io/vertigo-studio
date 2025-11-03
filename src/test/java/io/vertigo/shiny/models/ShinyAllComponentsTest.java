@@ -328,7 +328,7 @@ public class ShinyAllComponentsTest {
 
 	private static void testContainer(final ShinyWriter writer) {
 		writer.println(CYAN.fg("Component: ShinyContainer"))
-				.println("Parameters: components=[table, paragraph]");
+				.println("Parameters: models=[table, paragraph]");
 		//---
 		Shiny.render(
 				Shiny.container()

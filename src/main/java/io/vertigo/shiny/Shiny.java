@@ -5,7 +5,6 @@ import java.nio.charset.StandardCharsets;
 
 import io.vertigo.shiny.mermaid.ShinyMermaidServer;
 import io.vertigo.shiny.models.core.alert.ShinyAlertBuilder;
-import io.vertigo.shiny.models.core.container.ShinyContainerBuilder;
 import io.vertigo.shiny.models.core.error.ShinyErrorBuilder;
 import io.vertigo.shiny.models.data.board.ShinyBoardBuilder;
 import io.vertigo.shiny.models.data.board.ShinyBoardCardBuilder;
@@ -29,6 +28,7 @@ import io.vertigo.shiny.models.dataviz.timeline.ShinyTimelineBuilder;
 import io.vertigo.shiny.models.input.multiselection.ShinyMultiSelectionBuilder;
 import io.vertigo.shiny.models.input.slider.ShinySliderBuilder;
 import io.vertigo.shiny.models.input.text.ShinyInputTextBuilder;
+import io.vertigo.shiny.models.layout.container.ShinyContainerBuilder;
 import io.vertigo.shiny.models.layout.grid.ShinyGridBuilder;
 import io.vertigo.shiny.models.live.progressbar.ShinyProgressBarBuilder;
 import io.vertigo.shiny.models.live.spinner.ShinySpinnerBuilder;

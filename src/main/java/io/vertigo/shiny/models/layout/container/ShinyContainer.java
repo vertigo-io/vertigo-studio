@@ -1,4 +1,4 @@
-package io.vertigo.shiny.models.core.container;
+package io.vertigo.shiny.models.layout.container;
 
 import java.util.List;
 import java.util.UUID;
@@ -8,7 +8,7 @@ import io.vertigo.shiny.models.ShinyModel;
 
 public record ShinyContainer(
 		UUID id,
-		List<ShinyModel> components) implements ShinyModel {
+		List<ShinyModel> models) implements ShinyModel {
 
 	public ShinyContainer {
 		Assertion.check().isNotNull(id);
