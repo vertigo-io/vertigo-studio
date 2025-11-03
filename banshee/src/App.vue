@@ -133,7 +133,7 @@ onMounted(() => {
   }, 100);
 });
 
-const messageRefs = ref({}); // To store references to message content wrappers
+const messageRefs = ref<any>({}); // To store references to message content wrappers
 const hoveredMessageId = ref<string | null>(null);
 
 const toggleFullscreen = (messageId: string) => {
