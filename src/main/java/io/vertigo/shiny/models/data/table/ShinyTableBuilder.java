@@ -71,6 +71,15 @@ public final class ShinyTableBuilder implements Builder<ShinyTable> {
 		return this;
 	}
 
+	public ShinyTableBuilder addAllRows(final List<String[]> rows) {
+		Assertion.check().isNotNull(rows);
+		//---
+		for (String[] row : rows) {
+			this.addRow(row);
+		}
+		return this;
+	}
+
 	public ShinyTableBuilder addAllRowsOfCells(final List<List<ShinyTableCell>> rows) {
 		Assertion.check().isNotNull(rows);
 		//---

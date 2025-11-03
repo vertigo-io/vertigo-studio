@@ -1,4 +1,4 @@
-package io.vertigo.shiny.models.layout;
+package io.vertigo.shiny.models.layout.grid;
 
 import java.util.ArrayList;
 import java.util.List;

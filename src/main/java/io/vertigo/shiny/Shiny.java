@@ -29,7 +29,7 @@ import io.vertigo.shiny.models.dataviz.timeline.ShinyTimelineBuilder;
 import io.vertigo.shiny.models.input.multiselection.ShinyMultiSelectionBuilder;
 import io.vertigo.shiny.models.input.slider.ShinySliderBuilder;
 import io.vertigo.shiny.models.input.text.ShinyInputTextBuilder;
-import io.vertigo.shiny.models.layout.ShinyGridBuilder;
+import io.vertigo.shiny.models.layout.grid.ShinyGridBuilder;
 import io.vertigo.shiny.models.live.progressbar.ShinyProgressBarBuilder;
 import io.vertigo.shiny.models.live.spinner.ShinySpinnerBuilder;
 import io.vertigo.shiny.models.media.image.ShinyImageBuilder;
