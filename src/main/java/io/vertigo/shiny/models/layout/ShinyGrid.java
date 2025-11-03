@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.models.ShinyBlock;
 import io.vertigo.shiny.models.ShinyLayout;
 import io.vertigo.shiny.models.ShinyModel;
 

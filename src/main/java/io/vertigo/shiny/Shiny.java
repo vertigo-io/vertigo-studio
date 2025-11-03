@@ -29,10 +29,11 @@ import io.vertigo.shiny.models.dataviz.timeline.ShinyTimelineBuilder;
 import io.vertigo.shiny.models.input.multiselection.ShinyMultiSelectionBuilder;
 import io.vertigo.shiny.models.input.slider.ShinySliderBuilder;
 import io.vertigo.shiny.models.input.text.ShinyInputTextBuilder;
+import io.vertigo.shiny.models.layout.ShinyGridBuilder;
 import io.vertigo.shiny.models.live.progressbar.ShinyProgressBarBuilder;
 import io.vertigo.shiny.models.live.spinner.ShinySpinnerBuilder;
-import io.vertigo.shiny.models.media.pdf.ShinyPdfBuilder;
 import io.vertigo.shiny.models.media.image.ShinyImageBuilder;
+import io.vertigo.shiny.models.media.pdf.ShinyPdfBuilder;
 import io.vertigo.shiny.models.media.rss.ShinyRssBuilder;
 import io.vertigo.shiny.models.media.youtube.ShinyYoutubeBuilder;
 import io.vertigo.shiny.models.text.chip.ShinyChipBuilder;
@@ -185,8 +186,8 @@ public final class Shiny {
 	}
 
 	//	public static ShinyComposer composer() {
-		//		return new ShinyComposer();
-		//	}
+	//		return new ShinyComposer();
+	//	}
 
 	//---dataviz
 	public static ShinyChartBuilder barChart() {
