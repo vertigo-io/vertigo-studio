@@ -35,6 +35,7 @@ import VShinyFigletComponent from './text/v-shiny-figlet-component.vue';
 import VShinyParagraphComponent from './text/v-shiny-paragraph-component.vue';
 import VShinyTextPathComponent from './text/v-shiny-text-path-component.vue';
 import VShinyTitleComponent from './text/v-shiny-title-component.vue';
+import VShinyGridComponent from './layout/v-shiny-grid-component.vue';
 
 // Table Cell Components
 import VShinyStringCell from './data/table/cell/VShinyStringCell.vue';
@@ -88,6 +89,7 @@ export class ShinyRegistry {
     this.register('ShinyParagraph', VShinyParagraphComponent);
     this.register('ShinyTextPath', VShinyTextPathComponent);
     this.register('ShinyTitle', VShinyTitleComponent);
+    this.register('ShinyGrid', VShinyGridComponent);
 
     // Register Table Cell Components
     this.register('ShinyStringCell', VShinyStringCell);

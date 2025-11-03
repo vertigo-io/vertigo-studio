@@ -15,8 +15,8 @@
                @mouseover="hoveredMessageId = message.id"
                @mouseleave="hoveredMessageId = null">
             <div class="message-content-wrapper" :ref="el => message.id && (messageRefs[message.id] = el)">
-              <component :is="shinyRegistry.resolve(message.component.shinyType)" 
-              :data="message.component"></component>
+              <component :is="shinyRegistry.resolve(message.model.shinyType)" 
+              :data="message.model"></component>
               <button v-if="hoveredMessageId === message.id" 
                       @click="toggleFullscreen(message.id)" 
                       class="fullscreen-button">
@@ -90,8 +90,6 @@ const submitPrompt = () => {
     prompt.value = '';
   }
 };
-
-
 
 const handleIncomingEvent = (event: MessageEvent) => {
   isLoading.value = false; // Stop loading animation

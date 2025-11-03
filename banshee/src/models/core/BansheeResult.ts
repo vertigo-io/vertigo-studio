@@ -1,8 +1,6 @@
-import { ShinyElement } from "../ShinyElement";
-import { ShinyBlock } from "../ShinyBlock";
-import { ShinyLayout } from "../ShinyLayout";
+import { ShinyModel } from "../ShinyModel";
 
 export interface BansheeResult {
     action: string;
-    model: ShinyElement | ShinyBlock | ShinyLayout;
+    model: ShinyModel;
 }
