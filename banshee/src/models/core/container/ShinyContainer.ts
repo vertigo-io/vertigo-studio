@@ -1,7 +1,6 @@
 import { ShinyLayout } from '../../ShinyLayout';
-import { ShinyBlock } from '../../ShinyBlock';
-import { ShinyElement } from '../../ShinyElement';
+import { ShinyModel } from '../../ShinyModel';
 
 export interface ShinyContainer extends ShinyLayout {
-  content: (ShinyBlock | ShinyElement | ShinyLayout)[];
+  content: ShinyModel[];
 }

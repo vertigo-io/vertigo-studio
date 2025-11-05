@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { ShinyProgressBarCell } from '../../../models/data/table/cell/ShinyProgressBarCell';
+import { ShinyProgressBarCell } from '../../../../models/data/table/cell/ShinyProgressBarCell';
 
 defineProps<{
   data: ShinyProgressBarCell;

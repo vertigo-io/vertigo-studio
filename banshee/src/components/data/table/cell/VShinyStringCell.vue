@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { ShinyStringCell } from '../../../models/data/table/cell/ShinyStringCell';
+import { ShinyStringCell } from '../../../../models/data/table/cell/ShinyStringCell';
 
 defineProps<{
   data: ShinyStringCell;

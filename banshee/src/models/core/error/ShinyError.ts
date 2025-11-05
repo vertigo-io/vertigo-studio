@@ -1,5 +1,5 @@
-import { ShinyElement } from '../../ShinyElement';
+import { ShinyBlock } from '@/models/ShinyBlock';
 
-export interface ShinyError extends ShinyElement {
+export interface ShinyError extends ShinyBlock {
   text: string;
 }

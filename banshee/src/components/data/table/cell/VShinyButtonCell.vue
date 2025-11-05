@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { ShinyButtonCell } from '../../../models/data/table/cell/ShinyButtonCell';
+import { ShinyButtonCell } from '../../../../models/data/table/cell/ShinyButtonCell';
 
 const props = defineProps<{
   data: ShinyButtonCell;

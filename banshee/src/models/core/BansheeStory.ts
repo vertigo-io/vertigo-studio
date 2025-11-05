@@ -1,7 +1,5 @@
 import { BansheeMessage } from './BansheeMessage';
 import { ShinyModel } from '../ShinyModel';
-import { ShinyBlock } from '../ShinyBlock';
-import { ShinyLayout } from '../ShinyLayout';
 
 export class BansheeStory {
   private _messages: BansheeMessage[] = [];

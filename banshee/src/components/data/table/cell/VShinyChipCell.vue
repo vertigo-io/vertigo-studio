@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { ShinyChipCell } from '../../../models/data/table/cell/ShinyChipCell';
+import { ShinyChipCell } from '../../../../models/data/table/cell/ShinyChipCell';
 
 defineProps<{
   data: ShinyChipCell;

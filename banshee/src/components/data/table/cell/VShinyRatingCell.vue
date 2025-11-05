@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { ShinyRatingCell } from '../../../models/data/table/cell/ShinyRatingCell';
+import { ShinyRatingCell } from '../../../../models/data/table/cell/ShinyRatingCell';
 
 defineProps<{
   data: ShinyRatingCell;
