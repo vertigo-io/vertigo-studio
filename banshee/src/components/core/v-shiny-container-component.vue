@@ -1,10 +1,10 @@
 <template>
   <div class="shiny-container">
     <div class="container-content">
-      <template v-for="(component, index) in data.components" :key="index">
+      <template v-for="(component, index) in data.content" :key="index">
         <!-- TEST-->
         <component 
-        :is="shinyRegistry.resolve(component.type)" 
+        :is="shinyRegistry.resolve(component.shinyType)" 
         :data="component"></component>
       </template>
     </div>

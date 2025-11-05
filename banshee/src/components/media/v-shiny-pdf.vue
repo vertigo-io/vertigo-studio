@@ -62,7 +62,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, watch, onBeforeUnmount } from 'vue';
-import { ShinyPdfComponent } from '../../models/media/pdf/ShinyPdfComponent';
+import { ShinyPdf } from '../../models/media/pdf/ShinyPdf';
 
 // Declare PDF.js types if not available globally
 declare global {
@@ -78,7 +78,7 @@ interface PdfDocument {
 }
 
 const props = defineProps<{
-  data: ShinyPdfComponent
+  data: ShinyPdf
 }>()
 
 const pdfDoc = ref<PdfDocument | null>(null);

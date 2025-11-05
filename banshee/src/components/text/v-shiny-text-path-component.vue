@@ -1,6 +1,5 @@
 <template>
   <div class="chart-container">
-    <div class="table-title">{{ data.title || 'Text Path' }}</div>
     <div class="shiny-text-path" v-html="pathHtml"></div>
   </div>
 </template>
