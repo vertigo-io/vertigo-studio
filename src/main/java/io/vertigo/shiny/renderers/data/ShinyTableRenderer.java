@@ -9,6 +9,7 @@ import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.data.table.ShinyTable;
+import io.vertigo.shiny.models.data.table.cell.ShinyStringCell;
 import io.vertigo.shiny.models.data.table.cell.ShinyTableCell;
 import io.vertigo.shiny.renderers.ShinyModelRenderer;
 
@@ -46,11 +47,14 @@ public final class ShinyTableRenderer implements ShinyModelRenderer<ShinyTable> 
 			isNumericColumn[i] = isColumnNumeric(shinyTable.rows(), i);
 		}
 
-		for (final String[] row : shinyTable.rows()) {
-			Assertion.check().isTrue(row.length == columns, "Header and rows must have the same length");
+		for (final List<ShinyTableCell> row : shinyTable.rows()) {
+			Assertion.check().isTrue(row.size() == columns, "Header and rows must have the same length");
 			final String[] formattedRow = new String[columns];
 			for (int colIndex = 0; colIndex < columns; colIndex++) {
-				final String value = row[colIndex];
+				final ShinyTableCell cell = row.get(colIndex);
+				final String value = cell != null
+						? buildValue(cell)
+						: null;
 				if (value != null && isNumericColumn[colIndex] && isNumeric(value)) {
 					formattedRow[colIndex] = formatNumber(value, numberFormat);
 				} else {
@@ -156,14 +160,22 @@ public final class ShinyTableRenderer implements ShinyModelRenderer<ShinyTable> 
 		writer.println(right);
 	}
 
-	private static boolean isColumnNumeric(final List<ShinyTableCell[]> rows, final int columnIndex) {
+	private static String buildValue(final ShinyTableCell cell) {
+		if (cell instanceof ShinyStringCell s) {
+			return s.value();
+		} else {
+			return cell.toString();
+		}
+	}
+
+	private static boolean isColumnNumeric(final List<List<ShinyTableCell>> rows, final int columnIndex) {
 		int numericCount = 0;
 		int totalNonNullValues = 0;
 
-		for (final ShinyTableCell[] row : rows) {
-			if (columnIndex < row.length && row[columnIndex] != null && !row[columnIndex].trim().isEmpty()) {
+		for (final List<ShinyTableCell> row : rows) {
+			if (columnIndex < row.size() && row.get(columnIndex) != null && !buildValue(row.get(columnIndex)).trim().isEmpty()) {
 				totalNonNullValues++;
-				if (isNumeric(row[columnIndex])) {
+				if (isNumeric(buildValue(row.get(columnIndex)))) {
 					numericCount++;
 				}
 			}
