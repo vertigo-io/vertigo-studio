@@ -1,4 +1,4 @@
-package io.vertigo.shiny.models.text.markdown;
+package io.vertigo.shiny.renderers.text;
 
 import java.util.Collections;
 
@@ -10,6 +10,7 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.ShinyRenderer; // New import
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyComponent;
+import io.vertigo.shiny.models.text.markdown.ShinyMarkDown;
 
 public final class ShinyMarkDownRenderer implements ShinyRenderer<ShinyMarkDown> {
 

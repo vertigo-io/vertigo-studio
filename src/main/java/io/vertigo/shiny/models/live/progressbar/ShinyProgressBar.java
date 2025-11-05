@@ -43,10 +43,4 @@ public final class ShinyProgressBar extends ShinyLiveComponent<ShinyProgressBar>
 	synchronized protected void draw() {
 		new ShinyProgressBarRenderer().render(this);
 	}
-
-	@Override
-	public String type() {
-		return "ShinyProgressBar";
-	}
-
 }

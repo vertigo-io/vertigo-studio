@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
 import io.vertigo.shiny.mermaid.ShinyMermaidServer;
+import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.core.alert.ShinyAlertBuilder;
 import io.vertigo.shiny.models.core.error.ShinyErrorBuilder;
 import io.vertigo.shiny.models.data.board.ShinyBoardBuilder;
@@ -45,6 +46,7 @@ import io.vertigo.shiny.models.text.status.ShinyStatusBuilder;
 import io.vertigo.shiny.models.text.textpath.ShinyTextPathBuilder;
 import io.vertigo.shiny.models.text.title.ShinyTitleBuilder;
 import io.vertigo.shiny.models.text.toggle.ShinyToggleBuilder;
+import io.vertigo.shiny.renderers.ShinySuperRenderer;
 
 public final class Shiny {
 	private PrintWriter writer = new PrintWriter(System.out, true, StandardCharsets.UTF_8);
@@ -267,9 +269,9 @@ public final class Shiny {
 		return new ShinyBoardCardBuilder();
 	}
 
-	//	private static ShinySuperRenderer RENDERER = new ShinySuperRenderer();
-	//
-	//	public static <S extends ShinyModel> void render(S component) {
-	//		RENDERER.render(component);
-	//	}
+	private static ShinySuperRenderer RENDERER = new ShinySuperRenderer();
+
+	public static <S extends ShinyModel> void render(S component) {
+		RENDERER.render(component);
+	}
 }

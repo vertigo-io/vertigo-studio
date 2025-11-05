@@ -1,4 +1,4 @@
-package io.vertigo.shiny.models.text.markdown;
+package io.vertigo.shiny.renderers.text;
 
 import java.util.ArrayList;
 import java.util.List;
