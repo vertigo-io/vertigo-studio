@@ -25,8 +25,4 @@ public final class VXDomainType {
 	public String toString() {
 		return "DomainType{name='%s', dataType='%s'}".formatted(name, dataType);
 	}
-
-	public static VXDomainTypeBuilder builder(final String name, final VXDataType dataType) {
-		return new VXDomainTypeBuilder(name, dataType);
-	}
 }

@@ -39,6 +39,13 @@ public final class ShinyTreeBuilder implements Builder<ShinyTree> {
 		return this;
 	}
 
+	public ShinyTreeBuilder addAllTrees(List<ShinyTree> subTrees) {
+		Assertion.check().isNotNull(subTrees);
+		//---
+		_children.addAll(subTrees);
+		return this;
+	}
+
 	public ShinyTreeBuilder addTree(ShinyTree subTree) {
 		Assertion.check().isNotNull(subTree);
 		//---
