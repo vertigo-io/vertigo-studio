@@ -11,8 +11,7 @@
         <h3 class="rss-headline">
           <a :href="item.link" target="_blank" rel="noopener noreferrer">{{ item.title }}</a>
         </h3>
-        <p class="rss-summary">{{ item.description ? summary(item.description) }}</p>
-        <p class="rss-meta">
+                  <p class="rss-summary">{{ item.description ? summary(item.description) : '' }}</p>        <p class="rss-meta">
           <span v-if="item.author">By {{ item.author }}</span>
           <span v-if="item.pubDate"> - {{ item.pubDate }}</span>
         </p>
