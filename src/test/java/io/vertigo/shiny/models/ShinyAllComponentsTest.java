@@ -1,7 +1,5 @@
 package io.vertigo.shiny.models;
 
-import static io.vertigo.shiny.renderers.ShinyIcon.FILE;
-import static io.vertigo.shiny.renderers.ShinyIcon.FOLDER_OPEN;
 import static io.vertigo.shiny.style.ShinyColors.BLUE_BRIGHT;
 import static io.vertigo.shiny.style.ShinyColors.CYAN;
 import static io.vertigo.shiny.style.ShinyColors.YELLOW;
@@ -10,10 +8,11 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 import java.util.Scanner;
+import java.util.UUID;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.models.dataviz.bar.ShinySortMode;
+import io.vertigo.shiny.models.data.table.cell.ShinyStringCell;
 import io.vertigo.shiny.models.input.multiselection.ShinyMultiSelection;
 import io.vertigo.shiny.models.text.status.ShinyStatusType;
 
@@ -89,9 +88,8 @@ public class ShinyAllComponentsTest {
 		Shiny.render(
 				Shiny.barChart()
 						.withTitle("Monthly Sales")
-						.withHeader("Jan", "Feb", "Mar")
-						.withValues(100, 120, 90)
-						.withSort(ShinySortMode.VALUE_DESC)
+						.withLabels("Jan", "Feb", "Mar")
+						.addSerie("Première", 100d, 120d, 90d)
 						.build());
 		waitForEnter(writer);
 	}
@@ -240,9 +238,12 @@ public class ShinyAllComponentsTest {
 				Shiny.table()
 						.withTitle("Users")
 						.withHeader("FirstName", "LastName", "Age")
-						.addAllRows(
-								new String[] { "John", "doe", "30" },
-								new String[] { "Jane", "doe", "25" })
+						.addRow(new ShinyStringCell(UUID.randomUUID(), "John"),
+								new ShinyStringCell(UUID.randomUUID(), "doe"),
+								new ShinyStringCell(UUID.randomUUID(), "30"))
+						.addRow(new ShinyStringCell(UUID.randomUUID(), "Jane"),
+								new ShinyStringCell(UUID.randomUUID(), "doe"),
+								new ShinyStringCell(UUID.randomUUID(), "32"))
 						.build());
 		waitForEnter(writer);
 	}
@@ -285,11 +286,11 @@ public class ShinyAllComponentsTest {
 		writer.println(CYAN.fg("Component: ShinyTree"))
 				.println("Parameters: label='Files', nodes=['src', 'main', 'file.txt'] with icons");
 		//---
-		final var tree = Shiny.tree("Files").build();
-		tree.getRoot().addChild("src", FOLDER_OPEN)
-				.addChild("main", FOLDER_OPEN)
-				.addChild("file.txt", FILE);
-		Shiny.render(tree);
+		final var treeBuilder = Shiny.tree().withLabel("Files");
+		treeBuilder.addTree("src")
+				.addLeaf("main")
+				.addLeaf("file.txt");
+		Shiny.render(treeBuilder.build());
 		waitForEnter(writer);
 	}
 
@@ -336,9 +337,12 @@ public class ShinyAllComponentsTest {
 								Shiny.table()
 										.withTitle("Users")
 										.withHeader("FirstName", "LastName", "Age")
-										.addAllRows(
-												new String[] { "John", "doe", "30" },
-												new String[] { "Jane", "doe", "25" })
+										.addRow(new ShinyStringCell(UUID.randomUUID(), "John"),
+												new ShinyStringCell(UUID.randomUUID(), "doe"),
+												new ShinyStringCell(UUID.randomUUID(), "30"))
+										.addRow(new ShinyStringCell(UUID.randomUUID(), "Jane"),
+												new ShinyStringCell(UUID.randomUUID(), "doe"),
+												new ShinyStringCell(UUID.randomUUID(), "32"))
 										.build())
 						.addComponent(Shiny.paragraph()
 								.withText("This is a simple paragraph.")
