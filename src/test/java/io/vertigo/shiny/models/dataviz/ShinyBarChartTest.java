@@ -2,7 +2,6 @@ package io.vertigo.shiny.models.dataviz;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
-import io.vertigo.shiny.models.dataviz.bar.ShinySortMode;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyBarChartTest {
@@ -18,8 +17,8 @@ public class ShinyBarChartTest {
 		Shiny.render(
 				Shiny.barChart()
 						.withTitle("Monthly Sales")
-						.withHeader("Jan", "Feb", "Mar", "Apr", "May")
-						.withValues(100, 120, 90, 150, 110)
+						.withLabels("Jan", "Feb", "Mar", "Apr", "May")
+						.addSerie("sales", 100d, 120d, 90d, 150d, 110d)
 						.build()); // Max bar length of 50 characters
 		writer.println();
 	}
@@ -29,17 +28,14 @@ public class ShinyBarChartTest {
 		Shiny.render(
 				Shiny.barChart()
 						.withTitle("Population in European Countries")
-						.withHeader("Austria", "Belgium", "Bulgaria", "Croatia", "Cyprus",
+						.withLabels("Austria", "Belgium", "Bulgaria", "Croatia", "Cyprus",
 								"Czech Republic", "Denmark", "Estonia", "Finland", "France",
 								"Germany", "Greece", "Hungary", "Ireland", "Italy",
 								"Latvia", "Lithuania", "Luxembourg", "Malta", "Netherlands",
 								"Poland", "Portugal", "Romania", "Slovakia", "Slovenia", "Spain", "Sweden")
-						.withValues(9000000, 11700000, 6400000, 3900000, 920000,
-								10900000, 5900000, 1300000, 5600000, 68000000,
-								84000000, 10200000, 9600000, 5300000, 59000000,
-								1800000, 2800000, 660000, 520000, 17800000,
-								37600000, 10300000, 19000000, 5400000, 2100000, 48000000, 10600000)
-						.withSort(ShinySortMode.VALUE_DESC)
+						.addSerie("population", 9000000d, 11700000d, 6400000d, 3900000d, 920000d,
+								10900000d, 5900000d, 1300000d, 5600000d, 68000000d,
+								37600000d, 10300000d, 19000000d, 5400000d, 2100000d, 48000000d, 10600000d)
 						.build());
 		writer.println();
 	}
@@ -48,16 +44,15 @@ public class ShinyBarChartTest {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Bar Chart with Different Sort Modes ---"));
 		// Original data
 		final String[] headers = { "Apple", "Banana", "Cherry", "Date" };
-		final int[] values = { 50, 20, 80, 30 };
+		final Double[] values = { 50d, 20d, 80d, 30d };
 
 		// No sort
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- No Sort ---"));
 		Shiny.render(
 				Shiny.barChart()
 						.withTitle("Fruits (No Sort)")
-						.withHeader(headers)
-						.withValues(values)
-						.withSort(ShinySortMode.NO)
+						.withLabels(headers)
+						.addSerie("", values)
 						.build());
 		writer.println();
 
@@ -66,9 +61,9 @@ public class ShinyBarChartTest {
 		Shiny.render(
 				Shiny.barChart()
 						.withTitle("Fruits (Value Asc)")
-						.withHeader(headers)
-						.withValues(values)
-						.withSort(ShinySortMode.VALUE_ASC)
+						.withLabels(headers)
+						.addSerie("", values)
+						//.withSort(ShinySortMode.VALUE_ASC)
 						.build());
 		writer.println();
 
@@ -77,9 +72,9 @@ public class ShinyBarChartTest {
 		Shiny.render(
 				Shiny.barChart()
 						.withTitle("Fruits (Value Desc)")
-						.withHeader(headers)
-						.withValues(values)
-						.withSort(ShinySortMode.VALUE_DESC)
+						.withLabels(headers)
+						.addSerie("", values)
+						//.withSort(ShinySortMode.VALUE_DESC)
 						.build());
 		writer.println();
 
@@ -88,9 +83,9 @@ public class ShinyBarChartTest {
 		Shiny.render(
 				Shiny.barChart()
 						.withTitle("Fruits (Header Asc)")
-						.withHeader(headers)
-						.withValues(values)
-						.withSort(ShinySortMode.HEADER_ASC)
+						.withLabels(headers)
+						.addSerie("", values)
+						//.withSort(ShinySortMode.HEADER_ASC)
 						.build());
 		writer.println();
 
@@ -103,9 +98,9 @@ public class ShinyBarChartTest {
 		Shiny.render(
 				Shiny.barChart()
 						.withTitle("Fruits (Header Desc)")
-						.withHeader(headers)
-						.withValues(values)
-						.withSort(ShinySortMode.HEADER_DESC)
+						.withLabels(headers)
+						.addSerie("", values)
+						//.withSort(ShinySortMode.HEADER_DESC)
 						.build());
 		writer.println();
 	}
