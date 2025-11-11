@@ -7,8 +7,7 @@ import io.vertigo.shell.systems.db.DbModel.JdbcSchema;
 import io.vertigo.shell.systems.db.DbModel.JdbcTable;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.models.ShinyModel;
-import io.vertigo.shiny.models.data.tree.ShinyTree;
-import io.vertigo.shiny.models.data.tree.ShinyTreeNode;
+import io.vertigo.shiny.models.data.tree.ShinyTreeBuilder;
 import io.vertigo.shiny.style.ShinyColors;
 import io.vertigo.shiny.style.ShinyEffects;
 import picocli.CommandLine.Command;
@@ -21,24 +20,22 @@ public final class DbShowModelCommand implements ShellCommand {
 	}
 
 	private ShinyModel showModel() {
-		final ShinyTree tree = Shiny.tree("model").build();
+		final ShinyTreeBuilder treeBuilder = Shiny.tree().addTree("model");
 		for (final JdbcSchema schema : DbContext.model().schemas()) {
-			final ShinyTreeNode schemaNode = tree.getRoot().addChild("schema : " + schema.name());
-			final ShinyTreeNode tablesNode = schemaNode.addChild("tables (" + schema.tables().size() + ")");
+			final ShinyTreeBuilder schemaTreeBuilder = treeBuilder.addTree("schema : " + schema.name());
+			final ShinyTreeBuilder tablesTreeBuilder = schemaTreeBuilder.addTree("tables (" + schema.tables().size() + ")");
 			for (final JdbcTable table : schema.tables()) {
-				final ShinyTreeNode tableNode = tablesNode.addChild(table.name());
-				final ShinyTreeNode columnsNode = tableNode.addChild("columns");
+				final var tableTreeBuilder = tablesTreeBuilder.addTree(table.name());
+				final var columnsTreeBuilder = tableTreeBuilder.addTree("columns");
 				for (final JdbcColumn column : table.columns()) {
-
 					String info = column.name() + " " + ShinyColors.GREEN_BRIGHT.fg(column.typeName());
-
 					if (column.isPrimaryKey()) {
 						info = ShinyEffects.UNDERLINE.apply(info);
 					}
-					columnsNode.addChild(info);
+					columnsTreeBuilder.addLeaf(info);
 				}
 			}
 		}
-		return tree;
+		return treeBuilder.build();
 	}
 }
