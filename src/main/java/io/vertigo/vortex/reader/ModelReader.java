@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.vortex.model.VXAttribute;
 import io.vertigo.vortex.model.VXCardinality;
+import io.vertigo.vortex.model.VXDataType;
 import io.vertigo.vortex.model.VXDomainType;
 import io.vertigo.vortex.model.VXEntity;
 import io.vertigo.vortex.model.VXHeader;
@@ -69,7 +70,7 @@ public final class ModelReader {
 		}
 		for (final RawEntity rawEntity : rawModel.rawEntities) {
 			final var name = "do-" + rawEntity.name;
-			domainTypeCatalog.put(name, new VXDomainType(name, "Entity"));
+			domainTypeCatalog.put(name, new VXDomainType(name, VXDataType.Entity, List.of()));
 		}
 
 		for (final RawEntity rawEntity : rawModel.rawEntities) {
@@ -106,6 +107,7 @@ public final class ModelReader {
 	}
 
 	private static VXDomainType transform(final RawDomainType rawDomainType) {
-		return new VXDomainType(rawDomainType.name, rawDomainType.dataType);
+		var dataType = VXDataType.valueOf(rawDomainType.dataType);
+		return new VXDomainType(rawDomainType.name, dataType, List.of());
 	}
 }

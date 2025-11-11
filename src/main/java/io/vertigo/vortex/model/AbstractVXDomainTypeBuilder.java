@@ -21,6 +21,6 @@ public abstract class AbstractVXDomainTypeBuilder<B extends AbstractVXDomainType
 
 	@Override
 	public final VXDomainType build() {
-		return new VXDomainType(_name, _dataType.name(), _validators);
+		return new VXDomainType(_name, _dataType, _validators);
 	}
 }

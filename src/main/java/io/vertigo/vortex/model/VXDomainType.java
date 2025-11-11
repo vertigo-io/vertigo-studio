@@ -9,14 +9,14 @@ public final class VXDomainType {
 	public final VXDataType dataType;
 	public final List<VXValidator> validators;
 
-	public VXDomainType(final String name, final String dataType, final List<VXValidator> validators) {
+	public VXDomainType(final String name, final VXDataType dataType, final List<VXValidator> validators) {
 		Assertion.check()
 				.isNotBlank(name)
-				.isNotBlank(dataType)
+				.isNotNull(dataType)
 				.isNotNull(validators);
 		//---
 		this.name = name;
-		this.dataType = VXDataType.valueOf(dataType);
+		this.dataType = dataType;
 		this.validators = validators;
 	}
 
