@@ -39,7 +39,6 @@ public final class DbShowModelCommand implements ShellCommand {
 				}
 			}
 		}
-
 		return tree;
 	}
 }
