@@ -7,8 +7,7 @@ import io.vertigo.shell.systems.java.JavaModel.JavaImport;
 import io.vertigo.shell.systems.java.JavaModel.JavaPackage;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.models.ShinyModel;
-import io.vertigo.shiny.models.data.tree.ShinyTree;
-import io.vertigo.shiny.models.data.tree.ShinyTreeNode;
+import io.vertigo.shiny.models.data.tree.ShinyTreeBuilder;
 import picocli.CommandLine.Command;
 
 @Command(name = "model", description = "Show the java model")
@@ -22,22 +21,22 @@ public final class JavaShowModelCommand implements ShellCommand {
 		//To avoid java keyword
 		//Class => clazz
 		//package => jpackage
-		final ShinyTree tree = Shiny.tree("model").build();
+		final ShinyTreeBuilder tree = Shiny.tree().withLabel("model");
 		for (final JavaPackage jpackage : JavaContext.model().packages()) {
-			parse(jpackage, tree.getRoot());
+			parse(jpackage, tree);
 		}
-		return tree;
+		return tree.build();
 	}
 
-	private void parse(JavaPackage jpackage, ShinyTreeNode parent) {
-		final ShinyTreeNode packageNode = parent.addChild("package : " + jpackage.name());
-		final ShinyTreeNode ClassesNode = packageNode.addChild("classes (" + jpackage.classes().size() + ")");
+	private void parse(JavaPackage jpackage, ShinyTreeBuilder parent) {
+		final var packageTreeBuilder = parent.addTree("package : " + jpackage.name());
+		final var classesTreeBuilder = packageTreeBuilder.addTree("classes (" + jpackage.classes().size() + ")");
 		for (final JavaClass clazz : jpackage.classes()) {
-			final ShinyTreeNode classNode = ClassesNode.addChild(clazz.name());
-			classNode.addChild(clazz.imports().toString());
+			final var classTreeBuilder = classesTreeBuilder.addTree(clazz.name());
+			classTreeBuilder.addLeaf(clazz.imports().toString());
 			for (JavaImport javaImport : clazz.imports()) {
 				if (!javaImport.name().startsWith("java.")) {
-					classNode.addChild(javaImport.name());
+					classTreeBuilder.addLeaf(javaImport.name());
 				}
 			}
 			//				final ShinyTreeNode columnsNode = tableNode.addChild("columns");
