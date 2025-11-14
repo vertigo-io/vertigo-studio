@@ -3,13 +3,16 @@ import VShinyContainerComponent from './core/v-shiny-container-component.vue';
 import VShinyErrorComponent from './core/v-shiny-error-component.vue';
 import VShinyCardComponent from './data/v-shiny-card-component.vue';
 import VShinyChipComponent from './text/v-shiny-chip-component.vue';
-import VShinyFormComponent from './form/v-shiny-form-component.vue';
+import VShinyFormComponent from './input/form/v-shiny-form-component.vue';
+import VShinyNotificationComponent from './feedback/v-shiny-notification-component.vue';
+import VShinyModalComponent from './feedback/v-shiny-modal-component.vue';
 import VShinyJsonComponent from './data/v-shiny-json-component.vue';
 import VShinyListComponent from './data/v-shiny-list-component.vue';
 import VShinyOrganizationComponent from './dataviz/v-shiny-organization-component.vue';
 import VShinyTableComponent from './data/v-shiny-table-component.vue';
 import VShinyTimelineComponent from './dataviz/v-shiny-timeline-component.vue';
 import VShinyTreeComponent from './data/v-shiny-tree-component.vue';
+import VShinyDataGridComponent from './data/v-shiny-datagrid-component.vue';
 import VShinyAreaChartComponent from './dataviz/v-shiny-area-chart-component.vue';
 import VShinyBarChartComponent from './dataviz/v-shiny-bar-chart-component.vue';
 import VShinyDonutChartComponent from './dataviz/v-shiny-donut-chart-component.vue';
@@ -24,7 +27,7 @@ import VShinySparkLineComponent from './text/v-shiny-spark-line-component.vue';
 import VShinyStatusComponent from './text/v-shiny-status-component.vue';
 import VShinyFlowComponent from './dataviz/v-shiny-flow-component.vue';
 import VShinyAlertComponent from './core/v-shiny-alert-component.vue';
-import VShinySliderComponent from './form/v-shiny-slider-component.vue';
+import VShinySliderComponent from './input/form/v-shiny-slider-component.vue';
 import VShinyProgressBarComponent from './live/v-shiny-progress-bar-component.vue';
 import VShinyPdfComponent from './media/v-shiny-pdf.vue';
 import VShinyImageComponent from './media/v-shiny-image-component.vue';
@@ -35,7 +38,13 @@ import VShinyFigletComponent from './text/v-shiny-figlet-component.vue';
 import VShinyParagraphComponent from './text/v-shiny-paragraph-component.vue';
 import VShinyTextPathComponent from './text/v-shiny-text-path-component.vue';
 import VShinyTitleComponent from './text/v-shiny-title-component.vue';
+import VSpeechToTextButton from './input/VSpeechToTextButton.vue';
+import VShinyDatePickerComponent from './input/v-shiny-datepicker-component.vue';
+import VShinyFileUploadComponent from './input/v-shiny-fileupload-component.vue';
+import VShinyCodeEditorComponent from './input/v-shiny-codeeditor-component.vue';
 import VShinyGridComponent from './layout/v-shiny-grid-component.vue';
+import VShinyTabsComponent from './layout/v-shiny-tabs-component.vue';
+import VShinyStepperComponent from './layout/v-shiny-stepper-component.vue';
 
 // Table Cell Components
 import VShinyStringCell from './data/table/cell/VShinyStringCell.vue';
@@ -57,9 +66,12 @@ export class ShinyRegistry {
     this.register('ShinyContainer', VShinyContainerComponent);
     this.register('ShinyError', VShinyErrorComponent);
     this.register('ShinyForm', VShinyFormComponent);
+    this.register('ShinyNotification', VShinyNotificationComponent);
+    this.register('ShinyModal', VShinyModalComponent);
     this.register('ShinyJson', VShinyJsonComponent);
     this.register('ShinyList', VShinyListComponent);
     this.register('ShinyTable', VShinyTableComponent);
+    this.register('ShinyDataGrid', VShinyDataGridComponent);
     this.register('ShinyTree', VShinyTreeComponent);
     this.register('ShinyTimeline', VShinyTimelineComponent);
     this.register('ShinyChip', VShinyChipComponent);
@@ -78,6 +90,9 @@ export class ShinyRegistry {
     this.register('ShinyMindMap', VShinyMindMapComponent);
     this.register('ShinyAlert', VShinyAlertComponent);
     this.register('ShinySlider', VShinySliderComponent);
+    this.register('ShinyDatePicker', VShinyDatePickerComponent);
+    this.register('ShinyFileUpload', VShinyFileUploadComponent);
+    this.register('ShinyCodeEditor', VShinyCodeEditorComponent);
     this.register('ShinyPdfComponent', VShinyPdfComponent);
     this.register('ShinyImage', VShinyImageComponent);
     this.register('ShinyRss', VShinyRssComponent);
@@ -90,6 +105,8 @@ export class ShinyRegistry {
     this.register('ShinyTextPath', VShinyTextPathComponent);
     this.register('ShinyTitle', VShinyTitleComponent);
     this.register('ShinyGrid', VShinyGridComponent);
+    this.register('ShinyTabs', VShinyTabsComponent);
+    this.register('ShinyStepper', VShinyStepperComponent);
 
     // Register Table Cell Components
     this.register('ShinyStringCell', VShinyStringCell);
