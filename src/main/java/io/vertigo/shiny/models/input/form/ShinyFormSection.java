@@ -1,4 +1,4 @@
-package io.vertigo.shiny.models.data.form;
+package io.vertigo.shiny.models.input.form;
 
 import java.util.List;
 

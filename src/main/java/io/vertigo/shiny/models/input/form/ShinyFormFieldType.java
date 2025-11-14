@@ -1,4 +1,4 @@
-package io.vertigo.shiny.models.data.form;
+package io.vertigo.shiny.models.input.form;
 
 public enum ShinyFormFieldType {
     STRING,

@@ -1,4 +1,4 @@
-package io.vertigo.shiny.models.data.form;
+package io.vertigo.shiny.models.input.form;
 
 import io.vertigo.core.lang.Assertion;
 
