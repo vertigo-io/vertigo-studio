@@ -1,6 +1,7 @@
 <template>
     <v-dialog
-        v-model="dialog"
+        :model-value="dialog"
+        @update:model-value="val => dialog = val"
         fullscreen
         :scrim="false"
         transition="dialog-bottom-transition"
@@ -21,18 +22,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref, inject, watch } from 'vue';
+import { ref, inject, watch, computed } from 'vue';
 import { ShinyPage } from '../../models/layout/page/ShinyPage';
 import { ShinyRegistry } from '../ShinyRegistry';
 
 const props = defineProps<{
-    data: ShinyPage
+    data: ShinyPage,
+    dialog: boolean
 }>()
 
-const shinyRegistry = inject<ShinyRegistry>('shinyRegistry')!;
-const dialog = ref(false); // Controlled by parent
+const emit = defineEmits(['update:dialog']);
 
-watch(() => props.data, () => {
-    dialog.value = true; // Open dialog when new data is passed
+const shinyRegistry = inject<ShinyRegistry>('shinyRegistry')!;
+
+const dialog = computed({
+    get() {
+        return props.dialog;
+    },
+    set(value) {
+        emit('update:dialog', value);
+    }
 });
 </script>

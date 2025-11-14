@@ -4,6 +4,9 @@ import java.util.UUID;
 
 import io.vertigo.shiny.models.ShinyState;
 
+/**
+ * Le client envoie une commande au serveur
+ */
 public record BansheeCommand(
 		String command,
 		UUID id, //facultatif id d'un model
