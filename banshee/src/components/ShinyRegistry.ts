@@ -42,6 +42,8 @@ import VSpeechToTextButton from './input/VSpeechToTextButton.vue';
 import VShinyDatePickerComponent from './input/v-shiny-datepicker-component.vue';
 import VShinyFileUploadComponent from './input/v-shiny-fileupload-component.vue';
 import VShinyCodeEditorComponent from './input/v-shiny-codeeditor-component.vue';
+import VShinyAutocompleteComponent from './input/v-shiny-autocomplete-component.vue';
+import VShinyRangeSliderComponent from './input/v-shiny-rangeslider-component.vue';
 import VShinyGridComponent from './layout/v-shiny-grid-component.vue';
 import VShinyTabsComponent from './layout/v-shiny-tabs-component.vue';
 import VShinyStepperComponent from './layout/v-shiny-stepper-component.vue';
@@ -93,6 +95,8 @@ export class ShinyRegistry {
     this.register('ShinyDatePicker', VShinyDatePickerComponent);
     this.register('ShinyFileUpload', VShinyFileUploadComponent);
     this.register('ShinyCodeEditor', VShinyCodeEditorComponent);
+    this.register('ShinyAutocomplete', VShinyAutocompleteComponent);
+    this.register('ShinyRangeSlider', VShinyRangeSliderComponent);
     this.register('ShinyPdfComponent', VShinyPdfComponent);
     this.register('ShinyImage', VShinyImageComponent);
     this.register('ShinyRss', VShinyRssComponent);

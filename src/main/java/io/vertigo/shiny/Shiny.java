@@ -28,11 +28,13 @@ import io.vertigo.shiny.models.dataviz.sankey.ShinySankeyBuilder;
 import io.vertigo.shiny.models.dataviz.timeline.ShinyTimelineBuilder;
 import io.vertigo.shiny.models.feedback.modal.ShinyModalBuilder;
 import io.vertigo.shiny.models.feedback.notification.ShinyNotificationBuilder;
+import io.vertigo.shiny.models.input.autocomplete.ShinyAutocompleteBuilder;
 import io.vertigo.shiny.models.input.codeeditor.ShinyCodeEditorBuilder;
 import io.vertigo.shiny.models.input.datepicker.ShinyDatePickerBuilder;
 import io.vertigo.shiny.models.input.fileupload.ShinyFileUploadBuilder;
 import io.vertigo.shiny.models.input.form.ShinyFormBuilder;
 import io.vertigo.shiny.models.input.multiselection.ShinyMultiSelectionBuilder;
+import io.vertigo.shiny.models.input.rangeslider.ShinyRangeSliderBuilder;
 import io.vertigo.shiny.models.input.slider.ShinySliderBuilder;
 import io.vertigo.shiny.models.input.text.ShinyInputTextBuilder;
 import io.vertigo.shiny.models.layout.container.ShinyContainerBuilder;
@@ -195,8 +197,16 @@ public final class Shiny {
 		return new ShinyModalBuilder();
 	}
 
+	public static ShinyAutocompleteBuilder autocomplete() {
+		return new ShinyAutocompleteBuilder();
+	}
+
 	public static ShinyPdfBuilder pdf() {
 		return new ShinyPdfBuilder();
+	}
+
+	public static ShinyRangeSliderBuilder rangeSlider() {
+		return new ShinyRangeSliderBuilder();
 	}
 
 	public static ShinyCardBuilder card() {
