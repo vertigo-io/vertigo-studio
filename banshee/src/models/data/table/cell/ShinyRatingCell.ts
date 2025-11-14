@@ -1,5 +1,5 @@
 import { ShinyTableCell } from "./ShinyTableCell";
-import { ShinyRatingScale } from "../../../models/dataviz/rating/ShinyRatingScale";
+import { ShinyRatingScale } from "../../../text/rating/ShinyRatingScale";
 
 export interface ShinyRatingCell extends ShinyTableCell {
   id: string;

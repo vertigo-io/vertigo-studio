@@ -1,5 +1,5 @@
 import { ShinyTableCell } from "./ShinyTableCell";
-import { ShinyChipVariant } from "../../chip/ShinyChipVariant";
+import { ShinyChipVariant } from "../../../text/chip/ShinyChipVariant";
 
 export interface ShinyChipCell extends ShinyTableCell {
   id: string;
