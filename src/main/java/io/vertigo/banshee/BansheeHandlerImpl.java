@@ -550,6 +550,19 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 					.withContent(Shiny.paragraph().withText("This is the content of the modal.").build())
 					.isPersistent()
 					.build();
+			case "page" -> Shiny.page()
+					.withTitle("My Sample Page")
+					.withLayout(Shiny.container()
+							.addComponent(Shiny.card()
+									.withTitle("Card on Page")
+									.withDescription("This card is part of the page layout.")
+									.build())
+							.addComponent(Shiny.alert()
+									.withAlertType(ShinyAlertType.INFO)
+									.withContent("This is an alert on the page.")
+									.build())
+							.build())
+					.build();
 			default -> new ShinyErrorBuilder().withText("unknown command :" + command).build();
 		};
 	}

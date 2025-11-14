@@ -47,6 +47,8 @@ import VShinyRangeSliderComponent from './input/v-shiny-rangeslider-component.vu
 import VShinyGridComponent from './layout/v-shiny-grid-component.vue';
 import VShinyTabsComponent from './layout/v-shiny-tabs-component.vue';
 import VShinyStepperComponent from './layout/v-shiny-stepper-component.vue';
+import VShinyPageIconComponent from './layout/v-shiny-page-icon-component.vue';
+import VShinyFullPageComponent from './layout/v-shiny-full-page-component.vue';
 
 // Table Cell Components
 import VShinyStringCell from './data/table/cell/VShinyStringCell.vue';
@@ -111,6 +113,8 @@ export class ShinyRegistry {
     this.register('ShinyGrid', VShinyGridComponent);
     this.register('ShinyTabs', VShinyTabsComponent);
     this.register('ShinyStepper', VShinyStepperComponent);
+    this.register('ShinyPage', VShinyPageIconComponent); // Default representation
+    this.register('ShinyFullPage', VShinyFullPageComponent); // Full-screen representation
 
     // Register Table Cell Components
     this.register('ShinyStringCell', VShinyStringCell);

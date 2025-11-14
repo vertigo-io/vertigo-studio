@@ -22,7 +22,7 @@ public final class ShinyContainerRenderer implements ShinyModelRenderer<ShinyCon
 		//		final ShinyContainerStyle style = Shiny.theme().containerStyle();
 		final ShinyWriter writer = Shiny.writer();
 
-		for (ShinyModel model : container.models()) {
+		for (ShinyModel model : container.content()) {
 			Shiny.render(model);
 			writer.println("-------");
 		}

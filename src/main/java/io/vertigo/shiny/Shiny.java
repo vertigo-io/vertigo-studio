@@ -39,6 +39,7 @@ import io.vertigo.shiny.models.input.slider.ShinySliderBuilder;
 import io.vertigo.shiny.models.input.text.ShinyInputTextBuilder;
 import io.vertigo.shiny.models.layout.container.ShinyContainerBuilder;
 import io.vertigo.shiny.models.layout.grid.ShinyGridBuilder;
+import io.vertigo.shiny.models.layout.page.ShinyPageBuilder;
 import io.vertigo.shiny.models.layout.stepper.ShinyStepperBuilder;
 import io.vertigo.shiny.models.layout.tabs.ShinyTabsBuilder;
 import io.vertigo.shiny.models.live.progressbar.ShinyProgressBarBuilder;
@@ -231,6 +232,10 @@ public final class Shiny {
 
 	public static ShinyStepperBuilder stepper() {
 		return new ShinyStepperBuilder();
+	}
+
+	public static ShinyPageBuilder page() {
+		return new ShinyPageBuilder();
 	}
 
 	//	public static ShinyComposer composer() {
