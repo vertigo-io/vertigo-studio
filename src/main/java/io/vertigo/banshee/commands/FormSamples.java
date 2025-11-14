@@ -4,10 +4,10 @@ import java.util.List;
 
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.models.ShinyModel;
-import io.vertigo.shiny.models.data.form.ShinyFormField;
-import io.vertigo.shiny.models.data.form.ShinyFormFieldType;
-import io.vertigo.shiny.models.data.form.ShinyFormFieldValidator;
-import io.vertigo.shiny.models.data.form.ShinyFormOption;
+import io.vertigo.shiny.models.input.form.ShinyFormField;
+import io.vertigo.shiny.models.input.form.ShinyFormFieldType;
+import io.vertigo.shiny.models.input.form.ShinyFormFieldValidator;
+import io.vertigo.shiny.models.input.form.ShinyFormOption;
 
 public class FormSamples {
 

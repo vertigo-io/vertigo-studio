@@ -1,5 +1,7 @@
 package io.vertigo.banshee;
 
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -58,6 +60,7 @@ import io.vertigo.shiny.models.dataviz.flow.NodeType;
 import io.vertigo.shiny.models.dataviz.flow.ShinyFlowBuilder;
 import io.vertigo.shiny.models.dataviz.geomap.ShinyGeoPoint;
 import io.vertigo.shiny.models.dataviz.mindmap.ShinyMindMapNodeBuilder;
+import io.vertigo.shiny.models.feedback.notification.ShinyNotificationType;
 import io.vertigo.shiny.models.layout.container.ShinyContainerBuilder;
 import io.vertigo.shiny.models.text.chip.ShinyChipVariant;
 import io.vertigo.shiny.models.text.rating.ShinyRatingScale;
@@ -495,6 +498,40 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 							.build())
 					.build();
 			case "board" -> new CrmInstallationBoard().execute();
+			case "datagrid" -> Shiny.dataGrid()
+					.withTitle("My DataGrid")
+					.addColumn("ID", "id", true, true)
+					.addColumn("Name", "name", true, false)
+					.addColumn("Age", "age", true, false)
+					.withData(List.of(
+							Map.of("id", 1, "name", "John", "age", 30),
+							Map.of("id", 2, "name", "Jane", "age", 25),
+							Map.of("id", 3, "name", "Doe", "age", 40)))
+					.build();
+			case "datepicker" -> Shiny.datePicker()
+					.withLabel("Select a date")
+					.withValue("2025-11-13")
+					.isRequired()
+					.build();
+			case "fileupload" -> Shiny.fileUpload()
+					.withLabel("Upload a file")
+					.isMultiple()
+					.withAccept("image/*")
+					.build();
+			case "codeeditor" -> Shiny.codeEditor()
+					.withLanguage("javascript")
+					.withContent("function hello() {\n  console.log('Hello, World!');\n}")
+					.build();
+			case "notification" -> Shiny.notification()
+					.withType(ShinyNotificationType.SUCCESS)
+					.withMessage("This is a success notification")
+					.withTimeout(3000)
+					.build();
+			case "modal" -> Shiny.modal()
+					.withTitle("My Modal")
+					.withContent(Shiny.paragraph().withText("This is the content of the modal.").build())
+					.isPersistent()
+					.build();
 			default -> new ShinyErrorBuilder().withText("unknown command :" + command).build();
 		};
 	}

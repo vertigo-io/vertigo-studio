@@ -11,7 +11,7 @@ import io.vertigo.shiny.models.data.board.ShinyBoardBuilder;
 import io.vertigo.shiny.models.data.board.ShinyBoardCardBuilder;
 import io.vertigo.shiny.models.data.board.ShinyBoardListBuilder;
 import io.vertigo.shiny.models.data.card.ShinyCardBuilder;
-import io.vertigo.shiny.models.data.form.ShinyFormBuilder;
+import io.vertigo.shiny.models.data.datagrid.ShinyDataGridBuilder;
 import io.vertigo.shiny.models.data.json.ShinyJsonBuilder;
 import io.vertigo.shiny.models.data.list.ShinyListBuilder;
 import io.vertigo.shiny.models.data.table.ShinyTableBuilder;
@@ -26,11 +26,19 @@ import io.vertigo.shiny.models.dataviz.mindmap.ShinyMindMapBuilder;
 import io.vertigo.shiny.models.dataviz.organization.ShinyOrganizationBuilder;
 import io.vertigo.shiny.models.dataviz.sankey.ShinySankeyBuilder;
 import io.vertigo.shiny.models.dataviz.timeline.ShinyTimelineBuilder;
+import io.vertigo.shiny.models.feedback.modal.ShinyModalBuilder;
+import io.vertigo.shiny.models.feedback.notification.ShinyNotificationBuilder;
+import io.vertigo.shiny.models.input.codeeditor.ShinyCodeEditorBuilder;
+import io.vertigo.shiny.models.input.datepicker.ShinyDatePickerBuilder;
+import io.vertigo.shiny.models.input.fileupload.ShinyFileUploadBuilder;
+import io.vertigo.shiny.models.input.form.ShinyFormBuilder;
 import io.vertigo.shiny.models.input.multiselection.ShinyMultiSelectionBuilder;
 import io.vertigo.shiny.models.input.slider.ShinySliderBuilder;
 import io.vertigo.shiny.models.input.text.ShinyInputTextBuilder;
 import io.vertigo.shiny.models.layout.container.ShinyContainerBuilder;
 import io.vertigo.shiny.models.layout.grid.ShinyGridBuilder;
+import io.vertigo.shiny.models.layout.stepper.ShinyStepperBuilder;
+import io.vertigo.shiny.models.layout.tabs.ShinyTabsBuilder;
 import io.vertigo.shiny.models.live.progressbar.ShinyProgressBarBuilder;
 import io.vertigo.shiny.models.live.spinner.ShinySpinnerBuilder;
 import io.vertigo.shiny.models.media.image.ShinyImageBuilder;
@@ -167,6 +175,26 @@ public final class Shiny {
 		return new ShinySliderBuilder();
 	}
 
+	public static ShinyDatePickerBuilder datePicker() {
+		return new ShinyDatePickerBuilder();
+	}
+
+	public static ShinyFileUploadBuilder fileUpload() {
+		return new ShinyFileUploadBuilder();
+	}
+
+	public static ShinyCodeEditorBuilder codeEditor() {
+		return new ShinyCodeEditorBuilder();
+	}
+
+	public static ShinyNotificationBuilder notification() {
+		return new ShinyNotificationBuilder();
+	}
+
+	public static ShinyModalBuilder modal() {
+		return new ShinyModalBuilder();
+	}
+
 	public static ShinyPdfBuilder pdf() {
 		return new ShinyPdfBuilder();
 	}
@@ -185,6 +213,14 @@ public final class Shiny {
 
 	public static ShinyGridBuilder grid() {
 		return new ShinyGridBuilder();
+	}
+
+	public static ShinyTabsBuilder tabs() {
+		return new ShinyTabsBuilder();
+	}
+
+	public static ShinyStepperBuilder stepper() {
+		return new ShinyStepperBuilder();
 	}
 
 	//	public static ShinyComposer composer() {
@@ -267,6 +303,10 @@ public final class Shiny {
 
 	public static ShinyBoardCardBuilder boardCard() {
 		return new ShinyBoardCardBuilder();
+	}
+
+	public static ShinyDataGridBuilder dataGrid() {
+		return new ShinyDataGridBuilder();
 	}
 
 	private static ShinySuperRenderer RENDERER = new ShinySuperRenderer();
