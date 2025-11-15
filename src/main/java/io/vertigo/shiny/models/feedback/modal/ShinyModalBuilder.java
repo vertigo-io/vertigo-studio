@@ -5,7 +5,9 @@ import io.vertigo.shiny.models.ShinyModel;
 
 public final class ShinyModalBuilder {
 	private String _title;
-	private ShinyModel _content;
+	private ShinyBlock _content;
+
+	public ShinyModalBuilder withContent(final ShinyBlock content) {
 	private boolean _isPersistent;
 
 	public ShinyModalBuilder withTitle(final String title) {
