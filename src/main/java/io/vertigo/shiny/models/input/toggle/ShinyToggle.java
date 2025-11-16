@@ -1,4 +1,4 @@
-package io.vertigo.shiny.models.text.toggle;
+package io.vertigo.shiny.models.input.toggle;
 
 import java.util.UUID;
 

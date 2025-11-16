@@ -306,6 +306,14 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 					.withColor("orange")
 					.withThumbLabel(true)
 					.build();
+			case "multiselection" -> Shiny.multiSelection()
+					.withTitle("Select your favorite fruits")
+					.addOption("Apple")
+					.addOption("Banana")
+					.addOption("Orange")
+					.addOption("Grape")
+					.withSelectedIndices(0, 2)
+					.build();
 			case "alert" -> Shiny.alert()
 					.withAlertType(ShinyAlertType.INFO)
 					.withTitle("Information")

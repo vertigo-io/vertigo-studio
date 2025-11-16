@@ -56,7 +56,7 @@ import io.vertigo.shiny.models.text.sparkline.ShinySparklineBuilder;
 import io.vertigo.shiny.models.text.status.ShinyStatusBuilder;
 import io.vertigo.shiny.models.text.textpath.ShinyTextPathBuilder;
 import io.vertigo.shiny.models.text.title.ShinyTitleBuilder;
-import io.vertigo.shiny.models.text.toggle.ShinyToggleBuilder;
+import io.vertigo.shiny.models.input.toggle.ShinyToggleBuilder;
 import io.vertigo.shiny.renderers.ShinySuperRenderer;
 
 public final class Shiny {

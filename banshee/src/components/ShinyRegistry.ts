@@ -28,6 +28,7 @@ import VShinyStatusComponent from './text/v-shiny-status-component.vue';
 import VShinyFlowComponent from './dataviz/v-shiny-flow-component.vue';
 import VShinyAlertComponent from './core/v-shiny-alert-component.vue';
 import VShinySliderComponent from './input/form/v-shiny-slider-component.vue';
+import VShinyMultiSelectionComponent from './input/multiselection/v-shiny-multiselection-component.vue';
 import VShinyProgressBarComponent from './live/v-shiny-progress-bar-component.vue';
 import VShinyPdfComponent from './media/v-shiny-pdf.vue';
 import VShinyImageComponent from './media/v-shiny-image-component.vue';
@@ -94,7 +95,8 @@ export class ShinyRegistry {
     this.register('ShinyMindMap', VShinyMindMapComponent);
     this.register('ShinyAlert', VShinyAlertComponent);
     this.register('ShinySlider', VShinySliderComponent);
-    this.register('ShinyDatePicker', VShinyDatePickerComponent);
+    this.register('ShinyMultiSelection', VShinyMultiSelectionComponent);
+    this.register('ShinyProgressBar', VShinyProgressBarComponent);
     this.register('ShinyFileUpload', VShinyFileUploadComponent);
     this.register('ShinyCodeEditor', VShinyCodeEditorComponent);
     this.register('ShinyAutocomplete', VShinyAutocompleteComponent);
