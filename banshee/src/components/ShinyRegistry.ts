@@ -78,8 +78,6 @@ export class ShinyRegistry {
     this.register('ShinyJson', VShinyJsonComponent);
     this.register('ShinyList', VShinyListComponent);
     this.register('ShinyTable', VShinyTableComponent);
-    this.register('ShinyDataGrid', VShinyDataGridComponent);
-    this.register('ShinyTree', VShinyTreeComponent);
     this.register('ShinyTimeline', VShinyTimelineComponent);
     this.register('ShinyChip', VShinyChipComponent);
     this.register('ShinyOrganization', VShinyOrganizationComponent);
