@@ -1,5 +1,5 @@
 import VShinyBoardComponent from './data/board/v-shiny-board-component.vue';
-import VShinyContainerComponent from './core/v-shiny-container-component.vue';
+import VShinyContainerComponent from './block/v-shiny-container-component.vue';
 import VShinyErrorComponent from './feedback/v-shiny-error-component.vue';
 import VShinyCardComponent from './data/v-shiny-card-component.vue';
 import VShinyChipComponent from './text/v-shiny-chip-component.vue';

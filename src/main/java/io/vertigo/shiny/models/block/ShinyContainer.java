@@ -1,4 +1,4 @@
-package io.vertigo.shiny.models.layout.container;
+package io.vertigo.shiny.models.block;
 
 import java.util.List;
 import java.util.UUID;

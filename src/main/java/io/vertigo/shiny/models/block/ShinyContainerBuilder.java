@@ -1,4 +1,4 @@
-package io.vertigo.shiny.models.layout.container;
+package io.vertigo.shiny.models.block;
 
 import java.util.ArrayList;
 import java.util.List;
