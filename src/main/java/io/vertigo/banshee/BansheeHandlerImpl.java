@@ -200,6 +200,14 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 			case "paragraph" -> Shiny.paragraph()
 					.withText("This is a paragraph.")
 					.build();
+			case "toggle" -> Shiny.toggle()
+					.withLabel("Enable Feature")
+					.withValue(true)
+					.withType(ShinyToggleType.SWITCH)
+					.withOnText("Active")
+					.withOffText("Inactive")
+					.withShowText(true)
+					.build();
 			case "gauge" -> Shiny.gauge()
 					.withTitle("Ventes par produit")
 					.withValue(156)
@@ -250,6 +258,11 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 					.withValue(3.5)
 					.withScale(ShinyRatingScale.SCALE_5)
 					.withAllowHalfRating(true)
+					.build();
+			case "inputtext" -> Shiny.inputText()
+					.withLabel("Your Name")
+					.withDefaultValue("John Doe")
+					.isRequired()
 					.build();
 			case "json" -> Shiny.json()
 					.withJson("""

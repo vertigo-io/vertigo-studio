@@ -1,6 +1,6 @@
 import VShinyBoardComponent from './data/board/v-shiny-board-component.vue';
 import VShinyContainerComponent from './core/v-shiny-container-component.vue';
-import VShinyErrorComponent from './core/v-shiny-error-component.vue';
+import VShinyErrorComponent from './feedback/v-shiny-error-component.vue';
 import VShinyCardComponent from './data/v-shiny-card-component.vue';
 import VShinyChipComponent from './text/v-shiny-chip-component.vue';
 import VShinyFormComponent from './input/form/v-shiny-form-component.vue';
@@ -26,9 +26,10 @@ import VShinySankeyComponent from './dataviz/v-shiny-sankey-component.vue';
 import VShinySparkLineComponent from './text/v-shiny-spark-line-component.vue';
 import VShinyStatusComponent from './text/v-shiny-status-component.vue';
 import VShinyFlowComponent from './dataviz/v-shiny-flow-component.vue';
-import VShinyAlertComponent from './core/v-shiny-alert-component.vue';
+import VShinyAlertComponent from './feedback/v-shiny-alert-component.vue';
 import VShinySliderComponent from './input/form/v-shiny-slider-component.vue';
 import VShinyMultiSelectionComponent from './input/multiselection/v-shiny-multiselection-component.vue';
+import VShinyInputTextComponent from './input/text/v-shiny-inputtext-component.vue';
 import VShinyProgressBarComponent from './live/v-shiny-progress-bar-component.vue';
 import VShinyPdfComponent from './media/v-shiny-pdf.vue';
 import VShinyImageComponent from './media/v-shiny-image-component.vue';
@@ -45,6 +46,7 @@ import VShinyFileUploadComponent from './input/v-shiny-fileupload-component.vue'
 import VShinyCodeEditorComponent from './input/v-shiny-codeeditor-component.vue';
 import VShinyAutocompleteComponent from './input/v-shiny-autocomplete-component.vue';
 import VShinyRangeSliderComponent from './input/v-shiny-rangeslider-component.vue';
+import VShinyToggleComponent from './input/toggle/v-shiny-toggle-component.vue';
 import VShinyGridComponent from './layout/v-shiny-grid-component.vue';
 import VShinyTabsComponent from './layout/v-shiny-tabs-component.vue';
 import VShinyStepperComponent from './layout/v-shiny-stepper-component.vue';
@@ -96,6 +98,8 @@ export class ShinyRegistry {
     this.register('ShinyAlert', VShinyAlertComponent);
     this.register('ShinySlider', VShinySliderComponent);
     this.register('ShinyMultiSelection', VShinyMultiSelectionComponent);
+    this.register('ShinyInputText', VShinyInputTextComponent);
+    this.register('ShinyToggle', VShinyToggleComponent);
     this.register('ShinyProgressBar', VShinyProgressBarComponent);
     this.register('ShinyFileUpload', VShinyFileUploadComponent);
     this.register('ShinyCodeEditor', VShinyCodeEditorComponent);

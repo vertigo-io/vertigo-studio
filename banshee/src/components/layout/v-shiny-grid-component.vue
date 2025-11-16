@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { computed, inject } from 'vue';
-import { ShinyGrid } from '../../models/layout/ShinyGrid';
+import { ShinyGrid } from '../../models/layout/grid/ShinyGrid';
 import { ShinyRegistry } from '../ShinyRegistry';
 
 const props = defineProps<{
