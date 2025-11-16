@@ -12,7 +12,7 @@
               ></v-list-item>
             </template>
             <div class="sublist-indent">
-              <v-shiny-list-component :data="{ items: item.items }"></v-shiny-list-component>
+              <v-shiny-list :data="{ items: item.items }"></v-shiny-list>
             </div>
           </v-list-group>
         </template>

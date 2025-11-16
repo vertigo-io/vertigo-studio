@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { ShinyPage } from '../../models/layout/page/ShinyPage';
-import VShinyFullPageComponent from './v-shiny-full-page-component.vue';
+import VShinyFullPage from './v-shiny-full-page.vue';
 
 const props = defineProps<{
     data: ShinyPage
