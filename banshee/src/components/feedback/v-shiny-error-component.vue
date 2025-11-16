@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { ShinyError } from '../../models/core/error/ShinyError';
+import { ShinyError } from '../../models/feedback/error/ShinyError';
 
 defineProps<{
   data: ShinyError

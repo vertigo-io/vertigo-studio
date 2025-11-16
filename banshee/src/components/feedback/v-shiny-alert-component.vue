@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ShinyAlert } from '@/models/core/alert/ShinyAlert';
+import type { ShinyAlert } from '@/models/feedback/alert/ShinyAlert';
 
 defineProps<{
   data: ShinyAlert

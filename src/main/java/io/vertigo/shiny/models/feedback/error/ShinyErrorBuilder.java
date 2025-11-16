@@ -1,4 +1,4 @@
-package io.vertigo.shiny.models.core.error;
+package io.vertigo.shiny.models.feedback.error;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;

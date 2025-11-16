@@ -1,4 +1,4 @@
-package io.vertigo.shiny.models.core.alert;
+package io.vertigo.shiny.models.feedback.alert;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
