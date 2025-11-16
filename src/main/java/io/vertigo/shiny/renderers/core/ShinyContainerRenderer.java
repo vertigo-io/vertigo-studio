@@ -4,7 +4,7 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
-import io.vertigo.shiny.models.layout.container.ShinyContainer;
+import io.vertigo.shiny.models.block.ShinyContainer;
 import io.vertigo.shiny.renderers.ShinyModelRenderer;
 
 public final class ShinyContainerRenderer implements ShinyModelRenderer<ShinyContainer> {

@@ -1,5 +1,5 @@
-import { ShinyLayout } from "../ShinyLayout";
-import { ShinyModel } from "../ShinyModel";
+import { ShinyLayout } from "../../ShinyLayout";
+import { ShinyModel } from "../../ShinyModel";
 
 export interface ShinyGrid extends ShinyLayout {
   columns: number;
