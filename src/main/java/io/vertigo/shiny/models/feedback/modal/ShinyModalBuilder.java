@@ -1,6 +1,7 @@
 package io.vertigo.shiny.models.feedback.modal;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.shiny.models.ShinyBlock;
 import io.vertigo.shiny.models.ShinyModel;
 
 public final class ShinyModalBuilder {
@@ -8,6 +9,7 @@ public final class ShinyModalBuilder {
 	private ShinyBlock _content;
 
 	public ShinyModalBuilder withContent(final ShinyBlock content) {
+
 	private boolean _isPersistent;
 
 	public ShinyModalBuilder withTitle(final String title) {
