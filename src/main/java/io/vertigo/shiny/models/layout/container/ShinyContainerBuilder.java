@@ -10,7 +10,7 @@ import io.vertigo.shiny.models.ShinyModel;
 
 public final class ShinyContainerBuilder implements Builder<ShinyContainer> {
 	private UUID _id;
-	private List<ShinyModel> _components = new ArrayList<>();
+	private List<ShinyModel> _models = new ArrayList<>();
 
 	public ShinyContainerBuilder withId(final UUID id) {
 		Assertion.check().isNotNull(id);
@@ -19,23 +19,23 @@ public final class ShinyContainerBuilder implements Builder<ShinyContainer> {
 		return this;
 	}
 
-	public ShinyContainerBuilder addComponent(final ShinyModel component) {
+	public ShinyContainerBuilder addModel(final ShinyModel component) {
 		Assertion.check().isNotNull(component);
 		//---
-		this._components.add(component);
+		this._models.add(component);
 		return this;
 	}
 
-	public ShinyContainerBuilder addAllComponents(final ShinyModel... components) {
+	public ShinyContainerBuilder addAllModels(final ShinyModel... components) {
 		Assertion.check().isNotNull(components);
 		//---
-		this._components.addAll(List.of(components));
+		this._models.addAll(List.of(components));
 		return this;
 	}
 
 	@Override
 	public ShinyContainer build() {
 		_id = _id == null ? UUID.randomUUID() : _id;
-		return new ShinyContainer(_id, _components);
+		return new ShinyContainer(_id, _models);
 	}
 }

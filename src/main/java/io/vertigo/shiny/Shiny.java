@@ -5,8 +5,6 @@ import java.nio.charset.StandardCharsets;
 
 import io.vertigo.shiny.mermaid.ShinyMermaidServer;
 import io.vertigo.shiny.models.ShinyModel;
-import io.vertigo.shiny.models.core.alert.ShinyAlertBuilder;
-import io.vertigo.shiny.models.core.error.ShinyErrorBuilder;
 import io.vertigo.shiny.models.data.board.ShinyBoardBuilder;
 import io.vertigo.shiny.models.data.board.ShinyBoardCardBuilder;
 import io.vertigo.shiny.models.data.board.ShinyBoardListBuilder;
@@ -26,6 +24,8 @@ import io.vertigo.shiny.models.dataviz.mindmap.ShinyMindMapBuilder;
 import io.vertigo.shiny.models.dataviz.organization.ShinyOrganizationBuilder;
 import io.vertigo.shiny.models.dataviz.sankey.ShinySankeyBuilder;
 import io.vertigo.shiny.models.dataviz.timeline.ShinyTimelineBuilder;
+import io.vertigo.shiny.models.feedback.alert.ShinyAlertBuilder;
+import io.vertigo.shiny.models.feedback.error.ShinyErrorBuilder;
 import io.vertigo.shiny.models.feedback.modal.ShinyModalBuilder;
 import io.vertigo.shiny.models.feedback.notification.ShinyNotificationBuilder;
 import io.vertigo.shiny.models.input.autocomplete.ShinyAutocompleteBuilder;
@@ -37,6 +37,7 @@ import io.vertigo.shiny.models.input.multiselection.ShinyMultiSelectionBuilder;
 import io.vertigo.shiny.models.input.rangeslider.ShinyRangeSliderBuilder;
 import io.vertigo.shiny.models.input.slider.ShinySliderBuilder;
 import io.vertigo.shiny.models.input.text.ShinyInputTextBuilder;
+import io.vertigo.shiny.models.input.toggle.ShinyToggleBuilder;
 import io.vertigo.shiny.models.layout.container.ShinyContainerBuilder;
 import io.vertigo.shiny.models.layout.grid.ShinyGridBuilder;
 import io.vertigo.shiny.models.layout.page.ShinyPageBuilder;
@@ -56,7 +57,6 @@ import io.vertigo.shiny.models.text.sparkline.ShinySparklineBuilder;
 import io.vertigo.shiny.models.text.status.ShinyStatusBuilder;
 import io.vertigo.shiny.models.text.textpath.ShinyTextPathBuilder;
 import io.vertigo.shiny.models.text.title.ShinyTitleBuilder;
-import io.vertigo.shiny.models.input.toggle.ShinyToggleBuilder;
 import io.vertigo.shiny.renderers.ShinySuperRenderer;
 
 public final class Shiny {

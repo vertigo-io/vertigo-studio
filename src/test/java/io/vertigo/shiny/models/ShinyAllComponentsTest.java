@@ -333,7 +333,7 @@ public class ShinyAllComponentsTest {
 		//---
 		Shiny.render(
 				Shiny.container()
-						.addComponent(
+						.addModel(
 								Shiny.table()
 										.withTitle("Users")
 										.withHeader("FirstName", "LastName", "Age")
@@ -344,7 +344,7 @@ public class ShinyAllComponentsTest {
 												new ShinyStringCell(UUID.randomUUID(), "doe"),
 												new ShinyStringCell(UUID.randomUUID(), "32"))
 										.build())
-						.addComponent(Shiny.paragraph()
+						.addModel(Shiny.paragraph()
 								.withText("This is a simple paragraph.")
 								.build())
 						.build());

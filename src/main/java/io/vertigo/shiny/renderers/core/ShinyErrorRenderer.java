@@ -4,7 +4,7 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
-import io.vertigo.shiny.models.core.error.ShinyError;
+import io.vertigo.shiny.models.feedback.error.ShinyError;
 import io.vertigo.shiny.renderers.ShinyModelRenderer;
 import io.vertigo.shiny.style.ShinyColors;
 

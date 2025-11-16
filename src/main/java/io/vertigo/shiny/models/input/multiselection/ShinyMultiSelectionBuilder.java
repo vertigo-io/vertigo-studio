@@ -29,6 +29,13 @@ public final class ShinyMultiSelectionBuilder implements Builder<ShinyMultiSelec
 		return this;
 	}
 
+	public ShinyMultiSelectionBuilder addOption(final String option) {
+		Assertion.check().isNotNull(option);
+		//---
+		_options.add(option);
+		return this;
+	}
+
 	public ShinyMultiSelectionBuilder withOptions(final List<String> options) {
 		Assertion.check().isNotNull(options);
 		this._options.clear();

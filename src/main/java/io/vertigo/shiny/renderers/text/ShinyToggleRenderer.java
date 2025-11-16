@@ -4,7 +4,7 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
-import io.vertigo.shiny.models.text.toggle.ShinyToggle;
+import io.vertigo.shiny.models.input.toggle.ShinyToggle;
 import io.vertigo.shiny.renderers.ShinyModelRenderer;
 import io.vertigo.shiny.style.ShinyColor;
 

@@ -6,12 +6,12 @@ import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
-import io.vertigo.shiny.models.ShinyModel;
+import io.vertigo.shiny.models.ShinyBlock;
 
 public final class ShinyGridBuilder implements Builder<ShinyGrid> {
 	private UUID _id;
 	private int _columns = 1; // Default to 1 column
-	private final List<ShinyModel> _content = new ArrayList<>();
+	private final List<ShinyBlock> _content = new ArrayList<>();
 
 	public ShinyGridBuilder withId(final UUID id) {
 		Assertion.check().isNotNull(id);
@@ -22,26 +22,29 @@ public final class ShinyGridBuilder implements Builder<ShinyGrid> {
 
 	public ShinyGridBuilder withColumns(final int columns) {
 		Assertion.check().isTrue(columns > 0, "Columns must be a positive number");
+		//---
 		this._columns = columns;
 		return this;
 	}
 
-	public ShinyGridBuilder addContent(final ShinyModel model) {
-		Assertion.check().isNotNull(model);
-		this._content.add(model);
+	public ShinyGridBuilder addBlock(final ShinyBlock block) {
+		Assertion.check().isNotNull(block);
+		//---
+		this._content.add(block);
 		return this;
 	}
 
-	public ShinyGridBuilder addAllContent(final List<ShinyModel> models) {
-		Assertion.check().isNotNull(models);
-		this._content.addAll(models);
+	public ShinyGridBuilder addAllBlocks(final List<ShinyBlock> blocks) {
+		Assertion.check().isNotNull(blocks);
+		//---
+		this._content.addAll(blocks);
 		return this;
 	}
 
-	public ShinyGridBuilder addAllContent(final ShinyModel... models) {
-		Assertion.check().isNotNull(models);
-		this._content.addAll(List.of(models));
-		return this;
+	public ShinyGridBuilder addAllBlocks(final ShinyBlock... blocks) {
+		Assertion.check().isNotNull(blocks);
+		//---
+		return addAllBlocks(List.of(blocks));
 	}
 
 	@Override

@@ -42,8 +42,6 @@ import io.vertigo.shell.systems.java.commands.load.JavaLoadCommand;
 import io.vertigo.shell.systems.java.commands.show.JavaShowModelCommand;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.models.ShinyModel;
-import io.vertigo.shiny.models.core.alert.ShinyAlertType;
-import io.vertigo.shiny.models.core.error.ShinyErrorBuilder;
 import io.vertigo.shiny.models.data.card.ShinyCardFormat;
 import io.vertigo.shiny.models.data.list.ShinyListType;
 import io.vertigo.shiny.models.data.table.ShinyTableBuilder;
@@ -60,7 +58,10 @@ import io.vertigo.shiny.models.dataviz.flow.NodeType;
 import io.vertigo.shiny.models.dataviz.flow.ShinyFlowBuilder;
 import io.vertigo.shiny.models.dataviz.geomap.ShinyGeoPoint;
 import io.vertigo.shiny.models.dataviz.mindmap.ShinyMindMapNodeBuilder;
+import io.vertigo.shiny.models.feedback.alert.ShinyAlertType;
+import io.vertigo.shiny.models.feedback.error.ShinyErrorBuilder;
 import io.vertigo.shiny.models.feedback.notification.ShinyNotificationType;
+import io.vertigo.shiny.models.input.toggle.ShinyToggleType;
 import io.vertigo.shiny.models.layout.container.ShinyContainerBuilder;
 import io.vertigo.shiny.models.text.chip.ShinyChipVariant;
 import io.vertigo.shiny.models.text.rating.ShinyRatingScale;
@@ -262,7 +263,7 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 			case "inputtext" -> Shiny.inputText()
 					.withLabel("Your Name")
 					.withDefaultValue("John Doe")
-					.isRequired()
+					//.isRequired()
 					.build();
 			case "json" -> Shiny.json()
 					.withJson("""
@@ -325,7 +326,7 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 					.addOption("Banana")
 					.addOption("Orange")
 					.addOption("Grape")
-					.withSelectedIndices(0, 2)
+					//.withSelectedIndices(0, 2)
 					.build();
 			case "alert" -> Shiny.alert()
 					.withAlertType(ShinyAlertType.INFO)
@@ -413,25 +414,25 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 					.build();
 			case "wait" -> wait(Shiny.figlet().withText("attente 2s").build(), 2000);
 			case "container" -> new ShinyContainerBuilder()
-					.addComponent(Shiny.sparkline()
+					.addModel(Shiny.sparkline()
 							.withTitle("Ventes par produit")
 							.withValues(156, 450, 300, 200, 100, 23)
 							.build())
-					.addComponent(Shiny.list()
+					.addModel(Shiny.list()
 							.withTitle("planetes")
 							.withType(ShinyListType.DASHED)
 							.addItem("Uranus")
 							.addItem("Saturn")
 							.addItem("Venus")
 							.build())
-					.addComponent(Shiny.chip()
+					.addModel(Shiny.chip()
 							.withText("Beatles")
 							.withColor("red")
 							.withVariant(ShinyChipVariant.ELEVATED)
 							.withIcon("mdi-vuetify")
 							.withClosable(true)
 							.build())
-					.addComponent(Shiny.chip()
+					.addModel(Shiny.chip()
 							.withText("Kinks")
 							.withColor("pink")
 							.withVariant(ShinyChipVariant.ELEVATED)
@@ -502,21 +503,28 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 					.build();
 			case "grid" -> Shiny.grid()
 					.withColumns(2)
-					.addContent(Shiny.card()
+					.addBlock(Shiny.card()
 							.withTitle("Card 1")
 							.withDescription("This is the first card in the grid.")
 							.build())
-					.addContent(Shiny.card()
+					.addBlock(Shiny.card()
 							.withTitle("Card 2")
 							.withDescription("This is the second card in the grid.")
 							.build())
-					.addContent(Shiny.paragraph()
-							.withText("This is a paragraph in the grid.")
-							.build())
-					.addContent(Shiny.alert()
-							.withAlertType(ShinyAlertType.WARNING)
-							.withContent("This is an alert in the grid.")
-							.build())
+					.addBlock(
+							Shiny.container().addModel(
+									Shiny.paragraph()
+											.withText("This is a paragraph in the grid.")
+											.build())
+									.build())
+					.addBlock(
+							Shiny.container().addModel(
+
+									Shiny.alert()
+											.withAlertType(ShinyAlertType.WARNING)
+											.withContent("This is an alert in the grid.")
+											.build())
+									.build())
 					.build();
 			case "board" -> new CrmInstallationBoard().execute();
 			case "datagrid" -> Shiny.dataGrid()
@@ -568,20 +576,29 @@ public final class BansheeHandlerImpl implements BansheeHandler {
 					.build();
 			case "modal" -> Shiny.modal()
 					.withTitle("My Modal")
-					.withContent(Shiny.paragraph().withText("This is the content of the modal.").build())
+					.withContent(
+							Shiny.container().addModel(
+									Shiny.paragraph()
+											.withText("This is the content of the modal.")
+											.build())
+									.build())
 					.isPersistent()
 					.build();
 			case "page" -> Shiny.page()
 					.withTitle("My Sample Page")
-					.withLayout(Shiny.container()
-							.addComponent(Shiny.card()
-									.withTitle("Card on Page")
-									.withDescription("This card is part of the page layout.")
-									.build())
-							.addComponent(Shiny.alert()
-									.withAlertType(ShinyAlertType.INFO)
-									.withContent("This is an alert on the page.")
-									.build())
+					.withLayout(Shiny.grid()
+							.addBlock(
+									Shiny.card()
+											.withTitle("Card on Page")
+											.withDescription("This card is part of the page layout.")
+											.build())
+							.addBlock(
+									Shiny.container().addModel(
+											Shiny.alert()
+													.withAlertType(ShinyAlertType.INFO)
+													.withContent("This is an alert on the page.")
+													.build())
+											.build())
 							.build())
 					.build();
 			default -> new ShinyErrorBuilder().withText("unknown command :" + command).build();
