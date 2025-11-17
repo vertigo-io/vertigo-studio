@@ -18,9 +18,9 @@ public record ShinyGrid(
 				.isTrue(columns > 0, "Grid must have at least one column")
 				.isNotNull(content);
 	}
-
-	@Override
-	public String shinyType() {
-		return "ShinyGrid";
-	}
+	//
+	//	@Override
+	//	public String shinyType() {
+	//		return "ShinyGrid";
+	//	}
 }
