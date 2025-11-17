@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, nextTick, provide } from 'vue';
-import VAppStatusComponent from './components/core/VAppStatusComponent.vue';
+import VAppStatusComponent from './views/core/VAppStatusComponent.vue';
 import { BansheeRole } from './models/core/BansheeRole';
 import { BansheeMessage } from './models/core/BansheeMessage';
 import { BansheeStory } from './models/core/BansheeStory';
@@ -49,7 +49,7 @@ import { ShinyModel } from './models/ShinyModel';
 import { BansheeCommand } from './models/core/BansheeCommand';
 import { BansheeResult } from './models/core/BansheeResult';
 
-import { ShinyRegistry } from './components/ShinyRegistry';
+import { ShinyRegistry } from './views/ShinyRegistry';
 
 // Declare global types if not already defined
 declare global {

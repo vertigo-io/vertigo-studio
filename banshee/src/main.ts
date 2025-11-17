@@ -24,7 +24,7 @@ const vuetify = createVuetify({
 app.use(vuetify);
 
 // Import and register all Shiny components automatically
-const shinyComponents = import.meta.glob('./components/**/*.vue', { eager: true });
+const shinyComponents = import.meta.glob('./views/**/*.vue', { eager: true });
 
 for (const path in shinyComponents) {
     const componentName = path.split('/').pop().replace(/\.\w+$/, '');

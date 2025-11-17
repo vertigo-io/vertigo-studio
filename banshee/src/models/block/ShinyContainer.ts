@@ -1,5 +1,5 @@
-import { ShinyBlock } from '../../ShinyBlock';
-import { ShinyModel } from '../../ShinyModel';
+import { ShinyBlock } from '../../models/ShinyBlock';
+import { ShinyModel } from '../../models/ShinyModel';
 
 export interface ShinyContainer extends ShinyBlock {
   id?: string;
