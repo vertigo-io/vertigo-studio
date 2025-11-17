@@ -105,7 +105,7 @@ export class ShinyRegistry {
     this.register('ShinyCodeEditor', ShinyCodeEditorComponent);
     this.register('ShinyAutocomplete', ShinyAutocompleteComponent);
     this.register('ShinyRangeSlider', ShinyRangeSliderComponent);
-    this.register('ShinyPdfComponent', VShinyPdf);
+    this.register('ShinyPdfComponent', ShinyPdf);
     this.register('ShinyImage', ShinyImage);
     this.register('ShinyRss', ShinyRss);
     this.register('ShinyVideo', ShinyVideo);
