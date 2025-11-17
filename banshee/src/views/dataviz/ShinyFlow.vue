@@ -36,10 +36,10 @@ const elements = ref<Elements>([])
 
 // Define nodeTypes object
 const nodeTypes = {
-  [NodeType.LR]: FlowCustomNode,
-  [NodeType.TB]: FlowCustomNode,
-  [NodeType.LL]: FlowCustomNode,
-  [NodeType.RR]: FlowCustomNode,
+  [NodeType.LR]: ShinyFlowCustomNode,
+  [NodeType.TB]: ShinyFlowCustomNode,
+  [NodeType.LL]: ShinyFlowCustomNode,
+  [NodeType.RR]: ShinyFlowCustomNode,
 };
 
 // 🎨 Palette Make-like
