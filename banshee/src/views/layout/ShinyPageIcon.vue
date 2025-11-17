@@ -3,14 +3,14 @@
         <v-icon size="64">mdi-file-document-outline</v-icon>
         <v-card-title>{{ data.title }}</v-card-title>
 
-        <v-shiny-full-page-component :data="data" v-model:dialog="dialog"></v-shiny-full-page-component>
+        <ShinyFullPage :data="data" v-model:dialog="dialog"></ShinyFullPage>
     </v-card>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import { ShinyPage } from '../../models/layout/page/ShinyPage';
-import VShinyFullPage from './v-shiny-full-page.vue';
+import ShinyFullPage from './ShinyFullPage.vue';
 
 const props = defineProps<{
     data: ShinyPage

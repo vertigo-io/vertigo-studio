@@ -89,48 +89,48 @@ export class ShinyRegistry {
     this.register('ShinyDonutChart', ShinyDonutChart);
     this.register('ShinyAreaChart', ShinyAreaChart);
     this.register('ShinyLineChart', ShinyLineChart);
-    this.register('ShinyProgressBar', VShinyProgressBar);
-    this.register('ShinyRating', VShinyRating);
-    this.register('ShinySparkline', VShinySparkLine);
-    this.register('ShinyStatus', VShinyStatus);
-    this.register('ShinyFlow', VShinyFlow);
-    this.register('ShinyMindMap', VShinyMindMap);
-    this.register('ShinyAlert', VShinyAlert);
-    this.register('ShinySlider', VShinySlider);
-    this.register('ShinyMultiSelection', VShinyMultiSelection);
-    this.register('ShinyInputText', VShinyInputText);
-    this.register('ShinyToggle', VShinyToggle);
-    this.register('ShinyDatePicker', VShinyDatePickerComponent);
-    this.register('ShinyFileUpload', VShinyFileUploadComponent);
-    this.register('ShinyCodeEditor', VShinyCodeEditorComponent);
-    this.register('ShinyAutocomplete', VShinyAutocompleteComponent);
-    this.register('ShinyRangeSlider', VShinyRangeSliderComponent);
-    this.register('ShinyPdf', VShinyPdf);
-    this.register('ShinyImage', VShinyImage);
-    this.register('ShinyRss', VShinyRss);
-    this.register('ShinyVideo', VShinyVideo);
-    this.register('ShinyYoutube', VShinyYoutube);
-    this.register('ShinyGeoMap', VShinyGeoMap);
-    this.register('ShinyCard', VShinyCard);
-    this.register('ShinyFiglet', VShinyFiglet);
-    this.register('ShinyParagraph', VShinyParagraph);
-    this.register('ShinyTextPath', VShinyTextPath);
-    this.register('ShinyTitle', VShinyTitle);
-    this.register('ShinyGrid', VShinyGrid);
-    this.register('ShinyTabs', VShinyTabs);
-    this.register('ShinyStepper', VShinyStepper);
-    this.register('ShinyPage', VShinyPageIcon); // Default representation
-    this.register('ShinyFullPage', VShinyFullPage); // Full-screen representation
+    this.register('ShinyProgressBar', ShinyProgressBar);
+    this.register('ShinyRating', ShinyRating);
+    this.register('ShinySparkline', ShinySparkLine);
+    this.register('ShinyStatus', ShinyStatus);
+    this.register('ShinyFlow', ShinyFlow);
+    this.register('ShinyMindMap', ShinyMindMap);
+    this.register('ShinyAlert', ShinyAlert);
+    this.register('ShinySlider', ShinySlider);
+    this.register('ShinyMultiSelection', ShinyMultiSelection);
+    this.register('ShinyInputText', ShinyInputText);
+    this.register('ShinyToggle', ShinyToggle);
+    this.register('ShinyDatePicker', ShinyDatePickerComponent);
+    this.register('ShinyFileUpload', ShinyFileUploadComponent);
+    this.register('ShinyCodeEditor', ShinyCodeEditorComponent);
+    this.register('ShinyAutocomplete', ShinyAutocompleteComponent);
+    this.register('ShinyRangeSlider', ShinyRangeSliderComponent);
+    this.register('ShinyPdfComponent', VShinyPdf);
+    this.register('ShinyImage', ShinyImage);
+    this.register('ShinyRss', ShinyRss);
+    this.register('ShinyVideo', ShinyVideo);
+    this.register('ShinyYoutube', ShinyYoutube);
+    this.register('ShinyGeoMap', ShinyGeoMap);
+    this.register('ShinyCard', ShinyCard);
+    this.register('ShinyFiglet', ShinyFiglet);
+    this.register('ShinyParagraph', ShinyParagraph);
+    this.register('ShinyTextPath', ShinyTextPath);
+    this.register('ShinyTitle', ShinyTitle);
+    this.register('ShinyGrid', ShinyGrid);
+    this.register('ShinyTabs', ShinyTabs);
+    this.register('ShinyStepper', ShinyStepper);
+    this.register('ShinyPage', ShinyPageIcon); // Default representation
+    this.register('ShinyFullPage', ShinyFullPage); // Full-screen representation
 
     // Register Table Cell Components
-    this.register('ShinyStringCell', VShinyStringCell);
-    this.register('ShinyChipCell', VShinyChipCell);
-    this.register('ShinyIconCell', VShinyIconCell);
-    this.register('ShinyButtonCell', VShinyButtonCell);
-    this.register('ShinyAvatarCell', VShinyAvatarCell);
-    this.register('ShinyProgressBarCell', VShinyProgressBarCell);
-    this.register('ShinyBadgeCell', VShinyBadgeCell);
-    this.register('ShinyRatingCell', VShinyRatingCell);
+    this.register('ShinyStringCell', ShinyStringCell);
+    this.register('ShinyChipCell', ShinyChipCell);
+    this.register('ShinyIconCell', ShinyIconCell);
+    this.register('ShinyButtonCell', ShinyButtonCell);
+    this.register('ShinyAvatarCell', ShinyAvatarCell);
+    this.register('ShinyProgressBarCell', ShinyProgressBarCell);
+    this.register('ShinyBadgeCell', ShinyBadgeCell);
+    this.register('ShinyRatingCell', ShinyRatingCell);
   }
  
   register(shinyType: string, componentType: any): void {

@@ -21,7 +21,7 @@ import { ref, watchEffect, onMounted } from 'vue'
 import { VueFlow, useVueFlow, type Elements } from '@vue-flow/core'
 import { Background } from '@vue-flow/background'
 import { Controls } from '@vue-flow/controls'
-import FlowCustomNode from './flow/FlowCustomNode.vue'; // Import custom node component
+import ShinyFlowCustomNode from './flow/ShinyFlowCustomNode.vue'; // Import custom node component
 import { FlowLayout } from './flow/FlowLayout';
 import '@vue-flow/core/dist/style.css'
 import '@vue-flow/core/dist/theme-default.css'
