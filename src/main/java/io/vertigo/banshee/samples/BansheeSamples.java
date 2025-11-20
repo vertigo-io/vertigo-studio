@@ -133,22 +133,13 @@ public final class BansheeSamples {
 			.addCommandExecutor("org", cmd -> Shiny.organization().addNode("1", null, "John Doe", "CEO", "https://randomuser.me/api/portraits/men/1.jpg").addNode("2", "1", "Jane Smith", "CTO", "https://randomuser.me/api/portraits/women/2.jpg").addNode("3", "1", "Mike Johnson", "CFO", "https://randomuser.me/api/portraits/men/3.jpg").addNode("4", "2", "Emily Brown", "Lead Developer", "https://randomuser.me/api/portraits/women/4.jpg").addNode("5", "2", "David Wilson", "DevOps Engineer", "https://randomuser.me/api/portraits/men/5.jpg").addNode("6", "3", "Sarah Davis", "Accountant", "https://randomuser.me/api/portraits/women/6.jpg").build())
 			.addCommandExecutor("pdf", cmd -> Shiny.pdf().withTitle("Arthur Rimbaud - Poèmes").withPath("sample-report.pdf").build())
 			.addCommandExecutor("tree", cmd -> Shiny.tree().withLabel("my directory").addTree("Files").addLeaf("src").addTree("main").addLeaf("file.txt").up().up().addTree("test").addLeaf("testFile.txt").root().build())
-			.addCommandExecutor("sankey", cmd -> Shiny.sankey().withTitle("Flux d\'énergie").addLink("Nucléaire", "Réseau électrique", 120.0).addLink("Hydraulique", "Réseau électrique", 80.0).addLink("Éolien", "Réseau électrique", 60.0).addLink("Solaire", "Réseau électrique", 40.0).addLink("Charbon", "Réseau électrique", 100.0).addLink("Réseau électrique", "Industrie", 150.0).addLink("Réseau électrique", "Transport", 70.0).addLink("Réseau électrique", "Résidentiel", 100.0).addLink("Réseau électrique", "Pertes réseau", 20.0).addLink("Résidentiel", "Chauffage", 40.0).addLink("Résidentiel", "Électroménager", 30.0).addLink("Résidentiel", "Informatique", 30.0).build())
-			.addCommandExecutor("flow", cmd -> new ShinyFlowBuilder().withNode("1", "Order Received", 100, 50, NodeType.RR).withNode("2", "Payment Processed", 300, 50, NodeType.LR).withNode("3", "Items Shipped", 500, 50, NodeType.TB).withNode("4", "Invoice Generated", 300, 200, NodeType.LR).withNode("5", "Billing Completed", 500, 200, NodeType.LL).withEdge("e1-2", "1", "2", "Process Payment").withEdge("e2-3", "2", "3", "Ship Items").withEdge("e2-4", "2", "4", "Generate Invoice").withEdge("e4-5", "4", "5", "Finalize Billing").build())
+			.addCommandExecutor("sankey", BansheeSamples::sankey)
+			.addCommandExecutor("flow", BansheeSamples::flow)
 			.addCommandExecutor("wait", cmd -> wait(Shiny.figlet().withText("attente 2s").build(), 2000))
 			.addCommandExecutor("container", cmd -> new ShinyContainerBuilder().addModel(Shiny.sparkline().withTitle("Ventes par produit").withValues(156, 450, 300, 200, 100, 23).build()).addModel(Shiny.list().withTitle("planetes").withType(ShinyListType.DASHED).addItem("Uranus").addItem("Saturn").addItem("Venus").build()).addModel(Shiny.chip().withText("Beatles").withColor("red").withVariant(ShinyChipVariant.ELEVATED).withIcon("mdi-vuetify").withClosable(true).build()).addModel(Shiny.chip().withText("Kinks").withColor("pink").withVariant(ShinyChipVariant.ELEVATED).withIcon("mdi-vuetify").build()).build())
 			.addCommandExecutor("mindmap", BansheeSamples::mindmap)
-			.addCommandExecutor("table3",
-					cmd -> Shiny.table()
-							.withTitle("Rich Content Table")
-							.withHeader("Name", "Status", "Progress", "Rating", "Action", "Avatar", "Icon", "Badge").addRow(new ShinyStringCell(UUID.randomUUID(), "Alice"), new ShinyChipCell(UUID.randomUUID(), "Active", "green", ShinyChipVariant.FLAT, false, null), new ShinyProgressBarCell(UUID.randomUUID(), 75, 100, "blue"), new ShinyRatingCell(UUID.randomUUID(), 4.5, ShinyRatingScale.SCALE_5, true), new ShinyButtonCell(UUID.randomUUID(), "View", "primary", "viewAlice"), new ShinyAvatarCell(UUID.randomUUID(), "https://randomuser.me/api/portraits/women/1.jpg", "Alice", "36px"), new ShinyIconCell(UUID.randomUUID(), "mdi-check-circle", "green", "24px"),
-									new ShinyBadgeCell(UUID.randomUUID(), "New", "red"))
-							.addRow(
-									new ShinyStringCell(UUID.randomUUID(), "Bob"), new ShinyChipCell(UUID.randomUUID(), "Inactive", "red", ShinyChipVariant.OUTLINED, false, null), new ShinyProgressBarCell(UUID.randomUUID(), 25, 100, "red"), new ShinyRatingCell(UUID.randomUUID(), 2.0, ShinyRatingScale.SCALE_5, false), new ShinyButtonCell(UUID.randomUUID(), "Edit", "secondary", "editBob"), new ShinyAvatarCell(UUID.randomUUID(), "https://randomuser.me/api/portraits/men/2.jpg", "Bob", "36px"), new ShinyIconCell(UUID.randomUUID(), "mdi-alert-circle", "orange", "24px"), new ShinyBadgeCell(UUID.randomUUID(), "Urgent", "orange"))
-							.addRow(
-									new ShinyStringCell(UUID.randomUUID(), "Charlie"), new ShinyChipCell(UUID.randomUUID(), "Pending", "orange", ShinyChipVariant.ELEVATED, false, null), new ShinyProgressBarCell(UUID.randomUUID(), 50, 100, "orange"), new ShinyRatingCell(UUID.randomUUID(), 3.0, ShinyRatingScale.SCALE_5, true), new ShinyButtonCell(UUID.randomUUID(), "Delete", "error", "deleteCharlie"), new ShinyAvatarCell(UUID.randomUUID(), "https://randomuser.me/api/portraits/men/3.jpg", "Charlie", "36px"), new ShinyIconCell(UUID.randomUUID(), "mdi-information", "blue", "24px"), new ShinyBadgeCell(UUID.randomUUID(), "Info", "blue"))
-							.build())
-			.addCommandExecutor("grid", cmd -> Shiny.grid().withColumns(2).addBlock(Shiny.card().withTitle("Card 1").withDescription("This is the first card in the grid.").build()).addBlock(Shiny.card().withTitle("Card 2").withDescription("This is the second card in the grid.").build()).addBlock(Shiny.container().addModel(Shiny.paragraph().withText("This is a paragraph in the grid.").build()).build()).addBlock(Shiny.container().addModel(Shiny.alert().withAlertType(ShinyAlertType.WARNING).withContent("This is an alert in the grid.").build()).build()).build())
+			.addCommandExecutor("table3", BansheeSamples::table3)
+			.addCommandExecutor("grid", BansheeSamples::grid)
 			.addCommandExecutor("datagrid", cmd -> Shiny.dataGrid().withTitle("My DataGrid").addColumn("ID", "id", true, true).addColumn("Name", "name", true, false).addColumn("Age", "age", true, false).withData(List.of(Map.of("id", 1, "name", "John", "age", 30), Map.of("id", 2, "name", "Jane", "age", 25), Map.of("id", 3, "name", "Doe", "age", 40))).build())
 			.addCommandExecutor("datepicker", cmd -> Shiny.datePicker().withLabel("Select a date").withValue("2025-11-13").isRequired().build())
 			.addCommandExecutor("fileupload", cmd -> Shiny.fileUpload().withLabel("Upload a file").isMultiple().withAccept("image/*").build())
@@ -157,25 +148,7 @@ public final class BansheeSamples {
 			.addCommandExecutor("rangeslider", cmd -> Shiny.rangeSlider().withLabel("Price Range").withMin(0).withMax(1000).withStep(10).withValue(200, 800).withColor("green").withThumbLabel(true).build())
 			.addCommandExecutor("notification", cmd -> Shiny.notification().withType(ShinyNotificationType.SUCCESS).withMessage("This is a success notification").withTimeout(3000).build())
 			.addCommandExecutor("modal", cmd -> Shiny.modal().withTitle("My Modal").withContent(Shiny.container().addModel(Shiny.paragraph().withText("This is the content of the modal.").build()).build()).isPersistent().build())
-			.addCommandExecutor("page", cmd -> Shiny.page()
-					.withTitle("My Sample Page")
-					.withLayout(
-							Shiny.grid()
-									.addBlock(
-											Shiny.card()
-													.withTitle("Card on Page")
-													.withDescription("This card is part of the page layout.")
-													.build())
-									.addBlock(
-											Shiny.container()
-													.addModel(
-															Shiny.alert()
-																	.withAlertType(ShinyAlertType.INFO)
-																	.withContent("This is an alert on the page.")
-																	.build())
-													.build())
-									.build())
-					.build())
+			.addCommandExecutor("page", BansheeSamples::page)
 			.build();
 
 	private static ShinyModel wait(final ShinyModel model, final int timeInMillis) {
@@ -256,4 +229,102 @@ public final class BansheeSamples {
 								.build())
 				.build();
 	}
+
+	private static ShinyModel page(BansheeCommand cmd) {
+		return Shiny.page()
+				.withTitle("My Sample Page")
+				.withLayout(
+						Shiny.grid()
+								.addBlock(
+										Shiny.card()
+												.withTitle("Card on Page")
+												.withDescription("This card is part of the page layout.")
+												.build())
+								.addBlock(
+										Shiny.container()
+												.addModel(
+														Shiny.alert()
+																.withAlertType(ShinyAlertType.INFO)
+																.withContent("This is an alert on the page.")
+																.build())
+												.build())
+								.build())
+				.build();
+	}
+
+	private static ShinyModel table3(BansheeCommand cmd) {
+		return Shiny.table()
+				.withTitle("Rich Content Table")
+				.withHeader("Name", "Status", "Progress", "Rating", "Action", "Avatar", "Icon", "Badge").addRow(new ShinyStringCell(UUID.randomUUID(), "Alice"), new ShinyChipCell(UUID.randomUUID(), "Active", "green", ShinyChipVariant.FLAT, false, null), new ShinyProgressBarCell(UUID.randomUUID(), 75, 100, "blue"), new ShinyRatingCell(UUID.randomUUID(), 4.5, ShinyRatingScale.SCALE_5, true), new ShinyButtonCell(UUID.randomUUID(), "View", "primary", "viewAlice"), new ShinyAvatarCell(UUID.randomUUID(), "https://randomuser.me/api/portraits/women/1.jpg", "Alice", "36px"), new ShinyIconCell(UUID.randomUUID(), "mdi-check-circle", "green", "24px"),
+						new ShinyBadgeCell(UUID.randomUUID(), "New", "red"))
+				.addRow(
+						new ShinyStringCell(UUID.randomUUID(), "Bob"), new ShinyChipCell(UUID.randomUUID(), "Inactive", "red", ShinyChipVariant.OUTLINED, false, null), new ShinyProgressBarCell(UUID.randomUUID(), 25, 100, "red"), new ShinyRatingCell(UUID.randomUUID(), 2.0, ShinyRatingScale.SCALE_5, false), new ShinyButtonCell(UUID.randomUUID(), "Edit", "secondary", "editBob"), new ShinyAvatarCell(UUID.randomUUID(), "https://randomuser.me/api/portraits/men/2.jpg", "Bob", "36px"), new ShinyIconCell(UUID.randomUUID(), "mdi-alert-circle", "orange", "24px"), new ShinyBadgeCell(UUID.randomUUID(), "Urgent", "orange"))
+				.addRow(
+						new ShinyStringCell(UUID.randomUUID(), "Charlie"), new ShinyChipCell(UUID.randomUUID(), "Pending", "orange", ShinyChipVariant.ELEVATED, false, null), new ShinyProgressBarCell(UUID.randomUUID(), 50, 100, "orange"), new ShinyRatingCell(UUID.randomUUID(), 3.0, ShinyRatingScale.SCALE_5, true), new ShinyButtonCell(UUID.randomUUID(), "Delete", "error", "deleteCharlie"), new ShinyAvatarCell(UUID.randomUUID(), "https://randomuser.me/api/portraits/men/3.jpg", "Charlie", "36px"), new ShinyIconCell(UUID.randomUUID(), "mdi-information", "blue", "24px"), new ShinyBadgeCell(UUID.randomUUID(), "Info", "blue"))
+				.build();
+	}
+
+	private static ShinyModel sankey(BansheeCommand cmd) {
+		return Shiny.sankey()
+				.withTitle("Flux d\'énergie")
+				.addLink("Nucléaire", "Réseau électrique", 120.0)
+				.addLink("Hydraulique", "Réseau électrique", 80.0)
+				.addLink("Éolien", "Réseau électrique", 60.0)
+				.addLink("Solaire", "Réseau électrique", 40.0)
+				.addLink("Charbon", "Réseau électrique", 100.0)
+				.addLink("Réseau électrique", "Industrie", 150.0)
+				.addLink("Réseau électrique", "Transport", 70.0)
+				.addLink("Réseau électrique", "Résidentiel", 100.0)
+				.addLink("Réseau électrique", "Pertes réseau", 20.0)
+				.addLink("Résidentiel", "Chauffage", 40.0)
+				.addLink("Résidentiel", "Électroménager", 30.0)
+				.addLink("Résidentiel", "Informatique", 30.0)
+				.build();
+	}
+
+	private static ShinyModel flow(BansheeCommand cmd) {
+		return new ShinyFlowBuilder()
+				.withNode("1", "Order Received", 100, 50, NodeType.RR)
+				.withNode("2", "Payment Processed", 300, 50, NodeType.LR)
+				.withNode("3", "Items Shipped", 500, 50, NodeType.TB)
+				.withNode("4", "Invoice Generated", 300, 200, NodeType.LR)
+				.withNode("5", "Billing Completed", 500, 200, NodeType.LL)
+				.withEdge("e1-2", "1", "2", "Process Payment")
+				.withEdge("e2-3", "2", "3", "Ship Items")
+				.withEdge("e2-4", "2", "4", "Generate Invoice")
+				.withEdge("e4-5", "4", "5", "Finalize Billing")
+				.build();
+	}
+
+	private static ShinyModel grid(BansheeCommand cmd) {
+		return Shiny.grid()
+				.withColumns(2)
+				.addBlock(
+						Shiny.card()
+								.withTitle("Card 1")
+								.withDescription("This is the first card in the grid.")
+								.build())
+				.addBlock(
+						Shiny.card()
+								.withTitle("Card 2")
+								.withDescription("This is the second card in the grid.")
+								.build())
+				.addBlock(
+						Shiny.container()
+								.addModel(
+										Shiny.paragraph()
+												.withText("This is a paragraph in the grid.")
+												.build())
+								.build())
+				.addBlock(
+						Shiny.container()
+								.addModel(
+										Shiny.alert()
+												.withAlertType(ShinyAlertType.WARNING)
+												.withContent("This is an alert in the grid.")
+												.build())
+								.build())
+				.build();
+	}
+
 }
