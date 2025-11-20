@@ -3,8 +3,9 @@ package io.vertigo.shiny.models.input.autocomplete;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import io.vertigo.core.lang.Assertion;
-import jakarta.annotation.Nonnull;
 
 public final class ShinyAutocompleteBuilder {
 	private String _label;

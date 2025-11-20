@@ -1,7 +1,8 @@
 package io.vertigo.shiny.models.input.fileupload;
 
+import javax.annotation.Nonnull;
+
 import io.vertigo.core.lang.Assertion;
-import jakarta.annotation.Nonnull;
 
 public final class ShinyFileUploadBuilder {
 	private String _label;

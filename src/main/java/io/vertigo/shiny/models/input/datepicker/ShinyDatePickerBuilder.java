@@ -1,7 +1,8 @@
 package io.vertigo.shiny.models.input.datepicker;
 
+import javax.annotation.Nonnull;
+
 import io.vertigo.core.lang.Assertion;
-import jakarta.annotation.Nonnull;
 
 public final class ShinyDatePickerBuilder {
 	private String _label;

@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Nonnull;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
-import jakarta.annotation.Nonnull;
 
 public final class ShinyFormBuilder implements Builder<ShinyForm> {
 	private UUID _id;
@@ -25,15 +26,16 @@ public final class ShinyFormBuilder implements Builder<ShinyForm> {
 		return this;
 	}
 
-	    public ShinyFormBuilder addSection(final String sectionTitle, final List<ShinyFormField> fields) {
-	        return addSection(sectionTitle, fields, false, false); // Default to not collapsible and not initially collapsed
-	    }
-	
-	    public ShinyFormBuilder addSection(@Nonnull final String sectionTitle, @Nonnull final List<ShinyFormField> fields, final boolean collapsible, final boolean initiallyCollapsed) {
-	        Assertion.check().isNotBlank(sectionTitle).isNotNull(fields);
-	        this._sections.add(new ShinyFormSection(sectionTitle, fields, collapsible, initiallyCollapsed));
-	        return this;
-	    }
+	public ShinyFormBuilder addSection(final String sectionTitle, final List<ShinyFormField> fields) {
+		return addSection(sectionTitle, fields, false, false); // Default to not collapsible and not initially collapsed
+	}
+
+	public ShinyFormBuilder addSection(@Nonnull final String sectionTitle, @Nonnull final List<ShinyFormField> fields, final boolean collapsible, final boolean initiallyCollapsed) {
+		Assertion.check().isNotBlank(sectionTitle).isNotNull(fields);
+		this._sections.add(new ShinyFormSection(sectionTitle, fields, collapsible, initiallyCollapsed));
+		return this;
+	}
+
 	@Override
 	public ShinyForm build() {
 		_id = _id == null ? UUID.randomUUID() : _id;
