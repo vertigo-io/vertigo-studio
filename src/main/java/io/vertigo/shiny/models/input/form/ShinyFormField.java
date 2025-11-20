@@ -1,13 +1,14 @@
 package io.vertigo.shiny.models.input.form;
 
 import io.vertigo.core.lang.Assertion;
+import jakarta.annotation.Nonnull;
 
 import java.util.List;
 
 public record ShinyFormField(
-        String name,
-        String label,
-        ShinyFormFieldType type,
+        @Nonnull String name,
+        @Nonnull String label,
+        @Nonnull ShinyFormFieldType type,
         Object value,
         boolean required,
         String placeholder,

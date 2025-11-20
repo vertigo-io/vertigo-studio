@@ -4,10 +4,11 @@ import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyModel;
+import jakarta.annotation.Nonnull;
 
 public record ShinySlider(
-		UUID id,
-		String label,
+		@Nonnull UUID id,
+		@Nonnull String label,
 		double min,
 		double max,
 		double step,

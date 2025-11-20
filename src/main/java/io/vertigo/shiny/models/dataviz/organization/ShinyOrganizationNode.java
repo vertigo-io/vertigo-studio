@@ -1,12 +1,13 @@
 package io.vertigo.shiny.models.dataviz.organization;
 
 import io.vertigo.core.lang.Assertion;
+import jakarta.annotation.Nonnull;
 
 public record ShinyOrganizationNode(
-        String id,
+        @Nonnull String id,
         String parentId,
-        String name,
-        String position,
+        @Nonnull String name,
+        @Nonnull String position,
         String imageUrl) {
 
     public ShinyOrganizationNode {

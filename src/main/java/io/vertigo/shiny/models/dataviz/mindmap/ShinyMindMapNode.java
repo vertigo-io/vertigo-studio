@@ -3,15 +3,16 @@ package io.vertigo.shiny.models.dataviz.mindmap;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
+import jakarta.annotation.Nonnull;
 
 public record ShinyMindMapNode(
-		String id,
-		String topic,
+		@Nonnull String id,
+		@Nonnull String topic,
 		String background,
 		String foreground,
 		String direction, // "left" or "right"
 		boolean expanded, // "true" or "false"
-		List<ShinyMindMapNode> children) {
+		@Nonnull List<ShinyMindMapNode> children) {
 
 	public ShinyMindMapNode {
 		Assertion.check()

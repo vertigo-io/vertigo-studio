@@ -4,8 +4,9 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyBlock;
+import jakarta.annotation.Nonnull;
 
-public record ShinyTabs(List<ShinyTab> tabs) implements ShinyBlock {
+public record ShinyTabs(@Nonnull List<ShinyTab> tabs) implements ShinyBlock {
 	public ShinyTabs {
 		Assertion.check()
 				.isNotNull(tabs);

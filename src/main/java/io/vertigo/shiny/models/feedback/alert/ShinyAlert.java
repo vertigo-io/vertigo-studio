@@ -4,12 +4,13 @@ import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyModel;
+import jakarta.annotation.Nonnull;
 
 public record ShinyAlert(
-		UUID id,
-		ShinyAlertType alertType,
+		@Nonnull UUID id,
+		@Nonnull ShinyAlertType alertType,
 		String title,
-		String content,
+		@Nonnull String content,
 		boolean closable,
 		String icon,
 		boolean prominent) implements ShinyModel {

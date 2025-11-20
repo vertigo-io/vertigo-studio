@@ -5,8 +5,9 @@ import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyBlock;
+import jakarta.annotation.Nonnull;
 
-public record ShinyForm(UUID id, String title, List<ShinyFormSection> sections) implements ShinyBlock {
+public record ShinyForm(@Nonnull UUID id, @Nonnull String title, @Nonnull List<ShinyFormSection> sections) implements ShinyBlock {
 	public ShinyForm {
 		Assertion.check()
 				.isNotNull(id)

@@ -6,11 +6,12 @@ import java.util.UUID;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyBlock;
 import io.vertigo.shiny.models.ShinyLayout;
+import jakarta.annotation.Nonnull;
 
 public record ShinyGrid(
-		UUID id,
+		@Nonnull UUID id,
 		int columns,
-		List<ShinyBlock> content) implements ShinyLayout {
+		@Nonnull List<ShinyBlock> content) implements ShinyLayout {
 
 	public ShinyGrid {
 		Assertion.check()

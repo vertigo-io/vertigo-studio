@@ -1,9 +1,10 @@
 package io.vertigo.shiny.models.dataviz.timeline;
 
 import io.vertigo.core.lang.Assertion;
+import jakarta.annotation.Nonnull;
 
 public record ShinyTimelineItem(
-        String title,
+        @Nonnull String title,
         String content,
         String color,
         String icon) {

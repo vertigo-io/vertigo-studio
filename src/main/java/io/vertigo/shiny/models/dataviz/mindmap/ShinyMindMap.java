@@ -4,11 +4,12 @@ import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyBlock;
+import jakarta.annotation.Nonnull;
 
 public record ShinyMindMap(
-		UUID id,
-		String title,
-		ShinyMindMapNode rootNode) implements ShinyBlock {
+		@Nonnull UUID id,
+		@Nonnull String title,
+		@Nonnull ShinyMindMapNode rootNode) implements ShinyBlock {
 
 	public ShinyMindMap {
 		Assertion.check().isNotNull(id);

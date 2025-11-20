@@ -2,15 +2,16 @@ package io.vertigo.shiny.models.media.pdf;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyBlock;
+import jakarta.annotation.Nonnull;
 
 /**
  * Represents a PDF component to be rendered in the UI.
  */
 public record ShinyPdf(
 		String title,
-		String pdfPath,
+		@Nonnull String pdfPath,
 		int initialPage,
-		String height) implements ShinyBlock {
+		@Nonnull String height) implements ShinyBlock {
 
 	public ShinyPdf {
 		Assertion.check()
