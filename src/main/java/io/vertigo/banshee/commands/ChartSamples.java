@@ -1,11 +1,13 @@
 package io.vertigo.banshee.commands;
 
+import io.vertigo.banshee.com.BansheeCommand;
+import io.vertigo.banshee.com.BansheeCommandExecutor;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.models.ShinyModel;
 
 public class ChartSamples {
-	public static class BarSample {
-		public ShinyModel execute() {
+	public static class BarSample implements BansheeCommandExecutor {
+		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.barChart()
 					.withTitle("Ventes par produit")
 					.withLabels("telephones", "ordinateurs", "livres")
@@ -15,8 +17,8 @@ public class ChartSamples {
 		}
 	}
 
-	public static class PieSample {
-		public ShinyModel execute() {
+	public static class PieSample implements BansheeCommandExecutor {
+		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.pieChart()
 					.withTitle("Répartition des ventes")
 					.withLabels("Téléphones", "Ordinateurs", "Livres")
@@ -25,8 +27,8 @@ public class ChartSamples {
 		}
 	}
 
-	public static class PieSample2 {
-		public ShinyModel execute() {
+	public static class PieSample2 implements BansheeCommandExecutor {
+		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.pieChart()
 					.withTitle("Répartition des ventes")
 					.withLabels("Téléphones", "Ordinateurs", "Livres")
@@ -37,8 +39,8 @@ public class ChartSamples {
 		}
 	}
 
-	public static class DonutSample {
-		public ShinyModel execute() {
+	public static class DonutSample implements BansheeCommandExecutor {
+		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.donutChart()
 					.withTitle("Répartition des ventes")
 					.withLabels("Téléphones", "Ordinateurs", "Livres")
@@ -49,8 +51,8 @@ public class ChartSamples {
 		}
 	}
 
-	public static class AreaSample {
-		public ShinyModel execute() {
+	public static class AreaSample implements BansheeCommandExecutor {
+		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.areaChart()
 					.withTitle("Ventes par mois")
 					.withLabels("Jan", "Fev", "Mar", "Avr", "Mai", "Juin")
@@ -60,8 +62,8 @@ public class ChartSamples {
 		}
 	}
 
-	public static class LineSample {
-		public ShinyModel execute() {
+	public static class LineSample implements BansheeCommandExecutor {
+		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.lineChart()
 					.withTitle("Ventes par mois")
 					.withLabels("Jan", "Fev", "Mar", "Avr", "Mai", "Juin")
@@ -71,8 +73,8 @@ public class ChartSamples {
 		}
 	}
 
-	public static class RadarSample {
-		public ShinyModel execute() {
+	public static class RadarSample implements BansheeCommandExecutor {
+		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.radarChart()
 					.withTitle("Final Fantasy VII Stats")
 					.withLabels("Attack", "Defense", "Magic Attack", "Magic Defense", "Speed", "Luck")

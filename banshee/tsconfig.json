@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "lib": ["es2015", "dom", "dom.iterable"]
+  },
+  "exclude": ["node_modules", "dist"]
+}
