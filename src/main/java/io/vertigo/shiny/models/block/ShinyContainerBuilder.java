@@ -7,26 +7,27 @@ import java.util.UUID;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 import io.vertigo.shiny.models.ShinyModel;
+import jakarta.annotation.Nonnull;
 
 public final class ShinyContainerBuilder implements Builder<ShinyContainer> {
 	private UUID _id;
 	private List<ShinyModel> _models = new ArrayList<>();
 
-	public ShinyContainerBuilder withId(final UUID id) {
+	public ShinyContainerBuilder withId(@Nonnull final UUID id) {
 		Assertion.check().isNotNull(id);
 		//---
 		_id = id;
 		return this;
 	}
 
-	public ShinyContainerBuilder addModel(final ShinyModel component) {
+	public ShinyContainerBuilder addModel(@Nonnull final ShinyModel component) {
 		Assertion.check().isNotNull(component);
 		//---
 		this._models.add(component);
 		return this;
 	}
 
-	public ShinyContainerBuilder addAllModels(final ShinyModel... components) {
+	public ShinyContainerBuilder addAllModels(@Nonnull final ShinyModel... components) {
 		Assertion.check().isNotNull(components);
 		//---
 		this._models.addAll(List.of(components));

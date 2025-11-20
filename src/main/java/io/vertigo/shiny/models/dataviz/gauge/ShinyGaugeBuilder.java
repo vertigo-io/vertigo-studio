@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
+import jakarta.annotation.Nonnull;
 
 public final class ShinyGaugeBuilder implements Builder<ShinyGauge> {
 	private UUID _id;
@@ -11,14 +12,14 @@ public final class ShinyGaugeBuilder implements Builder<ShinyGauge> {
 	private double _value;
 	private double _maxValue = 100;
 
-	public ShinyGaugeBuilder withId(final UUID id) {
+	public ShinyGaugeBuilder withId(@Nonnull final UUID id) {
 		Assertion.check().isNotNull(id);
 		//---
 		_id = id;
 		return this;
 	}
 
-	public ShinyGaugeBuilder withTitle(final String title) {
+	public ShinyGaugeBuilder withTitle(@Nonnull final String title) {
 		Assertion.check().isNotBlank(title);
 		this._title = title;
 		return this;

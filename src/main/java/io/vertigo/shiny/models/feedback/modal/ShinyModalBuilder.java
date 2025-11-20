@@ -2,6 +2,7 @@ package io.vertigo.shiny.models.feedback.modal;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyBlock;
+import jakarta.annotation.Nonnull;
 
 public final class ShinyModalBuilder {
 	private String _title;
@@ -9,14 +10,14 @@ public final class ShinyModalBuilder {
 
 	private boolean _isPersistent;
 
-	public ShinyModalBuilder withTitle(final String title) {
+	public ShinyModalBuilder withTitle(@Nonnull final String title) {
 		Assertion.check().isNotBlank(title);
 		//---
 		_title = title;
 		return this;
 	}
 
-	public ShinyModalBuilder withContent(final ShinyBlock content) {
+	public ShinyModalBuilder withContent(@Nonnull final ShinyBlock content) {
 		Assertion.check().isNotNull(content);
 		//---
 		_content = content;

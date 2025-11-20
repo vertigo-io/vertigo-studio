@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
+import jakarta.annotation.Nonnull;
 
 public final class ShinyAlertBuilder implements Builder<ShinyAlert> {
 	private UUID _id;
@@ -14,7 +15,7 @@ public final class ShinyAlertBuilder implements Builder<ShinyAlert> {
     private String _icon;
     private boolean _prominent;
 
-	public ShinyAlertBuilder withId(final UUID id) {
+	public ShinyAlertBuilder withId(@Nonnull final UUID id) {
 		Assertion.check().isNotNull(id);
 		//---
 		_id = id;
@@ -51,6 +52,7 @@ public final class ShinyAlertBuilder implements Builder<ShinyAlert> {
         return this;
     }
 
+    @Override
     public ShinyAlert build() {
 		_id = _id == null ? UUID.randomUUID() : _id;
         return new ShinyAlert(_id, _alertType, _title, _content, _closable, _icon, _prominent);

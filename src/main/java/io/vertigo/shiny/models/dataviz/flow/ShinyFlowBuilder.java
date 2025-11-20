@@ -24,6 +24,7 @@ import java.util.UUID;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 import io.vertigo.shiny.models.dataviz.flow.ShinyFlowNode.Position;
+import jakarta.annotation.Nonnull;
 
 public final class ShinyFlowBuilder implements Builder<ShinyFlow> {
 
@@ -31,7 +32,7 @@ public final class ShinyFlowBuilder implements Builder<ShinyFlow> {
 	private final List<ShinyFlowNode> _nodes = new ArrayList<>();
 	private final List<ShinyFlowEdge> _edges = new ArrayList<>();
 
-	public ShinyFlowBuilder withId(final UUID id) {
+	public ShinyFlowBuilder withId(@Nonnull final UUID id) {
 		Assertion.check().isNotNull(id);
 		//---
 		_id = id;

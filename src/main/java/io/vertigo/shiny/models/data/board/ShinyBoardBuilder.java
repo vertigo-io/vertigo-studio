@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
+import jakarta.annotation.Nonnull;
 
 public final class ShinyBoardBuilder implements Builder<ShinyBoard> {
 	private UUID _id;
@@ -14,42 +15,42 @@ public final class ShinyBoardBuilder implements Builder<ShinyBoard> {
 	private String _backgroundColor;
 	private final List<ShinyBoardList> _lists = new ArrayList<>();
 
-	public ShinyBoardBuilder withId(final UUID id) {
+	public ShinyBoardBuilder withId(@Nonnull final UUID id) {
 		Assertion.check().isNotNull(id);
 		//---
 		_id = id;
 		return this;
 	}
 
-	public ShinyBoardBuilder withName(final String name) {
+	public ShinyBoardBuilder withName(@Nonnull final String name) {
 		Assertion.check().isNotBlank(name);
 		//---
 		_name = name;
 		return this;
 	}
 
-	public ShinyBoardBuilder withDescription(final String description) {
+	public ShinyBoardBuilder withDescription(@Nonnull final String description) {
 		Assertion.check().isNotBlank(description);
 		//---
 		_description = description;
 		return this;
 	}
 
-	public ShinyBoardBuilder withBackgroundColor(final String backgroundColor) {
+	public ShinyBoardBuilder withBackgroundColor(@Nonnull final String backgroundColor) {
 		Assertion.check().isNotBlank(backgroundColor);
 		//---
 		_backgroundColor = backgroundColor;
 		return this;
 	}
 
-	public ShinyBoardBuilder addList(final ShinyBoardList list) {
+	public ShinyBoardBuilder addList(@Nonnull final ShinyBoardList list) {
 		Assertion.check().isNotNull(list);
 		//---
 		_lists.add(list);
 		return this;
 	}
 
-	public ShinyBoardBuilder addAllLists(final List<ShinyBoardList> lists) {
+	public ShinyBoardBuilder addAllLists(@Nonnull final List<ShinyBoardList> lists) {
 		Assertion.check().isNotNull(lists);
 		//---
 		_lists.addAll(lists);

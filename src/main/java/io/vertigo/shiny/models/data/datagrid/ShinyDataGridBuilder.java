@@ -5,24 +5,25 @@ import java.util.List;
 import java.util.Map;
 
 import io.vertigo.core.lang.Assertion;
+import jakarta.annotation.Nonnull;
 
 public final class ShinyDataGridBuilder {
 	private String _title;
 	private final List<ShinyDataGridColumn> _columns = new ArrayList<>();
 	private List<Map<String, Object>> _data = new ArrayList<>();
 
-	public ShinyDataGridBuilder withTitle(final String title) {
+	public ShinyDataGridBuilder withTitle(@Nonnull final String title) {
 		Assertion.check().isNotBlank(title);
 		//---
 		_title = title;
 		return this;
 	}
 
-	public ShinyDataGridBuilder addColumn(final String header, final String field) {
+	public ShinyDataGridBuilder addColumn(@Nonnull final String header, @Nonnull final String field) {
 		return addColumn(header, field, false, false);
 	}
 
-	public ShinyDataGridBuilder addColumn(final String header, final String field, final boolean sortable, final boolean filterable) {
+	public ShinyDataGridBuilder addColumn(@Nonnull final String header, @Nonnull final String field, final boolean sortable, final boolean filterable) {
 		Assertion.check()
 				.isNotBlank(header)
 				.isNotBlank(field);
@@ -31,7 +32,7 @@ public final class ShinyDataGridBuilder {
 		return this;
 	}
 
-	public ShinyDataGridBuilder withData(final List<Map<String, Object>> data) {
+	public ShinyDataGridBuilder withData(@Nonnull final List<Map<String, Object>> data) {
 		Assertion.check().isNotNull(data);
 		//---
 		_data = data;

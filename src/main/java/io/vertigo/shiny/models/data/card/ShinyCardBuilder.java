@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
+import jakarta.annotation.Nonnull;
 
 public final class ShinyCardBuilder implements Builder<ShinyCard> {
 	private UUID _id;
@@ -18,21 +19,21 @@ public final class ShinyCardBuilder implements Builder<ShinyCard> {
 	private String _badgeColor;
 	private ShinyCardFormat _format = ShinyCardFormat.M; // Default format
 
-	public ShinyCardBuilder withId(final UUID id) {
+	public ShinyCardBuilder withId(@Nonnull final UUID id) {
 		Assertion.check().isNotNull(id);
 		//---
 		_id = id;
 		return this;
 	}
 
-	public ShinyCardBuilder withTitle(final String title) {
+	public ShinyCardBuilder withTitle(@Nonnull final String title) {
 		Assertion.check().isNotBlank(title);
 		//---
 		this._title = title;
 		return this;
 	}
 
-	public ShinyCardBuilder withSubtitle(final String subtitle) {
+	public ShinyCardBuilder withSubtitle(@Nonnull final String subtitle) {
 		Assertion.check().isNotBlank(subtitle);
 		//---
 		this._subtitle = subtitle;
@@ -64,14 +65,14 @@ public final class ShinyCardBuilder implements Builder<ShinyCard> {
 		return this;
 	}
 
-	public ShinyCardBuilder withBadge(final String label, final String color) {
+	public ShinyCardBuilder withBadge(@Nonnull final String label, final String color) {
 		Assertion.check().isNotBlank(label);
 		this._badgeLabel = label;
 		this._badgeColor = color;
 		return this;
 	}
 
-	public ShinyCardBuilder withFormat(final ShinyCardFormat format) {
+	public ShinyCardBuilder withFormat(@Nonnull final ShinyCardFormat format) {
 		Assertion.check().isNotNull(format);
 		this._format = format;
 		return this;

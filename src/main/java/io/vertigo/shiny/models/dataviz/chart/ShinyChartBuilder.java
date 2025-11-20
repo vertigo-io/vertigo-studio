@@ -6,6 +6,7 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
+import jakarta.annotation.Nonnull;
 
 public final class ShinyChartBuilder implements Builder<ShinyChart> {
 
@@ -14,7 +15,7 @@ public final class ShinyChartBuilder implements Builder<ShinyChart> {
 	private List<String> _labels = new ArrayList<>();
 	private final List<ShinyChartSerie> _series = new ArrayList<>();
 
-	public ShinyChartBuilder(ShinyChartType chartType) {
+	public ShinyChartBuilder(@Nonnull final ShinyChartType chartType) {
 		Assertion.check().isNotNull(chartType);
 		//---
 		this._chartType = chartType;
@@ -40,14 +41,14 @@ public final class ShinyChartBuilder implements Builder<ShinyChart> {
 		return this;
 	}
 
-	public ShinyChartBuilder addSerie(final ShinyChartSerie serie) {
+	public ShinyChartBuilder addSerie(@Nonnull final ShinyChartSerie serie) {
 		Assertion.check().isNotNull(serie);
 		//---
 		this._series.add(serie);
 		return this;
 	}
 
-	public ShinyChartBuilder addAllSeries(final List<ShinyChartSerie> series) {
+	public ShinyChartBuilder addAllSeries(@Nonnull final List<ShinyChartSerie> series) {
 		Assertion.check().isNotNull(series);
 		//---
 		this._series.addAll(series);
