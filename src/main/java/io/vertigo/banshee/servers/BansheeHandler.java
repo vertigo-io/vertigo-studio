@@ -2,6 +2,60 @@ package io.vertigo.banshee.servers;
 
 import java.util.function.Consumer;
 
-public interface BansheeHandler {
-	void handle(Consumer<String> webSocket, String event);
+import javax.annotation.Nonnull;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import io.vertigo.banshee.com.BansheeAction;
+import io.vertigo.banshee.com.BansheeCommand;
+import io.vertigo.banshee.com.BansheeCommandHandler;
+import io.vertigo.banshee.com.BansheeResult;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.shiny.models.ShinyModel;
+
+final class BansheeHandler {
+	private static final ObjectMapper MAPPER = new ObjectMapper();
+	private final BansheeCommandHandler commandHandler;
+
+	BansheeHandler(@Nonnull BansheeCommandHandler commandHandler) {
+		Assertion.check().isNotNull(commandHandler);
+		//---
+		this.commandHandler = commandHandler;
+	}
+
+	private static void sendEvent(final Consumer<String> webSocket, final BansheeResult event) {
+		Assertion.check()
+				.isNotNull(webSocket)
+				.isNotNull(event);
+		//---
+		try {
+			final String json = MAPPER.writeValueAsString(event);
+			webSocket.accept(json);
+			System.out.println("<<< sent : " + json);
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	void handle(final Consumer<String> webSocket, final String event) {
+		try {
+			final BansheeCommand receivedEvent = MAPPER.readValue(event, BansheeCommand.class);
+			//1.
+			final ShinyModel model = execute(receivedEvent);
+			//2.
+			final BansheeAction action;
+			action = receivedEvent.id() == null
+					? BansheeAction.create
+					: BansheeAction.update;
+			sendEvent(webSocket, new BansheeResult(
+					action,
+					model));
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private ShinyModel execute(final BansheeCommand command) throws Exception {
+		return commandHandler.execute(command);
+	}
 }

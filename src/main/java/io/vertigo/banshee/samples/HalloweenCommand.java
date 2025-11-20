@@ -1,11 +1,11 @@
-package io.vertigo.banshee.commands;
+package io.vertigo.banshee.samples;
 
 import io.vertigo.shell.ai.Agent;
 import io.vertigo.shell.ai.AgentBuilder;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.composer.ShinyComposer;
 
-public final class HalloweenCommand {
+final class HalloweenCommand {
 	private final Agent agent = new AgentBuilder().build();
 
 	public ShinyModel llm(String Q) {

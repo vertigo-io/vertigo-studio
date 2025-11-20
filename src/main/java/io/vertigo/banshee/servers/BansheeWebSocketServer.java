@@ -11,18 +11,19 @@ import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
+import io.vertigo.banshee.com.BansheeCommandHandler;
 import io.vertigo.core.lang.Assertion;
 
 public final class BansheeWebSocketServer extends WebSocketServer {
 	private static final Set<WebSocket> connections = Collections.synchronizedSet(new HashSet<>());;
 	private final BansheeHandler handler;
 
-	public BansheeWebSocketServer(final int port, @Nonnull final BansheeHandler handler) {
+	public BansheeWebSocketServer(final int port, @Nonnull final BansheeCommandHandler commandHandler) {
 		super(new InetSocketAddress(port));
 		Assertion.check()
-				.isNotNull(handler);
+				.isNotNull(commandHandler);
 		//---
-		this.handler = handler;
+		this.handler = new BansheeHandler(commandHandler);
 	}
 
 	@Override

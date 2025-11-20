@@ -1,12 +1,12 @@
-package io.vertigo.banshee.commands;
+package io.vertigo.banshee.samples;
 
 import io.vertigo.banshee.com.BansheeCommand;
 import io.vertigo.banshee.com.BansheeCommandExecutor;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.models.ShinyModel;
 
-public class ChartSamples {
-	public static class BarSample implements BansheeCommandExecutor {
+final class ChartSamples {
+	static class BarSample implements BansheeCommandExecutor {
 		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.barChart()
 					.withTitle("Ventes par produit")
@@ -17,7 +17,7 @@ public class ChartSamples {
 		}
 	}
 
-	public static class PieSample implements BansheeCommandExecutor {
+	static class PieSample implements BansheeCommandExecutor {
 		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.pieChart()
 					.withTitle("Répartition des ventes")
@@ -27,7 +27,7 @@ public class ChartSamples {
 		}
 	}
 
-	public static class PieSample2 implements BansheeCommandExecutor {
+	static class PieSample2 implements BansheeCommandExecutor {
 		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.pieChart()
 					.withTitle("Répartition des ventes")
@@ -39,7 +39,7 @@ public class ChartSamples {
 		}
 	}
 
-	public static class DonutSample implements BansheeCommandExecutor {
+	static class DonutSample implements BansheeCommandExecutor {
 		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.donutChart()
 					.withTitle("Répartition des ventes")
@@ -51,7 +51,7 @@ public class ChartSamples {
 		}
 	}
 
-	public static class AreaSample implements BansheeCommandExecutor {
+	static class AreaSample implements BansheeCommandExecutor {
 		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.areaChart()
 					.withTitle("Ventes par mois")
@@ -62,7 +62,7 @@ public class ChartSamples {
 		}
 	}
 
-	public static class LineSample implements BansheeCommandExecutor {
+	static class LineSample implements BansheeCommandExecutor {
 		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.lineChart()
 					.withTitle("Ventes par mois")
@@ -73,7 +73,7 @@ public class ChartSamples {
 		}
 	}
 
-	public static class RadarSample implements BansheeCommandExecutor {
+	static class RadarSample implements BansheeCommandExecutor {
 		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.radarChart()
 					.withTitle("Final Fantasy VII Stats")

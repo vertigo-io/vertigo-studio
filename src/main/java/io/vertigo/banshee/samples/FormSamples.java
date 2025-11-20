@@ -1,4 +1,4 @@
-package io.vertigo.banshee.commands;
+package io.vertigo.banshee.samples;
 
 import java.util.List;
 
@@ -11,9 +11,9 @@ import io.vertigo.shiny.models.input.form.ShinyFormFieldType;
 import io.vertigo.shiny.models.input.form.ShinyFormFieldValidator;
 import io.vertigo.shiny.models.input.form.ShinyFormOption;
 
-public class FormSamples {
+final class FormSamples {
 
-	public static class FormSample1 implements BansheeCommandExecutor {
+	static class FormSample1 implements BansheeCommandExecutor {
 		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.form()
 					.withTitle("Person Details")
@@ -30,7 +30,7 @@ public class FormSamples {
 		}
 	}
 
-	public static class FormSample2 implements BansheeCommandExecutor {
+	static class FormSample2 implements BansheeCommandExecutor {
 		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.form()
 					.withTitle("Product Details")
@@ -48,7 +48,7 @@ public class FormSamples {
 		}
 	}
 
-	public static class FormSample3 implements BansheeCommandExecutor {
+	static class FormSample3 implements BansheeCommandExecutor {
 		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.form()
 					.withTitle("Photo Metadata")
@@ -64,7 +64,7 @@ public class FormSamples {
 		}
 	}
 
-	public static class FormSample4 implements BansheeCommandExecutor {
+	static class FormSample4 implements BansheeCommandExecutor {
 		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.form()
 					.withTitle("Critique de film")
@@ -80,7 +80,7 @@ public class FormSamples {
 		}
 	}
 
-	public static class FormSample5 implements BansheeCommandExecutor {
+	static class FormSample5 implements BansheeCommandExecutor {
 		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.form()
 					.withTitle("Commande de produit")
@@ -95,7 +95,7 @@ public class FormSamples {
 		}
 	}
 
-	public static class FormSample6 implements BansheeCommandExecutor {
+	static class FormSample6 implements BansheeCommandExecutor {
 		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.form()
 					.withTitle("Ajout de film")
