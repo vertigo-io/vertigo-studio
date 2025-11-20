@@ -1,13 +1,14 @@
 package io.vertigo.shiny.models.input.fileupload;
 
 import io.vertigo.core.lang.Assertion;
+import jakarta.annotation.Nonnull;
 
 public final class ShinyFileUploadBuilder {
 	private String _label;
 	private boolean _isMultiple;
 	private String _accept;
 
-	public ShinyFileUploadBuilder withLabel(final String label) {
+	public ShinyFileUploadBuilder withLabel(@Nonnull final String label) {
 		Assertion.check().isNotBlank(label);
 		//---
 		_label = label;

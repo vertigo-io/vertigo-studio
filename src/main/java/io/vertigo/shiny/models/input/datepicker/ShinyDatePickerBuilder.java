@@ -1,13 +1,14 @@
 package io.vertigo.shiny.models.input.datepicker;
 
 import io.vertigo.core.lang.Assertion;
+import jakarta.annotation.Nonnull;
 
 public final class ShinyDatePickerBuilder {
 	private String _label;
 	private String _value;
 	private boolean _isRequired;
 
-	public ShinyDatePickerBuilder withLabel(final String label) {
+	public ShinyDatePickerBuilder withLabel(@Nonnull final String label) {
 		Assertion.check().isNotBlank(label);
 		//---
 		_label = label;

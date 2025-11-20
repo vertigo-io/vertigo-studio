@@ -1,20 +1,21 @@
 package io.vertigo.shiny.models.feedback.notification;
 
 import io.vertigo.core.lang.Assertion;
+import jakarta.annotation.Nonnull;
 
 public final class ShinyNotificationBuilder {
 	private String _message;
 	private ShinyNotificationType _type = ShinyNotificationType.INFO;
 	private int _timeout = 5000; // Default 5 seconds
 
-	public ShinyNotificationBuilder withMessage(final String message) {
+	public ShinyNotificationBuilder withMessage(@Nonnull final String message) {
 		Assertion.check().isNotBlank(message);
 		//---
 		_message = message;
 		return this;
 	}
 
-	public ShinyNotificationBuilder withType(final ShinyNotificationType type) {
+	public ShinyNotificationBuilder withType(@Nonnull final ShinyNotificationType type) {
 		Assertion.check().isNotNull(type);
 		//---
 		_type = type;

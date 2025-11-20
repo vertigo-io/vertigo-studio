@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
+import jakarta.annotation.Nonnull;
 
 public final class ShinyAutocompleteBuilder {
 	private String _label;
@@ -11,14 +12,14 @@ public final class ShinyAutocompleteBuilder {
 	private String _value;
 	private String _placeholder;
 
-	public ShinyAutocompleteBuilder withLabel(final String label) {
+	public ShinyAutocompleteBuilder withLabel(@Nonnull final String label) {
 		Assertion.check().isNotBlank(label);
 		//---
 		_label = label;
 		return this;
 	}
 
-	public ShinyAutocompleteBuilder addOption(final String option) {
+	public ShinyAutocompleteBuilder addOption(@Nonnull final String option) {
 		Assertion.check().isNotBlank(option);
 		//---
 		_options.add(option);

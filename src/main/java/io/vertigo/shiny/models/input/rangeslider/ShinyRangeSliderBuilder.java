@@ -3,6 +3,7 @@ package io.vertigo.shiny.models.input.rangeslider;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
+import jakarta.annotation.Nonnull;
 
 public final class ShinyRangeSliderBuilder {
 	private String _label;
@@ -13,7 +14,7 @@ public final class ShinyRangeSliderBuilder {
 	private String _color;
 	private boolean _thumbLabel;
 
-	public ShinyRangeSliderBuilder withLabel(final String label) {
+	public ShinyRangeSliderBuilder withLabel(@Nonnull final String label) {
 		Assertion.check().isNotBlank(label);
 		//---
 		_label = label;

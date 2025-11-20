@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
+import jakarta.annotation.Nonnull;
 
 public final class ShinyMultiSelectionBuilder implements Builder<ShinyMultiSelection> {
 	private UUID _id;
@@ -16,39 +17,39 @@ public final class ShinyMultiSelectionBuilder implements Builder<ShinyMultiSelec
 	private final List<String> _options = new ArrayList<>();
 	private final Set<Integer> _selectedIndices = new HashSet<>();
 
-	public ShinyMultiSelectionBuilder withId(final UUID id) {
+	public ShinyMultiSelectionBuilder withId(@Nonnull final UUID id) {
 		Assertion.check().isNotNull(id);
 		//---
 		_id = id;
 		return this;
 	}
 
-	public ShinyMultiSelectionBuilder withTitle(final String title) {
+	public ShinyMultiSelectionBuilder withTitle(@Nonnull final String title) {
 		Assertion.check().isNotBlank(title);
 		this._title = title;
 		return this;
 	}
 
-	public ShinyMultiSelectionBuilder addOption(final String option) {
+	public ShinyMultiSelectionBuilder addOption(@Nonnull final String option) {
 		Assertion.check().isNotNull(option);
 		//---
 		_options.add(option);
 		return this;
 	}
 
-	public ShinyMultiSelectionBuilder withOptions(final List<String> options) {
+	public ShinyMultiSelectionBuilder withOptions(@Nonnull final List<String> options) {
 		Assertion.check().isNotNull(options);
 		this._options.clear();
 		this._options.addAll(options);
 		return this;
 	}
 
-	public ShinyMultiSelectionBuilder withOptions(final String... options) {
+	public ShinyMultiSelectionBuilder withOptions(@Nonnull final String... options) {
 		Assertion.check().isNotNull(options);
 		return withOptions(Arrays.asList(options));
 	}
 
-	public ShinyMultiSelectionBuilder withSelected(final List<String> initialSelected) {
+	public ShinyMultiSelectionBuilder withSelected(@Nonnull final List<String> initialSelected) {
 		Assertion.check().isNotNull(initialSelected);
 		this._selectedIndices.clear();
 		for (final String selectedOption : initialSelected) {
