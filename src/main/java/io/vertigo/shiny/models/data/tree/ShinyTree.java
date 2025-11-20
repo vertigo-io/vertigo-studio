@@ -5,8 +5,12 @@ import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyBlock;
+import jakarta.annotation.Nonnull;
 
-public record ShinyTree(UUID id, String label, List<ShinyTree> children) implements ShinyBlock {
+public record ShinyTree(
+		@Nonnull UUID id,
+		@Nonnull String label,
+		@Nonnull List<ShinyTree> children) implements ShinyBlock {
 
 	public ShinyTree {
 		Assertion.check()
@@ -15,7 +19,7 @@ public record ShinyTree(UUID id, String label, List<ShinyTree> children) impleme
 				.isNotNull(children);
 	}
 
-	ShinyTree(String label) {
+	ShinyTree(final String label) {
 		this(UUID.randomUUID(), label, List.of());
 	}
 

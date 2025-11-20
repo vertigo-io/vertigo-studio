@@ -3,10 +3,11 @@ package io.vertigo.shiny.models.data.table.cell;
 import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
+import jakarta.annotation.Nonnull;
 
 public record ShinyStringCell(
-		UUID id,
-		String value) implements ShinyTableCell {
+		@Nonnull UUID id,
+		@Nonnull String value) implements ShinyTableCell {
 
 	public ShinyStringCell {
 		Assertion.check()

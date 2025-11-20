@@ -5,11 +5,12 @@ import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyBlock;
+import jakarta.annotation.Nonnull;
 
 public record ShinyFlow(
 		UUID id,
-		List<ShinyFlowNode> nodes,
-		List<ShinyFlowEdge> edges) implements ShinyBlock {
+		@Nonnull List<ShinyFlowNode> nodes,
+		@Nonnull List<ShinyFlowEdge> edges) implements ShinyBlock {
 
 	public ShinyFlow {
 		Assertion.check()

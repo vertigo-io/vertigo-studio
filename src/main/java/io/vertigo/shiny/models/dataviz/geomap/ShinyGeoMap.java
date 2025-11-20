@@ -4,10 +4,11 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyBlock;
+import jakarta.annotation.Nonnull;
 
 public record ShinyGeoMap(
-		String title,
-		List<ShinyGeoPoint> geoPoints) implements ShinyBlock {
+		@Nonnull String title,
+		@Nonnull List<ShinyGeoPoint> geoPoints) implements ShinyBlock {
 
 	public ShinyGeoMap {
 		Assertion.check()

@@ -4,11 +4,12 @@ import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.text.rating.ShinyRatingScale;
+import jakarta.annotation.Nonnull;
 
 public record ShinyRatingCell(
-		UUID id,
+		@Nonnull UUID id,
 		double value,
-		ShinyRatingScale scale,
+		@Nonnull ShinyRatingScale scale,
 		boolean allowHalfRating) implements ShinyTableCell {
 
 	public ShinyRatingCell {

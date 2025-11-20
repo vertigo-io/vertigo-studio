@@ -4,9 +4,10 @@ import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyBlock;
+import jakarta.annotation.Nonnull;
 
 public record ShinyCalendar(
-		UUID id,
+		@Nonnull UUID id,
 		int year,
 		int month) implements ShinyBlock {
 
