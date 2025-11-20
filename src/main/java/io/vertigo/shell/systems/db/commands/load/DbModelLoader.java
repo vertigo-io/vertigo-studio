@@ -23,12 +23,13 @@ import io.vertigo.shell.systems.db.DbModel.JdbcSchema;
 import io.vertigo.shell.systems.db.DbModel.JdbcSequence;
 import io.vertigo.shell.systems.db.DbModel.JdbcTable;
 import io.vertigo.shell.systems.db.DbModel.JdbcTrigger;
+import jakarta.annotation.Nonnull;
 
 // Classe pour charger le modèle à partir d’une connexion JDBC
 final class DbModelLoader {
 	private final Connection connection;
 
-	DbModelLoader(final Connection connection) {
+	DbModelLoader(@Nonnull final Connection connection) {
 		Assertion.check().isNotNull(connection);
 		//---
 		this.connection = connection;

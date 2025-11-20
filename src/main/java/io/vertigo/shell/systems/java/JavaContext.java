@@ -2,11 +2,12 @@ package io.vertigo.shell.systems.java;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.VSystemException;
+import jakarta.annotation.Nonnull;
 
 public class JavaContext {
 	private static JavaModel javaModel;
 
-	public static void model(final JavaModel model) {
+	public static void model(@Nonnull final JavaModel model) {
 		Assertion.check().isNotNull(model);
 		//---
 		javaModel = model;

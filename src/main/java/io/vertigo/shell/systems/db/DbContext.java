@@ -7,12 +7,13 @@ import java.util.Properties;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.VSystemException;
+import jakarta.annotation.Nonnull;
 
 public final class DbContext {
 	public static Connection dbConnection;
 	private static DbModel dbModel;
 
-	public static void model(final DbModel model) {
+	public static void model(@Nonnull final DbModel model) {
 		Assertion.check().isNotNull(model);
 		//---
 		dbModel = model;

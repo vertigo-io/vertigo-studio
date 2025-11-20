@@ -2,13 +2,14 @@ package io.vertigo.shiny.models.text.title;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
+import jakarta.annotation.Nonnull;
 
 public final class ShinyTitleBuilder implements Builder<ShinyTitle> {
 
 	private String _text;
 	private int _level = 1; // Default to Level 1
 
-	public ShinyTitleBuilder withText(final String text) {
+	public ShinyTitleBuilder withText(@Nonnull final String text) {
 		Assertion.check().isNotBlank(text);
 		this._text = text;
 		return this;

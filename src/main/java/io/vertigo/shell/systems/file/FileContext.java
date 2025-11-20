@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import io.vertigo.core.lang.Assertion;
+import jakarta.annotation.Nonnull;
 
 public final class FileContext {
 	private static final FileContext INSTANCE = new FileContext(Path.of("C:"));
@@ -17,7 +18,7 @@ public final class FileContext {
 	private final Path rootPath;
 	private Path currentPath;
 
-	public FileContext(Path rootPath) {
+	public FileContext(@Nonnull final Path rootPath) {
 		Assertion.check().isNotNull(rootPath);
 		Assertion.check().isTrue(Files.isDirectory(rootPath), "Root path must be a directory");
 		//---

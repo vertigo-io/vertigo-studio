@@ -10,12 +10,13 @@ import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
 import io.vertigo.core.lang.Assertion;
+import jakarta.annotation.Nonnull;
 
 public final class BansheeWebSocketServer extends WebSocketServer {
 	private static final Set<WebSocket> connections = Collections.synchronizedSet(new HashSet<>());;
 	private final BansheeHandler handler;
 
-	public BansheeWebSocketServer(int port, BansheeHandler handler) {
+	public BansheeWebSocketServer(final int port, @Nonnull final BansheeHandler handler) {
 		super(new InetSocketAddress(port));
 		Assertion.check()
 				.isNotNull(handler);
@@ -24,7 +25,7 @@ public final class BansheeWebSocketServer extends WebSocketServer {
 	}
 
 	@Override
-	public void onOpen(WebSocket webSocket, ClientHandshake handshake) {
+	public void onOpen(@Nonnull final WebSocket webSocket, @Nonnull final ClientHandshake handshake) {
 		Assertion.check()
 				.isNotNull(webSocket)
 				.isNotNull(handshake);
@@ -36,7 +37,7 @@ public final class BansheeWebSocketServer extends WebSocketServer {
 	}
 
 	@Override
-	public void onClose(WebSocket webSocket, int code, String reason, boolean remote) {
+	public void onClose(@Nonnull final WebSocket webSocket, final int code, final String reason, final boolean remote) {
 		Assertion.check()
 				.isNotNull(webSocket);
 		//---
@@ -45,7 +46,7 @@ public final class BansheeWebSocketServer extends WebSocketServer {
 	}
 
 	@Override
-	public void onMessage(WebSocket webSocket, String event) {
+	public void onMessage(@Nonnull final WebSocket webSocket, final String event) {
 		Assertion.check()
 				.isNotNull(webSocket);
 		//---
@@ -54,7 +55,7 @@ public final class BansheeWebSocketServer extends WebSocketServer {
 	}
 
 	@Override
-	public void onError(WebSocket webSocket, Exception ex) {
+	public void onError(final WebSocket webSocket, final Exception ex) {
 		ex.printStackTrace();
 	}
 
