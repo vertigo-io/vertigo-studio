@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shell.systems.db.DbModel;
 import io.vertigo.shell.systems.db.DbModel.JdbcColumn;
@@ -23,7 +25,6 @@ import io.vertigo.shell.systems.db.DbModel.JdbcSchema;
 import io.vertigo.shell.systems.db.DbModel.JdbcSequence;
 import io.vertigo.shell.systems.db.DbModel.JdbcTable;
 import io.vertigo.shell.systems.db.DbModel.JdbcTrigger;
-import jakarta.annotation.Nonnull;
 
 // Classe pour charger le modèle à partir d’une connexion JDBC
 final class DbModelLoader {

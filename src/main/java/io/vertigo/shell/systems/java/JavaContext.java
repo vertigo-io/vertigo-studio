@@ -1,8 +1,9 @@
 package io.vertigo.shell.systems.java;
 
+import javax.annotation.Nonnull;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.VSystemException;
-import jakarta.annotation.Nonnull;
 
 public class JavaContext {
 	private static JavaModel javaModel;

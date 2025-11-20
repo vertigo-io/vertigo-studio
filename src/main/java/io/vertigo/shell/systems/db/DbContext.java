@@ -5,9 +5,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import javax.annotation.Nonnull;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.VSystemException;
-import jakarta.annotation.Nonnull;
 
 public final class DbContext {
 	public static Connection dbConnection;

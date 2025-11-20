@@ -5,13 +5,14 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
+import javax.annotation.Nonnull;
+
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
-import jakarta.annotation.Nonnull;
 
 // This is a simplified webSErver. A real one would use a dedicated library.
 
