@@ -3,9 +3,10 @@ package io.vertigo.shiny.models.layout.stepper;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyBlock;
-import jakarta.annotation.Nonnull;
 
 public final class ShinyStepperBuilder {
 	private final List<ShinyStep> _steps = new ArrayList<>();

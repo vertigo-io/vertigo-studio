@@ -1,8 +1,9 @@
 package io.vertigo.shiny.models.text.paragraph;
 
+import javax.annotation.Nonnull;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyModel;
-import jakarta.annotation.Nonnull;
 
 public record ShinyParagraph(
 		@Nonnull String text) implements ShinyModel {
