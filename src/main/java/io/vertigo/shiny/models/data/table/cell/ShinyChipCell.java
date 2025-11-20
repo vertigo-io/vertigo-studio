@@ -4,10 +4,11 @@ import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.text.chip.ShinyChipVariant;
+import jakarta.annotation.Nonnull;
 
 public record ShinyChipCell(
-		UUID id,
-		String text,
+		@Nonnull UUID id,
+		@Nonnull String text,
 		String color,
 		ShinyChipVariant variant,
 		boolean closable,

@@ -11,6 +11,7 @@ import com.sun.net.httpserver.HttpServer;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
+import jakarta.annotation.Nonnull;
 
 // This is a simplified webSErver. A real one would use a dedicated library.
 
@@ -20,7 +21,7 @@ public final class ShinyMermaidServer {
 	private HttpServer httpServer;
 	private String currentMermaidDiagram = "";
 
-	public ShinyMermaidServer(final Shiny shiny, final int port) {
+	public ShinyMermaidServer(@Nonnull final Shiny shiny, final int port) {
 		Assertion.check().isNotNull(shiny);
 		Assertion.check().isTrue(port > 0 && port < 65536, "Port must be valid");
 		this.shiny = shiny;
@@ -45,7 +46,7 @@ public final class ShinyMermaidServer {
 		}
 	}
 
-	public void updateDiagram(final String mermaidDiagram) {
+	public void updateDiagram(@Nonnull final String mermaidDiagram) {
 		Assertion.check().isNotBlank(mermaidDiagram);
 		//---
 		this.currentMermaidDiagram = mermaidDiagram;

@@ -5,12 +5,13 @@ import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyBlock;
+import jakarta.annotation.Nonnull;
 
 public record ShinyList(
-		UUID id,
+		@Nonnull UUID id,
 		String title,
-		List<Object> items, //String || ShinyList
-		ShinyListType listType) implements ShinyBlock {
+		@Nonnull List<Object> items, //String || ShinyList
+		@Nonnull ShinyListType listType) implements ShinyBlock {
 
 	public ShinyList {
 		Assertion.check().isNotNull(id);

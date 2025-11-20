@@ -4,10 +4,11 @@ import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyBlock;
+import jakarta.annotation.Nonnull;
 
 public record ShinyCard(
-		UUID id,
-		String title,
+		@Nonnull UUID id,
+		@Nonnull String title,
 		String subtitle,
 		String description,
 		String imageUrl,

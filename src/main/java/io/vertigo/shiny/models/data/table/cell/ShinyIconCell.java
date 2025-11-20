@@ -3,10 +3,11 @@ package io.vertigo.shiny.models.data.table.cell;
 import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
+import jakarta.annotation.Nonnull;
 
 public record ShinyIconCell(
-		UUID id,
-		String icon,
+		@Nonnull UUID id,
+		@Nonnull String icon,
 		String color,
 		String size) implements ShinyTableCell {
 

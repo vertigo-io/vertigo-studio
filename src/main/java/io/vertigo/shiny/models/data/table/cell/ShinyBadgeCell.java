@@ -3,10 +3,11 @@ package io.vertigo.shiny.models.data.table.cell;
 import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
+import jakarta.annotation.Nonnull;
 
 public record ShinyBadgeCell(
-		UUID id,
-		String content,
+		@Nonnull UUID id,
+		@Nonnull String content,
 		String color) implements ShinyTableCell {
 
 	public ShinyBadgeCell {
