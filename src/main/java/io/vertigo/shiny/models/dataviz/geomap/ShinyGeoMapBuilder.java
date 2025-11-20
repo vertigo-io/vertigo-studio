@@ -3,9 +3,10 @@ package io.vertigo.shiny.models.dataviz.geomap;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
-import jakarta.annotation.Nonnull;
 
 public final class ShinyGeoMapBuilder implements Builder<ShinyGeoMap> {
 

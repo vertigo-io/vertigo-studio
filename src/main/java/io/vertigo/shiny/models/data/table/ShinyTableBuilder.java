@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Nonnull;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 import io.vertigo.shiny.models.ShinyState;
 import io.vertigo.shiny.models.data.table.cell.ShinyStringCell;
 import io.vertigo.shiny.models.data.table.cell.ShinyTableCell;
-import jakarta.annotation.Nonnull;
 
 public final class ShinyTableBuilder implements Builder<ShinyTable> {
 	private UUID _id;

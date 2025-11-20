@@ -2,8 +2,9 @@ package io.vertigo.shiny.models.dataviz.mindmap;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import io.vertigo.core.lang.Assertion;
-import jakarta.annotation.Nonnull;
 
 public record ShinyMindMapNode(
 		@Nonnull String id,

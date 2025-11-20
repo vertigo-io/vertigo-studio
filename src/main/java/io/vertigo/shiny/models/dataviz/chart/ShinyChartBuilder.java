@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
-import jakarta.annotation.Nonnull;
 
 public final class ShinyChartBuilder implements Builder<ShinyChart> {
 

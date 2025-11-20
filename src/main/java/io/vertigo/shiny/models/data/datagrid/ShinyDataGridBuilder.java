@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import io.vertigo.core.lang.Assertion;
-import jakarta.annotation.Nonnull;
 
 public final class ShinyDataGridBuilder {
 	private String _title;

@@ -17,8 +17,9 @@
  */
 package io.vertigo.shiny.models.dataviz.flow;
 
+import javax.annotation.Nonnull;
+
 import io.vertigo.core.lang.Assertion;
-import jakarta.annotation.Nonnull;
 
 public record ShinyFlowNode(@Nonnull String id, @Nonnull String label, @Nonnull ShinyFlowNode.Position position, @Nonnull NodeType nodeType) { // Changed 'type' to 'nodeType' and its type to NodeType
 

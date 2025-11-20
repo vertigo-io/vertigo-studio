@@ -2,9 +2,10 @@ package io.vertigo.shiny.models.data.card;
 
 import java.util.UUID;
 
+import javax.annotation.Nonnull;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
-import jakarta.annotation.Nonnull;
 
 public final class ShinyCardBuilder implements Builder<ShinyCard> {
 	private UUID _id;

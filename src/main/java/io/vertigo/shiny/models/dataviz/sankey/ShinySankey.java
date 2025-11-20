@@ -2,9 +2,10 @@ package io.vertigo.shiny.models.dataviz.sankey;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyBlock;
-import jakarta.annotation.Nonnull;
 
 public record ShinySankey(
 		@Nonnull String title,
