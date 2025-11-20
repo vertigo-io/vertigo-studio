@@ -12,33 +12,34 @@ import com.rometools.rome.io.XmlReader;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 import io.vertigo.core.lang.VSystemException;
+import jakarta.annotation.Nonnull;
 
 public final class ShinyRssBuilder implements Builder<ShinyRss> {
 
 	private String _title;
 	private final List<ShinyRssItem> _items = new ArrayList<>();
 
-	public ShinyRssBuilder withTitle(final String title) {
+	public ShinyRssBuilder withTitle(@Nonnull final String title) {
 		Assertion.check().isNotBlank(title);
 		this._title = title;
 		return this;
 	}
 
-	public ShinyRssBuilder addItem(ShinyRssItem item) {
+	public ShinyRssBuilder addItem(@Nonnull ShinyRssItem item) {
 		Assertion.check().isNotNull(item);
 		//---
 		this._items.add(item);
 		return this;
 	}
 
-	public ShinyRssBuilder addAllItems(final List<ShinyRssItem> items) {
+	public ShinyRssBuilder addAllItems(@Nonnull final List<ShinyRssItem> items) {
 		Assertion.check().isNotNull(items);
 		//---
 		this._items.addAll(items);
 		return this;
 	}
 
-	public ShinyRssBuilder withFeed(final String feedUrl) {
+	public ShinyRssBuilder withFeed(@Nonnull final String feedUrl) {
 		Assertion.check().isNotNull(feedUrl);
 		//---
 		try {

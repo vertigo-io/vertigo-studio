@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 import io.vertigo.shiny.ShinyMagicBox;
+import jakarta.annotation.Nonnull;
 
 public final class ShinyInputTextBuilder implements Builder<ShinyInputText> {
 	private UUID _id;
@@ -18,14 +19,14 @@ public final class ShinyInputTextBuilder implements Builder<ShinyInputText> {
 	private String _defaultValue;
 	private boolean _secret = false;
 
-	public ShinyInputTextBuilder withId(final UUID id) {
+	public ShinyInputTextBuilder withId(@Nonnull final UUID id) {
 		Assertion.check().isNotNull(id);
 		//---
 		_id = id;
 		return this;
 	}
 
-	public ShinyInputTextBuilder withLabel(final String label) {
+	public ShinyInputTextBuilder withLabel(@Nonnull final String label) {
 		Assertion.check().isNotBlank(label);
 		this._label = label;
 		return this;
@@ -36,19 +37,19 @@ public final class ShinyInputTextBuilder implements Builder<ShinyInputText> {
 		return this;
 	}
 
-	public ShinyInputTextBuilder withPattern(final String regex) {
+	public ShinyInputTextBuilder withPattern(@Nonnull final String regex) {
 		Assertion.check().isNotBlank(regex, "Pattern cannot be blank");
 		this._validationPattern = Pattern.compile(regex);
 		return this;
 	}
 
-	public ShinyInputTextBuilder addSuggestion(final String suggestion) {
+	public ShinyInputTextBuilder addSuggestion(@Nonnull final String suggestion) {
 		Assertion.check().isNotNull(suggestion);
 		this._suggestions.add(suggestion);
 		return this;
 	}
 
-	public ShinyInputTextBuilder addAllSuggestions(final List<String> suggestions) {
+	public ShinyInputTextBuilder addAllSuggestions(@Nonnull final List<String> suggestions) {
 		Assertion.check().isNotNull(suggestions);
 		this._suggestions.addAll(suggestions);
 		return this;

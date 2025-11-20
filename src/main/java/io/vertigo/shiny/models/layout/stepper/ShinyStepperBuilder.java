@@ -5,6 +5,7 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyBlock;
+import jakarta.annotation.Nonnull;
 
 public final class ShinyStepperBuilder {
 	private final List<ShinyStep> _steps = new ArrayList<>();
@@ -13,7 +14,7 @@ public final class ShinyStepperBuilder {
 		return addStep(title, null, content);
 	}
 
-	public ShinyStepperBuilder addStep(final String title, final String subtitle, final ShinyBlock content) {
+	public ShinyStepperBuilder addStep(@Nonnull final String title, final String subtitle, @Nonnull final ShinyBlock content) {
 		Assertion.check()
 				.isNotBlank(title)
 				.isNotNull(content);

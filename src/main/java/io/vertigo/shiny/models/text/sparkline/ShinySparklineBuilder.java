@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
+import jakarta.annotation.Nonnull;
 
 public final class ShinySparklineBuilder implements Builder<ShinySparkline> {
 
@@ -17,14 +18,14 @@ public final class ShinySparklineBuilder implements Builder<ShinySparkline> {
 		return this;
 	}
 
-	public ShinySparklineBuilder withValues(final List<Double> values) {
+	public ShinySparklineBuilder withValues(@Nonnull final List<Double> values) {
 		Assertion.check().isNotNull(values);
 		//---
 		this._values = values;
 		return this;
 	}
 
-	public ShinySparklineBuilder withValues(final double... values) {
+	public ShinySparklineBuilder withValues(@Nonnull final double... values) {
 		Assertion.check().isNotNull(values);
 		//---
 		this._values = Arrays.stream(values).boxed().collect(Collectors.toList());

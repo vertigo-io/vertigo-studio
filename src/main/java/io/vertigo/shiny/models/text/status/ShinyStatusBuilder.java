@@ -5,6 +5,7 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
+import jakarta.annotation.Nonnull;
 
 public final class ShinyStatusBuilder implements Builder<ShinyStatus> {
 
@@ -16,21 +17,21 @@ public final class ShinyStatusBuilder implements Builder<ShinyStatus> {
 		return this;
 	}
 
-	public ShinyStatusBuilder addType(final ShinyStatusType type) {
+	public ShinyStatusBuilder addType(@Nonnull final ShinyStatusType type) {
 		Assertion.check().isNotNull(type);
 		//---
 		this._statusTypes.add(type);
 		return this;
 	}
 
-	public ShinyStatusBuilder addAllTypes(final List<ShinyStatusType> types) {
+	public ShinyStatusBuilder addAllTypes(@Nonnull final List<ShinyStatusType> types) {
 		Assertion.check().isNotNull(types);
 		//---
 		this._statusTypes.addAll(types);
 		return this;
 	}
 
-	public ShinyStatusBuilder addAllTypes(final ShinyStatusType... types) {
+	public ShinyStatusBuilder addAllTypes(@Nonnull final ShinyStatusType... types) {
 		Assertion.check().isNotNull(types);
 		//---
 		return addAllTypes(List.of(types));

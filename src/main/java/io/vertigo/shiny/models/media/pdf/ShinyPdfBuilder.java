@@ -2,6 +2,7 @@ package io.vertigo.shiny.models.media.pdf;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
+import jakarta.annotation.Nonnull;
 
 public final class ShinyPdfBuilder implements Builder<ShinyPdf> {
 	private String _title;
@@ -9,13 +10,13 @@ public final class ShinyPdfBuilder implements Builder<ShinyPdf> {
 	private int _page = 1; // Default to _page 1
 	private String _componentHeight = "800px"; // Default height
 
-	public ShinyPdfBuilder withTitle(final String title) {
+	public ShinyPdfBuilder withTitle(@Nonnull final String title) {
 		Assertion.check().isNotBlank(title);
 		this._title = title;
 		return this;
 	}
 
-	public ShinyPdfBuilder withPath(final String pdfPath) {
+	public ShinyPdfBuilder withPath(@Nonnull final String pdfPath) {
 		Assertion.check().isNotBlank(pdfPath);
 		this._path = pdfPath;
 		return this;

@@ -4,25 +4,26 @@ import java.nio.file.Path;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
+import jakarta.annotation.Nonnull;
 
 public final class ShinyTextPathBuilder implements Builder<ShinyTextPath> {
 
 	private String _textPath;
 	private String _textPathSeparator = "/";
 
-	public ShinyTextPathBuilder withPath(final Path path) {
+	public ShinyTextPathBuilder withPath(@Nonnull final Path path) {
 		Assertion.check().isNotNull(path);
 		this._textPath = path.normalize().toString();
 		return this;
 	}
 
-	public ShinyTextPathBuilder withPath(final String path) {
+	public ShinyTextPathBuilder withPath(@Nonnull final String path) {
 		Assertion.check().isNotBlank(path);
 		this._textPath = path;
 		return this;
 	}
 
-	public ShinyTextPathBuilder withSeparator(final String separator) {
+	public ShinyTextPathBuilder withSeparator(@Nonnull final String separator) {
 		Assertion.check().isNotBlank(separator);
 		this._textPathSeparator = separator;
 		return this;

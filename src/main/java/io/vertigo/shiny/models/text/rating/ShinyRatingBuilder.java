@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
+import jakarta.annotation.Nonnull;
 
 public final class ShinyRatingBuilder implements Builder<ShinyRating> {
 	private UUID _id;
@@ -17,14 +18,14 @@ public final class ShinyRatingBuilder implements Builder<ShinyRating> {
 	private String _separator = "";
 	private boolean _allowHalfRating = false;
 
-	public ShinyRatingBuilder withId(final UUID id) {
+	public ShinyRatingBuilder withId(@Nonnull final UUID id) {
 		Assertion.check().isNotNull(id);
 		//---
 		_id = id;
 		return this;
 	}
 
-	public ShinyRatingBuilder withLabel(final String label) {
+	public ShinyRatingBuilder withLabel(@Nonnull final String label) {
 		Assertion.check().isNotBlank(label);
 		this._label = label;
 		return this;
@@ -35,7 +36,7 @@ public final class ShinyRatingBuilder implements Builder<ShinyRating> {
 		return this;
 	}
 
-	public ShinyRatingBuilder withScale(final ShinyRatingScale scale) {
+	public ShinyRatingBuilder withScale(@Nonnull final ShinyRatingScale scale) {
 		Assertion.check().isNotNull(scale);
 		this._scale = scale;
 		this._customMaxValue = -1; // Reset custom maxValue when using scale
@@ -62,7 +63,7 @@ public final class ShinyRatingBuilder implements Builder<ShinyRating> {
 		return this;
 	}
 
-	public ShinyRatingBuilder withSeparator(final String separator) {
+	public ShinyRatingBuilder withSeparator(@Nonnull final String separator) {
 		Assertion.check().isNotNull(separator);
 		//---
 		this._separator = separator;

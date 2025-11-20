@@ -2,6 +2,7 @@ package io.vertigo.shiny.models.media.image;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
+import jakarta.annotation.Nonnull;
 
 public final class ShinyImageBuilder implements Builder<ShinyImage> {
 
@@ -14,7 +15,7 @@ public final class ShinyImageBuilder implements Builder<ShinyImage> {
 		return this;
 	}
 
-	public ShinyImageBuilder withUrl(final String url) {
+	public ShinyImageBuilder withUrl(@Nonnull final String url) {
 		Assertion.check().isNotBlank(url);
 		this._url = url;
 		return this;
