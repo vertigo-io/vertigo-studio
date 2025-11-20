@@ -101,53 +101,53 @@ public final class BansheeSamples {
 			.addCommandExecutor("paragraph", cmd -> Shiny.paragraph().withText("This is a paragraph.").build())
 			.addCommandExecutor("toggle", cmd -> Shiny.toggle().withLabel("Enable Feature").withValue(true).withType(ShinyToggleType.SWITCH).withOnText("Active").withOffText("Inactive").withShowText(true).build())
 			.addCommandExecutor("gauge", cmd -> Shiny.gauge().withTitle("Ventes par produit").withValue(156).withMaxValue(450).build())
-			.addCommandExecutor("sparkline", cmd -> Shiny.sparkline().withTitle("S.p.a.r.k.l.i.n.e").withValues(156, 450, 300, 200, 100, 23).build())
-			.addCommandExecutor("image", cmd -> Shiny.image().withTitle("Random image from picsum").withUrl("https://picsum.photos/800/600").withAlt("Random image from picsum").build())
-			.addCommandExecutor("photo", cmd -> Shiny.image().withTitle("Random image from picsum").withUrl("https://picsum.photos/800/600").withAlt("Random image from picsum").build())
-			.addCommandExecutor("card", cmd -> Shiny.card().withTitle("Mon Titre de Carte").withSubtitle("Un sous-titre pour le contexte").withDescription("Ceci est le contenu principal de ma carte. Il peut être plus long et contenir des informations détaillées sur le sujet de la carte.").withImageUrl("https://picsum.photos/id/237/200/300").withImageAlt("Image aléatoire de Picsum").withLink("https://www.vertigo.io").withIcon("star").withBadge("Nouveau", "blue").withFormat(ShinyCardFormat.M).build())
-			.addCommandExecutor("list", cmd -> Shiny.list().withTitle("planetes").withType(ShinyListType.UNORDERED).addItem("Uranus").addList(Shiny.list().withTitle("Mars").withType(ShinyListType.UNORDERED).addItem("Bleue").addItem("Rouge").addItem("Verte").build()).addItem("Saturn").addItem("Venus").build())
-			.addCommandExecutor("status", cmd -> Shiny.status().withTitle("Component Status").addType(ShinyStatusType.SUCCESS).addType(ShinyStatusType.ERROR).addType(ShinyStatusType.WARNING).build())
-			.addCommandExecutor("rating", cmd -> Shiny.rating().withLabel("User satisfaction").withValue(3.5).withScale(ShinyRatingScale.SCALE_5).withAllowHalfRating(true).build())
-			.addCommandExecutor("inputtext", cmd -> Shiny.inputText().withLabel("Your Name").withDefaultValue("John Doe").build())
-			.addCommandExecutor("json", cmd -> Shiny.json().withJson("{\"title\": \"The Shining\",\"director\": \"Stanley Kubrick\",\"release_year\": 1980,\"genre\": [\"Horror\", \"Thriller\"],\"duration\": \"2h 26m\",\"cast\": [\"Jack Nicholson\", \"Shelley Duvall\", \"Danny Lloyd\"],\"synopsis\": \"A family heads to an isolated hotel for the winter where a sinister presence influences the father into violence.\"}").withTitle("Fiche de Shinning").build())
-			.addCommandExecutor("youtube", cmd -> Shiny.youtube().withTitle("Rick Astley - Never Gonna Give You Up").withVideoId("dQw4w9WgXcQ").build())
-			.addCommandExecutor("map", cmd -> Shiny.geoMap().withTitle("Tour Eiffel & Saint Germain").addGeoPoint(ShinyGeoPoint.of(48.8584, 2.2945, "Tour Eiffel")).addGeoPoint(ShinyGeoPoint.of(48.901022, 2.100765, "Saint Germain en Laye")).build())
-			.addCommandExecutor("rss", cmd -> Shiny.rss().withFeed("https://www.francetvinfo.fr/titres.rss").build())
-			.addCommandExecutor("rss franceinfo", cmd -> Shiny.rss().withFeed("https://www.francetvinfo.fr/titres.rss").build())
-			.addCommandExecutor("rss france info", cmd -> Shiny.rss().withFeed("https://www.francetvinfo.fr/titres.rss").build())
-			.addCommandExecutor("bbc", cmd -> Shiny.rss().withFeed("https://feeds.bbci.co.uk/news/world/rss.xml").build())
-			.addCommandExecutor("rss bbc", cmd -> Shiny.rss().withFeed("https://feeds.bbci.co.uk/news/world/rss.xml").build())
-			.addCommandExecutor("lemonde", cmd -> Shiny.rss().withFeed("https://www.lemonde.fr/rss/une.xml").build())
-			.addCommandExecutor("le monde", cmd -> Shiny.rss().withFeed("https://www.lemonde.fr/rss/une.xml").build())
-			.addCommandExecutor("rss lemonde", cmd -> Shiny.rss().withFeed("https://www.lemonde.fr/rss/une.xml").build())
-			.addCommandExecutor("table", cmd -> Shiny.table().withTitle("carnet d'adresses").withNoDataFound("no files found").withHeader("Prénom", "Nom").addRow("Arthur", "Penn").addRow("Marilyn", "Pinson").build())
-			.addCommandExecutor("timeline", cmd -> Shiny.timeline().withTitle("Project Timeline").addItem("Step 1: Conception", "Defining project goals and scope.", "blue", "mdi-lightbulb-on-outline").addItem("Step 2: Development", "Building the core features.", "green", "mdi-code-braces").addItem("Step 3: Testing", "Ensuring quality and stability.", "orange", "mdi-flask-empty-outline").addItem("Step 4: Deployment", "Releasing to production.", "purple", "mdi-rocket-launch-outline").build())
-			.addCommandExecutor("tl", cmd -> Shiny.timeline().withTitle("Project Timeline").addItem("Step 1: Conception", "Defining project goals and scope.", "blue", "mdi-lightbulb-on-outline").addItem("Step 2: Development", "Building the core features.", "green", "mdi-code-braces").addItem("Step 3: Testing", "Ensuring quality and stability.", "orange", "mdi-flask-empty-outline").addItem("Step 4: Deployment", "Releasing to production.", "purple", "mdi-rocket-launch-outline").build())
-			.addCommandExecutor("slider", cmd -> Shiny.slider().withLabel("Volume").withMin(0).withMax(100).withStep(1).withValue(45).withColor("orange").withThumbLabel(true).build())
-			.addCommandExecutor("multiselection", cmd -> Shiny.multiSelection().withTitle("Select your favorite fruits").addOption("Apple").addOption("Banana").addOption("Orange").addOption("Grape").build())
-			.addCommandExecutor("alert", cmd -> Shiny.alert().withAlertType(ShinyAlertType.INFO).withTitle("Information").withContent("This is an informational message.").withClosable(true).build())
-			.addCommandExecutor("alert-success", cmd -> Shiny.alert().withAlertType(ShinyAlertType.SUCCESS).withTitle("Success").withContent("The operation completed successfully!").build())
-			.addCommandExecutor("alert-warning", cmd -> Shiny.alert().withAlertType(ShinyAlertType.WARNING).withContent("This is a warning message, please be careful.").build())
-			.addCommandExecutor("alert-error", cmd -> Shiny.alert().withAlertType(ShinyAlertType.ERROR).withTitle("Error").withContent("An error occurred while processing your request.").build())
-			.addCommandExecutor("chip", cmd -> Shiny.chip().withText("Vuetify").withColor("red").withVariant(ShinyChipVariant.ELEVATED).withIcon("mdi-vuetify").withClosable(true).build())
-			.addCommandExecutor("org", cmd -> Shiny.organization().addNode("1", null, "John Doe", "CEO", "https://randomuser.me/api/portraits/men/1.jpg").addNode("2", "1", "Jane Smith", "CTO", "https://randomuser.me/api/portraits/women/2.jpg").addNode("3", "1", "Mike Johnson", "CFO", "https://randomuser.me/api/portraits/men/3.jpg").addNode("4", "2", "Emily Brown", "Lead Developer", "https://randomuser.me/api/portraits/women/4.jpg").addNode("5", "2", "David Wilson", "DevOps Engineer", "https://randomuser.me/api/portraits/men/5.jpg").addNode("6", "3", "Sarah Davis", "Accountant", "https://randomuser.me/api/portraits/women/6.jpg").build())
-			.addCommandExecutor("pdf", cmd -> Shiny.pdf().withTitle("Arthur Rimbaud - Poèmes").withPath("sample-report.pdf").build())
-			.addCommandExecutor("tree", cmd -> Shiny.tree().withLabel("my directory").addTree("Files").addLeaf("src").addTree("main").addLeaf("file.txt").up().up().addTree("test").addLeaf("testFile.txt").root().build())
+			.addCommandExecutor("sparkline", BansheeSamples::sparklineCommand)
+			.addCommandExecutor("image", BansheeSamples::imageCommand)
+			.addCommandExecutor("photo", BansheeSamples::imageCommand)
+			.addCommandExecutor("card", BansheeSamples::cardCommand)
+			.addCommandExecutor("list", BansheeSamples::listCommand)
+			.addCommandExecutor("status", BansheeSamples::statusCommand)
+			.addCommandExecutor("rating", BansheeSamples::ratingCommand)
+			.addCommandExecutor("inputtext", BansheeSamples::inputTextCommand)
+			.addCommandExecutor("json", BansheeSamples::jsonCommand)
+			.addCommandExecutor("youtube", BansheeSamples::youtubeCommand)
+			.addCommandExecutor("map", BansheeSamples::mapCommand)
+			.addCommandExecutor("rss", BansheeSamples::rssCommand)
+			.addCommandExecutor("rss franceinfo", BansheeSamples::rssFranceInfoCommand)
+			.addCommandExecutor("rss france info", BansheeSamples::rssFranceInfoCommand2)
+			.addCommandExecutor("bbc", BansheeSamples::bbcCommand)
+			.addCommandExecutor("rss bbc", BansheeSamples::bbcCommand)
+			.addCommandExecutor("lemonde", BansheeSamples::lemondeCommand)
+			.addCommandExecutor("le monde", BansheeSamples::lemondeCommand)
+			.addCommandExecutor("rss lemonde", BansheeSamples::lemondeCommand)
+			.addCommandExecutor("table", BansheeSamples::tableCommand)
+			.addCommandExecutor("timeline", BansheeSamples::timelineCommand)
+			.addCommandExecutor("tl", BansheeSamples::timelineCommand)
+			.addCommandExecutor("slider", BansheeSamples::sliderCommand)
+			.addCommandExecutor("multiselection", BansheeSamples::multiselectionCommand)
+			.addCommandExecutor("alert", BansheeSamples::alertCommand)
+			.addCommandExecutor("alert-success", BansheeSamples::alertSuccessCommand)
+			.addCommandExecutor("alert-warning", BansheeSamples::alertWarningCommand)
+			.addCommandExecutor("alert-error", BansheeSamples::alertErrorCommand)
+			.addCommandExecutor("chip", BansheeSamples::chipCommand)
+			.addCommandExecutor("org", BansheeSamples::orgCommand)
+			.addCommandExecutor("pdf", BansheeSamples::pdfCommand)
+			.addCommandExecutor("tree", BansheeSamples::treeCommand)
 			.addCommandExecutor("sankey", BansheeSamples::sankey)
 			.addCommandExecutor("flow", BansheeSamples::flow)
 			.addCommandExecutor("wait", cmd -> wait(Shiny.figlet().withText("attente 2s").build(), 2000))
-			.addCommandExecutor("container", cmd -> new ShinyContainerBuilder().addModel(Shiny.sparkline().withTitle("Ventes par produit").withValues(156, 450, 300, 200, 100, 23).build()).addModel(Shiny.list().withTitle("planetes").withType(ShinyListType.DASHED).addItem("Uranus").addItem("Saturn").addItem("Venus").build()).addModel(Shiny.chip().withText("Beatles").withColor("red").withVariant(ShinyChipVariant.ELEVATED).withIcon("mdi-vuetify").withClosable(true).build()).addModel(Shiny.chip().withText("Kinks").withColor("pink").withVariant(ShinyChipVariant.ELEVATED).withIcon("mdi-vuetify").build()).build())
+			.addCommandExecutor("container", BansheeSamples::containerCommand)
 			.addCommandExecutor("mindmap", BansheeSamples::mindmap)
 			.addCommandExecutor("table3", BansheeSamples::table3)
 			.addCommandExecutor("grid", BansheeSamples::grid)
-			.addCommandExecutor("datagrid", cmd -> Shiny.dataGrid().withTitle("My DataGrid").addColumn("ID", "id", true, true).addColumn("Name", "name", true, false).addColumn("Age", "age", true, false).withData(List.of(Map.of("id", 1, "name", "John", "age", 30), Map.of("id", 2, "name", "Jane", "age", 25), Map.of("id", 3, "name", "Doe", "age", 40))).build())
-			.addCommandExecutor("datepicker", cmd -> Shiny.datePicker().withLabel("Select a date").withValue("2025-11-13").isRequired().build())
-			.addCommandExecutor("fileupload", cmd -> Shiny.fileUpload().withLabel("Upload a file").isMultiple().withAccept("image/*").build())
-			.addCommandExecutor("codeeditor", cmd -> Shiny.codeEditor().withLanguage("javascript").withContent("function hello() {\n  console.log('Hello, World!');\n}").build())
-			.addCommandExecutor("autocomplete", cmd -> Shiny.autocomplete().withLabel("Select a country").addOption("France").addOption("Germany").addOption("Spain").addOption("Italy").withValue("France").withPlaceholder("Start typing...").build())
-			.addCommandExecutor("rangeslider", cmd -> Shiny.rangeSlider().withLabel("Price Range").withMin(0).withMax(1000).withStep(10).withValue(200, 800).withColor("green").withThumbLabel(true).build())
-			.addCommandExecutor("notification", cmd -> Shiny.notification().withType(ShinyNotificationType.SUCCESS).withMessage("This is a success notification").withTimeout(3000).build())
-			.addCommandExecutor("modal", cmd -> Shiny.modal().withTitle("My Modal").withContent(Shiny.container().addModel(Shiny.paragraph().withText("This is the content of the modal.").build()).build()).isPersistent().build())
+			.addCommandExecutor("datagrid", BansheeSamples::datagridCommand)
+			.addCommandExecutor("datepicker", BansheeSamples::datepickerCommand)
+			.addCommandExecutor("fileupload", BansheeSamples::fileuploadCommand)
+			.addCommandExecutor("codeeditor", BansheeSamples::codeeditorCommand)
+			.addCommandExecutor("autocomplete", BansheeSamples::autocompleteCommand)
+			.addCommandExecutor("rangeslider", BansheeSamples::rangesliderCommand)
+			.addCommandExecutor("notification", BansheeSamples::notificationCommand)
+			.addCommandExecutor("modal", BansheeSamples::modalCommand)
 			.addCommandExecutor("page", BansheeSamples::page)
 			.build();
 
@@ -158,6 +158,150 @@ public final class BansheeSamples {
 			throw new RuntimeException(e);
 		}
 		return model;
+	}
+
+	private static ShinyModel modalCommand(final BansheeCommand cmd) {
+		return Shiny.modal().withTitle("My Modal").withContent(Shiny.container().addModel(Shiny.paragraph().withText("This is the content of the modal.").build()).build()).isPersistent().build();
+	}
+
+	private static ShinyModel notificationCommand(final BansheeCommand cmd) {
+		return Shiny.notification().withType(ShinyNotificationType.SUCCESS).withMessage("This is a success notification").withTimeout(3000).build();
+	}
+
+	private static ShinyModel rangesliderCommand(final BansheeCommand cmd) {
+		return Shiny.rangeSlider().withLabel("Price Range").withMin(0).withMax(1000).withStep(10).withValue(200, 800).withColor("green").withThumbLabel(true).build();
+	}
+
+	private static ShinyModel autocompleteCommand(final BansheeCommand cmd) {
+		return Shiny.autocomplete().withLabel("Select a country").addOption("France").addOption("Germany").addOption("Spain").addOption("Italy").withValue("France").withPlaceholder("Start typing...").build();
+	}
+
+	private static ShinyModel codeeditorCommand(final BansheeCommand cmd) {
+		return Shiny.codeEditor().withLanguage("javascript").withContent("function hello() {\n  console.log('Hello, World!');\n}").build();
+	}
+
+	private static ShinyModel fileuploadCommand(final BansheeCommand cmd) {
+		return Shiny.fileUpload().withLabel("Upload a file").isMultiple().withAccept("image/*").build();
+	}
+
+	private static ShinyModel datepickerCommand(final BansheeCommand cmd) {
+		return Shiny.datePicker().withLabel("Select a date").withValue("2025-11-13").isRequired().build();
+	}
+
+	private static ShinyModel datagridCommand(final BansheeCommand cmd) {
+		return Shiny.dataGrid().withTitle("My DataGrid").addColumn("ID", "id", true, true).addColumn("Name", "name", true, false).addColumn("Age", "age", true, false).withData(List.of(Map.of("id", 1, "name", "John", "age", 30), Map.of("id", 2, "name", "Jane", "age", 25), Map.of("id", 3, "name", "Doe", "age", 40))).build();
+	}
+
+	private static ShinyModel containerCommand(final BansheeCommand cmd) {
+		return new ShinyContainerBuilder().addModel(Shiny.sparkline().withTitle("Ventes par produit").withValues(156, 450, 300, 200, 100, 23).build()).addModel(Shiny.list().withTitle("planetes").withType(ShinyListType.DASHED).addItem("Uranus").addItem("Saturn").addItem("Venus").build()).addModel(Shiny.chip().withText("Beatles").withColor("red").withVariant(ShinyChipVariant.ELEVATED).withIcon("mdi-vuetify").withClosable(true).build()).addModel(Shiny.chip().withText("Kinks").withColor("pink").withVariant(ShinyChipVariant.ELEVATED).withIcon("mdi-vuetify").build()).build();
+	}
+
+	private static ShinyModel treeCommand(final BansheeCommand cmd) {
+		return Shiny.tree().withLabel("my directory").addTree("Files").addLeaf("src").addTree("main").addLeaf("file.txt").up().up().addTree("test").addLeaf("testFile.txt").root().build();
+	}
+
+	private static ShinyModel pdfCommand(final BansheeCommand cmd) {
+		return Shiny.pdf().withTitle("Arthur Rimbaud - Poèmes").withPath("sample-report.pdf").build();
+	}
+
+	private static ShinyModel orgCommand(final BansheeCommand cmd) {
+		return Shiny.organization().addNode("1", null, "John Doe", "CEO", "https://randomuser.me/api/portraits/men/1.jpg").addNode("2", "1", "Jane Smith", "CTO", "https://randomuser.me/api/portraits/women/2.jpg").addNode("3", "1", "Mike Johnson", "CFO", "https://randomuser.me/api/portraits/men/3.jpg").addNode("4", "2", "Emily Brown", "Lead Developer", "https://randomuser.me/api/portraits/women/4.jpg").addNode("5", "2", "David Wilson", "DevOps Engineer", "https://randomuser.me/api/portraits/men/5.jpg").addNode("6", "3", "Sarah Davis", "Accountant", "https://randomuser.me/api/portraits/women/6.jpg").build();
+	}
+
+	private static ShinyModel chipCommand(final BansheeCommand cmd) {
+		return Shiny.chip().withText("Vuetify").withColor("red").withVariant(ShinyChipVariant.ELEVATED).withIcon("mdi-vuetify").withClosable(true).build();
+	}
+
+	private static ShinyModel alertErrorCommand(final BansheeCommand cmd) {
+		return Shiny.alert().withAlertType(ShinyAlertType.ERROR).withTitle("Error").withContent("An error occurred while processing your request.").build();
+	}
+
+	private static ShinyModel alertWarningCommand(final BansheeCommand cmd) {
+		return Shiny.alert().withAlertType(ShinyAlertType.WARNING).withContent("This is a warning message, please be careful.").build();
+	}
+
+	private static ShinyModel alertSuccessCommand(final BansheeCommand cmd) {
+		return Shiny.alert().withAlertType(ShinyAlertType.SUCCESS).withTitle("Success").withContent("The operation completed successfully!").build();
+	}
+
+	private static ShinyModel alertCommand(final BansheeCommand cmd) {
+		return Shiny.alert().withAlertType(ShinyAlertType.INFO).withTitle("Information").withContent("This is an informational message.").withClosable(true).build();
+	}
+
+	private static ShinyModel multiselectionCommand(final BansheeCommand cmd) {
+		return Shiny.multiSelection().withTitle("Select your favorite fruits").addOption("Apple").addOption("Banana").addOption("Orange").addOption("Grape").build();
+	}
+
+	private static ShinyModel sliderCommand(final BansheeCommand cmd) {
+		return Shiny.slider().withLabel("Volume").withMin(0).withMax(100).withStep(1).withValue(45).withColor("orange").withThumbLabel(true).build();
+	}
+
+	private static ShinyModel timelineCommand(final BansheeCommand cmd) {
+		return Shiny.timeline().withTitle("Project Timeline").addItem("Step 1: Conception", "Defining project goals and scope.", "blue", "mdi-lightbulb-on-outline").addItem("Step 2: Development", "Building the core features.", "green", "mdi-code-braces").addItem("Step 3: Testing", "Ensuring quality and stability.", "orange", "mdi-flask-empty-outline").addItem("Step 4: Deployment", "Releasing to production.", "purple", "mdi-rocket-launch-outline").build();
+	}
+
+	private static ShinyModel tableCommand(final BansheeCommand cmd) {
+		return Shiny.table().withTitle("carnet d'adresses").withNoDataFound("no files found").withHeader("Prénom", "Nom").addRow("Arthur", "Penn").addRow("Marilyn", "Pinson").build();
+	}
+
+	private static ShinyModel lemondeCommand(final BansheeCommand cmd) {
+		return Shiny.rss().withFeed("https://www.lemonde.fr/rss/une.xml").build();
+	}
+
+	private static ShinyModel bbcCommand(final BansheeCommand cmd) {
+		return Shiny.rss().withFeed("https://feeds.bbci.co.uk/news/world/rss.xml").build();
+	}
+
+	private static ShinyModel rssFranceInfoCommand2(final BansheeCommand cmd) {
+		return Shiny.rss().withFeed("https://www.francetvinfo.fr/titres.rss").build();
+	}
+
+	private static ShinyModel rssFranceInfoCommand(final BansheeCommand cmd) {
+		return Shiny.rss().withFeed("https://www.francetvinfo.fr/titres.rss").build();
+	}
+
+	private static ShinyModel rssCommand(final BansheeCommand cmd) {
+		return Shiny.rss().withFeed("https://www.francetvinfo.fr/titres.rss").build();
+	}
+
+	private static ShinyModel mapCommand(final BansheeCommand cmd) {
+		return Shiny.geoMap().withTitle("Tour Eiffel & Saint Germain").addGeoPoint(ShinyGeoPoint.of(48.8584, 2.2945, "Tour Eiffel")).addGeoPoint(ShinyGeoPoint.of(48.901022, 2.100765, "Saint Germain en Laye")).build();
+	}
+
+	private static ShinyModel youtubeCommand(final BansheeCommand cmd) {
+		return Shiny.youtube().withTitle("Rick Astley - Never Gonna Give You Up").withVideoId("dQw4w9WgXcQ").build();
+	}
+
+	private static ShinyModel jsonCommand(final BansheeCommand cmd) {
+		return Shiny.json().withJson("{\"title\": \"The Shining\",\"director\": \"Stanley Kubrick\",\"release_year\": 1980,\"genre\": [\"Horror\", \"Thriller\"],\"duration\": \"2h 26m\",\"cast\": [\"Jack Nicholson\", \"Shelley Duvall\", \"Danny Lloyd\"],\"synopsis\": \"A family heads to an isolated hotel for the winter where a sinister presence influences the father into violence.\"}").withTitle("Fiche de Shinning").build();
+	}
+
+	private static ShinyModel inputTextCommand(final BansheeCommand cmd) {
+		return Shiny.inputText().withLabel("Your Name").withDefaultValue("John Doe").build();
+	}
+
+	private static ShinyModel ratingCommand(final BansheeCommand cmd) {
+		return Shiny.rating().withLabel("User satisfaction").withValue(3.5).withScale(ShinyRatingScale.SCALE_5).withAllowHalfRating(true).build();
+	}
+
+	private static ShinyModel statusCommand(final BansheeCommand cmd) {
+		return Shiny.status().withTitle("Component Status").addType(ShinyStatusType.SUCCESS).addType(ShinyStatusType.ERROR).addType(ShinyStatusType.WARNING).build();
+	}
+
+	private static ShinyModel listCommand(final BansheeCommand cmd) {
+		return Shiny.list().withTitle("planetes").withType(ShinyListType.UNORDERED).addItem("Uranus").addList(Shiny.list().withTitle("Mars").withType(ShinyListType.UNORDERED).addItem("Bleue").addItem("Rouge").addItem("Verte").build()).addItem("Saturn").addItem("Venus").build();
+	}
+
+	private static ShinyModel cardCommand(final BansheeCommand cmd) {
+		return Shiny.card().withTitle("Mon Titre de Carte").withSubtitle("Un sous-titre pour le contexte").withDescription("Ceci est le contenu principal de ma carte. Il peut être plus long et contenir des informations détaillées sur le sujet de la carte.").withImageUrl("https://picsum.photos/id/237/200/300").withImageAlt("Image aléatoire de Picsum").withLink("https://www.vertigo.io").withIcon("star").withBadge("Nouveau", "blue").withFormat(ShinyCardFormat.M).build();
+	}
+
+	private static ShinyModel imageCommand(final BansheeCommand cmd) {
+		return Shiny.image().withTitle("Random image from picsum").withUrl("https://picsum.photos/800/600").withAlt("Random image from picsum").build();
+	}
+
+	private static ShinyModel sparklineCommand(final BansheeCommand cmd) {
+		return Shiny.sparkline().withTitle("S.p.a.r.k.l.i.n.e").withValues(156, 450, 300, 200, 100, 23).build();
 	}
 
 	//BansheeCommandExcecutor 
