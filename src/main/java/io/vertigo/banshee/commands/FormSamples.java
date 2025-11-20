@@ -2,6 +2,8 @@ package io.vertigo.banshee.commands;
 
 import java.util.List;
 
+import io.vertigo.banshee.com.BansheeCommand;
+import io.vertigo.banshee.com.BansheeCommandExecutor;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.input.form.ShinyFormField;
@@ -11,8 +13,8 @@ import io.vertigo.shiny.models.input.form.ShinyFormOption;
 
 public class FormSamples {
 
-	public static class FormSample1 {
-		public ShinyModel execute() {
+	public static class FormSample1 implements BansheeCommandExecutor {
+		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.form()
 					.withTitle("Person Details")
 					.addSection("Personal Info", List.of(
@@ -28,8 +30,8 @@ public class FormSamples {
 		}
 	}
 
-	public static class FormSample2 {
-		public ShinyModel execute() {
+	public static class FormSample2 implements BansheeCommandExecutor {
+		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.form()
 					.withTitle("Product Details")
 					.addSection("Product Info", List.of(
@@ -46,8 +48,8 @@ public class FormSamples {
 		}
 	}
 
-	public static class FormSample3 {
-		public ShinyModel execute() {
+	public static class FormSample3 implements BansheeCommandExecutor {
+		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.form()
 					.withTitle("Photo Metadata")
 					.addSection("File Info", List.of(
@@ -62,8 +64,8 @@ public class FormSamples {
 		}
 	}
 
-	public static class FormSample4 {
-		public ShinyModel execute() {
+	public static class FormSample4 implements BansheeCommandExecutor {
+		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.form()
 					.withTitle("Critique de film")
 					.addSection("Détails du film", List.of(
@@ -78,8 +80,8 @@ public class FormSamples {
 		}
 	}
 
-	public static class FormSample5 {
-		public ShinyModel execute() {
+	public static class FormSample5 implements BansheeCommandExecutor {
+		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.form()
 					.withTitle("Commande de produit")
 					.addSection("Détails du produit", List.of(
@@ -93,8 +95,8 @@ public class FormSamples {
 		}
 	}
 
-	public static class FormSample6 {
-		public ShinyModel execute() {
+	public static class FormSample6 implements BansheeCommandExecutor {
+		public ShinyModel execute(BansheeCommand command) {
 			return Shiny.form()
 					.withTitle("Ajout de film")
 					.addSection("Informations sur le film", List.of(
