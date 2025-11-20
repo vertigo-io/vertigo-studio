@@ -3,9 +3,10 @@ package io.vertigo.shiny.models.layout.tabs;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyBlock;
-import jakarta.annotation.Nonnull;
 
 public final class ShinyTabsBuilder {
 	private final List<ShinyTab> _tabs = new ArrayList<>();

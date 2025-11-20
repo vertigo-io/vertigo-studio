@@ -2,9 +2,10 @@ package io.vertigo.shiny.models.input.toggle;
 
 import java.util.UUID;
 
+import javax.annotation.Nonnull;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
-import jakarta.annotation.Nonnull;
 
 public final class ShinyToggleBuilder implements Builder<ShinyToggle> {
 	private UUID _id;

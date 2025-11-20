@@ -7,9 +7,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.annotation.Nonnull;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
-import jakarta.annotation.Nonnull;
 
 public final class ShinyMultiSelectionBuilder implements Builder<ShinyMultiSelection> {
 	private UUID _id;

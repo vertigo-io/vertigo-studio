@@ -2,8 +2,9 @@ package io.vertigo.shiny.models.input.rangeslider;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import io.vertigo.core.lang.Assertion;
-import jakarta.annotation.Nonnull;
 
 public final class ShinyRangeSliderBuilder {
 	private String _label;

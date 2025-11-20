@@ -2,9 +2,10 @@ package io.vertigo.shiny.models.text.textpath;
 
 import java.nio.file.Path;
 
+import javax.annotation.Nonnull;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
-import jakarta.annotation.Nonnull;
 
 public final class ShinyTextPathBuilder implements Builder<ShinyTextPath> {
 

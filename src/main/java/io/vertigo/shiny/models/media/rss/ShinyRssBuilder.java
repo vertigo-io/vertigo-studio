@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.SyndFeedInput;
@@ -12,7 +14,6 @@ import com.rometools.rome.io.XmlReader;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
 import io.vertigo.core.lang.VSystemException;
-import jakarta.annotation.Nonnull;
 
 public final class ShinyRssBuilder implements Builder<ShinyRss> {
 
