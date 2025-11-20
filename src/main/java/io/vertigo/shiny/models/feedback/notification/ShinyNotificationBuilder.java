@@ -1,7 +1,8 @@
 package io.vertigo.shiny.models.feedback.notification;
 
+import javax.annotation.Nonnull;
+
 import io.vertigo.core.lang.Assertion;
-import jakarta.annotation.Nonnull;
 
 public final class ShinyNotificationBuilder {
 	private String _message;

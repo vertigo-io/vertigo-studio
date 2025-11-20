@@ -1,8 +1,9 @@
 package io.vertigo.shiny.models.text.title;
 
+import javax.annotation.Nonnull;
+
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
-import jakarta.annotation.Nonnull;
 
 public final class ShinyTitleBuilder implements Builder<ShinyTitle> {
 
