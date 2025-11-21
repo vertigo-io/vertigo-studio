@@ -25,6 +25,7 @@ public final class ShinyMermaidServer {
 	public ShinyMermaidServer(@Nonnull final Shiny shiny, final int port) {
 		Assertion.check().isNotNull(shiny);
 		Assertion.check().isTrue(port > 0 && port < 65536, "Port must be valid");
+		//---
 		this.shiny = shiny;
 		this.port = port;
 	}
