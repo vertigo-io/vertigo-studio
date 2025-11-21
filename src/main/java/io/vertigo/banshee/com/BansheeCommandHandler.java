@@ -7,6 +7,12 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.feedback.error.ShinyErrorBuilder;
 
+/**
+ * CommandHandler dispatche les commandes à l'executor idoine.
+ * Les CommandExecutors auront été enregistrés dans le builder.
+ * Attention les executors doivent être sans état car ils sont réutilisés d'une exécution à l'autre.
+ * 
+ */
 public final class BansheeCommandHandler {
 	private final Map<String, BansheeCommandExecutor> _commandExecutors = new HashMap<>();
 
