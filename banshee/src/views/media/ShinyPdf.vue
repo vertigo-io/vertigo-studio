@@ -100,7 +100,10 @@ const loadPdf = async () => {
 
     const loadingTask = window.pdfjsLib.getDocument(props.data.pdfPath);
     pdfDoc.value = await loadingTask.promise;
-    numPages.value = pdfDoc.value.numPages;
+
+    if (pdfDoc.value) {
+      numPages.value = pdfDoc.value.numPages;
+    }
 
     if (currentPage.value > numPages.value) {
       currentPage.value = 1;
@@ -218,7 +221,4 @@ onBeforeUnmount(() => {
   border-bottom: 1px solid var(--assistant-accent);
 }
 
-.pdf-container {
-  /* Specific styles for the PDF rendering area */
-}
 </style>
