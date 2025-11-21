@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { ref, watch, computed } from 'vue';
-import { ShinyToggle } from '../../models/input/toggle/ShinyToggle';
+import { ShinyToggle } from '../../../models/input/toggle/ShinyToggle';
 
 const props = defineProps<{
     data: ShinyToggle

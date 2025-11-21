@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { ShinyMultiSelection } from '../../models/input/multiselection/ShinyMultiSelection';
+import { ShinyMultiSelection } from '../../../models/input/multiselection/ShinyMultiSelection';
 
 const props = defineProps<{
     data: ShinyMultiSelection

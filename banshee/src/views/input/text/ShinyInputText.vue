@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import { ref, watch, computed } from 'vue';
-import { ShinyInputText } from '../../models/input/text/ShinyInputText';
+import { ShinyInputText } from '../../../models/input/text/ShinyInputText';
 
 const props = defineProps<{
     data: ShinyInputText

@@ -184,8 +184,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { ShinyForm } from '../../models/input/form/ShinyForm';
-import { ShinyFormField } from '../../models/input/form/ShinyFormField';
+import { ShinyForm } from '../../../models/input/form/ShinyForm';
+import { ShinyFormField } from '../../../models/input/form/ShinyFormField';
 
 const props = defineProps<{
   data: ShinyForm
