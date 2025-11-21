@@ -24,14 +24,18 @@ const vuetify = createVuetify({
 app.use(vuetify);
 
 // Import and register all Shiny components automatically
-const shinyComponents = import.meta.glob('./views/**/*.vue', { eager: true });
+const shinyComponents = import.meta.glob<{ default: any }>('./views/**/*.vue', { eager: true });
 
 for (const path in shinyComponents) {
-    const componentName = path.split('/').pop().replace(/\.\w+$/, '');
-    const componentModule = shinyComponents[path];
-    if (componentModule && typeof componentModule === 'object' && 'default' in componentModule) {
-        app.component(componentName, componentModule.default);
-    }
+  const file = path.split('/').pop();
+  if (!file) continue; // ← évite l'erreur TS2532
+
+  const componentName = file.replace(/\.\w+$/, '');
+
+  const componentModule = shinyComponents[path];
+  if (componentModule?.default) {
+    app.component(componentName, componentModule.default);
+  }
 }
 
 app.mount('#app');

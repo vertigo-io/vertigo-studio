@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, watch, onBeforeUnmount } from 'vue';
-import { OrgChart } from 'd3-org-chart';
+import OrgChart from 'd3-org-chart';
 import type { ShinyOrganization } from '@/models/dataviz/organization/ShinyOrganization';
 
 const props = defineProps<{

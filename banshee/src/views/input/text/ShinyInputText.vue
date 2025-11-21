@@ -4,7 +4,6 @@
         :label="data.label"
         :required="data.required"
         :rules="rules"
-        :placeholder="data.placeholder"
         :items="data.suggestions"
         clearable
     ></v-text-field>
