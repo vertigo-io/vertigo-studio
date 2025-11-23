@@ -62,18 +62,18 @@ public final class ModelReader {
 	private VXModel transform(final RawModel rawModel) {
 		Assertion.check().isNotNull(rawModel);
 		//---
-		final var header = new VXHeader(rawModel.rawHeader.description, rawModel.rawHeader.tags);
+		final var header = new VXHeader(rawModel.header().description(), rawModel.header().tags());
 
-		for (final RawDomainType rawDomainType : rawModel.rawDomainTypes) {
+		for (final RawDomainType rawDomainType : rawModel.domainTypes()) {
 			final var domainType = transform(rawDomainType);
 			domainTypeCatalog.put(domainType.name(), domainType);
 		}
-		for (final RawEntity rawEntity : rawModel.rawEntities) {
-			final var name = "do-" + rawEntity.name;
+		for (final RawEntity rawEntity : rawModel.entities()) {
+			final var name = "do-" + rawEntity.name();
 			domainTypeCatalog.put(name, new VXDomainType(name, VXDataType.Entity, List.of()));
 		}
 
-		for (final RawEntity rawEntity : rawModel.rawEntities) {
+		for (final RawEntity rawEntity : rawModel.entities()) {
 			final var entity = transform(rawEntity);
 			entityCatalog.put(entity.name(), entity);
 		}
@@ -86,28 +86,28 @@ public final class ModelReader {
 
 	private VXAttribute transform(final RawAttribute rawAttribute) {
 		//default values
-		final VXRole role = rawAttribute.role == null
+		final VXRole role = rawAttribute.role() == null
 				? VXRole.DATA
-				: VXRole.valueOf(rawAttribute.role.toUpperCase());
+				: VXRole.valueOf(rawAttribute.role().toUpperCase());
 
 		return new VXAttribute(
-				rawAttribute.name,
-				domainTypeCatalog.get(rawAttribute.domainType),
+				rawAttribute.name(),
+				domainTypeCatalog.get(rawAttribute.domainType()),
 				role,
-				VXCardinality.fromSymbol(rawAttribute.cardinality));
+				VXCardinality.fromSymbol(rawAttribute.cardinality()));
 	}
 
 	private VXEntity transform(final RawEntity rawEntity) {
-		final List<VXAttribute> attributes = rawEntity.rawAttributes
+		final List<VXAttribute> attributes = rawEntity.attributes()
 				.stream()
 				.map(rawAttribute -> transform(rawAttribute))
 				.collect(Collectors.toList());
 
-		return new VXEntity(rawEntity.name, attributes);
+		return new VXEntity(rawEntity.name(), attributes);
 	}
 
 	private static VXDomainType transform(final RawDomainType rawDomainType) {
-		var dataType = VXDataType.valueOf(rawDomainType.dataType);
-		return new VXDomainType(rawDomainType.name, dataType, List.of());
+		var dataType = VXDataType.valueOf(rawDomainType.dataType());
+		return new VXDomainType(rawDomainType.name(), dataType, List.of());
 	}
 }
