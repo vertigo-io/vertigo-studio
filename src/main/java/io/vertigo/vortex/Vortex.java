@@ -15,7 +15,7 @@ public class Vortex {
 		final VXModel model = modelReader.process();
 
 		//-
-		for (final VXEntity entity : model.entities) {
+		for (final VXEntity entity : model.entities()) {
 			System.out.println(entity);
 		}
 	}

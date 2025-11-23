@@ -2,17 +2,14 @@ package io.vertigo.vortex.model;
 
 import io.vertigo.core.lang.Assertion;
 
-public final class VXHeader {
-	public final String description;
-	public final String[] tags;
+public record VXHeader(
+		String description,
+		String[] tags) {
 
-	public VXHeader(final String description, final String[] tags) {
+	public VXHeader {
 		Assertion.check()
 				.isNotBlank(description)
 				.isNotNull(tags);
-		//---
-		this.description = description;
-		this.tags = tags;
 	}
 
 	@Override

@@ -66,7 +66,7 @@ public final class ModelReader {
 
 		for (final RawDomainType rawDomainType : rawModel.rawDomainTypes) {
 			final var domainType = transform(rawDomainType);
-			domainTypeCatalog.put(domainType.name, domainType);
+			domainTypeCatalog.put(domainType.name(), domainType);
 		}
 		for (final RawEntity rawEntity : rawModel.rawEntities) {
 			final var name = "do-" + rawEntity.name;
@@ -75,7 +75,7 @@ public final class ModelReader {
 
 		for (final RawEntity rawEntity : rawModel.rawEntities) {
 			final var entity = transform(rawEntity);
-			entityCatalog.put(entity.name, entity);
+			entityCatalog.put(entity.name(), entity);
 		}
 
 		return new VXModel(

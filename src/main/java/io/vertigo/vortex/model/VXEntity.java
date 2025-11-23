@@ -4,17 +4,14 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 
-public final class VXEntity {
-	public final String name;
-	public final List<VXAttribute> attributes;
+public record VXEntity(
+		String name,
+		List<VXAttribute> attributes) {
 
-	public VXEntity(final String name, final List<VXAttribute> attributes) {
+	public VXEntity {
 		Assertion.check()
 				.isNotBlank(name)
 				.isNotNull(attributes);
-		//---
-		this.name = name;
-		this.attributes = attributes;
 	}
 
 	@Override

@@ -4,20 +4,16 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 
-public final class VXDomainType {
-	public final String name;
-	public final VXDataType dataType;
-	public final List<VXValidator> validators;
+public record VXDomainType(
+		String name,
+		VXDataType dataType,
+		List<VXValidator> validators) {
 
-	public VXDomainType(final String name, final VXDataType dataType, final List<VXValidator> validators) {
+	public VXDomainType {
 		Assertion.check()
 				.isNotBlank(name)
 				.isNotNull(dataType)
 				.isNotNull(validators);
-		//---
-		this.name = name;
-		this.dataType = dataType;
-		this.validators = validators;
 	}
 
 	@Override
