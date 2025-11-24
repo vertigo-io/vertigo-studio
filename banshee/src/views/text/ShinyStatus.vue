@@ -12,7 +12,7 @@ import { onMounted, reactive } from 'vue';
 import { ShinyStatus } from '../../models/text/status/ShinyStatus';
 import { ShinyStatusType, getShinyStatusColor } from '../../models/text/status/ShinyStatusType';
 
-const props = defineProps<{
+const { data } = defineProps<{
   data: ShinyStatus
 }>()
 
