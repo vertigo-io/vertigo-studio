@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, inject, watch, computed } from 'vue';
+import { inject, computed } from 'vue';
 import { ShinyPage } from '../../models/layout/page/ShinyPage';
 import { ShinyRegistry } from '../ShinyRegistry';
 

@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import { ShinyFileUpload } from '../../models/input/fileupload/ShinyFileUpload';
 
-const props = defineProps<{
+const { data } = defineProps<{
     data: ShinyFileUpload
 }>()
 

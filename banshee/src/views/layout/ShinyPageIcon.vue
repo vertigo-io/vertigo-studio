@@ -12,7 +12,7 @@ import { ref } from 'vue';
 import { ShinyPage } from '../../models/layout/page/ShinyPage';
 import ShinyFullPage from './ShinyFullPage.vue';
 
-const props = defineProps<{
+const { data } = defineProps<{
     data: ShinyPage
 }>()
 
