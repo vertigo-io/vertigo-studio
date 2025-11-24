@@ -24,9 +24,9 @@
 	{ 
 	  "name": "author",
 	  "attributes": [
-		{ "name": "id", "domainType": "do-id", "cardinality": "1", "role":"id"},
-	    { "name": "first-name", "domainType": "do-label", "cardinality": "1"},
-	    {"name": "last-name", "domainType": "do-label", "cardinality": "1"}
+		{ "name": "id", "domainType": "do-id", "role":"id"},
+	    { "name": "first-name", "domainType": "do-label"},
+	    {"name": "last-name", "domainType": "do-label"}
 	  ]
 	}
   ]

@@ -1,6 +1,5 @@
 package io.vertigo.vortex.model;
 
-import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.VSystemException;
 
 public enum VXCardinality {
@@ -19,11 +18,10 @@ public enum VXCardinality {
 	MANY;
 
 	public static VXCardinality fromSymbol(final String sCardinality) {
-		Assertion.check().isNotBlank(sCardinality);
-		//---
+		// If cardinality is null, defaults to '1'
 		return switch (sCardinality) {
+			case null, "1" -> ONE;
 			case "?" -> NULLABLE;
-			case "1" -> ONE;
 			case "*" -> MANY;
 			default -> throw new VSystemException("Unknown cardinality symbol : '{0}'. Supported cardinalities are '?' for optional, '1' for one and '*' for many ", sCardinality);
 		};

@@ -70,7 +70,7 @@
                   "enum": ["id", "data", "computed"]
                 }
               },
-              "required": ["name", "domainType", "cardinality"]
+              "required": ["name", "domainType"]
             }
           }
         },

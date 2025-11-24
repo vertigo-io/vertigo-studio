@@ -12,14 +12,13 @@ import io.vertigo.vortex.model.VXCardinality;
 import io.vertigo.vortex.model.VXDataType;
 import io.vertigo.vortex.model.VXDomainType;
 import io.vertigo.vortex.model.VXEntity;
+import io.vertigo.vortex.model.VXFile;
 import io.vertigo.vortex.model.VXHeader;
-import io.vertigo.vortex.model.VXModel;
 import io.vertigo.vortex.model.VXRole;
 import io.vertigo.vortex.raw.RawAttribute;
 import io.vertigo.vortex.raw.RawDomainType;
 import io.vertigo.vortex.raw.RawEntity;
-import io.vertigo.vortex.raw.RawModel;
-
+import io.vertigo.vortex.raw.RawFile;
 
 /**
  * Transforms a raw model into a VXModel.
@@ -29,40 +28,40 @@ import io.vertigo.vortex.raw.RawModel;
  * @synthetic
  */
 final class RawToModel {
-	private final RawModel rawModel;
+	private final RawFile rawFile;
 	private final Map<String, VXDomainType> domainTypeCatalog = new HashMap<>();
 	private final Map<String, VXEntity> entityCatalog = new HashMap<>();
 
-	RawToModel(final RawModel rawModel) {
-		Assertion.check().isNotNull(rawModel);
+	RawToModel(final RawFile rawFile) {
+		Assertion.check().isNotNull(rawFile);
 		//---
-		this.rawModel = rawModel;
+		this.rawFile = rawFile;
 	}
 
 	/**
 	 * Transforms the raw model into a VXModel.
 	 * @return the transformed VXModel
 	 */
-	VXModel transform() {
-		Assertion.check().isNotNull(rawModel);
+	VXFile transform() {
+		Assertion.check().isNotNull(rawFile);
 		//---
-		final var header = new VXHeader(rawModel.header().description(), rawModel.header().tags());
+		final var header = new VXHeader(rawFile.header().description(), rawFile.header().tags());
 
-		for (final RawDomainType rawDomainType : rawModel.domainTypes()) {
+		for (final RawDomainType rawDomainType : rawFile.domainTypes()) {
 			final var domainType = transform(rawDomainType);
 			domainTypeCatalog.put(domainType.name(), domainType);
 		}
-		for (final RawEntity rawEntity : rawModel.entities()) {
+		for (final RawEntity rawEntity : rawFile.entities()) {
 			final var name = "do-" + rawEntity.name();
 			domainTypeCatalog.put(name, new VXDomainType(name, VXDataType.Entity, List.of()));
 		}
 
-		for (final RawEntity rawEntity : rawModel.entities()) {
+		for (final RawEntity rawEntity : rawFile.entities()) {
 			final var entity = transform(rawEntity);
 			entityCatalog.put(entity.name(), entity);
 		}
 
-		return new VXModel(
+		return new VXFile(
 				header,
 				new ArrayList<>(domainTypeCatalog.values()),
 				new ArrayList<>(entityCatalog.values()));
