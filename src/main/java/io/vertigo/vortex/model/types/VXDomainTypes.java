@@ -5,7 +5,7 @@ import io.vertigo.vortex.model.VXDomainType;
 public final class VXDomainTypes {
     private VXDomainTypes() {}
 
-    public static final VXDomainType EMAIL = VX.string("Email").email().build();
+    public static final VXDomainType DO_EMAIL = VX.string("Email").email().build();
     public static final VXDomainType PHONE = VX.string("Phone").pattern("^[0-9]{10}$").build();
     public static final VXDomainType CODE_POSTAL = VX.string("CodePostal").pattern("^[0-9]{5}$").build();
     public static final VXDomainType YEAR = VX.integer("Year").min(1900).max(2100).build();

@@ -10,8 +10,20 @@ import com.github.fge.jsonschema.main.JsonSchemaFactory;
 
 import io.vertigo.core.lang.Assertion;
 
+
+/**
+ * Utility class for validating a JSON file against a JSON schema.
+ * This validator uses the `com.github.fge.jsonschema` library.
+ * @synthetic
+ */
 final class JsonValidator {
 
+	/**
+	 * Validates a data file against a schema file.
+	 * @param schemaFile the file containing the JSON schema
+	 * @param dataFile the file containing the JSON data to validate
+	 * @throws Exception if an error occurs during validation
+	 */
 	public static void validate(final File schemaFile, final File dataFile) throws Exception {
 		Assertion.check()
 				.isNotNull(schemaFile)

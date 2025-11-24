@@ -20,6 +20,14 @@ import io.vertigo.vortex.raw.RawDomainType;
 import io.vertigo.vortex.raw.RawEntity;
 import io.vertigo.vortex.raw.RawModel;
 
+
+/**
+ * Transforms a raw model into a VXModel.
+ * This class is responsible for converting the raw data read from the JSON file
+ * into the final, structured VXModel.
+ * It builds a catalog of domain types and entities.
+ * @synthetic
+ */
 final class RawToModel {
 	private final RawModel rawModel;
 	private final Map<String, VXDomainType> domainTypeCatalog = new HashMap<>();
@@ -31,6 +39,10 @@ final class RawToModel {
 		this.rawModel = rawModel;
 	}
 
+	/**
+	 * Transforms the raw model into a VXModel.
+	 * @return the transformed VXModel
+	 */
 	VXModel transform() {
 		Assertion.check().isNotNull(rawModel);
 		//---

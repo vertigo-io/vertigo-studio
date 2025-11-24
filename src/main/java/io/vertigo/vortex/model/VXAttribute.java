@@ -2,6 +2,13 @@ package io.vertigo.vortex.model;
 
 import io.vertigo.core.lang.Assertion;
 
+
+/**
+ * Represents an attribute of an entity.
+ * An attribute has a name, a domain type, a role, and a cardinality.
+ * For example, a 'title' attribute for a 'Book' entity.
+ * @synthetic
+ */
 public record VXAttribute(
 		String name,
 		VXDomainType domainType,

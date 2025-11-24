@@ -9,6 +9,13 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.vortex.model.VXModel;
 import io.vertigo.vortex.raw.RawModel;
 
+
+/**
+ * Reads a model from a JSON file.
+ * The reader first validates the JSON file against a schema, then reads it into a raw model,
+ * and finally transforms the raw model into a VXModel.
+ * @synthetic
+ */
 public final class ModelReader {
 	private final File file;
 
@@ -18,6 +25,11 @@ public final class ModelReader {
 		this.file = file;
 	}
 
+	/**
+	 * Processes the JSON file and returns the model.
+	 * @return the processed model
+	 * @throws Exception if an error occurs during validation, reading, or transformation
+	 */
 	public VXModel process() throws Exception {
 		//- STEP 1
 		validate();
