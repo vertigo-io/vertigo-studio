@@ -22,6 +22,7 @@ import ShinyMindMap from './dataviz/ShinyMindmap.vue';
 import ShinyPieChart from './dataviz/ShinyPieChart.vue';
 import ShinyRadarChart from './dataviz/ShinyRadarChart.vue';
 import ShinyRating from './text/ShinyRating.vue';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import ShinySankey from './dataviz/ShinySankey.vue';
 import ShinySparkLine from './text/ShinySparkLine.vue';
 import ShinyStatus from './text/ShinyStatus.vue';
@@ -40,7 +41,6 @@ import ShinyFiglet from './text/ShinyFiglet.vue';
 import ShinyParagraph from './text/ShinyParagraph.vue';
 import ShinyTextPath from './text/ShinyTextPath.vue';
 import ShinyTitle from './text/ShinyTitle.vue';
-import VSpeechToTextButton from './input/VSpeechToTextButton.vue';
 import ShinyDatePicker from './input/ShinyDatePicker.vue';
 import ShinyFileUpload from './input/ShinyFileUpload.vue';
 import ShinyCodeEditor from './input/ShinyCodeEditor.vue';
@@ -63,9 +63,9 @@ import ShinyProgressBarCell from './data/table/cell/ShinyProgressBarCell.vue';
 import ShinyBadgeCell from './data/table/cell/ShinyBadgeCell.vue';
 import ShinyRatingCell from './data/table/cell/ShinyRatingCell.vue';
 
-import { ShinyModel } from '../models/ShinyModel';
 
 export class ShinyRegistry {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private _componentMap: Record<string, any> = {};
 
   constructor() {
@@ -133,10 +133,12 @@ export class ShinyRegistry {
     this.register('ShinyRatingCell', ShinyRatingCell);
   }
  
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register(shinyType: string, componentType: any): void {
     this._componentMap[shinyType] = componentType;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   resolve(shinyType: string): any {
     const component = this._componentMap[shinyType];
     return component;

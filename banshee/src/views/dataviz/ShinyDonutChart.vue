@@ -30,7 +30,6 @@ onMounted(() => {
     style.getPropertyValue('--x-neon-blue').trim(),
   ];
   const textColor = style.getPropertyValue('--chakra-paragraph-text').trim();
-  const gridColor = style.getPropertyValue('--assistant-accent').trim();
 
   const ctx = document.getElementById(canvasId) as HTMLCanvasElement | null;
   if (!ctx) return;

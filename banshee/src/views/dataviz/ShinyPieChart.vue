@@ -43,7 +43,6 @@ onMounted(() => {
     const seriesCount = props.data.series.length;
 
     datasetsConfig = props.data.series.map((serie: any, serieIndex: number) => {
-      const cutoutPercentage = 30 + (serieIndex * (50 / seriesCount));
       const colorOffset = serieIndex * Math.floor(colors.length / seriesCount);
       const serieColors = serie.data.map((_: any, index: number) => {
         const colorIndex = (colorOffset + index) % colors.length;

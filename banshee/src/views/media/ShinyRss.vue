@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import { ShinyRss } from '../../models/media/rss/ShinyRss';
 
-const props = defineProps<{
+const { data } = defineProps<{
   data: ShinyRss
 }>()
 

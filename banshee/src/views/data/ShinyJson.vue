@@ -14,7 +14,7 @@ const props = defineProps<{
 }>()
 
 const highlightedJson = computed((): string => {
-  let json = props.data.json || {};
+  const json = props.data.json || {};
   
   // Convertir en string d'abord
   let jsonString: string;
@@ -32,7 +32,7 @@ const highlightedJson = computed((): string => {
   
   // Coloration syntaxique
   return escapedJson.replace(
-    /("(?:\\.|[^"\\])*")(\s*:\s*)?|(\b(?:true|false|null)\b)|(-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+    /("(?:\\.|[^"\\])*")(\s*:\s*)?|(\b(?:true|false|null)\b)|(-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g,
     (match, quotedString, colon, bool, num) => {
       if (quotedString) {
         if (colon) {
