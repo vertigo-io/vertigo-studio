@@ -11,6 +11,7 @@ public record RawEntity(
 
 	@Override
 	public String toString() {
-		return "Entity{name='%s', attributes='%s'}".formatted(name, attributes);
+		return "Entity{name='%s', attributes='%s'}"
+				.formatted(name, attributes);
 	}
 }

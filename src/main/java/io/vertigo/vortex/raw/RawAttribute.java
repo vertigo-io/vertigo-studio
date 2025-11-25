@@ -11,6 +11,7 @@ public record RawAttribute(
 
 	@Override
 	public String toString() {
-		return "Attribute{name='%s', domainType='%s', cardinality='%s'}".formatted(name, domainType, cardinality);
+		return "Attribute{name='%s', domainType='%s', cardinality='%s'}"
+				.formatted(name, domainType, cardinality);
 	}
 }

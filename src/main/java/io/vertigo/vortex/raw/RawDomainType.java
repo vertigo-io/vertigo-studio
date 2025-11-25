@@ -9,6 +9,7 @@ public record RawDomainType(
 
 	@Override
 	public String toString() {
-		return "DomainType{name='%s', dataType='%s'}".formatted(name, dataType);
+		return "DomainType{name='%s', dataType='%s'}"
+				.formatted(name, dataType);
 	}
 }

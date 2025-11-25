@@ -12,6 +12,7 @@ public record RawFile(
 
 	@Override
 	public String toString() {
-		return "RawFile{header='%s', domainTypes='%s', entities='%s'}".formatted(header, domainTypes, entities);
+		return "RawFile{header='%s', domainTypes='%s', entities='%s'}"
+				.formatted(header, domainTypes, entities);
 	}
 }

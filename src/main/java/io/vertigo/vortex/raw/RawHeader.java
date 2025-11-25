@@ -9,6 +9,7 @@ public record RawHeader(
 
 	@Override
 	public String toString() {
-		return "Header{description='%s', tags='%s'}".formatted(description, tags);
+		return "Header{description='%s', tags='%s'}"
+				.formatted(description, tags);
 	}
 }
