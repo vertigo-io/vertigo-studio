@@ -11,6 +11,7 @@ public record RawCatalog(
 
 	@Override
 	public String toString() {
-		return "RawCatalog{header='%s', files='%s'}".formatted(header, files);
+		return "RawCatalog{header='%s', files='%s'}"
+				.formatted(header, files);
 	}
 }

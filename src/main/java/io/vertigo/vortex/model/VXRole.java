@@ -1,7 +1,7 @@
 package io.vertigo.vortex.model;
 
 public enum VXRole {
-	/**identity	 */
+	/**identity	or primary key */
 	ID,
 
 	/**a simple data field	(default) */

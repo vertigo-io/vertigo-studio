@@ -14,6 +14,7 @@ public record VXHeader(
 
 	@Override
 	public String toString() {
-		return "Header{description='%s', tags='%s'}".formatted(description, tags);
+		return "Header{description='%s', tags='%s'}"
+				.formatted(description, tags);
 	}
 }

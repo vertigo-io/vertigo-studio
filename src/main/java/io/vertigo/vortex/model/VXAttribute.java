@@ -24,7 +24,8 @@ public record VXAttribute(
 
 	@Override
 	public String toString() {
-		return "Attribute{name='%s', domainType='%s', cardinality='%s'}".formatted(name, domainType.name(), cardinality);
+		return "Attribute{name='%s', domainType='%s', cardinality='%s'}"
+				.formatted(name, domainType.name(), cardinality);
 	}
 
 }
