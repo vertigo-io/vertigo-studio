@@ -1,6 +1,7 @@
 package io.vertigo.vortex.model;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.vortex.types.VXDomainType;
 
 /**
  * Represents an attribute of an entity.
@@ -17,6 +18,7 @@ public record VXAttribute(
 	public VXAttribute {
 		Assertion.check()
 				.isNotBlank(name)
+				//				.isTrue(name.matches("[a-z](1"))
 				.isNotNull(domainType)
 				.isNotNull(role)
 				.isNotNull(cardinality);

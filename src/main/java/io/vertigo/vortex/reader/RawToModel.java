@@ -9,8 +9,6 @@ import java.util.stream.Collectors;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.vortex.model.VXAttribute;
 import io.vertigo.vortex.model.VXCardinality;
-import io.vertigo.vortex.model.VXDataType;
-import io.vertigo.vortex.model.VXDomainType;
 import io.vertigo.vortex.model.VXEntity;
 import io.vertigo.vortex.model.VXFile;
 import io.vertigo.vortex.model.VXHeader;
@@ -19,6 +17,8 @@ import io.vertigo.vortex.raw.RawAttribute;
 import io.vertigo.vortex.raw.RawDomainType;
 import io.vertigo.vortex.raw.RawEntity;
 import io.vertigo.vortex.raw.RawFile;
+import io.vertigo.vortex.types.VXDataType;
+import io.vertigo.vortex.types.VXDomainType;
 
 /**
  * Transforms a raw model into a VXModel.
@@ -53,7 +53,7 @@ final class RawToModel {
 		}
 		for (final RawEntity rawEntity : rawFile.entities()) {
 			final var name = "do-" + rawEntity.name();
-			domainTypeCatalog.put(name, new VXDomainType(name, VXDataType.Entity, List.of()));
+			domainTypeCatalog.put(name, new VXDomainType(name, VXDataType.Entity, List.of(), List.of()));
 		}
 
 		for (final RawEntity rawEntity : rawFile.entities()) {
@@ -91,7 +91,7 @@ final class RawToModel {
 
 	private static VXDomainType transform(final RawDomainType rawDomainType) {
 		var dataType = VXDataType.valueOf(rawDomainType.dataType());
-		return new VXDomainType(rawDomainType.name(), dataType, List.of());
+		return new VXDomainType(rawDomainType.name(), dataType, List.of(), List.of());
 	}
 
 }
