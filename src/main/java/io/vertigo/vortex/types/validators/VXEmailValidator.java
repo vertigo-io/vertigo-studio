@@ -1,11 +1,13 @@
-package io.vertigo.vortex.model.validators;
+package io.vertigo.vortex.types.validators;
 
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 import io.vertigo.core.locale.LocaleMessageText;
-import io.vertigo.vortex.model.VXValidator;
+import io.vertigo.vortex.types.VXValidator;
+import io.vertigo.vortex.types.VxProperty;
 
-public record VXEmailValidator() implements VXValidator<String> {
+public record VXEmailValidator() implements VXValidator<String, Void> {
 	private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
 	@Override
@@ -18,6 +20,11 @@ public record VXEmailValidator() implements VXValidator<String> {
 
 	@Override
 	public LocaleMessageText getErrorMessage() {
-		return LocaleMessageText.of("The email format is invalid");
+		return LocaleMessageText.of("The value must be a valid email address.");
+	}
+
+	@Override
+	public Optional<VxProperty<Void>> getProperty() {
+		return Optional.empty();
 	}
 }

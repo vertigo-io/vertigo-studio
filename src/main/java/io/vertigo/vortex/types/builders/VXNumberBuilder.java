@@ -1,8 +1,8 @@
-package io.vertigo.vortex.model.types;
+package io.vertigo.vortex.types.builders;
 
-import io.vertigo.vortex.model.VXDataType;
-import io.vertigo.vortex.model.validators.VXMaxValidator;
-import io.vertigo.vortex.model.validators.VXMinValidator;
+import io.vertigo.vortex.types.VXDataType;
+import io.vertigo.vortex.types.validators.VXMaxValidator;
+import io.vertigo.vortex.types.validators.VXMinValidator;
 
 public final class VXNumberBuilder extends AbstractVXDomainTypeBuilder<VXNumberBuilder> {
     public VXNumberBuilder(final String name, final VXDataType dataType) {

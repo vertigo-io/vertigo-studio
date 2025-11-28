@@ -1,4 +1,4 @@
-package io.vertigo.vortex.model;
+package io.vertigo.vortex.types;
 
 public enum VXDataType {
 	String,
