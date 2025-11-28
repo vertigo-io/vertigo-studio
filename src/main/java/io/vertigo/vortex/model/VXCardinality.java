@@ -20,7 +20,8 @@ public enum VXCardinality {
 	public static VXCardinality fromSymbol(final String sCardinality) {
 		// If cardinality is null, defaults to '1'
 		return switch (sCardinality) {
-			case null, "1" -> ONE;
+			case null -> ONE;
+			case "1" -> ONE;
 			case "?" -> NULLABLE;
 			case "*" -> MANY;
 			default -> throw new VSystemException("Unknown cardinality symbol : '{0}'. Supported cardinalities are '?' for optional, '1' for one and '*' for many ", sCardinality);
