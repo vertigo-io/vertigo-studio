@@ -17,7 +17,7 @@
  */
 package io.vertigo.studio.dao.fileinfo;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.vertigo.core.lang.Generated;
 import io.vertigo.datamodel.smarttype.SmartTypeManager;

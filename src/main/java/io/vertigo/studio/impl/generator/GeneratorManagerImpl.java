@@ -20,7 +20,7 @@ package io.vertigo.studio.impl.generator;
 import java.io.File;
 import java.util.List;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.studio.generator.GeneratorConfig;
