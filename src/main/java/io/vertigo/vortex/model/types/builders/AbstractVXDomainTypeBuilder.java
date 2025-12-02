@@ -1,13 +1,13 @@
-package io.vertigo.vortex.types.builders;
+package io.vertigo.vortex.model.types.builders;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.vertigo.core.lang.Builder;
-import io.vertigo.vortex.types.VXDataType;
-import io.vertigo.vortex.types.VXDomainType;
-import io.vertigo.vortex.types.VXValidator;
-import io.vertigo.vortex.types.VxProperty;
+import io.vertigo.vortex.model.types.VXDataType;
+import io.vertigo.vortex.model.types.VXDomainType;
+import io.vertigo.vortex.model.types.VXValidator;
+import io.vertigo.vortex.model.types.VxProperty;
 
 abstract class AbstractVXDomainTypeBuilder<B extends AbstractVXDomainTypeBuilder<B>> implements Builder<VXDomainType> {
 	protected final String _name;

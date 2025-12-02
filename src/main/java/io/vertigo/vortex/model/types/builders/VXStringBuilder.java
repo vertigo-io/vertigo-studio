@@ -1,10 +1,10 @@
-package io.vertigo.vortex.types.builders;
+package io.vertigo.vortex.model.types.builders;
 
-import io.vertigo.vortex.types.VXDataType;
-import io.vertigo.vortex.types.validators.VXEmailValidator;
-import io.vertigo.vortex.types.validators.VXMaxLengthValidator;
-import io.vertigo.vortex.types.validators.VXMinLengthValidator;
-import io.vertigo.vortex.types.validators.VXPatternValidator;
+import io.vertigo.vortex.model.types.VXDataType;
+import io.vertigo.vortex.model.types.validators.VXEmailValidator;
+import io.vertigo.vortex.model.types.validators.VXMaxLengthValidator;
+import io.vertigo.vortex.model.types.validators.VXMinLengthValidator;
+import io.vertigo.vortex.model.types.validators.VXPatternValidator;
 
 public final class VXStringBuilder extends AbstractVXDomainTypeBuilder<VXStringBuilder> {
     public VXStringBuilder(final String name) {

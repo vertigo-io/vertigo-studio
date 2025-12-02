@@ -1,9 +1,8 @@
-package io.vertigo.vortex.model;
+package io.vertigo.vortex.model.modules;
 
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
-
 
 /**
  * Represents a business entity.

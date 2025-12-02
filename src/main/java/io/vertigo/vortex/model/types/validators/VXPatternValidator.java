@@ -1,12 +1,12 @@
-package io.vertigo.vortex.types.validators;
+package io.vertigo.vortex.model.types.validators;
 
 import java.util.Optional;
 import java.util.regex.Pattern;
 
 import io.vertigo.core.locale.LocaleMessageText;
-import io.vertigo.vortex.types.VXValidator;
-import io.vertigo.vortex.types.VxProperty;
-import io.vertigo.vortex.types.VxProps;
+import io.vertigo.vortex.model.types.VXValidator;
+import io.vertigo.vortex.model.types.VxProperty;
+import io.vertigo.vortex.model.types.VxProps;
 
 public record VXPatternValidator(String pattern) implements VXValidator<String, String> {
 

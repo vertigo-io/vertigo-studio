@@ -1,4 +1,4 @@
-package io.vertigo.vortex.types;
+package io.vertigo.vortex.model.types;
 
 /**
  * Centralized property names used by validators.

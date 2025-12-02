@@ -1,7 +1,7 @@
-package io.vertigo.vortex.model;
+package io.vertigo.vortex.model.modules;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.vortex.types.VXDomainType;
+import io.vertigo.vortex.model.types.VXDomainType;
 
 /**
  * Represents an attribute of an entity.

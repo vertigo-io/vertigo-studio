@@ -6,7 +6,7 @@ import java.io.IOException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.vortex.model.VXFile;
+import io.vertigo.vortex.model.VXModel;
 import io.vertigo.vortex.raw.RawFile;
 
 /**
@@ -29,7 +29,7 @@ public final class RawFileReader {
 	 * @return the processed model
 	 * @throws Exception if an error occurs during validation, reading, or transformation
 	 */
-	public VXFile process() throws Exception {
+	public VXModel process() throws Exception {
 		//- STEP 1
 		validate();
 
@@ -37,7 +37,8 @@ public final class RawFileReader {
 		final RawFile rawFile = read();
 
 		//- STEP 3
-		return new RawToModel(rawFile).transform();
+		return new RawToModel(rawFile)
+				.transform();
 	}
 
 	private void validate() throws Exception {

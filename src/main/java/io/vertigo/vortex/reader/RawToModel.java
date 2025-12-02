@@ -7,18 +7,19 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.vortex.model.VXAttribute;
-import io.vertigo.vortex.model.VXCardinality;
-import io.vertigo.vortex.model.VXEntity;
 import io.vertigo.vortex.model.VXFile;
 import io.vertigo.vortex.model.VXHeader;
-import io.vertigo.vortex.model.VXRole;
+import io.vertigo.vortex.model.VXModel;
+import io.vertigo.vortex.model.modules.VXAttribute;
+import io.vertigo.vortex.model.modules.VXCardinality;
+import io.vertigo.vortex.model.modules.VXEntity;
+import io.vertigo.vortex.model.modules.VXRole;
+import io.vertigo.vortex.model.types.VXDataType;
+import io.vertigo.vortex.model.types.VXDomainType;
 import io.vertigo.vortex.raw.RawAttribute;
 import io.vertigo.vortex.raw.RawDomainType;
 import io.vertigo.vortex.raw.RawEntity;
 import io.vertigo.vortex.raw.RawFile;
-import io.vertigo.vortex.types.VXDataType;
-import io.vertigo.vortex.types.VXDomainType;
 
 /**
  * Transforms a raw model into a VXModel.
@@ -42,7 +43,7 @@ final class RawToModel {
 	 * Transforms the raw model into a VXModel.
 	 * @return the transformed VXModel
 	 */
-	VXFile transform() {
+	VXModel transform() {
 		Assertion.check().isNotNull(rawFile);
 		//---
 		final var header = new VXHeader(rawFile.header().description(), rawFile.header().tags());

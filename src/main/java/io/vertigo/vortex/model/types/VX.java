@@ -1,10 +1,10 @@
-package io.vertigo.vortex.types;
+package io.vertigo.vortex.model.types;
 
-import io.vertigo.vortex.types.builders.VXBooleanBuilder;
-import io.vertigo.vortex.types.builders.VXEntityBuilder;
-import io.vertigo.vortex.types.builders.VXJsonBuilder;
-import io.vertigo.vortex.types.builders.VXNumberBuilder;
-import io.vertigo.vortex.types.builders.VXStringBuilder;
+import io.vertigo.vortex.model.types.builders.VXBooleanBuilder;
+import io.vertigo.vortex.model.types.builders.VXEntityBuilder;
+import io.vertigo.vortex.model.types.builders.VXJsonBuilder;
+import io.vertigo.vortex.model.types.builders.VXNumberBuilder;
+import io.vertigo.vortex.model.types.builders.VXStringBuilder;
 
 public final class VX {
     private VX() {

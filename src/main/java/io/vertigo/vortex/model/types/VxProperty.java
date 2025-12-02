@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.vertigo.vortex.types;
+package io.vertigo.vortex.model.types;
 
 import io.vertigo.core.lang.Assertion;
 

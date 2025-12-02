@@ -1,6 +1,6 @@
-package io.vertigo.vortex.types.builders;
+package io.vertigo.vortex.model.types.builders;
 
-import io.vertigo.vortex.types.VXDataType;
+import io.vertigo.vortex.model.types.VXDataType;
 
 public final class VXBooleanBuilder extends AbstractVXDomainTypeBuilder<VXBooleanBuilder> {
     public VXBooleanBuilder(final String name) {
