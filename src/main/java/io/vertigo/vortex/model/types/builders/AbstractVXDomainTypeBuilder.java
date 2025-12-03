@@ -8,6 +8,7 @@ import io.vertigo.vortex.model.types.VXDataType;
 import io.vertigo.vortex.model.types.VXDomainType;
 import io.vertigo.vortex.model.types.VXValidator;
 import io.vertigo.vortex.model.types.VxProperty;
+import io.vertigo.vortex.model.types.validators.VXRequiredValidator;
 
 abstract class AbstractVXDomainTypeBuilder<B extends AbstractVXDomainTypeBuilder<B>> implements Builder<VXDomainType> {
 	protected final String _name;
@@ -22,6 +23,11 @@ abstract class AbstractVXDomainTypeBuilder<B extends AbstractVXDomainTypeBuilder
 
 	protected final B self() {
 		return (B) this;
+	}
+
+	public B required() {
+		_validators.add(new VXRequiredValidator());
+		return self();
 	}
 
 	@Override

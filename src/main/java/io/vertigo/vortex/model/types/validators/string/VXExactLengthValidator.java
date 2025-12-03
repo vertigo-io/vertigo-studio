@@ -5,6 +5,7 @@ import java.util.Optional;
 import io.vertigo.core.locale.LocaleMessageText;
 import io.vertigo.vortex.model.types.VXValidator;
 import io.vertigo.vortex.model.types.VxProperty;
+import io.vertigo.vortex.model.types.VxProps;
 
 public record VXExactLengthValidator(int length) implements VXValidator<String, Integer> {
 
@@ -23,8 +24,6 @@ public record VXExactLengthValidator(int length) implements VXValidator<String, 
 
 	@Override
 	public Optional<VxProperty<Integer>> getProperty() {
-		// This doesn't fit into a standard VxProps property, so we return empty.
-		// A custom property could be created if needed on the client-side.
-		return Optional.empty();
+		return Optional.of(new VxProperty<>(VxProps.EXACT_LENGTH, Integer.class));
 	}
 }

@@ -6,6 +6,7 @@ public enum VXDataType {
 	Long,
 	Integer,
 	Double,
+	BigDecimal,
 	Boolean,
 	LocalDate,
 	Instant,
