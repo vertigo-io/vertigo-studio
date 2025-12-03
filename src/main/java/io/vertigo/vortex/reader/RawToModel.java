@@ -30,7 +30,7 @@ import io.vertigo.vortex.raw.RawFile;
  */
 final class RawToModel {
 	private final RawFile rawFile;
-	private final Map<String, VXDomainType> domainTypeCatalog = new HashMap<>();
+	//	private final Map<String, VXDomainType> domainTypeCatalog = new HashMap<>();
 	private final Map<String, VXEntity> entityCatalog = new HashMap<>();
 
 	RawToModel(final RawFile rawFile) {
@@ -52,6 +52,7 @@ final class RawToModel {
 			final var domainType = transform(rawDomainType);
 			domainTypeCatalog.put(domainType.name(), domainType);
 		}
+
 		for (final RawEntity rawEntity : rawFile.entities()) {
 			final var name = "do-" + rawEntity.name();
 			domainTypeCatalog.put(name, new VXDomainType(name, VXDataType.Entity, List.of(), List.of()));

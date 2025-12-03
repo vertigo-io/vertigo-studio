@@ -1,4 +1,6 @@
 {
+  "module": "bibliotheque",
+  
   "header": {
 	"description": "modélisation d'une bibliothèque",
 	"tags":["books", "authors"]

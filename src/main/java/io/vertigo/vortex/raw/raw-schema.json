@@ -2,6 +2,11 @@
   "$schema": "http://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "properties": {
+	"module": {
+	  "type": "string",
+	  "pattern": "^[a-z]+(-[a-z]+)*$",
+	  "maxLength": 20
+	},  
     "header": {
       "type": "object",
       "properties": {
@@ -78,5 +83,5 @@
       }
     }
   },
-  "required": ["header", "domainTypes", "entities"]
+  "required": ["module", "header", "domainTypes", "entities"]
 }
