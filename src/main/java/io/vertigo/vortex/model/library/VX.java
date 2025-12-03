@@ -1,6 +1,14 @@
-package io.vertigo.vortex.model.library.builders;
+package io.vertigo.vortex.model.library;
 
-import io.vertigo.vortex.model.types.VXDataType;
+import io.vertigo.vortex.model.library.builders.VXBigDecimalBuilder;
+import io.vertigo.vortex.model.library.builders.VXBooleanBuilder;
+import io.vertigo.vortex.model.library.builders.VXEntityBuilder;
+import io.vertigo.vortex.model.library.builders.VXInstantBuilder;
+import io.vertigo.vortex.model.library.builders.VXJsonBuilder;
+import io.vertigo.vortex.model.library.builders.VXLocalDateBuilder;
+import io.vertigo.vortex.model.library.builders.VXNumberBuilder;
+import io.vertigo.vortex.model.library.builders.VXStringBuilder;
+import io.vertigo.vortex.model.library.types.VXDataType;
 
 public final class VX {
 	private VX() {
@@ -50,4 +58,5 @@ public final class VX {
 	public static VXEntityBuilder entity(final String name) {
 		return new VXEntityBuilder(name);
 	}
+
 }

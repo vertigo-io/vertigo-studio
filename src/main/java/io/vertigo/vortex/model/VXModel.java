@@ -3,8 +3,8 @@ package io.vertigo.vortex.model;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.vortex.model.library.VXLibrary;
 import io.vertigo.vortex.model.modules.VXModule;
-import io.vertigo.vortex.model.types.VXLibrary;
 
 /**
  * Represents the entire data model.
@@ -19,11 +19,5 @@ public record VXModel(
 		Assertion.check()
 				.isNotNull(modules)
 				.isNotNull(library);
-	}
-
-	@Override
-	public String toString() {
-		return "Model{modules='%s', library='%s'}"
-				.formatted(modules, library);
 	}
 }

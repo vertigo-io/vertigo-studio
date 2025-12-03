@@ -1,4 +1,4 @@
-package io.vertigo.vortex.model.types;
+package io.vertigo.vortex.model.library.types;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,10 +39,5 @@ public record VXDomainType(
 			_properties.add(v.getProperty());
 		}
 		return _properties;
-	}
-
-	@Override
-	public String toString() {
-		return "DomainType{name='%s', dataType='%s'}".formatted(name, dataType);
 	}
 }

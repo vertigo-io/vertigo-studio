@@ -1,9 +1,9 @@
 package io.vertigo.vortex.model.library.validators.string;
 
 import io.vertigo.core.locale.LocaleMessageText;
-import io.vertigo.vortex.model.library.validators.VXProps;
-import io.vertigo.vortex.model.types.VXProperty;
-import io.vertigo.vortex.model.types.VXValidator;
+import io.vertigo.vortex.model.library.VXProps;
+import io.vertigo.vortex.model.library.types.VXProperty;
+import io.vertigo.vortex.model.library.types.VXValidator;
 
 public record VXContainsValidator(String subString) implements VXValidator<String, String> {
 

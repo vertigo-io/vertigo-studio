@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.vertigo.core.lang.Builder;
-import io.vertigo.vortex.model.library.validators.VXRequiredValidator;
-import io.vertigo.vortex.model.types.VXDataType;
-import io.vertigo.vortex.model.types.VXDomainType;
-import io.vertigo.vortex.model.types.VXProperty;
-import io.vertigo.vortex.model.types.VXValidator;
+import io.vertigo.vortex.model.library.types.VXDataType;
+import io.vertigo.vortex.model.library.types.VXDomainType;
+import io.vertigo.vortex.model.library.types.VXProperty;
+import io.vertigo.vortex.model.library.types.VXValidator;
 
 abstract class VXAbstractDomainTypeBuilder<B extends VXAbstractDomainTypeBuilder<B>> implements Builder<VXDomainType> {
 	private final String _name;
@@ -28,10 +27,6 @@ abstract class VXAbstractDomainTypeBuilder<B extends VXAbstractDomainTypeBuilder
 	protected final B withValidator(VXValidator validator) {
 		_validators.add(validator);
 		return self();
-	}
-
-	public B required() {
-		return withValidator(new VXRequiredValidator());
 	}
 
 	@Override

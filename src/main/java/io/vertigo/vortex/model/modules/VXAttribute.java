@@ -1,7 +1,7 @@
 package io.vertigo.vortex.model.modules;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.vortex.model.types.VXDomainType;
+import io.vertigo.vortex.model.library.types.VXDomainType;
 
 /**
  * Represents an attribute of an entity.
@@ -23,11 +23,4 @@ public record VXAttribute(
 				.isNotNull(role)
 				.isNotNull(cardinality);
 	}
-
-	@Override
-	public String toString() {
-		return "Attribute{name='%s', domainType='%s', cardinality='%s'}"
-				.formatted(name, domainType.name(), cardinality);
-	}
-
 }

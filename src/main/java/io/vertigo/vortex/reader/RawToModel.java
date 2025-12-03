@@ -8,14 +8,14 @@ import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.vortex.model.VXModel;
+import io.vertigo.vortex.model.library.VXLibrary;
+import io.vertigo.vortex.model.library.types.VXDataType;
+import io.vertigo.vortex.model.library.types.VXDomainType;
 import io.vertigo.vortex.model.modules.VXAttribute;
 import io.vertigo.vortex.model.modules.VXCardinality;
 import io.vertigo.vortex.model.modules.VXEntity;
 import io.vertigo.vortex.model.modules.VXModule;
 import io.vertigo.vortex.model.modules.VXRole;
-import io.vertigo.vortex.model.types.VXDataType;
-import io.vertigo.vortex.model.types.VXDomainType;
-import io.vertigo.vortex.model.types.VXLibrary;
 import io.vertigo.vortex.raw.RawAttribute;
 import io.vertigo.vortex.raw.RawDomainType;
 import io.vertigo.vortex.raw.RawEntity;

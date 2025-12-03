@@ -10,10 +10,4 @@ public record RawFile(
 		RawHeader header,
 		List<RawDomainType> domainTypes,
 		List<RawEntity> entities) {
-
-	@Override
-	public String toString() {
-		return "RawFile{module='%s%', header='%s', domainTypes='%s', entities='%s'}"
-				.formatted(module, header, domainTypes, entities);
-	}
 }

@@ -8,10 +8,4 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public record RawEntity(
 		String name,
 		List<RawAttribute> attributes) {
-
-	@Override
-	public String toString() {
-		return "Entity{name='%s', attributes='%s'}"
-				.formatted(name, attributes);
-	}
 }

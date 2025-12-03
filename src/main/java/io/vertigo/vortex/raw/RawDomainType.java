@@ -6,10 +6,4 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public record RawDomainType(
 		String name,
 		String dataType) {
-
-	@Override
-	public String toString() {
-		return "DomainType{name='%s', dataType='%s'}"
-				.formatted(name, dataType);
-	}
 }

@@ -1,9 +1,9 @@
 package io.vertigo.vortex.model.library.validators.number;
 
 import io.vertigo.core.locale.LocaleMessageText;
-import io.vertigo.vortex.model.library.validators.VXProps;
-import io.vertigo.vortex.model.types.VXProperty;
-import io.vertigo.vortex.model.types.VXValidator;
+import io.vertigo.vortex.model.library.VXProps;
+import io.vertigo.vortex.model.library.types.VXProperty;
+import io.vertigo.vortex.model.library.types.VXValidator;
 
 public record VXMinValidator(Number min) implements VXValidator<Number, Number> {
 

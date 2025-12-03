@@ -8,10 +8,4 @@ public record RawAttribute(
 		String domainType,
 		String role,
 		String cardinality) {
-
-	@Override
-	public String toString() {
-		return "Attribute{name='%s', domainType='%s', cardinality='%s'}"
-				.formatted(name, domainType, cardinality);
-	}
 }

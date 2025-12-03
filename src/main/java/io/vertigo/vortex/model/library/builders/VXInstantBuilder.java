@@ -2,14 +2,14 @@ package io.vertigo.vortex.model.library.builders;
 
 import java.time.Instant;
 
+import io.vertigo.vortex.model.library.types.VXDataType;
 import io.vertigo.vortex.model.library.validators.time.VXInstantAfterValidator;
 import io.vertigo.vortex.model.library.validators.time.VXInstantBeforeValidator;
 import io.vertigo.vortex.model.library.validators.time.VXInstantFutureValidator;
 import io.vertigo.vortex.model.library.validators.time.VXInstantPastValidator;
-import io.vertigo.vortex.model.types.VXDataType;
 
 public final class VXInstantBuilder extends VXAbstractDomainTypeBuilder<VXInstantBuilder> {
-	VXInstantBuilder(final String name) {
+	public VXInstantBuilder(final String name) {
 		super(name, VXDataType.Instant);
 	}
 

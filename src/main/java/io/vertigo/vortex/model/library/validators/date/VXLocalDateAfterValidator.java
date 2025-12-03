@@ -4,9 +4,9 @@ import java.time.LocalDate;
 import java.time.temporal.Temporal;
 
 import io.vertigo.core.locale.LocaleMessageText;
-import io.vertigo.vortex.model.library.validators.VXProps;
-import io.vertigo.vortex.model.types.VXProperty;
-import io.vertigo.vortex.model.types.VXValidator;
+import io.vertigo.vortex.model.library.VXProps;
+import io.vertigo.vortex.model.library.types.VXProperty;
+import io.vertigo.vortex.model.library.types.VXValidator;
 
 public record VXLocalDateAfterValidator(LocalDate date) implements VXValidator<LocalDate, Temporal> {
 

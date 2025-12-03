@@ -3,9 +3,9 @@ package io.vertigo.vortex.model.library.validators.string;
 import java.util.regex.Pattern;
 
 import io.vertigo.core.locale.LocaleMessageText;
-import io.vertigo.vortex.model.library.validators.VXProps;
-import io.vertigo.vortex.model.types.VXProperty;
-import io.vertigo.vortex.model.types.VXValidator;
+import io.vertigo.vortex.model.library.VXProps;
+import io.vertigo.vortex.model.library.types.VXProperty;
+import io.vertigo.vortex.model.library.types.VXValidator;
 
 public record VXEmailValidator() implements VXValidator<String, Boolean> {
 	private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);

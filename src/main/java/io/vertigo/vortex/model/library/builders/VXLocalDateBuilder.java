@@ -2,14 +2,14 @@ package io.vertigo.vortex.model.library.builders;
 
 import java.time.LocalDate;
 
+import io.vertigo.vortex.model.library.types.VXDataType;
 import io.vertigo.vortex.model.library.validators.date.VXLocalDateAfterValidator;
 import io.vertigo.vortex.model.library.validators.date.VXLocalDateBeforeValidator;
 import io.vertigo.vortex.model.library.validators.date.VXLocalDateFutureValidator;
 import io.vertigo.vortex.model.library.validators.date.VXLocalDatePastValidator;
-import io.vertigo.vortex.model.types.VXDataType;
 
 public final class VXLocalDateBuilder extends VXAbstractDomainTypeBuilder<VXLocalDateBuilder> {
-	VXLocalDateBuilder(final String name) {
+	public VXLocalDateBuilder(final String name) {
 		super(name, VXDataType.LocalDate);
 	}
 

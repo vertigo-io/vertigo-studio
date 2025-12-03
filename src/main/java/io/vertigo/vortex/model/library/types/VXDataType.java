@@ -1,4 +1,4 @@
-package io.vertigo.vortex.model.types;
+package io.vertigo.vortex.model.library.types;
 
 public enum VXDataType {
 	//---can be multiple => []

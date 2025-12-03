@@ -3,9 +3,9 @@ package io.vertigo.vortex.model.library.validators.string;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.vertigo.core.locale.LocaleMessageText;
-import io.vertigo.vortex.model.library.validators.VXProps;
-import io.vertigo.vortex.model.types.VXProperty;
-import io.vertigo.vortex.model.types.VXValidator;
+import io.vertigo.vortex.model.library.VXProps;
+import io.vertigo.vortex.model.library.types.VXProperty;
+import io.vertigo.vortex.model.library.types.VXValidator;
 
 /**
  * Validator to check if a string is a valid JSON.

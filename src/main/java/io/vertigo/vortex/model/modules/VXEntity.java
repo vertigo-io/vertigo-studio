@@ -19,9 +19,4 @@ public record VXEntity(
 				.isNotBlank(name)
 				.isNotNull(attributes);
 	}
-
-	@Override
-	public String toString() {
-		return "Entity{name='%s', attributes='%s'}".formatted(name, attributes);
-	}
 }

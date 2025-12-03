@@ -8,10 +8,4 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public record RawCatalog(
 		RawHeader header,
 		List<RawFile> files) {
-
-	@Override
-	public String toString() {
-		return "RawCatalog{header='%s', files='%s'}"
-				.formatted(header, files);
-	}
 }

@@ -6,10 +6,4 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public record RawHeader(
 		String description,
 		String[] tags) {
-
-	@Override
-	public String toString() {
-		return "Header{description='%s', tags='%s'}"
-				.formatted(description, tags);
-	}
 }

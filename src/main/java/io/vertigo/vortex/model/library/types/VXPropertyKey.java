@@ -1,4 +1,4 @@
-package io.vertigo.vortex.model.types;
+package io.vertigo.vortex.model.library.types;
 
 /**
  * Represents a key for a validator property, including its name and expected type.
@@ -10,6 +10,10 @@ package io.vertigo.vortex.model.types;
  */
 public record VXPropertyKey<T>(String name, Class<T> type) {
 	// No additional methods needed for a record class beyond what's generated.
+
+	public static <T> VXPropertyKey<T> of(String name, Class<T> type) {
+		return new VXPropertyKey<>(name, type);
+	}
 
 	public VXProperty<T> build(T value) {
 		return new VXProperty(this, value);

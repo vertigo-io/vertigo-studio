@@ -16,10 +16,4 @@ public record VXModule(
 		Assertion.check()
 				.isNotNull(entities);
 	}
-
-	@Override
-	public String toString() {
-		return "Module{entities='%s''}"
-				.formatted(entities);
-	}
 }

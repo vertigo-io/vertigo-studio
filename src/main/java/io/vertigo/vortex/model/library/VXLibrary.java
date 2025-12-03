@@ -1,9 +1,9 @@
-package io.vertigo.vortex.model.types;
+package io.vertigo.vortex.model.library;
 
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.vortex.catalog.VXDomainTypes;
+import io.vertigo.vortex.VXDomainTypes;
 
 /**
  * Represents the entire data model.
@@ -16,11 +16,5 @@ public record VXLibrary(
 	public VXLibrary {
 		Assertion.check()
 				.isNotNull(domainTypes);
-	}
-
-	@Override
-	public String toString() {
-		return "Library{domainTypes='%s'}"
-				.formatted(domainTypes);
 	}
 }
