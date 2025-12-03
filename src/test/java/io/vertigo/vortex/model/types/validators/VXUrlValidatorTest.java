@@ -12,8 +12,7 @@ public class VXUrlValidatorTest {
         // Given
         final String validUrl = "https://www.google.com";
         // When
-        Assertions.assertDoesNotThrow(() -> urlValidator.check(validUrl));
-        // Then - no exception is thrown
+        Assertions.assertTrue(urlValidator.isValid(validUrl));
     }
 
     @Test
@@ -21,8 +20,7 @@ public class VXUrlValidatorTest {
         // Given
         final String validUrl = "http://localhost:8080";
         // When
-        Assertions.assertDoesNotThrow(() -> urlValidator.check(validUrl));
-        // Then - no exception is thrown
+        Assertions.assertTrue(urlValidator.isValid(validUrl));
     }
 
     @Test
@@ -30,9 +28,7 @@ public class VXUrlValidatorTest {
         // Given
         final String invalidUrl = "not a url";
         // When
-        final Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> urlValidator.check(invalidUrl));
-        // Then
-        Assertions.assertEquals(urlValidator.getErrorMessage().getDisplay(), exception.getMessage());
+        Assertions.assertFalse(urlValidator.isValid(invalidUrl));
     }
 
     @Test
@@ -40,9 +36,7 @@ public class VXUrlValidatorTest {
         // Given
         final String invalidUrl = "www.google.com";
         // When
-        final Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> urlValidator.check(invalidUrl));
-        // Then
-        Assertions.assertEquals(urlValidator.getErrorMessage().getDisplay(), exception.getMessage());
+        Assertions.assertFalse(urlValidator.isValid(invalidUrl));
     }
 
     @Test
@@ -50,8 +44,7 @@ public class VXUrlValidatorTest {
         // Given
         final String nullString = null;
         // When
-        Assertions.assertDoesNotThrow(() -> urlValidator.check(nullString));
-        // Then - no exception is thrown
+        Assertions.assertTrue(urlValidator.isValid(nullString));
     }
 
     @Test
@@ -59,8 +52,7 @@ public class VXUrlValidatorTest {
         // Given
         final String emptyString = "";
         // When
-        Assertions.assertDoesNotThrow(() -> urlValidator.check(emptyString));
-        // Then - no exception is thrown
+        Assertions.assertTrue(urlValidator.isValid(emptyString));
     }
 
     @Test

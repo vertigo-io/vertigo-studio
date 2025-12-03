@@ -12,7 +12,7 @@ public class VXSlugValidatorTest {
         // Given
         final String validSlug = "this-is-a-valid-slug";
         // When
-        Assertions.assertDoesNotThrow(() -> slugValidator.check(validSlug));
+        Assertions.assertTrue(slugValidator.isValid(validSlug));
         // Then - no exception is thrown
     }
 
@@ -21,9 +21,7 @@ public class VXSlugValidatorTest {
         // Given
         final String invalidSlug = "This-is-an-invalid-slug";
         // When
-        final Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> slugValidator.check(invalidSlug));
-        // Then
-        Assertions.assertEquals(slugValidator.getErrorMessage().getDisplay(), exception.getMessage());
+        Assertions.assertFalse(slugValidator.isValid(invalidSlug));
     }
 
     @Test
@@ -31,9 +29,7 @@ public class VXSlugValidatorTest {
         // Given
         final String invalidSlug = "this is an invalid slug";
         // When
-        final Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> slugValidator.check(invalidSlug));
-        // Then
-        Assertions.assertEquals(slugValidator.getErrorMessage().getDisplay(), exception.getMessage());
+        Assertions.assertFalse(slugValidator.isValid(invalidSlug));
     }
 
     @Test
@@ -41,9 +37,7 @@ public class VXSlugValidatorTest {
         // Given
         final String invalidSlug = "-this-is-an-invalid-slug";
         // When
-        final Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> slugValidator.check(invalidSlug));
-        // Then
-        Assertions.assertEquals(slugValidator.getErrorMessage().getDisplay(), exception.getMessage());
+        Assertions.assertFalse(slugValidator.isValid(invalidSlug));
     }
 
     @Test
@@ -51,9 +45,7 @@ public class VXSlugValidatorTest {
         // Given
         final String invalidSlug = "this-is-an-invalid-slug-";
         // When
-        final Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> slugValidator.check(invalidSlug));
-        // Then
-        Assertions.assertEquals(slugValidator.getErrorMessage().getDisplay(), exception.getMessage());
+        Assertions.assertFalse(slugValidator.isValid(invalidSlug));
     }
 
     @Test
@@ -61,7 +53,7 @@ public class VXSlugValidatorTest {
         // Given
         final String nullString = null;
         // When
-        Assertions.assertDoesNotThrow(() -> slugValidator.check(nullString));
+        Assertions.assertTrue(slugValidator.isValid(nullString));
         // Then - no exception is thrown
     }
 
@@ -70,7 +62,7 @@ public class VXSlugValidatorTest {
         // Given
         final String emptyString = "";
         // When
-        Assertions.assertDoesNotThrow(() -> slugValidator.check(emptyString));
+        Assertions.assertTrue(slugValidator.isValid(emptyString));
         // Then - no exception is thrown
     }
 
