@@ -30,7 +30,7 @@ import io.vertigo.vortex.raw.RawFile;
  */
 final class RawToModel {
 	private final RawFile rawFile;
-	//	private final Map<String, VXDomainType> domainTypeCatalog = new HashMap<>();
+	private final Map<String, VXDomainType> domainTypeCatalog = new HashMap<>();
 	private final Map<String, VXEntity> entityCatalog = new HashMap<>();
 
 	RawToModel(final RawFile rawFile) {

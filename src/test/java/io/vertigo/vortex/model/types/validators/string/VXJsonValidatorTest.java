@@ -1,4 +1,4 @@
-package io.vertigo.vortex.model.types.validators;
+package io.vertigo.vortex.model.types.validators.string;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

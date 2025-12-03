@@ -1,4 +1,4 @@
-package io.vertigo.vortex.model.types.validators;
+package io.vertigo.vortex.model.types.validators.string;
 
 import java.util.Optional;
 

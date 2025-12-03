@@ -1,4 +1,4 @@
-package io.vertigo.vortex.model.types.validators;
+package io.vertigo.vortex.model.types.validators.number;
 
 import java.util.Optional;
 
@@ -7,7 +7,7 @@ import io.vertigo.vortex.model.types.VXValidator;
 import io.vertigo.vortex.model.types.VxProperty;
 import io.vertigo.vortex.model.types.VxProps;
 
-public record VXMinValidator(Number min) implements VXValidator<Number, Number> {
+public record VXMaxValidator(Number max) implements VXValidator<Number, Number> {
 
 	@Override
 	public boolean isValid(final Number value) {
@@ -15,18 +15,18 @@ public record VXMinValidator(Number min) implements VXValidator<Number, Number> 
 			return true;
 		}
 		if (value instanceof Integer || value instanceof Long) {
-			return value.longValue() >= min.longValue();
+			return value.longValue() <= max.longValue();
 		}
-		return value.doubleValue() >= min.doubleValue();
+		return value.doubleValue() <= max.doubleValue();
 	}
 
 	@Override
 	public LocaleMessageText getErrorMessage() {
-		return LocaleMessageText.of("The value must be greater than or equal to " + min);
+		return LocaleMessageText.of("The value must be less than or equal to " + max);
 	}
 
 	@Override
 	public Optional<VxProperty<Number>> getProperty() {
-		return Optional.of(new VxProperty<>(VxProps.MIN, Number.class));
+		return Optional.of(new VxProperty<>(VxProps.MAX, Number.class));
 	}
 }
