@@ -3,7 +3,7 @@ package io.vertigo.vortex;
 import java.io.File;
 
 import io.vertigo.vortex.model.VXModel;
-import io.vertigo.vortex.model.modules.VXEntity;
+import io.vertigo.vortex.model.modules.VXModule;
 import io.vertigo.vortex.reader.RawFileReader;
 
 public class Vortex {
@@ -14,8 +14,8 @@ public class Vortex {
 
 		final VXModel model = reader.process();
 		//---
-		for (final VXEntity entity : model.entities()) {
-			System.out.println(entity);
+		for (final VXModule module : model.modules()) {
+			System.out.println(module);
 		}
 	}
 

@@ -7,15 +7,15 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.vortex.model.VXFile;
-import io.vertigo.vortex.model.VXHeader;
 import io.vertigo.vortex.model.VXModel;
 import io.vertigo.vortex.model.modules.VXAttribute;
 import io.vertigo.vortex.model.modules.VXCardinality;
 import io.vertigo.vortex.model.modules.VXEntity;
+import io.vertigo.vortex.model.modules.VXModule;
 import io.vertigo.vortex.model.modules.VXRole;
 import io.vertigo.vortex.model.types.VXDataType;
 import io.vertigo.vortex.model.types.VXDomainType;
+import io.vertigo.vortex.model.types.VXLibrary;
 import io.vertigo.vortex.raw.RawAttribute;
 import io.vertigo.vortex.raw.RawDomainType;
 import io.vertigo.vortex.raw.RawEntity;
@@ -46,7 +46,7 @@ final class RawToModel {
 	VXModel transform() {
 		Assertion.check().isNotNull(rawFile);
 		//---
-		final var header = new VXHeader(rawFile.header().description(), rawFile.header().tags());
+		//		final var header = new VXHeader(rawFile.header().description(), rawFile.header().tags());
 
 		for (final RawDomainType rawDomainType : rawFile.domainTypes()) {
 			final var domainType = transform(rawDomainType);
@@ -62,10 +62,9 @@ final class RawToModel {
 			entityCatalog.put(entity.name(), entity);
 		}
 
-		return new VXFile(
-				header,
-				new ArrayList<>(domainTypeCatalog.values()),
-				new ArrayList<>(entityCatalog.values()));
+		final VXLibrary library = new VXLibrary(new ArrayList(domainTypeCatalog.values()));
+		final VXModule module = new VXModule(new ArrayList(entityCatalog.values()));
+		return new VXModel(List.of(module), library);
 	}
 
 	private VXAttribute transform(final RawAttribute rawAttribute) {

@@ -11,16 +11,16 @@ import io.vertigo.vortex.model.types.builders.VXDomainTypes;
  * @synthetic
  */
 public record VXLibrary(
-		List<VXDomainTypes> domainTYpes) {
+		List<VXDomainTypes> domainTypes) {
 
 	public VXLibrary {
 		Assertion.check()
-				.isNotNull(domainTYpes);
+				.isNotNull(domainTypes);
 	}
 
 	@Override
 	public String toString() {
 		return "Library{domainTypes='%s'}"
-				.formatted(domainTYpes);
+				.formatted(domainTypes);
 	}
 }
