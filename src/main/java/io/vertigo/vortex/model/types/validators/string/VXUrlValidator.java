@@ -20,6 +20,7 @@ public record VXUrlValidator() implements VXValidator<String, Void> {
 	@Override
 	public boolean isValid(final String value) {
 		return value == null
+				|| value.isBlank()
 				|| URL_PATTERN.matcher(value).matches();
 	}
 
