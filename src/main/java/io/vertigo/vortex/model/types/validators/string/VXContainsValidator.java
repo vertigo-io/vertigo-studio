@@ -9,10 +9,8 @@ public record VXContainsValidator(String subString) implements VXValidator<Strin
 
 	@Override
 	public boolean isValid(final String value) {
-		if (value == null) {
-			return true;
-		}
-		return value.contains(subString);
+		return value == null
+				|| value.contains(subString);
 	}
 
 	@Override
@@ -22,6 +20,6 @@ public record VXContainsValidator(String subString) implements VXValidator<Strin
 
 	@Override
 	public VXProperty<String> getProperty() {
-		return VXProperty.of(VXProps.CONTAINS, subString);
+		return VXProps.CONTAINS.build(subString);
 	}
 }

@@ -25,6 +25,6 @@ public record VXMaxValidator(Number max) implements VXValidator<Number, Number> 
 
 	@Override
 	public VXProperty<Number> getProperty() {
-		return VXProperty.of(VXProps.MAX, max);
+		return VXProps.MAX.build(max);
 	}
 }

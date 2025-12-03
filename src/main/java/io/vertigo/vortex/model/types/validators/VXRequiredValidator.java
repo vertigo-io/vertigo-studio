@@ -31,6 +31,6 @@ public record VXRequiredValidator() implements VXValidator<Object, Boolean> {
 	@Override
 	public VXProperty<Boolean> getProperty() {
 		// A required field can be represented by a boolean 'true'
-		return VXProperty.of(VXProps.REQUIRED, true);
+		return VXProps.REQUIRED.build(true);
 	}
 }

@@ -20,6 +20,7 @@ public record VXUrlValidator() implements VXValidator<String, Boolean> {
 	@Override
 	public boolean isValid(final String value) {
 		return value == null
+				|| value.isBlank()
 				|| URL_PATTERN.matcher(value).matches();
 	}
 
@@ -30,6 +31,6 @@ public record VXUrlValidator() implements VXValidator<String, Boolean> {
 
 	@Override
 	public VXProperty<Boolean> getProperty() {
-		return VXProperty.of(VXProps.URL, true);
+		return VXProps.URL.build(true);
 	}
 }

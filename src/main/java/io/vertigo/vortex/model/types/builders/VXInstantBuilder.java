@@ -14,22 +14,18 @@ public final class VXInstantBuilder extends AbstractVXDomainTypeBuilder<VXInstan
 	}
 
 	public VXInstantBuilder after(final Instant instant) {
-		_validators.add(new VXInstantAfterValidator(instant));
-		return self();
+		return withValidator(new VXInstantAfterValidator(instant));
 	}
 
 	public VXInstantBuilder before(final Instant instant) {
-		_validators.add(new VXInstantBeforeValidator(instant));
-		return self();
+		return withValidator(new VXInstantBeforeValidator(instant));
 	}
 
 	public VXInstantBuilder future() {
-		_validators.add(new VXInstantFutureValidator());
-		return self();
+		return withValidator(new VXInstantFutureValidator());
 	}
 
 	public VXInstantBuilder past() {
-		_validators.add(new VXInstantPastValidator());
-		return self();
+		return withValidator(new VXInstantPastValidator());
 	}
 }

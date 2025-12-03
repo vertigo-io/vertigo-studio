@@ -11,10 +11,8 @@ public record VXPatternValidator(String pattern) implements VXValidator<String, 
 
 	@Override
 	public boolean isValid(final String value) {
-		if (value == null) {
-			return true;
-		}
-		return Pattern.compile(pattern).matcher(value).matches();
+		return value == null
+				|| Pattern.compile(pattern).matcher(value).matches();
 	}
 
 	@Override
@@ -24,6 +22,6 @@ public record VXPatternValidator(String pattern) implements VXValidator<String, 
 
 	@Override
 	public VXProperty<String> getProperty() {
-		return VXProperty.of(VXProps.PATTERN, pattern);
+		return VXProps.PATTERN.build(pattern);
 	}
 }

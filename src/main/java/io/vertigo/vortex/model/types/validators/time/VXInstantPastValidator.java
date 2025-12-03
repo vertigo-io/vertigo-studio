@@ -11,10 +11,8 @@ public record VXInstantPastValidator() implements VXValidator<Instant, Boolean> 
 
 	@Override
 	public boolean isValid(final Instant value) {
-		if (value == null) {
-			return true;
-		}
-		return value.isBefore(Instant.now());
+		return value == null
+				|| value.isBefore(Instant.now());
 	}
 
 	@Override
@@ -24,6 +22,6 @@ public record VXInstantPastValidator() implements VXValidator<Instant, Boolean> 
 
 	@Override
 	public VXProperty<Boolean> getProperty() {
-		return VXProperty.of(VXProps.PAST, true);
+		return VXProps.PAST.build(true);
 	}
 }

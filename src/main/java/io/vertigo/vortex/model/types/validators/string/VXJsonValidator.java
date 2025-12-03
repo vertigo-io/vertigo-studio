@@ -33,6 +33,6 @@ public record VXJsonValidator() implements VXValidator<String, Boolean> {
 
 	@Override
 	public VXProperty<Boolean> getProperty() {
-		return VXProperty.of(VXProps.JSON, true);
+		return VXProps.JSON.build(true);
 	}
 }

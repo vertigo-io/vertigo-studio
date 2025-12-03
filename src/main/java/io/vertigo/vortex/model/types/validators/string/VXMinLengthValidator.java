@@ -9,10 +9,8 @@ public record VXMinLengthValidator(int min) implements VXValidator<String, Integ
 
 	@Override
 	public boolean isValid(final String value) {
-		if (value == null) {
-			return true;
-		}
-		return value.length() >= min;
+		return value == null
+				|| value.length() >= min;
 	}
 
 	@Override
@@ -22,6 +20,6 @@ public record VXMinLengthValidator(int min) implements VXValidator<String, Integ
 
 	@Override
 	public VXProperty<Integer> getProperty() {
-		return VXProperty.of(VXProps.MIN_LENGTH, min);
+		return VXProps.MIN_LENGTH.build(min);
 	}
 }

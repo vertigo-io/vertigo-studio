@@ -9,10 +9,8 @@ public record VXMaxLengthValidator(int maxLength) implements VXValidator<String,
 
 	@Override
 	public boolean isValid(final String value) {
-		if (value == null) {
-			return true;
-		}
-		return value.length() <= maxLength;
+		return value == null
+				|| value.length() <= maxLength;
 	}
 
 	@Override
@@ -22,6 +20,6 @@ public record VXMaxLengthValidator(int maxLength) implements VXValidator<String,
 
 	@Override
 	public VXProperty<Integer> getProperty() {
-		return VXProperty.of(VXProps.MAX_LENGTH, maxLength);
+		return VXProps.MAX_LENGTH.build(maxLength);
 	}
 }

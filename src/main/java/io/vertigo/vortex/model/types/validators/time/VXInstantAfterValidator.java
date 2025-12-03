@@ -12,10 +12,8 @@ public record VXInstantAfterValidator(Instant instant) implements VXValidator<In
 
 	@Override
 	public boolean isValid(final Instant value) {
-		if (value == null) {
-			return true;
-		}
-		return value.isAfter(instant);
+		return value == null
+				|| value.isAfter(instant);
 	}
 
 	@Override
@@ -25,6 +23,6 @@ public record VXInstantAfterValidator(Instant instant) implements VXValidator<In
 
 	@Override
 	public VXProperty<Temporal> getProperty() {
-		return VXProperty.of(VXProps.AFTER, instant);
+		return VXProps.AFTER.build(instant);
 	}
 }

@@ -9,10 +9,8 @@ public record VXEndsWithValidator(String suffix) implements VXValidator<String, 
 
 	@Override
 	public boolean isValid(final String value) {
-		if (value == null) {
-			return true;
-		}
-		return value.endsWith(suffix);
+		return value == null
+				|| value.endsWith(suffix);
 	}
 
 	@Override
@@ -22,6 +20,6 @@ public record VXEndsWithValidator(String suffix) implements VXValidator<String, 
 
 	@Override
 	public VXProperty<String> getProperty() {
-		return VXProperty.of(VXProps.ENDS_WITH, suffix);
+		return VXProps.ENDS_WITH.build(suffix);
 	}
 }

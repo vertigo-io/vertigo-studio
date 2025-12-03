@@ -11,10 +11,8 @@ public record VXLocalDatePastValidator() implements VXValidator<LocalDate, Boole
 
 	@Override
 	public boolean isValid(final LocalDate value) {
-		if (value == null) {
-			return true;
-		}
-		return value.isBefore(LocalDate.now());
+		return value == null
+				|| value.isBefore(LocalDate.now());
 	}
 
 	@Override
@@ -24,6 +22,6 @@ public record VXLocalDatePastValidator() implements VXValidator<LocalDate, Boole
 
 	@Override
 	public VXProperty<Boolean> getProperty() {
-		return VXProperty.of(VXProps.PAST, true);
+		return VXProps.PAST.build(true);
 	}
 }

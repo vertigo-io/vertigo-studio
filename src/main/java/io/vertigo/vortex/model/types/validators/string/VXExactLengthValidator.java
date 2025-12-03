@@ -9,10 +9,8 @@ public record VXExactLengthValidator(int length) implements VXValidator<String, 
 
 	@Override
 	public boolean isValid(final String value) {
-		if (value == null) {
-			return true;
-		}
-		return value.length() == length;
+		return value == null
+				|| value.length() == length;
 	}
 
 	@Override
@@ -22,6 +20,6 @@ public record VXExactLengthValidator(int length) implements VXValidator<String, 
 
 	@Override
 	public VXProperty<Integer> getProperty() {
-		return VXProperty.of(VXProps.EXACT_LENGTH, length);
+		return VXProps.EXACT_LENGTH.build(length);
 	}
 }

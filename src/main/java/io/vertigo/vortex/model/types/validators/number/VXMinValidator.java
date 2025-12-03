@@ -25,6 +25,6 @@ public record VXMinValidator(Number min) implements VXValidator<Number, Number> 
 
 	@Override
 	public VXProperty<Number> getProperty() {
-		return VXProperty.of(VXProps.MIN, min);
+		return VXProps.MIN.build(min);
 	}
 }

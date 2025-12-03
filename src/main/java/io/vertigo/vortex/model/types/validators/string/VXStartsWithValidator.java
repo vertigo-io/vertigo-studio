@@ -9,10 +9,8 @@ public record VXStartsWithValidator(String prefix) implements VXValidator<String
 
 	@Override
 	public boolean isValid(final String value) {
-		if (value == null) {
-			return true;
-		}
-		return value.startsWith(prefix);
+		return value == null
+				|| value.startsWith(prefix);
 	}
 
 	@Override
@@ -22,6 +20,6 @@ public record VXStartsWithValidator(String prefix) implements VXValidator<String
 
 	@Override
 	public VXProperty<String> getProperty() {
-		return VXProperty.of(VXProps.STARTS_WITH, prefix);
+		return VXProps.STARTS_WITH.build(prefix);
 	}
 }

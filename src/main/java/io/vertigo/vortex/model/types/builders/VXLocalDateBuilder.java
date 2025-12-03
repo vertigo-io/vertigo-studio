@@ -14,22 +14,18 @@ public final class VXLocalDateBuilder extends AbstractVXDomainTypeBuilder<VXLoca
 	}
 
 	public VXLocalDateBuilder after(final LocalDate date) {
-		_validators.add(new VXLocalDateAfterValidator(date));
-		return self();
+		return withValidator(new VXLocalDateAfterValidator(date));
 	}
 
 	public VXLocalDateBuilder before(final LocalDate date) {
-		_validators.add(new VXLocalDateBeforeValidator(date));
-		return self();
+		return withValidator(new VXLocalDateBeforeValidator(date));
 	}
 
 	public VXLocalDateBuilder future() {
-		_validators.add(new VXLocalDateFutureValidator());
-		return self();
+		return withValidator(new VXLocalDateFutureValidator());
 	}
 
 	public VXLocalDateBuilder past() {
-		_validators.add(new VXLocalDatePastValidator());
-		return self();
+		return withValidator(new VXLocalDatePastValidator());
 	}
 }

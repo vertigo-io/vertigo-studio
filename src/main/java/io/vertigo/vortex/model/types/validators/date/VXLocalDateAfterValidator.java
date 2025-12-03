@@ -12,10 +12,8 @@ public record VXLocalDateAfterValidator(LocalDate date) implements VXValidator<L
 
 	@Override
 	public boolean isValid(final LocalDate value) {
-		if (value == null) {
-			return true;
-		}
-		return value.isAfter(date);
+		return value == null
+				|| value.isAfter(date);
 	}
 
 	@Override
@@ -25,6 +23,6 @@ public record VXLocalDateAfterValidator(LocalDate date) implements VXValidator<L
 
 	@Override
 	public VXProperty<Temporal> getProperty() {
-		return VXProperty.of(VXProps.AFTER, date);
+		return VXProps.AFTER.build(date);
 	}
 }

@@ -12,10 +12,8 @@ public record VXEmailValidator() implements VXValidator<String, Boolean> {
 
 	@Override
 	public boolean isValid(final String value) {
-		if (value == null) {
-			return true;
-		}
-		return EMAIL_PATTERN.matcher(value).matches();
+		return value == null
+				|| EMAIL_PATTERN.matcher(value).matches();
 	}
 
 	@Override
@@ -25,6 +23,6 @@ public record VXEmailValidator() implements VXValidator<String, Boolean> {
 
 	@Override
 	public VXProperty<Boolean> getProperty() {
-		return VXProperty.of(VXProps.EMAIL, true);
+		return VXProps.EMAIL.build(true);
 	}
 }

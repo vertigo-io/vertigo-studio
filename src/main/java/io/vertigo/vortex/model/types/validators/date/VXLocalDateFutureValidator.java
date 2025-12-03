@@ -11,10 +11,8 @@ public record VXLocalDateFutureValidator() implements VXValidator<LocalDate, Boo
 
 	@Override
 	public boolean isValid(final LocalDate value) {
-		if (value == null) {
-			return true;
-		}
-		return value.isAfter(LocalDate.now());
+		return value == null
+				|| value.isAfter(LocalDate.now());
 	}
 
 	@Override
@@ -24,6 +22,6 @@ public record VXLocalDateFutureValidator() implements VXValidator<LocalDate, Boo
 
 	@Override
 	public VXProperty<Boolean> getProperty() {
-		return VXProperty.of(VXProps.FUTURE, true);
+		return VXProps.FUTURE.build(true);
 	}
 }

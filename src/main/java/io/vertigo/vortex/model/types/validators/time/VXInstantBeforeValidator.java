@@ -12,10 +12,8 @@ public record VXInstantBeforeValidator(Instant instant) implements VXValidator<I
 
 	@Override
 	public boolean isValid(final Instant value) {
-		if (value == null) {
-			return true;
-		}
-		return value.isBefore(instant);
+		return value == null
+				|| value.isBefore(instant);
 	}
 
 	@Override
@@ -25,6 +23,6 @@ public record VXInstantBeforeValidator(Instant instant) implements VXValidator<I
 
 	@Override
 	public VXProperty<Temporal> getProperty() {
-		return VXProperty.of(VXProps.BEFORE, instant);
+		return VXProps.BEFORE.build(instant);
 	}
 }

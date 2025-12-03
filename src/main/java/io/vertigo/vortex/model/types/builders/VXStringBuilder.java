@@ -20,55 +20,45 @@ public final class VXStringBuilder extends AbstractVXDomainTypeBuilder<VXStringB
 	//--- Length
 
 	public VXStringBuilder minLength(final int min) {
-		_validators.add(new VXMinLengthValidator(min));
-		return self();
+		return withValidator(new VXMinLengthValidator(min));
 	}
 
 	public VXStringBuilder maxLength(final int max) {
-		_validators.add(new VXMaxLengthValidator(max));
-		return self();
+		return withValidator(new VXMaxLengthValidator(max));
 	}
 
 	public VXStringBuilder exactLength(final int length) {
-		_validators.add(new VXExactLengthValidator(length));
-		return self();
+		return withValidator(new VXExactLengthValidator(length));
 	}
 
 	//--- Patterns
 
 	public VXStringBuilder pattern(final String pattern) {
-		_validators.add(new VXPatternValidator(pattern));
-		return self();
+		return withValidator(new VXPatternValidator(pattern));
 	}
 
 	public VXStringBuilder startsWith(final String prefix) {
-		_validators.add(new VXStartsWithValidator(prefix));
-		return self();
+		return withValidator(new VXStartsWithValidator(prefix));
 	}
 
 	public VXStringBuilder endsWith(final String suffix) {
-		_validators.add(new VXEndsWithValidator(suffix));
-		return self();
+		return withValidator(new VXEndsWithValidator(suffix));
 	}
 
 	public VXStringBuilder contains(final String subString) {
-		_validators.add(new VXContainsValidator(subString));
-		return self();
+		return withValidator(new VXContainsValidator(subString));
 	}
 
 	//--- Formats
 	public VXStringBuilder email() {
-		_validators.add(new VXEmailValidator());
-		return self();
+		return withValidator(new VXEmailValidator());
 	}
 
 	public VXStringBuilder url() {
-		_validators.add(new VXUrlValidator());
-		return self();
+		return withValidator(new VXUrlValidator());
 	}
 
 	public VXStringBuilder json() {
-		_validators.add(new VXJsonValidator());
-		return self();
+		return withValidator(new VXJsonValidator());
 	}
 }
