@@ -1,17 +1,16 @@
 package io.vertigo.vortex.model.types.validators.string;
 
-import java.util.Optional;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.vertigo.core.locale.LocaleMessageText;
+import io.vertigo.vortex.model.types.VXProperty;
+import io.vertigo.vortex.model.types.VXProps;
 import io.vertigo.vortex.model.types.VXValidator;
-import io.vertigo.vortex.model.types.VxProperty;
 
 /**
  * Validator to check if a string is a valid JSON.
  */
-public record VXJsonValidator() implements VXValidator<String, Void> {
+public record VXJsonValidator() implements VXValidator<String, Boolean> {
 
 	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
@@ -33,7 +32,7 @@ public record VXJsonValidator() implements VXValidator<String, Void> {
 	}
 
 	@Override
-	public Optional<VxProperty<Void>> getProperty() {
-		return Optional.empty();
+	public VXProperty<Boolean> getProperty() {
+		return VXProperty.of(VXProps.JSON, true);
 	}
 }

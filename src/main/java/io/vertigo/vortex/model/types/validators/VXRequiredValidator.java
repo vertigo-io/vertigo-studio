@@ -1,11 +1,9 @@
 package io.vertigo.vortex.model.types.validators;
 
-import java.util.Optional;
-
 import io.vertigo.core.locale.LocaleMessageText;
+import io.vertigo.vortex.model.types.VXProperty;
+import io.vertigo.vortex.model.types.VXProps;
 import io.vertigo.vortex.model.types.VXValidator;
-import io.vertigo.vortex.model.types.VxProperty;
-import io.vertigo.vortex.model.types.VxProps;
 
 /**
  * Validator to check for non-null and non-empty values.
@@ -31,8 +29,8 @@ public record VXRequiredValidator() implements VXValidator<Object, Boolean> {
 	}
 
 	@Override
-	public Optional<VxProperty<Boolean>> getProperty() {
+	public VXProperty<Boolean> getProperty() {
 		// A required field can be represented by a boolean 'true'
-		return Optional.of(new VxProperty<>(VxProps.REQUIRED, Boolean.class));
+		return VXProperty.of(VXProps.REQUIRED, true);
 	}
 }

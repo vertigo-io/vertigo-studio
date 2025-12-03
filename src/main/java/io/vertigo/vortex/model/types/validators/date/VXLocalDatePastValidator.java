@@ -1,13 +1,13 @@
 package io.vertigo.vortex.model.types.validators.date;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 import io.vertigo.core.locale.LocaleMessageText;
+import io.vertigo.vortex.model.types.VXProperty;
+import io.vertigo.vortex.model.types.VXProps;
 import io.vertigo.vortex.model.types.VXValidator;
-import io.vertigo.vortex.model.types.VxProperty;
 
-public record VXLocalDatePastValidator() implements VXValidator<LocalDate, Void> {
+public record VXLocalDatePastValidator() implements VXValidator<LocalDate, Boolean> {
 
 	@Override
 	public boolean isValid(final LocalDate value) {
@@ -23,7 +23,7 @@ public record VXLocalDatePastValidator() implements VXValidator<LocalDate, Void>
 	}
 
 	@Override
-	public Optional<VxProperty<Void>> getProperty() {
-		return Optional.empty();
+	public VXProperty<Boolean> getProperty() {
+		return VXProperty.of(VXProps.PAST, true);
 	}
 }

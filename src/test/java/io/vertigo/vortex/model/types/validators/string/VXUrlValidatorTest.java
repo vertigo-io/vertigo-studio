@@ -62,12 +62,4 @@ public class VXUrlValidatorTest {
 		// Then
 		Assertions.assertEquals("Value is not a valid URL.", errorMessage);
 	}
-
-	@Test
-	void shouldReturnEmptyProperty() {
-		// When
-		final var property = urlValidator.getProperty();
-		// Then
-		Assertions.assertTrue(property.isEmpty());
-	}
 }

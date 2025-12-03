@@ -61,8 +61,7 @@ public class VXMaxLengthValidatorTest {
 		// When
 		final var property = validator.getProperty();
 		// Then
-		Assertions.assertTrue(property.isPresent());
-		Assertions.assertEquals("maxLength", property.get().name());
-		Assertions.assertEquals(Integer.class, property.get().type());
+		Assertions.assertEquals("maxLength", property.key().name());
+		Assertions.assertEquals(10, property.value());
 	}
 }

@@ -1,10 +1,9 @@
 package io.vertigo.vortex.model.types.validators.string;
 
-import java.util.Optional;
-
 import io.vertigo.core.locale.LocaleMessageText;
+import io.vertigo.vortex.model.types.VXProperty;
+import io.vertigo.vortex.model.types.VXProps;
 import io.vertigo.vortex.model.types.VXValidator;
-import io.vertigo.vortex.model.types.VxProperty;
 
 public record VXEndsWithValidator(String suffix) implements VXValidator<String, String> {
 
@@ -22,7 +21,7 @@ public record VXEndsWithValidator(String suffix) implements VXValidator<String, 
 	}
 
 	@Override
-	public Optional<VxProperty<String>> getProperty() {
-		return Optional.empty();
+	public VXProperty<String> getProperty() {
+		return VXProperty.of(VXProps.ENDS_WITH, suffix);
 	}
 }

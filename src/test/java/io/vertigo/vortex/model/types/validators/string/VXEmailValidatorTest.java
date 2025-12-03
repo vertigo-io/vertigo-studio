@@ -90,12 +90,4 @@ public class VXEmailValidatorTest {
 		// Then
 		Assertions.assertEquals("The value must be a valid email address.", errorMessage);
 	}
-
-	@Test
-	void shouldReturnEmptyProperty() {
-		// When
-		final var property = validator.getProperty();
-		// Then
-		Assertions.assertTrue(property.isEmpty());
-	}
 }

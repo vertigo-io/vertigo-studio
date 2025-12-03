@@ -74,8 +74,7 @@ public class VXMinValidatorTest {
 		// When
 		final var property = validator.getProperty();
 		// Then
-		Assertions.assertTrue(property.isPresent());
-		Assertions.assertEquals("min", property.get().name());
-		Assertions.assertEquals(Number.class, property.get().type());
+		Assertions.assertEquals("min", property.key().name());
+		Assertions.assertEquals(10, property.value());
 	}
 }

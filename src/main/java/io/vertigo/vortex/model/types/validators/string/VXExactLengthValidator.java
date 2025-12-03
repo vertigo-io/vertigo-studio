@@ -1,11 +1,9 @@
 package io.vertigo.vortex.model.types.validators.string;
 
-import java.util.Optional;
-
 import io.vertigo.core.locale.LocaleMessageText;
+import io.vertigo.vortex.model.types.VXProperty;
+import io.vertigo.vortex.model.types.VXProps;
 import io.vertigo.vortex.model.types.VXValidator;
-import io.vertigo.vortex.model.types.VxProperty;
-import io.vertigo.vortex.model.types.VxProps;
 
 public record VXExactLengthValidator(int length) implements VXValidator<String, Integer> {
 
@@ -23,7 +21,7 @@ public record VXExactLengthValidator(int length) implements VXValidator<String, 
 	}
 
 	@Override
-	public Optional<VxProperty<Integer>> getProperty() {
-		return Optional.of(new VxProperty<>(VxProps.EXACT_LENGTH, Integer.class));
+	public VXProperty<Integer> getProperty() {
+		return VXProperty.of(VXProps.EXACT_LENGTH, length);
 	}
 }

@@ -1,16 +1,16 @@
 package io.vertigo.vortex.model.types.validators.string;
 
-import java.util.Optional;
 import java.util.regex.Pattern;
 
 import io.vertigo.core.locale.LocaleMessageText;
+import io.vertigo.vortex.model.types.VXProperty;
+import io.vertigo.vortex.model.types.VXProps;
 import io.vertigo.vortex.model.types.VXValidator;
-import io.vertigo.vortex.model.types.VxProperty;
 
 /**
  * Validator to check if a string is a valid URL.
  */
-public record VXUrlValidator() implements VXValidator<String, Void> {
+public record VXUrlValidator() implements VXValidator<String, Boolean> {
 
 	// A comprehensive regex for URL validation (simplified for demonstration)
 	// In a real application, consider a dedicated library or more robust regex.
@@ -20,7 +20,6 @@ public record VXUrlValidator() implements VXValidator<String, Void> {
 	@Override
 	public boolean isValid(final String value) {
 		return value == null
-				|| value.isBlank()
 				|| URL_PATTERN.matcher(value).matches();
 	}
 
@@ -30,7 +29,7 @@ public record VXUrlValidator() implements VXValidator<String, Void> {
 	}
 
 	@Override
-	public Optional<VxProperty<Void>> getProperty() {
-		return Optional.empty();
+	public VXProperty<Boolean> getProperty() {
+		return VXProperty.of(VXProps.URL, true);
 	}
 }

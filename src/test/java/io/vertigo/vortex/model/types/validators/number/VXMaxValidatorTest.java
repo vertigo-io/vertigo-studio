@@ -74,8 +74,7 @@ public class VXMaxValidatorTest {
 		// When
 		final var property = validator.getProperty();
 		// Then
-		Assertions.assertTrue(property.isPresent());
-		Assertions.assertEquals("max", property.get().name());
-		Assertions.assertEquals(Number.class, property.get().type());
+		Assertions.assertEquals("max", property.key().name());
+		Assertions.assertEquals(10, property.value());
 	}
 }

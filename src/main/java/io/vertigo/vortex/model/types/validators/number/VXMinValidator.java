@@ -1,11 +1,9 @@
 package io.vertigo.vortex.model.types.validators.number;
 
-import java.util.Optional;
-
 import io.vertigo.core.locale.LocaleMessageText;
+import io.vertigo.vortex.model.types.VXProperty;
+import io.vertigo.vortex.model.types.VXProps;
 import io.vertigo.vortex.model.types.VXValidator;
-import io.vertigo.vortex.model.types.VxProperty;
-import io.vertigo.vortex.model.types.VxProps;
 
 public record VXMinValidator(Number min) implements VXValidator<Number, Number> {
 
@@ -26,7 +24,7 @@ public record VXMinValidator(Number min) implements VXValidator<Number, Number> 
 	}
 
 	@Override
-	public Optional<VxProperty<Number>> getProperty() {
-		return Optional.of(new VxProperty<>(VxProps.MIN, Number.class));
+	public VXProperty<Number> getProperty() {
+		return VXProperty.of(VXProps.MIN, min);
 	}
 }

@@ -2,7 +2,6 @@ package io.vertigo.vortex.model.types;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import io.vertigo.core.lang.Assertion;
 
@@ -16,12 +15,12 @@ public record VXDomainType(
 		String name,
 		VXDataType dataType,
 		List<VXValidator> validators,
-		List<VxProperty> properties) {
+		List<VXProperty> properties) {
 
 	public VXDomainType(String name,
 			VXDataType dataType,
 			List<VXValidator> validators,
-			List<VxProperty> properties) {
+			List<VXProperty> properties) {
 		Assertion.check()
 				.isNotBlank(name)
 				.isNotNull(dataType)
@@ -32,15 +31,12 @@ public record VXDomainType(
 		this.properties = buildProperties(validators, properties);
 	}
 
-	private static List<VxProperty> buildProperties(
+	private static List<VXProperty> buildProperties(
 			List<VXValidator> validators,
-			List<VxProperty> properties) {
-		final List<VxProperty> _properties = new ArrayList<>(properties);
+			List<VXProperty> properties) {
+		final List<VXProperty> _properties = new ArrayList<>(properties);
 		for (var v : validators) {
-			if (v.getProperty().isPresent()) {
-				final Optional<VxProperty> propertyOpt = v.getProperty();
-				_properties.add(propertyOpt.get());
-			}
+			_properties.add(v.getProperty());
 		}
 		return _properties;
 	}

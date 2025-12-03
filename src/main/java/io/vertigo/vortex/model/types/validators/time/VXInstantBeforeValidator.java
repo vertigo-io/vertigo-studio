@@ -1,13 +1,14 @@
 package io.vertigo.vortex.model.types.validators.time;
 
 import java.time.Instant;
-import java.util.Optional;
+import java.time.temporal.Temporal;
 
 import io.vertigo.core.locale.LocaleMessageText;
+import io.vertigo.vortex.model.types.VXProperty;
+import io.vertigo.vortex.model.types.VXProps;
 import io.vertigo.vortex.model.types.VXValidator;
-import io.vertigo.vortex.model.types.VxProperty;
 
-public record VXInstantBeforeValidator(Instant instant) implements VXValidator<Instant, Instant> {
+public record VXInstantBeforeValidator(Instant instant) implements VXValidator<Instant, Temporal> {
 
 	@Override
 	public boolean isValid(final Instant value) {
@@ -23,7 +24,7 @@ public record VXInstantBeforeValidator(Instant instant) implements VXValidator<I
 	}
 
 	@Override
-	public Optional<VxProperty<Instant>> getProperty() {
-		return Optional.empty();
+	public VXProperty<Temporal> getProperty() {
+		return VXProperty.of(VXProps.BEFORE, instant);
 	}
 }

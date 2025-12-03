@@ -47,12 +47,12 @@ public class VXPatternValidatorTest {
 	@Test
 	void shouldReturnCorrectProperty() {
 		// Given
-		final VXPatternValidator validator = new VXPatternValidator("^[a-z]+$");
+		String pattern = "^[a-z]+$";
+		final VXPatternValidator validator = new VXPatternValidator(pattern);
 		// When
 		final var property = validator.getProperty();
 		// Then
-		Assertions.assertTrue(property.isPresent());
-		Assertions.assertEquals("pattern", property.get().name());
-		Assertions.assertEquals(String.class, property.get().type());
+		Assertions.assertEquals("pattern", property.key().name());
+		Assertions.assertEquals("^[a-z]+$", property.value());
 	}
 }

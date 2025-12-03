@@ -7,14 +7,14 @@ import io.vertigo.core.lang.Builder;
 import io.vertigo.vortex.model.types.VXDataType;
 import io.vertigo.vortex.model.types.VXDomainType;
 import io.vertigo.vortex.model.types.VXValidator;
-import io.vertigo.vortex.model.types.VxProperty;
+import io.vertigo.vortex.model.types.VXProperty;
 import io.vertigo.vortex.model.types.validators.VXRequiredValidator;
 
 abstract class AbstractVXDomainTypeBuilder<B extends AbstractVXDomainTypeBuilder<B>> implements Builder<VXDomainType> {
 	protected final String _name;
 	protected final VXDataType _dataType;
 	protected final List<VXValidator> _validators = new ArrayList<>();
-	protected final List<VxProperty> _properties = new ArrayList<>();
+	protected final List<VXProperty> _properties = new ArrayList<>();
 
 	protected AbstractVXDomainTypeBuilder(final String name, final VXDataType dataType) {
 		_name = name;

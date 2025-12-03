@@ -1,7 +1,5 @@
 package io.vertigo.vortex.model.types;
 
-import java.util.Optional;
-
 import io.vertigo.core.locale.LocaleMessageText;
 
 /**
@@ -27,7 +25,5 @@ public interface VXValidator<V, P> {
 	/**
 	 * @return The property associated with this validator, if any.
 	 */
-	default Optional<VxProperty<P>> getProperty() {
-		return Optional.empty();
-	}
+	VXProperty<P> getProperty();
 }

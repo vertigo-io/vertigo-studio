@@ -61,8 +61,7 @@ public class VXMinLengthValidatorTest {
 		// When
 		final var property = validator.getProperty();
 		// Then
-		Assertions.assertTrue(property.isPresent());
-		Assertions.assertEquals("minLength", property.get().name());
-		Assertions.assertEquals(Integer.class, property.get().type());
+		Assertions.assertEquals("minLength", property.key().name());
+		Assertions.assertEquals(5, property.value());
 	}
 }

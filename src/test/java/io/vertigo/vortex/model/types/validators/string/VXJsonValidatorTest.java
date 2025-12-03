@@ -78,11 +78,4 @@ public class VXJsonValidatorTest {
 		Assertions.assertEquals("Value is not a valid JSON.", errorMessage);
 	}
 
-	@Test
-	void shouldReturnEmptyProperty() {
-		// When
-		final var property = jsonValidator.getProperty();
-		// Then
-		Assertions.assertTrue(property.isEmpty());
-	}
 }
