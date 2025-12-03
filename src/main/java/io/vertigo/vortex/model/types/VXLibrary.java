@@ -3,7 +3,7 @@ package io.vertigo.vortex.model.types;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.vortex.model.types.builders.VXDomainTypes;
+import io.vertigo.vortex.catalog.VXDomainTypes;
 
 /**
  * Represents the entire data model.

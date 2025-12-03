@@ -3,6 +3,8 @@ package io.vertigo.vortex.model.types.validators.number;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import io.vertigo.vortex.model.library.validators.number.VXMaxValidator;
+
 public class VXMaxValidatorTest {
 
 	@Test

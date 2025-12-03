@@ -3,6 +3,8 @@ package io.vertigo.vortex.model.types.validators.string;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import io.vertigo.vortex.model.library.validators.string.VXUrlValidator;
+
 public class VXUrlValidatorTest {
 
 	private final VXUrlValidator urlValidator = new VXUrlValidator();

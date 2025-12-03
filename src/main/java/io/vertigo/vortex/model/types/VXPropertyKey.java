@@ -12,6 +12,6 @@ public record VXPropertyKey<T>(String name, Class<T> type) {
 	// No additional methods needed for a record class beyond what's generated.
 
 	public VXProperty<T> build(T value) {
-		return VXProperty.of(this, value);
+		return new VXProperty(this, value);
 	}
 }

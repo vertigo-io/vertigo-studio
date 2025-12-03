@@ -48,12 +48,6 @@ public record VXProperty<T>(
 		VXPropertyKey<T> key,
 		T value) {
 
-	public static <T> VXProperty<T> of(
-			VXPropertyKey<T> key,
-			T value) {
-		return new VXProperty<>(key, value);
-	}
-
 	/**
 	 * Constructor for the property.
 	 * @param key The key defining the property's name and type.
