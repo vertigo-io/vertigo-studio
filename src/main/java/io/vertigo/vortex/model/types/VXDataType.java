@@ -7,6 +7,8 @@ public enum VXDataType {
 	Integer,
 	Double,
 	Boolean,
+	LocalDate,
+	Instant,
 	//---Should not be multiple
 	Text,
 	Json,
