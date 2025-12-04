@@ -4,7 +4,7 @@ import java.time.Instant;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import io.vertigo.vortex.model.library.validators.time.VXInstantAfterValidator;
+import io.vertigo.vortex.gold.library.validators.time.VXInstantAfterValidator;
 
 public class VXInstantAfterValidatorTest {
 

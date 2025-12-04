@@ -3,7 +3,7 @@ package io.vertigo.vortex.model.types.validators.string;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import io.vertigo.vortex.model.library.validators.string.VXContainsValidator;
+import io.vertigo.vortex.gold.library.validators.string.VXContainsValidator;
 
 public class VXContainsValidatorTest {
 

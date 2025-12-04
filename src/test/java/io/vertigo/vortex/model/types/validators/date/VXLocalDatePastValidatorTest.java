@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import io.vertigo.vortex.model.library.validators.date.VXLocalDatePastValidator;
+import io.vertigo.vortex.gold.library.validators.date.VXLocalDatePastValidator;
 
 public class VXLocalDatePastValidatorTest {
 
