@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "library": {
+  	  "type": "string",
+  	  "pattern": "^[a-z]+(-[a-z]+)*$",
+  	  "maxLength": 20
+  	},  
+  "properties": {
+    "header": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+			"pattern": "^[a-z]+(-[a-z]+)*$",
+			"maxLength": 20
+          }
+        }
+      },
+      "required": ["description"]
+    },
+    "domainTypes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+			"pattern": "^do-[a-z]+$", 
+			"maxLength": 20
+          },
+          "dataType": {
+            "type": "string",
+            "enum": ["String", "Text", "Long", "Integer", "Double", "Boolean", "Json"]
+          }
+        },
+        "required": ["name", "dataType"]
+      }
+    }
+  },
+  "required": ["header", "domainTypes"]
+}

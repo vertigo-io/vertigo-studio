@@ -11,10 +11,12 @@ import io.vertigo.vortex.VXDomainTypes;
  * @synthetic
  */
 public record VXLibrary(
+		String name,
 		List<VXDomainTypes> domainTypes) {
 
 	public VXLibrary {
 		Assertion.check()
+				.isNotBlank(name)
 				.isNotNull(domainTypes);
 	}
 }

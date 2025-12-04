@@ -1,0 +1,12 @@
+{
+	"library": "core",
+	"header": {
+		"description": "liste des domainTypes",
+		"tags":["books", "authors"]
+  	}, 	
+  	"domainTypes": 
+  	[
+    	{ "name": "do-label", "dataType": "String"},
+		{ "name": "do-id", "dataType": "Long"}
+  	]
+}

@@ -1,0 +1,21 @@
+{
+  "module": "book",
+  
+  "header": {
+	"description": "List of books",
+	"tags":["books"]
+  }, 	
+  
+  "entities": 
+  [
+    { 
+	  "name": "book",
+      "attributes": [
+		{ "name": "id", "domainType": "do-id", "cardinality": "1", "role":"id"},
+		{ "name": "title", "domainType": "do-label", "cardinality": "1"},
+        { "name": "isbn", "domainType": "do-label", "cardinality": "1"},
+        { "name": "author","domainType": "do-author", "cardinality": "1"}
+      ]
+    }
+  ]
+}

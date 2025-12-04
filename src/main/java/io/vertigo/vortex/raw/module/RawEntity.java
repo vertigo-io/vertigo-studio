@@ -1,4 +1,4 @@
-package io.vertigo.vortex.raw;
+package io.vertigo.vortex.raw.module;
 
 import java.util.List;
 

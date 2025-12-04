@@ -1,4 +1,4 @@
-package io.vertigo.vortex.model.modules;
+package io.vertigo.vortex.model.module;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.vortex.model.library.types.VXDomainType;

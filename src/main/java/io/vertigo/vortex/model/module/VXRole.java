@@ -1,4 +1,4 @@
-package io.vertigo.vortex.model.modules;
+package io.vertigo.vortex.model.module;
 
 public enum VXRole {
 	/**identity	or primary key */

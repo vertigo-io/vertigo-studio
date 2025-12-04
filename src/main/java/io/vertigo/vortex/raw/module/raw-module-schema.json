@@ -24,24 +24,6 @@
       },
       "required": ["description"]
     },
-    "domainTypes": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-			"pattern": "^do-[a-z]+$", 
-			"maxLength": 20
-          },
-          "dataType": {
-            "type": "string",
-            "enum": ["String", "Text", "Long", "Integer", "Double", "Boolean", "Json"]
-          }
-        },
-        "required": ["name", "dataType"]
-      }
-    },
     "entities": {
       "type": "array",
       "items": {
@@ -83,5 +65,5 @@
       }
     }
   },
-  "required": ["module", "header", "domainTypes", "entities"]
+  "required": ["module", "header", "entities"]
 }

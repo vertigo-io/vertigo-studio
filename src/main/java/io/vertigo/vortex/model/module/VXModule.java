@@ -1,4 +1,4 @@
-package io.vertigo.vortex.model.modules;
+package io.vertigo.vortex.model.module;
 
 import java.util.List;
 
@@ -10,10 +10,12 @@ import io.vertigo.core.lang.Assertion;
  * @synthetic
  */
 public record VXModule(
+		String name,
 		List<VXEntity> entities) {
 
 	public VXModule {
 		Assertion.check()
+				.isNotBlank(name)
 				.isNotNull(entities);
 	}
 }

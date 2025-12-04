@@ -7,19 +7,21 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.vortex.model.VXModel;
+import io.vertigo.vortex.model.VXNotebook;
 import io.vertigo.vortex.model.library.VXLibrary;
 import io.vertigo.vortex.model.library.types.VXDataType;
 import io.vertigo.vortex.model.library.types.VXDomainType;
-import io.vertigo.vortex.model.modules.VXAttribute;
-import io.vertigo.vortex.model.modules.VXCardinality;
-import io.vertigo.vortex.model.modules.VXEntity;
-import io.vertigo.vortex.model.modules.VXModule;
-import io.vertigo.vortex.model.modules.VXRole;
-import io.vertigo.vortex.raw.RawAttribute;
-import io.vertigo.vortex.raw.RawDomainType;
-import io.vertigo.vortex.raw.RawEntity;
-import io.vertigo.vortex.raw.RawFile;
+import io.vertigo.vortex.model.module.VXAttribute;
+import io.vertigo.vortex.model.module.VXCardinality;
+import io.vertigo.vortex.model.module.VXEntity;
+import io.vertigo.vortex.model.module.VXModule;
+import io.vertigo.vortex.model.module.VXRole;
+import io.vertigo.vortex.raw.RawNotebook;
+import io.vertigo.vortex.raw.library.RawDomainType;
+import io.vertigo.vortex.raw.library.RawLibrarySource;
+import io.vertigo.vortex.raw.module.RawAttribute;
+import io.vertigo.vortex.raw.module.RawEntity;
+import io.vertigo.vortex.raw.module.RawModuleSource;
 
 /**
  * Transforms a raw model into a VXModel.
@@ -28,44 +30,44 @@ import io.vertigo.vortex.raw.RawFile;
  * It builds a catalog of domain types and entities.
  * @synthetic
  */
-final class RawToModel {
-	private final RawFile rawFile;
+final class RawToGold {
+	private final RawNotebook rawNotebook;
 	private final Map<String, VXDomainType> domainTypeCatalog = new HashMap<>();
 	private final Map<String, VXEntity> entityCatalog = new HashMap<>();
 
-	RawToModel(final RawFile rawFile) {
-		Assertion.check().isNotNull(rawFile);
+	RawToGold(final RawNotebook rawNotebook) {
+		Assertion.check().isNotNull(rawNotebook);
 		//---
-		this.rawFile = rawFile;
+		this.rawNotebook = rawNotebook;
 	}
 
 	/**
 	 * Transforms the raw model into a VXModel.
 	 * @return the transformed VXModel
 	 */
-	VXModel transform() {
-		Assertion.check().isNotNull(rawFile);
-		//---
-		//		final var header = new VXHeader(rawFile.header().description(), rawFile.header().tags());
+	VXNotebook transform() {
 
-		for (final RawDomainType rawDomainType : rawFile.domainTypes()) {
-			final var domainType = transform(rawDomainType);
-			domainTypeCatalog.put(domainType.name(), domainType);
+		for (final RawLibrarySource rawLibrarySource : rawNotebook.libraries()) {
+			for (final RawDomainType rawDomainType : rawLibrarySource.domainTypes()) {
+				final var domainType = transform(rawDomainType);
+				domainTypeCatalog.put(domainType.name(), domainType);
+			}
 		}
 
-		for (final RawEntity rawEntity : rawFile.entities()) {
-			final var name = "do-" + rawEntity.name();
-			domainTypeCatalog.put(name, new VXDomainType(name, VXDataType.Entity, List.of(), List.of()));
-		}
+		for (final RawModuleSource rawModuleSource : rawNotebook.rawModules()) {
+			for (final RawEntity rawEntity : rawModuleSource.entities()) {
+				final var name = "do-" + rawEntity.name();
+				domainTypeCatalog.put(name, new VXDomainType(name, VXDataType.Entity, List.of(), List.of()));
+			}
 
-		for (final RawEntity rawEntity : rawFile.entities()) {
-			final var entity = transform(rawEntity);
-			entityCatalog.put(entity.name(), entity);
+			for (final RawEntity rawEntity : rawModuleSource.entities()) {
+				final var entity = transform(rawEntity);
+				entityCatalog.put(entity.name(), entity);
+			}
 		}
-
-		final VXLibrary library = new VXLibrary(new ArrayList(domainTypeCatalog.values()));
-		final VXModule module = new VXModule(new ArrayList(entityCatalog.values()));
-		return new VXModel(List.of(module), library);
+		final VXLibrary library = new VXLibrary("test", new ArrayList(domainTypeCatalog.values()));
+		final VXModule module = new VXModule("test", new ArrayList(entityCatalog.values()));
+		return new VXNotebook(List.of(module), List.of(library));
 	}
 
 	private VXAttribute transform(final RawAttribute rawAttribute) {
