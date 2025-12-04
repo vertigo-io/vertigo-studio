@@ -5,7 +5,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonschema.core.report.ProcessingReport;
+import com.github.fge.jsonschema.main.JsonSchema;
+import com.github.fge.jsonschema.main.JsonSchemaFactory;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.vortex.bronze.NotebookConfig;
@@ -63,12 +67,12 @@ public final class BronzeToSilver {
 
 	private static void validateModule(File file) throws Exception {
 		final File schemaFile = new File("C:\\Users\\pchretien\\GitHub\\vertigo-studio\\src\\main\\java\\io\\vertigo\\vortex\\silver\\module\\raw-module-schema.json");
-		JsonValidator.validate(schemaFile, file);
+		validate(schemaFile, file);
 	}
 
 	private static void validateLibrary(File file) throws Exception {
 		final File schemaFile = new File("C:\\Users\\pchretien\\GitHub\\vertigo-studio\\src\\main\\java\\io\\vertigo\\vortex\\silver\\library\\raw-library-schema.json");
-		JsonValidator.validate(schemaFile, file);
+		validate(schemaFile, file);
 	}
 
 	private static RawModule readModule(File file) throws IOException {
@@ -83,5 +87,38 @@ public final class BronzeToSilver {
 		//---
 		final ObjectMapper mapper = new ObjectMapper();
 		return mapper.readValue(file, RawLibrary.class);
+	}
+
+	/**
+	 * Validates a data file against a schema file.
+	 * @param schemaFile the file containing the JSON schema
+	 * @param dataFile the file containing the JSON data to validate
+	 * @throws Exception if an error occurs during validation
+	 */
+	private static void validate(final File schemaFile, final File dataFile) throws Exception {
+		Assertion.check()
+				.isNotNull(schemaFile)
+				.isNotNull(dataFile);
+		//---
+		final ObjectMapper mapper = new ObjectMapper();
+
+		// Charge le schéma et le JSON à valider
+		final JsonNode schemaNode = mapper.readTree(schemaFile);
+		final JsonNode dataNode = mapper.readTree(dataFile);
+
+		// Crée un validateur JSON Schema
+		final JsonSchemaFactory factory = JsonSchemaFactory.byDefault();
+		final JsonSchema schema = factory.getJsonSchema(schemaNode);
+
+		// Valide le document JSON
+		final ProcessingReport report = schema.validate(dataNode);
+
+		// Affiche les erreurs éventuelles
+		if (report.isSuccess()) {
+			System.out.println("✅ JSON valide.");
+		} else {
+			System.out.println("❌ JSON invalide :");
+			System.out.println(report);
+		}
 	}
 }

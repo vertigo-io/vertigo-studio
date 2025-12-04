@@ -7,8 +7,8 @@ import io.vertigo.vortex.gold.library.VXLibrary;
 import io.vertigo.vortex.gold.module.VXModule;
 
 /**
- * Represents the entire data model.
- * This model is composed of a header and a list of files.
+ * Represents the entire model called "Notebook".
+ * This notebook is composed of a list of modules and a list of libraries.
  * @synthetic
  */
 public record VXNotebook(
