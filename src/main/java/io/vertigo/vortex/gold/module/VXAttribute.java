@@ -11,6 +11,7 @@ import io.vertigo.vortex.gold.library.types.VXDomainType;
  */
 public record VXAttribute(
 		String name,
+		String description,
 		VXDomainType domainType,
 		VXRole role,
 		VXCardinality cardinality) {

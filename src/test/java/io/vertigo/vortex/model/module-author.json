@@ -9,21 +9,33 @@
 	"entities": [
 		{
 			"name": "author",
+			"description": "An author",
 			"attributes": [
 				{
 					"name": "id",
+					"description": "Identifier of the author",
 					"domainType": "do-id",
 					"role": "id"
 				},
 				{
 					"name": "first-name",
+					"description": "First name of the author",
 					"domainType": "do-label",
 					"role": "data",
 					"cardinality": "1"
 				},
 				{
 					"name": "last-name",
+					"description": "Last name of the author",
 					"domainType": "do-label"
+				}
+			],
+			"links": [
+				{
+					"name": "books",
+					"description": "Books written by the author",
+					"targetEntityName": "book",
+					"cardinality": "*"
 				}
 			]
 		}

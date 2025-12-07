@@ -13,5 +13,5 @@ public enum VXDataType {
 	//---Should not be multiple
 	Text,
 	Json,
-	Entity
+	Entity //Link towards an Entity
 }

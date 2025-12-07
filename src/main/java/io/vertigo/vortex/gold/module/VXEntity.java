@@ -12,11 +12,15 @@ import io.vertigo.core.lang.Assertion;
  */
 public record VXEntity(
 		String name,
-		List<VXAttribute> attributes) {
+		String description,
+		List<VXAttribute> attributes,
+		List<VXLink> links) {
 
 	public VXEntity {
 		Assertion.check()
 				.isNotBlank(name)
-				.isNotNull(attributes);
+				.isNotBlank(description)
+				.isNotNull(attributes)
+				.isNotNull(links);
 	}
 }

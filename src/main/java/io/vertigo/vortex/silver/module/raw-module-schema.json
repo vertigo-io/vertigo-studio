@@ -36,6 +36,9 @@
 						"pattern": "^[a-z]+$",
 						"maxLength": 30
 					},
+					"description": {
+						"type": "string"
+					},
 					"attributes": {
 						"type": "array",
 						"items": {
@@ -45,6 +48,9 @@
 									"type": "string",
 									"pattern": "^[a-z]+(-[a-z]+)*$",
 									"maxLength": 30
+								},
+								"description": {
+									"type": "string"
 								},
 								"domainType": {
 									"type": "string",
@@ -69,13 +75,48 @@
 							},
 							"required": [
 								"name",
+								"description",
 								"domainType"
+							]
+						}
+					},
+					"links": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"name": {
+									"type": "string",
+									"pattern": "^[a-z]+(-[a-z]+)*$",
+									"maxLength": 30
+								},
+								"description": {
+									"type": "string"
+								},
+								"targetEntityName": {
+									"type": "string",
+									"pattern": "^[a-z]+$"
+								},
+								"cardinality": {
+									"type": "string",
+									"enum": [
+										"1",
+										"*",
+										"?"
+									]
+								}
+							},
+							"required": [
+								"name",
+								"description",
+								"targetEntityName"
 							]
 						}
 					}
 				},
 				"required": [
 					"name",
+					"description",
 					"attributes"
 				]
 			}

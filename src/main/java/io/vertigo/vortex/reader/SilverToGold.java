@@ -14,6 +14,7 @@ import io.vertigo.vortex.gold.library.types.VXDomainType;
 import io.vertigo.vortex.gold.module.VXAttribute;
 import io.vertigo.vortex.gold.module.VXCardinality;
 import io.vertigo.vortex.gold.module.VXEntity;
+import io.vertigo.vortex.gold.module.VXLink;
 import io.vertigo.vortex.gold.module.VXModule;
 import io.vertigo.vortex.gold.module.VXRole;
 import io.vertigo.vortex.silver.RawNotebook;
@@ -21,6 +22,7 @@ import io.vertigo.vortex.silver.library.RawDomainType;
 import io.vertigo.vortex.silver.library.RawLibrary;
 import io.vertigo.vortex.silver.module.RawAttribute;
 import io.vertigo.vortex.silver.module.RawEntity;
+import io.vertigo.vortex.silver.module.RawLink;
 import io.vertigo.vortex.silver.module.RawModule;
 
 /**
@@ -55,7 +57,7 @@ public final class SilverToGold {
 		for (final RawModule rawModuleSource : rawNotebook.rawModules()) {
 			for (final RawEntity rawEntity : rawModuleSource.entities()) {
 				final var name = "do-" + rawEntity.name();
-				domainTypeCatalog.put(name, new VXDomainType(name, VXDataType.Entity, List.of(), List.of()));
+				domainTypeCatalog.put(name, new VXDomainType(name, rawEntity.description(), VXDataType.Entity, List.of(), List.of()));
 			}
 
 			for (final RawEntity rawEntity : rawModuleSource.entities()) {
@@ -63,8 +65,25 @@ public final class SilverToGold {
 				entityCatalog.put(entity.name(), entity);
 			}
 		}
-		final VXLibrary library = new VXLibrary("test", new ArrayList(domainTypeCatalog.values()));
-		final VXModule module = new VXModule("test", new ArrayList(entityCatalog.values()));
+		final var rawModules = rawNotebook.rawModules();
+		final var rawLibraries = rawNotebook.libraries();
+
+		// we merge all modules into one.
+		// we merge all libraries into one.
+		final VXLibrary library = new VXLibrary(
+				!rawLibraries.isEmpty()
+						? rawLibraries.get(0).library()
+						: "library",
+				!rawLibraries.isEmpty()
+						? rawLibraries.get(0).header().description()
+						: "Default Library",
+				new ArrayList(domainTypeCatalog.values()));
+
+		final VXModule module = new VXModule(
+				!rawModules.isEmpty() ? rawModules.get(0).module() : "module",
+				!rawModules.isEmpty() ? rawModules.get(0).header().description() : "Default Module",
+				new ArrayList(entityCatalog.values()));
+
 		return new VXNotebook(List.of(module), List.of(library));
 	}
 
@@ -76,9 +95,18 @@ public final class SilverToGold {
 
 		return new VXAttribute(
 				rawAttribute.name(),
+				rawAttribute.description(),
 				domainTypeCatalog.get(rawAttribute.domainType()),
 				role,
 				VXCardinality.fromSymbol(rawAttribute.cardinality()));
+	}
+
+	private VXLink transform(final RawLink rawLink) {
+		return new VXLink(
+				rawLink.name(),
+				rawLink.description(),
+				entityCatalog.get(rawLink.targetEntityName()),
+				VXCardinality.fromSymbol(rawLink.cardinality()));
 	}
 
 	private VXEntity transform(final RawEntity rawEntity) {
@@ -87,12 +115,25 @@ public final class SilverToGold {
 				.map(rawAttribute -> transform(rawAttribute))
 				.collect(Collectors.toList());
 
-		return new VXEntity(rawEntity.name(), attributes);
+		final List<VXLink> links = rawEntity.links()
+				.stream()
+				.map(rawLink -> transform(rawLink))
+				.collect(Collectors.toList());
+
+		return new VXEntity(
+				rawEntity.name(),
+				rawEntity.description(),
+				attributes,
+				links);
 	}
 
 	private static VXDomainType transform(final RawDomainType rawDomainType) {
-		var dataType = VXDataType.valueOf(rawDomainType.dataType());
-		return new VXDomainType(rawDomainType.name(), dataType, List.of(), List.of());
+		return new VXDomainType(
+				rawDomainType.name(),
+				rawDomainType.description(),
+				VXDataType.valueOf(rawDomainType.dataType()),
+				List.of(),
+				List.of());
 	}
 
 }

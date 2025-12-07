@@ -13,19 +13,24 @@ import io.vertigo.core.lang.Assertion;
  */
 public record VXDomainType(
 		String name,
+		String description,
 		VXDataType dataType,
 		List<VXValidator> validators,
 		List<VXProperty> properties) {
 
-	public VXDomainType(String name,
+	public VXDomainType(
+			String name,
+			String description,
 			VXDataType dataType,
 			List<VXValidator> validators,
 			List<VXProperty> properties) {
 		Assertion.check()
 				.isNotBlank(name)
+				.isNotBlank(description)
 				.isNotNull(dataType)
 				.isNotNull(validators);
 		this.name = name;
+		this.description = description;
 		this.dataType = dataType;
 		this.validators = validators;
 		this.properties = buildProperties(validators, properties);
