@@ -44,12 +44,12 @@ public final class Bronze {
 	}
 
 	private static void validateNotebook(NotebookConfig notebook) throws Exception {
-		final File schemaLibraryFile = new File("C:\\Users\\pchretien\\GitHub\\vertigo-studio\\src\\main\\java\\io\\vertigo\\vortex\\bronze\\module-schema.json");
+		final File schemaLibraryFile = new File("C:\\Users\\pchretien\\GitHub\\vertigo-studio\\src\\main\\java\\io\\vertigo\\vortex\\bronze\\library-schema.json");
 		for (File file : notebook.libraries()) {
 			validateFile(schemaLibraryFile, file);
 		}
 		//---
-		final File schemaModuleFile = new File("C:\\Users\\pchretien\\GitHub\\vertigo-studio\\src\\main\\java\\io\\vertigo\\vortex\\bronze\\library-schema.json");
+		final File schemaModuleFile = new File("C:\\Users\\pchretien\\GitHub\\vertigo-studio\\src\\main\\java\\io\\vertigo\\vortex\\bronze\\module-schema.json");
 		for (File file : notebook.modules()) {
 			validateFile(schemaModuleFile, file);
 		}

@@ -4,13 +4,10 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import io.vertigo.vortex.silver.RawElement;
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RawModule(
-		String name,
+		String module,
 		String description,
-		List<String> uses, //libraries
-		List<String> imports, //modules
-		List<RawEntity> entities) implements RawElement {
+		RawUses uses,
+		List<RawEntity> entities) {
 }

@@ -2,7 +2,7 @@
 	"$schema": "http://json-schema.org/draft/2020-12/schema",
 	"type": "object",
 	"properties": {
-		"name": {
+		"library": {
 			"type": "string",
 			"pattern": "^[a-z]+(-[a-z]+)*$",
 			"maxLength": 20
@@ -41,7 +41,7 @@
 		}
 	},
 	"required": [
-		"name",
+		"library",
 		"domainTypes"
 	]
 }

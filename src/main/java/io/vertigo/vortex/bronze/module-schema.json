@@ -2,7 +2,7 @@
 	"$schema": "http://json-schema.org/draft/2020-12/schema",
 	"type": "object",
 	"properties": {
-		"name": {
+		"module": {
 			"type": "string",
 			"pattern": "^[a-z]+(-[a-z]+)*$",
 			"maxLength": 20
@@ -11,15 +11,20 @@
 			"type": "string"
 		},
 		"uses": {
-			"type": "array",
-			"items": {
-				"type": "string"
-			}
-		},
-		"imports": {
-			"type": "array",
-			"items": {
-				"type": "string"
+			"type": "object",
+			"properties": {
+				"libraries": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"modules": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
 			}
 		},
 		"entities": {
@@ -119,9 +124,8 @@
 		}
 	},
 	"required": [
-		"name",
+		"module",
 		"uses",
-		"import",
 		"entities"
 	]
 }

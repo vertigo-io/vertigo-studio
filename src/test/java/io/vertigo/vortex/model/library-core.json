@@ -1,6 +1,7 @@
 {
 	"library": "core",
 	"description": "liste des domainTypes",
+	
 	"domainTypes": [
 		{
 			"name": "do-label",

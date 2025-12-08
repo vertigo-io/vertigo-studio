@@ -61,15 +61,15 @@ public final class Silver {
 		final Catalog<VXEntity> entityCatalog = new Catalog<>();
 
 		//---
-		if (rawModule.uses() != null) {
-			for (String lib : rawModule.uses()) {
+		if (rawModule.uses().libraries() != null) {
+			for (String lib : rawModule.uses().libraries()) {
 				VXLibrary library = libraryCatalog.get(lib);
 				library.domainTypes()
 						.forEach(dt -> domainTypeCatalog.put(dt.name(), dt));
 			}
 		}
-		if (rawModule.imports() != null) {
-			for (String lib : rawModule.imports()) {
+		if (rawModule.uses().modules() != null) {
+			for (String lib : rawModule.uses().modules()) {
 				VXModule module = moduleCatalog.get(lib);
 				module.entities()
 						.forEach(e -> entityCatalog.put(e.name(), e));
@@ -80,10 +80,10 @@ public final class Silver {
 				.map(e -> transform(e, domainTypeCatalog, entityCatalog))
 				.toList();
 		return new VXModule(
-				rawModule.name(),
+				rawModule.module(),
 				rawModule.description() != null
 						? rawModule.description()
-						: rawModule.name(),
+						: rawModule.module(),
 				List.of(),
 				List.of(),
 				entities);
@@ -120,10 +120,10 @@ public final class Silver {
 				.toList();
 
 		return new VXLibrary(
-				rawLibrary.name(),
+				rawLibrary.library(),
 				rawLibrary.description() != null
 						? rawLibrary.description()
-						: rawLibrary.name(),
+						: rawLibrary.library(),
 				domainTypes);
 	}
 

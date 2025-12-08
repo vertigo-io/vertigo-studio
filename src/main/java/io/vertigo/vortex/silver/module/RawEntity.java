@@ -4,12 +4,10 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import io.vertigo.vortex.silver.RawElement;
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RawEntity(
 		String name,
 		String description,
 		List<RawAttribute> attributes,
-		List<RawLink> links) implements RawElement {
+		List<RawLink> links) {
 }

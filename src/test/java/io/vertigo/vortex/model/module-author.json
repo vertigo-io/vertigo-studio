@@ -1,8 +1,10 @@
 {
-	"name": "author",
+	"module": "author",
 	"description": "List of authors",
-	"uses":["core"],
-	"imports":[],
+	"uses" : {
+		"libraries":["core"],
+		"modules":[]
+	},
 	
 	"entities": [
 		{
