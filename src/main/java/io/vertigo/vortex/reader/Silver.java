@@ -43,7 +43,7 @@ public final class Silver {
 	 * Transforms the raw model into a VXNotebook.
 	 */
 	public VXNotebook toGold() {
-		final List<VXLibrary> libraries = rawNotebook.libraries().stream()
+		final List<VXLibrary> libraries = rawNotebook.rawLibraries().stream()
 				.map(lib -> transform(lib))
 				.peek(lib -> libraryCatalog.put(lib.name(), lib))
 				.toList();
