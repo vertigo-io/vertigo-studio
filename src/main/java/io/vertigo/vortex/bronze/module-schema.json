@@ -119,8 +119,9 @@
 		}
 	},
 	"required": [
-		"module",
-		"description",
+		"name",
+		"uses",
+		"import",
 		"entities"
 	]
 }

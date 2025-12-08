@@ -1,5 +1,5 @@
 {
-	"module": "book",
+	"name": "book",
 	"description": "List of books",
 	"uses": ["core"],
 	"imports": ["author"],
