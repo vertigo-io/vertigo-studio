@@ -18,28 +18,30 @@ import io.vertigo.vortex.silver.library.RawLibrary;
 import io.vertigo.vortex.silver.module.RawModule;
 
 /**
- * Reads a rawNotebook (Silver) from a JSON file (Bronze).
+ * Reads a JSON file (Bronze) and transforms it to a rawNotebook (Silver).  
  * First we validate the JSON file against a schema, then reads it into a raw structure.
  * @synthetic
  */
-public final class BronzeToSilver {
+public final class Bronze {
 	private final NotebookConfig notebookConfig;
 
-	private BronzeToSilver(NotebookConfig notebookConfig) {
+	private Bronze(NotebookConfig notebookConfig) {
+		Assertion.check().isNotNull(notebookConfig);
+		//---
 		this.notebookConfig = notebookConfig;
 	}
 
-	public static BronzeToSilver from(NotebookConfig notebookConfig) {
-		return new BronzeToSilver(notebookConfig);
+	public static Bronze from(NotebookConfig notebookConfig) {
+		return new Bronze(notebookConfig);
 	}
 
-	public SilverToGold toSilver() throws Exception {
+	public Silver toSilver() throws Exception {
 		//- STEP 1
 		validate(notebookConfig);
 
 		//- STEP 2
 		final RawNotebook rawNotebook = read(notebookConfig);
-		return new SilverToGold(rawNotebook);
+		return new Silver(rawNotebook);
 	}
 
 	private static void validate(NotebookConfig notebook) throws Exception {

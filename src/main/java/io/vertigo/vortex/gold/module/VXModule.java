@@ -12,12 +12,14 @@ import io.vertigo.core.lang.Assertion;
 public record VXModule(
 		String name,
 		String description,
+		List<String> imports,
 		List<VXEntity> entities) {
 
 	public VXModule {
 		Assertion.check()
 				.isNotBlank(name)
 				.isNotBlank(description)
+				.isNotNull(imports)
 				.isNotNull(entities);
 	}
 }

@@ -10,6 +10,12 @@
 		"description": {
 			"type": "string"
 		},
+		"imports": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			}
+		},
 		"entities": {
 			"type": "array",
 			"items": {

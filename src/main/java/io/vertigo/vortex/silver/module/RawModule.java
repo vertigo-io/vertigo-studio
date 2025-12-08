@@ -8,5 +8,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public record RawModule(
 		String module,
 		String description,
+		List<String> imports,
 		List<RawEntity> entities) {
 }

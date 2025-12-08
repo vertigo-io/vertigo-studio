@@ -1,6 +1,10 @@
 {
 	"module": "book",
 	"description": "List of books",
+	"imports": [
+		"core",
+		"author"
+	],
 	"entities": [
 		{
 			"name": "book",

@@ -5,7 +5,7 @@ import java.util.List;
 
 import io.vertigo.vortex.bronze.NotebookConfig;
 import io.vertigo.vortex.gold.VXNotebook;
-import io.vertigo.vortex.reader.BronzeToSilver;
+import io.vertigo.vortex.reader.Bronze;
 
 public class Vortex {
 	public static String MODEL_BOOK = "C:\\Users\\pchretien\\GitHub\\vertigo-studio\\src\\test\\java\\io\\vertigo\\vortex\\model\\module-book.json";
@@ -17,7 +17,7 @@ public class Vortex {
 				List.of(new File(LIBRARY_CORE)),
 				List.of(new File(MODEL_AUTHOR), new File(MODEL_BOOK)));
 
-		final VXNotebook notebook = BronzeToSilver
+		final VXNotebook notebook = Bronze
 				.from(notebookConfig)
 				.toSilver()
 				.toGold();

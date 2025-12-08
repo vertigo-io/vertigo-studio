@@ -6,7 +6,4 @@ public enum VXRole {
 
 	/**a simple data field	(default) */
 	DATA,
-
-	/**a computed field */
-	COMPUTED;
 }

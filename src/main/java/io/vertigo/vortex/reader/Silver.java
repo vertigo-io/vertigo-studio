@@ -32,12 +32,12 @@ import io.vertigo.vortex.silver.module.RawModule;
  * It builds a catalog of domain types and entities.
  * @synthetic
  */
-public final class SilverToGold {
+public final class Silver {
 	private final RawNotebook rawNotebook;
 	private final Map<String, VXDomainType> domainTypeCatalog = new HashMap<>();
 	private final Map<String, VXEntity> entityCatalog = new HashMap<>();
 
-	SilverToGold(final RawNotebook rawNotebook) {
+	Silver(final RawNotebook rawNotebook) {
 		Assertion.check().isNotNull(rawNotebook);
 		//---
 		this.rawNotebook = rawNotebook;
@@ -79,9 +79,16 @@ public final class SilverToGold {
 						: "Default Library",
 				new ArrayList(domainTypeCatalog.values()));
 
+		final List<String> imports = rawModules.stream()
+				.filter(rawModule -> rawModule.imports() != null)
+				.flatMap(rawModule -> rawModule.imports().stream())
+				.distinct()
+				.collect(Collectors.toList());
+
 		final VXModule module = new VXModule(
 				!rawModules.isEmpty() ? rawModules.get(0).module() : "module",
 				!rawModules.isEmpty() ? rawModules.get(0).description() : "Default Module",
+				imports,
 				new ArrayList(entityCatalog.values()));
 
 		return new VXNotebook(List.of(module), List.of(library));
@@ -95,7 +102,9 @@ public final class SilverToGold {
 
 		return new VXAttribute(
 				rawAttribute.name(),
-				rawAttribute.description(),
+				rawAttribute.description() != null
+						? rawAttribute.description()
+						: rawAttribute.name(),
 				domainTypeCatalog.get(rawAttribute.domainType()),
 				role,
 				VXCardinality.fromSymbol(rawAttribute.cardinality()));
