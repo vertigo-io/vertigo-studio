@@ -1,11 +1,6 @@
 {
 	"module": "book",
-	"header": {
-		"description": "List of books",
-		"tags": [
-			"books"
-		]
-	},
+	"description": "List of books",
 	"entities": [
 		{
 			"name": "book",

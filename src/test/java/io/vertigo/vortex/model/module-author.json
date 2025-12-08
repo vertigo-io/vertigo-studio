@@ -1,11 +1,6 @@
 {
 	"module": "author",
-	"header": {
-		"description": "List of authors",
-		"tags": [
-			"authors"
-		]
-	},
+	"description": "List of authors",
 	"entities": [
 		{
 			"name": "author",
@@ -28,14 +23,6 @@
 					"name": "last-name",
 					"description": "Last name of the author",
 					"domainType": "do-label"
-				}
-			],
-			"links": [
-				{
-					"name": "books",
-					"description": "Books written by the author",
-					"targetEntityName": "book",
-					"cardinality": "*"
 				}
 			]
 		}

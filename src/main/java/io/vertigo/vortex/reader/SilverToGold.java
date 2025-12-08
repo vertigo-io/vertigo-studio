@@ -75,13 +75,13 @@ public final class SilverToGold {
 						? rawLibraries.get(0).library()
 						: "library",
 				!rawLibraries.isEmpty()
-						? rawLibraries.get(0).header().description()
+						? rawLibraries.get(0).description()
 						: "Default Library",
 				new ArrayList(domainTypeCatalog.values()));
 
 		final VXModule module = new VXModule(
 				!rawModules.isEmpty() ? rawModules.get(0).module() : "module",
-				!rawModules.isEmpty() ? rawModules.get(0).header().description() : "Default Module",
+				!rawModules.isEmpty() ? rawModules.get(0).description() : "Default Module",
 				new ArrayList(entityCatalog.values()));
 
 		return new VXNotebook(List.of(module), List.of(library));
@@ -102,23 +102,31 @@ public final class SilverToGold {
 	}
 
 	private VXLink transform(final RawLink rawLink) {
+		final VXEntity entity = entityCatalog.get(rawLink.targetEntityName());
+		Assertion.check().isNotNull(entity, "no entity found for " + rawLink.targetEntityName());
 		return new VXLink(
 				rawLink.name(),
-				rawLink.description(),
-				entityCatalog.get(rawLink.targetEntityName()),
+				rawLink.description() != null
+						? rawLink.description()
+						: rawLink.name(),
+				entity,
 				VXCardinality.fromSymbol(rawLink.cardinality()));
 	}
 
 	private VXEntity transform(final RawEntity rawEntity) {
-		final List<VXAttribute> attributes = rawEntity.attributes()
-				.stream()
-				.map(rawAttribute -> transform(rawAttribute))
-				.collect(Collectors.toList());
+		final List<VXAttribute> attributes = rawEntity.attributes() != null
+				? rawEntity.attributes()
+						.stream()
+						.map(rawAttribute -> transform(rawAttribute))
+						.collect(Collectors.toList())
+				: List.of();
 
-		final List<VXLink> links = rawEntity.links()
-				.stream()
-				.map(rawLink -> transform(rawLink))
-				.collect(Collectors.toList());
+		final List<VXLink> links = rawEntity.links() != null
+				? rawEntity.links()
+						.stream()
+						.map(rawLink -> transform(rawLink))
+						.collect(Collectors.toList())
+				: List.of();
 
 		return new VXEntity(
 				rawEntity.name(),
@@ -130,7 +138,9 @@ public final class SilverToGold {
 	private static VXDomainType transform(final RawDomainType rawDomainType) {
 		return new VXDomainType(
 				rawDomainType.name(),
-				rawDomainType.description(),
+				rawDomainType.description() != null
+						? rawDomainType.description()
+						: rawDomainType.name(),
 				VXDataType.valueOf(rawDomainType.dataType()),
 				List.of(),
 				List.of());

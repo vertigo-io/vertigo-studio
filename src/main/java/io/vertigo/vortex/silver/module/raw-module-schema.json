@@ -7,24 +7,8 @@
 			"pattern": "^[a-z]+(-[a-z]+)*$",
 			"maxLength": 20
 		},
-		"header": {
-			"type": "object",
-			"properties": {
-				"description": {
-					"type": "string"
-				},
-				"tags": {
-					"type": "array",
-					"items": {
-						"type": "string",
-						"pattern": "^[a-z]+(-[a-z]+)*$",
-						"maxLength": 20
-					}
-				}
-			},
-			"required": [
-				"description"
-			]
+		"description": {
+			"type": "string"
 		},
 		"entities": {
 			"type": "array",
@@ -124,7 +108,7 @@
 	},
 	"required": [
 		"module",
-		"header",
+		"description",
 		"entities"
 	]
 }

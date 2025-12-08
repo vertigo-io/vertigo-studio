@@ -1,12 +1,6 @@
 {
 	"library": "core",
-	"header": {
-		"description": "liste des domainTypes",
-		"tags": [
-			"books",
-			"authors"
-		]
-	},
+	"description": "liste des domainTypes",
 	"domainTypes": [
 		{
 			"name": "do-label",
