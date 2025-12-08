@@ -15,12 +15,12 @@ import io.vertigo.vortex.gold.module.VXModule;
  * @synthetic
  */
 public record VXNotebook(
-		List<VXModule> modules,
-		List<VXLibrary> libraries) {
+		List<VXLibrary> libraries,
+		List<VXModule> modules) {
 
 	public VXNotebook {
 		Assertion.check()
-				.isNotNull(modules)
-				.isNotNull(libraries);
+				.isNotNull(libraries)
+				.isNotNull(modules);
 	}
 }

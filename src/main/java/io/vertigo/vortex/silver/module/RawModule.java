@@ -6,8 +6,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RawModule(
-		String module,
+		String name,
 		String description,
-		List<String> imports,
+		List<String> uses, //libraries
+		List<String> imports, //modules
 		List<RawEntity> entities) {
 }

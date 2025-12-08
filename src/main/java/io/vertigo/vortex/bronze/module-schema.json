@@ -2,13 +2,19 @@
 	"$schema": "http://json-schema.org/draft/2020-12/schema",
 	"type": "object",
 	"properties": {
-		"module": {
+		"name": {
 			"type": "string",
 			"pattern": "^[a-z]+(-[a-z]+)*$",
 			"maxLength": 20
 		},
 		"description": {
 			"type": "string"
+		},
+		"uses": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			}
 		},
 		"imports": {
 			"type": "array",

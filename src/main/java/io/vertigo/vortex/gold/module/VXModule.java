@@ -3,6 +3,7 @@ package io.vertigo.vortex.gold.module;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.vortex.gold.library.VXLibrary;
 
 /**
  * Represents a module.
@@ -12,7 +13,8 @@ import io.vertigo.core.lang.Assertion;
 public record VXModule(
 		String name,
 		String description,
-		List<String> imports,
+		List<VXLibrary> uses,
+		List<VXModule> imports,
 		List<VXEntity> entities) {
 
 	public VXModule {
@@ -20,6 +22,7 @@ public record VXModule(
 				.isNotBlank(name)
 				.isNotBlank(description)
 				.isNotNull(imports)
+				.isNotNull(uses)
 				.isNotNull(entities);
 	}
 }

@@ -1,10 +1,6 @@
 package io.vertigo.vortex.reader;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.vortex.gold.VXNotebook;
@@ -34,8 +30,6 @@ import io.vertigo.vortex.silver.module.RawModule;
  */
 public final class Silver {
 	private final RawNotebook rawNotebook;
-	private final Map<String, VXDomainType> domainTypeCatalog = new HashMap<>();
-	private final Map<String, VXEntity> entityCatalog = new HashMap<>();
 
 	Silver(final RawNotebook rawNotebook) {
 		Assertion.check().isNotNull(rawNotebook);
@@ -47,54 +41,105 @@ public final class Silver {
 	 * Transforms the raw model into a VXNotebook.
 	 */
 	public VXNotebook toGold() {
-		for (final RawLibrary rawLibrarySource : rawNotebook.libraries()) {
-			for (final RawDomainType rawDomainType : rawLibrarySource.domainTypes()) {
-				final var domainType = transform(rawDomainType);
-				domainTypeCatalog.put(domainType.name(), domainType);
-			}
-		}
+		final List<VXLibrary> libraries = rawNotebook.libraries().stream()
+				.map(lib -> transform(lib))
+				.toList();
 
-		for (final RawModule rawModuleSource : rawNotebook.rawModules()) {
-			for (final RawEntity rawEntity : rawModuleSource.entities()) {
-				final var name = "do-" + rawEntity.name();
-				domainTypeCatalog.put(name, new VXDomainType(name, rawEntity.description(), VXDataType.Entity, List.of(), List.of()));
-			}
-
-			for (final RawEntity rawEntity : rawModuleSource.entities()) {
-				final var entity = transform(rawEntity);
-				entityCatalog.put(entity.name(), entity);
-			}
-		}
-		final var rawModules = rawNotebook.rawModules();
-		final var rawLibraries = rawNotebook.libraries();
-
-		// we merge all modules into one.
-		// we merge all libraries into one.
-		final VXLibrary library = new VXLibrary(
-				!rawLibraries.isEmpty()
-						? rawLibraries.get(0).library()
-						: "library",
-				!rawLibraries.isEmpty()
-						? rawLibraries.get(0).description()
-						: "Default Library",
-				new ArrayList(domainTypeCatalog.values()));
-
-		final List<String> imports = rawModules.stream()
-				.filter(rawModule -> rawModule.imports() != null)
-				.flatMap(rawModule -> rawModule.imports().stream())
-				.distinct()
-				.collect(Collectors.toList());
-
-		final VXModule module = new VXModule(
-				!rawModules.isEmpty() ? rawModules.get(0).module() : "module",
-				!rawModules.isEmpty() ? rawModules.get(0).description() : "Default Module",
-				imports,
-				new ArrayList(entityCatalog.values()));
-
-		return new VXNotebook(List.of(module), List.of(library));
+		final List<VXModule> modules = rawNotebook.rawModules().stream()
+				.map(mod -> transform(mod))
+				.toList();
+		//	
+		//		for (final RawEntity rawEntity : rawModuleSource.entities()) {
+		//			final var name = "do-" + rawEntity.name();
+		//			domainTypeCatalog.put(name, new VXDomainType(name, rawEntity.description(), VXDataType.Entity, List.of(), List.of()));
+		//		}
+		//
+		//		for (final RawEntity rawEntity : rawModuleSource.entities()) {
+		//			final var entity = transform(rawEntity);
+		//			entityCatalog.put(entity.name(), entity);
+		//		}
+		//	}
+		//
+		//	final var rawModules = rawNotebook.rawModules();
+		//	final var rawLibraries = rawNotebook.libraries();
+		//
+		//	// we merge all modules into one.
+		//	// we merge all libraries into one.
+		//
+		//	libraryCatalog.put(library.name(),library);
+		//
+		//	final List<String> uses = rawModules.stream()
+		//			.filter(rawModule -> rawModule.uses() != null)
+		//			.flatMap(rawModule -> rawModule.uses().stream())
+		//			.distinct()
+		//			.collect(Collectors.toList());
+		//
+		//	final List<String> imports = rawModules.stream()
+		//			.filter(rawModule -> rawModule.imports() != null)
+		//			.flatMap(rawModule -> rawModule.imports().stream())
+		//			.distinct()
+		//			.collect(Collectors.toList());
+		//
+		//	final VXModule module = new VXModule(
+		//			!rawModules.isEmpty() ? rawModules.get(0).module() : "module",
+		//			!rawModules.isEmpty() ? rawModules.get(0).description() : "Default Module",
+		//			uses,
+		//			imports,
+		//			new ArrayList(entityCatalog.values()));moduleCatalog.put(module.name(),module);
+		//
+		return new VXNotebook(libraries, modules);
 	}
 
-	private VXAttribute transform(final RawAttribute rawAttribute) {
+	private static VXEntity transform(final RawEntity rawEntity) {
+		final List<VXAttribute> attributes = rawEntity.attributes() != null
+				? rawEntity.attributes()
+						.stream()
+						.map(rawAttribute -> transform(rawAttribute))
+						.toList()
+				: List.of();
+
+		final List<VXLink> links = rawEntity.links() != null
+				? rawEntity.links()
+						.stream()
+						.map(rawLink -> transform(rawLink))
+						.toList()
+				: List.of();
+
+		return new VXEntity(
+				rawEntity.name(),
+				rawEntity.description(),
+				attributes,
+				links);
+	}
+
+	private static VXModule transform(final RawModule rawModule) {
+		final List<VXEntity> entities = rawModule.entities().stream()
+				.map(e -> transform(e))
+				.toList();
+		return new VXModule(
+				rawModule.name(),
+				rawModule.description() != null
+						? rawModule.description()
+						: rawModule.name(),
+				List.of(),
+				List.of(),
+				entities);
+	}
+
+	private static VXLibrary transform(final RawLibrary rawLibrary) {
+		final List<VXDomainType> domainTypes = rawLibrary.domainTypes().stream()
+				.map(dt -> transform(dt))
+				.toList();
+
+		return new VXLibrary(
+				rawLibrary.name(),
+				rawLibrary.description() != null
+						? rawLibrary.description()
+						: rawLibrary.name(),
+				domainTypes);
+	}
+
+	private static VXAttribute transform(final RawAttribute rawAttribute) {
 		//default values
 		final VXRole role = rawAttribute.role() == null
 				? VXRole.DATA
@@ -105,13 +150,15 @@ public final class Silver {
 				rawAttribute.description() != null
 						? rawAttribute.description()
 						: rawAttribute.name(),
-				domainTypeCatalog.get(rawAttribute.domainType()),
+				//!!!!!!!!!!!!!!!!!!!!!!!!!!
+				null, //				domainTypeCatalog.get(rawAttribute.domainType()),
 				role,
 				VXCardinality.fromSymbol(rawAttribute.cardinality()));
 	}
 
-	private VXLink transform(final RawLink rawLink) {
-		final VXEntity entity = entityCatalog.get(rawLink.targetEntityName());
+	private static VXLink transform(final RawLink rawLink) {
+		//!!!!!!!!!!!!!!!!
+		final VXEntity entity = null; //entityCatalog.get(rawLink.targetEntityName());
 		Assertion.check().isNotNull(entity, "no entity found for " + rawLink.targetEntityName());
 		return new VXLink(
 				rawLink.name(),
@@ -120,28 +167,6 @@ public final class Silver {
 						: rawLink.name(),
 				entity,
 				VXCardinality.fromSymbol(rawLink.cardinality()));
-	}
-
-	private VXEntity transform(final RawEntity rawEntity) {
-		final List<VXAttribute> attributes = rawEntity.attributes() != null
-				? rawEntity.attributes()
-						.stream()
-						.map(rawAttribute -> transform(rawAttribute))
-						.collect(Collectors.toList())
-				: List.of();
-
-		final List<VXLink> links = rawEntity.links() != null
-				? rawEntity.links()
-						.stream()
-						.map(rawLink -> transform(rawLink))
-						.collect(Collectors.toList())
-				: List.of();
-
-		return new VXEntity(
-				rawEntity.name(),
-				rawEntity.description(),
-				attributes,
-				links);
 	}
 
 	private static VXDomainType transform(final RawDomainType rawDomainType) {

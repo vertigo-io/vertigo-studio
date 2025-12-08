@@ -1,6 +1,9 @@
 {
 	"module": "author",
 	"description": "List of authors",
+	"uses":["core"],
+	"imports":[],
+	
 	"entities": [
 		{
 			"name": "author",

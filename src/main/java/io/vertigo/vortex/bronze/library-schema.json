@@ -2,7 +2,7 @@
 	"$schema": "http://json-schema.org/draft/2020-12/schema",
 	"type": "object",
 	"properties": {
-		"library": {
+		"name": {
 			"type": "string",
 			"pattern": "^[a-z]+(-[a-z]+)*$",
 			"maxLength": 20
