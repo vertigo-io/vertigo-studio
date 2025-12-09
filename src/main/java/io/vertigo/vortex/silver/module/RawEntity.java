@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public record RawEntity(
 		String name,
 		String description,
+		RawId id,
 		List<RawAttribute> attributes,
 		List<RawLink> links) {
 }

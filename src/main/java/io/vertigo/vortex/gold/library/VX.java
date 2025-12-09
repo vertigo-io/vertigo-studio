@@ -2,7 +2,6 @@ package io.vertigo.vortex.gold.library;
 
 import io.vertigo.vortex.gold.library.builders.VXBigDecimalBuilder;
 import io.vertigo.vortex.gold.library.builders.VXBooleanBuilder;
-import io.vertigo.vortex.gold.library.builders.VXEntityBuilder;
 import io.vertigo.vortex.gold.library.builders.VXInstantBuilder;
 import io.vertigo.vortex.gold.library.builders.VXJsonBuilder;
 import io.vertigo.vortex.gold.library.builders.VXLocalDateBuilder;
@@ -54,9 +53,4 @@ public final class VX {
 	public static VXJsonBuilder json(final String name) {
 		return new VXJsonBuilder(name);
 	}
-
-	public static VXEntityBuilder entity(final String name) {
-		return new VXEntityBuilder(name);
-	}
-
 }

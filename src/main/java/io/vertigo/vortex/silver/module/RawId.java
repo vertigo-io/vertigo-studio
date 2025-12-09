@@ -3,9 +3,8 @@ package io.vertigo.vortex.silver.module;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public record RawAttribute(
+public record RawId(
 		String name,
 		String description,
-		String domainType,
-		String cardinality) {
+		String domainType) {
 }

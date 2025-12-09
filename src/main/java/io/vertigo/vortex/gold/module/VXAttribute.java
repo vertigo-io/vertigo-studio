@@ -13,7 +13,6 @@ public record VXAttribute(
 		String name,
 		String description,
 		VXDomainType domainType,
-		VXRole role,
 		VXCardinality cardinality) {
 
 	public VXAttribute {
@@ -21,7 +20,6 @@ public record VXAttribute(
 				.isNotBlank(name)
 				//				.isTrue(name.matches("[a-z](1"))
 				.isNotNull(domainType)
-				.isNotNull(role)
 				.isNotNull(cardinality);
 	}
 }

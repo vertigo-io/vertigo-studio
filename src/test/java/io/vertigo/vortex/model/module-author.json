@@ -10,18 +10,16 @@
 		{
 			"name": "author",
 			"description": "An author",
+			"id": {
+				"name": "id",
+				"description": "Identifier of the author",
+				"domainType": "do-id"
+			},
 			"attributes": [
-				{
-					"name": "id",
-					"description": "Identifier of the author",
-					"domainType": "do-id",
-					"role": "id"
-				},
 				{
 					"name": "first-name",
 					"description": "First name of the author",
 					"domainType": "do-label",
-					"role": "data",
 					"cardinality": "1"
 				},
 				{

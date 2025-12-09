@@ -40,6 +40,27 @@
 					"description": {
 						"type": "string"
 					},
+					"id": {
+						"type": "object",
+						"properties": {
+							"name": {
+								"type": "string",
+								"pattern": "^[a-z]+(-[a-z]+)*$",
+								"maxLength": 30
+							},
+							"description": {
+								"type": "string"
+							},
+							"domainType": {
+								"type": "string",
+								"pattern": "^do-[a-z]+$"
+							}
+						},
+						"required": [
+							"name",
+							"domainType"
+						]
+					},
 					"attributes": {
 						"type": "array",
 						"items": {
@@ -63,14 +84,6 @@
 										"1",
 										"*",
 										"?"
-									]
-								},
-								"role": {
-									"type": "string",
-									"enum": [
-										"id",
-										"data",
-										"computed"
 									]
 								}
 							},
@@ -117,7 +130,7 @@
 				},
 				"required": [
 					"name",
-					"description",
+					"id",
 					"attributes"
 				]
 			}

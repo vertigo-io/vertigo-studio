@@ -10,14 +10,15 @@ import io.vertigo.vortex.gold.library.types.VXDomainType;
 import io.vertigo.vortex.gold.module.VXAttribute;
 import io.vertigo.vortex.gold.module.VXCardinality;
 import io.vertigo.vortex.gold.module.VXEntity;
+import io.vertigo.vortex.gold.module.VXId;
 import io.vertigo.vortex.gold.module.VXLink;
 import io.vertigo.vortex.gold.module.VXModule;
-import io.vertigo.vortex.gold.module.VXRole;
 import io.vertigo.vortex.silver.RawNotebook;
 import io.vertigo.vortex.silver.library.RawDomainType;
 import io.vertigo.vortex.silver.library.RawLibrary;
 import io.vertigo.vortex.silver.module.RawAttribute;
 import io.vertigo.vortex.silver.module.RawEntity;
+import io.vertigo.vortex.silver.module.RawId;
 import io.vertigo.vortex.silver.module.RawLink;
 import io.vertigo.vortex.silver.module.RawModule;
 
@@ -110,8 +111,17 @@ public final class Silver {
 		return new VXEntity(
 				rawEntity.name(),
 				rawEntity.description(),
+				transform(rawEntity.id(), domainTypeCatalog),
 				attributes,
 				links);
+	}
+
+	private static VXId transform(RawId id,
+			final Catalog<VXDomainType> domainTypeCatalog) {
+		return new VXId(
+				id.name(),
+				id.description(),
+				domainTypeCatalog.get(id.domainType()));
 	}
 
 	private static VXLibrary transform(final RawLibrary rawLibrary) {
@@ -130,17 +140,12 @@ public final class Silver {
 	private static VXAttribute transform(
 			final RawAttribute rawAttribute,
 			final Catalog<VXDomainType> domainTypeCatalog) {
-		final VXRole role = rawAttribute.role() == null
-				? VXRole.DATA
-				: VXRole.valueOf(rawAttribute.role().toUpperCase());
-
 		return new VXAttribute(
 				rawAttribute.name(),
 				rawAttribute.description() != null
 						? rawAttribute.description()
 						: rawAttribute.name(),
 				domainTypeCatalog.get(rawAttribute.domainType()),
-				role,
 				VXCardinality.fromSymbol(rawAttribute.cardinality()));
 	}
 
