@@ -10,9 +10,11 @@ import io.vertigo.vortex.gold.library.types.VXDomainType;
 import io.vertigo.vortex.gold.module.VXAttribute;
 import io.vertigo.vortex.gold.module.VXCardinality;
 import io.vertigo.vortex.gold.module.VXEntity;
+import io.vertigo.vortex.gold.module.VXEntityKey;
 import io.vertigo.vortex.gold.module.VXId;
 import io.vertigo.vortex.gold.module.VXLink;
 import io.vertigo.vortex.gold.module.VXModule;
+import io.vertigo.vortex.gold.module.VXUses;
 import io.vertigo.vortex.silver.RawNotebook;
 import io.vertigo.vortex.silver.library.RawDomainType;
 import io.vertigo.vortex.silver.library.RawLibrary;
@@ -21,6 +23,7 @@ import io.vertigo.vortex.silver.module.RawEntity;
 import io.vertigo.vortex.silver.module.RawId;
 import io.vertigo.vortex.silver.module.RawLink;
 import io.vertigo.vortex.silver.module.RawModule;
+import io.vertigo.vortex.silver.module.RawUses;
 
 /**
  * Transforms a raw model into a VXModel.
@@ -31,8 +34,8 @@ import io.vertigo.vortex.silver.module.RawModule;
  */
 public final class Silver {
 	private final RawNotebook rawNotebook;
-	private final Catalog<VXLibrary> libraryCatalog = new Catalog<>();
-	private final Catalog<VXModule> moduleCatalog = new Catalog<>();
+	private final Catalog<String, VXLibrary> libraryCatalog = new Catalog<>();
+	private final Catalog<String, VXModule> moduleCatalog = new Catalog<>();
 
 	Silver(final RawNotebook rawNotebook) {
 		Assertion.check().isNotNull(rawNotebook);
@@ -57,23 +60,35 @@ public final class Silver {
 		return new VXNotebook(libraries, modules);
 	}
 
-	private VXModule transform(final RawModule rawModule) {
-		final Catalog<VXDomainType> domainTypeCatalog = new Catalog<>();
-		final Catalog<VXEntity> entityCatalog = new Catalog<>();
+	private VXUses transform(final RawUses uses) {
+		final List<VXLibrary> libraries = uses.libraries() == null
+				? List.of()
+				: uses.libraries().stream()
+						.map(libraryCatalog::get)
+						.toList();
 
+		final List<VXModule> modules = uses.modules() == null
+				? List.of()
+				: uses.modules().stream()
+						.map(moduleCatalog::get)
+						.toList();
+		return new VXUses(libraries, modules);
+	}
+
+	private VXModule transform(final RawModule rawModule) {
+		final VXUses uses = transform(rawModule.uses());
+
+		final Catalog<String, VXDomainType> domainTypeCatalog = new Catalog<>();
+		final Catalog<VXEntityKey, VXEntity> entityCatalog = new Catalog<>();
 		//---
-		if (rawModule.uses().libraries() != null) {
-			for (String lib : rawModule.uses().libraries()) {
-				VXLibrary library = libraryCatalog.get(lib);
-				library.domainTypes()
-						.forEach(dt -> domainTypeCatalog.put(dt.name(), dt));
+		for (var library : uses.libraries()) {
+			for (var dt : library.domainTypes()) {
+				domainTypeCatalog.put(dt.name(), dt);
 			}
 		}
-		if (rawModule.uses().modules() != null) {
-			for (String lib : rawModule.uses().modules()) {
-				VXModule module = moduleCatalog.get(lib);
-				module.entities()
-						.forEach(e -> entityCatalog.put(e.name(), e));
+		for (var module : uses.modules()) {
+			for (var entity : module.entities()) {
+				entityCatalog.put(entity.key(), entity);
 			}
 		}
 
@@ -85,15 +100,14 @@ public final class Silver {
 				rawModule.description() != null
 						? rawModule.description()
 						: rawModule.module(),
-				List.of(),
-				List.of(),
+				uses,
 				entities);
 	}
 
 	private static VXEntity transform(
 			final RawEntity rawEntity,
-			Catalog<VXDomainType> domainTypeCatalog,
-			Catalog<VXEntity> entityCatalog) {
+			Catalog<String, VXDomainType> domainTypeCatalog,
+			Catalog<VXEntityKey, VXEntity> entityCatalog) {
 		final List<VXAttribute> attributes = rawEntity.attributes() != null
 				? rawEntity.attributes()
 						.stream()
@@ -109,7 +123,7 @@ public final class Silver {
 				: List.of();
 
 		return new VXEntity(
-				rawEntity.name(),
+				new VXEntityKey(rawEntity.name()),
 				rawEntity.description(),
 				transform(rawEntity.id(), domainTypeCatalog),
 				attributes,
@@ -117,7 +131,7 @@ public final class Silver {
 	}
 
 	private static VXId transform(RawId id,
-			final Catalog<VXDomainType> domainTypeCatalog) {
+			final Catalog<String, VXDomainType> domainTypeCatalog) {
 		return new VXId(
 				id.name(),
 				id.description(),
@@ -139,7 +153,7 @@ public final class Silver {
 
 	private static VXAttribute transform(
 			final RawAttribute rawAttribute,
-			final Catalog<VXDomainType> domainTypeCatalog) {
+			final Catalog<String, VXDomainType> domainTypeCatalog) {
 		return new VXAttribute(
 				rawAttribute.name(),
 				rawAttribute.description() != null
@@ -151,13 +165,13 @@ public final class Silver {
 
 	private static VXLink transform(
 			final RawLink rawLink,
-			final Catalog<VXEntity> entityCatalog) {
+			final Catalog<VXEntityKey, VXEntity> entityCatalog) {
 		return new VXLink(
 				rawLink.name(),
 				rawLink.description() != null
 						? rawLink.description()
 						: rawLink.name(),
-				entityCatalog.get(rawLink.targetEntityName()),
+				new VXEntityKey(rawLink.targetEntityName()),
 				VXCardinality.fromSymbol(rawLink.cardinality()));
 	}
 

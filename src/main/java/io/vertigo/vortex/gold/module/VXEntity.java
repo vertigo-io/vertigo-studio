@@ -11,7 +11,7 @@ import io.vertigo.core.lang.Assertion;
  * @synthetic
  */
 public record VXEntity(
-		String name,
+		VXEntityKey key,
 		String description,
 		VXId id,
 		List<VXAttribute> attributes,
@@ -19,7 +19,7 @@ public record VXEntity(
 
 	public VXEntity {
 		Assertion.check()
-				.isNotBlank(name)
+				.isNotNull(key)
 				.isNotNull(id)
 				.isNotNull(attributes)
 				.isNotNull(links);

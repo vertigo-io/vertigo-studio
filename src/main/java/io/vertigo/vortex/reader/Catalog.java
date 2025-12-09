@@ -6,26 +6,25 @@ import java.util.Map;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.VSystemException;
 
-final class Catalog<E> {
-	private final Map<String, E> map = new HashMap<>();
+final class Catalog<K, E> {
+	private final Map<K, E> map = new HashMap<>();
 
-	void put(String name, E element) {
+	void put(K key, E element) {
 		Assertion.check()
-				.isNotBlank(name)
+				.isNotNull(key)
 				.isNotNull(element);
 		//---
-		map.put(name, element);
+		map.put(key, element);
 	}
 
-	E get(String name) {
+	E get(K key) {
 		Assertion.check()
-				.isNotBlank(name);
+				.isNotNull(key);
 		//---
-		E element = map.get(name);
+		E element = map.get(key);
 		if (element == null) {
-			throw new VSystemException("No data found for name = '{0}'", name);
+			throw new VSystemException("No data found for key = '{0}'", key);
 		}
 		return element;
 	}
-
 }

@@ -5,14 +5,15 @@ import io.vertigo.core.lang.Assertion;
 public record VXLink(
 		String name,
 		String description,
-		VXEntity targetEntity,
+		VXEntityKey targetEntityKey,
 		VXCardinality cardinality) {
 
 	public VXLink {
 		Assertion.check()
 				.isNotBlank(name)
 				.isNotBlank(description)
-				.isNotNull(targetEntity)
+				.isNotNull(targetEntityKey)
 				.isNotNull(cardinality);
 	}
+
 }
