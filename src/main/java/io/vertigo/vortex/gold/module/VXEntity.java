@@ -3,6 +3,7 @@ package io.vertigo.vortex.gold.module;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.vortex.gold.VXUID;
 
 /**
  * Represents a business entity.
@@ -11,15 +12,15 @@ import io.vertigo.core.lang.Assertion;
  * @synthetic
  */
 public record VXEntity(
-		VXEntityKey key,
+		VXUID uid, //entity uid aka class name/ table name
 		String description,
-		VXId id,
+		VXId id, //id or pk 
 		List<VXAttribute> attributes,
 		List<VXLink> links) {
 
 	public VXEntity {
 		Assertion.check()
-				.isNotNull(key)
+				.isNotNull(uid)
 				.isNotNull(id)
 				.isNotNull(attributes)
 				.isNotNull(links);
