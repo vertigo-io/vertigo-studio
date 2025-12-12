@@ -1,19 +1,19 @@
 package io.vertigo.vortex.gold.module;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.vortex.gold.VXUID;
+import io.vertigo.vortex.gold.VXKey;
 
 public record VXLink(
 		String name,
 		String description,
-		VXUID targetEntityUid,
+		VXKey targetEntityKey,
 		VXCardinality cardinality) {
 
 	public VXLink {
 		Assertion.check()
 				.isNotBlank(name)
 				.isNotBlank(description)
-				.isNotNull(targetEntityUid)
+				.isNotNull(targetEntityKey)
 				.isNotNull(cardinality);
 	}
 

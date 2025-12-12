@@ -1,0 +1,31 @@
+package io.vertigo.vortex.gold;
+
+import static io.vertigo.vortex.gold.module.VXElementType.ENTITY;
+import static io.vertigo.vortex.gold.module.VXElementType.LIBRARY;
+import static io.vertigo.vortex.gold.module.VXElementType.MODULE;
+
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.VSystemException;
+import io.vertigo.vortex.gold.module.VXElementType;
+
+/**
+ * An UID is defined by 
+ *  - Its owner
+ *  - a name and a Type
+ */
+public record VXKey(VXKey owner, VXElementType type, String name) {
+
+	public VXKey {
+		Assertion.check()
+				.isNotNull(type)
+				.isNotBlank(name);
+
+		switch (type) {
+			case MODULE, LIBRARY -> Assertion.check().isNull(owner, "Owner of a '{0}' must be null", type);
+			case ENTITY -> Assertion.check().isTrue(owner != null && owner.type() == MODULE, "Owner of an '{0}' must be a '{1}'", type, MODULE);
+			case DOMAIN_TYPE -> Assertion.check().isTrue(owner != null && owner.type() == LIBRARY, "Owner of a '{0}' must be a '{1}'", type, LIBRARY);
+			case ATTRIBUTE, ID, LINK -> Assertion.check().isTrue(owner != null && owner.type() == ENTITY, "Owner of an '{0}' must be an '{1}'", type, ENTITY);
+			default -> throw new VSystemException("This element type '{0}' is not supported", type);
+		}
+	}
+}

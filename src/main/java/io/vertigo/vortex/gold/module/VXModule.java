@@ -3,7 +3,7 @@ package io.vertigo.vortex.gold.module;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.vortex.gold.VXUID;
+import io.vertigo.vortex.gold.VXKey;
 
 /**
  * Represents a module.
@@ -11,14 +11,14 @@ import io.vertigo.vortex.gold.VXUID;
  * @synthetic 
  */
 public record VXModule(
-		VXUID uid,
+		VXKey key,
 		String description,
 		VXUses uses,
 		List<VXEntity> entities) {
 
 	public VXModule {
 		Assertion.check()
-				.isNotNull(uid)
+				.isNotNull(key)
 				.isNotBlank(description)
 				.isNotNull(uses)
 				.isNotNull(entities);
