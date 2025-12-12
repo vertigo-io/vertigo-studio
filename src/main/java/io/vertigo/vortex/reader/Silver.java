@@ -3,13 +3,14 @@ package io.vertigo.vortex.reader;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.vortex.gold.VXKey;
 import io.vertigo.vortex.gold.VXNotebook;
-import io.vertigo.vortex.gold.VXUID;
 import io.vertigo.vortex.gold.library.VXLibrary;
 import io.vertigo.vortex.gold.library.types.VXDataType;
 import io.vertigo.vortex.gold.library.types.VXDomainType;
 import io.vertigo.vortex.gold.module.VXAttribute;
 import io.vertigo.vortex.gold.module.VXCardinality;
+import io.vertigo.vortex.gold.module.VXElementType;
 import io.vertigo.vortex.gold.module.VXEntity;
 import io.vertigo.vortex.gold.module.VXId;
 import io.vertigo.vortex.gold.module.VXLink;
@@ -34,8 +35,8 @@ import io.vertigo.vortex.silver.module.RawUses;
  */
 public final class Silver {
 	private final RawNotebook rawNotebook;
-	private final Catalog<String, VXLibrary> libraryCatalog = new Catalog<>();
-	private final Catalog<VXUID, VXModule> moduleCatalog = new Catalog<>();
+	private final Catalog<VXKey, VXLibrary> libraryCatalog = new Catalog<>();
+	private final Catalog<VXKey, VXModule> moduleCatalog = new Catalog<>();
 
 	Silver(final RawNotebook rawNotebook) {
 		Assertion.check().isNotNull(rawNotebook);
@@ -43,15 +44,19 @@ public final class Silver {
 		this.rawNotebook = rawNotebook;
 	}
 
-	private static VXUID createKeyForModule(String name) {
-		return new VXUID(null, "module", name);
+	private static VXKey createKeyForModule(String name) {
+		return new VXKey(null, VXElementType.MODULE, name);
 	}
 
-	private static VXUID createKeyForEntity(VXUID owner, String name) {
+	private static VXKey createKeyForLibrary(String name) {
+		return new VXKey(null, VXElementType.LIBRARY, name);
+	}
+
+	private static VXKey createKeyForEntity(VXKey owner, String name) {
 		//si name ne contient pas de "." alors on prends l'owner ( on reste dans le même module) 
 		//Sinon on cherche me module
 		int i = name.indexOf(".");
-		VXUID _owner;
+		VXKey _owner;
 		if (i < 0) {
 			_owner = owner;
 		} else {
@@ -59,11 +64,10 @@ public final class Silver {
 			//TODO
 			//TODO
 			//TODO
-			//TODO
 			_owner = owner;
 		}
 
-		return new VXUID(_owner, "entity", name);
+		return new VXKey(_owner, VXElementType.ENTITY, name);
 	}
 
 	/**
@@ -72,12 +76,12 @@ public final class Silver {
 	public VXNotebook toGold() {
 		final List<VXLibrary> libraries = rawNotebook.rawLibraries().stream()
 				.map(lib -> transform(lib))
-				.peek(lib -> libraryCatalog.put(lib.name(), lib))
+				.peek(lib -> libraryCatalog.put(lib.key(), lib))
 				.toList();
 
 		final List<VXModule> modules = rawNotebook.rawModules().stream()
 				.map(mod -> transform(mod))
-				.peek(mod -> moduleCatalog.put(mod.uid(), mod))
+				.peek(mod -> moduleCatalog.put(mod.key(), mod))
 				.toList();
 
 		return new VXNotebook(libraries, modules);
@@ -87,25 +91,26 @@ public final class Silver {
 		final List<VXLibrary> libraries = uses.libraries() == null
 				? List.of()
 				: uses.libraries().stream()
+						.map(Silver::createKeyForLibrary)
 						.map(libraryCatalog::get)
 						.toList();
 
 		final List<VXModule> modules = uses.modules() == null
 				? List.of()
 				: uses.modules().stream()
-						.map(name -> createKeyForModule(name))
+						.map(Silver::createKeyForModule)
 						.map(moduleCatalog::get)
 						.toList();
 		return new VXUses(libraries, modules);
 	}
 
 	private VXModule transform(final RawModule rawModule) {
-		final VXUID moduleUKey = createKeyForModule(rawModule.module());
+		final VXKey moduleUKey = createKeyForModule(rawModule.module());
 
 		final VXUses uses = transform(rawModule.uses());
 
 		final Catalog<String, VXDomainType> domainTypeCatalog = new Catalog<>();
-		final Catalog<VXUID, VXEntity> entityCatalog = new Catalog<>();
+		final Catalog<VXKey, VXEntity> entityCatalog = new Catalog<>();
 		//---
 		for (var library : uses.libraries()) {
 			for (var dt : library.domainTypes()) {
@@ -114,7 +119,7 @@ public final class Silver {
 		}
 		for (var module : uses.modules()) {
 			for (var entity : module.entities()) {
-				entityCatalog.put(entity.uid(), entity);
+				entityCatalog.put(entity.key(), entity);
 			}
 		}
 
@@ -132,9 +137,9 @@ public final class Silver {
 
 	private static VXEntity transform(
 			final RawEntity rawEntity,
-			final VXUID owner, //the module UKey
+			final VXKey owner, //the module UKey
 			Catalog<String, VXDomainType> domainTypeCatalog,
-			Catalog<VXUID, VXEntity> entityCatalog) {
+			Catalog<VXKey, VXEntity> entityCatalog) {
 		final List<VXAttribute> attributes = rawEntity.attributes() != null
 				? rawEntity.attributes()
 						.stream()
@@ -171,7 +176,7 @@ public final class Silver {
 				.toList();
 
 		return new VXLibrary(
-				rawLibrary.library(),
+				createKeyForLibrary(rawLibrary.library()),
 				rawLibrary.description() != null
 						? rawLibrary.description()
 						: rawLibrary.library(),
@@ -192,8 +197,8 @@ public final class Silver {
 
 	private static VXLink transform(
 			final RawLink rawLink,
-			final VXUID owner,
-			final Catalog<VXUID, VXEntity> entityCatalog) {
+			final VXKey owner,
+			final Catalog<VXKey, VXEntity> entityCatalog) {
 		return new VXLink(
 				rawLink.name(),
 				rawLink.description() != null
