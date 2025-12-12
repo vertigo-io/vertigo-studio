@@ -1,5 +1,6 @@
 package io.vertigo.vortex.gold.library.builders;
 
+import io.vertigo.vortex.gold.VXKey;
 import io.vertigo.vortex.gold.library.types.VXDataType;
 import io.vertigo.vortex.gold.library.validators.string.VXContainsValidator;
 import io.vertigo.vortex.gold.library.validators.string.VXEmailValidator;
@@ -13,8 +14,8 @@ import io.vertigo.vortex.gold.library.validators.string.VXStartsWithValidator;
 import io.vertigo.vortex.gold.library.validators.string.VXUrlValidator;
 
 public final class VXStringBuilder extends VXAbstractDomainTypeBuilder<VXStringBuilder> {
-	public VXStringBuilder(final String name) {
-		super(name, VXDataType.String);
+	public VXStringBuilder(final VXKey libraryKey, final String name) {
+		super(libraryKey, name, VXDataType.String);
 	}
 
 	//--- Length

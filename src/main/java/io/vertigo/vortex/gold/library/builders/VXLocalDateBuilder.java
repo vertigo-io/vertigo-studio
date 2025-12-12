@@ -2,6 +2,7 @@ package io.vertigo.vortex.gold.library.builders;
 
 import java.time.LocalDate;
 
+import io.vertigo.vortex.gold.VXKey;
 import io.vertigo.vortex.gold.library.types.VXDataType;
 import io.vertigo.vortex.gold.library.validators.date.VXLocalDateAfterValidator;
 import io.vertigo.vortex.gold.library.validators.date.VXLocalDateBeforeValidator;
@@ -9,8 +10,8 @@ import io.vertigo.vortex.gold.library.validators.date.VXLocalDateFutureValidator
 import io.vertigo.vortex.gold.library.validators.date.VXLocalDatePastValidator;
 
 public final class VXLocalDateBuilder extends VXAbstractDomainTypeBuilder<VXLocalDateBuilder> {
-	public VXLocalDateBuilder(final String name) {
-		super(name, VXDataType.LocalDate);
+	public VXLocalDateBuilder(final VXKey libraryKey, final String name) {
+		super(libraryKey, name, VXDataType.LocalDate);
 	}
 
 	public VXLocalDateBuilder after(final LocalDate date) {

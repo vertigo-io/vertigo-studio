@@ -5,11 +5,12 @@ import java.util.Map;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.VSystemException;
+import io.vertigo.vortex.gold.VXKey;
 
-final class Catalog<K, E> {
-	private final Map<K, E> map = new HashMap<>();
+final class Catalog<E> {
+	private final Map<VXKey, E> map = new HashMap<>();
 
-	void put(K key, E element) {
+	void put(VXKey key, E element) {
 		Assertion.check()
 				.isNotNull(key)
 				.isNotNull(element);
@@ -17,7 +18,7 @@ final class Catalog<K, E> {
 		map.put(key, element);
 	}
 
-	E get(K key) {
+	E get(VXKey key) {
 		Assertion.check()
 				.isNotNull(key);
 		//---

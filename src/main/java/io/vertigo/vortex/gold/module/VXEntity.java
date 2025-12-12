@@ -21,6 +21,7 @@ public record VXEntity(
 	public VXEntity {
 		Assertion.check()
 				.isNotNull(key)
+				.isTrue(key.type() == VXElementType.ENTITY, "An entity's key must be of type ENTITY_TYPE")
 				.isNotNull(id)
 				.isNotNull(attributes)
 				.isNotNull(links);

@@ -1,9 +1,10 @@
 package io.vertigo.vortex.gold.library.builders;
 
+import io.vertigo.vortex.gold.VXKey;
 import io.vertigo.vortex.gold.library.types.VXDataType;
 
 public final class VXBooleanBuilder extends VXAbstractDomainTypeBuilder<VXBooleanBuilder> {
-	public VXBooleanBuilder(final String name) {
-		super(name, VXDataType.Boolean);
+	public VXBooleanBuilder(final VXKey libraryKey, final String name) {
+		super(libraryKey, name, VXDataType.Boolean);
 	}
 }

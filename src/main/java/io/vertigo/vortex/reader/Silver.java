@@ -35,8 +35,8 @@ import io.vertigo.vortex.silver.module.RawUses;
  */
 public final class Silver {
 	private final RawNotebook rawNotebook;
-	private final Catalog<VXKey, VXLibrary> libraryCatalog = new Catalog<>();
-	private final Catalog<VXKey, VXModule> moduleCatalog = new Catalog<>();
+	private final Catalog<VXLibrary> libraryCatalog = new Catalog<>();
+	private final Catalog<VXModule> moduleCatalog = new Catalog<>();
 
 	Silver(final RawNotebook rawNotebook) {
 		Assertion.check().isNotNull(rawNotebook);
@@ -50,6 +50,10 @@ public final class Silver {
 
 	private static VXKey createKeyForLibrary(String name) {
 		return new VXKey(null, VXElementType.LIBRARY, name);
+	}
+
+	private static VXKey createKeyForDomainType(String name) {
+		return new VXKey(null, VXElementType.DOMAIN_TYPE, name);
 	}
 
 	private static VXKey createKeyForEntity(VXKey owner, String name) {
@@ -109,12 +113,12 @@ public final class Silver {
 
 		final VXUses uses = transform(rawModule.uses());
 
-		final Catalog<String, VXDomainType> domainTypeCatalog = new Catalog<>();
-		final Catalog<VXKey, VXEntity> entityCatalog = new Catalog<>();
+		final Catalog<VXDomainType> domainTypeCatalog = new Catalog<>();
+		final Catalog<VXEntity> entityCatalog = new Catalog<>();
 		//---
 		for (var library : uses.libraries()) {
 			for (var dt : library.domainTypes()) {
-				domainTypeCatalog.put(dt.name(), dt);
+				domainTypeCatalog.put(dt.key(), dt);
 			}
 		}
 		for (var module : uses.modules()) {
@@ -138,8 +142,8 @@ public final class Silver {
 	private static VXEntity transform(
 			final RawEntity rawEntity,
 			final VXKey owner, //the module UKey
-			Catalog<String, VXDomainType> domainTypeCatalog,
-			Catalog<VXKey, VXEntity> entityCatalog) {
+			Catalog<VXDomainType> domainTypeCatalog,
+			Catalog<VXEntity> entityCatalog) {
 		final List<VXAttribute> attributes = rawEntity.attributes() != null
 				? rawEntity.attributes()
 						.stream()
@@ -163,20 +167,21 @@ public final class Silver {
 	}
 
 	private static VXId transform(RawId id,
-			final Catalog<String, VXDomainType> domainTypeCatalog) {
+			final Catalog<VXDomainType> domainTypeCatalog) {
 		return new VXId(
 				id.name(),
 				id.description(),
-				domainTypeCatalog.get(id.domainType()));
+				domainTypeCatalog.get(createKeyForDomainType(id.domainType())));
 	}
 
 	private static VXLibrary transform(final RawLibrary rawLibrary) {
+		final VXKey libraryKey = createKeyForLibrary(rawLibrary.library());
 		final List<VXDomainType> domainTypes = rawLibrary.domainTypes().stream()
-				.map(dt -> transform(dt))
+				.map(dt -> transform(dt, libraryKey))
 				.toList();
 
 		return new VXLibrary(
-				createKeyForLibrary(rawLibrary.library()),
+				libraryKey,
 				rawLibrary.description() != null
 						? rawLibrary.description()
 						: rawLibrary.library(),
@@ -185,20 +190,20 @@ public final class Silver {
 
 	private static VXAttribute transform(
 			final RawAttribute rawAttribute,
-			final Catalog<String, VXDomainType> domainTypeCatalog) {
+			final Catalog<VXDomainType> domainTypeCatalog) {
 		return new VXAttribute(
 				rawAttribute.name(),
 				rawAttribute.description() != null
 						? rawAttribute.description()
 						: rawAttribute.name(),
-				domainTypeCatalog.get(rawAttribute.domainType()),
+				domainTypeCatalog.get(createKeyForDomainType(rawAttribute.domainType())),
 				VXCardinality.fromSymbol(rawAttribute.cardinality()));
 	}
 
 	private static VXLink transform(
 			final RawLink rawLink,
 			final VXKey owner,
-			final Catalog<VXKey, VXEntity> entityCatalog) {
+			final Catalog<VXEntity> entityCatalog) {
 		return new VXLink(
 				rawLink.name(),
 				rawLink.description() != null
@@ -208,9 +213,12 @@ public final class Silver {
 				VXCardinality.fromSymbol(rawLink.cardinality()));
 	}
 
-	private static VXDomainType transform(final RawDomainType rawDomainType) {
+	private static VXDomainType transform(
+			final RawDomainType rawDomainType,
+			final VXKey libraryKey) {
+		final VXKey domainTypeKey = new VXKey(libraryKey, VXElementType.DOMAIN_TYPE, rawDomainType.name());
 		return new VXDomainType(
-				rawDomainType.name(),
+				domainTypeKey,
 				rawDomainType.description() != null
 						? rawDomainType.description()
 						: rawDomainType.name(),

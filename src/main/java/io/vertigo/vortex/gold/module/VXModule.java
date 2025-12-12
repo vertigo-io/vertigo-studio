@@ -19,6 +19,7 @@ public record VXModule(
 	public VXModule {
 		Assertion.check()
 				.isNotNull(key)
+				.isTrue(key.type() == VXElementType.MODULE, "An module's key must be of type MODULE_TYPE")
 				.isNotBlank(description)
 				.isNotNull(uses)
 				.isNotNull(entities);

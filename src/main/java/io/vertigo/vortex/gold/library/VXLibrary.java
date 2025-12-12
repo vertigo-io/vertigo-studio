@@ -5,6 +5,7 @@ import java.util.List;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.vortex.gold.VXKey;
 import io.vertigo.vortex.gold.library.types.VXDomainType;
+import io.vertigo.vortex.gold.module.VXElementType;
 
 /**
  * Represents the entire data model.
@@ -19,6 +20,7 @@ public record VXLibrary(
 	public VXLibrary {
 		Assertion.check()
 				.isNotNull(key)
+				.isTrue(key.type() == VXElementType.LIBRARY, "An library's key must be of type LIBRARY_TYPE")
 				.isNotBlank(description)
 				.isNotNull(domainTypes);
 	}

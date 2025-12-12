@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.vortex.gold.VXKey;
+import io.vertigo.vortex.gold.module.VXElementType;
 
 /**
  * Represents a domain type.
@@ -12,35 +14,28 @@ import io.vertigo.core.lang.Assertion;
  * @synthetic
  */
 public record VXDomainType(
-		String name,
+		VXKey key,
 		String description,
 		VXDataType dataType,
 		List<VXValidator> validators,
 		List<VXProperty> properties) {
 
-	public VXDomainType(
-			String name,
-			String description,
-			VXDataType dataType,
-			List<VXValidator> validators,
-			List<VXProperty> properties) {
+	public VXDomainType {
 		Assertion.check()
-				.isNotBlank(name)
+				.isNotNull(key)
+				.isTrue(key.type() == VXElementType.DOMAIN_TYPE, "A VXDomainType's key must be of type DOMAIN_TYPE")
 				.isNotBlank(description)
 				.isNotNull(dataType)
 				.isNotNull(validators);
-		this.name = name;
-		this.description = description;
-		this.dataType = dataType;
-		this.validators = validators;
-		this.properties = buildProperties(validators, properties);
+
+		properties = buildProperties(validators, properties);
 	}
 
 	private static List<VXProperty> buildProperties(
-			List<VXValidator> validators,
-			List<VXProperty> properties) {
+			final List<VXValidator> validators,
+			final List<VXProperty> properties) {
 		final List<VXProperty> _properties = new ArrayList<>(properties);
-		for (var v : validators) {
+		for (final var v : validators) {
 			_properties.add(v.getProperty());
 		}
 		return _properties;
