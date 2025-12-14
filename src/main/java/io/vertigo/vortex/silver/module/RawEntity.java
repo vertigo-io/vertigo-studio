@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RawEntity(
-		String name,
+		String key,
 		String description,
 		RawId id,
 		List<RawAttribute> attributes,

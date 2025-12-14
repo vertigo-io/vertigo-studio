@@ -78,7 +78,7 @@ public final class Bronze {
 		try {
 			return mapper.readValue(file, clazz);
 		} catch (Exception e) {
-			throw new VSystemException(e, "JSON validation failed");
+			throw new VSystemException(e, "Unable to read JSON");
 		}
 	}
 

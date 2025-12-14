@@ -4,11 +4,11 @@
 	
 	"domainTypes": [
 		{
-			"name": "do-label",
+			"key": "do-label",
 			"dataType": "String"
 		},
 		{
-			"name": "do-id",
+			"key": "do-id",
 			"dataType": "Long"
 		}
 	]

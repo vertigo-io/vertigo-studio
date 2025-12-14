@@ -149,7 +149,7 @@ public final class Silver {
 			final VXKey owner, //the module UKey
 			Catalog<VXDomainType> domainTypeCatalog,
 			Catalog<VXEntity> entityCatalog) {
-		final VXKey entityKey = createKeyForEntity(owner, rawEntity.name());
+		final VXKey entityKey = createKeyForEntity(owner, rawEntity.key());
 		final List<VXAttribute> attributes = rawEntity.attributes() != null
 				? rawEntity.attributes()
 						.stream()
@@ -175,7 +175,7 @@ public final class Silver {
 	private static VXId transform(RawId id,
 			final VXKey entityKey,
 			final Catalog<VXDomainType> domainTypeCatalog) {
-		final VXKey idKey = new VXKey(entityKey, VXElementType.ID, id.name());
+		final VXKey idKey = new VXKey(entityKey, VXElementType.ID, id.key());
 		return new VXId(
 				idKey,
 				id.description(),
@@ -200,12 +200,12 @@ public final class Silver {
 			final RawAttribute rawAttribute,
 			final VXKey entityKey,
 			final Catalog<VXDomainType> domainTypeCatalog) {
-		final VXKey attributeKey = new VXKey(entityKey, VXElementType.ATTRIBUTE, rawAttribute.name());
+		final VXKey attributeKey = new VXKey(entityKey, VXElementType.ATTRIBUTE, rawAttribute.key());
 		return new VXAttribute(
 				attributeKey,
 				rawAttribute.description() != null
 						? rawAttribute.description()
-						: rawAttribute.name(),
+						: rawAttribute.key(),
 				domainTypeCatalog.get(createKeyForDomainType(rawAttribute.domainType())),
 				VXCardinality.fromSymbol(rawAttribute.cardinality()));
 	}
@@ -215,12 +215,12 @@ public final class Silver {
 			final VXKey entityKey,
 			final VXKey owner,
 			final Catalog<VXEntity> entityCatalog) {
-		final VXKey linkKey = new VXKey(entityKey, VXElementType.LINK, rawLink.name());
+		final VXKey linkKey = new VXKey(entityKey, VXElementType.LINK, rawLink.key());
 		return new VXLink(
 				linkKey,
 				rawLink.description() != null
 						? rawLink.description()
-						: rawLink.name(),
+						: rawLink.key(),
 				createKeyForEntity(owner, rawLink.targetEntityName()),
 				VXCardinality.fromSymbol(rawLink.cardinality()));
 	}
@@ -228,12 +228,12 @@ public final class Silver {
 	private static VXDomainType transform(
 			final RawDomainType rawDomainType,
 			final VXKey libraryKey) {
-		final VXKey domainTypeKey = new VXKey(libraryKey, VXElementType.DOMAIN_TYPE, rawDomainType.name());
+		final VXKey domainTypeKey = new VXKey(libraryKey, VXElementType.DOMAIN_TYPE, rawDomainType.key());
 		return new VXDomainType(
 				domainTypeKey,
 				rawDomainType.description() != null
 						? rawDomainType.description()
-						: rawDomainType.name(),
+						: rawDomainType.key(),
 				VXDataType.valueOf(rawDomainType.dataType()),
 				//!!!!!!!!!!!!!!!!!!!!!!!
 				List.of(),

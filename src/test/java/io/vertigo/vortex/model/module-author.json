@@ -8,22 +8,22 @@
 	
 	"entities": [
 		{
-			"name": "author",
+			"key": "author",
 			"description": "An author",
 			"id": {
-				"name": "id",
+				"key": "id",
 				"description": "Identifier of the author",
 				"domainType": "do-id"
 			},
 			"attributes": [
 				{
-					"name": "first-name",
+					"key": "first-name",
 					"description": "First name of the author",
 					"domainType": "do-label",
 					"cardinality": "1"
 				},
 				{
-					"name": "last-name",
+					"key": "last-name",
 					"description": "Last name of the author",
 					"domainType": "do-label"
 				}

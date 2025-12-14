@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RawLink(
-		String name,
+		String key,
 		String description,
 		String targetEntityName,
 		String cardinality) {

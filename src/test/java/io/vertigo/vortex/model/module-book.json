@@ -8,22 +8,22 @@
 	
 	"entities": [
 		{
-			"name": "book",
+			"key": "book",
 			"description": "A book",
 			"id": {
-				"name": "id",
+				"key": "id",
 				"description": "Identifier of the book",
 				"domainType": "do-id"
 			},
 			"attributes": [
 				{
-					"name": "title",
+					"key": "title",
 					"description": "Title of the book",
 					"domainType": "do-label",
 					"cardinality": "1"
 				},
 				{
-					"name": "isbn",
+					"key": "isbn",
 					"description": "ISBN of the book",
 					"domainType": "do-label",
 					"cardinality": "1"
@@ -31,7 +31,7 @@
 			],
 			"links": [
 				{
-					"name": "author",
+					"key": "author",
 					"description": "Author of the book",
 					"targetEntityName": "author",
 					"cardinality": "1"

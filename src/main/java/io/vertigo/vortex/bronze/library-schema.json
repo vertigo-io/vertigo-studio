@@ -15,7 +15,7 @@
 			"items": {
 				"type": "object",
 				"properties": {
-					"name": {
+					"key": {
 						"type": "string",
 						"pattern": "^do-[a-z]+$",
 						"maxLength": 20
@@ -34,7 +34,7 @@
 					}
 				},
 				"required": [
-					"name",
+					"key",
 					"dataType"
 				]
 			}
