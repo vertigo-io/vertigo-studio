@@ -149,22 +149,23 @@ public final class Silver {
 			final VXKey owner, //the module UKey
 			Catalog<VXDomainType> domainTypeCatalog,
 			Catalog<VXEntity> entityCatalog) {
+		final VXKey entityKey = createKeyForEntity(owner, rawEntity.name());
 		final List<VXAttribute> attributes = rawEntity.attributes() != null
 				? rawEntity.attributes()
 						.stream()
-						.map(rawAttribute -> transform(rawAttribute, domainTypeCatalog))
+						.map(rawAttribute -> transform(rawAttribute, entityKey, domainTypeCatalog))
 						.toList()
 				: List.of();
 
 		final List<VXLink> links = rawEntity.links() != null
 				? rawEntity.links()
 						.stream()
-						.map(rawLink -> transform(rawLink, owner, entityCatalog))
+						.map(rawLink -> transform(rawLink, entityKey, owner, entityCatalog))
 						.toList()
 				: List.of();
 
 		return new VXEntity(
-				createKeyForEntity(owner, rawEntity.name()),
+				entityKey,
 				rawEntity.description(),
 				transform(rawEntity.id(), domainTypeCatalog),
 				attributes,
@@ -195,9 +196,11 @@ public final class Silver {
 
 	private static VXAttribute transform(
 			final RawAttribute rawAttribute,
+			final VXKey entityKey,
 			final Catalog<VXDomainType> domainTypeCatalog) {
+		final VXKey attributeKey = new VXKey(entityKey, VXElementType.ATTRIBUTE, rawAttribute.name());
 		return new VXAttribute(
-				rawAttribute.name(),
+				attributeKey,
 				rawAttribute.description() != null
 						? rawAttribute.description()
 						: rawAttribute.name(),
@@ -207,10 +210,12 @@ public final class Silver {
 
 	private static VXLink transform(
 			final RawLink rawLink,
+			final VXKey entityKey,
 			final VXKey owner,
 			final Catalog<VXEntity> entityCatalog) {
+		final VXKey linkKey = new VXKey(entityKey, VXElementType.LINK, rawLink.name());
 		return new VXLink(
-				rawLink.name(),
+				linkKey,
 				rawLink.description() != null
 						? rawLink.description()
 						: rawLink.name(),

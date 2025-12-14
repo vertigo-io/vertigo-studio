@@ -1,10 +1,11 @@
 package io.vertigo.vortex.gold;
 
 public enum VXElementType {
-	MODULE,
 	LIBRARY,
-	ENTITY,
 	DOMAIN_TYPE,
+	//---
+	MODULE,
+	ENTITY,
 	ATTRIBUTE,
 	LINK,
 	ID

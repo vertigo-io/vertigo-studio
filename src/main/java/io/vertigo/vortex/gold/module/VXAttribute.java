@@ -1,6 +1,8 @@
 package io.vertigo.vortex.gold.module;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.vortex.gold.VXElementType;
+import io.vertigo.vortex.gold.VXKey;
 import io.vertigo.vortex.gold.library.types.VXDomainType;
 
 /**
@@ -10,15 +12,15 @@ import io.vertigo.vortex.gold.library.types.VXDomainType;
  * @synthetic
  */
 public record VXAttribute(
-		String name,
+		VXKey key,
 		String description,
 		VXDomainType domainType,
 		VXCardinality cardinality) {
 
 	public VXAttribute {
 		Assertion.check()
-				.isNotBlank(name)
-				//				.isTrue(name.matches("[a-z](1"))
+				.isNotNull(key)
+				.isTrue(key.type() == VXElementType.ATTRIBUTE, "An attribute's key must be of type ATTRIBUTE")
 				.isNotNull(domainType)
 				.isNotNull(cardinality);
 	}
