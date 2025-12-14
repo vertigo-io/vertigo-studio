@@ -20,7 +20,7 @@ public record VXLibrary(
 	public VXLibrary {
 		Assertion.check()
 				.isNotNull(key)
-				.isTrue(key.type() == VXElementType.LIBRARY, "An library's key must be of type LIBRARY_TYPE")
+				.isTrue(key.type() == VXElementType.LIBRARY, "A library's key must be of type LIBRARY")
 				.isNotBlank(description)
 				.isNotNull(domainTypes);
 	}
