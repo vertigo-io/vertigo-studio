@@ -167,15 +167,17 @@ public final class Silver {
 		return new VXEntity(
 				entityKey,
 				rawEntity.description(),
-				transform(rawEntity.id(), domainTypeCatalog),
+				transform(rawEntity.id(), entityKey, domainTypeCatalog),
 				attributes,
 				links);
 	}
 
 	private static VXId transform(RawId id,
+			final VXKey entityKey,
 			final Catalog<VXDomainType> domainTypeCatalog) {
+		final VXKey idKey = new VXKey(entityKey, VXElementType.ID, id.name());
 		return new VXId(
-				id.name(),
+				idKey,
 				id.description(),
 				domainTypeCatalog.get(createKeyForDomainType(id.domainType())));
 	}

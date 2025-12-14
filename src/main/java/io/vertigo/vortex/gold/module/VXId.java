@@ -1,6 +1,8 @@
 package io.vertigo.vortex.gold.module;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.vortex.gold.VXElementType;
+import io.vertigo.vortex.gold.VXKey;
 import io.vertigo.vortex.gold.library.types.VXDomainType;
 
 /**
@@ -8,13 +10,14 @@ import io.vertigo.vortex.gold.library.types.VXDomainType;
  * @synthetic
  */
 public record VXId(
-		String name,
+		VXKey key,
 		String description,
 		VXDomainType domainType) {
 
 	public VXId {
 		Assertion.check()
-				.isNotBlank(name)
+				.isNotNull(key)
+				.isTrue(key.type() == VXElementType.ID, "An id's key must be of type ID")
 				.isNotNull(domainType);
 	}
 }
