@@ -1,4 +1,4 @@
-package io.vertigo.vortex.gold.module;
+package io.vertigo.vortex.gold;
 
 public enum VXElementType {
 	MODULE,

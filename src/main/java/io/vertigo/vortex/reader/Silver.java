@@ -3,6 +3,7 @@ package io.vertigo.vortex.reader;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.vortex.gold.VXElementType;
 import io.vertigo.vortex.gold.VXKey;
 import io.vertigo.vortex.gold.VXNotebook;
 import io.vertigo.vortex.gold.library.VXLibrary;
@@ -10,7 +11,6 @@ import io.vertigo.vortex.gold.library.types.VXDataType;
 import io.vertigo.vortex.gold.library.types.VXDomainType;
 import io.vertigo.vortex.gold.module.VXAttribute;
 import io.vertigo.vortex.gold.module.VXCardinality;
-import io.vertigo.vortex.gold.module.VXElementType;
 import io.vertigo.vortex.gold.module.VXEntity;
 import io.vertigo.vortex.gold.module.VXId;
 import io.vertigo.vortex.gold.module.VXLink;
@@ -53,7 +53,12 @@ public final class Silver {
 	}
 
 	private static VXKey createKeyForDomainType(String name) {
-		return new VXKey(null, VXElementType.DOMAIN_TYPE, name);
+		//!!!!!!
+		//!!!!!! TODO
+		//!!!!!!
+		//!!!!!!
+		final VXKey libraryKey = new VXKey(null, VXElementType.LIBRARY, "core");
+		return new VXKey(libraryKey, VXElementType.DOMAIN_TYPE, name);
 	}
 
 	private static VXKey createKeyForEntity(VXKey owner, String name) {

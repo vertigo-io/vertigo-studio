@@ -5,12 +5,12 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.Builder;
+import io.vertigo.vortex.gold.VXElementType;
 import io.vertigo.vortex.gold.VXKey;
 import io.vertigo.vortex.gold.library.types.VXDataType;
 import io.vertigo.vortex.gold.library.types.VXDomainType;
 import io.vertigo.vortex.gold.library.types.VXProperty;
 import io.vertigo.vortex.gold.library.types.VXValidator;
-import io.vertigo.vortex.gold.module.VXElementType;
 
 abstract class VXAbstractDomainTypeBuilder<B extends VXAbstractDomainTypeBuilder<B>> implements Builder<VXDomainType> {
 	private final VXKey _libraryKey;

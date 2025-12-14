@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.vortex.gold.VXElementType;
 import io.vertigo.vortex.gold.VXKey;
-import io.vertigo.vortex.gold.module.VXElementType;
 
 /**
  * Represents a domain type.

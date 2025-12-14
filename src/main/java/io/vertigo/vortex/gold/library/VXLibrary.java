@@ -3,9 +3,9 @@ package io.vertigo.vortex.gold.library;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.vortex.gold.VXElementType;
 import io.vertigo.vortex.gold.VXKey;
 import io.vertigo.vortex.gold.library.types.VXDomainType;
-import io.vertigo.vortex.gold.module.VXElementType;
 
 /**
  * Represents the entire data model.

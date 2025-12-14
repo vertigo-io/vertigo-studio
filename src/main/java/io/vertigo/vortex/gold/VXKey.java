@@ -1,17 +1,28 @@
 package io.vertigo.vortex.gold;
 
-import static io.vertigo.vortex.gold.module.VXElementType.ENTITY;
-import static io.vertigo.vortex.gold.module.VXElementType.LIBRARY;
-import static io.vertigo.vortex.gold.module.VXElementType.MODULE;
+import static io.vertigo.vortex.gold.VXElementType.ENTITY;
+import static io.vertigo.vortex.gold.VXElementType.LIBRARY;
+import static io.vertigo.vortex.gold.VXElementType.MODULE;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.VSystemException;
-import io.vertigo.vortex.gold.module.VXElementType;
 
 /**
  * An UID is defined by 
  *  - Its owner
  *  - a name and a Type
+ * 
+ * Keys are organized in a tree 
+ * 
+ * root
+ * │
+ * ├── module
+ * │   └── entity
+ * │       ├── attribute
+ * │       └── link
+ * │
+ * └── library
+ *     └── domainType
  */
 public record VXKey(VXKey owner, VXElementType type, String name) {
 

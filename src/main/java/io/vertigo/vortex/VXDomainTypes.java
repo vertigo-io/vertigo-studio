@@ -1,9 +1,9 @@
 package io.vertigo.vortex;
 
+import io.vertigo.vortex.gold.VXElementType;
 import io.vertigo.vortex.gold.VXKey;
 import io.vertigo.vortex.gold.library.VX;
 import io.vertigo.vortex.gold.library.types.VXDomainType;
-import io.vertigo.vortex.gold.module.VXElementType;
 
 public final class VXDomainTypes {
 	private VXDomainTypes() {
