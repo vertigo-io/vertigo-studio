@@ -1,36 +1,53 @@
 {
 	"$schema": "http://json-schema.org/draft/2020-12/schema",
 	"$defs": {
-	   "key-type": {
-	     "type": "string",
-	     "pattern": "^[a-z]+(-[a-z]+)*$",
-	     "maxLength": 30
-	   },
-	   "description-type": {
-	   	     "type": "string",
-	   	     "maxLength": 250
-	   }
+		"key-type": {
+			"type": "string",
+			"pattern": "^[a-z]+(-[a-z]+)*$",
+			"maxLength": 30
+		},
+		"description-type": {
+			"type": "string",
+			"maxLength": 250
+		},
+		"string-array-type": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			},
+			"minItems": 0,
+			"uniqueItems": true
+		}
 	},
 	"type": "object",
 	"properties": {
 		"library": {
 			"type": "object",
 			"properties": {
-				"key": { "$ref": "#/$defs/key-type" },
-				"description": { "$ref": "#/$defs/description-type" },
+				"key": {
+					"$ref": "#/$defs/key-type"
+				},
+				"description": {
+					"$ref": "#/$defs/description-type"
+				},
 				"tags": {
-					"type": "array",
-					"items": { "type": "string" }
+					"$ref": "#/$defs/string-array-type"
 				}
 			},
-			"required": ["key", "description", "tags"]
+			"required": [
+				"key",
+				"description",
+				"tags"
+			]
 		},
 		"domainTypes": {
 			"type": "array",
 			"items": {
 				"type": "object",
 				"properties": {
-					"key": { "$ref": "#/$defs/key-type" },
+					"key": {
+						"$ref": "#/$defs/key-type"
+					},
 					"dataType": {
 						"type": "string",
 						"enum": [

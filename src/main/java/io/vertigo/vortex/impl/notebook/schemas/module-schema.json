@@ -1,44 +1,61 @@
 {
 	"$schema": "http://json-schema.org/draft/2020-12/schema",
 	"$defs": {
-	   "key-type": {
-	     "type": "string",
-	     "pattern": "^[a-z]+(-[a-z]+)*$",
-	     "maxLength": 30
-	   },
-	   "description-type": {
-	   	     "type": "string",
-	   	     "maxLength": 250
-	   }
-	 },
+		"key-type": {
+			"type": "string",
+			"pattern": "^[a-z]+(-[a-z]+)*$",
+			"maxLength": 30
+		},
+		"description-type": {
+			"type": "string",
+			"maxLength": 250
+		},
+		"string-array-type": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			},
+			"minItems": 0,
+			"uniqueItems": true
+		},
+		"cardinality-type": {
+			"type": "string",
+			"enum": [
+				"1",
+				"*",
+				"?"
+			]
+		}
+	},
 	"type": "object",
 	"properties": {
 		"module": {
 			"type": "object",
 			"properties": {
-				"key": { "$ref": "#/$defs/key-type" },
-				"description": { "$ref": "#/$defs/description-type" },
+				"key": {
+					"$ref": "#/$defs/key-type"
+				},
+				"description": {
+					"$ref": "#/$defs/description-type"
+				},
 				"tags": {
-					"type": "array",
-					"items": { "type": "string" }
+					"$ref": "#/$defs/string-array-type"
 				}
 			},
-			"required": ["key", "description", "tags"]
+			"required": [
+				"key",
+				"description",
+				"tags"
+			]
 		},
 		"uses": {
 			"type": "object",
 			"properties": {
 				"libraries": {
-					"type": "array",
-					"items": {
-						"type": "string"
-					}
+					"$ref": "#/$defs/string-array-type"
 				},
 				"modules": {
-					"type": "array",
-					"items": {
-						"type": "string"
-					}
+					"$ref": "#/$defs/string-array-type"
 				}
 			}
 		},
@@ -47,13 +64,21 @@
 			"items": {
 				"type": "object",
 				"properties": {
-					"key": { "$ref": "#/$defs/key-type" },
-					"description": { "$ref": "#/$defs/description-type" },
+					"key": {
+						"$ref": "#/$defs/key-type"
+					},
+					"description": {
+						"$ref": "#/$defs/description-type"
+					},
 					"id": {
 						"type": "object",
 						"properties": {
-							"key": { "$ref": "#/$defs/key-type" },
-							"description": { "$ref": "#/$defs/description-type" },
+							"key": {
+								"$ref": "#/$defs/key-type"
+							},
+							"description": {
+								"$ref": "#/$defs/description-type"
+							},
 							"domainType": {
 								"type": "string",
 								"pattern": "^do-[a-z]+$"
@@ -69,19 +94,18 @@
 						"items": {
 							"type": "object",
 							"properties": {
-								"key": { "$ref": "#/$defs/key-type" },
-								"description": { "$ref": "#/$defs/description-type" },
+								"key": {
+									"$ref": "#/$defs/key-type"
+								},
+								"description": {
+									"$ref": "#/$defs/description-type"
+								},
 								"domainType": {
 									"type": "string",
 									"pattern": "^do-[a-z]+$"
 								},
 								"cardinality": {
-									"type": "string",
-									"enum": [
-										"1",
-										"*",
-										"?"
-									]
+									"$ref": "#/$defs/cardinality-type"
 								}
 							},
 							"required": [
@@ -95,24 +119,22 @@
 						"items": {
 							"type": "object",
 							"properties": {
-								"key": { "$ref": "#/$defs/key-type" },
-								"description": { "$ref": "#/$defs/description-type" },
+								"key": {
+									"$ref": "#/$defs/key-type"
+								},
+								"description": {
+									"$ref": "#/$defs/description-type"
+								},
 								"targetEntityName": {
 									"type": "string",
 									"pattern": "^[a-z]+$"
 								},
 								"cardinality": {
-									"type": "string",
-									"enum": [
-										"1",
-										"*",
-										"?"
-									]
+									"$ref": "#/$defs/cardinality-type"
 								}
 							},
 							"required": [
 								"key",
-								"description",
 								"targetEntityName"
 							]
 						}
@@ -121,7 +143,7 @@
 				"required": [
 					"key",
 					"id",
-					"attributes", 
+					"attributes",
 					"links"
 				]
 			}
