@@ -1,9 +1,13 @@
 {
-	"module": "book",
-	"description": "List of books",
-	"uses" : {
-		"libraries": ["core"],
-		"modules": ["author"]
+	"module": {
+		"key": "book",
+		"description": "List of books",
+		"tags": []
+	},
+		
+ 	"uses" : {
+			"libraries": ["core"],
+			"modules": ["author"]
 	},
 	
 	"entities": [

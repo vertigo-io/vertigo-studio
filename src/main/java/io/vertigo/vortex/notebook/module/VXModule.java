@@ -4,7 +4,7 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.vortex.notebook.VXElementType;
-import io.vertigo.vortex.notebook.VXKey;
+import io.vertigo.vortex.notebook.VXIdentification;
 
 /**
  * Represents a module.
@@ -12,16 +12,14 @@ import io.vertigo.vortex.notebook.VXKey;
  * @synthetic 
  */
 public record VXModule(
-		VXKey key,
-		String description,
+		VXIdentification identification,
 		VXUses uses,
 		List<VXEntity> entities) {
 
 	public VXModule {
 		Assertion.check()
-				.isNotNull(key)
-				.isTrue(key.type() == VXElementType.MODULE, "An module's key must be of type MODULE_TYPE")
-				.isNotBlank(description)
+				.isNotNull(identification)
+				.isTrue(identification.key().type() == VXElementType.MODULE, "A module's key must be of type MODULE")
 				.isNotNull(uses)
 				.isNotNull(entities);
 	}

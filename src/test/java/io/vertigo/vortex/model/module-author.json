@@ -1,6 +1,10 @@
 {
-	"module": "author",
-	"description": "List of authors",
+	"module" : {
+		"key": "author",
+		"description": "List of authors",
+		"tags":[]
+	},
+
 	"uses" : {
 		"libraries":["core"],
 		"modules":[]

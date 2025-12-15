@@ -5,16 +5,16 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.vortex.impl.notebook.raw.RawIdentification;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RawLibrary(
-		String library,
-		String description,
+		RawIdentification library,
 		List<RawDomainType> domainTypes) {
 
 	public RawLibrary {
 		Assertion.check()
-				.isNotBlank(library)
+				.isNotNull(library)
 				.isNotNull(domainTypes);
 	}
 }

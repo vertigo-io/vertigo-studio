@@ -13,6 +13,7 @@ import io.vertigo.vortex.impl.notebook.raw.module.RawLink;
 import io.vertigo.vortex.impl.notebook.raw.module.RawModule;
 import io.vertigo.vortex.impl.notebook.raw.module.RawUses;
 import io.vertigo.vortex.notebook.VXElementType;
+import io.vertigo.vortex.notebook.VXIdentification;
 import io.vertigo.vortex.notebook.VXKey;
 import io.vertigo.vortex.notebook.VXNotebook;
 import io.vertigo.vortex.notebook.library.VXLibrary;
@@ -85,12 +86,12 @@ final class RawToNotebook {
 	VXNotebook toNotebook() {
 		final List<VXLibrary> libraries = rawNotebook.rawLibraries().stream()
 				.map(rawLibrary -> transform(rawLibrary))
-				.peek(library -> libraryCatalog.put(library.key(), library))
+				.peek(library -> libraryCatalog.put(library.identification().key(), library))
 				.toList();
 
 		final List<VXModule> modules = rawNotebook.rawModules().stream()
 				.map(rawModule -> transform(rawModule))
-				.peek(module -> moduleCatalog.put(module.key(), module))
+				.peek(module -> moduleCatalog.put(module.identification().key(), module))
 				.toList();
 
 		return new VXNotebook(libraries, modules);
@@ -114,7 +115,11 @@ final class RawToNotebook {
 	}
 
 	private VXModule transform(final RawModule rawModule) {
-		final VXKey moduleUKey = createKeyForModule(rawModule.module());
+		final VXKey moduleKey = createKeyForModule(rawModule.module().key());
+		final VXIdentification identification = new VXIdentification(
+				moduleKey,
+				rawModule.module().description(),
+				rawModule.module().tags());
 
 		final VXUses uses = transform(rawModule.uses());
 
@@ -133,13 +138,10 @@ final class RawToNotebook {
 		}
 
 		final List<VXEntity> entities = rawModule.entities().stream()
-				.map(e -> transform(e, moduleUKey, domainTypeCatalog, entityCatalog))
+				.map(e -> transform(e, moduleKey, domainTypeCatalog, entityCatalog))
 				.toList();
 		return new VXModule(
-				moduleUKey,
-				rawModule.description() != null
-						? rawModule.description()
-						: rawModule.module(),
+				identification,
 				uses,
 				entities);
 	}
@@ -181,16 +183,17 @@ final class RawToNotebook {
 	}
 
 	private static VXLibrary transform(final RawLibrary rawLibrary) {
-		final VXKey libraryKey = createKeyForLibrary(rawLibrary.library());
+		final VXKey libraryKey = createKeyForLibrary(rawLibrary.library().key());
+		final VXIdentification identification = new VXIdentification(
+				libraryKey,
+				rawLibrary.library().description(),
+				rawLibrary.library().tags());
 		final List<VXDomainType> domainTypes = rawLibrary.domainTypes().stream()
 				.map(dt -> transform(dt, libraryKey))
 				.toList();
 
 		return new VXLibrary(
-				libraryKey,
-				rawLibrary.description() != null
-						? rawLibrary.description()
-						: rawLibrary.library(),
+				identification,
 				domainTypes);
 	}
 

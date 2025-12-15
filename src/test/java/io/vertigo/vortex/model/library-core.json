@@ -1,7 +1,10 @@
 {
-	"library": "core",
-	"description": "liste des domainTypes",
-	
+	"library" : {
+		"key": "core",
+		"description": "List of domainTypes",
+		"tags":[]
+	},
+
 	"domainTypes": [
 		{
 			"key": "do-label",

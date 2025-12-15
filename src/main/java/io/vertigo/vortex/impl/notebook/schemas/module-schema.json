@@ -13,8 +13,18 @@
 	 },
 	"type": "object",
 	"properties": {
-		"module": { "$ref": "#/$defs/key-type" },
-		"description": { "$ref": "#/$defs/description-type" },
+		"module": {
+			"type": "object",
+			"properties": {
+				"key": { "$ref": "#/$defs/key-type" },
+				"description": { "$ref": "#/$defs/description-type" },
+				"tags": {
+					"type": "array",
+					"items": { "type": "string" }
+				}
+			},
+			"required": ["key", "description", "tags"]
+		},
 		"uses": {
 			"type": "object",
 			"properties": {

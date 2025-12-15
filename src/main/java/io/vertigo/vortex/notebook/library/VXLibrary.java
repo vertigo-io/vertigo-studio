@@ -4,7 +4,7 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.vortex.notebook.VXElementType;
-import io.vertigo.vortex.notebook.VXKey;
+import io.vertigo.vortex.notebook.VXIdentification;
 import io.vertigo.vortex.notebook.library.types.VXDomainType;
 
 /**
@@ -13,15 +13,13 @@ import io.vertigo.vortex.notebook.library.types.VXDomainType;
  * @synthetic
  */
 public record VXLibrary(
-		VXKey key,
-		String description,
+		VXIdentification identification,
 		List<VXDomainType> domainTypes) {
 
 	public VXLibrary {
 		Assertion.check()
-				.isNotNull(key)
-				.isTrue(key.type() == VXElementType.LIBRARY, "A library's key must be of type LIBRARY")
-				.isNotBlank(description)
+				.isNotNull(identification)
+				.isTrue(identification.key().type() == VXElementType.LIBRARY, "A library's key must be of type LIBRARY")
 				.isNotNull(domainTypes);
 	}
 }
