@@ -22,6 +22,9 @@ import io.vertigo.vortex.notebook.VXNotebookConfig;
  * @synthetic
  */
 final class FileToRaw {
+	private static final File LIBRARY_SCHEMA_FILE = new File("src/main/java/io/vertigo/vortex/impl/notebook/schemas/library-schema.json");
+	private static final File MODULE_SCHEMA_FILE = new File("src/main/java/io/vertigo/vortex/impl/notebook/schemas/module-schema.json");
+
 	private final VXNotebookConfig notebookConfig;
 
 	private FileToRaw(VXNotebookConfig notebookConfig) {
@@ -46,14 +49,12 @@ final class FileToRaw {
 	}
 
 	private static void validateNotebook(VXNotebookConfig notebook) throws Exception {
-		final File schemaLibraryFile = new File("C:\\Users\\pchretien\\GitHub\\vertigo-studio\\src\\main\\java\\io\\vertigo\\vortex\\bronze\\library-schema.json");
 		for (File file : notebook.libraries()) {
-			validateFile(schemaLibraryFile, file);
+			validateFile(LIBRARY_SCHEMA_FILE, file);
 		}
 		//---
-		final File schemaModuleFile = new File("C:\\Users\\pchretien\\GitHub\\vertigo-studio\\src\\main\\java\\io\\vertigo\\vortex\\bronze\\module-schema.json");
 		for (File file : notebook.modules()) {
-			validateFile(schemaModuleFile, file);
+			validateFile(MODULE_SCHEMA_FILE, file);
 		}
 	}
 
