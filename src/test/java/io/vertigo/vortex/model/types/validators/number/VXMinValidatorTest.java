@@ -3,7 +3,7 @@ package io.vertigo.vortex.model.types.validators.number;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import io.vertigo.vortex.gold.library.validators.number.VXMinValidator;
+import io.vertigo.vortex.notebook.library.validators.number.VXMinValidator;
 
 public class VXMinValidatorTest {
 
