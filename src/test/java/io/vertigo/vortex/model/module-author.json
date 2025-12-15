@@ -27,7 +27,8 @@
 					"description": "Last name of the author",
 					"domainType": "do-label"
 				}
-			]
+			], 
+			"links": []
 		}
 	]
 }

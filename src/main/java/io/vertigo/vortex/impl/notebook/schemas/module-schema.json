@@ -111,7 +111,8 @@
 				"required": [
 					"key",
 					"id",
-					"attributes"
+					"attributes", 
+					"links"
 				]
 			}
 		}
