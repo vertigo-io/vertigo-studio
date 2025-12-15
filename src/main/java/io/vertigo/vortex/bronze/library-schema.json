@@ -1,25 +1,26 @@
 {
 	"$schema": "http://json-schema.org/draft/2020-12/schema",
+	"$defs": {
+	   "key-type": {
+	     "type": "string",
+	     "pattern": "^[a-z]+(-[a-z]+)*$",
+	     "maxLength": 30
+	   },
+	   "description-type": {
+	   	     "type": "string",
+	   	     "maxLength": 250
+	   }
+	},
 	"type": "object",
 	"properties": {
-		"library": {
-			"type": "string",
-			"pattern": "^[a-z]+(-[a-z]+)*$",
-			"maxLength": 20
-		},
-		"description": {
-			"type": "string"
-		},
+		"library": { "$ref": "#/$defs/key-type" },
+		"description": { "$ref": "#/$defs/description-type" },
 		"domainTypes": {
 			"type": "array",
 			"items": {
 				"type": "object",
 				"properties": {
-					"key": {
-						"type": "string",
-						"pattern": "^do-[a-z]+$",
-						"maxLength": 20
-					},
+					"key": { "$ref": "#/$defs/key-type" },
 					"dataType": {
 						"type": "string",
 						"enum": [

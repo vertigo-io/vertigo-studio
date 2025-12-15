@@ -31,6 +31,8 @@ public final class Bronze {
 	}
 
 	public static Bronze from(NotebookConfig notebookConfig) {
+		Assertion.check().isNotNull(notebookConfig);
+		//---
 		return new Bronze(notebookConfig);
 	}
 

@@ -1,15 +1,20 @@
 {
 	"$schema": "http://json-schema.org/draft/2020-12/schema",
+	"$defs": {
+	   "key-type": {
+	     "type": "string",
+	     "pattern": "^[a-z]+(-[a-z]+)*$",
+	     "maxLength": 30
+	   },
+	   "description-type": {
+	   	     "type": "string",
+	   	     "maxLength": 250
+	   }
+	 },
 	"type": "object",
 	"properties": {
-		"module": {
-			"type": "string",
-			"pattern": "^[a-z]+(-[a-z]+)*$",
-			"maxLength": 20
-		},
-		"description": {
-			"type": "string"
-		},
+		"module": { "$ref": "#/$defs/key-type" },
+		"description": { "$ref": "#/$defs/description-type" },
 		"uses": {
 			"type": "object",
 			"properties": {
@@ -32,25 +37,13 @@
 			"items": {
 				"type": "object",
 				"properties": {
-					"key": {
-						"type": "string",
-						"pattern": "^[a-z]+$",
-						"maxLength": 30
-					},
-					"description": {
-						"type": "string"
-					},
+					"key": { "$ref": "#/$defs/key-type" },
+					"description": { "$ref": "#/$defs/description-type" },
 					"id": {
 						"type": "object",
 						"properties": {
-							"key": {
-								"type": "string",
-								"pattern": "^[a-z]+(-[a-z]+)*$",
-								"maxLength": 30
-							},
-							"description": {
-								"type": "string"
-							},
+							"key": { "$ref": "#/$defs/key-type" },
+							"description": { "$ref": "#/$defs/description-type" },
 							"domainType": {
 								"type": "string",
 								"pattern": "^do-[a-z]+$"
@@ -66,14 +59,8 @@
 						"items": {
 							"type": "object",
 							"properties": {
-								"key": {
-									"type": "string",
-									"pattern": "^[a-z]+(-[a-z]+)*$",
-									"maxLength": 30
-								},
-								"description": {
-									"type": "string"
-								},
+								"key": { "$ref": "#/$defs/key-type" },
+								"description": { "$ref": "#/$defs/description-type" },
 								"domainType": {
 									"type": "string",
 									"pattern": "^do-[a-z]+$"
@@ -89,7 +76,6 @@
 							},
 							"required": [
 								"key",
-								"description",
 								"domainType"
 							]
 						}
@@ -99,14 +85,8 @@
 						"items": {
 							"type": "object",
 							"properties": {
-								"key": {
-									"type": "string",
-									"pattern": "^[a-z]+(-[a-z]+)*$",
-									"maxLength": 30
-								},
-								"description": {
-									"type": "string"
-								},
+								"key": { "$ref": "#/$defs/key-type" },
+								"description": { "$ref": "#/$defs/description-type" },
 								"targetEntityName": {
 									"type": "string",
 									"pattern": "^[a-z]+$"

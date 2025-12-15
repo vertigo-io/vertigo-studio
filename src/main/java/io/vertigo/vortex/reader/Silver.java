@@ -84,13 +84,13 @@ public final class Silver {
 	 */
 	public VXNotebook toGold() {
 		final List<VXLibrary> libraries = rawNotebook.rawLibraries().stream()
-				.map(lib -> transform(lib))
-				.peek(lib -> libraryCatalog.put(lib.key(), lib))
+				.map(rawLibrary -> transform(rawLibrary))
+				.peek(library -> libraryCatalog.put(library.key(), library))
 				.toList();
 
 		final List<VXModule> modules = rawNotebook.rawModules().stream()
-				.map(mod -> transform(mod))
-				.peek(mod -> moduleCatalog.put(mod.key(), mod))
+				.map(rawModule -> transform(rawModule))
+				.peek(module -> moduleCatalog.put(module.key(), module))
 				.toList();
 
 		return new VXNotebook(libraries, modules);
@@ -151,15 +151,13 @@ public final class Silver {
 			Catalog<VXEntity> entityCatalog) {
 		final VXKey entityKey = createKeyForEntity(owner, rawEntity.key());
 		final List<VXAttribute> attributes = rawEntity.attributes() != null
-				? rawEntity.attributes()
-						.stream()
+				? rawEntity.attributes().stream()
 						.map(rawAttribute -> transform(rawAttribute, entityKey, domainTypeCatalog))
 						.toList()
 				: List.of();
 
 		final List<VXLink> links = rawEntity.links() != null
-				? rawEntity.links()
-						.stream()
+				? rawEntity.links().stream()
 						.map(rawLink -> transform(rawLink, entityKey, owner, entityCatalog))
 						.toList()
 				: List.of();
