@@ -4,9 +4,17 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import io.vertigo.core.lang.Assertion;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RawIdentification(
 		String key,
 		String description,
 		List<String> tags) {
+
+	public RawIdentification {
+		Assertion.check()
+				.isNotNull(key)
+				.isNotNull(tags);
+	}
 }

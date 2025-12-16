@@ -18,8 +18,9 @@ import io.vertigo.core.lang.VSystemException;
  * │
  * ├── module
  * │   └── entity
- * │       ├── attribute
- * │       └── link
+ * │       ├── id 
+ * │       ├── attribute 
+ * │       └── link 
  * │
  * └── library
  *     └── domainType
