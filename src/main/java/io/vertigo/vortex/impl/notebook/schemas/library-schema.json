@@ -36,7 +36,6 @@
 			},
 			"required": [
 				"key",
-				"description",
 				"tags"
 			]
 		},
