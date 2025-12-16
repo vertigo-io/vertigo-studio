@@ -13,14 +13,14 @@ import io.vertigo.vortex.notebook.VXIdentification;
  */
 public record VXModule(
 		VXIdentification identification,
-		VXUses uses,
+		VXImports imports,
 		List<VXEntity> entities) {
 
 	public VXModule {
 		Assertion.check()
 				.isNotNull(identification)
 				.isTrue(identification.key().type() == VXElementType.MODULE, "A module's key must be of type MODULE")
-				.isNotNull(uses)
+				.isNotNull(imports)
 				.isNotNull(entities);
 	}
 }

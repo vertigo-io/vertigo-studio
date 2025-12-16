@@ -6,6 +6,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public record RawLink(
 		String key,
 		String description,
-		String targetEntityName,
+		String targetEntityKey,
 		String cardinality) {
 }

@@ -8,7 +8,8 @@ public record VXLink(
 		VXKey key,
 		String description,
 		VXKey targetEntityKey,
-		VXCardinality cardinality) {
+		VXCardinality cardinality,
+		VXLinkStereotype stereotype) {
 
 	public VXLink {
 		Assertion.check()
@@ -16,7 +17,8 @@ public record VXLink(
 				.isTrue(key.type() == VXElementType.LINK, "A link's key must be of type LINK")
 				.isNotBlank(description)
 				.isNotNull(targetEntityKey)
-				.isNotNull(cardinality);
+				.isNotNull(cardinality)
+				.isNotNull(stereotype);
 	}
 
 }

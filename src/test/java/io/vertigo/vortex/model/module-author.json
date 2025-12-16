@@ -5,7 +5,7 @@
 		"tags":[]
 	},
 
-	"uses" : {
+	"imports" : {
 		"libraries":["core"],
 		"modules":[]
 	},
@@ -32,7 +32,9 @@
 					"domainType": "do-label"
 				}
 			], 
-			"links": []
+			"partOf": [],
+			"memberOf": [],
+			"uses": []
 		}
 	]
 }

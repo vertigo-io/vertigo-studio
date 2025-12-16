@@ -10,13 +10,13 @@ import io.vertigo.vortex.impl.notebook.raw.RawIdentification;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RawModule(
 		RawIdentification module,
-		RawUses uses,
+		RawImports imports,
 		List<RawEntity> entities) {
 
 	public RawModule {
 		Assertion.check()
 				.isNotNull(module)
-				.isNotNull(uses)
+				.isNotNull(imports)
 				.isNotNull(entities);
 	}
 }

@@ -5,7 +5,7 @@
 		"tags": []
 	},
 		
- 	"uses" : {
+ 	"imports" : {
 			"libraries": ["core"],
 			"modules": ["author"]
 	},
@@ -33,11 +33,13 @@
 					"cardinality": "1"
 				}
 			],
-			"links": [
+			"partOf": [],
+			"memberOf": [],
+			"uses": [
 				{
 					"key": "author",
 					"description": "Author of the book",
-					"targetEntityName": "author",
+					"targetEntityKey": "author",
 					"cardinality": "1"
 				}
 			]
