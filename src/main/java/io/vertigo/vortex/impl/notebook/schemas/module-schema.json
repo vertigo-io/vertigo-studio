@@ -30,7 +30,7 @@
 				"?"
 			]
 		},
-		"link-item": {
+		"link-type": {
 			"type": "object",
 			"properties": {
 				"key": {
@@ -48,10 +48,29 @@
 			},
 			"required": [
 				"key",
-				"targetEntityKey"
+				"targetEntityKey",
+				"cardinality"
 			]
+		},
+		"part-of-type": {
+			"type": "object",
+			"properties": {
+				"key": {
+					"$ref": "#/$defs/key-type"
+				},
+				"description": {
+					"$ref": "#/$defs/description-type"
+				},
+				"targetEntityKey": {
+					"$ref": "#/$defs/key-type"
+				}	
+			},
+			"required": [
+				"key",
+				"targetEntityKey"			]
 		}
 	},
+	
 	"type": "object",
 	"properties": {
 		"module": {
@@ -69,6 +88,7 @@
 			},
 			"required": [
 				"key",
+				"description",
 				"tags"
 			]
 		},
@@ -113,6 +133,7 @@
 						},
 						"required": [
 							"key",
+							"description",
 							"domainType"
 						]
 					},
@@ -121,18 +142,10 @@
 						"items": {
 							"type": "object",
 							"properties": {
-								"key": {
-									"$ref": "#/$defs/key-type"
-								},
-								"description": {
-									"$ref": "#/$defs/description-type"
-								},
-								"domainType": {
-									"$ref": "#/$defs/domain-type-type"
-								},
-								"cardinality": {
-									"$ref": "#/$defs/cardinality-type"
-								}
+								"key": {"$ref": "#/$defs/key-type"},
+								"description": {"$ref": "#/$defs/description-type"},
+								"domainType": {"$ref": "#/$defs/domain-type-type"},
+								"cardinality": {"$ref": "#/$defs/cardinality-type"}
 							},
 							"required": [
 								"key",
@@ -141,22 +154,12 @@
 						}
 					},
 					"partOf": {
-						"type": "array",
-						"items": {
-							"$ref": "#/$defs/link-item"
-						}
+						"type": "object",
+						"items": {"$ref": "#/$defs/part-of-type"}
 					},
-					"memberOf": {
+					"link": {
 						"type": "array",
-						"items": {
-							"$ref": "#/$defs/link-item"
-						}
-					},
-					"uses": {
-						"type": "array",
-						"items": {
-							"$ref": "#/$defs/link-item"
-						}
+						"items": {"$ref": "#/$defs/link-type"}
 					}
 				},
 				"required": [

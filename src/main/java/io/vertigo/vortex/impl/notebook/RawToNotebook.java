@@ -1,7 +1,7 @@
 package io.vertigo.vortex.impl.notebook;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.vortex.impl.notebook.raw.RawNotebook;
@@ -99,7 +99,7 @@ final class RawToNotebook {
 		return new VXNotebook(libraries, modules);
 	}
 
-	private VXImports transform(final RawImports imports) { 
+	private VXImports transform(final RawImports imports) {
 		final List<VXLibrary> libraries = imports.libraries() == null
 				? List.of()
 				: imports.libraries().stream()
@@ -113,7 +113,7 @@ final class RawToNotebook {
 						.map(RawToNotebook::createKeyForModule)
 						.map(moduleCatalog::get)
 						.toList();
-		return new VXImports(libraries, modules); 
+		return new VXImports(libraries, modules);
 	}
 
 	private VXModule transform(final RawModule rawModule) {
@@ -123,17 +123,17 @@ final class RawToNotebook {
 				rawModule.module().description(),
 				rawModule.module().tags());
 
-		final VXImports imports = transform(rawModule.imports()); 
+		final VXImports imports = transform(rawModule.imports());
 
 		final Catalog<VXDomainType> domainTypeCatalog = new Catalog<>();
 		final Catalog<VXEntity> entityCatalog = new Catalog<>();
 		//---
-		for (var library : imports.libraries()) { 
+		for (var library : imports.libraries()) {
 			for (var dt : library.domainTypes()) {
 				domainTypeCatalog.put(dt.key(), dt);
 			}
 		}
-		for (var module : imports.modules()) { 
+		for (var module : imports.modules()) {
 			for (var entity : module.entities()) {
 				entityCatalog.put(entity.key(), entity);
 			}
@@ -144,7 +144,7 @@ final class RawToNotebook {
 				.toList();
 		return new VXModule(
 				identification,
-				imports, 
+				imports,
 				entities);
 	}
 
@@ -160,31 +160,25 @@ final class RawToNotebook {
 						.toList()
 				: List.of();
 
-        final Stream<VXLink> partOfLinks = rawEntity.partOf() != null
-                ? rawEntity.partOf().stream()
-                        .map(rawLink -> transform(rawLink, entityKey, owner, entityCatalog, VXLinkStereotype.PART_OF))
-                : Stream.empty();
+		VXLink partOfLink = rawEntity.partOf() != null
+				? transform(rawEntity.partOf(), entityKey, owner, entityCatalog, VXLinkStereotype.PART_OF)
+				: null;
 
-        final Stream<VXLink> memberOfLinks = rawEntity.memberOf() != null
-                ? rawEntity.memberOf().stream()
-                        .map(rawLink -> transform(rawLink, entityKey, owner, entityCatalog, VXLinkStereotype.MEMBER_OF))
-                : Stream.empty();
-        
-        final Stream<VXLink> usesLinks = rawEntity.uses() != null
-                ? rawEntity.uses().stream()
-                        .map(rawLink -> transform(rawLink, entityKey, owner, entityCatalog, VXLinkStereotype.USES))
-                : Stream.empty();
+		final List<VXLink> links = rawEntity.links() != null
+				? rawEntity.links().stream()
+						.map(rawLink -> transform(rawLink, entityKey, owner, entityCatalog, VXLinkStereotype.LINK))
+						.toList()
+				: List.of();
 
-		final List<VXLink> links = Stream.of(partOfLinks, memberOfLinks, usesLinks)
-                .flatMap(x -> x)
-                .toList();
+		final List<VXLink> allLinks = new ArrayList(links);
+		allLinks.add(partOfLink);
 
 		return new VXEntity(
 				entityKey,
 				rawEntity.description(),
 				transform(rawEntity.id(), entityKey, domainTypeCatalog),
 				attributes,
-				links);
+				allLinks);
 	}
 
 	private static VXId transform(RawId id,
