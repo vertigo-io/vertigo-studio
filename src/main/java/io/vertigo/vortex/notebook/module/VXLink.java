@@ -19,6 +19,13 @@ public record VXLink(
 				.isNotNull(targetEntityKey)
 				.isNotNull(cardinality)
 				.isNotNull(stereotype);
+		// --- Constraint : partOf has 1..1 cardinality
+		if (stereotype == VXLinkStereotype.PART_OF) {
+			Assertion.check()
+					.isTrue(cardinality == VXCardinality.ONE,
+							"A PART_OF link must have a ONE (1) cardinality, but was '{0}'",
+							cardinality);
+		}
 	}
 
 }

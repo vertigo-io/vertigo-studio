@@ -20,7 +20,7 @@ import io.vertigo.core.lang.VSystemException;
  * │   └── entity
  * │       ├── id 
  * │       ├── attribute 
- * │       └── link 
+ * │       └── link ( link or partOf)
  * │
  * └── library
  *     └── domainType

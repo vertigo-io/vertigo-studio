@@ -6,11 +6,8 @@ public enum VXLinkStereotype {
 	 */
 	PART_OF,
 	/**
-	 * A weak "has-a" relationship where the part can exist independently. (Aggregation)
-	 */
-	MEMBER_OF,
-	/**
 	 * A standard relationship between two peer entities. (Association)
+	 * or a simple Aggregation between a member and a group
 	 */
-	USES;
+	LINK;
 }

@@ -32,14 +32,36 @@
 					"domainType": "do-label",
 					"cardinality": "1"
 				}
-			],
-			"partOf": [],
-			"memberOf": [],
-			"uses": [
+			], 
+			"links": [
 				{
 					"key": "author",
 					"description": "Author of the book",
 					"targetEntityKey": "author",
+					"cardinality": "1"
+				},
+				{
+					"key": "category",
+					"description": "Category of the book",
+					"targetEntityKey": "category",
+					"cardinality": "?"
+				}
+			]
+		},
+		
+		{
+			"key": "category",
+			"description": "A book category",
+			"id": {
+				"key": "id",
+				"description": "Identifier of the category",
+				"domainType": "do-id"
+			},
+			"attributes": [
+				{
+					"key": "name",
+					"description": "Name of the category",
+					"domainType": "do-label",
 					"cardinality": "1"
 				}
 			]

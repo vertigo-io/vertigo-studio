@@ -32,9 +32,31 @@
 					"domainType": "do-label"
 				}
 			], 
-			"partOf": [],
-			"memberOf": [],
-			"uses": []
+			"links": [
+				{
+					"key": "publisher",
+					"description": "Publisher of the author",
+					"targetEntityKey": "publisher",
+					"cardinality": "1" 
+				}
+			]
+		},
+		{
+			"key": "publisher",
+			"description": "A book publisher",
+			"id": {
+				"key": "id",
+				"description": "Identifier of the publisher",
+				"domainType": "do-id"
+			},
+			"attributes": [
+				{
+					"key": "name",
+					"description": "Name of the publisher",
+					"domainType": "do-label",
+					"cardinality": "1"
+				}
+			]
 		}
 	]
 }

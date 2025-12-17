@@ -10,7 +10,6 @@ public record RawEntity(
 		String description,
 		RawId id,
 		List<RawAttribute> attributes,
-		List<RawLink> partOf,
-		List<RawLink> memberOf,
-		List<RawLink> uses) {
+		RawLink partOf,
+		List<RawLink> links) {
 }
