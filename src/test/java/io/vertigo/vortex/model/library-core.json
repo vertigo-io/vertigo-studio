@@ -5,21 +5,21 @@
 		"tags":[]
 	},
 
-	"domainTypes": [
+	"types": [
 		{
-			"key": "do-label",
+			"key": "do:label",
 			"dataType": "String"
 		},
 		{
-			"key": "do-email",
+			"key": "do:email",
 			"dataType": "String"
 		},
 		{
-			"key": "do-phone",
+			"key": "do:phone",
 			"dataType": "String"
 		},
 		{
-			"key": "do-id",
+			"key": "do:id",
 			"dataType": "Long"
 		}
 	]

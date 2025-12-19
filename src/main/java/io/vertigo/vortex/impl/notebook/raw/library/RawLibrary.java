@@ -10,11 +10,11 @@ import io.vertigo.vortex.impl.notebook.raw.RawIdentification;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RawLibrary(
 		RawIdentification library,
-		List<RawDomainType> domainTypes) {
+		List<RawType> types) {
 
 	public RawLibrary {
 		Assertion.check()
 				.isNotNull(library)
-				.isNotNull(domainTypes);
+				.isNotNull(types);
 	}
 }

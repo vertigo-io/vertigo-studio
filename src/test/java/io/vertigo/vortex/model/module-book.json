@@ -17,19 +17,19 @@
 			"id": {
 				"key": "id",
 				"label": "Identifier",
-				"type": "do-id"
+				"type": "do:id"
 			},
 			"attributes": [
 				{
 					"key": "title",
 					"label": "Title",
-					"type": "do-label",
+					"type": "do:label",
 					"required": true
 				},
 				{
 					"key": "isbn",
 					"label": "ISBN",
-					"type": "do-label",
+					"type": "do:label",
 					"required": true
 				}
 			], 
@@ -65,18 +65,18 @@
 			"id": {
 				"key": "id",
 				"label": "Identifier",
-				"type": "do-id"
+				"type": "do:id"
 			},
 			"attributes": [
 				{
 					"key": "name",
 					"label": "Name of the category",
-					"type": "do-label",
+					"type": "do:label",
 					"required": true
 				}
 			],
 			"links": []
 		}
 	],
-	"valueObjects": []
+	"values": []
 }

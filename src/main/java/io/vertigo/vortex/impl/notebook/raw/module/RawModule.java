@@ -12,13 +12,13 @@ public record RawModule(
 		RawIdentification module,
 		RawImports imports,
 		List<RawEntity> entities,
-		List<RawValueObject> valueObjects) {
+		List<RawValue> values) {
 
 	public RawModule {
 		Assertion.check()
 				.isNotNull(module)
 				.isNotNull(imports)
 				.isNotNull(entities)
-				.isNotNull(valueObjects);
+				.isNotNull(values);
 	}
 }

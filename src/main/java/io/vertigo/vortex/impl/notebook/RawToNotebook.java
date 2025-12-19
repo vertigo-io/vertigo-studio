@@ -4,15 +4,15 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.vortex.impl.notebook.raw.RawNotebook;
-import io.vertigo.vortex.impl.notebook.raw.library.RawDomainType;
 import io.vertigo.vortex.impl.notebook.raw.library.RawLibrary;
+import io.vertigo.vortex.impl.notebook.raw.library.RawType;
 import io.vertigo.vortex.impl.notebook.raw.module.RawAttribute;
 import io.vertigo.vortex.impl.notebook.raw.module.RawEntity;
 import io.vertigo.vortex.impl.notebook.raw.module.RawId;
 import io.vertigo.vortex.impl.notebook.raw.module.RawImports;
 import io.vertigo.vortex.impl.notebook.raw.module.RawLink;
 import io.vertigo.vortex.impl.notebook.raw.module.RawModule;
-import io.vertigo.vortex.impl.notebook.raw.module.RawValueObject;
+import io.vertigo.vortex.impl.notebook.raw.module.RawValue;
 import io.vertigo.vortex.notebook.VXElementType;
 import io.vertigo.vortex.notebook.VXIdentification;
 import io.vertigo.vortex.notebook.VXKey;
@@ -161,7 +161,7 @@ final class RawToNotebook {
 				.map(e -> transform(e, moduleKey, domainTypeCatalog, entityCatalog))
 				.toList();
 
-		final List<VXValueObject> valueObjects = rawModule.valueObjects().stream()
+		final List<VXValueObject> valueObjects = rawModule.values().stream()
 				.map(vo -> transform(vo, moduleKey, domainTypeCatalog))
 				.toList();
 
@@ -172,17 +172,17 @@ final class RawToNotebook {
 				valueObjects);
 	}
 
-	private static VXValueObject transform(final RawValueObject rawValueObject, final VXKey owner, final Catalog<VXDomainType> domainTypeCatalog) {
-		final VXKey voKey = createKeyForValueObject(owner, rawValueObject.key());
-		final List<VXAttribute> attributes = rawValueObject.attributes() != null
-				? rawValueObject.attributes().stream()
+	private static VXValueObject transform(final RawValue rawValue, final VXKey owner, final Catalog<VXDomainType> domainTypeCatalog) {
+		final VXKey voKey = createKeyForValueObject(owner, rawValue.key());
+		final List<VXAttribute> attributes = rawValue.attributes() != null
+				? rawValue.attributes().stream()
 						.map(rawAttribute -> transform(rawAttribute, voKey, domainTypeCatalog))
 						.toList()
 				: List.of();
 
 		return new VXValueObject(
 				voKey,
-				rawValueObject.comment(),
+				rawValue.comment(),
 				attributes);
 	}
 
@@ -229,7 +229,7 @@ final class RawToNotebook {
 				libraryKey,
 				rawLibrary.library().comment(),
 				rawLibrary.library().tags());
-		final List<VXDomainType> domainTypes = rawLibrary.domainTypes().stream()
+		final List<VXDomainType> domainTypes = rawLibrary.types().stream()
 				.map(dt -> transform(dt, libraryKey))
 				.toList();
 
@@ -269,13 +269,13 @@ final class RawToNotebook {
 	}
 
 	private static VXDomainType transform(
-			final RawDomainType rawDomainType,
+			final RawType rawType,
 			final VXKey libraryKey) {
-		final VXKey domainTypeKey = new VXKey(libraryKey, VXElementType.DOMAIN_TYPE, rawDomainType.key());
+		final VXKey typeKey = new VXKey(libraryKey, VXElementType.DOMAIN_TYPE, rawType.key());
 		return new VXDomainType(
-				domainTypeKey,
-				rawDomainType.comment(),
-				VXDataType.valueOf(rawDomainType.dataType()),
+				typeKey,
+				rawType.comment(),
+				VXDataType.valueOf(rawType.dataType()),
 				//!!!!!!!!!!!!!!!!!!!!!!!
 				List.of(),
 				//!!!!!!!!!!!!!!!!!!!!!!!

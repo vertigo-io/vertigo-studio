@@ -1,48 +1,38 @@
 {
 	"$schema": "http://json-schema.org/draft/2020-12/schema",
 	"$defs": {
-		"key-type": {
+		"_key": {
 			"type": "string",
-			"pattern": "^[a-z]+(-[a-z]+)*$",
+			"pattern": "^([a-z]+:?)[a-z]+(-[a-z]+)*$",
 			"maxLength": 30
 		},
-		"domain-type-type": {
+		"_type": {
 			"type": "string",
-			"pattern": "^do-[a-z]+$"
+			"pattern": "^([a-z]+:?)[a-z]+(-[a-z]+)*$"
 		},
-		"comment-type": {
+		"_comment": {
 			"type": "string",
 			"maxLength": 500
 		},
-		"label-type": {
+		"_label": {
 			"type": "string",
 			"maxLength": 100
 		},
-		"string-array-type": {
+		"_string-array": {
 			"type": "array",
 			"items": {
 				"type": "string"
 			},
 			"uniqueItems": true
 		},
-		"link-type": {
+		"_link": {
 			"type": "object",
 			"properties": {
-				"key": {
-					"$ref": "#/$defs/key-type"
-				},
-				"label": {
-					"$ref": "#/$defs/label-type"
-				},
-				"comment": {
-					"$ref": "#/$defs/comment-type"
-				},
-				"targetEntityKey": {
-					"$ref": "#/$defs/key-type"
-				},
-				"required": {
-					"type": "boolean"
-				},
+				"key": {"$ref": "#/$defs/_key"},
+				"label": {"$ref": "#/$defs/_label"},
+				"comment": {"$ref": "#/$defs/_comment"},
+				"targetEntityKey": {"$ref": "#/$defs/_key"},
+				"required": {"type": "boolean"},
 				"stereotype": {
 					"type": "string",
 					"enum": [
@@ -60,35 +50,21 @@
 				"stereotype"
 			]
 		},
-		"valueObject-type": {
+		"_value": {
 			"type": "object",
 			"properties": {
-				"key": {
-					"$ref": "#/$defs/key-type"
-				},
-				"comment": {
-					"$ref": "#/$defs/comment-type"
-				},
+				"key": {"$ref": "#/$defs/_key"},
+				"comment": {"$ref": "#/$defs/_comment"},
 				"attributes": {
 					"type": "array",
 					"items": {
 						"type": "object",
 						"properties": {
-							"key": {
-								"$ref": "#/$defs/key-type"
-							},
-							"label": {
-								"$ref": "#/$defs/label-type"
-							},
-							"comment": {
-								"$ref": "#/$defs/comment-type"
-							},
-							"type": {
-								"$ref": "#/$defs/domain-type-type"
-							},
-							"required": {
-								"type": "boolean"
-							}
+							"key": {"$ref": "#/$defs/_key"},
+							"label": {"$ref": "#/$defs/_label"},
+							"comment": {"$ref": "#/$defs/_comment"},
+							"type": {"$ref": "#/$defs/_type"},
+							"required": {"type": "boolean"}
 						},
 						"required": [
 							"key",
@@ -111,15 +87,9 @@
 		"module": {
 			"type": "object",
 			"properties": {
-				"key": {
-					"$ref": "#/$defs/key-type"
-				},
-				"comment": {
-					"$ref": "#/$defs/comment-type"
-				},
-				"tags": {
-					"$ref": "#/$defs/string-array-type"
-				}
+				"key": {"$ref": "#/$defs/_key"},
+				"comment": {"$ref": "#/$defs/_comment"},
+				"tags": {"$ref": "#/$defs/_string-array"}
 			},
 			"required": [
 				"key",
@@ -129,12 +99,8 @@
 		"imports": {
 			"type": "object",
 			"properties": {
-				"libraries": {
-					"$ref": "#/$defs/string-array-type"
-				},
-				"modules": {
-					"$ref": "#/$defs/string-array-type"
-				}
+				"libraries": {"$ref": "#/$defs/_string-array"},
+				"modules": {"$ref": "#/$defs/_string-array"}
 			},
 			"required": [
 				"libraries",
@@ -146,27 +112,15 @@
 			"items": {
 				"type": "object",
 				"properties": {
-					"key": {
-						"$ref": "#/$defs/key-type"
-					},
-					"comment": {
-						"$ref": "#/$defs/comment-type"
-					},
+					"key": {"$ref": "#/$defs/_key"},
+					"comment": {"$ref": "#/$defs/_comment"},
 					"id": {
 						"type": "object",
 						"properties": {
-							"key": {
-								"$ref": "#/$defs/key-type"
-							},
-							"label": {
-								"$ref": "#/$defs/label-type"
-							},
-							"comment": {
-								"$ref": "#/$defs/comment-type"
-							},
-							"type": {
-								"$ref": "#/$defs/domain-type-type"
-							}
+							"key": {"$ref": "#/$defs/_key"},
+							"label": {"$ref": "#/$defs/_label"},
+							"comment": {"$ref": "#/$defs/_comment"},
+							"type": {"$ref": "#/$defs/_type"}
 						},
 						"required": [
 							"key",
@@ -179,21 +133,11 @@
 						"items": {
 							"type": "object",
 							"properties": {
-								"key": {
-									"$ref": "#/$defs/key-type"
-								},
-								"label": {
-									"$ref": "#/$defs/label-type"
-								},
-								"comment": {
-									"$ref": "#/$defs/comment-type"
-								},
-								"type": {
-									"$ref": "#/$defs/domain-type-type"
-								},
-								"required": {
-									"type": "boolean"
-								}
+								"key": {"$ref": "#/$defs/_key"},
+								"label": {"$ref": "#/$defs/_label"},
+								"comment": {"$ref": "#/$defs/_comment"},
+								"type": {"$ref": "#/$defs/_type"},
+								"required": {"type": "boolean"}
 							},
 							"required": [
 								"key",
@@ -205,9 +149,7 @@
 					},
 					"links": {
 						"type": "array",
-						"items": {
-							"$ref": "#/$defs/link-type"
-						}
+						"items": {"$ref": "#/$defs/_link"}
 					}
 				},
 				"required": [
@@ -218,11 +160,9 @@
 				]
 			}
 		},
-		"valueObjects": {
+		"values": {
 			"type": "array",
-			"items": {
-				"$ref": "#/$defs/valueObject-type"
-			}
+			"items": {"$ref": "#/$defs/_value"}
 		}
 	},
 	"required": [

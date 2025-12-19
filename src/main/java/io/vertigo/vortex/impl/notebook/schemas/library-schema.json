@@ -1,24 +1,23 @@
 {
 	"$schema": "http://json-schema.org/draft/2020-12/schema",
 	"$defs": {
-		"key-type": {
+		"_key": {
 			"type": "string",
-			"pattern": "^[a-z]+(-[a-z]+)*$",
+			"pattern": "^([a-z]+:?)[a-z]+(-[a-z]+)*$",
 			"maxLength": 30
 		},
-		"comment-type": {
+		"_comment": {
 			"type": "string",
 			"maxLength": 500
 		},
-		"label-type": {
+		"_label": {
 			"type": "string",
 			"maxLength": 100
 		},
-		"string-array-type": {
+		"_string-array": {
 			"type": "array",
-			"items": {
-				"type": "string"
-			},
+			"items": {"type": "string"
+},
 			"uniqueItems": true
 		}
 	},
@@ -27,33 +26,23 @@
 		"library": {
 			"type": "object",
 			"properties": {
-				"key": {
-					"$ref": "#/$defs/key-type"
-				},
-				"comment": {
-					"$ref": "#/$defs/comment-type"
-				},
-				"tags": {
-					"$ref": "#/$defs/string-array-type"
-				}
+				"key": {"$ref": "#/$defs/_key"},
+				"comment": {"$ref": "#/$defs/_comment"},
+				"tags": {"$ref": "#/$defs/_string-array"}
 			},
 			"required": [
 				"key",
-				"comment",
 				"tags"
 			]
 		},
-		"domainTypes": {
+		"types": {
 			"type": "array",
 			"items": {
 				"type": "object",
 				"properties": {
-					"key": {
-						"$ref": "#/$defs/key-type"
-					},
+					"key": {"$ref": "#/$defs/_key"},
 					"comment": {
-						"$ref": "#/$defs/comment-type"
-					},
+						"$ref": "#/$defs/_comment"},
 					"dataType": {
 						"type": "string",
 						"enum": [
@@ -63,6 +52,7 @@
 							"Integer",
 							"Double",
 							"Boolean",
+							"UUID",
 							"Json"
 						]
 					}
