@@ -3,7 +3,7 @@
 	"$defs": {
 		"_key": {
 			"type": "string",
-			"pattern": "^([a-z]+:?)[a-z]+(-[a-z]+)*$",
+			"pattern": "^([a-z]+:)[a-z]+(-[a-z]+)*$",
 			"maxLength": 30
 		},
 		"_comment": {
@@ -66,6 +66,6 @@
 	},
 	"required": [
 		"library",
-		"domainTypes"
+		"types"
 	]
 }

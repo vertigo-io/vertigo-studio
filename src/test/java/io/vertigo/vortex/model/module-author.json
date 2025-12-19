@@ -31,6 +31,12 @@
 					"label": "Last name",
 					"type": "do:label",
 					"required": false
+				},
+				{
+					"key": "contact-info",
+					"label": "contact",
+					"type": "do:json",
+					"required": false
 				}
 			], 
 			"links": [

@@ -3,13 +3,14 @@ package io.vertigo.vortex.plugins.notebook.json;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.VSystemException;
 import io.vertigo.vortex.notebook.VXElementType;
 import io.vertigo.vortex.notebook.VXIdentification;
 import io.vertigo.vortex.notebook.VXKey;
 import io.vertigo.vortex.notebook.VXNotebook;
 import io.vertigo.vortex.notebook.library.VXLibrary;
 import io.vertigo.vortex.notebook.library.types.VXDataType;
-import io.vertigo.vortex.notebook.library.types.VXDomainType;
+import io.vertigo.vortex.notebook.library.types.VXType;
 import io.vertigo.vortex.notebook.module.VXAttribute;
 import io.vertigo.vortex.notebook.module.VXEntity;
 import io.vertigo.vortex.notebook.module.VXId;
@@ -61,7 +62,7 @@ final class RawToNotebook {
 		//!!!!!!
 		//!!!!!!
 		final VXKey libraryKey = new VXKey(null, VXElementType.LIBRARY, "core");
-		return new VXKey(libraryKey, VXElementType.DOMAIN_TYPE, name);
+		return new VXKey(libraryKey, VXElementType.TYPE, name);
 	}
 
 	// Updated to use key
@@ -97,7 +98,7 @@ final class RawToNotebook {
 			//TODO
 			_owner = owner;
 		}
-		return new VXKey(_owner, VXElementType.VALUE_OBJECT, key);
+		return new VXKey(_owner, VXElementType.VALUE, key);
 	}
 
 	/**
@@ -143,12 +144,12 @@ final class RawToNotebook {
 
 		final VXImports imports = transform(rawModule.imports());
 
-		final Catalog<VXDomainType> domainTypeCatalog = new Catalog<>();
+		final Catalog<VXType> typeCatalog = new Catalog<>();
 		final Catalog<VXEntity> entityCatalog = new Catalog<>();
 		//---
 		for (var library : imports.libraries()) {
 			for (var dt : library.domainTypes()) {
-				domainTypeCatalog.put(dt.key(), dt);
+				typeCatalog.put(dt.key(), dt);
 			}
 		}
 		for (var module : imports.modules()) {
@@ -158,11 +159,11 @@ final class RawToNotebook {
 		}
 
 		final List<VXEntity> entities = rawModule.entities().stream()
-				.map(e -> transform(e, moduleKey, domainTypeCatalog, entityCatalog))
+				.map(e -> transform(e, moduleKey, typeCatalog, entityCatalog))
 				.toList();
 
 		final List<VXValueObject> valueObjects = rawModule.values().stream()
-				.map(vo -> transform(vo, moduleKey, domainTypeCatalog))
+				.map(vo -> transform(vo, moduleKey, typeCatalog))
 				.toList();
 
 		return new VXModule(
@@ -172,11 +173,11 @@ final class RawToNotebook {
 				valueObjects);
 	}
 
-	private static VXValueObject transform(final RawValue rawValue, final VXKey owner, final Catalog<VXDomainType> domainTypeCatalog) {
+	private static VXValueObject transform(final RawValue rawValue, final VXKey owner, final Catalog<VXType> typeCatalog) {
 		final VXKey voKey = createKeyForValueObject(owner, rawValue.key());
 		final List<VXAttribute> attributes = rawValue.attributes() != null
 				? rawValue.attributes().stream()
-						.map(rawAttribute -> transform(rawAttribute, voKey, domainTypeCatalog))
+						.map(rawAttribute -> transform(rawAttribute, voKey, typeCatalog))
 						.toList()
 				: List.of();
 
@@ -189,7 +190,7 @@ final class RawToNotebook {
 	private static VXEntity transform(
 			final RawEntity rawEntity,
 			final VXKey owner, //the module UKey
-			Catalog<VXDomainType> domainTypeCatalog,
+			Catalog<VXType> domainTypeCatalog,
 			Catalog<VXEntity> entityCatalog) {
 		final VXKey entityKey = createKeyForEntity(owner, rawEntity.key());
 		final List<VXAttribute> attributes = rawEntity.attributes() != null
@@ -214,7 +215,7 @@ final class RawToNotebook {
 
 	private static VXId transform(RawId id,
 			final VXKey entityKey,
-			final Catalog<VXDomainType> domainTypeCatalog) {
+			final Catalog<VXType> domainTypeCatalog) {
 		final VXKey idKey = new VXKey(entityKey, VXElementType.ID, id.key());
 		return new VXId(
 				idKey,
@@ -229,7 +230,7 @@ final class RawToNotebook {
 				libraryKey,
 				rawLibrary.library().comment(),
 				rawLibrary.library().tags());
-		final List<VXDomainType> domainTypes = rawLibrary.types().stream()
+		final List<VXType> domainTypes = rawLibrary.types().stream()
 				.map(dt -> transform(dt, libraryKey))
 				.toList();
 
@@ -241,14 +242,22 @@ final class RawToNotebook {
 	private static VXAttribute transform(
 			final RawAttribute rawAttribute,
 			final VXKey entityKey,
-			final Catalog<VXDomainType> domainTypeCatalog) {
+			final Catalog<VXType> typeCatalog) {
 		final VXKey attributeKey = new VXKey(entityKey, VXElementType.ATTRIBUTE, rawAttribute.key());
+
+		int found = rawAttribute.type().indexOf(':');
+		final VXType type = switch (rawAttribute.type().substring(0, found)) {
+			case "do" -> typeCatalog.get(createKeyForDomainType(rawAttribute.type()));
+			case "value" -> null;
+			default -> throw new VSystemException("type '{0}' must be do:xxx or value:xxx", rawAttribute.type());
+		};
 		return new VXAttribute(
 				attributeKey,
 				rawAttribute.label(),
 				rawAttribute.comment(),
-				domainTypeCatalog.get(createKeyForDomainType(rawAttribute.type())),
+				type,
 				rawAttribute.required());
+
 	}
 
 	private static VXLink transform(
@@ -268,11 +277,11 @@ final class RawToNotebook {
 				stereotype);
 	}
 
-	private static VXDomainType transform(
+	private static VXType transform(
 			final RawType rawType,
 			final VXKey libraryKey) {
-		final VXKey typeKey = new VXKey(libraryKey, VXElementType.DOMAIN_TYPE, rawType.key());
-		return new VXDomainType(
+		final VXKey typeKey = new VXKey(libraryKey, VXElementType.TYPE, rawType.key());
+		return new VXType(
 				typeKey,
 				rawType.comment(),
 				VXDataType.valueOf(rawType.dataType()),

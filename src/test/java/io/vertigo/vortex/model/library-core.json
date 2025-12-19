@@ -21,6 +21,10 @@
 		{
 			"key": "do:id",
 			"dataType": "Long"
+		},
+		{
+			"key": "do:json",
+			"dataType": "Json"
 		}
 	]
 }

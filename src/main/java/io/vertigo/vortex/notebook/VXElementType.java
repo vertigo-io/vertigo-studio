@@ -2,11 +2,11 @@ package io.vertigo.vortex.notebook;
 
 public enum VXElementType {
 	LIBRARY,
-	DOMAIN_TYPE,
+	TYPE,
 	//---
 	MODULE,
 	ENTITY,
-	VALUE_OBJECT,
+	VALUE,
 	ATTRIBUTE,
 	LINK,
 	ID

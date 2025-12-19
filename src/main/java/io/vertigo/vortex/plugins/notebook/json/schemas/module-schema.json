@@ -8,7 +8,7 @@
 		},
 		"_type": {
 			"type": "string",
-			"pattern": "^([a-z]+:?)[a-z]+(-[a-z]+)*$"
+			"pattern": "^([a-z]+:)[a-z]+(-[a-z]+)*$"
 		},
 		"_comment": {
 			"type": "string",
@@ -169,6 +169,6 @@
 		"module",
 		"imports",
 		"entities",
-		"valueObjects"
+		"values"
 	]
 }

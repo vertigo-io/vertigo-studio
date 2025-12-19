@@ -8,11 +8,11 @@ import io.vertigo.core.lang.Builder;
 import io.vertigo.vortex.notebook.VXElementType;
 import io.vertigo.vortex.notebook.VXKey;
 import io.vertigo.vortex.notebook.library.types.VXDataType;
-import io.vertigo.vortex.notebook.library.types.VXDomainType;
+import io.vertigo.vortex.notebook.library.types.VXType;
 import io.vertigo.vortex.notebook.library.types.VXProperty;
 import io.vertigo.vortex.notebook.library.types.VXValidator;
 
-abstract class VXAbstractDomainTypeBuilder<B extends VXAbstractDomainTypeBuilder<B>> implements Builder<VXDomainType> {
+abstract class VXAbstractDomainTypeBuilder<B extends VXAbstractDomainTypeBuilder<B>> implements Builder<VXType> {
 	private final VXKey _libraryKey;
 	private final String _key;
 	private String _comment;
@@ -48,10 +48,10 @@ abstract class VXAbstractDomainTypeBuilder<B extends VXAbstractDomainTypeBuilder
 	}
 
 	@Override
-	public final VXDomainType build() {
+	public final VXType build() {
 		final VXKey domainTypeKey = new VXKey(_libraryKey,
-				VXElementType.DOMAIN_TYPE, _key);
-		return new VXDomainType(
+				VXElementType.TYPE, _key);
+		return new VXType(
 				domainTypeKey,
 				_comment,
 				_dataType,

@@ -3,7 +3,7 @@ package io.vertigo.vortex.notebook.module;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.vortex.notebook.VXElementType;
 import io.vertigo.vortex.notebook.VXKey;
-import io.vertigo.vortex.notebook.library.types.VXDomainType;
+import io.vertigo.vortex.notebook.library.types.VXType;
 
 /**
  * Represents an attribute of an entity.
@@ -15,7 +15,7 @@ public record VXAttribute(
 		VXKey key,
 		String label,
 		String comment,
-		VXDomainType type,
+		VXType type,
 		boolean required) {
 
 	public VXAttribute {

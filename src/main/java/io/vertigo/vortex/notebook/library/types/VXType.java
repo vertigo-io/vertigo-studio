@@ -13,17 +13,17 @@ import io.vertigo.vortex.notebook.VXKey;
  * For example, a 'String' domain could have a max length validator.
  * @synthetic
  */
-public record VXDomainType(
+public record VXType(
 		VXKey key,
 		String comment,
 		VXDataType dataType,
 		List<VXValidator> validators,
 		List<VXProperty> properties) {
 
-	public VXDomainType {
+	public VXType {
 		Assertion.check()
 				.isNotNull(key)
-				.isTrue(key.type() == VXElementType.DOMAIN_TYPE, "A VXDomainType's key must be of type DOMAIN_TYPE")
+				.isTrue(key.type() == VXElementType.TYPE, "A VXDomainType's key must be of type DOMAIN_TYPE")
 				.isNotNull(dataType)
 				.isNotNull(validators);
 

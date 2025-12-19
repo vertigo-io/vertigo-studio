@@ -5,7 +5,7 @@ import java.util.List;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.vortex.notebook.VXElementType;
 import io.vertigo.vortex.notebook.VXIdentification;
-import io.vertigo.vortex.notebook.library.types.VXDomainType;
+import io.vertigo.vortex.notebook.library.types.VXType;
 
 /**
  * Represents the entire data model.
@@ -14,7 +14,7 @@ import io.vertigo.vortex.notebook.library.types.VXDomainType;
  */
 public record VXLibrary(
 		VXIdentification identification,
-		List<VXDomainType> domainTypes) {
+		List<VXType> domainTypes) {
 
 	public VXLibrary {
 		Assertion.check()

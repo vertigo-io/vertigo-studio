@@ -14,7 +14,7 @@ public record VXValueObject(
 	public VXValueObject {
 		Assertion.check()
 				.isNotNull(key)
-				.isTrue(key.type() == VXElementType.VALUE_OBJECT, "A value object's key must be of type VALUE_OBJECT")
+				.isTrue(key.type() == VXElementType.VALUE, "A value object's key must be of type VALUE_OBJECT")
 				.isNotBlank(comment)
 				.isNotNull(attributes);
 	}
