@@ -1,4 +1,4 @@
-package io.vertigo.vortex.impl.notebook.raw.library;
+package io.vertigo.vortex.plugins.notebook.json.library;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

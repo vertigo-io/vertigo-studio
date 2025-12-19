@@ -1,4 +1,4 @@
-package io.vertigo.vortex.impl.notebook;
+package io.vertigo.vortex.plugins.notebook.json;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package io.vertigo.vortex.impl.notebook;
+package io.vertigo.vortex.plugins.notebook.json;
 
 import java.io.File;
 import java.util.List;
@@ -11,10 +11,9 @@ import com.github.fge.jsonschema.main.JsonSchemaFactory;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.VSystemException;
-import io.vertigo.vortex.impl.notebook.raw.RawNotebook;
-import io.vertigo.vortex.impl.notebook.raw.library.RawLibrary;
-import io.vertigo.vortex.impl.notebook.raw.module.RawModule;
 import io.vertigo.vortex.notebook.VXNotebookConfig;
+import io.vertigo.vortex.plugins.notebook.json.library.RawLibrary;
+import io.vertigo.vortex.plugins.notebook.json.module.RawModule;
 
 /**
  * Reads a JSON file (Bronze), and transforms it into a rawNotebook (Silver).  
@@ -22,8 +21,8 @@ import io.vertigo.vortex.notebook.VXNotebookConfig;
  * @synthetic
  */
 final class FileToRaw {
-	private static final File LIBRARY_SCHEMA_FILE = new File("src/main/java/io/vertigo/vortex/impl/notebook/schemas/library-schema.json");
-	private static final File MODULE_SCHEMA_FILE = new File("src/main/java/io/vertigo/vortex/impl/notebook/schemas/module-schema.json");
+	private static final File LIBRARY_SCHEMA_FILE = new File("src/main/java/io/vertigo/vortex/plugins/notebook/json/schemas/library-schema.json");
+	private static final File MODULE_SCHEMA_FILE = new File("src/main/java/io/vertigo/vortex/plugins/notebook/json/schemas/module-schema.json");
 
 	private final VXNotebookConfig notebookConfig;
 

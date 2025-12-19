@@ -1,11 +1,11 @@
-package io.vertigo.vortex.impl.notebook.raw.module;
+package io.vertigo.vortex.plugins.notebook.json.module;
 
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.vortex.impl.notebook.raw.RawIdentification;
+import io.vertigo.vortex.plugins.notebook.json.RawIdentification;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RawModule(

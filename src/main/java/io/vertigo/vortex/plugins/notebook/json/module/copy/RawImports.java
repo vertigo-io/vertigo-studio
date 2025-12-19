@@ -1,4 +1,4 @@
-package io.vertigo.vortex.impl.notebook.raw.module;
+package io.vertigo.vortex.plugins.notebook.json.module.copy;
 
 import java.util.List;
 
