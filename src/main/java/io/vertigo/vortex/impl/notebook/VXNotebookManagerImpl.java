@@ -4,10 +4,12 @@ import io.vertigo.core.lang.Assertion;
 import io.vertigo.vortex.notebook.VXNotebook;
 import io.vertigo.vortex.notebook.VXNotebookConfig;
 import io.vertigo.vortex.notebook.VXNotebookManager;
+import jakarta.inject.Inject;
 
 public class VXNotebookManagerImpl implements VXNotebookManager {
 	private final NotebookReaderPlugin notebookReaderPlugin;
 
+	@Inject
 	public VXNotebookManagerImpl(NotebookReaderPlugin notebookReaderPlugin) {
 		Assertion.check().isNotNull(notebookReaderPlugin);
 		//---

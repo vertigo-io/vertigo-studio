@@ -1,5 +1,7 @@
 package io.vertigo.vortex.notebook;
 
-public interface VXNotebookManager {
+import io.vertigo.core.node.component.Manager;
+
+public interface VXNotebookManager extends Manager {
 	VXNotebook createNotebook(VXNotebookConfig notebookConfig) throws Exception;
 }
