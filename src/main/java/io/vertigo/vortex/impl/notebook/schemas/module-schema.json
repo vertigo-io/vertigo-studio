@@ -59,6 +59,51 @@
 				"required",
 				"stereotype"
 			]
+		},
+		"valueObject-type": {
+			"type": "object",
+			"properties": {
+				"key": {
+					"$ref": "#/$defs/key-type"
+				},
+				"comment": {
+					"$ref": "#/$defs/comment-type"
+				},
+				"attributes": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"key": {
+								"$ref": "#/$defs/key-type"
+							},
+							"label": {
+								"$ref": "#/$defs/label-type"
+							},
+							"comment": {
+								"$ref": "#/$defs/comment-type"
+							},
+							"type": {
+								"$ref": "#/$defs/domain-type-type"
+							},
+							"required": {
+								"type": "boolean"
+							}
+						},
+						"required": [
+							"key",
+							"label",
+							"type",
+							"required"
+						]
+					}
+				}
+			},
+			"required": [
+				"key",
+				"comment",
+				"attributes"
+			]
 		}
 	},
 	"type": "object",
@@ -120,14 +165,14 @@
 							"comment": {
 								"$ref": "#/$defs/comment-type"
 							},
-							"domainType": {
+							"type": {
 								"$ref": "#/$defs/domain-type-type"
 							}
 						},
 						"required": [
 							"key",
 							"label",
-							"domainType"
+							"type"
 						]
 					},
 					"attributes": {
@@ -144,7 +189,7 @@
 								"comment": {
 									"$ref": "#/$defs/comment-type"
 								},
-								"domainType": {
+								"type": {
 									"$ref": "#/$defs/domain-type-type"
 								},
 								"required": {
@@ -154,7 +199,7 @@
 							"required": [
 								"key",
 								"label",
-								"domainType",
+								"type",
 								"required"
 							]
 						}
@@ -173,11 +218,18 @@
 					"attributes"
 				]
 			}
+		},
+		"valueObjects": {
+			"type": "array",
+			"items": {
+				"$ref": "#/$defs/valueObject-type"
+			}
 		}
 	},
 	"required": [
 		"module",
 		"imports",
-		"entities"
+		"entities",
+		"valueObjects"
 	]
 }

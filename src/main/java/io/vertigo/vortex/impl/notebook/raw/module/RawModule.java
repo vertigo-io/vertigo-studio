@@ -11,12 +11,14 @@ import io.vertigo.vortex.impl.notebook.raw.RawIdentification;
 public record RawModule(
 		RawIdentification module,
 		RawImports imports,
-		List<RawEntity> entities) {
+		List<RawEntity> entities,
+		List<RawValueObject> valueObjects) {
 
 	public RawModule {
 		Assertion.check()
 				.isNotNull(module)
 				.isNotNull(imports)
-				.isNotNull(entities);
+				.isNotNull(entities)
+				.isNotNull(valueObjects);
 	}
 }

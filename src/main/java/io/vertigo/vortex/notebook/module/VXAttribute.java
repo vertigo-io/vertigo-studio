@@ -15,7 +15,7 @@ public record VXAttribute(
 		VXKey key,
 		String label,
 		String comment,
-		VXDomainType domainType,
+		VXDomainType type,
 		boolean required) {
 
 	public VXAttribute {
@@ -23,6 +23,6 @@ public record VXAttribute(
 				.isNotNull(key)
 				.isTrue(key.type() == VXElementType.ATTRIBUTE, "An attribute's key must be of type ATTRIBUTE")
 				.isNotBlank(label)
-				.isNotNull(domainType);
+				.isNotNull(type);
 	}
 }

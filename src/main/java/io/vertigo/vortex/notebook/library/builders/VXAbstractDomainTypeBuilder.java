@@ -15,7 +15,6 @@ import io.vertigo.vortex.notebook.library.types.VXValidator;
 abstract class VXAbstractDomainTypeBuilder<B extends VXAbstractDomainTypeBuilder<B>> implements Builder<VXDomainType> {
 	private final VXKey _libraryKey;
 	private final String _key;
-	private String _label;
 	private String _comment;
 	private final VXDataType _dataType;
 	private final List<VXValidator> _validators = new ArrayList<>();
@@ -32,16 +31,10 @@ abstract class VXAbstractDomainTypeBuilder<B extends VXAbstractDomainTypeBuilder
 		_libraryKey = libraryKey;
 		_key = key;
 		_dataType = dataType;
-		_label = key; //By default
 	}
 
 	protected final B self() {
 		return (B) this;
-	}
-
-	protected final B withLabel(final String label) {
-		_label = label;
-		return self();
 	}
 
 	protected final B withComment(final String comment) {
@@ -60,7 +53,6 @@ abstract class VXAbstractDomainTypeBuilder<B extends VXAbstractDomainTypeBuilder
 				VXElementType.DOMAIN_TYPE, _key);
 		return new VXDomainType(
 				domainTypeKey,
-				_label,
 				_comment,
 				_dataType,
 				_validators,

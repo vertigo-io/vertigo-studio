@@ -7,7 +7,7 @@ public record RawId(
 		String key,
 		String label,
 		String comment,
-		String domainType) {
+		String type) {
 }
 
 

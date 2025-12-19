@@ -11,6 +11,14 @@
 			"dataType": "String"
 		},
 		{
+			"key": "do-email",
+			"dataType": "String"
+		},
+		{
+			"key": "do-phone",
+			"dataType": "String"
+		},
+		{
 			"key": "do-id",
 			"dataType": "Long"
 		}

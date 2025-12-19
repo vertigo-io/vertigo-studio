@@ -6,6 +6,7 @@ public enum VXElementType {
 	//---
 	MODULE,
 	ENTITY,
+	VALUE_OBJECT,
 	ATTRIBUTE,
 	LINK,
 	ID

@@ -17,19 +17,19 @@
 			"id": {
 				"key": "id",
 				"label": "Identifier",
-				"domainType": "do-id"
+				"type": "do-id"
 			},
 			"attributes": [
 				{
 					"key": "first-name",
 					"label": "First name",
-					"domainType": "do-label",
+					"type": "do-label",
 					"required": true
 				},
 				{
 					"key": "last-name",
 					"label": "Last name",
-					"domainType": "do-label",
+					"type": "do-label",
 					"required": false
 				}
 			], 
@@ -56,17 +56,37 @@
 			"id": {
 				"key": "id",
 				"label": "Identifier of the publisher",
-				"domainType": "do-id"
+				"type": "do-id"
 			},
 			"attributes": [
 				{
 					"key": "name",
 					"label": "Name of the publisher",
-					"domainType": "do-label",
+					"type": "do-label",
 					"required": true
 				}
 			],
 			"links": []
+		}
+	],
+	"valueObjects": [
+		{
+			"key": "contact-info",
+			"comment": "Contact info of an author",
+			"attributes": [
+				{
+					"key": "email",
+					"label": "Email",
+					"type": "do-email",
+					"required": true
+				},
+				{
+					"key": "phone",
+					"label": "Phone",
+					"type": "do-phone",
+					"required": false
+				}
+			]
 		}
 	]
 }

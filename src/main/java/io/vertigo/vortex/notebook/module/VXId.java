@@ -13,13 +13,13 @@ public record VXId(
 		VXKey key,
 		String label,
 		String comment,
-		VXDomainType domainType) {
+		VXDomainType type) {
 
 	public VXId {
 		Assertion.check()
 				.isNotNull(key)
 				.isTrue(key.type() == VXElementType.ID, "An id's key must be of type ID")
 				.isNotBlank(label)
-				.isNotNull(domainType);
+				.isNotNull(type);
 	}
 }

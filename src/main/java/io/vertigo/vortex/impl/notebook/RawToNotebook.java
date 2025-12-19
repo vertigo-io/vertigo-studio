@@ -1,7 +1,6 @@
 package io.vertigo.vortex.impl.notebook;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.vortex.impl.notebook.raw.RawNotebook;
@@ -13,6 +12,7 @@ import io.vertigo.vortex.impl.notebook.raw.module.RawId;
 import io.vertigo.vortex.impl.notebook.raw.module.RawImports;
 import io.vertigo.vortex.impl.notebook.raw.module.RawLink;
 import io.vertigo.vortex.impl.notebook.raw.module.RawModule;
+import io.vertigo.vortex.impl.notebook.raw.module.RawValueObject;
 import io.vertigo.vortex.notebook.VXElementType;
 import io.vertigo.vortex.notebook.VXIdentification;
 import io.vertigo.vortex.notebook.VXKey;
@@ -27,6 +27,7 @@ import io.vertigo.vortex.notebook.module.VXImports;
 import io.vertigo.vortex.notebook.module.VXLink;
 import io.vertigo.vortex.notebook.module.VXLinkStereotype;
 import io.vertigo.vortex.notebook.module.VXModule;
+import io.vertigo.vortex.notebook.module.VXValueObject;
 
 /**
  * Transforms a raw model into a VXModel.
@@ -80,6 +81,23 @@ final class RawToNotebook {
 		}
 
 		return new VXKey(_owner, VXElementType.ENTITY, key);
+	}
+
+	private static VXKey createKeyForValueObject(VXKey owner, String key) {
+		//si key ne contient pas de "." alors on prends l'owner ( on reste dans le même module)
+		//Sinon on cherche me module
+		int i = key.indexOf(".");
+		VXKey _owner;
+		if (i < 0) {
+			_owner = owner;
+		} else {
+			//on recherche le module qui correspond
+			//TODO
+			//TODO
+			//TODO
+			_owner = owner;
+		}
+		return new VXKey(_owner, VXElementType.VALUE_OBJECT, key);
 	}
 
 	/**
@@ -143,10 +161,29 @@ final class RawToNotebook {
 				.map(e -> transform(e, moduleKey, domainTypeCatalog, entityCatalog))
 				.toList();
 
+		final List<VXValueObject> valueObjects = rawModule.valueObjects().stream()
+				.map(vo -> transform(vo, moduleKey, domainTypeCatalog))
+				.toList();
+
 		return new VXModule(
 				identification,
 				imports,
-				entities);
+				entities,
+				valueObjects);
+	}
+
+	private static VXValueObject transform(final RawValueObject rawValueObject, final VXKey owner, final Catalog<VXDomainType> domainTypeCatalog) {
+		final VXKey voKey = createKeyForValueObject(owner, rawValueObject.key());
+		final List<VXAttribute> attributes = rawValueObject.attributes() != null
+				? rawValueObject.attributes().stream()
+						.map(rawAttribute -> transform(rawAttribute, voKey, domainTypeCatalog))
+						.toList()
+				: List.of();
+
+		return new VXValueObject(
+				voKey,
+				rawValueObject.comment(),
+				attributes);
 	}
 
 	private static VXEntity transform(
@@ -183,7 +220,7 @@ final class RawToNotebook {
 				idKey,
 				id.label(),
 				id.comment(),
-				domainTypeCatalog.get(createKeyForDomainType(id.domainType())));
+				domainTypeCatalog.get(createKeyForDomainType(id.type())));
 	}
 
 	private static VXLibrary transform(final RawLibrary rawLibrary) {
@@ -210,7 +247,7 @@ final class RawToNotebook {
 				attributeKey,
 				rawAttribute.label(),
 				rawAttribute.comment(),
-				domainTypeCatalog.get(createKeyForDomainType(rawAttribute.domainType())),
+				domainTypeCatalog.get(createKeyForDomainType(rawAttribute.type())),
 				rawAttribute.required());
 	}
 
