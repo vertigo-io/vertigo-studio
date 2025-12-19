@@ -18,15 +18,16 @@ import io.vertigo.vortex.notebook.module.VXLink;
 import io.vertigo.vortex.notebook.module.VXLinkStereotype;
 import io.vertigo.vortex.notebook.module.VXModule;
 import io.vertigo.vortex.notebook.module.VXValueObject;
-import io.vertigo.vortex.plugins.notebook.json.library.RawLibrary;
-import io.vertigo.vortex.plugins.notebook.json.library.RawType;
-import io.vertigo.vortex.plugins.notebook.json.module.RawAttribute;
-import io.vertigo.vortex.plugins.notebook.json.module.RawEntity;
-import io.vertigo.vortex.plugins.notebook.json.module.RawId;
-import io.vertigo.vortex.plugins.notebook.json.module.RawImports;
-import io.vertigo.vortex.plugins.notebook.json.module.RawLink;
-import io.vertigo.vortex.plugins.notebook.json.module.RawModule;
-import io.vertigo.vortex.plugins.notebook.json.module.RawValue;
+import io.vertigo.vortex.plugins.notebook.json.raw.RawNotebook;
+import io.vertigo.vortex.plugins.notebook.json.raw.library.RawLibrary;
+import io.vertigo.vortex.plugins.notebook.json.raw.library.RawType;
+import io.vertigo.vortex.plugins.notebook.json.raw.module.RawAttribute;
+import io.vertigo.vortex.plugins.notebook.json.raw.module.RawEntity;
+import io.vertigo.vortex.plugins.notebook.json.raw.module.RawId;
+import io.vertigo.vortex.plugins.notebook.json.raw.module.RawImports;
+import io.vertigo.vortex.plugins.notebook.json.raw.module.RawLink;
+import io.vertigo.vortex.plugins.notebook.json.raw.module.RawModule;
+import io.vertigo.vortex.plugins.notebook.json.raw.module.RawValue;
 
 /**
  * Transforms a raw model into a VXModel.

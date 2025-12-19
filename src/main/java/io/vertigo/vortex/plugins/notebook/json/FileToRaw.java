@@ -12,8 +12,9 @@ import com.github.fge.jsonschema.main.JsonSchemaFactory;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.vortex.notebook.VXNotebookConfig;
-import io.vertigo.vortex.plugins.notebook.json.library.RawLibrary;
-import io.vertigo.vortex.plugins.notebook.json.module.RawModule;
+import io.vertigo.vortex.plugins.notebook.json.raw.RawNotebook;
+import io.vertigo.vortex.plugins.notebook.json.raw.library.RawLibrary;
+import io.vertigo.vortex.plugins.notebook.json.raw.module.RawModule;
 
 /**
  * Reads a JSON file (Bronze), and transforms it into a rawNotebook (Silver).  

@@ -1,12 +1,14 @@
-package io.vertigo.vortex.plugins.notebook.json.module.copy;
+package io.vertigo.vortex.plugins.notebook.json.raw.module;
 
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public record RawValue(
+public record RawEntity(
 		String key,
 		String comment,
-		List<RawAttribute> attributes) {
+		RawId id,
+		List<RawAttribute> attributes,
+		List<RawLink> links) {
 }
