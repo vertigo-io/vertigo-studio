@@ -46,7 +46,6 @@
 					"label": "List of publishers",
 					"comment": "Agreement between author and publisher for a book",
 					"targetEntityKey": "publisher",
-					"required": false,
 					"stereotype": "MANY_TO_MANY"
 				}
 			]
