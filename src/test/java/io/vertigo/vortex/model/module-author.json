@@ -1,7 +1,7 @@
 {
 	"module" : {
 		"key": "author",
-		"description": "List of authors",
+		"comment": "List of authors",
 		"tags":[]
 	},
 
@@ -13,50 +13,61 @@
 	"entities": [
 		{
 			"key": "author",
-			"description": "An author",
+			"comment": "An author",
 			"id": {
 				"key": "id",
-				"description": "Identifier of the author",
+				"label": "Identifier",
 				"domainType": "do-id"
 			},
 			"attributes": [
 				{
 					"key": "first-name",
-					"description": "First name of the author",
+					"label": "First name",
 					"domainType": "do-label",
-					"cardinality": "1"
+					"required": true
 				},
 				{
 					"key": "last-name",
-					"description": "Last name of the author",
-					"domainType": "do-label"
+					"label": "Last name",
+					"domainType": "do-label",
+					"required": false
 				}
 			], 
 			"links": [
 				{
 					"key": "publisher",
-					"description": "Publisher of the author",
+					"label": "Publisher",
 					"targetEntityKey": "publisher",
-					"cardinality": "1" 
+					"required": true,
+					"stereotype": "MANY_TO_ONE" 
+				},
+				{
+					"key": "author-publisher-agreement",
+					"label": "List of publishers",
+					"comment": "Agreement between author and publisher for a book",
+					"targetEntityKey": "publisher",
+					"required": false,
+					"stereotype": "MANY_TO_MANY"
 				}
 			]
 		},
 		{
 			"key": "publisher",
-			"description": "A book publisher",
+			"comment": "A book publisher",
 			"id": {
 				"key": "id",
-				"description": "Identifier of the publisher",
+				"label": "Identifier of the publisher",
 				"domainType": "do-id"
 			},
 			"attributes": [
 				{
 					"key": "name",
-					"description": "Name of the publisher",
+					"label": "Name of the publisher",
 					"domainType": "do-label",
-					"cardinality": "1"
+					"required": true
 				}
-			]
+			],
+			"links": []
 		}
 	]
 }

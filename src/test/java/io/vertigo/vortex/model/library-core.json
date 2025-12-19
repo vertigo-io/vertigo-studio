@@ -1,7 +1,7 @@
 {
 	"library" : {
 		"key": "core",
-		"description": "List of domainTypes",
+		"comment": "List of domainTypes",
 		"tags":[]
 	},
 

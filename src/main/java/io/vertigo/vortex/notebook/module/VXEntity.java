@@ -14,7 +14,7 @@ import io.vertigo.vortex.notebook.VXKey;
  */
 public record VXEntity(
 		VXKey key, //entity key aka class name/ table name
-		String description,
+		String comment,
 		VXId id, //id or pk 
 		List<VXAttribute> attributes,
 		List<VXLink> links) {

@@ -6,26 +6,19 @@ import io.vertigo.vortex.notebook.VXKey;
 
 public record VXLink(
 		VXKey key,
-		String description,
+		String label,
+		String comment,
 		VXKey targetEntityKey,
-		VXCardinality cardinality,
+		boolean required,
 		VXLinkStereotype stereotype) {
 
 	public VXLink {
 		Assertion.check()
 				.isNotNull(key)
 				.isTrue(key.type() == VXElementType.LINK, "A link's key must be of type LINK")
-				.isNotBlank(description)
+				.isNotBlank(label)
 				.isNotNull(targetEntityKey)
-				.isNotNull(cardinality)
 				.isNotNull(stereotype);
-		// --- Constraint : partOf has 1..1 cardinality
-		if (stereotype == VXLinkStereotype.PART_OF) {
-			Assertion.check()
-					.isTrue(cardinality == VXCardinality.ONE,
-							"A PART_OF link must have a ONE (1) cardinality, but was '{0}'",
-							cardinality);
-		}
 	}
 
 }

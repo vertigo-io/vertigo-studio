@@ -10,25 +10,20 @@
 			"type": "string",
 			"pattern": "^do-[a-z]+$"
 		},
-		"description-type": {
+		"comment-type": {
 			"type": "string",
-			"maxLength": 250
+			"maxLength": 500
+		},
+		"label-type": {
+			"type": "string",
+			"maxLength": 100
 		},
 		"string-array-type": {
 			"type": "array",
 			"items": {
 				"type": "string"
 			},
-			"minItems": 0,
 			"uniqueItems": true
-		},
-		"cardinality-type": {
-			"type": "string",
-			"enum": [
-				"1",
-				"*",
-				"?"
-			]
 		},
 		"link-type": {
 			"type": "object",
@@ -36,41 +31,36 @@
 				"key": {
 					"$ref": "#/$defs/key-type"
 				},
-				"description": {
-					"$ref": "#/$defs/description-type"
+				"label": {
+					"$ref": "#/$defs/label-type"
+				},
+				"comment": {
+					"$ref": "#/$defs/comment-type"
 				},
 				"targetEntityKey": {
 					"$ref": "#/$defs/key-type"
 				},
-				"cardinality": {
-					"$ref": "#/$defs/cardinality-type"
+				"required": {
+					"type": "boolean"
+				},
+				"stereotype": {
+					"type": "string",
+					"enum": [
+						"MANY_TO_ONE",
+						"ONE_TO_ONE",
+						"MANY_TO_MANY"
+					]
 				}
 			},
 			"required": [
 				"key",
+				"label",
 				"targetEntityKey",
-				"cardinality"
+				"required",
+				"stereotype"
 			]
-		},
-		"part-of-type": {
-			"type": "object",
-			"properties": {
-				"key": {
-					"$ref": "#/$defs/key-type"
-				},
-				"description": {
-					"$ref": "#/$defs/description-type"
-				},
-				"targetEntityKey": {
-					"$ref": "#/$defs/key-type"
-				}	
-			},
-			"required": [
-				"key",
-				"targetEntityKey"			]
 		}
 	},
-	
 	"type": "object",
 	"properties": {
 		"module": {
@@ -79,8 +69,8 @@
 				"key": {
 					"$ref": "#/$defs/key-type"
 				},
-				"description": {
-					"$ref": "#/$defs/description-type"
+				"comment": {
+					"$ref": "#/$defs/comment-type"
 				},
 				"tags": {
 					"$ref": "#/$defs/string-array-type"
@@ -88,7 +78,7 @@
 			},
 			"required": [
 				"key",
-				"description",
+				"comment",
 				"tags"
 			]
 		},
@@ -115,8 +105,8 @@
 					"key": {
 						"$ref": "#/$defs/key-type"
 					},
-					"description": {
-						"$ref": "#/$defs/description-type"
+					"comment": {
+						"$ref": "#/$defs/comment-type"
 					},
 					"id": {
 						"type": "object",
@@ -124,8 +114,11 @@
 							"key": {
 								"$ref": "#/$defs/key-type"
 							},
-							"description": {
-								"$ref": "#/$defs/description-type"
+							"label": {
+								"$ref": "#/$defs/label-type"
+							},
+							"comment": {
+								"$ref": "#/$defs/comment-type"
 							},
 							"domainType": {
 								"$ref": "#/$defs/domain-type-type"
@@ -133,7 +126,7 @@
 						},
 						"required": [
 							"key",
-							"description",
+							"label",
 							"domainType"
 						]
 					},
@@ -142,28 +135,40 @@
 						"items": {
 							"type": "object",
 							"properties": {
-								"key": {"$ref": "#/$defs/key-type"},
-								"description": {"$ref": "#/$defs/description-type"},
-								"domainType": {"$ref": "#/$defs/domain-type-type"},
-								"cardinality": {"$ref": "#/$defs/cardinality-type"}
+								"key": {
+									"$ref": "#/$defs/key-type"
+								},
+								"label": {
+									"$ref": "#/$defs/label-type"
+								},
+								"comment": {
+									"$ref": "#/$defs/comment-type"
+								},
+								"domainType": {
+									"$ref": "#/$defs/domain-type-type"
+								},
+								"required": {
+									"type": "boolean"
+								}
 							},
 							"required": [
 								"key",
-								"domainType"
+								"label",
+								"domainType",
+								"required"
 							]
 						}
 					},
-					"partOf": {
-						"type": "object",
-						"items": {"$ref": "#/$defs/part-of-type"}
-					},
-					"link": {
+					"links": {
 						"type": "array",
-						"items": {"$ref": "#/$defs/link-type"}
+						"items": {
+							"$ref": "#/$defs/link-type"
+						}
 					}
 				},
 				"required": [
 					"key",
+					"comment",
 					"id",
 					"attributes"
 				]

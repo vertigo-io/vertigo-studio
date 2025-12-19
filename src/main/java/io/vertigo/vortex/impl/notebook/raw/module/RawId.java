@@ -5,7 +5,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RawId(
 		String key,
-		String description,
+		String label,
+		String comment,
 		String domainType) {
 }
+
+
 

@@ -1,7 +1,7 @@
 package io.vertigo.vortex.impl.notebook;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.vortex.impl.notebook.raw.RawNotebook;
@@ -21,7 +21,6 @@ import io.vertigo.vortex.notebook.library.VXLibrary;
 import io.vertigo.vortex.notebook.library.types.VXDataType;
 import io.vertigo.vortex.notebook.library.types.VXDomainType;
 import io.vertigo.vortex.notebook.module.VXAttribute;
-import io.vertigo.vortex.notebook.module.VXCardinality;
 import io.vertigo.vortex.notebook.module.VXEntity;
 import io.vertigo.vortex.notebook.module.VXId;
 import io.vertigo.vortex.notebook.module.VXImports;
@@ -64,10 +63,11 @@ final class RawToNotebook {
 		return new VXKey(libraryKey, VXElementType.DOMAIN_TYPE, name);
 	}
 
-	private static VXKey createKeyForEntity(VXKey owner, String name) {
-		//si name ne contient pas de "." alors on prends l'owner ( on reste dans le même module)
+	// Updated to use key
+	private static VXKey createKeyForEntity(VXKey owner, String key) {
+		//si key ne contient pas de "." alors on prends l'owner ( on reste dans le même module)
 		//Sinon on cherche me module
-		int i = name.indexOf(".");
+		int i = key.indexOf(".");
 		VXKey _owner;
 		if (i < 0) {
 			_owner = owner;
@@ -79,7 +79,7 @@ final class RawToNotebook {
 			_owner = owner;
 		}
 
-		return new VXKey(_owner, VXElementType.ENTITY, name);
+		return new VXKey(_owner, VXElementType.ENTITY, key);
 	}
 
 	/**
@@ -120,7 +120,7 @@ final class RawToNotebook {
 		final VXKey moduleKey = createKeyForModule(rawModule.module().key());
 		final VXIdentification identification = new VXIdentification(
 				moduleKey,
-				rawModule.module().description(),
+				rawModule.module().comment(),
 				rawModule.module().tags());
 
 		final VXImports imports = transform(rawModule.imports());
@@ -142,6 +142,7 @@ final class RawToNotebook {
 		final List<VXEntity> entities = rawModule.entities().stream()
 				.map(e -> transform(e, moduleKey, domainTypeCatalog, entityCatalog))
 				.toList();
+
 		return new VXModule(
 				identification,
 				imports,
@@ -160,25 +161,18 @@ final class RawToNotebook {
 						.toList()
 				: List.of();
 
-		VXLink partOfLink = rawEntity.partOf() != null
-				? transform(rawEntity.partOf(), entityKey, owner, entityCatalog, VXLinkStereotype.PART_OF)
-				: null;
-
 		final List<VXLink> links = rawEntity.links() != null
 				? rawEntity.links().stream()
-						.map(rawLink -> transform(rawLink, entityKey, owner, entityCatalog, VXLinkStereotype.LINK))
+						.map(rawLink -> transform(rawLink, entityKey, owner, entityCatalog, rawLink.required(), VXLinkStereotype.valueOf(rawLink.stereotype())))
 						.toList()
 				: List.of();
 
-		final List<VXLink> allLinks = new ArrayList(links);
-		allLinks.add(partOfLink);
-
 		return new VXEntity(
 				entityKey,
-				rawEntity.description(),
+				rawEntity.comment(),
 				transform(rawEntity.id(), entityKey, domainTypeCatalog),
 				attributes,
-				allLinks);
+				links);
 	}
 
 	private static VXId transform(RawId id,
@@ -187,7 +181,8 @@ final class RawToNotebook {
 		final VXKey idKey = new VXKey(entityKey, VXElementType.ID, id.key());
 		return new VXId(
 				idKey,
-				id.description(),
+				id.label(),
+				id.comment(),
 				domainTypeCatalog.get(createKeyForDomainType(id.domainType())));
 	}
 
@@ -195,7 +190,7 @@ final class RawToNotebook {
 		final VXKey libraryKey = createKeyForLibrary(rawLibrary.library().key());
 		final VXIdentification identification = new VXIdentification(
 				libraryKey,
-				rawLibrary.library().description(),
+				rawLibrary.library().comment(),
 				rawLibrary.library().tags());
 		final List<VXDomainType> domainTypes = rawLibrary.domainTypes().stream()
 				.map(dt -> transform(dt, libraryKey))
@@ -213,11 +208,10 @@ final class RawToNotebook {
 		final VXKey attributeKey = new VXKey(entityKey, VXElementType.ATTRIBUTE, rawAttribute.key());
 		return new VXAttribute(
 				attributeKey,
-				rawAttribute.description() != null
-						? rawAttribute.description()
-						: rawAttribute.key(),
+				rawAttribute.label(),
+				rawAttribute.comment(),
 				domainTypeCatalog.get(createKeyForDomainType(rawAttribute.domainType())),
-				VXCardinality.fromSymbol(rawAttribute.cardinality()));
+				rawAttribute.required());
 	}
 
 	private static VXLink transform(
@@ -225,15 +219,15 @@ final class RawToNotebook {
 			final VXKey entityKey,
 			final VXKey owner,
 			final Catalog<VXEntity> entityCatalog,
+			final boolean required,
 			final VXLinkStereotype stereotype) {
 		final VXKey linkKey = new VXKey(entityKey, VXElementType.LINK, rawLink.key());
 		return new VXLink(
 				linkKey,
-				rawLink.description() != null
-						? rawLink.description()
-						: rawLink.key(),
+				rawLink.label(),
+				rawLink.comment(),
 				createKeyForEntity(owner, rawLink.targetEntityKey()),
-				VXCardinality.fromSymbol(rawLink.cardinality()),
+				required,
 				stereotype);
 	}
 
@@ -243,9 +237,7 @@ final class RawToNotebook {
 		final VXKey domainTypeKey = new VXKey(libraryKey, VXElementType.DOMAIN_TYPE, rawDomainType.key());
 		return new VXDomainType(
 				domainTypeKey,
-				rawDomainType.description() != null
-						? rawDomainType.description()
-						: rawDomainType.key(),
+				rawDomainType.comment(),
 				VXDataType.valueOf(rawDomainType.dataType()),
 				//!!!!!!!!!!!!!!!!!!!!!!!
 				List.of(),

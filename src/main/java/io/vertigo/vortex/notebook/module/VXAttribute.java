@@ -13,15 +13,16 @@ import io.vertigo.vortex.notebook.library.types.VXDomainType;
  */
 public record VXAttribute(
 		VXKey key,
-		String description,
+		String label,
+		String comment,
 		VXDomainType domainType,
-		VXCardinality cardinality) {
+		boolean required) {
 
 	public VXAttribute {
 		Assertion.check()
 				.isNotNull(key)
 				.isTrue(key.type() == VXElementType.ATTRIBUTE, "An attribute's key must be of type ATTRIBUTE")
-				.isNotNull(domainType)
-				.isNotNull(cardinality);
+				.isNotBlank(label)
+				.isNotNull(domainType);
 	}
 }

@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RawAttribute(
 		String key,
-		String description,
+		String label,
+		String comment,
 		String domainType,
-		String cardinality) {
+		boolean required) {
 }

@@ -1,7 +1,7 @@
 {
 	"module": {
 		"key": "book",
-		"description": "List of books",
+		"comment": "List of books",
 		"tags": []
 	},
 		
@@ -13,58 +13,69 @@
 	"entities": [
 		{
 			"key": "book",
-			"description": "A book",
+			"comment": "A book",
 			"id": {
 				"key": "id",
-				"description": "Identifier of the book",
+				"label": "Identifier",
 				"domainType": "do-id"
 			},
 			"attributes": [
 				{
 					"key": "title",
-					"description": "Title of the book",
+					"label": "Title",
 					"domainType": "do-label",
-					"cardinality": "1"
+					"required": true
 				},
 				{
 					"key": "isbn",
-					"description": "ISBN of the book",
+					"label": "ISBN",
 					"domainType": "do-label",
-					"cardinality": "1"
+					"required": true
 				}
 			], 
 			"links": [
 				{
 					"key": "author",
-					"description": "Author of the book",
+					"label": "Author",
 					"targetEntityKey": "author",
-					"cardinality": "1"
+					"required": true,
+					"stereotype": "MANY_TO_ONE"
 				},
 				{
 					"key": "category",
-					"description": "Category of the book",
+					"label": "Category of the book",
 					"targetEntityKey": "category",
-					"cardinality": "?"
+					"required": false,
+					"stereotype": "MANY_TO_ONE"
+				},
+				{
+					"key": "book-category-classification",
+					"label": "List of categories",
+					"comment": "Classification of books by category",
+					"targetEntityKey": "category",
+					"required": false,
+					"stereotype": "MANY_TO_MANY"
 				}
 			]
 		},
 		
 		{
 			"key": "category",
-			"description": "A book category",
+			"comment": "A book category",
 			"id": {
 				"key": "id",
-				"description": "Identifier of the category",
+				"label": "Identifier",
 				"domainType": "do-id"
 			},
 			"attributes": [
 				{
 					"key": "name",
-					"description": "Name of the category",
+					"label": "Name of the category",
 					"domainType": "do-label",
-					"cardinality": "1"
+					"required": true
 				}
-			]
+			],
+			"links": []
 		}
 	]
 }

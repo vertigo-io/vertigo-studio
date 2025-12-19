@@ -14,29 +14,38 @@ import io.vertigo.vortex.notebook.library.types.VXValidator;
 
 abstract class VXAbstractDomainTypeBuilder<B extends VXAbstractDomainTypeBuilder<B>> implements Builder<VXDomainType> {
 	private final VXKey _libraryKey;
-	private final String _name;
-	private String _description;
+	private final String _key;
+	private String _label;
+	private String _comment;
 	private final VXDataType _dataType;
 	private final List<VXValidator> _validators = new ArrayList<>();
 	private final List<VXProperty> _properties = new ArrayList<>();
 
-	protected VXAbstractDomainTypeBuilder(final VXKey libraryKey, final String name, final VXDataType dataType) {
+	protected VXAbstractDomainTypeBuilder(
+			final VXKey libraryKey,
+			final String key,
+			final VXDataType dataType) {
 		Assertion.check()
 				.isNotNull(libraryKey)
 				.isTrue(libraryKey.type() == VXElementType.LIBRARY, "Owner of a domainType must be a library");
 		//---
 		_libraryKey = libraryKey;
-		_name = name;
+		_key = key;
 		_dataType = dataType;
-		_description = name; //default description is name
+		_label = key; //By default
 	}
 
 	protected final B self() {
 		return (B) this;
 	}
 
-	protected final B withDescription(final String description) {
-		_description = description;
+	protected final B withLabel(final String label) {
+		_label = label;
+		return self();
+	}
+
+	protected final B withComment(final String comment) {
+		_comment = comment;
 		return self();
 	}
 
@@ -47,7 +56,14 @@ abstract class VXAbstractDomainTypeBuilder<B extends VXAbstractDomainTypeBuilder
 
 	@Override
 	public final VXDomainType build() {
-		final VXKey domainTypeKey = new VXKey(_libraryKey, VXElementType.DOMAIN_TYPE, _name);
-		return new VXDomainType(domainTypeKey, _description, _dataType, _validators, _properties);
+		final VXKey domainTypeKey = new VXKey(_libraryKey,
+				VXElementType.DOMAIN_TYPE, _key);
+		return new VXDomainType(
+				domainTypeKey,
+				_label,
+				_comment,
+				_dataType,
+				_validators,
+				_properties);
 	}
 }

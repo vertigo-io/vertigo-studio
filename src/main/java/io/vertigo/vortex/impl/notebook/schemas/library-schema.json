@@ -6,16 +6,19 @@
 			"pattern": "^[a-z]+(-[a-z]+)*$",
 			"maxLength": 30
 		},
-		"description-type": {
+		"comment-type": {
 			"type": "string",
-			"maxLength": 250
+			"maxLength": 500
+		},
+		"label-type": {
+			"type": "string",
+			"maxLength": 100
 		},
 		"string-array-type": {
 			"type": "array",
 			"items": {
 				"type": "string"
 			},
-			"minItems": 0,
 			"uniqueItems": true
 		}
 	},
@@ -27,8 +30,8 @@
 				"key": {
 					"$ref": "#/$defs/key-type"
 				},
-				"description": {
-					"$ref": "#/$defs/description-type"
+				"comment": {
+					"$ref": "#/$defs/comment-type"
 				},
 				"tags": {
 					"$ref": "#/$defs/string-array-type"
@@ -36,6 +39,7 @@
 			},
 			"required": [
 				"key",
+				"comment",
 				"tags"
 			]
 		},
@@ -46,6 +50,9 @@
 				"properties": {
 					"key": {
 						"$ref": "#/$defs/key-type"
+					},
+					"comment": {
+						"$ref": "#/$defs/comment-type"
 					},
 					"dataType": {
 						"type": "string",

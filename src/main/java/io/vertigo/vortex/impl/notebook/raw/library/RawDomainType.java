@@ -7,7 +7,7 @@ import io.vertigo.core.lang.Assertion;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RawDomainType(
 		String key,
-		String description,
+		String comment,
 		String dataType) {
 
 	public RawDomainType {

@@ -15,7 +15,7 @@ import io.vertigo.vortex.notebook.VXKey;
  */
 public record VXDomainType(
 		VXKey key,
-		String description,
+		String comment,
 		VXDataType dataType,
 		List<VXValidator> validators,
 		List<VXProperty> properties) {
@@ -24,7 +24,6 @@ public record VXDomainType(
 		Assertion.check()
 				.isNotNull(key)
 				.isTrue(key.type() == VXElementType.DOMAIN_TYPE, "A VXDomainType's key must be of type DOMAIN_TYPE")
-				.isNotBlank(description)
 				.isNotNull(dataType)
 				.isNotNull(validators);
 
