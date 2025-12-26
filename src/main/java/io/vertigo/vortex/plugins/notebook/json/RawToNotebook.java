@@ -56,7 +56,7 @@ final class RawToNotebook {
 		return new VXKey(null, VXElementType.LIBRARY, name);
 	}
 
-	private static VXKey createKeyForDomainType(String name) {
+	private static VXKey createKeyForType(String name) {
 		//!!!!!!
 		//!!!!!! TODO
 		//!!!!!!
@@ -221,7 +221,7 @@ final class RawToNotebook {
 				idKey,
 				id.label(),
 				id.comment(),
-				domainTypeCatalog.get(createKeyForDomainType(id.type())));
+				domainTypeCatalog.get(createKeyForType(id.type())));
 	}
 
 	private static VXLibrary transform(final RawLibrary rawLibrary) {
@@ -247,8 +247,8 @@ final class RawToNotebook {
 
 		int found = rawAttribute.type().indexOf(':');
 		final VXType type = switch (rawAttribute.type().substring(0, found)) {
-			case "do" -> typeCatalog.get(createKeyForDomainType(rawAttribute.type()));
-			case "value" -> null;
+			case "do" -> typeCatalog.get(createKeyForType(rawAttribute.type()));
+			case "json" -> typeCatalog.get(createKeyForType("do:json"));
 			default -> throw new VSystemException("type '{0}' must be do:xxx or value:xxx", rawAttribute.type());
 		};
 		return new VXAttribute(
