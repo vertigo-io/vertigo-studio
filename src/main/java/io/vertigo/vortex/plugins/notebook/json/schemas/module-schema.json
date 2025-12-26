@@ -1,12 +1,13 @@
 {
 	"$schema": "http://json-schema.org/draft/2020-12/schema",
+	
 	"$defs": {
 		"_key": {
 			"type": "string",
-			"pattern": "^([a-z]+:?)[a-z]+(-[a-z]+)*$",
+			"pattern": "^([a-z]+:)?[a-z]+(-[a-z]+)*$",
 			"maxLength": 30
 		},
-		"_type": {
+		"_domain-type": {
 			"type": "string",
 			"pattern": "^([a-z]+:)[a-z]+(-[a-z]+)*$"
 		},
@@ -31,7 +32,7 @@
 				"key": {"$ref": "#/$defs/_key"},
 				"label": {"$ref": "#/$defs/_label"},
 				"comment": {"$ref": "#/$defs/_comment"},
-				"targetEntityKey": {"$ref": "#/$defs/_key"},
+				"target-entity-key": {"$ref": "#/$defs/_key"},
 				"required": {"type": "boolean"},
 				"stereotype": {
 					"type": "string",
@@ -45,46 +46,35 @@
 			"required": [
 				"key",
 				"label",
-				"targetEntityKey",
+				"target-entity-key",
 				"required",
 				"stereotype"
 			]
 		},
-		"_value": {
-			"type": "object",
-			"properties": {
-				"key": {"$ref": "#/$defs/_key"},
-				"comment": {"$ref": "#/$defs/_comment"},
-				"attributes": {
-					"type": "array",
-					"items": {
-						"type": "object",
-						"properties": {
-							"key": {"$ref": "#/$defs/_key"},
-							"label": {"$ref": "#/$defs/_label"},
-							"comment": {"$ref": "#/$defs/_comment"},
-							"type": {"$ref": "#/$defs/_type"},
-							"required": {"type": "boolean"}
-						},
-						"required": [
-							"key",
-							"label",
-							"type",
-							"required"
-						]
-					}
-				}
-			},
-			"required": [
-				"key",
-				"comment",
-				"attributes"
-			]
+		"_attributes": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"key": {"$ref": "#/$defs/_key"},
+					"label": {"$ref": "#/$defs/_label"},
+					"comment": {"$ref": "#/$defs/_comment"},
+					"domain-type": {"$ref": "#/$defs/_domain-type"},
+					"required": {"type": "boolean"}
+				},
+				"required": [
+					"key",
+					"label",
+					"domain-type",
+					"required"
+				]
+			}
 		}
 	},
+	
 	"type": "object",
 	"properties": {
-		"module": {
+		"module-info": {
 			"type": "object",
 			"properties": {
 				"key": {"$ref": "#/$defs/_key"},
@@ -96,6 +86,7 @@
 				"tags"
 			]
 		},
+		
 		"imports": {
 			"type": "object",
 			"properties": {
@@ -107,6 +98,7 @@
 				"modules"
 			]
 		},
+		
 		"entities": {
 			"type": "array",
 			"items": {
@@ -120,33 +112,15 @@
 							"key": {"$ref": "#/$defs/_key"},
 							"label": {"$ref": "#/$defs/_label"},
 							"comment": {"$ref": "#/$defs/_comment"},
-							"type": {"$ref": "#/$defs/_type"}
+							"domain-type": {"$ref": "#/$defs/_domain-type"}
 						},
 						"required": [
 							"key",
 							"label",
-							"type"
+							"domain-type"
 						]
 					},
-					"attributes": {
-						"type": "array",
-						"items": {
-							"type": "object",
-							"properties": {
-								"key": {"$ref": "#/$defs/_key"},
-								"label": {"$ref": "#/$defs/_label"},
-								"comment": {"$ref": "#/$defs/_comment"},
-								"type": {"$ref": "#/$defs/_type"},
-								"required": {"type": "boolean"}
-							},
-							"required": [
-								"key",
-								"label",
-								"type",
-								"required"
-							]
-						}
-					},
+					"attributes": {"$ref":"#/$defs/_attributes"},
 					"links": {
 						"type": "array",
 						"items": {"$ref": "#/$defs/_link"}
@@ -154,21 +128,32 @@
 				},
 				"required": [
 					"key",
-					"comment",
 					"id",
-					"attributes"
+					"attributes", 
+					"links"
 				]
 			}
 		},
-		"values": {
+		"value-objects": {
 			"type": "array",
-			"items": {"$ref": "#/$defs/_value"}
+			"items": {
+				"type":"object",
+				"properties": {
+					"key": {"$ref": "#/$defs/_key"},
+					"comment": {"$ref": "#/$defs/_comment"},
+					"attributes": {"$ref": "#/$defs/_attributes"}
+				}	
+			},
+			"required": [
+				"key",
+				"attributes"
+			]
 		}
 	},
 	"required": [
-		"module",
+		"module-info",
 		"imports",
 		"entities",
-		"values"
+		"value-objects"
 	]
 }

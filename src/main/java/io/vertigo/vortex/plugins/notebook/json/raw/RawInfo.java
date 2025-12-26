@@ -7,15 +7,15 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import io.vertigo.core.lang.Assertion;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public record RawIdentification(
+public record RawInfo(
 		String key,
 		String comment,
 		List<String> tags) {
 
-	public RawIdentification {
+	public RawInfo {
 		Assertion.check()
-				.isNotNull(key)
-				.isNotBlank(comment) // Added check for comment
+				.isNotBlank(key)
+				//comment may be null
 				.isNotNull(tags);
 	}
 }

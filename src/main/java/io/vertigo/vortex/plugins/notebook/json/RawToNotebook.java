@@ -1,11 +1,12 @@
 package io.vertigo.vortex.plugins.notebook.json;
 
 import java.util.List;
+import java.util.function.Function;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.VSystemException;
 import io.vertigo.vortex.notebook.VXElementType;
-import io.vertigo.vortex.notebook.VXIdentification;
+import io.vertigo.vortex.notebook.VXInfo;
 import io.vertigo.vortex.notebook.VXKey;
 import io.vertigo.vortex.notebook.VXNotebook;
 import io.vertigo.vortex.notebook.library.VXLibrary;
@@ -19,16 +20,17 @@ import io.vertigo.vortex.notebook.module.VXLink;
 import io.vertigo.vortex.notebook.module.VXLinkStereotype;
 import io.vertigo.vortex.notebook.module.VXModule;
 import io.vertigo.vortex.notebook.module.VXValueObject;
+import io.vertigo.vortex.plugins.notebook.json.raw.RawInfo;
 import io.vertigo.vortex.plugins.notebook.json.raw.RawNotebook;
+import io.vertigo.vortex.plugins.notebook.json.raw.library.RawDomainType;
 import io.vertigo.vortex.plugins.notebook.json.raw.library.RawLibrary;
-import io.vertigo.vortex.plugins.notebook.json.raw.library.RawType;
 import io.vertigo.vortex.plugins.notebook.json.raw.module.RawAttribute;
 import io.vertigo.vortex.plugins.notebook.json.raw.module.RawEntity;
 import io.vertigo.vortex.plugins.notebook.json.raw.module.RawId;
 import io.vertigo.vortex.plugins.notebook.json.raw.module.RawImports;
 import io.vertigo.vortex.plugins.notebook.json.raw.module.RawLink;
 import io.vertigo.vortex.plugins.notebook.json.raw.module.RawModule;
-import io.vertigo.vortex.plugins.notebook.json.raw.module.RawValue;
+import io.vertigo.vortex.plugins.notebook.json.raw.module.RawValueObject;
 
 /**
  * Transforms a raw model into a VXModel.
@@ -46,14 +48,6 @@ final class RawToNotebook {
 		Assertion.check().isNotNull(rawNotebook);
 		//---
 		this.rawNotebook = rawNotebook;
-	}
-
-	private static VXKey createKeyForModule(String name) {
-		return new VXKey(null, VXElementType.MODULE, name);
-	}
-
-	private static VXKey createKeyForLibrary(String name) {
-		return new VXKey(null, VXElementType.LIBRARY, name);
 	}
 
 	private static VXKey createKeyForType(String name) {
@@ -107,15 +101,23 @@ final class RawToNotebook {
 	VXNotebook toNotebook() {
 		final List<VXLibrary> libraries = rawNotebook.rawLibraries().stream()
 				.map(rawLibrary -> transform(rawLibrary))
-				.peek(library -> libraryCatalog.put(library.identification().key(), library))
+				.peek(library -> libraryCatalog.put(library.info().key(), library))
 				.toList();
 
 		final List<VXModule> modules = rawNotebook.rawModules().stream()
 				.map(rawModule -> transform(rawModule))
-				.peek(module -> moduleCatalog.put(module.identification().key(), module))
+				.peek(module -> moduleCatalog.put(module.info().key(), module))
 				.toList();
 
 		return new VXNotebook(libraries, modules);
+	}
+
+	private static VXKey createKeyForModule(String name) {
+		return new VXKey(null, VXElementType.MODULE, name);
+	}
+
+	private static VXKey createKeyForLibrary(String name) {
+		return new VXKey(null, VXElementType.LIBRARY, name);
 	}
 
 	private VXImports transform(final RawImports imports) {
@@ -135,12 +137,17 @@ final class RawToNotebook {
 		return new VXImports(libraries, modules);
 	}
 
+	private static VXInfo transform(final RawInfo rawIdentification, Function<String, VXKey> createKey) {
+		final VXKey key = createKey.apply(rawIdentification.key());
+		return new VXInfo(
+				key,
+				rawIdentification.comment(),
+				rawIdentification.tags());
+
+	}
+
 	private VXModule transform(final RawModule rawModule) {
-		final VXKey moduleKey = createKeyForModule(rawModule.module().key());
-		final VXIdentification identification = new VXIdentification(
-				moduleKey,
-				rawModule.module().comment(),
-				rawModule.module().tags());
+		final VXInfo info = transform(rawModule.moduleInfo(), RawToNotebook::createKeyForModule);
 
 		final VXImports imports = transform(rawModule.imports());
 
@@ -159,31 +166,34 @@ final class RawToNotebook {
 		}
 
 		final List<VXEntity> entities = rawModule.entities().stream()
-				.map(e -> transform(e, moduleKey, typeCatalog, entityCatalog))
+				.map(e -> transform(e, info.key(), typeCatalog, entityCatalog))
 				.toList();
 
-		final List<VXValueObject> valueObjects = rawModule.values().stream()
-				.map(vo -> transform(vo, moduleKey, typeCatalog))
+		final List<VXValueObject> valueObjects = rawModule.valueObjects().stream()
+				.map(vo -> transform(vo, info.key(), typeCatalog))
 				.toList();
 
 		return new VXModule(
-				identification,
+				info,
 				imports,
 				entities,
 				valueObjects);
 	}
 
-	private static VXValueObject transform(final RawValue rawValue, final VXKey owner, final Catalog<VXType> typeCatalog) {
-		final VXKey voKey = createKeyForValueObject(owner, rawValue.key());
-		final List<VXAttribute> attributes = rawValue.attributes() != null
-				? rawValue.attributes().stream()
+	private static VXValueObject transform(
+			final RawValueObject rawValueObject,
+			final VXKey owner,
+			final Catalog<VXType> typeCatalog) {
+		final VXKey voKey = createKeyForValueObject(owner, rawValueObject.key());
+		final List<VXAttribute> attributes = rawValueObject.attributes() != null
+				? rawValueObject.attributes().stream()
 						.map(rawAttribute -> transform(rawAttribute, voKey, typeCatalog))
 						.toList()
 				: List.of();
 
 		return new VXValueObject(
 				voKey,
-				rawValue.comment(),
+				rawValueObject.comment(),
 				attributes);
 	}
 
@@ -221,21 +231,18 @@ final class RawToNotebook {
 				idKey,
 				id.label(),
 				id.comment(),
-				domainTypeCatalog.get(createKeyForType(id.type())));
+				domainTypeCatalog.get(createKeyForType(id.domainType())));
 	}
 
 	private static VXLibrary transform(final RawLibrary rawLibrary) {
-		final VXKey libraryKey = createKeyForLibrary(rawLibrary.library().key());
-		final VXIdentification identification = new VXIdentification(
-				libraryKey,
-				rawLibrary.library().comment(),
-				rawLibrary.library().tags());
-		final List<VXType> domainTypes = rawLibrary.types().stream()
-				.map(dt -> transform(dt, libraryKey))
+		final VXInfo info = transform(rawLibrary.libraryInfo(), RawToNotebook::createKeyForLibrary);
+
+		final List<VXType> domainTypes = rawLibrary.domainTypes().stream()
+				.map(dt -> transform(dt, info.key()))
 				.toList();
 
 		return new VXLibrary(
-				identification,
+				info,
 				domainTypes);
 	}
 
@@ -245,11 +252,11 @@ final class RawToNotebook {
 			final Catalog<VXType> typeCatalog) {
 		final VXKey attributeKey = new VXKey(entityKey, VXElementType.ATTRIBUTE, rawAttribute.key());
 
-		int found = rawAttribute.type().indexOf(':');
-		final VXType type = switch (rawAttribute.type().substring(0, found)) {
-			case "do" -> typeCatalog.get(createKeyForType(rawAttribute.type()));
+		int found = rawAttribute.domainType().indexOf(':');
+		final VXType type = switch (rawAttribute.domainType().substring(0, found)) {
+			case "do" -> typeCatalog.get(createKeyForType(rawAttribute.domainType()));
 			case "json" -> typeCatalog.get(createKeyForType("do:json"));
-			default -> throw new VSystemException("type '{0}' must be do:xxx or value:xxx", rawAttribute.type());
+			default -> throw new VSystemException("type '{0}' must be do:xxx or value:xxx", rawAttribute.domainType());
 		};
 		return new VXAttribute(
 				attributeKey,
@@ -278,7 +285,7 @@ final class RawToNotebook {
 	}
 
 	private static VXType transform(
-			final RawType rawType,
+			final RawDomainType rawType,
 			final VXKey libraryKey) {
 		final VXKey typeKey = new VXKey(libraryKey, VXElementType.TYPE, rawType.key());
 		return new VXType(

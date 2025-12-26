@@ -4,8 +4,16 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import io.vertigo.core.lang.Assertion;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RawImports(
 		List<String> libraries,
 		List<String> modules) {
+
+	public RawImports {
+		Assertion.check()
+				.isNotNull(libraries)
+				.isNotNull(modules);
+	}
 }

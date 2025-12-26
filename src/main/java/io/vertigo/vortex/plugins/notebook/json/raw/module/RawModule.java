@@ -3,22 +3,23 @@ package io.vertigo.vortex.plugins.notebook.json.raw.module;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.vortex.plugins.notebook.json.raw.RawIdentification;
+import io.vertigo.vortex.plugins.notebook.json.raw.RawInfo;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RawModule(
-		RawIdentification module,
+		@JsonProperty("module-info") RawInfo moduleInfo,
 		RawImports imports,
 		List<RawEntity> entities,
-		List<RawValue> values) {
+		@JsonProperty("value-objects") List<RawValueObject> valueObjects) {
 
 	public RawModule {
 		Assertion.check()
-				.isNotNull(module)
+				.isNotNull(moduleInfo)
 				.isNotNull(imports)
 				.isNotNull(entities)
-				.isNotNull(values);
+				.isNotNull(valueObjects);
 	}
 }

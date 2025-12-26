@@ -1,5 +1,5 @@
 {
-	"module" : {
+	"module-info" : {
 		"key": "author",
 		"comment": "List of authors",
 		"tags":[]
@@ -17,25 +17,25 @@
 			"id": {
 				"key": "id",
 				"label": "Identifier",
-				"type": "do:id"
+				"domain-type": "do:id"
 			},
 			"attributes": [
 				{
 					"key": "first-name",
 					"label": "First name",
-					"type": "do:label",
+					"domain-type": "do:label",
 					"required": true
 				},
 				{
 					"key": "last-name",
 					"label": "Last name",
-					"type": "do:label",
+					"domain-type": "do:label",
 					"required": false
 				},
 				{
 					"key": "contact-info",
 					"label": "contact",
-					"type": "do:json",
+					"domain-type": "json:contact-info",
 					"required": false
 				}
 			], 
@@ -43,7 +43,7 @@
 				{
 					"key": "publisher",
 					"label": "Publisher",
-					"targetEntityKey": "publisher",
+					"target-entity-key": "publisher",
 					"required": true,
 					"stereotype": "MANY_TO_ONE" 
 				},
@@ -51,7 +51,8 @@
 					"key": "author-publisher-agreement",
 					"label": "List of publishers",
 					"comment": "Agreement between author and publisher for a book",
-					"targetEntityKey": "publisher",
+					"target-entity-key": "publisher",
+					"required": true,
 					"stereotype": "MANY_TO_MANY"
 				}
 			]
@@ -62,20 +63,20 @@
 			"id": {
 				"key": "id",
 				"label": "Identifier of the publisher",
-				"type": "do:id"
+				"domain-type": "do:id"
 			},
 			"attributes": [
 				{
 					"key": "name",
 					"label": "Name of the publisher",
-					"type": "do:label",
+					"domain-type": "do:label",
 					"required": true
 				}
 			],
 			"links": []
 		}
 	],
-	"values": [
+	"value-objects": [
 		{
 			"key": "contact-info",
 			"comment": "Contact info of an author",
@@ -83,13 +84,13 @@
 				{
 					"key": "email",
 					"label": "Email",
-					"type": "do:email",
+					"domain-type": "do:email",
 					"required": true
 				},
 				{
 					"key": "phone",
 					"label": "Phone",
-					"type": "do:phone",
+					"domain-type": "do:phone",
 					"required": false
 				}
 			]

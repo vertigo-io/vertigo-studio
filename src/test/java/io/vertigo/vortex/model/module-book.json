@@ -1,5 +1,5 @@
 {
-	"module": {
+	"module-info": {
 		"key": "book",
 		"comment": "List of books",
 		"tags": []
@@ -17,19 +17,19 @@
 			"id": {
 				"key": "id",
 				"label": "Identifier",
-				"type": "do:id"
+				"domain-type": "do:id"
 			},
 			"attributes": [
 				{
 					"key": "title",
 					"label": "Title",
-					"type": "do:label",
+					"domain-type": "do:label",
 					"required": true
 				},
 				{
 					"key": "isbn",
 					"label": "ISBN",
-					"type": "do:label",
+					"domain-type": "do:label",
 					"required": true
 				}
 			], 
@@ -37,14 +37,14 @@
 				{
 					"key": "author",
 					"label": "Author",
-					"targetEntityKey": "author",
+					"target-entity-key": "author",
 					"required": true,
 					"stereotype": "MANY_TO_ONE"
 				},
 				{
 					"key": "category",
 					"label": "Category of the book",
-					"targetEntityKey": "category",
+					"target-entity-key": "category",
 					"required": false,
 					"stereotype": "MANY_TO_ONE"
 				},
@@ -52,7 +52,7 @@
 					"key": "book-category-classification",
 					"label": "List of categories",
 					"comment": "Classification of books by category",
-					"targetEntityKey": "category",
+					"target-entity-key": "category",
 					"required": false,
 					"stereotype": "MANY_TO_MANY"
 				}
@@ -65,18 +65,18 @@
 			"id": {
 				"key": "id",
 				"label": "Identifier",
-				"type": "do:id"
+				"domain-type": "do:id"
 			},
 			"attributes": [
 				{
 					"key": "name",
 					"label": "Name of the category",
-					"type": "do:label",
+					"domain-type": "do:label",
 					"required": true
 				}
 			],
 			"links": []
 		}
 	],
-	"values": []
+	"value-objects": []
 }

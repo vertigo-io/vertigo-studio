@@ -1,11 +1,11 @@
 {
-	"library" : {
+	"library-info" : {
 		"key": "core",
 		"comment": "List of domainTypes",
 		"tags":[]
 	},
 
-	"types": [
+	"domain-types": [
 		{
 			"key": "do:label",
 			"dataType": "String"

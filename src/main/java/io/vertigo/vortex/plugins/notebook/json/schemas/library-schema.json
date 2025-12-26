@@ -3,7 +3,7 @@
 	"$defs": {
 		"_key": {
 			"type": "string",
-			"pattern": "^([a-z]+:)[a-z]+(-[a-z]+)*$",
+			"pattern": "^([a-z]+:)?[a-z]+(-[a-z]+)*$",
 			"maxLength": 30
 		},
 		"_comment": {
@@ -23,7 +23,7 @@
 	},
 	"type": "object",
 	"properties": {
-		"library": {
+		"library-info": {
 			"type": "object",
 			"properties": {
 				"key": {"$ref": "#/$defs/_key"},
@@ -35,7 +35,7 @@
 				"tags"
 			]
 		},
-		"types": {
+		"domain-types": {
 			"type": "array",
 			"items": {
 				"type": "object",
@@ -65,7 +65,7 @@
 		}
 	},
 	"required": [
-		"library",
-		"types"
+		"library-info",
+		"domain-types"
 	]
 }

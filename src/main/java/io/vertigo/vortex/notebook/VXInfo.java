@@ -4,12 +4,12 @@ import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
 
-public record VXIdentification(
+public record VXInfo(
 		VXKey key,
 		String comment,
 		List<String> tags) {
 
-	public VXIdentification {
+	public VXInfo {
 		Assertion.check()
 				.isNotNull(key)
 				.isNotNull(tags);
