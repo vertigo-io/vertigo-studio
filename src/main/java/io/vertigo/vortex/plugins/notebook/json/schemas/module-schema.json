@@ -84,7 +84,8 @@
 			"required": [
 				"key",
 				"tags"
-			]
+			],
+			"additionalProperties": false
 		},
 		
 		"imports": {
@@ -96,7 +97,8 @@
 			"required": [
 				"libraries",
 				"modules"
-			]
+			],
+			"additionalProperties": false
 		},
 		
 		"entities": {
@@ -118,7 +120,8 @@
 							"key",
 							"label",
 							"domain-type"
-						]
+						],
+						"additionalProperties": false
 					},
 					"attributes": {"$ref":"#/$defs/_attributes"},
 					"links": {
@@ -131,7 +134,8 @@
 					"id",
 					"attributes", 
 					"links"
-				]
+				],
+				"additionalProperties": false
 			}
 		},
 		"value-objects": {
@@ -147,7 +151,8 @@
 			"required": [
 				"key",
 				"attributes"
-			]
+			],
+			"additionalProperties": false
 		}
 	},
 	"required": [
@@ -155,5 +160,6 @@
 		"imports",
 		"entities",
 		"value-objects"
-	]
+	],
+	"additionalProperties": false
 }

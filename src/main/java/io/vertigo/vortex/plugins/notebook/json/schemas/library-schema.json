@@ -33,7 +33,8 @@
 			"required": [
 				"key",
 				"tags"
-			]
+			],
+			"additionalProperties": false
 		},
 		"domain-types": {
 			"type": "array",
@@ -60,12 +61,14 @@
 				"required": [
 					"key",
 					"dataType"
-				]
+				],
+				"additionalProperties": false
 			}
 		}
 	},
 	"required": [
 		"library-info",
 		"domain-types"
-	]
+	],
+	"additionalProperties": false
 }
