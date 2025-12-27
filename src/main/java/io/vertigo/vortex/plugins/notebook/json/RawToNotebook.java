@@ -238,8 +238,8 @@ final class RawToNotebook {
 	private static VXLibrary transform(final RawLibrary rawLibrary) {
 		final VXInfo info = transform(rawLibrary.libraryInfo(), RawToNotebook::createKeyForLibrary);
 
-		final List<VXType> domainTypes = rawLibrary.domainTypes().stream()
-				.map(dt -> transform(dt, info.key()))
+		final List<VXType> domainTypes = rawLibrary.domainTypes().entrySet().stream()
+				.map(dt -> transform(dt.getKey(), dt.getValue(), info.key()))
 				.toList();
 
 		return new VXLibrary(
@@ -288,13 +288,14 @@ final class RawToNotebook {
 	}
 
 	private static VXType transform(
-			final RawDomainType rawType,
+			final String typeKeyStr,
+			final RawDomainType rawDomainType,
 			final VXKey libraryKey) {
-		final VXKey typeKey = new VXKey(libraryKey, VXElementType.TYPE, rawType.key());
+		final VXKey typeKey = new VXKey(libraryKey, VXElementType.TYPE, typeKeyStr);
 		return new VXType(
 				typeKey,
-				rawType.comment(),
-				VXDataType.valueOf(rawType.dataType()),
+				rawDomainType.comment(),
+				VXDataType.valueOf(rawDomainType.dataType()),
 				//!!!!!!!!!!!!!!!!!!!!!!!
 				List.of(),
 				//!!!!!!!!!!!!!!!!!!!!!!!

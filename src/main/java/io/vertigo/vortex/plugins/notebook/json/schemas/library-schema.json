@@ -32,11 +32,11 @@
 			"additionalProperties": false
 		},
 		"domain-types": {
-			"type": "array",
-			"items": {
+			"type": "object",
+		 	"propertyNames": {"$ref": "#/$defs/_key"},
+			"additionalProperties": {
 				"type": "object",
 				"properties": {
-					"key": {"$ref": "#/$defs/_key"},
 					"comment": {"$ref": "#/$defs/_comment"},
 					"data-type": {
 						"type": "string",
@@ -53,7 +53,6 @@
 					}
 				},
 				"required": [
-					"key",
 					"data-type"
 				],
 				"additionalProperties": false
