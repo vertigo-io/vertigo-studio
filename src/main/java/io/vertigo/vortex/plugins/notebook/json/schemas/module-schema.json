@@ -5,51 +5,31 @@
 		"_key": {
 			"type": "string",
 			"pattern": "^([a-z]+:)?[a-z]+(-[a-z]+)*$",
-			"maxLength": 30
+			"maxLength": 30,
+			"description": "Unique identifier for elements, typically lowercase and hyphen-separated. Can optionally include a prefix (e.g., 'do:my-key')."
 		},
 		"_domain-type": {
 			"type": "string",
-			"pattern": "^([a-z]+:)[a-z]+(-[a-z]+)*$"
+			"pattern": "^([a-z]+:)[a-z]+(-[a-z]+)*$",
+			"description": "Represents a domain-specific type, always prefixed with its schema (e.g., 'do:String', 'json:ContactInfo')."
 		},
 		"_comment": {
 			"type": "string",
-			"maxLength": 500
+			"maxLength": 500,
+			"description": "Optional free-text comment intended for developers and documentation."
 		},
 		"_label": {
 			"type": "string",
-			"maxLength": 100
+			"maxLength": 100,
+			"description": "Human-readable label, intended for UI display."
 		},
 		"_string-array": {
 			"type": "array",
 			"items": {
 				"type": "string"
 			},
-			"uniqueItems": true
-		},
-		"_link": {
-			"type": "object",
-			"properties": {
-				"key": {"$ref": "#/$defs/_key"},
-				"label": {"$ref": "#/$defs/_label"},
-				"comment": {"$ref": "#/$defs/_comment"},
-				"target-entity-key": {"$ref": "#/$defs/_key"},
-				"required": {"type": "boolean"},
-				"stereotype": {
-					"type": "string",
-					"enum": [
-						"MANY_TO_ONE",
-						"ONE_TO_ONE",
-						"MANY_TO_MANY"
-					]
-				}
-			},
-			"required": [
-				"key",
-				"label",
-				"target-entity-key",
-				"required",
-				"stereotype"
-			]
+			"uniqueItems": true,
+			"description": "An array of unique strings."
 		},
 		"_links": {
 			"type": "object",
@@ -104,6 +84,7 @@
 	"properties": {
 		"module-info": {
 			"type": "object",
+			"description": "Metadata describing the current module.",
 			"properties": {
 				"key": {"$ref": "#/$defs/_key"},
 				"comment": {"$ref": "#/$defs/_comment"},
