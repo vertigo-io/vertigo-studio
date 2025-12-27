@@ -186,8 +186,8 @@ final class RawToNotebook {
 			final Catalog<VXType> typeCatalog) {
 		final VXKey voKey = createKeyForValueObject(owner, rawValueObject.key());
 		final List<VXAttribute> attributes = rawValueObject.attributes() != null
-				? rawValueObject.attributes().stream()
-						.map(rawAttribute -> transform(rawAttribute, voKey, typeCatalog))
+				? rawValueObject.attributes().entrySet().stream()
+						.map(entry -> transform(entry.getKey(), entry.getValue(), voKey, typeCatalog))
 						.toList()
 				: List.of();
 
@@ -204,8 +204,8 @@ final class RawToNotebook {
 			Catalog<VXEntity> entityCatalog) {
 		final VXKey entityKey = createKeyForEntity(owner, rawEntity.key());
 		final List<VXAttribute> attributes = rawEntity.attributes() != null
-				? rawEntity.attributes().stream()
-						.map(rawAttribute -> transform(rawAttribute, entityKey, domainTypeCatalog))
+				? rawEntity.attributes().entrySet().stream()
+						.map(entry -> transform(entry.getKey(), entry.getValue(), entityKey, domainTypeCatalog))
 						.toList()
 				: List.of();
 
@@ -247,10 +247,11 @@ final class RawToNotebook {
 	}
 
 	private static VXAttribute transform(
+			final String attributeKey,
 			final RawAttribute rawAttribute,
 			final VXKey entityKey,
 			final Catalog<VXType> typeCatalog) {
-		final VXKey attributeKey = new VXKey(entityKey, VXElementType.ATTRIBUTE, rawAttribute.key());
+		final VXKey attributeVXKey = new VXKey(entityKey, VXElementType.ATTRIBUTE, attributeKey);
 
 		int found = rawAttribute.domainType().indexOf(':');
 		final VXType type = switch (rawAttribute.domainType().substring(0, found)) {
@@ -259,7 +260,7 @@ final class RawToNotebook {
 			default -> throw new VSystemException("type '{0}' must be do:xxx or value:xxx", rawAttribute.domainType());
 		};
 		return new VXAttribute(
-				attributeKey,
+				attributeVXKey,
 				rawAttribute.label(),
 				rawAttribute.comment(),
 				type,

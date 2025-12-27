@@ -1,6 +1,6 @@
 package io.vertigo.vortex.plugins.notebook.json.raw.module;
 
-import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -10,7 +10,7 @@ import io.vertigo.core.lang.Assertion;
 public record RawValueObject(
 		String key,
 		String comment,
-		List<RawAttribute> attributes) {
+		Map<String, RawAttribute> attributes) {
 
 	public RawValueObject {
 		Assertion.check()

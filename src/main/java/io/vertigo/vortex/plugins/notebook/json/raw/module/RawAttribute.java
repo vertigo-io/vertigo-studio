@@ -7,7 +7,6 @@ import io.vertigo.core.lang.Assertion;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RawAttribute(
-		String key,
 		String label,
 		String comment,
 		@JsonProperty("domain-type") String domainType,
@@ -15,7 +14,6 @@ public record RawAttribute(
 
 	public RawAttribute {
 		Assertion.check()
-				.isNotBlank(key)
 				// comment may be null
 				.isNotBlank(label)
 				.isNotNull(domainType);

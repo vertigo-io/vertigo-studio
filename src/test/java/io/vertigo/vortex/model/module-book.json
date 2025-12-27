@@ -19,20 +19,18 @@
 				"label": "Identifier",
 				"domain-type": "do:id"
 			},
-			"attributes": [
-				{
-					"key": "title",
+			"attributes": {
+				"title":{
 					"label": "Title",
 					"domain-type": "do:label",
 					"required": true
 				},
-				{
-					"key": "isbn",
+				"isbn" :{
 					"label": "ISBN",
 					"domain-type": "do:label",
 					"required": true
-				}
-			], 
+				} 
+			},	
 			"links": [
 				{
 					"key": "author",
@@ -67,14 +65,13 @@
 				"label": "Identifier",
 				"domain-type": "do:id"
 			},
-			"attributes": [
-				{
-					"key": "name",
+			"attributes": {
+				"name":{
 					"label": "Name of the category",
 					"domain-type": "do:label",
 					"required": true
 				}
-			],
+			},
 			"links": []
 		}
 	],

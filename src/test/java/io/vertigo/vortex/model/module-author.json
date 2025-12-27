@@ -19,26 +19,23 @@
 				"label": "Identifier",
 				"domain-type": "do:id"
 			},
-			"attributes": [
-				{
-					"key": "first-name",
+			"attributes" : {
+				"first-name": {
 					"label": "First name",
 					"domain-type": "do:label",
 					"required": true
 				},
-				{
-					"key": "last-name",
+				"last-name" : {
 					"label": "Last name",
 					"domain-type": "do:label",
 					"required": false
 				},
-				{
-					"key": "contact-info",
+				"contact-info" : {
 					"label": "contact",
 					"domain-type": "json:contact-info",
 					"required": false
-				}
-			], 
+				} 
+			},	
 			"links": [
 				{
 					"key": "publisher",
@@ -65,14 +62,13 @@
 				"label": "Identifier of the publisher",
 				"domain-type": "do:id"
 			},
-			"attributes": [
-				{
-					"key": "name",
-					"label": "Name of the publisher",
-					"domain-type": "do:label",
-					"required": true
-				}
-			],
+			"attributes": {
+					"name"  :{
+						"label": "Name of the publisher",
+						"domain-type": "do:label",
+						"required": true
+					}
+			},
 			"links": []
 		}
 	],
@@ -80,20 +76,18 @@
 		{
 			"key": "contact-info",
 			"comment": "Contact info of an author",
-			"attributes": [
-				{
-					"key": "email",
+			"attributes": {
+				"email" :{
 					"label": "Email",
 					"domain-type": "do:email",
 					"required": true
 				},
-				{
-					"key": "phone",
+				"phone":{
 					"label": "Phone",
 					"domain-type": "do:phone",
 					"required": false
 				}
-			]
+			}
 		}
 	]
 }
