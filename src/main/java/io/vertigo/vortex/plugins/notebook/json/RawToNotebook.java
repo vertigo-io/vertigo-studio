@@ -169,8 +169,8 @@ final class RawToNotebook {
 				.map(e -> transform(e.getKey(), e.getValue(), info.key(), typeCatalog, entityCatalog))
 				.toList();
 
-		final List<VXValueObject> valueObjects = rawModule.valueObjects().stream()
-				.map(vo -> transform(vo, info.key(), typeCatalog))
+		final List<VXValueObject> valueObjects = rawModule.valueObjects().entrySet().stream()
+				.map(vo -> transform(vo.getKey(), vo.getValue(), info.key(), typeCatalog))
 				.toList();
 
 		return new VXModule(
@@ -181,10 +181,11 @@ final class RawToNotebook {
 	}
 
 	private static VXValueObject transform(
+			final String voKeyStr,
 			final RawValueObject rawValueObject,
 			final VXKey owner,
 			final Catalog<VXType> typeCatalog) {
-		final VXKey voKey = createKeyForValueObject(owner, rawValueObject.key());
+		final VXKey voKey = createKeyForValueObject(owner, voKeyStr);
 		final List<VXAttribute> attributes = rawValueObject.attributes() != null
 				? rawValueObject.attributes().entrySet().stream()
 						.map(entry -> transform(entry.getKey(), entry.getValue(), voKey, typeCatalog))

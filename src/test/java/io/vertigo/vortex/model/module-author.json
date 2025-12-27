@@ -68,9 +68,8 @@
 			"links": {}
 		}
 	},
-	"value-objects": [
-		{
-			"key": "contact-info",
+	"value-objects": {
+		"contact-info": {
 			"comment": "Contact info of an author",
 			"attributes": {
 				"email" :{
@@ -85,5 +84,5 @@
 				}
 			}
 		}
-	]
+	}
 }

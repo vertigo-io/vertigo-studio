@@ -14,7 +14,7 @@ public record RawModule(
 		@JsonProperty("module-info") RawInfo moduleInfo,
 		RawImports imports,
 		Map<String, RawEntity> entities,
-		@JsonProperty("value-objects") List<RawValueObject> valueObjects) {
+		@JsonProperty("value-objects") Map<String, RawValueObject> valueObjects) {
 
 	public RawModule {
 		Assertion.check()

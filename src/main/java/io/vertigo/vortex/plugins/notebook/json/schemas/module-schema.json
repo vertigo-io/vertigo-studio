@@ -163,16 +163,15 @@
 			}
 		},
 		"value-objects": {
-			"type": "array",
-			"items": {
+			"type": "object",
+		 	"propertyNames": {"$ref": "#/$defs/_key"},
+			"additionalProperties": {
 				"type":"object",
 				"properties": {
-					"key": {"$ref": "#/$defs/_key"},
 					"comment": {"$ref": "#/$defs/_comment"},
 					"attributes": {"$ref": "#/$defs/_attributes"}
 				}, 	
 				"required": [
-					"key",
 					"attributes"
 				],
 				"additionalProperties": false
