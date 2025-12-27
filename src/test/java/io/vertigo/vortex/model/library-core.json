@@ -8,23 +8,23 @@
 	"domain-types": [
 		{
 			"key": "do:label",
-			"dataType": "String"
+			"data-type": "String"
 		},
 		{
 			"key": "do:email",
-			"dataType": "String"
+			"data-type": "String"
 		},
 		{
 			"key": "do:phone",
-			"dataType": "String"
+			"data-type": "String"
 		},
 		{
 			"key": "do:id",
-			"dataType": "Long"
+			"data-type": "Long"
 		},
 		{
 			"key": "do:json",
-			"dataType": "Json"
+			"data-type": "Json"
 		}
 	]
 }

@@ -146,13 +146,13 @@
 					"key": {"$ref": "#/$defs/_key"},
 					"comment": {"$ref": "#/$defs/_comment"},
 					"attributes": {"$ref": "#/$defs/_attributes"}
-				}	
-			},
-			"required": [
-				"key",
-				"attributes"
-			],
-			"additionalProperties": false
+				}, 	
+				"required": [
+					"key",
+					"attributes"
+				],
+				"additionalProperties": false
+			}
 		}
 	},
 	"required": [

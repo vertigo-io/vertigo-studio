@@ -10,14 +10,9 @@
 			"type": "string",
 			"maxLength": 500
 		},
-		"_label": {
-			"type": "string",
-			"maxLength": 100
-		},
 		"_string-array": {
 			"type": "array",
-			"items": {"type": "string"
-},
+			"items": {"type": "string"},
 			"uniqueItems": true
 		}
 	},
@@ -42,9 +37,8 @@
 				"type": "object",
 				"properties": {
 					"key": {"$ref": "#/$defs/_key"},
-					"comment": {
-						"$ref": "#/$defs/_comment"},
-					"dataType": {
+					"comment": {"$ref": "#/$defs/_comment"},
+					"data-type": {
 						"type": "string",
 						"enum": [
 							"String",
@@ -60,7 +54,7 @@
 				},
 				"required": [
 					"key",
-					"dataType"
+					"data-type"
 				],
 				"additionalProperties": false
 			}

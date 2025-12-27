@@ -1,6 +1,7 @@
 package io.vertigo.vortex.plugins.notebook.json.raw.library;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.vertigo.core.lang.Assertion;
 
@@ -8,7 +9,7 @@ import io.vertigo.core.lang.Assertion;
 public record RawDomainType(
 		String key,
 		String comment,
-		String dataType) {
+		@JsonProperty("data-type") String dataType) {
 
 	public RawDomainType {
 		Assertion.check()
