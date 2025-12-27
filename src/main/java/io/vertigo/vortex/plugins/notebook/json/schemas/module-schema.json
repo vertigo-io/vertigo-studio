@@ -51,6 +51,34 @@
 				"stereotype"
 			]
 		},
+		"_links": {
+			"type": "object",
+		 	"propertyNames": {"$ref": "#/$defs/_key"},
+			"additionalProperties": {
+			    	"type": "object",
+			    	"properties": {
+						"label": {"$ref": "#/$defs/_label"},
+						"comment": {"$ref": "#/$defs/_comment"},
+						"target-entity-key": {"$ref": "#/$defs/_key"},
+						"required": {"type": "boolean"},
+						"stereotype": {
+							"type": "string",
+							"enum": [
+								"MANY_TO_ONE",
+								"ONE_TO_ONE",
+								"MANY_TO_MANY"
+							]
+						}
+			    	},
+			    "required": [
+			    		"label",
+			      	"target-entity-key",
+			      	"required",
+					"stereotype"
+			    ],
+			    "additionalProperties": false
+			}
+		},
 		"_attributes": {
 			"type": "object",
 		 	"propertyNames": {"$ref": "#/$defs/_key"},
@@ -124,10 +152,7 @@
 						"additionalProperties": false
 					},
 					"attributes": {"$ref":"#/$defs/_attributes"},
-					"links": {
-						"type": "array",
-						"items": {"$ref": "#/$defs/_link"}
-					}
+					"links": {"$ref": "#/$defs/_links"}
 				},
 				"required": [
 					"key",

@@ -36,23 +36,21 @@
 					"required": false
 				} 
 			},	
-			"links": [
-				{
-					"key": "publisher",
+			"links": {
+				"publisher":{
 					"label": "Publisher",
 					"target-entity-key": "publisher",
 					"required": true,
 					"stereotype": "MANY_TO_ONE" 
 				},
-				{
-					"key": "author-publisher-agreement",
+				"author-publisher-agreement":{
 					"label": "List of publishers",
 					"comment": "Agreement between author and publisher for a book",
 					"target-entity-key": "publisher",
 					"required": true,
 					"stereotype": "MANY_TO_MANY"
 				}
-			]
+			}
 		},
 		{
 			"key": "publisher",
@@ -69,7 +67,7 @@
 						"required": true
 					}
 			},
-			"links": []
+			"links": {}
 		}
 	],
 	"value-objects": [

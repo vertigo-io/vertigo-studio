@@ -1,6 +1,5 @@
 package io.vertigo.vortex.plugins.notebook.json.raw.module;
 
-import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -13,7 +12,7 @@ public record RawEntity(
 		String comment,
 		RawId id,
 		Map<String, RawAttribute> attributes,
-		List<RawLink> links) {
+		Map<String, RawLink> links) {
 
 	public RawEntity {
 		Assertion.check()
