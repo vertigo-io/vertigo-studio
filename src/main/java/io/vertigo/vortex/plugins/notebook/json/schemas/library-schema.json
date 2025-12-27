@@ -4,7 +4,8 @@
 		"_key": {
 			"type": "string",
 			"pattern": "^([a-z]+:)?[a-z]+(-[a-z]+)*$",
-			"maxLength": 30
+			"maxLength": 30,
+			"description": "Unique identifier for elements, typically lowercase and hyphen-separated. Can optionally include a prefix (e.g., 'do:my-key')."
 		},
 		"_comment": {
 			"type": "string",
@@ -14,13 +15,15 @@
 		"_string-array": {
 			"type": "array",
 			"items": {"type": "string"},
-			"uniqueItems": true
+			"uniqueItems": true,
+			"description": "An array of unique strings."
 		}
 	},
 	"type": "object",
 	"properties": {
 		"library-info": {
 			"type": "object",
+			"description": "Metadata describing the current library.",
 			"properties": {
 				"key": {"$ref": "#/$defs/_key"},
 				"comment": {"$ref": "#/$defs/_comment"},
@@ -34,6 +37,7 @@
 		},
 		"domain-types": {
 			"type": "object",
+			"description": "Map of domain type definitions, where each property name is a domain type key, and its value is the domain type object.",
 		 	"propertyNames": {"$ref": "#/$defs/_key"},
 			"additionalProperties": {
 				"type": "object",
@@ -41,6 +45,7 @@
 					"comment": {"$ref": "#/$defs/_comment"},
 					"data-type": {
 						"type": "string",
+						"description": "Specifies the primitive type of the domain.",
 						"enum": [
 							"String",
 							"Text",

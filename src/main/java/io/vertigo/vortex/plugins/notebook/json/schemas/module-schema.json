@@ -99,6 +99,7 @@
 		
 		"imports": {
 			"type": "object",
+			"description": "Defines external libraries and modules that this module depends on.",
 			"properties": {
 				"libraries": {"$ref": "#/$defs/_string-array"},
 				"modules": {"$ref": "#/$defs/_string-array"}
@@ -112,6 +113,7 @@
 		
 		"entities": {
 			"type": "object",
+			"description": "Map of entity definitions, where each property name is an entity key and its value is the entity object.",
 		 	"propertyNames": {"$ref": "#/$defs/_key"},
 			"additionalProperties": {
 				"type": "object",
@@ -119,6 +121,7 @@
 					"comment": {"$ref": "#/$defs/_comment"},
 					"id": {
 						"type": "object",
+						"description": "Definition of the primary key for the entity.",
 						"properties": {
 							"key": {"$ref": "#/$defs/_key"},
 							"label": {"$ref": "#/$defs/_label"},
@@ -145,6 +148,7 @@
 		},
 		"value-objects": {
 			"type": "object",
+			"description": "Map of value object definitions, where each property name is a value object key, and its value is the value object object.",
 		 	"propertyNames": {"$ref": "#/$defs/_key"},
 			"additionalProperties": {
 				"type":"object",
