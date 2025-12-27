@@ -1,6 +1,7 @@
 package io.vertigo.vortex.plugins.notebook.json.raw.module;
 
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,7 +13,7 @@ import io.vertigo.vortex.plugins.notebook.json.raw.RawInfo;
 public record RawModule(
 		@JsonProperty("module-info") RawInfo moduleInfo,
 		RawImports imports,
-		List<RawEntity> entities,
+		Map<String, RawEntity> entities,
 		@JsonProperty("value-objects") List<RawValueObject> valueObjects) {
 
 	public RawModule {

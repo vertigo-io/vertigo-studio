@@ -8,7 +8,6 @@ import io.vertigo.core.lang.Assertion;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RawEntity(
-		String key,
 		String comment,
 		RawId id,
 		Map<String, RawAttribute> attributes,
@@ -16,7 +15,6 @@ public record RawEntity(
 
 	public RawEntity {
 		Assertion.check()
-				.isNotBlank(key)
 				// comment may be null
 				.isNotNull(id)
 				.isNotNull(attributes)

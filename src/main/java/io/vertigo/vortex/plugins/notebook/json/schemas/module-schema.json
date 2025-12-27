@@ -130,11 +130,11 @@
 		},
 		
 		"entities": {
-			"type": "array",
-			"items": {
+			"type": "object",
+		 	"propertyNames": {"$ref": "#/$defs/_key"},
+			"additionalProperties": {
 				"type": "object",
 				"properties": {
-					"key": {"$ref": "#/$defs/_key"},
 					"comment": {"$ref": "#/$defs/_comment"},
 					"id": {
 						"type": "object",
@@ -155,7 +155,6 @@
 					"links": {"$ref": "#/$defs/_links"}
 				},
 				"required": [
-					"key",
 					"id",
 					"attributes", 
 					"links"

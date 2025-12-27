@@ -10,9 +10,8 @@
 			"modules": ["author"]
 	},
 	
-	"entities": [
-		{
-			"key": "book",
+	"entities": {
+		"book": {
 			"comment": "A book",
 			"id": {
 				"key": "id",
@@ -53,9 +52,7 @@
 				}
 			}	
 		},
-		
-		{
-			"key": "category",
+		"category": {
 			"comment": "A book category",
 			"id": {
 				"key": "id",
@@ -71,6 +68,6 @@
 			},
 			"links": {}
 		}
-	],
+	},
 	"value-objects": []
 }

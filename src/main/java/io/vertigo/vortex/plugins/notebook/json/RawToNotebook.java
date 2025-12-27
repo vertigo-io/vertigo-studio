@@ -165,8 +165,8 @@ final class RawToNotebook {
 			}
 		}
 
-		final List<VXEntity> entities = rawModule.entities().stream()
-				.map(e -> transform(e, info.key(), typeCatalog, entityCatalog))
+		final List<VXEntity> entities = rawModule.entities().entrySet().stream()
+				.map(e -> transform(e.getKey(), e.getValue(), info.key(), typeCatalog, entityCatalog))
 				.toList();
 
 		final List<VXValueObject> valueObjects = rawModule.valueObjects().stream()
@@ -198,11 +198,12 @@ final class RawToNotebook {
 	}
 
 	private static VXEntity transform(
+			final String entityKeyStr,
 			final RawEntity rawEntity,
 			final VXKey owner, //the module UKey
 			Catalog<VXType> domainTypeCatalog,
 			Catalog<VXEntity> entityCatalog) {
-		final VXKey entityKey = createKeyForEntity(owner, rawEntity.key());
+		final VXKey entityKey = createKeyForEntity(owner, entityKeyStr);
 		final List<VXAttribute> attributes = rawEntity.attributes() != null
 				? rawEntity.attributes().entrySet().stream()
 						.map(entry -> transform(entry.getKey(), entry.getValue(), entityKey, domainTypeCatalog))
