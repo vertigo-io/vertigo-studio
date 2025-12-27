@@ -9,7 +9,6 @@ public record VXLink(
 		String label,
 		String comment,
 		VXKey targetEntityKey,
-		boolean required,
 		VXLinkStereotype stereotype) {
 
 	public VXLink {

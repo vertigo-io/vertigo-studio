@@ -213,7 +213,7 @@ final class RawToNotebook {
 
 		final List<VXLink> links = rawEntity.links() != null
 				? rawEntity.links().entrySet().stream()
-						.map(entry -> transform(entry.getKey(), entry.getValue(), entityKey, owner, entityCatalog, entry.getValue().required(), VXLinkStereotype.valueOf(entry.getValue().stereotype())))
+						.map(entry -> transform(entry.getKey(), entry.getValue(), entityKey, owner, entityCatalog, VXLinkStereotype.valueOf(entry.getValue().stereotype())))
 						.toList()
 				: List.of();
 
@@ -276,7 +276,6 @@ final class RawToNotebook {
 			final VXKey entityKey,
 			final VXKey owner,
 			final Catalog<VXEntity> entityCatalog,
-			final boolean required,
 			final VXLinkStereotype stereotype) {
 		final VXKey linkVXKey = new VXKey(entityKey, VXElementType.LINK, linkKey);
 		return new VXLink(
@@ -284,7 +283,6 @@ final class RawToNotebook {
 				rawLink.label(),
 				rawLink.comment(),
 				createKeyForEntity(owner, rawLink.targetEntityKey()),
-				required,
 				stereotype);
 	}
 

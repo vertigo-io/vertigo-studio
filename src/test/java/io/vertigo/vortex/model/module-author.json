@@ -39,14 +39,12 @@
 				"publisher":{
 					"label": "Publisher",
 					"target-entity-key": "publisher",
-					"required": true,
 					"stereotype": "MANY_TO_ONE" 
 				},
 				"author-publisher-agreement":{
 					"label": "List of publishers",
 					"comment": "Agreement between author and publisher for a book",
 					"target-entity-key": "publisher",
-					"required": true,
 					"stereotype": "MANY_TO_MANY"
 				}
 			}

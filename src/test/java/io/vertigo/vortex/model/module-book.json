@@ -34,20 +34,17 @@
 				"author":{
 					"label": "Author",
 					"target-entity-key": "author",
-					"required": true,
 					"stereotype": "MANY_TO_ONE"
 				},
 				"category":{
 					"label": "Category of the book",
 					"target-entity-key": "category",
-					"required": false,
-					"stereotype": "MANY_TO_ONE"
+					"stereotype": "MANY_TO_OPTIONAL"
 				},
 				"book-category-classification":{
 					"label": "List of categories",
 					"comment": "Classification of books by category",
 					"target-entity-key": "category",
-					"required": false,
 					"stereotype": "MANY_TO_MANY"
 				}
 			}	

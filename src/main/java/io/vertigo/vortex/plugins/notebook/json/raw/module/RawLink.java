@@ -8,6 +8,5 @@ public record RawLink(
 		String label,
 		String comment,
 		@JsonProperty("target-entity-key") String targetEntityKey,
-		boolean required,
 		String stereotype) {
 }

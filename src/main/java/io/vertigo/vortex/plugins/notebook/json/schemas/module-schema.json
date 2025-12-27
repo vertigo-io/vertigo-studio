@@ -40,12 +40,13 @@
 						"label": {"$ref": "#/$defs/_label"},
 						"comment": {"$ref": "#/$defs/_comment"},
 						"target-entity-key": {"$ref": "#/$defs/_key"},
-						"required": {"type": "boolean"},
 						"stereotype": {
 							"type": "string",
 							"enum": [
 								"MANY_TO_ONE",
+								"MANY_TO_OPTIONAL",
 								"ONE_TO_ONE",
+								"ONE_TO_OPTIONAL",
 								"MANY_TO_MANY"
 							]
 						}
@@ -53,7 +54,6 @@
 			    "required": [
 			    		"label",
 			      	"target-entity-key",
-			      	"required",
 					"stereotype"
 			    ],
 			    "additionalProperties": false
@@ -121,7 +121,7 @@
 					"comment": {"$ref": "#/$defs/_comment"},
 					"id": {
 						"type": "object",
-						"description": "Definition of the primary key for the entity.",
+						"description": "Definition of the id or primary key for the entity.",
 						"properties": {
 							"key": {"$ref": "#/$defs/_key"},
 							"label": {"$ref": "#/$defs/_label"},
