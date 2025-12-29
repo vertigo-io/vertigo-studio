@@ -3,18 +3,13 @@
 	"$id": "module-schema.json",
 	
 	"$defs": {
-		"_label": {
-			"type": "string",
-			"maxLength": 100,
-			"description": "Human-readable label, intended for UI display."
-		},
 		"_links": {
 			"type": "object",
 		 	"propertyNames": {"$ref": "commons.json#/$defs/_key"},
 			"additionalProperties": {
 			    	"type": "object",
 			    	"properties": {
-						"label": {"$ref": "#/$defs/_label"},
+						"label": {"$ref": "commons.json#/$defs/_label"},
 						"comment": {"$ref": "commons.json#/$defs/_comment"},
 						"target-entity-key": {"$ref": "commons.json#/$defs/_key"},
 						"stereotype": {
@@ -42,7 +37,7 @@
 			"additionalProperties": {
 			    	"type": "object",
 			    	"properties": {
-			    		"label": { "$ref": "#/$defs/_label" },
+			    		"label": { "$ref": "commons.json#/$defs/_label" },
 			      	"comment": { "$ref": "commons.json#/$defs/_comment" },
 			      	"domain-type": { "$ref": "commons.json#/$defs/_key" },
 			      	"required": { "type": "boolean" }
@@ -101,7 +96,7 @@
 						"description": "Definition of the id or primary key for the entity.",
 						"properties": {
 							"key": {"$ref": "commons.json#/$defs/_key"},
-							"label": {"$ref": "#/$defs/_label"},
+							"label": {"$ref": "commons.json#/$defs/_label"},
 							"comment": {"$ref": "commons.json#/$defs/_comment"},
 							"domain-type": {"$ref": "commons.json#/$defs/_key"}
 						},

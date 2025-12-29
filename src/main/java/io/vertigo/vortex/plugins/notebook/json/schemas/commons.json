@@ -18,6 +18,11 @@
 			"items": {"type": "string"},
 			"uniqueItems": true,
 			"description": "An array of unique strings."
+		},
+		"_label": {
+			"type": "string",
+			"maxLength": 100,
+			"description": "Human-readable label, intended for UI display."
 		}
 	}
 }
