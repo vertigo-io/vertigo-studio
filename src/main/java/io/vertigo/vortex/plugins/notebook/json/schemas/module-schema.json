@@ -3,52 +3,43 @@
 	"$id": "module-schema.json",
 	
 	"$defs": {
-		"_links": {
-			"type": "object",
-		 	"propertyNames": {"$ref": "commons.json#/$defs/_key"},
-			"additionalProperties": {
-			    	"type": "object",
-			    	"properties": {
-						"label": {"$ref": "commons.json#/$defs/_label"},
-						"comment": {"$ref": "commons.json#/$defs/_comment"},
-						"target-entity-key": {"$ref": "commons.json#/$defs/_key"},
-						"stereotype": {
-							"type": "string",
-							"enum": [
-								"MANY_TO_ONE",
-								"MANY_TO_OPTIONAL",
-								"ONE_TO_ONE",
-								"ONE_TO_OPTIONAL",
-								"MANY_TO_MANY"
-							]
-						}
-			    	},
-			    "required": [
-			    		"label",
-			      	"target-entity-key",
-					"stereotype"
-			    ],
-			    "additionalProperties": false
-			}
+		"_link": {
+		    	"properties": {
+				"label": {"$ref": "commons.json#/$defs/_label"},
+				"comment": {"$ref": "commons.json#/$defs/_comment"},
+				"target-entity-key": {"$ref": "commons.json#/$defs/_key"},
+				"stereotype": {
+					"type": "string",
+					"enum": [
+						"MANY_TO_ONE",
+						"MANY_TO_OPTIONAL",
+						"ONE_TO_ONE",
+						"ONE_TO_OPTIONAL",
+						"MANY_TO_MANY"
+					]
+				}
+		    	},
+			"required": [
+				"label",
+			    "target-entity-key",
+				"stereotype"
+			],
+			"additionalProperties": false
 		},
-		"_attributes": {
+		"_attribute": {
 			"type": "object",
-		 	"propertyNames": {"$ref": "commons.json#/$defs/_key"},
-			"additionalProperties": {
-			    	"type": "object",
-			    	"properties": {
-			    		"label": { "$ref": "commons.json#/$defs/_label" },
-			      	"comment": { "$ref": "commons.json#/$defs/_comment" },
-			      	"domain-type": { "$ref": "commons.json#/$defs/_key" },
-			      	"required": { "type": "boolean" }
-			    	},
-			    "required": [
-			    		"label",
-			      	"domain-type",
-			      	"required"
-			    ],
-			    "additionalProperties": false
-			}
+		    	"properties": {
+		    		"label": { "$ref": "commons.json#/$defs/_label" },
+		      	"comment": { "$ref": "commons.json#/$defs/_comment" },
+		      	"domain-type": { "$ref": "commons.json#/$defs/_key" },
+		      	"required": { "type": "boolean" }
+		    	},
+		    "required": [
+		    		"label",
+		      	"domain-type",
+		      	"required"
+		    ],
+		    "additionalProperties": false
 		}
 	},
 	
@@ -107,8 +98,16 @@
 						],
 						"additionalProperties": false
 					},
-					"attributes": {"$ref":"#/$defs/_attributes"},
-					"links": {"$ref": "#/$defs/_links"}
+					"attributes": { 		
+						"type": "object",
+						"propertyNames": {"$ref": "commons.json#/$defs/_key"},
+						"additionalProperties": {"$ref": "#/$defs/_attribute"}
+					},
+					"links": { 		
+						"type": "object",
+						"propertyNames": {"$ref": "commons.json#/$defs/_key"},
+						"additionalProperties": {"$ref": "#/$defs/_link"}
+					}
 				},
 				"required": [
 					"id",
@@ -126,7 +125,11 @@
 				"type":"object",
 				"properties": {
 					"comment": {"$ref": "commons.json#/$defs/_comment"},
-					"attributes": {"$ref": "#/$defs/_attributes"}
+					"attributes": { 		
+						"type": "object",
+						"propertyNames": {"$ref": "commons.json#/$defs/_key"},
+						"additionalProperties": {"$ref": "#/$defs/_attribute"}
+					}
 				}, 	
 				"required": [
 					"attributes"

@@ -1,6 +1,7 @@
 {
 	"$schema": "http://json-schema.org/draft/2020-12/schema",
 	"$id": "commons.json",
+	
 	"$defs": {
 		"_key": {
 			"type": "string",
