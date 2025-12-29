@@ -98,13 +98,12 @@ final class FileToRaw {
 		//---
 		final ObjectMapper mapper = new ObjectMapper();
 
-		// Charge le schéma et le JSON à valider
-		final JsonNode schemaNode = mapper.readTree(schemaFile);
+		// Charge le JSON à valider
 		final JsonNode dataNode = mapper.readTree(dataFile);
 
 		// Crée un validateur JSON Schema
 		final JsonSchemaFactory factory = JsonSchemaFactory.byDefault();
-		final JsonSchema schema = factory.getJsonSchema(schemaNode);
+		final JsonSchema schema = factory.getJsonSchema(schemaFile.toURI().toString());
 		// Valide le document JSON
 		final ProcessingReport report = schema.validate(dataNode);
 		// Affiche les erreurs éventuelles

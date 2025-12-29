@@ -1,45 +1,27 @@
 {
 	"$schema": "http://json-schema.org/draft/2020-12/schema",
+	"$id": "module-schema.json",
 	
 	"$defs": {
-		"_key": {
-			"type": "string",
-			"pattern": "^([a-z]+:)?[a-z]+(-[a-z]+)*$",
-			"maxLength": 30,
-			"description": "Unique identifier for elements, typically lowercase and hyphen-separated. Can optionally include a prefix (e.g., 'do:my-key')."
-		},
 		"_domain-type": {
 			"type": "string",
 			"pattern": "^([a-z]+:)[a-z]+(-[a-z]+)*$",
 			"description": "Represents a domain-specific type, always prefixed with its schema (e.g., 'do:String', 'json:ContactInfo')."
-		},
-		"_comment": {
-			"type": "string",
-			"maxLength": 500,
-			"description": "Optional free-text comment intended for developers and documentation."
 		},
 		"_label": {
 			"type": "string",
 			"maxLength": 100,
 			"description": "Human-readable label, intended for UI display."
 		},
-		"_string-array": {
-			"type": "array",
-			"items": {
-				"type": "string"
-			},
-			"uniqueItems": true,
-			"description": "An array of unique strings."
-		},
 		"_links": {
 			"type": "object",
-		 	"propertyNames": {"$ref": "#/$defs/_key"},
+		 	"propertyNames": {"$ref": "commons.json#/$defs/_key"},
 			"additionalProperties": {
 			    	"type": "object",
 			    	"properties": {
 						"label": {"$ref": "#/$defs/_label"},
-						"comment": {"$ref": "#/$defs/_comment"},
-						"target-entity-key": {"$ref": "#/$defs/_key"},
+						"comment": {"$ref": "commons.json#/$defs/_comment"},
+						"target-entity-key": {"$ref": "commons.json#/$defs/_key"},
 						"stereotype": {
 							"type": "string",
 							"enum": [
@@ -61,12 +43,12 @@
 		},
 		"_attributes": {
 			"type": "object",
-		 	"propertyNames": {"$ref": "#/$defs/_key"},
+		 	"propertyNames": {"$ref": "commons.json#/$defs/_key"},
 			"additionalProperties": {
 			    	"type": "object",
 			    	"properties": {
 			    		"label": { "$ref": "#/$defs/_label" },
-			      	"comment": { "$ref": "#/$defs/_comment" },
+			      	"comment": { "$ref": "commons.json#/$defs/_comment" },
 			      	"domain-type": { "$ref": "#/$defs/_domain-type" },
 			      	"required": { "type": "boolean" }
 			    	},
@@ -86,9 +68,9 @@
 			"type": "object",
 			"description": "Metadata describing the current module.",
 			"properties": {
-				"key": {"$ref": "#/$defs/_key"},
-				"comment": {"$ref": "#/$defs/_comment"},
-				"tags": {"$ref": "#/$defs/_string-array"}
+				"key": {"$ref": "commons.json#/$defs/_key"},
+				"comment": {"$ref": "commons.json#/$defs/_comment"},
+				"tags": {"$ref": "commons.json#/$defs/_string-array"}
 			},
 			"required": [
 				"key",
@@ -101,8 +83,8 @@
 			"type": "object",
 			"description": "Defines external libraries and modules that this module depends on.",
 			"properties": {
-				"libraries": {"$ref": "#/$defs/_string-array"},
-				"modules": {"$ref": "#/$defs/_string-array"}
+				"libraries": {"$ref": "commons.json#/$defs/_string-array"},
+				"modules": {"$ref": "commons.json#/$defs/_string-array"}
 			},
 			"required": [
 				"libraries",
@@ -114,18 +96,18 @@
 		"entities": {
 			"type": "object",
 			"description": "Map of entity definitions, where each property name is an entity key and its value is the entity object.",
-		 	"propertyNames": {"$ref": "#/$defs/_key"},
+		 	"propertyNames": {"$ref": "commons.json#/$defs/_key"},
 			"additionalProperties": {
 				"type": "object",
 				"properties": {
-					"comment": {"$ref": "#/$defs/_comment"},
+					"comment": {"$ref": "commons.json#/$defs/_comment"},
 					"id": {
 						"type": "object",
 						"description": "Definition of the id or primary key for the entity.",
 						"properties": {
-							"key": {"$ref": "#/$defs/_key"},
+							"key": {"$ref": "commons.json#/$defs/_key"},
 							"label": {"$ref": "#/$defs/_label"},
-							"comment": {"$ref": "#/$defs/_comment"},
+							"comment": {"$ref": "commons.json#/$defs/_comment"},
 							"domain-type": {"$ref": "#/$defs/_domain-type"}
 						},
 						"required": [
@@ -149,11 +131,11 @@
 		"value-objects": {
 			"type": "object",
 			"description": "Map of value object definitions, where each property name is a value object key, and its value is the value object object.",
-		 	"propertyNames": {"$ref": "#/$defs/_key"},
+		 	"propertyNames": {"$ref": "commons.json#/$defs/_key"},
 			"additionalProperties": {
 				"type":"object",
 				"properties": {
-					"comment": {"$ref": "#/$defs/_comment"},
+					"comment": {"$ref": "commons.json#/$defs/_comment"},
 					"attributes": {"$ref": "#/$defs/_attributes"}
 				}, 	
 				"required": [

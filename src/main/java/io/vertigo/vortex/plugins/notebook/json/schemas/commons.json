@@ -1,0 +1,23 @@
+{
+	"$schema": "http://json-schema.org/draft/2020-12/schema",
+	"$id": "commons.json",
+	"$defs": {
+		"_key": {
+			"type": "string",
+			"pattern": "^([a-z]+:)?[a-z]+(-[a-z]+)*$",
+			"maxLength": 30,
+			"description": "Unique identifier for elements, typically lowercase and hyphen-separated. Can optionally include a prefix (e.g., 'do:my-key')."
+		},
+		"_comment": {
+			"type": "string",
+			"maxLength": 500,
+			"description": "Optional free-text comment intended for developers and documentation."
+		},
+		"_string-array": {
+			"type": "array",
+			"items": {"type": "string"},
+			"uniqueItems": true,
+			"description": "An array of unique strings."
+		}
+	}
+}

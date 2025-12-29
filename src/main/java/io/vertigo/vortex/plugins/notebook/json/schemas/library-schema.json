@@ -1,33 +1,15 @@
 {
 	"$schema": "http://json-schema.org/draft/2020-12/schema",
-	"$defs": {
-		"_key": {
-			"type": "string",
-			"pattern": "^([a-z]+:)?[a-z]+(-[a-z]+)*$",
-			"maxLength": 30,
-			"description": "Unique identifier for elements, typically lowercase and hyphen-separated. Can optionally include a prefix (e.g., 'do:my-key')."
-		},
-		"_comment": {
-			"type": "string",
-			"maxLength": 500,
-			"description": "Optional free-text comment intended for developers and documentation."
-		},
-		"_string-array": {
-			"type": "array",
-			"items": {"type": "string"},
-			"uniqueItems": true,
-			"description": "An array of unique strings."
-		}
-	},
+	"$id": "library-schema.json",
 	"type": "object",
 	"properties": {
 		"library-info": {
 			"type": "object",
 			"description": "Metadata describing the current library.",
 			"properties": {
-				"key": {"$ref": "#/$defs/_key"},
-				"comment": {"$ref": "#/$defs/_comment"},
-				"tags": {"$ref": "#/$defs/_string-array"}
+				"key": {"$ref": "commons.json#/$defs/_key"},
+				"comment": {"$ref": "commons.json#/$defs/_comment"},
+				"tags": {"$ref": "commons.json#/$defs/_string-array"}
 			},
 			"required": [
 				"key",
@@ -38,11 +20,11 @@
 		"domain-types": {
 			"type": "object",
 			"description": "Map of domain type definitions, where each property name is a domain type key, and its value is the domain type object.",
-		 	"propertyNames": {"$ref": "#/$defs/_key"},
+		 	"propertyNames": {"$ref": "commons.json#/$defs/_key"},
 			"additionalProperties": {
 				"type": "object",
 				"properties": {
-					"comment": {"$ref": "#/$defs/_comment"},
+					"comment": {"$ref": "commons.json#/$defs/_comment"},
 					"data-type": {
 						"type": "string",
 						"description": "Specifies the primitive type of the domain.",
