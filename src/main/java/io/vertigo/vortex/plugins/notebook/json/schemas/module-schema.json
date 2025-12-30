@@ -3,6 +3,36 @@
 	"$id": "module-schema.json",
 	
 	"$defs": {
+		"_id": {
+			"type": "object",
+			"properties": {
+				"key": {"$ref": "commons.json#/$defs/_key"},
+				"label": {"$ref": "commons.json#/$defs/_label"},
+				"comment": {"$ref": "commons.json#/$defs/_comment"},
+				"domain-type": {"$ref": "commons.json#/$defs/_key"}
+			},
+			"required": [
+				"key",
+				"label",
+				"domain-type"
+			],
+			"additionalProperties": false
+		},
+		"_attribute": {
+			"type": "object",
+		    	"properties": {
+		    		"label": { "$ref": "commons.json#/$defs/_label" },
+		      	"comment": { "$ref": "commons.json#/$defs/_comment" },
+		      	"domain-type": { "$ref": "commons.json#/$defs/_key" },
+		      	"required": { "type": "boolean" }
+		    	},
+		    "required": [
+		    		"label",
+		      	"domain-type",
+		      	"required"
+		    ],
+		    "additionalProperties": false
+		},
 		"_link": {
 		    	"properties": {
 				"label": {"$ref": "commons.json#/$defs/_label"},
@@ -25,23 +55,8 @@
 				"stereotype"
 			],
 			"additionalProperties": false
-		},
-		"_attribute": {
-			"type": "object",
-		    	"properties": {
-		    		"label": { "$ref": "commons.json#/$defs/_label" },
-		      	"comment": { "$ref": "commons.json#/$defs/_comment" },
-		      	"domain-type": { "$ref": "commons.json#/$defs/_key" },
-		      	"required": { "type": "boolean" }
-		    	},
-		    "required": [
-		    		"label",
-		      	"domain-type",
-		      	"required"
-		    ],
-		    "additionalProperties": false
 		}
-	},
+	},	
 	
 	"type": "object",
 	"properties": {
@@ -82,21 +97,9 @@
 				"type": "object",
 				"properties": {
 					"comment": {"$ref": "commons.json#/$defs/_comment"},
-					"id": {
-						"type": "object",
-						"description": "Definition of the id or primary key for the entity.",
-						"properties": {
-							"key": {"$ref": "commons.json#/$defs/_key"},
-							"label": {"$ref": "commons.json#/$defs/_label"},
-							"comment": {"$ref": "commons.json#/$defs/_comment"},
-							"domain-type": {"$ref": "commons.json#/$defs/_key"}
-						},
-						"required": [
-							"key",
-							"label",
-							"domain-type"
-						],
-						"additionalProperties": false
+					"id": { 
+						"$ref": "#/$defs/_id",
+						"description": "Definition of the id or primary key for the entity."
 					},
 					"attributes": { 		
 						"type": "object",
