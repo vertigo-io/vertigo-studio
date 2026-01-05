@@ -132,7 +132,7 @@
 			"additionalProperties": {
 				"type":"object",
 				"properties": {
-					"comment": {"$ref": "commons.json#/$defs/_comment"},
+					"_comment": {"$ref": "commons.json#/$defs/_comment"},
 					"attributes": { 		
 						"type": "object",
 						"propertyNames": {"$ref": "commons.json#/$defs/_key"},

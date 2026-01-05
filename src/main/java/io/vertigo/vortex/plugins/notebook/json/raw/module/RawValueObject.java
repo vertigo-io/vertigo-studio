@@ -8,7 +8,7 @@ import io.vertigo.core.lang.Assertion;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RawValueObject(
-		String comment,
+		String _comment,
 		Map<String, RawAttribute> attributes) {
 
 	public RawValueObject {

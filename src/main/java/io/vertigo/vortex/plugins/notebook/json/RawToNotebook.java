@@ -216,7 +216,7 @@ final class RawToNotebook {
 
 		return new VXValueObject(
 				voKey,
-				rawValueObject.comment(),
+				rawValueObject._comment(),
 				attributes);
 	}
 
