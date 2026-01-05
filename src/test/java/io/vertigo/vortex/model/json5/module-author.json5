@@ -11,6 +11,7 @@
 	},
 	
 	entities: {
+		/* Author */
 		author: {
 			comment: "An author",
 			id: {key: "id",  domain-type: "do:id", label: "Identifier"},
@@ -22,14 +23,11 @@
 			},	
 			links: {
 				publisher: { stereotype: "MANY_TO_ONE", label: "Publisher", target-entity-key: "publisher" },
-				author-publisher-agreement: {
-					label: "List of publishers",
-					comment: "Agreement between author and publisher for a book",
-					target-entity-key: "publisher",
-					stereotype: "MANY_TO_MANY"
-				}
+				author-publisher-agreement: {stereotype: "MANY_TO_MANY", label: "List of publishers", comment: "Agreement between author and publisher for a book", target-entity-key: "publisher"	}
 			}
 		},
+		
+		/* Publisher */
 		publisher: {
 			comment: "A book publisher",
 			id: { key: "id", domain-type: "do:id", label: "Identifier of the publisher"},
@@ -40,6 +38,7 @@
 			links: {}
 		}
 	},
+	
 	value-objects: {
 		contact-info: {
 			comment: "Contact info of an author",
