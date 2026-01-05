@@ -3,6 +3,7 @@ package io.vertigo.vortex.plugins.notebook.json;
 import java.io.File;
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonschema.core.report.ProcessingReport;
@@ -25,6 +26,10 @@ final class FileToRaw {
 	private static final File LIBRARY_SCHEMA_FILE = new File("src/main/java/io/vertigo/vortex/plugins/notebook/json/schemas/library-schema.json");
 	private static final File MODULE_SCHEMA_FILE = new File("src/main/java/io/vertigo/vortex/plugins/notebook/json/schemas/module-schema.json");
 
+	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
+			.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true)
+			.configure(JsonParser.Feature.ALLOW_COMMENTS, true)
+			.configure(JsonParser.Feature.ALLOW_YAML_COMMENTS, true);
 	private final VXNotebookConfig notebookConfig;
 
 	private FileToRaw(VXNotebookConfig notebookConfig) {
@@ -77,11 +82,10 @@ final class FileToRaw {
 				.isNotNull(file)
 				.isNotNull(clazz);
 		//---
-		final ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(file, clazz);
+			return OBJECT_MAPPER.readValue(file, clazz);
 		} catch (Exception e) {
-			throw new VSystemException(e, "Unable to read JSON");
+			throw new VSystemException(e, "Unable to read JSON file {0}", file);
 		}
 	}
 
@@ -96,10 +100,8 @@ final class FileToRaw {
 				.isNotNull(schemaFile)
 				.isNotNull(dataFile);
 		//---
-		final ObjectMapper mapper = new ObjectMapper();
-
 		// Charge le JSON à valider
-		final JsonNode dataNode = mapper.readTree(dataFile);
+		final JsonNode dataNode = OBJECT_MAPPER.readTree(dataFile);
 
 		// Crée un validateur JSON Schema
 		final JsonSchemaFactory factory = JsonSchemaFactory.byDefault();

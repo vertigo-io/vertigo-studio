@@ -1,0 +1,62 @@
+{
+	module-info : {
+		key: "author",
+		comment: "List of authors",
+		tags:[]
+	},
+
+	imports : {
+		libraries:["core"],
+		modules:[]
+	},
+	
+	entities: {
+		author: {
+			comment: "An author",
+			id: {
+				key: "id",
+				label: "Identifier",
+				domain-type: "do:id"
+			},
+			attributes : {
+				first-name: { domain-type: "do:label", label: "First name", required: true },
+				last-name : { domain-type: "do:label", label: "Last name", required: false },
+				contact-info : { domain-type: "json:contact-info", label: "contact", required: false } 
+			},	
+			links: {
+				publisher:{
+					label: "Publisher",
+					target-entity-key: "publisher",
+					stereotype: "MANY_TO_ONE" 
+				},
+				author-publisher-agreement:{
+					label: "List of publishers",
+					comment: "Agreement between author and publisher for a book",
+					target-entity-key: "publisher",
+					stereotype: "MANY_TO_MANY"
+				}
+			}
+		},
+		publisher: {
+			comment: "A book publisher",
+			id: {
+				key: "id",
+				label: "Identifier of the publisher",
+				domain-type: "do:id"
+			},
+			attributes: {
+				name  :{ domain-type: "do:label", label: "Name of the publisher", required: true }
+			},
+			links: {}
+		}
+	},
+	value-objects: {
+		contact-info: {
+			comment: "Contact info of an author",
+			attributes: {
+				email :{ domain-type: "do:email", label: "Email", required: true 	},
+				phone:{ domain-type: "do:phone", label: "Phone", required: false }
+			}
+		}
+	}
+}
