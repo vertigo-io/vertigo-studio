@@ -23,7 +23,7 @@ public record VXType(
 	public VXType {
 		Assertion.check()
 				.isNotNull(key)
-				.isTrue(key.type() == VXElementType.TYPE, "A VXDomainType's key must be of type DOMAIN_TYPE")
+				.isTrue(key.type() == VXElementType.DOMAIN_TYPE, "A VXDomainType's key must be of type DOMAIN_TYPE")
 				.isNotNull(dataType)
 				.isNotNull(validators);
 

@@ -1,6 +1,5 @@
 package io.vertigo.vortex.plugins.notebook.json.raw.module;
 
-import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -8,20 +7,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import io.vertigo.core.lang.Assertion;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public record RawEntity(
+public record RawTrait(
 		String comment,
-		RawId id,
-		List<String> traits,
-		Map<String, RawAttribute> attributes,
-		Map<String, RawLink> links) {
+		Map<String, RawAttribute> attributes) {
 
-	public RawEntity {
+	public RawTrait {
 		Assertion.check()
 				// comment may be null
-				.isNotNull(id)
-				.isNotNull(traits)
-				.isNotNull(attributes)
-				.isNotNull(links);
+				.isNotNull(attributes);
 	}
-
 }

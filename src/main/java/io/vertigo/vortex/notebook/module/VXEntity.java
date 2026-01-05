@@ -16,6 +16,7 @@ public record VXEntity(
 		VXKey key, //entity key aka class name/ table name
 		String comment,
 		VXId id, //id or pk 
+		List<VXTrait> traits,
 		List<VXAttribute> attributes,
 		List<VXLink> links) {
 
@@ -24,6 +25,7 @@ public record VXEntity(
 				.isNotNull(key)
 				.isTrue(key.type() == VXElementType.ENTITY, "An entity's key must be of type ENTITY_TYPE")
 				.isNotNull(id)
+				.isNotNull(traits)
 				.isNotNull(attributes)
 				.isNotNull(links);
 	}

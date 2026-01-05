@@ -15,7 +15,8 @@ public record VXModule(
 		VXInfo info,
 		VXImports imports,
 		List<VXEntity> entities,
-		List<VXValueObject> valueObjects) {
+		List<VXValueObject> valueObjects,
+		List<VXTrait> traits) {
 
 	public VXModule {
 		Assertion.check()
@@ -23,6 +24,7 @@ public record VXModule(
 				.isTrue(info.key().type() == VXElementType.MODULE, "A module's key must be of type MODULE")
 				.isNotNull(imports)
 				.isNotNull(entities)
-				.isNotNull(valueObjects);
+				.isNotNull(valueObjects)
+				.isNotNull(traits);
 	}
 }

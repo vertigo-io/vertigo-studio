@@ -101,6 +101,10 @@
 						"$ref": "#/$defs/_id",
 						"description": "Definition of the id or primary key for the entity."
 					},
+					"traits": {
+						"$ref": "commons.json#/$defs/_string-array",
+						"description": "A list of traits to inherit attributes from."
+					},
 					"attributes": { 		
 						"type": "object",
 						"propertyNames": {"$ref": "commons.json#/$defs/_key"},
@@ -114,6 +118,7 @@
 				},
 				"required": [
 					"id",
+					"traits",
 					"attributes", 
 					"links"
 				],
@@ -133,19 +138,40 @@
 						"propertyNames": {"$ref": "commons.json#/$defs/_key"},
 						"additionalProperties": {"$ref": "#/$defs/_attribute"}
 					}
-				}, 	
+				},
+				"required": [
+					"attributes"
+				],
+				"additionalProperties": false
+			}
+		},
+		"traits": {
+			"type": "object",
+			"description": "Map of trait definitions, where each property name is a trait key, and its value is the trait object.",
+			"propertyNames": {"$ref": "commons.json#/$defs/_key"},
+			"additionalProperties": {
+				"type": "object",
+				"properties": {
+					"comment": {"$ref": "commons.json#/$defs/_comment"},
+					"attributes": { 		
+						"type": "object",
+						"propertyNames": {"$ref": "commons.json#/$defs/_key"},
+						"additionalProperties": {"$ref": "#/$defs/_attribute"}
+					}
+				},
 				"required": [
 					"attributes"
 				],
 				"additionalProperties": false
 			}
 		}
-	},
+	},	
 	"required": [
 		"module-info",
 		"imports",
 		"entities",
-		"value-objects"
+		"value-objects",
+		"traits"
 	],
 	"additionalProperties": false
 }

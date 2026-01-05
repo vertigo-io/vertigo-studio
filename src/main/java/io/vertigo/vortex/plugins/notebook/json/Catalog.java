@@ -24,7 +24,7 @@ final class Catalog<E> {
 		//---
 		E element = map.get(key);
 		if (element == null) {
-			throw new VSystemException("No data found for key = '{0}'", key);
+			throw new VSystemException("No data found for key = '{0}' in {1}", key, map);
 		}
 		return element;
 	}

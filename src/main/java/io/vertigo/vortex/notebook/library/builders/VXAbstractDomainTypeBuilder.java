@@ -50,7 +50,7 @@ abstract class VXAbstractDomainTypeBuilder<B extends VXAbstractDomainTypeBuilder
 	@Override
 	public final VXType build() {
 		final VXKey domainTypeKey = new VXKey(_libraryKey,
-				VXElementType.TYPE, _key);
+				VXElementType.DOMAIN_TYPE, _key);
 		return new VXType(
 				domainTypeKey,
 				_comment,

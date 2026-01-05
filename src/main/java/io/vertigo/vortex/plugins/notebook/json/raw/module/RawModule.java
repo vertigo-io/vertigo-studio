@@ -13,13 +13,15 @@ public record RawModule(
 		@JsonProperty("module-info") RawInfo moduleInfo,
 		RawImports imports,
 		Map<String, RawEntity> entities,
-		@JsonProperty("value-objects") Map<String, RawValueObject> valueObjects) {
+		@JsonProperty("value-objects") Map<String, RawValueObject> valueObjects,
+		Map<String, RawTrait> traits) {
 
 	public RawModule {
 		Assertion.check()
 				.isNotNull(moduleInfo)
 				.isNotNull(imports)
 				.isNotNull(entities)
-				.isNotNull(valueObjects);
+				.isNotNull(valueObjects)
+				.isNotNull(traits);
 	}
 }

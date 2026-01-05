@@ -18,6 +18,7 @@
 				"label": "Identifier",
 				"domain-type": "do:id"
 			},
+			"traits": ["producer"],
 			"attributes": {
 				"title":{
 					"label": "Title",
@@ -56,6 +57,7 @@
 				"label": "Identifier",
 				"domain-type": "do:id"
 			},
+			"traits": [],
 			"attributes": {
 				"name":{
 					"label": "Name of the category",
@@ -66,5 +68,6 @@
 			"links": {}
 		}
 	},
-	"value-objects": {}
+	"value-objects": {},
+	"traits": {}
 }

@@ -18,6 +18,7 @@
 				"label": "Identifier",
 				"domain-type": "do:id"
 			},
+			"traits": ["producer"],
 			"attributes" : {
 				"first-name": { "domain-type": "do:label", "label": "First name", "required": true },
 				"last-name" : { "domain-type": "do:label", "label": "Last name", "required": false },
@@ -44,6 +45,7 @@
 				"label": "Identifier of the publisher",
 				"domain-type": "do:id"
 			},
+			"traits": ["producer"],			
 			"attributes": {
 				"name"  :{ "domain-type": "do:label", "label": "Name of the publisher", "required": true }
 			},
@@ -57,6 +59,12 @@
 				"email" :{ "domain-type": "do:email", "label": "Email", "required": true 	},
 				"phone":{ "domain-type": "do:phone", "label": "Phone", "required": false }
 			}
+		}
+	},
+	"traits": {
+		"producer": {
+			"created-by": { "domain-type": "do:label", "label": "Created by", "required": true },
+			"created-at": { "domain-type": "do:instant", "label": "Created at", "required": true }
 		}
 	}
 }
