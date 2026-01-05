@@ -19,6 +19,7 @@ import io.vertigo.vortex.notebook.module.VXImports;
 import io.vertigo.vortex.notebook.module.VXLink;
 import io.vertigo.vortex.notebook.module.VXLinkStereotype;
 import io.vertigo.vortex.notebook.module.VXModule;
+import io.vertigo.vortex.notebook.module.VXTrait;
 import io.vertigo.vortex.notebook.module.VXValueObject;
 import io.vertigo.vortex.plugins.notebook.json.raw.RawInfo;
 import io.vertigo.vortex.plugins.notebook.json.raw.RawNotebook;
@@ -30,6 +31,7 @@ import io.vertigo.vortex.plugins.notebook.json.raw.module.RawId;
 import io.vertigo.vortex.plugins.notebook.json.raw.module.RawImports;
 import io.vertigo.vortex.plugins.notebook.json.raw.module.RawLink;
 import io.vertigo.vortex.plugins.notebook.json.raw.module.RawModule;
+import io.vertigo.vortex.plugins.notebook.json.raw.module.RawTrait;
 import io.vertigo.vortex.plugins.notebook.json.raw.module.RawValueObject;
 
 /**
@@ -43,6 +45,7 @@ final class RawToNotebook {
 	private final RawNotebook rawNotebook;
 	private final Catalog<VXLibrary> libraryCatalog = new Catalog<>();
 	private final Catalog<VXModule> moduleCatalog = new Catalog<>();
+	private final Catalog<VXTrait> traitCatalog = new Catalog<>();
 
 	RawToNotebook(final RawNotebook rawNotebook) {
 		Assertion.check().isNotNull(rawNotebook);
@@ -56,7 +59,20 @@ final class RawToNotebook {
 		//!!!!!!
 		//!!!!!!
 		final VXKey libraryKey = new VXKey(null, VXElementType.LIBRARY, "core");
-		return new VXKey(libraryKey, VXElementType.TYPE, name);
+		return new VXKey(libraryKey, VXElementType.DOMAIN_TYPE, name);
+	}
+
+	private static VXKey createKeyForTrait(final VXKey owner, final String key) {
+		//si key ne contient pas de "." alors on prends l'owner ( on reste dans le même module)
+		//Sinon on cherche le module
+		final int i = key.indexOf(".");
+		if (i < 0) {
+			return new VXKey(owner, VXElementType.TRAIT, key);
+		} else {
+			// example : "mod-a.car"  => car is a trait in mod-a
+			final VXKey _owner = new VXKey(null, VXElementType.MODULE, key.substring(0, i));
+			return new VXKey(_owner, VXElementType.TRAIT, key.substring(i + 1));
+		}
 	}
 
 	// Updated to use key
@@ -92,7 +108,7 @@ final class RawToNotebook {
 			//TODO
 			_owner = owner;
 		}
-		return new VXKey(_owner, VXElementType.VALUE, key);
+		return new VXKey(_owner, VXElementType.VALUE_OBJECT, key);
 	}
 
 	/**
@@ -165,19 +181,25 @@ final class RawToNotebook {
 			}
 		}
 
-		final List<VXEntity> entities = rawModule.entities().entrySet().stream()
-				.map(e -> transform(e.getKey(), e.getValue(), info.key(), typeCatalog, entityCatalog))
-				.toList();
-
 		final List<VXValueObject> valueObjects = rawModule.valueObjects().entrySet().stream()
 				.map(vo -> transform(vo.getKey(), vo.getValue(), info.key(), typeCatalog))
+				.toList();
+
+		final List<VXTrait> traits = rawModule.traits().entrySet().stream()
+				.map(t -> transform(t.getKey(), t.getValue(), info.key(), typeCatalog))
+				.peek(trait -> traitCatalog.put(trait.key(), trait))
+				.toList();
+
+		final List<VXEntity> entities = rawModule.entities().entrySet().stream()
+				.map(e -> transform(e.getKey(), e.getValue(), info.key(), typeCatalog, entityCatalog, traitCatalog))
 				.toList();
 
 		return new VXModule(
 				info,
 				imports,
 				entities,
-				valueObjects);
+				valueObjects,
+				traits);
 	}
 
 	private static VXValueObject transform(
@@ -198,12 +220,32 @@ final class RawToNotebook {
 				attributes);
 	}
 
+	private static VXTrait transform(
+			final String traitKeyStr,
+			final RawTrait rawTrait,
+			final VXKey owner,
+			final Catalog<VXType> typeCatalog) {
+		final VXKey traitKey = createKeyForTrait(owner, traitKeyStr);
+		final List<VXAttribute> attributes = rawTrait.attributes() != null
+				? rawTrait.attributes().entrySet().stream()
+						.map(entry -> transform(entry.getKey(), entry.getValue(), traitKey, typeCatalog))
+						.toList()
+				: List.of();
+
+		return new VXTrait(
+				traitKey,
+				rawTrait.comment(),
+				attributes);
+	}
+
 	private static VXEntity transform(
 			final String entityKeyStr,
 			final RawEntity rawEntity,
 			final VXKey owner, //the module UKey
-			Catalog<VXType> domainTypeCatalog,
-			Catalog<VXEntity> entityCatalog) {
+			final Catalog<VXType> domainTypeCatalog,
+			final Catalog<VXEntity> entityCatalog,
+			final Catalog<VXTrait> traitCatalog) {
+
 		final VXKey entityKey = createKeyForEntity(owner, entityKeyStr);
 		final List<VXAttribute> attributes = rawEntity.attributes() != null
 				? rawEntity.attributes().entrySet().stream()
@@ -217,10 +259,18 @@ final class RawToNotebook {
 						.toList()
 				: List.of();
 
+		final List<VXTrait> traits = rawEntity.traits() != null
+				? rawEntity.traits()
+						.stream()
+						.map(traitName -> createKeyForTrait(owner, traitName))
+						.map(traitKey -> traitCatalog.get(traitKey))
+						.toList()
+				: List.of();
 		return new VXEntity(
 				entityKey,
 				rawEntity.comment(),
 				transform(rawEntity.id(), entityKey, domainTypeCatalog),
+				traits,
 				attributes,
 				links);
 	}
@@ -290,7 +340,7 @@ final class RawToNotebook {
 			final String typeKeyStr,
 			final RawDomainType rawDomainType,
 			final VXKey libraryKey) {
-		final VXKey typeKey = new VXKey(libraryKey, VXElementType.TYPE, typeKeyStr);
+		final VXKey typeKey = new VXKey(libraryKey, VXElementType.DOMAIN_TYPE, typeKeyStr);
 		return new VXType(
 				typeKey,
 				rawDomainType.comment(),
