@@ -4,13 +4,13 @@
 	
 	"type": "object",
 	"properties": {
-		"library-info": {
+		"library_info": {
 			"type": "object",
 			"description": "Metadata describing the current library.",
 			"properties": {
 				"key": {"$ref": "commons.json#/$defs/_key"},
 				"comment": {"$ref": "commons.json#/$defs/_comment"},
-				"tags": {"$ref": "commons.json#/$defs/_string-array"}
+				"tags": {"$ref": "commons.json#/$defs/_string_array"}
 			},
 			"required": [
 				"key",
@@ -18,7 +18,7 @@
 			],
 			"additionalProperties": false
 		},
-		"domain-types": {
+		"domain_types": {
 			"type": "object",
 			"description": "Map of domain type definitions, where each property name is a domain type key, and its value is the domain type object.",
 		 	"propertyNames": {"$ref": "commons.json#/$defs/_key"},
@@ -26,7 +26,7 @@
 				"type": "object",
 				"properties": {
 					"comment": {"$ref": "commons.json#/$defs/_comment"},
-					"data-type": {
+					"data_type": {
 						"type": "string",
 						"description": "Specifies the primitive type of the domain.",
 						"enum": [
@@ -42,15 +42,15 @@
 					}
 				},
 				"required": [
-					"data-type"
+					"data_type"
 				],
 				"additionalProperties": false
 			}
 		}
 	},
 	"required": [
-		"library-info",
-		"domain-types"
+		"library_info",
+		"domain_types"
 	],
 	"additionalProperties": false
 }

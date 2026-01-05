@@ -308,7 +308,7 @@ final class RawToNotebook {
 		final String domainType = rawAttribute.domainType();
 		final VXKey domainTypeKey = switch (domainType) {
 			case String s when s.startsWith("do") -> createKeyForType(s);
-			case String s when s.startsWith("json") -> createKeyForType("do-json");
+			case String s when s.startsWith("json") -> createKeyForType("do_json");
 			default -> throw new VSystemException("type '{0}' must be do-xxx or json-xxx", domainType);
 		};
 		final VXType type = typeCatalog.get(domainTypeKey);

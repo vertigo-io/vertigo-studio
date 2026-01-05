@@ -9,12 +9,12 @@
 				"key": {"$ref": "commons.json#/$defs/_key"},
 				"label": {"$ref": "commons.json#/$defs/_label"},
 				"comment": {"$ref": "commons.json#/$defs/_comment"},
-				"domain-type": {"$ref": "commons.json#/$defs/_key"}
+				"domain_type": {"$ref": "commons.json#/$defs/_key"}
 			},
 			"required": [
 				"key",
 				"label",
-				"domain-type"
+				"domain_type"
 			],
 			"additionalProperties": false
 		},
@@ -23,12 +23,12 @@
 		    	"properties": {
 		    		"label": { "$ref": "commons.json#/$defs/_label" },
 		      	"comment": { "$ref": "commons.json#/$defs/_comment" },
-		      	"domain-type": { "$ref": "commons.json#/$defs/_key" },
+		      	"domain_type": { "$ref": "commons.json#/$defs/_key" },
 		      	"required": { "type": "boolean" }
 		    	},
 		    "required": [
 		    		"label",
-		      	"domain-type",
+		      	"domain_type",
 		      	"required"
 		    ],
 		    "additionalProperties": false
@@ -37,7 +37,7 @@
 		    	"properties": {
 				"label": {"$ref": "commons.json#/$defs/_label"},
 				"comment": {"$ref": "commons.json#/$defs/_comment"},
-				"target-entity-key": {"$ref": "commons.json#/$defs/_key"},
+				"target_entity_key": {"$ref": "commons.json#/$defs/_key"},
 				"stereotype": {
 					"type": "string",
 					"enum": [
@@ -51,7 +51,7 @@
 		    	},
 			"required": [
 				"label",
-			    "target-entity-key",
+			    "target_entity_key",
 				"stereotype"
 			],
 			"additionalProperties": false
@@ -60,13 +60,13 @@
 	
 	"type": "object",
 	"properties": {
-		"module-info": {
+		"module_info": {
 			"type": "object",
 			"description": "Metadata describing the current module.",
 			"properties": {
 				"key": {"$ref": "commons.json#/$defs/_key"},
 				"comment": {"$ref": "commons.json#/$defs/_comment"},
-				"tags": {"$ref": "commons.json#/$defs/_string-array"}
+				"tags": {"$ref": "commons.json#/$defs/_string_array"}
 			},
 			"required": [
 				"key",
@@ -79,8 +79,8 @@
 			"type": "object",
 			"description": "Defines external libraries and modules that this module depends on.",
 			"properties": {
-				"libraries": {"$ref": "commons.json#/$defs/_string-array"},
-				"modules": {"$ref": "commons.json#/$defs/_string-array"}
+				"libraries": {"$ref": "commons.json#/$defs/_string_array"},
+				"modules": {"$ref": "commons.json#/$defs/_string_array"}
 			},
 			"required": [
 				"libraries",
@@ -102,7 +102,7 @@
 						"description": "Definition of the id or primary key for the entity."
 					},
 					"traits": {
-						"$ref": "commons.json#/$defs/_string-array",
+						"$ref": "commons.json#/$defs/_string_array",
 						"description": "A list of traits to inherit attributes from."
 					},
 					"attributes": { 		
@@ -125,7 +125,7 @@
 				"additionalProperties": false
 			}
 		},
-		"value-objects": {
+		"value_objects": {
 			"type": "object",
 			"description": "Map of value object definitions, where each property name is a value object key, and its value is the value object object.",
 		 	"propertyNames": {"$ref": "commons.json#/$defs/_key"},
@@ -167,10 +167,10 @@
 		}
 	},	
 	"required": [
-		"module-info",
+		"module_info",
 		"imports",
 		"entities",
-		"value-objects",
+		"value_objects",
 		"traits"
 	],
 	"additionalProperties": false

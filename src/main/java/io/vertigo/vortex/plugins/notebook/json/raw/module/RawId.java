@@ -10,7 +10,7 @@ public record RawId(
 		String key,
 		String label,
 		String comment,
-		@JsonProperty("domain-type") String domainType) {
+		@JsonProperty("domain_type") String domainType) {
 
 	public RawId {
 		Assertion.check()

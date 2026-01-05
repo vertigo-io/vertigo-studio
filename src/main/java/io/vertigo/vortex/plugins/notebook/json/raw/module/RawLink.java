@@ -9,7 +9,7 @@ import io.vertigo.core.lang.Assertion;
 public record RawLink(
 		String label,
 		String comment,
-		@JsonProperty("target-entity-key") String targetEntityKey,
+		@JsonProperty("target_entity_key") String targetEntityKey,
 		String stereotype) {
 
 	public RawLink {

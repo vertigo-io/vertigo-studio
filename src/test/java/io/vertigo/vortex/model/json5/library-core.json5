@@ -1,16 +1,16 @@
 {
-	library-info : {
+	library_info : {
 		key: "core",
 		comment: "List of domainTypes",
 		tags:[]
 	},
 
-	domain-types: {
-		do-label: 	{data-type: "String"},
-		do-email: 	{data-type: "String"},
-		do-phone: 	{data-type: "String"},
-		do-id: 		{data-type: "Long"},
-		do-json: 	{data-type: "Json"},
-		do-instant: 	{data-type: "String"}
+	domain_types: {
+		do_label: 	{data_type: "String"},
+		do_email: 	{data_type: "String"},
+		do_phone: 	{data_type: "String"},
+		do_id: 		{data_type: "Long"},
+		do_json: 	{data_type: "Json"},
+		do_instant: 	{data_type: "String"}
 	}
 }

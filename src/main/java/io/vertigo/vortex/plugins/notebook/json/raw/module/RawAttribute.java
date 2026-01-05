@@ -9,7 +9,7 @@ import io.vertigo.core.lang.Assertion;
 public record RawAttribute(
 		String label,
 		String comment,
-		@JsonProperty("domain-type") String domainType,
+		@JsonProperty("domain_type") String domainType,
 		boolean required) {
 
 	public RawAttribute {

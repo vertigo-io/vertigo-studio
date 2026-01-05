@@ -10,10 +10,10 @@ import io.vertigo.vortex.plugins.notebook.json.raw.RawInfo;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RawModule(
-		@JsonProperty("module-info") RawInfo moduleInfo,
+		@JsonProperty("module_info") RawInfo moduleInfo,
 		RawImports imports,
 		Map<String, RawEntity> entities,
-		@JsonProperty("value-objects") Map<String, RawValueObject> valueObjects,
+		@JsonProperty("value_objects") Map<String, RawValueObject> valueObjects,
 		Map<String, RawTrait> traits) {
 
 	public RawModule {

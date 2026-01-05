@@ -5,7 +5,7 @@
 	"$defs": {
 		"_key": {
 			"type": "string",
-			"pattern": "^([a-z]+:)?[a-z]+(-[a-z]+)*$",
+			"pattern": "^([a-z]+:)?[a-z]+(_[a-z]+)*$",
 			"maxLength": 30,
 			"description": "Unique identifier for elements, typically lowercase and hyphen-separated. Can optionally include a prefix (e.g., 'do:my-key')."
 		},
@@ -14,7 +14,7 @@
 			"maxLength": 500,
 			"description": "Optional free-text comment intended for developers and documentation."
 		},
-		"_string-array": {
+		"_string_array": {
 			"type": "array",
 			"items": {"type": "string"},
 			"uniqueItems": true,

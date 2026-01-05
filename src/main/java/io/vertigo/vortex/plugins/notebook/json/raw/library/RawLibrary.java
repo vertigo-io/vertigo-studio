@@ -10,8 +10,8 @@ import io.vertigo.vortex.plugins.notebook.json.raw.RawInfo;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RawLibrary(
-		@JsonProperty("library-info") RawInfo libraryInfo,
-		@JsonProperty("domain-types") Map<String, RawDomainType> domainTypes) {
+		@JsonProperty("library_info") RawInfo libraryInfo,
+		@JsonProperty("domain_types") Map<String, RawDomainType> domainTypes) {
 
 	public RawLibrary {
 		Assertion.check()
@@ -19,4 +19,3 @@ public record RawLibrary(
 				.isNotNull(domainTypes);
 	}
 }
-
