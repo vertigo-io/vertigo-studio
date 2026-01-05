@@ -13,11 +13,11 @@
 	entities: {
 		book: {
 			comment: "A book",
-			id: { key: "id", label: "Identifier", domain-type: "do:id"},
+			id: { key: "id", label: "Identifier", domain-type: "do-id"},
 			traits: ["author.producer"],			
 			attributes: {
-				title:{ label: "Title", domain-type: "do:label", required: true },
-				isbn :{ label: "ISBN", domain-type: "do:label", required: true } 
+				title:{ label: "Title", domain-type: "do-label", required: true },
+				isbn :{ label: "ISBN", domain-type: "do-label", required: true } 
 			},	
 			links: {
 				author:{	label: "Author", 	target-entity-key: "author", stereotype: "MANY_TO_ONE" },
@@ -27,10 +27,10 @@
 		},
 		category: {
 			comment: "A book category",
-			id: { domain-type: "do:id", key: "id", label: "Identifier"},
+			id: { domain-type: "do-id", key: "id", label: "Identifier"},
 			traits: [],
 			attributes: {
-				name:{ label: "Name of the category", domain-type: "do:label", required: true }
+				name:{ label: "Name of the category", domain-type: "do-label", required: true }
 			},
 			links: {}
 		}

@@ -6,12 +6,11 @@
 	},
 
 	domain-types: {
-		"do:label": {data-type: "String"},
-		"do:email": {data-type: "String"},
-		"do:phone": {data-type: "String"},
-		"do:id": 	{data-type: "Long"},
-		"do:json": 	{data-type: "Json"},
-		"do:instant": {"data-type": "String"}
-
+		do-label: 	{data-type: "String"},
+		do-email: 	{data-type: "String"},
+		do-phone: 	{data-type: "String"},
+		do-id: 		{data-type: "Long"},
+		do-json: 	{data-type: "Json"},
+		do-instant: 	{data-type: "String"}
 	}
 }

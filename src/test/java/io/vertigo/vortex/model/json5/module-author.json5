@@ -14,11 +14,11 @@
 		/* Author */
 		author: {
 			comment: "An author",
-			id: {key: "id",  domain-type: "do:id", label: "Identifier"},
+			id: {key: "id",  domain-type: "do-id", label: "Identifier"},
 			traits: ["producer"],
 			attributes: {
-				first-name: { domain-type: "do:label", label: "First name", required: true },
-				last-name : { domain-type: "do:label", label: "Last name", required: false },
+				first-name: { domain-type: "do-label", label: "First name", required: true },
+				last-name : { domain-type: "do-label", label: "Last name", required: false },
 				contact-info : { domain-type: "json:contact-info", label: "contact", required: false } 
 			},	
 			links: {
@@ -30,10 +30,10 @@
 		/* Publisher */
 		publisher: {
 			comment: "A book publisher",
-			id: { key: "id", domain-type: "do:id", label: "Identifier of the publisher"},
+			id: { key: "id", domain-type: "do-id", label: "Identifier of the publisher"},
 			traits: ["producer"],			
 			attributes: {
-				name: { domain-type: "do:label", label: "Name of the publisher", required: true }
+				name: { domain-type: "do-label", label: "Name of the publisher", required: true }
 			},
 			links: {}
 		}
@@ -43,16 +43,16 @@
 		contact-info: {
 			comment: "Contact info of an author",
 			attributes: {
-				email: { domain-type: "do:email", label: "Email", required: true 	},
-				phone: { domain-type: "do:phone", label: "Phone", required: false }
+				email: { domain-type: "do-email", label: "Email", required: true 	},
+				phone: { domain-type: "do-phone", label: "Phone", required: false }
 			}
 		}
 	},
 	traits: {
 		producer: {
 			attributes: {
-				created-by: { domain-type: "do:label", label: "Created by", required: true },
-				created-at: { domain-type: "do:instant", label: "Created at", required: true }
+				created-by: { domain-type: "do-label", label: "Created by", required: true },
+				created-at: { domain-type: "do-instant", label: "Created at", required: true }
 			}
 		}
 	}

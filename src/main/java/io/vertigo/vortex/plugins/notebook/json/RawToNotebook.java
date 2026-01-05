@@ -305,12 +305,14 @@ final class RawToNotebook {
 			final Catalog<VXType> typeCatalog) {
 		final VXKey attributeVXKey = new VXKey(entityKey, VXElementType.ATTRIBUTE, attributeKey);
 
-		int found = rawAttribute.domainType().indexOf(':');
-		final VXType type = switch (rawAttribute.domainType().substring(0, found)) {
-			case "do" -> typeCatalog.get(createKeyForType(rawAttribute.domainType()));
-			case "json" -> typeCatalog.get(createKeyForType("do:json"));
-			default -> throw new VSystemException("type '{0}' must be do:xxx or value:xxx", rawAttribute.domainType());
+		final String domainType = rawAttribute.domainType();
+		final VXKey domainTypeKey = switch (domainType) {
+			case String s when s.startsWith("do") -> createKeyForType(s);
+			case String s when s.startsWith("json") -> createKeyForType("do-json");
+			default -> throw new VSystemException("type '{0}' must be do-xxx or json-xxx", domainType);
 		};
+		final VXType type = typeCatalog.get(domainTypeKey);
+
 		return new VXAttribute(
 				attributeVXKey,
 				rawAttribute.label(),
