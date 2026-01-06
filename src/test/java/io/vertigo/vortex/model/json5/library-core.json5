@@ -1,8 +1,8 @@
 {
 	library_info : {
 		key: "core",
-		comment: "List of domainTypes",
-		tags:[]
+		_comment: "List of domainTypes",
+		_tags:[]
 	},
 
 	domain_types: {

@@ -157,8 +157,8 @@ final class RawToNotebook {
 		final VXKey key = createKey.apply(rawIdentification.key());
 		return new VXInfo(
 				key,
-				rawIdentification.comment(),
-				rawIdentification.tags());
+				rawIdentification._comment(),
+				rawIdentification._tags());
 
 	}
 
@@ -259,8 +259,8 @@ final class RawToNotebook {
 						.toList()
 				: List.of();
 
-		final List<VXTrait> traits = rawEntity.traits() != null
-				? rawEntity.traits()
+		final List<VXTrait> traits = rawEntity._traits() != null
+				? rawEntity._traits()
 						.stream()
 						.map(traitName -> createKeyForTrait(owner, traitName))
 						.map(traitKey -> traitCatalog.get(traitKey))
@@ -268,7 +268,7 @@ final class RawToNotebook {
 				: List.of();
 		return new VXEntity(
 				entityKey,
-				rawEntity.comment(),
+				rawEntity._comment(),
 				transform(rawEntity.id(), entityKey, domainTypeCatalog),
 				traits,
 				attributes,

@@ -9,13 +9,13 @@ import io.vertigo.core.lang.Assertion;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RawInfo(
 		String key,
-		String comment,
-		List<String> tags) {
+		String _comment,
+		List<String> _tags) {
 
 	public RawInfo {
 		Assertion.check()
 				.isNotBlank(key)
 				//comment may be null
-				.isNotNull(tags);
+				.isNotNull(_tags);
 	}
 }

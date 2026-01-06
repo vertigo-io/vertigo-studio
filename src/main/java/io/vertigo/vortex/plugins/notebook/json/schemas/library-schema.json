@@ -9,12 +9,12 @@
 			"description": "Metadata describing the current library.",
 			"properties": {
 				"key": {"$ref": "commons.json#/$defs/_key"},
-				"comment": {"$ref": "commons.json#/$defs/_comment"},
-				"tags": {"$ref": "commons.json#/$defs/_string_array"}
+				"_comment": {"$ref": "commons.json#/$defs/_comment"},
+				"_tags": {"$ref": "commons.json#/$defs/_string_array"}
 			},
 			"required": [
 				"key",
-				"tags"
+				"_tags"
 			],
 			"additionalProperties": false
 		},

@@ -9,9 +9,9 @@ import io.vertigo.core.lang.Assertion;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RawEntity(
-		String comment,
+		String _comment,
 		RawId id,
-		List<String> traits,
+		List<String> _traits,
 		Map<String, RawAttribute> attributes,
 		Map<String, RawLink> links) {
 
@@ -19,7 +19,7 @@ public record RawEntity(
 		Assertion.check()
 				// comment may be null
 				.isNotNull(id)
-				.isNotNull(traits)
+				.isNotNull(_traits)
 				.isNotNull(attributes)
 				.isNotNull(links);
 	}

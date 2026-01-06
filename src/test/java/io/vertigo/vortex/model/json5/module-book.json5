@@ -1,8 +1,8 @@
 {
 	module_info: {
 		key: "book",
-		comment: "List of books",
-		tags: []
+		_comment: "List of books",
+		_tags: []
 	},
 		
  	imports : {
@@ -12,9 +12,9 @@
 	
 	entities: {
 		book: {
-			comment: "A book",
+			_comment: "A book",
 			id: { key: "id", label: "Identifier", domain_type: "do_id"},
-			traits: ["author.producer"],			
+			_traits: ["author.producer"],			
 			attributes: {
 				title:{ label: "Title", domain_type: "do_label", required: true },
 				isbn :{ label: "ISBN", domain_type: "do_label", required: true } 
@@ -26,9 +26,9 @@
 			}	
 		},
 		category: {
-			comment: "A book category",
+			_comment: "A book category",
 			id: { domain_type: "do_id", key: "id", label: "Identifier"},
-			traits: [],
+			_traits: [],
 			attributes: {
 				name:{ label: "Name of the category", domain_type: "do_label", required: true }
 			},
@@ -37,5 +37,4 @@
 	},
 	value_objects: {},
 	traits: {}
-
 }

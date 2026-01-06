@@ -1,8 +1,8 @@
 {
 	module_info: {
 		key: "author",
-		comment: "List of authors",
-		tags: []
+		_comment: "List of authors",
+		_tags: []
 	},
 
 	imports: {
@@ -13,9 +13,9 @@
 	entities: {
 		/* Author */
 		author: {
-			comment: "An author",
+			_comment: "An author",
 			id: {key: "id",  domain_type: "do_id", label: "Identifier"},
-			traits: ["producer"],
+			_traits: ["producer"],
 			attributes: {
 				first_name: {domain_type: "do_label", label: "First name", required: true },
 				last_name : {domain_type: "do_label", label: "Last name", required: false },
@@ -29,9 +29,9 @@
 		
 		/* Publisher */
 		publisher: {
-			comment: "A book publisher",
+			_comment: "A book publisher",
 			id: {key: "id", domain_type: "do_id", label: "Identifier of the publisher"},
-			traits: ["producer"],			
+			_traits: ["producer"],			
 			attributes: {
 				name: {domain_type: "do_label", label: "Name of the publisher", required: true }
 			},
@@ -42,10 +42,8 @@
 	value_objects: {
 		contact_info: {
 			_comment: "Contact info of an author",
-			attributes: {
-				email: {domain_type: "do_email", label: "Email", required: true 	},
-				phone: {domain_type: "do_phone", label: "Phone", required: false }
-			}
+			email: {domain_type: "do_email", label: "Email", required: true 	},
+			phone: {domain_type: "do_phone", label: "Phone", required: false }
 		}
 	},
 	traits: {

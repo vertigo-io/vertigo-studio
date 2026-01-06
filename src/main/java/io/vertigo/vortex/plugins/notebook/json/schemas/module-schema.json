@@ -65,12 +65,12 @@
 			"description": "Metadata describing the current module.",
 			"properties": {
 				"key": {"$ref": "commons.json#/$defs/_key"},
-				"comment": {"$ref": "commons.json#/$defs/_comment"},
-				"tags": {"$ref": "commons.json#/$defs/_string_array"}
+				"_comment": {"$ref": "commons.json#/$defs/_comment"},
+				"_tags": {"$ref": "commons.json#/$defs/_string_array"}
 			},
 			"required": [
 				"key",
-				"tags"
+				"_tags"
 			],
 			"additionalProperties": false
 		},
@@ -96,12 +96,12 @@
 			"additionalProperties": {
 				"type": "object",
 				"properties": {
-					"comment": {"$ref": "commons.json#/$defs/_comment"},
+					"_comment": {"$ref": "commons.json#/$defs/_comment"},
 					"id": { 
 						"$ref": "#/$defs/_id",
 						"description": "Definition of the id or primary key for the entity."
 					},
-					"traits": {
+					"_traits": {
 						"$ref": "commons.json#/$defs/_string_array",
 						"description": "A list of traits to inherit attributes from."
 					},
@@ -118,7 +118,7 @@
 				},
 				"required": [
 					"id",
-					"traits",
+					"_traits",
 					"attributes", 
 					"links"
 				],
@@ -126,24 +126,19 @@
 			}
 		},
 		"value_objects": {
-			"type": "object",
-			"description": "Map of value object definitions, where each property name is a value object key, and its value is the value object object.",
-		 	"propertyNames": {"$ref": "commons.json#/$defs/_key"},
-			"additionalProperties": {
-				"type":"object",
-				"properties": {
-					"_comment": {"$ref": "commons.json#/$defs/_comment"},
-					"attributes": { 		
-						"type": "object",
-						"propertyNames": {"$ref": "commons.json#/$defs/_key"},
-						"additionalProperties": {"$ref": "#/$defs/_attribute"}
-					}
-				},
-				"required": [
-					"attributes"
-				],
-				"additionalProperties": false
-			}
+		  "type": "object",
+		  "description": "Map of value object definitions, where each property name is a value object key, and its value is the value object object.",
+		  "propertyNames": { "$ref": "commons.json#/$defs/_key" },
+		  "additionalProperties": {
+		    "type": "object",
+		    "properties": {
+		      "_comment": { "$ref": "commons.json#/$defs/_comment" }
+		    },
+		    "patternProperties": {
+		      "^(?!_comment$).+$": { "$ref": "#/$defs/_attribute" }
+		    },
+		    "additionalProperties": false
+		  }
 		},
 		"traits": {
 			"type": "object",
