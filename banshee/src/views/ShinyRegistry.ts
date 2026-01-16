@@ -37,6 +37,7 @@ import ShinyImage from './media/ShinyImage.vue';
 import ShinyRss from './media/ShinyRss.vue';
 import ShinyVideo from './media/ShinyVideo.vue';
 import ShinyYoutube from './media/ShinyYoutube.vue';
+import ShinySlide from './media/ShinySlide.vue';
 import ShinyFiglet from './text/ShinyFiglet.vue';
 import ShinyParagraph from './text/ShinyParagraph.vue';
 import ShinyTextPath from './text/ShinyTextPath.vue';
@@ -110,6 +111,7 @@ export class ShinyRegistry {
     this.register('ShinyRss', ShinyRss);
     this.register('ShinyVideo', ShinyVideo);
     this.register('ShinyYoutube', ShinyYoutube);
+    this.register('ShinySlide', ShinySlide);
     this.register('ShinyGeoMap', ShinyGeoMap);
     this.register('ShinyCard', ShinyCard);
     this.register('ShinyFiglet', ShinyFiglet);

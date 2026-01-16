@@ -25,6 +25,7 @@ public final class BansheeCommandHandler {
 	public ShinyModel execute(final BansheeCommand command) throws Exception {
 		Assertion.check().isNotNull(command);
 		//---
+		System.out.println("execute command: " + command.command());
 		final var commandExecutor = _commandExecutors.get(command.command());
 		if (commandExecutor == null) {
 			return new ShinyErrorBuilder().withText("unknown command :" + command.command()).build();
