@@ -48,6 +48,7 @@ import io.vertigo.shiny.models.live.spinner.ShinySpinnerBuilder;
 import io.vertigo.shiny.models.media.image.ShinyImageBuilder;
 import io.vertigo.shiny.models.media.pdf.ShinyPdfBuilder;
 import io.vertigo.shiny.models.media.rss.ShinyRssBuilder;
+import io.vertigo.shiny.models.media.slide.ShinySlideBuilder;
 import io.vertigo.shiny.models.media.youtube.ShinyYoutubeBuilder;
 import io.vertigo.shiny.models.text.chip.ShinyChipBuilder;
 import io.vertigo.shiny.models.text.figlet.ShinyFigletBuilder;
@@ -92,6 +93,10 @@ public final class Shiny {
 
 	public static ShinyTableBuilder table() {
 		return new ShinyTableBuilder();
+	}
+
+	public static ShinySlideBuilder slide() {
+		return new ShinySlideBuilder();
 	}
 
 	public static ShinyProgressBarBuilder progressBar() {

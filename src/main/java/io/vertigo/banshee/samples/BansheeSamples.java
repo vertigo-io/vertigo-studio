@@ -144,6 +144,7 @@ public final class BansheeSamples {
 			.addCommandExecutor("rss france info", BansheeSamples::rssFranceInfoCommand2)
 			.addCommandExecutor("bbc", BansheeSamples::bbcCommand)
 			.addCommandExecutor("rss bbc", BansheeSamples::bbcCommand)
+			.addCommandExecutor("slides", BansheeSamples::slidesCommand)
 			.addCommandExecutor("lemonde", BansheeSamples::lemondeCommand)
 			.addCommandExecutor("le monde", BansheeSamples::lemondeCommand)
 			.addCommandExecutor("rss lemonde", BansheeSamples::lemondeCommand)
@@ -187,6 +188,20 @@ public final class BansheeSamples {
 			throw new RuntimeException(e);
 		}
 		return model;
+	}
+
+	private static ShinyModel slidesCommand(final BansheeCommand cmd) {
+		final String markdown = """
+				             # Slide 1
+				             Hello
+
+				             ---
+				             # Slide 2
+				             World
+				""";
+		return Shiny.slide()
+				.withMarkdown(markdown)
+				.build();
 	}
 
 	private static ShinyModel modalCommand(final BansheeCommand cmd) {
