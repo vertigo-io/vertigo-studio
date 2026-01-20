@@ -2,12 +2,12 @@
 import { ShinyState } from "../ShinyState";
 
 export class BansheeCommand {
-    command: string;
+    commandLine: string;
     id?: string;
     state?: ShinyState;
 
-    constructor(command: string, id?: string, state?: ShinyState) {
-        this.command = command;
+    constructor(commandLine: string, id?: string, state?: ShinyState) {
+        this.commandLine = commandLine;
         this.id = id;
         this.state = state;
     }

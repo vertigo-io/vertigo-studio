@@ -13,7 +13,7 @@ import io.vertigo.shiny.models.feedback.error.ShinyErrorBuilder;
  * Attention les executors doivent être sans état car ils sont réutilisés d'une exécution à l'autre.
  * 
  */
-public final class BansheeCommandHandler {
+public final class BansheeCommandHandler implements BansheeCommandExecutor {
 	private final Map<String, BansheeCommandExecutor> _commandExecutors = new HashMap<>();
 
 	BansheeCommandHandler(final Map<String, BansheeCommandExecutor> commandExecutors) {
@@ -25,10 +25,10 @@ public final class BansheeCommandHandler {
 	public ShinyModel execute(final BansheeCommand command) throws Exception {
 		Assertion.check().isNotNull(command);
 		//---
-		System.out.println("execute command: " + command.command());
-		final var commandExecutor = _commandExecutors.get(command.command());
+		System.out.println("execute command: " + command.commandLine());
+		final var commandExecutor = _commandExecutors.get(command.commandLine());
 		if (commandExecutor == null) {
-			return new ShinyErrorBuilder().withText("unknown command :" + command.command()).build();
+			return new ShinyErrorBuilder().withText("unknown command :" + command.commandLine()).build();
 		}
 		return commandExecutor.execute(command);
 	}

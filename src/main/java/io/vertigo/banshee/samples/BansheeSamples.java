@@ -63,7 +63,7 @@ import io.vertigo.shiny.models.text.status.ShinyStatusType;
 public final class BansheeSamples {
 	public static final BansheeCommandHandler commandHandler = new BansheeCommandHandlerBuilder()
 			.addCommandExecutor("llm", cmd -> new HalloweenCommand()
-					.llm(cmd.command().substring(3)))
+					.llm(cmd.commandLine().substring(3)))
 			.addCommandExecutor("table2", BansheeSamples::table2)
 			.addCommandExecutor("ls", cmd -> new FileLsCommand().build())
 			.addCommandExecutor("pwd", cmd -> new FilePwdCommand().build())
