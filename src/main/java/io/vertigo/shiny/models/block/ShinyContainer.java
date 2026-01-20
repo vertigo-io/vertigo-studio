@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyBlock;
+import io.vertigo.shiny.models.ShinyModel;
 
 /**
  * ShinyContainer is a record representing a block that can contain a list of other Shiny models.
