@@ -141,7 +141,6 @@ public final class BansheeSamples {
 			.addCommandExecutor("map", BansheeSamples::mapCommand)
 			.addCommandExecutor("rss", BansheeSamples::rssCommand)
 			.addCommandExecutor("rss franceinfo", BansheeSamples::rssFranceInfoCommand)
-			.addCommandExecutor("rss france info", BansheeSamples::rssFranceInfoCommand2)
 			.addCommandExecutor("rss bbc", BansheeSamples::bbcCommand)
 			.addCommandExecutor("rss lemonde", BansheeSamples::lemondeCommand)
 			.addCommandExecutor("slides", BansheeSamples::slidesCommand)
@@ -416,12 +415,6 @@ public final class BansheeSamples {
 	private static ShinyModel bbcCommand(final BansheeCommand cmd) {
 		return Shiny.rss()
 				.withFeed("https://feeds.bbci.co.uk/news/world/rss.xml")
-				.build();
-	}
-
-	private static ShinyModel rssFranceInfoCommand2(final BansheeCommand cmd) {
-		return Shiny.rss()
-				.withFeed("https://www.francetvinfo.fr/titres.rss")
 				.build();
 	}
 
