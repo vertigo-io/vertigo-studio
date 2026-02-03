@@ -22,14 +22,14 @@ public final class BansheeCommandHandler implements BansheeCommandExecutor {
 		this._commandExecutors.putAll(commandExecutors);
 	}
 
-	public ShinyModel execute(final BansheeCommand command) throws Exception {
-		Assertion.check().isNotNull(command);
+	public ShinyModel execute(final BansheeCommandLine commandLine) throws Exception {
+		Assertion.check().isNotNull(commandLine);
 		//---
-		System.out.println("execute command: " + command.commandLine());
-		final var commandExecutor = _commandExecutors.get(command.commandLine());
+		System.out.println("execute command: " + commandLine.commandLine());
+		final var commandExecutor = _commandExecutors.get(commandLine.commandLine());
 		if (commandExecutor == null) {
-			return new ShinyErrorBuilder().withText("unknown command :" + command.commandLine()).build();
+			return new ShinyErrorBuilder().withText("unknown command :" + commandLine.commandLine()).build();
 		}
-		return commandExecutor.execute(command);
+		return commandExecutor.execute(commandLine);
 	}
 }

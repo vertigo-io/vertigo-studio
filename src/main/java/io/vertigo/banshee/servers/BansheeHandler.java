@@ -7,8 +7,8 @@ import javax.annotation.Nonnull;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.vertigo.banshee.com.BansheeAction;
-import io.vertigo.banshee.com.BansheeCommand;
 import io.vertigo.banshee.com.BansheeCommandHandler;
+import io.vertigo.banshee.com.BansheeCommandLine;
 import io.vertigo.banshee.com.BansheeResult;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyModel;
@@ -39,7 +39,7 @@ final class BansheeHandler {
 
 	void handle(final Consumer<String> webSocket, final String event) {
 		try {
-			final BansheeCommand receivedEvent = MAPPER.readValue(event, BansheeCommand.class);
+			final BansheeCommandLine receivedEvent = MAPPER.readValue(event, BansheeCommandLine.class);
 			//1.
 			final ShinyModel model = execute(receivedEvent);
 			//2.
@@ -55,7 +55,7 @@ final class BansheeHandler {
 		}
 	}
 
-	private ShinyModel execute(final BansheeCommand command) throws Exception {
-		return commandHandler.execute(command);
+	private ShinyModel execute(final BansheeCommandLine commandLine) throws Exception {
+		return commandHandler.execute(commandLine);
 	}
 }

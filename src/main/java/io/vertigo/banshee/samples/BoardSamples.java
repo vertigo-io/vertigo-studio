@@ -1,6 +1,6 @@
 package io.vertigo.banshee.samples;
 
-import io.vertigo.banshee.com.BansheeCommand;
+import io.vertigo.banshee.com.BansheeCommandLine;
 import io.vertigo.banshee.com.BansheeCommandExecutor;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.models.ShinyModel;
@@ -10,7 +10,7 @@ import io.vertigo.shiny.models.data.board.ShinyBoardList;
 final class BoardSamples {
 
 	static class CrmInstallationBoard implements BansheeCommandExecutor {
-		public ShinyModel execute(BansheeCommand command) {
+		public ShinyModel execute(BansheeCommandLine command) {
 			final ShinyBoardCard card1 = Shiny.boardCard()
 					.withTitle("Évaluation des besoins")
 					.withDescription("Rencontrer les équipes pour comprendre les attentes et les processus actuels.")

@@ -4,17 +4,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import io.vertigo.banshee.com.BansheeCommand;
 import io.vertigo.banshee.com.BansheeCommandHandler;
 import io.vertigo.banshee.com.BansheeCommandHandlerBuilder;
+import io.vertigo.banshee.com.BansheeCommandLine;
 import io.vertigo.banshee.samples.BoardSamples.CrmInstallationBoard;
-import io.vertigo.banshee.samples.ChartSamples.AreaSample;
-import io.vertigo.banshee.samples.ChartSamples.BarSample;
-import io.vertigo.banshee.samples.ChartSamples.DonutSample;
-import io.vertigo.banshee.samples.ChartSamples.LineSample;
-import io.vertigo.banshee.samples.ChartSamples.PieSample;
-import io.vertigo.banshee.samples.ChartSamples.PieSample2;
-import io.vertigo.banshee.samples.ChartSamples.RadarSample;
 import io.vertigo.banshee.samples.FormSamples.FormSample1;
 import io.vertigo.banshee.samples.FormSamples.FormSample2;
 import io.vertigo.banshee.samples.FormSamples.FormSample3;
@@ -79,13 +72,13 @@ public final class BansheeSamples {
 			.addCommandExecutor("java load", cmd -> new JavaLoadCommand().build())
 			.addCommandExecutor("java show model", cmd -> new JavaShowModelCommand().build())
 
-			.addCommandExecutor("bar", new BarSample())
-			.addCommandExecutor("pie", new PieSample())
-			.addCommandExecutor("pie2", new PieSample2())
-			.addCommandExecutor("donut", new DonutSample())
-			.addCommandExecutor("area", new AreaSample())
-			.addCommandExecutor("line", new LineSample())
-			.addCommandExecutor("radar", new RadarSample())
+			.addCommandExecutor("bar", ChartSamples::barSample)
+			.addCommandExecutor("pie", ChartSamples::pieSample)
+			.addCommandExecutor("pie2", ChartSamples::pieSample2)
+			.addCommandExecutor("donut", ChartSamples::donutSample)
+			.addCommandExecutor("area", ChartSamples::areaSample)
+			.addCommandExecutor("line", ChartSamples::lineSample)
+			.addCommandExecutor("radar", ChartSamples::radarSample)
 			.addCommandExecutor("f1", new FormSample1())
 			.addCommandExecutor("f2", new FormSample2())
 			.addCommandExecutor("f3", new FormSample3())
@@ -186,7 +179,7 @@ public final class BansheeSamples {
 		return model;
 	}
 
-	private static ShinyModel slidesCommand(final BansheeCommand cmd) {
+	private static ShinyModel slidesCommand(final BansheeCommandLine cmd) {
 		final String markdown = """
 				             # Slide 1
 				             Hello
@@ -200,7 +193,7 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel modalCommand(final BansheeCommand cmd) {
+	private static ShinyModel modalCommand(final BansheeCommandLine cmd) {
 		return Shiny.modal()
 				.withTitle("My Modal")
 				.withContent(
@@ -214,7 +207,7 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel notificationCommand(final BansheeCommand cmd) {
+	private static ShinyModel notificationCommand(final BansheeCommandLine cmd) {
 		return Shiny.notification()
 				.withType(ShinyNotificationType.SUCCESS)
 				.withMessage("This is a success notification")
@@ -222,7 +215,7 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel rangesliderCommand(final BansheeCommand cmd) {
+	private static ShinyModel rangesliderCommand(final BansheeCommandLine cmd) {
 		return Shiny.rangeSlider()
 				.withLabel("Price Range")
 				.withMin(0)
@@ -234,7 +227,7 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel autocompleteCommand(final BansheeCommand cmd) {
+	private static ShinyModel autocompleteCommand(final BansheeCommandLine cmd) {
 		return Shiny.autocomplete()
 				.withLabel("Select a country")
 				.addOption("France")
@@ -246,24 +239,24 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel codeeditorCommand(final BansheeCommand cmd) {
+	private static ShinyModel codeeditorCommand(final BansheeCommandLine cmd) {
 		return Shiny.codeEditor()
 				.withLanguage("javascript")
 				.withContent("function hello() {\n  console.log('Hello, World!');\n}")
 				.build();
 	}
 
-	private static ShinyModel fileuploadCommand(final BansheeCommand cmd) {
+	private static ShinyModel fileuploadCommand(final BansheeCommandLine cmd) {
 		return Shiny.fileUpload().withLabel("Upload a file")
 				.isMultiple().withAccept("image/*").build();
 	}
 
-	private static ShinyModel datepickerCommand(final BansheeCommand cmd) {
+	private static ShinyModel datepickerCommand(final BansheeCommandLine cmd) {
 		return Shiny.datePicker().withLabel("Select a date")
 				.withValue("2025-11-13").isRequired().build();
 	}
 
-	private static ShinyModel datagridCommand(final BansheeCommand cmd) {
+	private static ShinyModel datagridCommand(final BansheeCommandLine cmd) {
 		return Shiny.dataGrid().withTitle("My DataGrid")
 				.addColumn("ID", "id", true, true)
 				.addColumn("Name", "name", true, false)
@@ -275,7 +268,7 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel containerCommand(final BansheeCommand cmd) {
+	private static ShinyModel containerCommand(final BansheeCommandLine cmd) {
 		return new ShinyContainerBuilder()
 				.addModel(Shiny.sparkline()
 						.withTitle("Ventes par produit")
@@ -297,7 +290,7 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel treeCommand(final BansheeCommand cmd) {
+	private static ShinyModel treeCommand(final BansheeCommandLine cmd) {
 		return Shiny.tree()
 				.withLabel("my directory")
 				.addTree("Files").addLeaf("src")
@@ -305,13 +298,13 @@ public final class BansheeSamples {
 				.addTree("test").addLeaf("testFile.txt").root().build();
 	}
 
-	private static ShinyModel pdfCommand(final BansheeCommand cmd) {
+	private static ShinyModel pdfCommand(final BansheeCommandLine cmd) {
 		return Shiny.pdf()
 				.withTitle("Arthur Rimbaud - Poèmes")
 				.withPath("sample-report.pdf").build();
 	}
 
-	private static ShinyModel orgCommand(final BansheeCommand cmd) {
+	private static ShinyModel orgCommand(final BansheeCommandLine cmd) {
 		return Shiny.organization()
 				.addNode("1", null, "John Doe", "CEO", "https://randomuser.me/api/portraits/men/1.jpg")
 				.addNode("2", "1", "Jane Smith", "CTO", "https://randomuser.me/api/portraits/women/2.jpg")
@@ -322,7 +315,7 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel chipCommand(final BansheeCommand cmd) {
+	private static ShinyModel chipCommand(final BansheeCommandLine cmd) {
 		return Shiny.chip()
 				.withText("Vuetify")
 				.withColor("red")
@@ -332,7 +325,7 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel alertErrorCommand(final BansheeCommand cmd) {
+	private static ShinyModel alertErrorCommand(final BansheeCommandLine cmd) {
 		return Shiny.alert()
 				.withAlertType(ShinyAlertType.ERROR)
 				.withTitle("Error")
@@ -340,14 +333,14 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel alertWarningCommand(final BansheeCommand cmd) {
+	private static ShinyModel alertWarningCommand(final BansheeCommandLine cmd) {
 		return Shiny.alert()
 				.withAlertType(ShinyAlertType.WARNING)
 				.withContent("This is a warning message, please be careful.")
 				.build();
 	}
 
-	private static ShinyModel alertSuccessCommand(final BansheeCommand cmd) {
+	private static ShinyModel alertSuccessCommand(final BansheeCommandLine cmd) {
 		return Shiny.alert()
 				.withAlertType(ShinyAlertType.SUCCESS)
 				.withTitle("Success")
@@ -355,7 +348,7 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel alertCommand(final BansheeCommand cmd) {
+	private static ShinyModel alertCommand(final BansheeCommandLine cmd) {
 		return Shiny.alert()
 				.withAlertType(ShinyAlertType.INFO)
 				.withTitle("Information")
@@ -364,7 +357,7 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel multiselectionCommand(final BansheeCommand cmd) {
+	private static ShinyModel multiselectionCommand(final BansheeCommandLine cmd) {
 		return Shiny.multiSelection()
 				.withTitle("Select your favorite fruits")
 				.addOption("Apple")
@@ -374,7 +367,7 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel sliderCommand(final BansheeCommand cmd) {
+	private static ShinyModel sliderCommand(final BansheeCommandLine cmd) {
 		return Shiny.slider()
 				.withLabel("Volume")
 				.withMin(0)
@@ -386,7 +379,7 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel timelineCommand(final BansheeCommand cmd) {
+	private static ShinyModel timelineCommand(final BansheeCommandLine cmd) {
 		return Shiny.timeline()
 				.withTitle("Project Timeline")
 				.addItem("Step 1: Conception", "Defining project goals and scope.", "blue", "mdi-lightbulb-on-outline")
@@ -396,7 +389,7 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel tableCommand(final BansheeCommand cmd) {
+	private static ShinyModel tableCommand(final BansheeCommandLine cmd) {
 		return Shiny.table()
 				.withTitle("carnet d'adresses")
 				.withNoDataFound("no files found")
@@ -406,31 +399,31 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel lemondeCommand(final BansheeCommand cmd) {
+	private static ShinyModel lemondeCommand(final BansheeCommandLine cmd) {
 		return Shiny.rss()
 				.withFeed("https://www.lemonde.fr/rss/une.xml")
 				.build();
 	}
 
-	private static ShinyModel bbcCommand(final BansheeCommand cmd) {
+	private static ShinyModel bbcCommand(final BansheeCommandLine cmd) {
 		return Shiny.rss()
 				.withFeed("https://feeds.bbci.co.uk/news/world/rss.xml")
 				.build();
 	}
 
-	private static ShinyModel rssFranceInfoCommand(final BansheeCommand cmd) {
+	private static ShinyModel rssFranceInfoCommand(final BansheeCommandLine cmd) {
 		return Shiny.rss()
 				.withFeed("https://www.francetvinfo.fr/titres.rss")
 				.build();
 	}
 
-	private static ShinyModel rssCommand(final BansheeCommand cmd) {
+	private static ShinyModel rssCommand(final BansheeCommandLine cmd) {
 		return Shiny.rss()
 				.withFeed("https://www.francetvinfo.fr/titres.rss")
 				.build();
 	}
 
-	private static ShinyModel mapCommand(final BansheeCommand cmd) {
+	private static ShinyModel mapCommand(final BansheeCommandLine cmd) {
 		return Shiny.geoMap()
 				.withTitle("Tour Eiffel & Saint Germain")
 				.addGeoPoint(ShinyGeoPoint.of(48.8584, 2.2945, "Tour Eiffel"))
@@ -438,14 +431,14 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel youtubeCommand(final BansheeCommand cmd) {
+	private static ShinyModel youtubeCommand(final BansheeCommandLine cmd) {
 		return Shiny.youtube()
 				.withTitle("Rick Astley - Never Gonna Give You Up")
 				.withVideoId("dQw4w9WgXcQ")
 				.build();
 	}
 
-	private static ShinyModel jsonCommand(final BansheeCommand cmd) {
+	private static ShinyModel jsonCommand(final BansheeCommandLine cmd) {
 		return Shiny.json()
 				.withJson(
 						"""
@@ -463,14 +456,14 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel inputTextCommand(final BansheeCommand cmd) {
+	private static ShinyModel inputTextCommand(final BansheeCommandLine cmd) {
 		return Shiny.inputText()
 				.withLabel("Your Name")
 				.withDefaultValue("John Doe")
 				.build();
 	}
 
-	private static ShinyModel ratingCommand(final BansheeCommand cmd) {
+	private static ShinyModel ratingCommand(final BansheeCommandLine cmd) {
 		return Shiny.rating()
 				.withLabel("User satisfaction")
 				.withValue(3.5)
@@ -479,7 +472,7 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel statusCommand(final BansheeCommand cmd) {
+	private static ShinyModel statusCommand(final BansheeCommandLine cmd) {
 		return Shiny.status()
 				.withTitle("Component Status")
 				.addType(ShinyStatusType.SUCCESS)
@@ -488,18 +481,18 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel listCommand(final BansheeCommand cmd) {
+	private static ShinyModel listCommand(final BansheeCommandLine cmd) {
 		return Shiny.list().withTitle("planetes")
 				.withType(ShinyListType.UNORDERED).addItem("Uranus").addList(Shiny.list().withTitle("Mars").withType(ShinyListType.UNORDERED).addItem("Bleue").addItem("Rouge").addItem("Verte").build()).addItem("Saturn").addItem("Venus").build();
 	}
 
-	private static ShinyModel cardCommand(final BansheeCommand cmd) {
+	private static ShinyModel cardCommand(final BansheeCommandLine cmd) {
 		return Shiny.card()
 				.withTitle("Mon Titre de Carte")
 				.withSubtitle("Un sous-titre pour le contexte").withDescription("Ceci est le contenu principal de ma carte. Il peut être plus long et contenir des informations détaillées sur le sujet de la carte.").withImageUrl("https://picsum.photos/id/237/200/300").withImageAlt("Image aléatoire de Picsum").withLink("https://www.vertigo.io").withIcon("star").withBadge("Nouveau", "blue").withFormat(ShinyCardFormat.M).build();
 	}
 
-	private static ShinyModel imageCommand(final BansheeCommand cmd) {
+	private static ShinyModel imageCommand(final BansheeCommandLine cmd) {
 		return Shiny.image()
 				.withTitle("Random image from picsum")
 				.withUrl("https://picsum.photos/800/600")
@@ -507,7 +500,7 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel sparklineCommand(final BansheeCommand cmd) {
+	private static ShinyModel sparklineCommand(final BansheeCommandLine cmd) {
 		return Shiny.sparkline()
 				.withTitle("S.p.a.r.k.l.i.n.e")
 				.withValues(156, 450, 300, 200, 100, 23)
@@ -515,7 +508,7 @@ public final class BansheeSamples {
 	}
 
 	//BansheeCommandExcecutor 
-	private static ShinyModel table2(BansheeCommand cmd) {
+	private static ShinyModel table2(BansheeCommandLine cmd) {
 		final ShinyTableBuilder tableBuilder = Shiny.table()
 				.withTitle("alphabet")
 				.withHeader("Lettre de A à Z");
@@ -560,7 +553,7 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel mindmap(BansheeCommand cmd) {
+	private static ShinyModel mindmap(BansheeCommandLine cmd) {
 		return Shiny.mindMap()
 				.withTitle("Mouvements Artistiques")
 				.withRootNode(
@@ -590,7 +583,7 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel page(BansheeCommand cmd) {
+	private static ShinyModel page(BansheeCommandLine cmd) {
 		return Shiny.page()
 				.withTitle("My Sample Page")
 				.withLayout(
@@ -612,7 +605,7 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel table3(BansheeCommand cmd) {
+	private static ShinyModel table3(BansheeCommandLine cmd) {
 		return Shiny.table()
 				.withTitle("Rich Content Table")
 				.withHeader("Name", "Status", "Progress", "Rating", "Action", "Avatar", "Icon", "Badge")
@@ -645,7 +638,7 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel sankey(BansheeCommand cmd) {
+	private static ShinyModel sankey(BansheeCommandLine cmd) {
 		return Shiny.sankey()
 				.withTitle("Flux d\'énergie")
 				.addLink("Nucléaire", "Réseau électrique", 120.0)
@@ -663,7 +656,7 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel flow(BansheeCommand cmd) {
+	private static ShinyModel flow(BansheeCommandLine cmd) {
 		return new ShinyFlowBuilder()
 				.withNode("1", "Order Received", 100, 50, NodeType.RR)
 				.withNode("2", "Payment Processed", 300, 50, NodeType.LR)
@@ -677,7 +670,7 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel grid(BansheeCommand cmd) {
+	private static ShinyModel grid(BansheeCommandLine cmd) {
 		return Shiny.grid()
 				.withColumns(2)
 				.addBlock(
