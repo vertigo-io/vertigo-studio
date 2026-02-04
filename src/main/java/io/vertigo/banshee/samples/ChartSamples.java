@@ -5,7 +5,7 @@ import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.models.dataviz.chart.ShinyChart;
 
 final class ChartSamples {
-	public static ShinyChart barSample(BansheeCommandLine command) {
+	static ShinyChart barSample() {
 		return Shiny.barChart()
 				.withTitle("Ventes par produit")
 				.withLabels("telephones", "ordinateurs", "livres")
@@ -14,7 +14,7 @@ final class ChartSamples {
 				.build();
 	}
 
-	public static ShinyChart pieSample(BansheeCommandLine command) {
+	static ShinyChart pieSample() {
 		return Shiny.pieChart()
 				.withTitle("Répartition des ventes")
 				.withLabels("Téléphones", "Ordinateurs", "Livres")
@@ -22,7 +22,7 @@ final class ChartSamples {
 				.build();
 	}
 
-	public static ShinyChart pieSample2(BansheeCommandLine command) {
+	static ShinyChart pieSample2() {
 		return Shiny.pieChart()
 				.withTitle("Répartition des ventes")
 				.withLabels("Téléphones", "Ordinateurs", "Livres")
@@ -32,7 +32,7 @@ final class ChartSamples {
 				.build();
 	}
 
-	public static ShinyChart donutSample(BansheeCommandLine command) {
+	static ShinyChart donutSample(BansheeCommandLine command) {
 		return Shiny.donutChart()
 				.withTitle("Répartition des ventes")
 				.withLabels("Téléphones", "Ordinateurs", "Livres")
@@ -42,7 +42,7 @@ final class ChartSamples {
 				.build();
 	}
 
-	public static ShinyChart areaSample(BansheeCommandLine command) {
+	static ShinyChart areaSample() {
 		return Shiny.areaChart()
 				.withTitle("Ventes par mois")
 				.withLabels("Jan", "Fev", "Mar", "Avr", "Mai", "Juin")
@@ -51,7 +51,7 @@ final class ChartSamples {
 				.build();
 	}
 
-	public static ShinyChart lineSample(BansheeCommandLine command) {
+	static ShinyChart lineSample() {
 		return Shiny.lineChart()
 				.withTitle("Ventes par mois")
 				.withLabels("Jan", "Fev", "Mar", "Avr", "Mai", "Juin")
@@ -60,7 +60,7 @@ final class ChartSamples {
 				.build();
 	}
 
-	public static ShinyChart radarSample(BansheeCommandLine command) {
+	static ShinyChart radarSample() {
 		return Shiny.radarChart()
 				.withTitle("Final Fantasy VII Stats")
 				.withLabels("Attack", "Defense", "Magic Attack", "Magic Defense", "Speed", "Luck")

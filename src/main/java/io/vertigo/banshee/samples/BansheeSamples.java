@@ -7,13 +7,6 @@ import java.util.UUID;
 import io.vertigo.banshee.com.BansheeCommandHandler;
 import io.vertigo.banshee.com.BansheeCommandHandlerBuilder;
 import io.vertigo.banshee.com.BansheeCommandLine;
-import io.vertigo.banshee.samples.BoardSamples.CrmInstallationBoard;
-import io.vertigo.banshee.samples.FormSamples.FormSample1;
-import io.vertigo.banshee.samples.FormSamples.FormSample2;
-import io.vertigo.banshee.samples.FormSamples.FormSample3;
-import io.vertigo.banshee.samples.FormSamples.FormSample4;
-import io.vertigo.banshee.samples.FormSamples.FormSample5;
-import io.vertigo.banshee.samples.FormSamples.FormSample6;
 import io.vertigo.shell.systems.core.commands.ip.IpCommand;
 import io.vertigo.shell.systems.core.commands.uptime.UptimeCommand;
 import io.vertigo.shell.systems.db.commands.connect.DbConnectCommand;
@@ -79,13 +72,13 @@ public final class BansheeSamples {
 			.addCommandExecutor("area", ChartSamples::areaSample)
 			.addCommandExecutor("line", ChartSamples::lineSample)
 			.addCommandExecutor("radar", ChartSamples::radarSample)
-			.addCommandExecutor("f1", new FormSample1())
-			.addCommandExecutor("f2", new FormSample2())
-			.addCommandExecutor("f3", new FormSample3())
-			.addCommandExecutor("f4", new FormSample4())
-			.addCommandExecutor("f5", new FormSample5())
-			.addCommandExecutor("f6", new FormSample6())
-			.addCommandExecutor("board", new CrmInstallationBoard())
+			.addCommandExecutor("f1", FormSamples::formSample1)
+			.addCommandExecutor("f2", FormSamples::formSample2)
+			.addCommandExecutor("f3", FormSamples::formSample3)
+			.addCommandExecutor("f4", FormSamples::formSample4)
+			.addCommandExecutor("f5", FormSamples::formSample5)
+			.addCommandExecutor("f6", FormSamples::formSample6)
+			.addCommandExecutor("board", BoardSamples::crm)
 
 			.addCommandExecutor("figlet", cmd -> Shiny.figlet()
 					.withText("Hello Vertigo")
