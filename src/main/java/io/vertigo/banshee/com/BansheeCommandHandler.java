@@ -23,13 +23,23 @@ public final class BansheeCommandHandler implements BansheeCommandExecutor {
 	}
 
 	public ShinyModel execute(final BansheeCommandLine commandLine) throws Exception {
+		System.out.println("execute commandLine: " + commandLine.commandLine());
+		return execute(commandLine, 0);
+	}
+
+	private ShinyModel execute(final BansheeCommandLine commandLine, int level) throws Exception {
 		Assertion.check().isNotNull(commandLine);
 		//---
-		System.out.println("execute command: " + commandLine.commandLine());
-		final var commandExecutor = _commandExecutors.get(commandLine.commandLine());
+		final var commandExecutor = _commandExecutors.get(commandLine.command(level));
 		if (commandExecutor == null) {
-			return new ShinyErrorBuilder().withText("unknown command :" + commandLine.commandLine()).build();
+			return new ShinyErrorBuilder().withText("Unknown command :" + commandLine.command(level)).build();
 		}
-		return commandExecutor.execute(commandLine);
+		if (commandExecutor instanceof BansheeCommandHandler bch) {
+			//cas des sous-commandes
+			return bch.execute(commandLine, level + 1);
+		} else {
+			return commandExecutor.execute(commandLine);
+		}
 	}
+
 }

@@ -17,6 +17,13 @@ final class TextSamples {
 				.build();
 	}
 
+	static ShinyModel textpath2() {
+		return Shiny.textPath()
+				.withPath("root/node/leaf")
+				.withSeparator("/")
+				.build();
+	}
+
 	static ShinyModel title() {
 		return Shiny.title()
 				.withText("This is a title")

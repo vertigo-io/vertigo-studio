@@ -23,11 +23,12 @@ public record BansheeCommandLine(
 		Assertion.check().isNotBlank(commandLine);
 	}
 
-	public String command() {
-		int i = commandLine.indexOf(" ");
-		return i > 0
-				? commandLine.substring(0, i)
-				: commandLine;
+	public String command(int level) {
+		return commandLine.split(" ")[level];
+		//		int i = commandLine.indexOf(" ");
+		//		return i > 0
+		//				? commandLine.substring(0, i)
+		//				: commandLine;
 	}
 
 	public String args() {

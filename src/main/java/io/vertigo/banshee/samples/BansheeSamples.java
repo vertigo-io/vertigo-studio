@@ -50,10 +50,17 @@ public final class BansheeSamples {
 	public static final BansheeCommandHandler commandHandler = new BansheeCommandHandlerBuilder()
 			.addCommandExecutor("llm", cmd -> new HalloweenCommand()
 					.llm(cmd.args()))
+
+			/* args attendus : bbc, lemonde, france info */
+			.addCommandExecutor("rss", new RssCommandExecutor())
+
 			.addCommandExecutor("table2", BansheeSamples::table2)
+
 			.addCommandExecutor("ls", cmd -> new FileLsCommand().build())
 			.addCommandExecutor("pwd", cmd -> new FilePwdCommand().build())
-			.addCommandExecutor("env list", cmd -> new EnvListCommand().build())
+			.addCommandExecutor("env", new BansheeCommandHandlerBuilder()
+					.addCommandExecutor("list", cmd -> new EnvListCommand().build())
+					.build())
 			.addCommandExecutor("uptime", cmd -> new UptimeCommand().build())
 			.addCommandExecutor("ip", cmd -> new IpCommand().build())
 
@@ -96,11 +103,7 @@ public final class BansheeSamples {
 			.addCommandExecutor("title", TextSamples::title)
 			.addCommandExecutor("paragraph", TextSamples::paragraph)
 			.addCommandExecutor("textpath", TextSamples::textpath)
-
-			.addCommandExecutor("tp", cmd -> Shiny.textPath()
-					.withPath("root/node/leaf")
-					.withSeparator("/")
-					.build())
+			.addCommandExecutor("textpath2", TextSamples::textpath2)
 			.addCommandExecutor("error", cmd -> Shiny.error()
 					.withText("This is an error message")
 					.build())
@@ -117,10 +120,6 @@ public final class BansheeSamples {
 			.addCommandExecutor("json", BansheeSamples::jsonCommand)
 			.addCommandExecutor("youtube", BansheeSamples::youtubeCommand)
 			.addCommandExecutor("map", BansheeSamples::mapCommand)
-			.addCommandExecutor("rss", BansheeSamples::rssCommand)
-			.addCommandExecutor("rss franceinfo", BansheeSamples::rssFranceInfoCommand)
-			.addCommandExecutor("rss bbc", BansheeSamples::bbcCommand)
-			.addCommandExecutor("rss lemonde", BansheeSamples::lemondeCommand)
 			.addCommandExecutor("slides", BansheeSamples::slidesCommand)
 			.addCommandExecutor("table", BansheeSamples::tableCommand)
 			.addCommandExecutor("timeline", BansheeSamples::timelineCommand)
@@ -137,9 +136,7 @@ public final class BansheeSamples {
 			.addCommandExecutor("tree", BansheeSamples::treeCommand)
 			.addCommandExecutor("sankey", BansheeSamples::sankey)
 			.addCommandExecutor("flow", BansheeSamples::flow)
-			.addCommandExecutor("wait", cmd -> wait(Shiny.figlet()
-					.withText("attente 2s")
-					.build(), 2000))
+			.addCommandExecutor("wait", BansheeSamples::waiting)
 			.addCommandExecutor("container", BansheeSamples::containerCommand)
 			.addCommandExecutor("mindmap", BansheeSamples::mindmap)
 			.addCommandExecutor("table3", BansheeSamples::table3)
@@ -155,13 +152,15 @@ public final class BansheeSamples {
 			.addCommandExecutor("page", BansheeSamples::page)
 			.build();
 
-	private static ShinyModel wait(final ShinyModel model, final int timeInMillis) {
+	private static ShinyModel waiting() {
 		try {
-			Thread.sleep(timeInMillis);
+			Thread.sleep(2000);
 		} catch (final InterruptedException e) {
 			throw new RuntimeException(e);
 		}
-		return model;
+		return Shiny.figlet()
+				.withText("attente 2s")
+				.build();
 	}
 
 	private static ShinyModel toggle() {
@@ -400,30 +399,6 @@ public final class BansheeSamples {
 				.withHeader("Prénom", "Nom")
 				.addRow("Arthur", "Penn")
 				.addRow("Marilyn", "Pinson")
-				.build();
-	}
-
-	private static ShinyModel lemondeCommand(final BansheeCommandLine cmd) {
-		return Shiny.rss()
-				.withFeed("https://www.lemonde.fr/rss/une.xml")
-				.build();
-	}
-
-	private static ShinyModel bbcCommand(final BansheeCommandLine cmd) {
-		return Shiny.rss()
-				.withFeed("https://feeds.bbci.co.uk/news/world/rss.xml")
-				.build();
-	}
-
-	private static ShinyModel rssFranceInfoCommand(final BansheeCommandLine cmd) {
-		return Shiny.rss()
-				.withFeed("https://www.francetvinfo.fr/titres.rss")
-				.build();
-	}
-
-	private static ShinyModel rssCommand(final BansheeCommandLine cmd) {
-		return Shiny.rss()
-				.withFeed("https://www.francetvinfo.fr/titres.rss")
 				.build();
 	}
 
