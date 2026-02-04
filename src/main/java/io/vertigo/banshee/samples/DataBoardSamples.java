@@ -6,7 +6,7 @@ import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.data.board.ShinyBoardCard;
 import io.vertigo.shiny.models.data.board.ShinyBoardList;
 
-final class BoardSamples {
+final class DataBoardSamples {
 
 	static ShinyModel crm(BansheeCommandLine command) {
 		final ShinyBoardCard card1 = Shiny.boardCard()

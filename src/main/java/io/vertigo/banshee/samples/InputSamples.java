@@ -8,8 +8,37 @@ import io.vertigo.shiny.models.input.form.ShinyFormField;
 import io.vertigo.shiny.models.input.form.ShinyFormFieldType;
 import io.vertigo.shiny.models.input.form.ShinyFormFieldValidator;
 import io.vertigo.shiny.models.input.form.ShinyFormOption;
+import io.vertigo.shiny.models.input.toggle.ShinyToggleType;
 
-final class FormSamples {
+final class InputSamples {
+	static ShinyModel autocomplete() {
+		return Shiny.autocomplete()
+				.withLabel("Select a country")
+				.addOption("France")
+				.addOption("Germany")
+				.addOption("Spain")
+				.addOption("Italy")
+				.withValue("France")
+				.withPlaceholder("Start typing...")
+				.build();
+	}
+
+	static ShinyModel codeeditor() {
+		return Shiny.codeEditor()
+				.withLanguage("javascript")
+				.withContent("function hello() {\n  console.log('Hello, World!');\n}")
+				.build();
+	}
+
+	static ShinyModel datepicker() {
+		return Shiny.datePicker().withLabel("Select a date")
+				.withValue("2025-11-13").isRequired().build();
+	}
+
+	static ShinyModel fileupload() {
+		return Shiny.fileUpload().withLabel("Upload a file")
+				.isMultiple().withAccept("image/*").build();
+	}
 
 	static ShinyModel formSample1() {
 		return Shiny.form()
@@ -96,5 +125,57 @@ final class FormSamples {
 						true, false)
 				.build();
 
+	}
+
+	static ShinyModel multiselection() {
+		return Shiny.multiSelection()
+				.withTitle("Select your favorite fruits")
+				.addOption("Apple")
+				.addOption("Banana")
+				.addOption("Orange")
+				.addOption("Grape")
+				.build();
+	}
+
+	static ShinyModel rangeslider() {
+		return Shiny.rangeSlider()
+				.withLabel("Price Range")
+				.withMin(0)
+				.withMax(1000)
+				.withStep(10)
+				.withValue(200, 800)
+				.withColor("green")
+				.withThumbLabel(true)
+				.build();
+	}
+
+	static ShinyModel slider() {
+		return Shiny.slider()
+				.withLabel("Volume")
+				.withMin(0)
+				.withMax(100)
+				.withStep(1)
+				.withValue(45)
+				.withColor("orange")
+				.withThumbLabel(true)
+				.build();
+	}
+
+	static ShinyModel inputText() {
+		return Shiny.inputText()
+				.withLabel("Your Name")
+				.withDefaultValue("John Doe")
+				.build();
+	}
+
+	static ShinyModel toggle() {
+		return Shiny.toggle()
+				.withLabel("Enable Feature")
+				.withValue(true)
+				.withType(ShinyToggleType.SWITCH)
+				.withOnText("Active")
+				.withOffText("Inactive")
+				.withShowText(true)
+				.build();
 	}
 }
