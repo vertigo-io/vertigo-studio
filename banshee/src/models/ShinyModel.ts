@@ -1,3 +1,7 @@
+// WARNING: DO NOT EDIT MANUALLY
+// This file is the TypeScript representation of a Java model.
+// Any changes must be made in the corresponding Java file first.
+
 /**
  * ShinyModel is the base interface for all Shiny components in the Banshee frontend.
  * It defines common properties that all Shiny models should have.

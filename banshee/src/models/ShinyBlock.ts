@@ -1,3 +1,7 @@
+// WARNING: DO NOT EDIT MANUALLY
+// This file is the TypeScript representation of a Java model.
+// Any changes must be made in the corresponding Java file first.
+
 /**
  * ShinyBlock is an interface representing a block of content within the Banshee frontend.
  * It extends ShinyModel, indicating that a block is also a type of Shiny component.

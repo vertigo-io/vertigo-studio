@@ -1,3 +1,7 @@
+// WARNING: DO NOT EDIT MANUALLY
+// This file is the TypeScript representation of a Java model.
+// Any changes must be made in the corresponding Java file first.
+
 /**
  * ShinyState is a class that represents the current state of a Shiny model in the Banshee frontend.
  * It manages a collection of `ShinyProp` instances, allowing for dynamic state management
