@@ -4,7 +4,7 @@ import io.vertigo.banshee.com.BansheeCommandLine;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.dataviz.chart.ShinyChart;
-import io.vertigo.shiny.models.dataviz.flow.NodeType;
+import io.vertigo.shiny.models.dataviz.flow.ShinyFlowNodeType;
 import io.vertigo.shiny.models.dataviz.flow.ShinyFlowBuilder;
 import io.vertigo.shiny.models.dataviz.geomap.ShinyGeoPoint;
 import io.vertigo.shiny.models.dataviz.mindmap.ShinyMindMapNodeBuilder;
@@ -76,11 +76,11 @@ final class DatavizSamples {
 
 	static ShinyModel flow() {
 		return new ShinyFlowBuilder()
-				.withNode("1", "Order Received", 100, 50, NodeType.RR)
-				.withNode("2", "Payment Processed", 300, 50, NodeType.LR)
-				.withNode("3", "Items Shipped", 500, 50, NodeType.TB)
-				.withNode("4", "Invoice Generated", 300, 200, NodeType.LR)
-				.withNode("5", "Billing Completed", 500, 200, NodeType.LL)
+				.withNode("1", "Order Received", 100, 50, ShinyFlowNodeType.RR)
+				.withNode("2", "Payment Processed", 300, 50, ShinyFlowNodeType.LR)
+				.withNode("3", "Items Shipped", 500, 50, ShinyFlowNodeType.TB)
+				.withNode("4", "Invoice Generated", 300, 200, ShinyFlowNodeType.LR)
+				.withNode("5", "Billing Completed", 500, 200, ShinyFlowNodeType.LL)
 				.withEdge("e1-2", "1", "2", "Process Payment")
 				.withEdge("e2-3", "2", "3", "Ship Items")
 				.withEdge("e2-4", "2", "4", "Generate Invoice")

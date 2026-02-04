@@ -40,7 +40,7 @@ public final class ShinyFlowBuilder implements Builder<ShinyFlow> {
 		return this;
 	}
 
-	public ShinyFlowBuilder withNode(final String id, final String label, final int x, final int y, final NodeType nodeType) { // Added NodeType
+	public ShinyFlowBuilder withNode(final String id, final String label, final int x, final int y, final ShinyFlowNodeType nodeType) { // Added NodeType
 		_nodes.add(new ShinyFlowNode(id, label, new Position(x, y), nodeType));
 		return this;
 	}

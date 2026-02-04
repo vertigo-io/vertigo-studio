@@ -17,7 +17,7 @@
  */
 package io.vertigo.shiny.models.dataviz.flow;
 
-public enum NodeType {
+public enum ShinyFlowNodeType {
 	LR, // Left-Right: Rounded rectangle, handles left/right
 	TB, // Top-Bottom: Circular, handles top/bottom
 	LL, // Left-Left: Rectangular left, very rounded right, handle left

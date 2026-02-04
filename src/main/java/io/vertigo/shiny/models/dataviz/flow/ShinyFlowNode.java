@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 
 import io.vertigo.core.lang.Assertion;
 
-public record ShinyFlowNode(@Nonnull String id, @Nonnull String label, @Nonnull ShinyFlowNode.Position position, @Nonnull NodeType nodeType) { // Changed 'type' to 'nodeType' and its type to NodeType
+public record ShinyFlowNode(@Nonnull String id, @Nonnull String label, @Nonnull ShinyFlowNode.Position position, @Nonnull ShinyFlowNodeType nodeType) { // Changed 'type' to 'nodeType' and its type to NodeType
 
 	public record Position(int x, int y) {
 	}
