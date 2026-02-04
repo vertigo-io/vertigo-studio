@@ -12,50 +12,50 @@ final class LLMCommandExecutor implements BansheeCommandExecutor {
 
 	public ShinyModel execute(BansheeCommandLine commandLine) throws Exception {
 		final String query = """
-				Analyse d'abord la question suivante pour identifier :
-				1. Type de données (temporelles, catégorielles, pourcentages, multi-critères ou cartographique)
-				2. Objectif (comparer, montrer évolution, répartition, profil)
-				3. on distingue les représentations graphiques ET LES représentations cartographiques
-				4.a Pour les représentations graphiques UNIQUEMENT
-				- Calcule les séries nécessaires
-				- Génère un JSON valide selon ce format (sans commentaires) :
-				{
-				"template":"bar",
-				"title":"Titre",
-				"labels":["A","B"],
-				"series":[{
-					"name":"Série",
-					"data":[1,2]
-					}]
-				}
+				ANALYSE la question pour déterminer :
+				1. Type de données : temporelles | catégorielles | pourcentages | multi-critères | géographiques
+				2. Objectif : comparaison | évolution | répartition | profil | localisation
+				3. Type de représentation : GRAPHIQUE ou CARTOGRAPHIQUE
 
-				4.b Pour les représentations cartographiques UNIQUEMENT
-				- Génère un JSON valide selon ce format (sans commentaires) :
-				{
-				"template":"map",
-				"title":"Titre",
-				"geoPoints":[{
-					"latitude": 48.901022,
-					"longitude":2.100765,
-					"label":"Saint Germain en Laye"
-					}]
-				}
+				═══════════════════════════════════════════════════════════════
 
-				5. CHOIX DU TEMPLATE selon l'analyse :
-				Il y a 2 types de réprésentations
-				On a 6 représentations graphiques
-				- "bar" → Comparer valeurs entre catégories
-				- "line" → Évolution/tendance temporelle
-				- "area" → Évolution avec volume cumulé
-				- "pie" → Répartition % (1 série uniquement)
-				- "donut" → Répartition avec métrique centrale (1 série uniquement)
-				- "radar" → Comparaison multi-critères/profils
-				On a une représetation cartographique
-				- "map" → Représentations de données cartographiques sous la forme de points d'intérêt
+				FORMAT A - REPRÉSENTATIONS GRAPHIQUES (6 types) :
+
+				{"template":"bar","title":"Titre du graphique","labels":["A","B","C"],"series":[{"name":"Série 1","data":[10,20,30]}]}
+
+				Templates graphiques disponibles :
+				• "bar" → Comparer des valeurs entre catégories (ex: ventes par région)
+				• "line" → Évolution temporelle ou tendance (ex: CA mensuel)
+				• "area" → Évolution avec volume cumulé (ex: croissance cumulative)
+				• "pie" → Répartition en % d'un total - 1 SEULE série (ex: parts de marché)
+				• "donut" → Répartition avec métrique centrale - 1 SEULE série (ex: budget)
+				• "radar" → Comparaison multi-critères (ex: profils de compétences)
+
+				Contraintes graphiques :
+				- pie/donut : UNE série uniquement
+				- autres : une ou plusieurs séries possibles
+				- labels.length === data.length pour chaque série
+
+				═══════════════════════════════════════════════════════════════
+
+				FORMAT B - REPRÉSENTATION CARTOGRAPHIQUE (1 type) :
+
+				{"template":"map","title":"Titre de la carte","geoPoints":[{"latitude":48.901022,"longitude":2.100765,"label":"Saint Germain en Laye"}]}
+
+				Template cartographique :
+				• "map" → Localisation géographique de points d'intérêt (ex: emplacements de magasins, sites touristiques)
+
+				Contraintes cartographiques :
+				- latitude : nombre décimal entre -90 et 90 (obligatoire)
+				- longitude : nombre décimal entre -180 et 180 (obligatoire)
+				- label : description du point (obligatoire)
+
+				═══════════════════════════════════════════════════════════════
 
 				Question : """ + commandLine.args() + """
 
-				Réponds UNIQUEMENT avec le JSON final.
+				Réponds UNIQUEMENT avec le JSON (format A OU format B selon l'analyse).
+				Pas de texte explicatif, pas de markdown, juste le JSON valide.
 				""";
 		final String response = agent.answer(query);
 		System.out.println("llm response >" + response);

@@ -35,24 +35,50 @@ import io.vertigo.shiny.models.data.table.cell.ShinyIconCell;
 import io.vertigo.shiny.models.data.table.cell.ShinyProgressBarCell;
 import io.vertigo.shiny.models.data.table.cell.ShinyRatingCell;
 import io.vertigo.shiny.models.data.table.cell.ShinyStringCell;
-import io.vertigo.shiny.models.dataviz.flow.NodeType;
-import io.vertigo.shiny.models.dataviz.flow.ShinyFlowBuilder;
-import io.vertigo.shiny.models.dataviz.geomap.ShinyGeoPoint;
-import io.vertigo.shiny.models.dataviz.mindmap.ShinyMindMapNodeBuilder;
 import io.vertigo.shiny.models.feedback.alert.ShinyAlertType;
 import io.vertigo.shiny.models.feedback.notification.ShinyNotificationType;
 import io.vertigo.shiny.models.input.toggle.ShinyToggleType;
 import io.vertigo.shiny.models.text.chip.ShinyChipVariant;
 import io.vertigo.shiny.models.text.rating.ShinyRatingScale;
-import io.vertigo.shiny.models.text.status.ShinyStatusType;
 
 public final class BansheeSamples {
 	public static final BansheeCommandHandler commandHandler = new BansheeCommandHandlerBuilder()
 			.addCommandExecutor("llm", new LLMCommandExecutor())
 
+			//--MEDIA	
 			/* args attendus : bbc, lemonde, france info */
-			.addCommandExecutor("rss", new RssCommandExecutor())
+			.addCommandExecutor("rss", MediaSamples::rss)
+			.addCommandExecutor("image", MediaSamples::image)
+			.addCommandExecutor("youtube", MediaSamples::youtube)
+			.addCommandExecutor("slides", MediaSamples::slides)
+			.addCommandExecutor("pdf", MediaSamples::pdf)
 
+			//--DATAVIZ
+			.addCommandExecutor("bar", DatavizSamples::barSample)
+			.addCommandExecutor("pie", DatavizSamples::pieSample)
+			.addCommandExecutor("pie2", DatavizSamples::pieSample2)
+			.addCommandExecutor("donut", DatavizSamples::donutSample)
+			.addCommandExecutor("area", DatavizSamples::areaSample)
+			.addCommandExecutor("line", DatavizSamples::lineSample)
+			.addCommandExecutor("radar", DatavizSamples::radarSample)
+			.addCommandExecutor("timeline", DatavizSamples::timeline)
+			.addCommandExecutor("sankey", DatavizSamples::sankey)
+			.addCommandExecutor("org", DatavizSamples::organization)
+			.addCommandExecutor("flow", DatavizSamples::flow)
+			.addCommandExecutor("gauge", DatavizSamples::gauge)
+			.addCommandExecutor("map", DatavizSamples::map)
+			.addCommandExecutor("mindmap", DatavizSamples::mindmap)
+
+			//--TEXT
+			.addCommandExecutor("figlet", TextSamples::figlet)
+			.addCommandExecutor("title", TextSamples::title)
+			.addCommandExecutor("paragraph", TextSamples::paragraph)
+			.addCommandExecutor("textpath", TextSamples::textpath)
+			.addCommandExecutor("textpath2", TextSamples::textpath2)
+			.addCommandExecutor("sparkline", TextSamples::sparkline)
+			.addCommandExecutor("status", TextSamples::status)
+			.addCommandExecutor("rating", TextSamples::rating)
+			.addCommandExecutor("chip", TextSamples::chip)
 			.addCommandExecutor("table2", BansheeSamples::table2)
 
 			.addCommandExecutor("ls", cmd -> new FileLsCommand().build())
@@ -81,13 +107,7 @@ public final class BansheeSamples {
 							.build())
 					.build())
 
-			.addCommandExecutor("bar", ChartSamples::barSample)
-			.addCommandExecutor("pie", ChartSamples::pieSample)
-			.addCommandExecutor("pie2", ChartSamples::pieSample2)
-			.addCommandExecutor("donut", ChartSamples::donutSample)
-			.addCommandExecutor("area", ChartSamples::areaSample)
-			.addCommandExecutor("line", ChartSamples::lineSample)
-			.addCommandExecutor("radar", ChartSamples::radarSample)
+			.addCommandExecutor("board", BoardSamples::crm)
 
 			.addCommandExecutor("f1", FormSamples::formSample1)
 			.addCommandExecutor("f2", FormSamples::formSample2)
@@ -96,48 +116,24 @@ public final class BansheeSamples {
 			.addCommandExecutor("f5", FormSamples::formSample5)
 			.addCommandExecutor("f6", FormSamples::formSample6)
 
-			.addCommandExecutor("board", BoardSamples::crm)
-
-			.addCommandExecutor("figlet", TextSamples::figlet)
-			.addCommandExecutor("title", TextSamples::title)
-			.addCommandExecutor("paragraph", TextSamples::paragraph)
-			.addCommandExecutor("textpath", TextSamples::textpath)
-			.addCommandExecutor("textpath2", TextSamples::textpath2)
 			.addCommandExecutor("error", cmd -> Shiny.error()
 					.withText("This is an error message")
 					.build())
 			.addCommandExecutor("toggle", BansheeSamples::toggle)
-			.addCommandExecutor("gauge", BansheeSamples::gauge)
-			.addCommandExecutor("sparkline", BansheeSamples::sparklineCommand)
-			.addCommandExecutor("image", BansheeSamples::imageCommand)
-			.addCommandExecutor("photo", BansheeSamples::imageCommand)
 			.addCommandExecutor("card", BansheeSamples::cardCommand)
 			.addCommandExecutor("list", BansheeSamples::listCommand)
-			.addCommandExecutor("status", BansheeSamples::statusCommand)
-			.addCommandExecutor("rating", BansheeSamples::ratingCommand)
 			.addCommandExecutor("inputtext", BansheeSamples::inputTextCommand)
 			.addCommandExecutor("json", BansheeSamples::jsonCommand)
-			.addCommandExecutor("youtube", BansheeSamples::youtubeCommand)
-			.addCommandExecutor("map", BansheeSamples::mapCommand)
-			.addCommandExecutor("slides", BansheeSamples::slidesCommand)
 			.addCommandExecutor("table", BansheeSamples::tableCommand)
-			.addCommandExecutor("timeline", BansheeSamples::timelineCommand)
-			.addCommandExecutor("tl", BansheeSamples::timelineCommand)
 			.addCommandExecutor("slider", BansheeSamples::sliderCommand)
 			.addCommandExecutor("multiselection", BansheeSamples::multiselectionCommand)
 			.addCommandExecutor("alert", BansheeSamples::alertCommand)
 			.addCommandExecutor("alert-success", BansheeSamples::alertSuccessCommand)
 			.addCommandExecutor("alert-warning", BansheeSamples::alertWarningCommand)
 			.addCommandExecutor("alert-error", BansheeSamples::alertErrorCommand)
-			.addCommandExecutor("chip", BansheeSamples::chipCommand)
-			.addCommandExecutor("org", BansheeSamples::orgCommand)
-			.addCommandExecutor("pdf", BansheeSamples::pdfCommand)
 			.addCommandExecutor("tree", BansheeSamples::treeCommand)
-			.addCommandExecutor("sankey", BansheeSamples::sankey)
-			.addCommandExecutor("flow", BansheeSamples::flow)
 			.addCommandExecutor("wait", BansheeSamples::waiting)
 			.addCommandExecutor("container", BansheeSamples::containerCommand)
-			.addCommandExecutor("mindmap", BansheeSamples::mindmap)
 			.addCommandExecutor("table3", BansheeSamples::table3)
 			.addCommandExecutor("grid", BansheeSamples::grid)
 			.addCommandExecutor("datagrid", BansheeSamples::datagridCommand)
@@ -170,28 +166,6 @@ public final class BansheeSamples {
 				.withOnText("Active")
 				.withOffText("Inactive")
 				.withShowText(true)
-				.build();
-	}
-
-	private static ShinyModel gauge() {
-		return Shiny.gauge()
-				.withTitle("Ventes par produit")
-				.withValue(156)
-				.withMaxValue(450)
-				.build();
-	}
-
-	private static ShinyModel slidesCommand(final BansheeCommandLine cmd) {
-		final String markdown = """
-				             # Slide 1
-				             Hello
-
-				             ---
-				             # Slide 2
-				             World
-				""";
-		return Shiny.slide()
-				.withMarkdown(markdown)
 				.build();
 	}
 
@@ -300,33 +274,6 @@ public final class BansheeSamples {
 				.addTree("test").addLeaf("testFile.txt").root().build();
 	}
 
-	private static ShinyModel pdfCommand(final BansheeCommandLine cmd) {
-		return Shiny.pdf()
-				.withTitle("Arthur Rimbaud - Poèmes")
-				.withPath("sample-report.pdf").build();
-	}
-
-	private static ShinyModel orgCommand(final BansheeCommandLine cmd) {
-		return Shiny.organization()
-				.addNode("1", null, "John Doe", "CEO", "https://randomuser.me/api/portraits/men/1.jpg")
-				.addNode("2", "1", "Jane Smith", "CTO", "https://randomuser.me/api/portraits/women/2.jpg")
-				.addNode("3", "1", "Mike Johnson", "CFO", "https://randomuser.me/api/portraits/men/3.jpg")
-				.addNode("4", "2", "Emily Brown", "Lead Developer", "https://randomuser.me/api/portraits/women/4.jpg")
-				.addNode("5", "2", "David Wilson", "DevOps Engineer", "https://randomuser.me/api/portraits/men/5.jpg")
-				.addNode("6", "3", "Sarah Davis", "Accountant", "https://randomuser.me/api/portraits/women/6.jpg")
-				.build();
-	}
-
-	private static ShinyModel chipCommand(final BansheeCommandLine cmd) {
-		return Shiny.chip()
-				.withText("Vuetify")
-				.withColor("red")
-				.withVariant(ShinyChipVariant.ELEVATED)
-				.withIcon("mdi-vuetify")
-				.withClosable(true)
-				.build();
-	}
-
 	private static ShinyModel alertErrorCommand(final BansheeCommandLine cmd) {
 		return Shiny.alert()
 				.withAlertType(ShinyAlertType.ERROR)
@@ -381,16 +328,6 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel timelineCommand(final BansheeCommandLine cmd) {
-		return Shiny.timeline()
-				.withTitle("Project Timeline")
-				.addItem("Step 1: Conception", "Defining project goals and scope.", "blue", "mdi-lightbulb-on-outline")
-				.addItem("Step 2: Development", "Building the core features.", "green", "mdi-code-braces")
-				.addItem("Step 3: Testing", "Ensuring quality and stability.", "orange", "mdi-flask-empty-outline")
-				.addItem("Step 4: Deployment", "Releasing to production.", "purple", "mdi-rocket-launch-outline")
-				.build();
-	}
-
 	private static ShinyModel tableCommand(final BansheeCommandLine cmd) {
 		return Shiny.table()
 				.withTitle("carnet d'adresses")
@@ -398,21 +335,6 @@ public final class BansheeSamples {
 				.withHeader("Prénom", "Nom")
 				.addRow("Arthur", "Penn")
 				.addRow("Marilyn", "Pinson")
-				.build();
-	}
-
-	private static ShinyModel mapCommand(final BansheeCommandLine cmd) {
-		return Shiny.geoMap()
-				.withTitle("Tour Eiffel & Saint Germain")
-				.addGeoPoint(ShinyGeoPoint.of(48.8584, 2.2945, "Tour Eiffel"))
-				.addGeoPoint(ShinyGeoPoint.of(48.901022, 2.100765, "Saint Germain en Laye"))
-				.build();
-	}
-
-	private static ShinyModel youtubeCommand(final BansheeCommandLine cmd) {
-		return Shiny.youtube()
-				.withTitle("Rick Astley - Never Gonna Give You Up")
-				.withVideoId("dQw4w9WgXcQ")
 				.build();
 	}
 
@@ -441,24 +363,6 @@ public final class BansheeSamples {
 				.build();
 	}
 
-	private static ShinyModel ratingCommand(final BansheeCommandLine cmd) {
-		return Shiny.rating()
-				.withLabel("User satisfaction")
-				.withValue(3.5)
-				.withScale(ShinyRatingScale.SCALE_5)
-				.withAllowHalfRating(true)
-				.build();
-	}
-
-	private static ShinyModel statusCommand(final BansheeCommandLine cmd) {
-		return Shiny.status()
-				.withTitle("Component Status")
-				.addType(ShinyStatusType.SUCCESS)
-				.addType(ShinyStatusType.ERROR)
-				.addType(ShinyStatusType.WARNING)
-				.build();
-	}
-
 	private static ShinyModel listCommand(final BansheeCommandLine cmd) {
 		return Shiny.list().withTitle("planetes")
 				.withType(ShinyListType.UNORDERED).addItem("Uranus").addList(Shiny.list().withTitle("Mars").withType(ShinyListType.UNORDERED).addItem("Bleue").addItem("Rouge").addItem("Verte").build()).addItem("Saturn").addItem("Venus").build();
@@ -468,21 +372,6 @@ public final class BansheeSamples {
 		return Shiny.card()
 				.withTitle("Mon Titre de Carte")
 				.withSubtitle("Un sous-titre pour le contexte").withDescription("Ceci est le contenu principal de ma carte. Il peut être plus long et contenir des informations détaillées sur le sujet de la carte.").withImageUrl("https://picsum.photos/id/237/200/300").withImageAlt("Image aléatoire de Picsum").withLink("https://www.vertigo.io").withIcon("star").withBadge("Nouveau", "blue").withFormat(ShinyCardFormat.M).build();
-	}
-
-	private static ShinyModel imageCommand(final BansheeCommandLine cmd) {
-		return Shiny.image()
-				.withTitle("Random image from picsum")
-				.withUrl("https://picsum.photos/800/600")
-				.withAlt("Random image from picsum")
-				.build();
-	}
-
-	private static ShinyModel sparklineCommand(final BansheeCommandLine cmd) {
-		return Shiny.sparkline()
-				.withTitle("S.p.a.r.k.l.i.n.e")
-				.withValues(156, 450, 300, 200, 100, 23)
-				.build();
 	}
 
 	//BansheeCommandExcecutor 
@@ -528,36 +417,6 @@ public final class BansheeSamples {
 						.withPageCount(6)
 						.withPage(Integer.valueOf(page).intValue())
 						.build())
-				.build();
-	}
-
-	private static ShinyModel mindmap(BansheeCommandLine cmd) {
-		return Shiny.mindMap()
-				.withTitle("Mouvements Artistiques")
-				.withRootNode(
-						new ShinyMindMapNodeBuilder("root", "Mouvements Artistiques")
-								.addAllChildren(
-										new ShinyMindMapNodeBuilder("classicisme", "Classicisme")
-												.withDirection("left")
-												.addAllChildren(
-														new ShinyMindMapNodeBuilder("renaissance", "Renaissance").build(),
-														new ShinyMindMapNodeBuilder("baroque", "Baroque").build())
-												.build(),
-										new ShinyMindMapNodeBuilder("romantisme", "Romantisme")
-												.withDirection("right")
-												.addAllChildren(
-														new ShinyMindMapNodeBuilder("pre_raphaelite", "Préraphaélisme").build(),
-														new ShinyMindMapNodeBuilder("symbolisme", "Symbolisme").build())
-												.build(),
-										new ShinyMindMapNodeBuilder("moderne", "Art Moderne")
-												.withDirection("left")
-												.addAllChildren(
-														new ShinyMindMapNodeBuilder("impressionnisme", "Impressionnisme").build(), new ShinyMindMapNodeBuilder("cubisme", "Cubisme").build())
-												.build(),
-										new ShinyMindMapNodeBuilder("contemporain", "Art Contemporain").withDirection("right").addAllChildren(new ShinyMindMapNodeBuilder("pop_art", "Pop Art").build(),
-												new ShinyMindMapNodeBuilder("minimalisme", "Minimalisme").build())
-												.build())
-								.build())
 				.build();
 	}
 
@@ -613,38 +472,6 @@ public final class BansheeSamples {
 						new ShinyAvatarCell(UUID.randomUUID(), "https://randomuser.me/api/portraits/men/3.jpg", "Charlie", "36px"),
 						new ShinyIconCell(UUID.randomUUID(), "mdi-information", "blue", "24px"),
 						new ShinyBadgeCell(UUID.randomUUID(), "Info", "blue"))
-				.build();
-	}
-
-	private static ShinyModel sankey(BansheeCommandLine cmd) {
-		return Shiny.sankey()
-				.withTitle("Flux d\'énergie")
-				.addLink("Nucléaire", "Réseau électrique", 120.0)
-				.addLink("Hydraulique", "Réseau électrique", 80.0)
-				.addLink("Éolien", "Réseau électrique", 60.0)
-				.addLink("Solaire", "Réseau électrique", 40.0)
-				.addLink("Charbon", "Réseau électrique", 100.0)
-				.addLink("Réseau électrique", "Industrie", 150.0)
-				.addLink("Réseau électrique", "Transport", 70.0)
-				.addLink("Réseau électrique", "Résidentiel", 100.0)
-				.addLink("Réseau électrique", "Pertes réseau", 20.0)
-				.addLink("Résidentiel", "Chauffage", 40.0)
-				.addLink("Résidentiel", "Électroménager", 30.0)
-				.addLink("Résidentiel", "Informatique", 30.0)
-				.build();
-	}
-
-	private static ShinyModel flow(BansheeCommandLine cmd) {
-		return new ShinyFlowBuilder()
-				.withNode("1", "Order Received", 100, 50, NodeType.RR)
-				.withNode("2", "Payment Processed", 300, 50, NodeType.LR)
-				.withNode("3", "Items Shipped", 500, 50, NodeType.TB)
-				.withNode("4", "Invoice Generated", 300, 200, NodeType.LR)
-				.withNode("5", "Billing Completed", 500, 200, NodeType.LL)
-				.withEdge("e1-2", "1", "2", "Process Payment")
-				.withEdge("e2-3", "2", "3", "Ship Items")
-				.withEdge("e2-4", "2", "4", "Generate Invoice")
-				.withEdge("e4-5", "4", "5", "Finalize Billing")
 				.build();
 	}
 
