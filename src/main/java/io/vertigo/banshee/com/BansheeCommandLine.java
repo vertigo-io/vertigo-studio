@@ -9,8 +9,8 @@ import io.vertigo.shiny.models.ShinyState;
  * Le client envoie une commandeLine au serveur.
  * 
  * Une commandLine est composée 
- * - d'une commande 
- * - d'unne
+ * - d'une commande ( et éventuellement de sous-commandes) 
+ * - d'args
  * 
  * 
  */

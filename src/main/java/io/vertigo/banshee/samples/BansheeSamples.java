@@ -56,14 +56,24 @@ public final class BansheeSamples {
 			.addCommandExecutor("env list", cmd -> new EnvListCommand().build())
 			.addCommandExecutor("uptime", cmd -> new UptimeCommand().build())
 			.addCommandExecutor("ip", cmd -> new IpCommand().build())
-			.addCommandExecutor("db connect", cmd -> new DbConnectCommand().build())
-			.addCommandExecutor("db disconnect", cmd -> new DbDisconnectCommand().build())
-			.addCommandExecutor("db load", cmd -> new DbLoadCommand().build())
-			.addCommandExecutor("db read", cmd -> new DbReadCommand().build())
-			.addCommandExecutor("db show tables", cmd -> new DbShowTablesCommand().build())
-			.addCommandExecutor("db show model", cmd -> new DbShowModelCommand().build())
-			.addCommandExecutor("java load", cmd -> new JavaLoadCommand().build())
-			.addCommandExecutor("java show model", cmd -> new JavaShowModelCommand().build())
+
+			.addCommandExecutor("db", new BansheeCommandHandlerBuilder()
+					.addCommandExecutor("connect", cmd -> new DbConnectCommand().build())
+					.addCommandExecutor("disconnect", cmd -> new DbDisconnectCommand().build())
+					.addCommandExecutor("load", cmd -> new DbLoadCommand().build())
+					.addCommandExecutor("read", cmd -> new DbReadCommand().build())
+					.addCommandExecutor("show", new BansheeCommandHandlerBuilder()
+							.addCommandExecutor("tables", cmd -> new DbShowTablesCommand().build())
+							.addCommandExecutor("model", cmd -> new DbShowModelCommand().build())
+							.build())
+					.build())
+
+			.addCommandExecutor("java", new BansheeCommandHandlerBuilder()
+					.addCommandExecutor("load", cmd -> new JavaLoadCommand().build())
+					.addCommandExecutor("show", new BansheeCommandHandlerBuilder()
+							.addCommandExecutor("model", cmd -> new JavaShowModelCommand().build())
+							.build())
+					.build())
 
 			.addCommandExecutor("bar", ChartSamples::barSample)
 			.addCommandExecutor("pie", ChartSamples::pieSample)
@@ -72,21 +82,21 @@ public final class BansheeSamples {
 			.addCommandExecutor("area", ChartSamples::areaSample)
 			.addCommandExecutor("line", ChartSamples::lineSample)
 			.addCommandExecutor("radar", ChartSamples::radarSample)
+
 			.addCommandExecutor("f1", FormSamples::formSample1)
 			.addCommandExecutor("f2", FormSamples::formSample2)
 			.addCommandExecutor("f3", FormSamples::formSample3)
 			.addCommandExecutor("f4", FormSamples::formSample4)
 			.addCommandExecutor("f5", FormSamples::formSample5)
 			.addCommandExecutor("f6", FormSamples::formSample6)
+
 			.addCommandExecutor("board", BoardSamples::crm)
 
-			.addCommandExecutor("figlet", cmd -> Shiny.figlet()
-					.withText("Hello Vertigo")
-					.build())
-			.addCommandExecutor("textpath", cmd -> Shiny.textPath()
-					.withPath("root/node/leaf")
-					.withSeparator("/")
-					.build())
+			.addCommandExecutor("figlet", TextSamples::figlet)
+			.addCommandExecutor("title", TextSamples::title)
+			.addCommandExecutor("paragraph", TextSamples::paragraph)
+			.addCommandExecutor("textpath", TextSamples::textpath)
+
 			.addCommandExecutor("tp", cmd -> Shiny.textPath()
 					.withPath("root/node/leaf")
 					.withSeparator("/")
@@ -94,26 +104,8 @@ public final class BansheeSamples {
 			.addCommandExecutor("error", cmd -> Shiny.error()
 					.withText("This is an error message")
 					.build())
-			.addCommandExecutor("title", cmd -> Shiny.title()
-					.withText("This is a title")
-					.withLevel(2)
-					.build())
-			.addCommandExecutor("paragraph", cmd -> Shiny.paragraph()
-					.withText("This is a paragraph.")
-					.build())
-			.addCommandExecutor("toggle", cmd -> Shiny.toggle()
-					.withLabel("Enable Feature")
-					.withValue(true)
-					.withType(ShinyToggleType.SWITCH)
-					.withOnText("Active")
-					.withOffText("Inactive")
-					.withShowText(true)
-					.build())
-			.addCommandExecutor("gauge", cmd -> Shiny.gauge()
-					.withTitle("Ventes par produit")
-					.withValue(156)
-					.withMaxValue(450)
-					.build())
+			.addCommandExecutor("toggle", BansheeSamples::toggle)
+			.addCommandExecutor("gauge", BansheeSamples::gauge)
 			.addCommandExecutor("sparkline", BansheeSamples::sparklineCommand)
 			.addCommandExecutor("image", BansheeSamples::imageCommand)
 			.addCommandExecutor("photo", BansheeSamples::imageCommand)
@@ -170,6 +162,25 @@ public final class BansheeSamples {
 			throw new RuntimeException(e);
 		}
 		return model;
+	}
+
+	private static ShinyModel toggle() {
+		return Shiny.toggle()
+				.withLabel("Enable Feature")
+				.withValue(true)
+				.withType(ShinyToggleType.SWITCH)
+				.withOnText("Active")
+				.withOffText("Inactive")
+				.withShowText(true)
+				.build();
+	}
+
+	private static ShinyModel gauge() {
+		return Shiny.gauge()
+				.withTitle("Ventes par produit")
+				.withValue(156)
+				.withMaxValue(450)
+				.build();
 	}
 
 	private static ShinyModel slidesCommand(final BansheeCommandLine cmd) {
