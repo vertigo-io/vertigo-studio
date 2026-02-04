@@ -10,7 +10,7 @@ import io.vertigo.core.lang.VSystemException;
 import io.vertigo.shiny.Shiny;
 import io.vertigo.shiny.models.ShinyBlock;
 import io.vertigo.shiny.models.dataviz.chart.ShinyChartSerie;
-import io.vertigo.shiny.models.dataviz.chart.ShinyChartType;
+import io.vertigo.shiny.models.dataviz.geomap.ShinyGeoPoint;
 
 public final class ShinyComposer {
 	private static final ObjectMapper MAPPER = new ObjectMapper();
@@ -47,13 +47,25 @@ public final class ShinyComposer {
 				}
 			}
 
-			return switch (ShinyChartType.valueOf(template.toLowerCase())) {
-				case bar -> Shiny.barChart().withTitle(title).withLabels(labels).addAllSeries(series).build();
-				case area -> Shiny.areaChart().withTitle(title).withLabels(labels).addAllSeries(series).build();
-				case line -> Shiny.lineChart().withTitle(title).withLabels(labels).addAllSeries(series).build();
-				case pie -> Shiny.pieChart().withTitle(title).withLabels(labels).addAllSeries(series).build();
-				case donut -> Shiny.donutChart().withTitle(title).withLabels(labels).addAllSeries(series).build();
-				case radar -> Shiny.radarChart().withTitle(title).withLabels(labels).addAllSeries(series).build();
+			final List<ShinyGeoPoint> geoPoints = new ArrayList<>();
+			if (rootNode.has("geoPoints")) {
+				for (final JsonNode serieNode : rootNode.get("geoPoints")) {
+					final double latitude = serieNode.get("latitude").asDouble();
+					final double longitude = serieNode.get("longitude").asDouble();
+					final String label = serieNode.get("label").asText();
+					geoPoints.add(new ShinyGeoPoint(latitude, longitude, label));
+				}
+			}
+
+			return switch (template.toLowerCase()) {
+				case "bar" -> Shiny.barChart().withTitle(title).withLabels(labels).addAllSeries(series).build();
+				case "area" -> Shiny.areaChart().withTitle(title).withLabels(labels).addAllSeries(series).build();
+				case "line" -> Shiny.lineChart().withTitle(title).withLabels(labels).addAllSeries(series).build();
+				case "pie" -> Shiny.pieChart().withTitle(title).withLabels(labels).addAllSeries(series).build();
+				case "donut" -> Shiny.donutChart().withTitle(title).withLabels(labels).addAllSeries(series).build();
+				case "radar" -> Shiny.radarChart().withTitle(title).withLabels(labels).addAllSeries(series).build();
+				//---
+				case "map" -> Shiny.geoMap().withTitle(title).addAllGeoPoints(geoPoints).build();
 				default -> throw new VSystemException("Unknown template: " + template);
 			};
 		} catch (final Exception e) {

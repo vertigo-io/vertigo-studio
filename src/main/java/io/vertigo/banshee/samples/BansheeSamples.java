@@ -48,8 +48,7 @@ import io.vertigo.shiny.models.text.status.ShinyStatusType;
 
 public final class BansheeSamples {
 	public static final BansheeCommandHandler commandHandler = new BansheeCommandHandlerBuilder()
-			.addCommandExecutor("llm", cmd -> new HalloweenCommand()
-					.llm(cmd.args()))
+			.addCommandExecutor("llm", new LLMCommandExecutor())
 
 			/* args attendus : bbc, lemonde, france info */
 			.addCommandExecutor("rss", new RssCommandExecutor())
