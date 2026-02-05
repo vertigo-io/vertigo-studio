@@ -1,16 +1,12 @@
-import { ShinyBlock } from '../../ShinyBlock';
+// WARNING: DO NOT EDIT MANUALLY
+// This file is the TypeScript representation of a Java model.
+// Any changes must be made in the corresponding Java file first.
 
-export interface MindMapNode {
-  id: string;
-  topic: string;
-  background?: string;
-  foreground?: string;
-  direction: boolean;
-  expanded: boolean; 
-  children: MindMapNode[];
-}
+import { ShinyBlock } from '../../ShinyBlock';
+import { ShinyMindMapNode } from './ShinyMindMapNode';
 
 export interface ShinyMindMap extends ShinyBlock {
+  id: string;
   title: string;
-  rootNode: MindMapNode;
+  rootNode: ShinyMindMapNode;
 }
