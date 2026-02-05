@@ -2,7 +2,7 @@ import dagre from '@dagrejs/dagre';
 import { Graph } from '@dagrejs/graphlib';
 import { ShinyFlowNode } from '../../../models/dataviz/flow/ShinyFlowNode';
 import { ShinyFlowEdge } from '../../../models/dataviz/flow/ShinyFlowEdge';
-import { NodeType } from '../../../models/dataviz/flow/NodeType';
+import { ShinyFlowNodeType } from '../../../models/dataviz/flow/ShinyFlowNodeType'; // Updated import
 
 export class FlowLayout {
   static layoutElements(nodes: ShinyFlowNode[], edges: ShinyFlowEdge[], direction = 'LR') {
@@ -13,7 +13,7 @@ export class FlowLayout {
     nodes.forEach(node => {
       let nodeWidth = 120;
       let nodeHeight = 120;
-      if (node.nodeType === NodeType.LR || node.nodeType === NodeType.LL || node.nodeType === NodeType.RR) {
+      if (node.nodeType === ShinyFlowNodeType.LR || node.nodeType === ShinyFlowNodeType.LL || node.nodeType === ShinyFlowNodeType.RR) { // Updated enum usage
         nodeWidth = 180;
         nodeHeight = 60;
       }
@@ -27,7 +27,7 @@ export class FlowLayout {
       const pos = dagreGraph.node(node.id);
       let nodeWidth = 120;
       let nodeHeight = 120;
-      if (node.nodeType === NodeType.LR || node.nodeType === NodeType.LL || node.nodeType === NodeType.RR) {
+      if (node.nodeType === ShinyFlowNodeType.LR || node.nodeType === ShinyFlowNodeType.LL || node.nodeType === ShinyFlowNodeType.RR) { // Updated enum usage
         nodeWidth = 180;
         nodeHeight = 60;
       }

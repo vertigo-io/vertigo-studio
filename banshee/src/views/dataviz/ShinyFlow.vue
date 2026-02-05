@@ -28,7 +28,7 @@ import '@vue-flow/core/dist/theme-default.css'
 import { ShinyFlow } from '../../models/dataviz/flow/ShinyFlow'
 import { ShinyFlowNode } from '@/models/dataviz/flow/ShinyFlowNode'
 import { ShinyFlowEdge } from '@/models/dataviz/flow/ShinyFlowEdge'
-import { NodeType } from '../../models/dataviz/flow/NodeType'; // Import NodeType enum
+import { ShinyFlowNodeType } from '../../models/dataviz/flow/ShinyFlowNodeType'; // Import ShinyFlowNodeType enum
 
 const props = defineProps<{ data: ShinyFlow }>()
 const { fitView } = useVueFlow(); // Only destructure fitView
@@ -36,10 +36,10 @@ const elements = ref<Elements>([])
 
 // Define nodeTypes object
 const nodeTypes = {
-  [NodeType.LR]: ShinyFlowCustomNode,
-  [NodeType.TB]: ShinyFlowCustomNode,
-  [NodeType.LL]: ShinyFlowCustomNode,
-  [NodeType.RR]: ShinyFlowCustomNode,
+  [ShinyFlowNodeType.LR]: ShinyFlowCustomNode,
+  [ShinyFlowNodeType.TB]: ShinyFlowCustomNode,
+  [ShinyFlowNodeType.LL]: ShinyFlowCustomNode,
+  [ShinyFlowNodeType.RR]: ShinyFlowCustomNode,
 };
 
 // 🎨 Palette Make-like

@@ -1,20 +1,20 @@
 <template>
   <div :class="nodeTypeClass">
     <!-- Handles based on node type -->
-    <template v-if="data.nodeType === NodeType.LR">
+    <template v-if="data.nodeType === ShinyFlowNodeType.LR">
       <Handle type="target" :position="Position.Left" class="flow-handle round" />
       <Handle type="source" :position="Position.Right" class="flow-handle round" />
       <Handle type="source" :position="Position.Bottom" class="flow-handle rectangle" />
       <Handle type="source" :position="Position.Top" class="flow-handle rectangle" />
     </template>
-    <template v-else-if="data.nodeType === NodeType.TB">
+    <template v-else-if="data.nodeType === ShinyFlowNodeType.TB">
       <Handle type="target" :position="Position.Top" class="flow-handle round" />
       <Handle type="source" :position="Position.Bottom" class="flow-handle round" />
     </template>
-    <template v-else-if="data.nodeType === NodeType.LL">
+    <template v-else-if="data.nodeType === ShinyFlowNodeType.LL">
       <Handle type="target" :position="Position.Left" class="flow-handle round" />
     </template>
-    <template v-else-if="data.nodeType === NodeType.RR">
+    <template v-else-if="data.nodeType === ShinyFlowNodeType.RR">
       <Handle type="source" :position="Position.Right" class="flow-handle round" />
     </template>
 
@@ -30,14 +30,14 @@
 <script setup lang="ts">
 import { defineProps, computed } from 'vue';
 import { Handle, Position } from '@vue-flow/core';
-import { NodeType } from '../../../models/dataviz/flow/NodeType'; // Import NodeType enum
+import { ShinyFlowNodeType } from '../../../models/dataviz/flow/ShinyFlowNodeType'; // Import ShinyFlowNodeType enum
 
 const props = defineProps<{
   data: {
     label: string;
     icon?: string;
     iconColor?: string;
-    nodeType: NodeType; // Expect nodeType from data
+    nodeType: ShinyFlowNodeType; // Expect nodeType from data
   };
 }>();
 
@@ -49,10 +49,10 @@ const iconBgColor = computed(() => props.data.iconColor || defaultIconColor);
 
 const nodeTypeClass = computed(() => {
   switch (props.data.nodeType) {
-    case NodeType.LR: return 'flow-lr-node';
-    case NodeType.TB: return 'flow-tb-node';
-    case NodeType.LL: return 'flow-ll-node';
-    case NodeType.RR: return 'flow-rr-node';
+    case ShinyFlowNodeType.LR: return 'flow-lr-node';
+    case ShinyFlowNodeType.TB: return 'flow-tb-node';
+    case ShinyFlowNodeType.LL: return 'flow-ll-node';
+    case ShinyFlowNodeType.RR: return 'flow-rr-node';
     default: return '';
   }
 });
