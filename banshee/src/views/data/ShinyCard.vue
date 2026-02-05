@@ -57,13 +57,13 @@
 
 <script setup lang="ts">
 import { computed, onMounted } from 'vue';
-import { ShinyCardComponent } from '../../models/data/card/ShinyCardComponent';
+import { ShinyCard } from '../../models/data/card/ShinyCard';
 import { ShinyCardFormat } from '../../models/data/card/ShinyCardFormat';
 
 declare const lucide: any; // Declare lucide to avoid TypeScript errors
 
 const props = defineProps<{
-  data: ShinyCardComponent
+  data: ShinyCard
 }>()
 
 const cardWidth = computed((): string => {

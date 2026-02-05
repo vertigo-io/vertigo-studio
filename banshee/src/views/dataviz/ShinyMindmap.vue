@@ -10,7 +10,8 @@ import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
 import '../../assets/jsmind.css';
 import jsMind from 'jsmind';
 
-import { ShinyMindMap, MindMapNode } from '../../models/dataviz/mindmap/ShinyMindMap'; // Adjust import path
+import { ShinyMindMap } from '../../models/dataviz/mindmap/ShinyMindMap'; 
+import {  ShinyMindMapNode } from '../../models/dataviz/mindmap/ShinyMindMapNode';
 
 
 
@@ -21,7 +22,7 @@ const props = defineProps<{
 const mindmapId = ref(`mindmap-${Math.random().toString(36).substr(2, 9)}`);
 let jm: any = null; // jsMind instance
 
-const formatMindMapData = (node: MindMapNode): any => {
+const formatMindMapData = (node: ShinyMindMapNode): any => {
   const formattedNode: any = {
     id: node.id,
     topic: node.topic,
