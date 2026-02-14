@@ -39,12 +39,12 @@ final class BansheeHandler {
 
 	void handle(final Consumer<String> webSocket, final String event) {
 		try {
-			final BansheeCommandLine receivedEvent = MAPPER.readValue(event, BansheeCommandLine.class);
+			final BansheeCommandLine commandLine = MAPPER.readValue(event, BansheeCommandLine.class);
 			//1.
-			final ShinyModel model = execute(receivedEvent);
+			final ShinyModel model = execute(commandLine);
 			//2.
 			final BansheeAction action;
-			action = receivedEvent.id() == null
+			action = commandLine.id() == null
 					? BansheeAction.create
 					: BansheeAction.update;
 			sendEvent(webSocket, new BansheeResult(

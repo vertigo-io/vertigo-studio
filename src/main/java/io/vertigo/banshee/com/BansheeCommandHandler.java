@@ -24,20 +24,23 @@ public final class BansheeCommandHandler implements BansheeCommandExecutor {
 
 	public ShinyModel execute(final BansheeCommandLine commandLine) throws Exception {
 		System.out.println("execute commandLine: " + commandLine.commandLine());
-		return execute(commandLine, 0);
+		return doExecute(commandLine, 0);
 	}
 
-	private ShinyModel execute(final BansheeCommandLine commandLine, int level) throws Exception {
+	private ShinyModel doExecute(final BansheeCommandLine commandLine, int level) throws Exception {
 		Assertion.check().isNotNull(commandLine);
 		//---
-		final var commandExecutor = _commandExecutors.get(commandLine.command(level));
+		//On décompose la CLI ( commandLine) en commande et sous commande ( que l'on met en minuscules)
+		//jusqu'à obtenir une commande.
+		final var commandExecutor = _commandExecutors.get(commandLine.command(level).toLowerCase());
 		if (commandExecutor == null) {
 			return new ShinyErrorBuilder().withText("Unknown command :" + commandLine.command(level)).build();
 		}
 		if (commandExecutor instanceof BansheeCommandHandler bch) {
 			//cas des sous-commandes
-			return bch.execute(commandLine, level + 1);
+			return bch.doExecute(commandLine, level + 1);
 		} else {
+			//on a trouvé une commande.
 			return commandExecutor.execute(commandLine);
 		}
 	}
