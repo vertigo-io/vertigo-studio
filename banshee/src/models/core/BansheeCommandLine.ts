@@ -1,7 +1,7 @@
 
 import { ShinyState } from "../ShinyState";
 
-export class BansheeCommand {
+export class BansheeCommandLine {
     commandLine: string;
     id?: string;
     state?: ShinyState;

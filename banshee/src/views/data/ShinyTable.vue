@@ -51,7 +51,7 @@ import { computed, inject } from 'vue';
 import { ShinyTable } from '../../models/data/table/ShinyTable';
 import { ShinyRegistry } from '../ShinyRegistry';
 import { ShinyState } from '../../models/ShinyState';
-import { BansheeCommand } from '../../models/core/BansheeCommand';
+import { BansheeCommandLine } from '../../models/core/BansheeCommandLine';
 import { BansheeManager } from '../../models/core/BansheeManager';
 
 //Inject
@@ -85,8 +85,8 @@ const pageCount = computed<number>(() => {
 });
 
 const updatePage = () => {
-  const command = new BansheeCommand('table2', props.data.id, props.data.state);
-  bansheeManager.send(command);
+  const commandLine = new BansheeCommandLine('table2', props.data.id, props.data.state);
+  bansheeManager.send(commandLine);
 };
 
 
@@ -103,11 +103,11 @@ const sort = (columnIndex: number) => {
 
     const newSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
     console.log('Sorting column:', columnIndex, 'with direction:', newSortDirection);
-    const command = new BansheeCommand('sort', props.data.id, new ShinyState([
+    const commandLine = new BansheeCommandLine('sort', props.data.id, new ShinyState([
       { key: 'columnIndex', value: columnIndex.toString() },
       { key: 'sortDirection', value: newSortDirection }
     ]));
-    bansheeManager.send(command);
+    bansheeManager.send(commandLine);
   }
 };
 
