@@ -25,6 +25,7 @@ import io.vertigo.shiny.models.text.chip.ShinyChipVariant;
 
 public final class BansheeSamples {
 	public static final BansheeCommandHandler commandHandler = new BansheeCommandHandlerBuilder()
+			.addCommandExecutor("ada", new LLMCommandExecutor())
 			.addCommandExecutor("llm", new LLMCommandExecutor())
 
 			//--MEDIA	

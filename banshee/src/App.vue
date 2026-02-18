@@ -46,7 +46,7 @@ import { BansheeMessage } from './models/core/BansheeMessage';
 import { BansheeStory } from './models/core/BansheeStory';
 import { ShinyParagraph } from './models/text/paragraph/ShinyParagraph';
 import { ShinyModel } from './models/ShinyModel';
-import { BansheeCommand } from './models/core/BansheeCommand';
+import { BansheeCommandLine } from './models/core/BansheeCommandLine';
 import { BansheeResult } from './models/core/BansheeResult';
 
 import { ShinyRegistry } from './views/ShinyRegistry';
@@ -83,7 +83,7 @@ const submitPrompt = () => {
       const component: ShinyParagraph = { id :undefined, shinyType:'ShinyParagraph', text : prompt.value };
       addMessage(BansheeRole.USER, component);
       
-      const command = new BansheeCommand(prompt.value);
+      const command = new BansheeCommandLine(prompt.value);
       bansheeManager.send(command);
       isLoading.value = true;
     }

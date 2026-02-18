@@ -40,7 +40,7 @@ final class LLMCommandExecutor implements BansheeCommandExecutor {
 
 				FORMAT B - REPRÉSENTATION CARTOGRAPHIQUE (1 type) :
 
-				{"template":"map","title":"Titre de la carte","geoPoints":[{"latitude":48.901022,"longitude":2.100765,"label":"Saint Germain en Laye"}]}
+				{"template":"map","title":"Titre de la carte","geoPoints":[{"latitude":0.0,"longitude":0.0,"label":"nom de la ville"}]}
 
 				Template cartographique :
 				• "map" → Localisation géographique de points d'intérêt (ex: emplacements de magasins, sites touristiques)
@@ -57,6 +57,7 @@ final class LLMCommandExecutor implements BansheeCommandExecutor {
 				Réponds UNIQUEMENT avec le JSON (format A OU format B selon l'analyse).
 				Pas de texte explicatif, pas de markdown, juste le JSON valide.
 				""";
+		System.out.println("llm query >" + query);
 		final String response = agent.answer(query);
 		System.out.println("llm response >" + response);
 		return new ShinyComposer().compose(response);
