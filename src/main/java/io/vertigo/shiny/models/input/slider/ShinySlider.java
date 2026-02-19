@@ -18,8 +18,8 @@ public record ShinySlider(
 		boolean thumbLabel) implements ShinyModel {
 
 	public ShinySlider {
-		Assertion.check().isNotNull(id);
 		Assertion.check()
+				.isNotNull(id)
 				.isNotBlank(label, "Label cannot be blank")
 				.isTrue(max > min, "Max must be greater than min")
 				.isTrue(step > 0, "Step must be positive")

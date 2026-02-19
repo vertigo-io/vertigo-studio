@@ -9,7 +9,7 @@ export interface ShinySlider extends ShinyModel {
     min: number;
     max: number;
     step: number;
-    value?: number;
+    value: number;
     color?: string;
     thumbLabel: boolean;
 }
