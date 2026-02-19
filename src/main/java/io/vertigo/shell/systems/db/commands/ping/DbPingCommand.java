@@ -7,6 +7,7 @@ import java.util.List;
 import io.vertigo.shell.ShellCommand;
 import io.vertigo.shell.systems.db.DbContext;
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.live.progressbar.ShinyProgressBar;
 import picocli.CommandLine.Command;
@@ -19,7 +20,7 @@ public final class DbPingCommand implements ShellCommand {
 
 	@Override
 	public void run() {
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyWriter writer = ShinyRenderer.writer();
 		// Validate number of calls
 		if (calls <= 0 && calls > 50) {
 			System.err.println("Error: Number of calls must be greater than 0 and lower than 50");

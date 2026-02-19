@@ -8,6 +8,7 @@ import io.vertigo.shell.systems.db.DbContext;
 import io.vertigo.shell.systems.db.DbModel.JdbcSchema;
 import io.vertigo.shell.systems.db.DbModel.JdbcTable;
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import picocli.CommandLine.Command;
 
@@ -16,7 +17,7 @@ public final class DbAnalyzeCommand implements ShellCommand {
 
 	@Override
 	public void run() {
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyWriter writer = ShinyRenderer.writer();
 		int tables = 0;
 		int columns = 0;
 		int relations = 0;
@@ -32,7 +33,7 @@ public final class DbAnalyzeCommand implements ShellCommand {
 		final List<String[]> rows = new ArrayList<>();
 		rows.add(result);
 
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.table()
 						.withTitle("Objects in the database:")
 						.withNoDataFound("No object found in the database.")
@@ -56,7 +57,7 @@ public final class DbAnalyzeCommand implements ShellCommand {
 			dependencies.add(new String[] { t, "" + stats.fanIn(), "" + stats.fanOut(), "" + stats.transitiveFanIn() });
 		});
 
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.table()
 						.withTitle("Dependency stats")
 						.withHeader("table", "in", "out", "transitive Fan In")
