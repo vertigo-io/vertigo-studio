@@ -1,13 +1,14 @@
 package io.vertigo.shiny;
 
+import java.util.Locale;
+
 import io.vertigo.shiny.style.ShinyColors;
 import io.vertigo.shiny.style.ShinyEffects;
-import java.util.Locale;
 
 public class ShinyStyleTest {
 
 	public static void main(String[] args) {
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyWriter writer = ShinyRenderer.writer();
 
 		writer.println(" no effect");
 		writer.println();
@@ -138,34 +139,34 @@ public class ShinyStyleTest {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Theme Changes ---"));
 
 		// Test locale change
-		Shiny.theme().withLocale(Locale.FRENCH);
-		writer.println("Current locale: " + Shiny.theme().locale().getDisplayName());
-		Shiny.theme().withLocale(Locale.ENGLISH); // Reset to default for other tests
-		writer.println("Current locale: " + Shiny.theme().locale().getDisplayName());
+		ShinyRenderer.theme().withLocale(Locale.FRENCH);
+		writer.println("Current locale: " + ShinyRenderer.theme().locale().getDisplayName());
+		ShinyRenderer.theme().withLocale(Locale.ENGLISH); // Reset to default for other tests
+		writer.println("Current locale: " + ShinyRenderer.theme().locale().getDisplayName());
 
 		// Test ASCII theme
-		Shiny.theme().withAscii(true);
-		writer.println("ASCII theme enabled: " + Shiny.theme().ascii());
-		Shiny.theme().withAscii(false);
-		writer.println("ASCII theme enabled: " + Shiny.theme().ascii());
+		ShinyRenderer.theme().withAscii(true);
+		writer.println("ASCII theme enabled: " + ShinyRenderer.theme().ascii());
+		ShinyRenderer.theme().withAscii(false);
+		writer.println("ASCII theme enabled: " + ShinyRenderer.theme().ascii());
 
 		// Test Square theme
-		Shiny.theme().withSquare(true);
-		writer.println("Square theme enabled: " + Shiny.theme().square());
-		Shiny.theme().withSquare(false);
-		writer.println("Square theme enabled: " + Shiny.theme().square());
+		ShinyRenderer.theme().withSquare(true);
+		writer.println("Square theme enabled: " + ShinyRenderer.theme().square());
+		ShinyRenderer.theme().withSquare(false);
+		writer.println("Square theme enabled: " + ShinyRenderer.theme().square());
 
 		// Test Unicode theme
-		Shiny.theme().withUnicode(true);
-		writer.println("Unicode theme enabled: " + !Shiny.theme().ascii());
-		Shiny.theme().withUnicode(false);
-		writer.println("Unicode theme enabled: " + !Shiny.theme().ascii());
+		ShinyRenderer.theme().withUnicode(true);
+		writer.println("Unicode theme enabled: " + !ShinyRenderer.theme().ascii());
+		ShinyRenderer.theme().withUnicode(false);
+		writer.println("Unicode theme enabled: " + !ShinyRenderer.theme().ascii());
 
 		// Test Rounded theme
-		Shiny.theme().withRounded(true);
-		writer.println("Rounded theme enabled: " + !Shiny.theme().square());
-		Shiny.theme().withRounded(false);
-		writer.println("Rounded theme enabled: " + !Shiny.theme().square());
+		ShinyRenderer.theme().withRounded(true);
+		writer.println("Rounded theme enabled: " + !ShinyRenderer.theme().square());
+		ShinyRenderer.theme().withRounded(false);
+		writer.println("Rounded theme enabled: " + !ShinyRenderer.theme().square());
 
 		writer.println();
 	}

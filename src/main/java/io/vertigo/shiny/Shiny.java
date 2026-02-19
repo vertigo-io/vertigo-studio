@@ -1,10 +1,6 @@
 package io.vertigo.shiny;
 
-import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
-
 import io.vertigo.shiny.mermaid.ShinyMermaidServer;
-import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.block.ShinyContainerBuilder;
 import io.vertigo.shiny.models.data.board.ShinyBoardBuilder;
 import io.vertigo.shiny.models.data.board.ShinyBoardCardBuilder;
@@ -58,25 +54,11 @@ import io.vertigo.shiny.models.text.sparkline.ShinySparklineBuilder;
 import io.vertigo.shiny.models.text.status.ShinyStatusBuilder;
 import io.vertigo.shiny.models.text.textpath.ShinyTextPathBuilder;
 import io.vertigo.shiny.models.text.title.ShinyTitleBuilder;
-import io.vertigo.shiny.renderers.ShinySuperRenderer;
 
 public final class Shiny {
-	private PrintWriter writer = new PrintWriter(System.out, true, StandardCharsets.UTF_8);
-
 	private static final Shiny INSTANCE = new Shiny();
 
-	private final ShinyTheme theme = new ShinyTheme();
-
-	public static void withWriter(PrintWriter printWriter) {
-		INSTANCE.writer = printWriter;
-	}
-
-	public static ShinyWriter writer() {
-		return new ShinyWriter(INSTANCE.writer);
-	}
-
 	private Shiny() {
-		writer = new PrintWriter(System.out, true, StandardCharsets.UTF_8);
 	}
 
 	public static ShinyErrorBuilder error() {
@@ -280,14 +262,6 @@ public final class Shiny {
 		return new ShinyGeoMapBuilder();
 	}
 
-	public static ShinyTheme theme() {
-		return INSTANCE.theme;
-	}
-
-	public PrintWriter getWriter() {
-		return writer;
-	}
-
 	//-----
 	public static ShinyMermaidServer mermaid() {
 		return new ShinyMermaidServer(INSTANCE, 5656);
@@ -327,11 +301,5 @@ public final class Shiny {
 
 	public static ShinyDataGridBuilder dataGrid() {
 		return new ShinyDataGridBuilder();
-	}
-
-	private static ShinySuperRenderer RENDERER = new ShinySuperRenderer();
-
-	public static <S extends ShinyModel> void render(S component) {
-		RENDERER.render(component);
 	}
 }
