@@ -11,5 +11,5 @@ export interface ShinyRangeSlider extends ShinyBlock {
     step: number;
     value: number[];
     color?: string;
-    thumbLabel?: boolean;
+    thumbLabel: boolean;
 }

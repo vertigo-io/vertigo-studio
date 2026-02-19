@@ -7,7 +7,14 @@ import javax.annotation.Nonnull;
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.models.ShinyBlock;
 
-public record ShinyRangeSlider(@Nonnull String label, int min, int max, int step, @Nonnull List<Integer> value, String color, boolean thumbLabel) implements ShinyBlock {
+public record ShinyRangeSlider(
+		@Nonnull String label,
+		int min,
+		int max,
+		int step,
+		@Nonnull List<Integer> value,
+		String color,
+		boolean thumbLabel) implements ShinyBlock {
 	public ShinyRangeSlider {
 		Assertion.check()
 				.isNotBlank(label)
