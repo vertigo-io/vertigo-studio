@@ -27,6 +27,7 @@ import io.vertigo.shell.systems.photo.PhotoInfo;
 import io.vertigo.shell.systems.photo.PhotoType;
 import io.vertigo.shell.systems.photo.PhotoVar;
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.live.progressbar.ShinyProgressBar;
 import picocli.CommandLine.Command;
@@ -36,7 +37,7 @@ public final class PhotoLoadCommand implements ShellCommand {
 
 	@Override
 	public void run() {
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyWriter writer = ShinyRenderer.writer();
 
 		final Path rootPath = Path.of(Env.get(PhotoVar.ROOT_PATH));
 

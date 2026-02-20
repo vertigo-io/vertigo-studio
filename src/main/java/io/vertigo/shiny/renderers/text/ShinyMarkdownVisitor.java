@@ -18,6 +18,7 @@ import org.commonmark.node.Paragraph;
 import org.commonmark.renderer.text.TextContentRenderer;
 
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.models.data.list.ShinyListType;
 
 class ShinyMarkdownVisitor extends AbstractVisitor {
@@ -26,7 +27,7 @@ class ShinyMarkdownVisitor extends AbstractVisitor {
 	@Override
 	public void visit(final Heading heading) {
 		final String title = textContentRenderer.render(heading);
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.title()
 						.withLevel(heading.getLevel())
 						.withText(title)
@@ -36,7 +37,7 @@ class ShinyMarkdownVisitor extends AbstractVisitor {
 	@Override
 	public void visit(final Paragraph paragraph) {
 		final String text = textContentRenderer.render(paragraph);
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.paragraph().withText(text).build());
 	}
 
@@ -48,7 +49,7 @@ class ShinyMarkdownVisitor extends AbstractVisitor {
 				items.add(textContentRenderer.render(child));
 			}
 		}
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny
 						.list()
 						.addAllItems(items)
@@ -63,7 +64,7 @@ class ShinyMarkdownVisitor extends AbstractVisitor {
 				items.add(textContentRenderer.render(child));
 			}
 		}
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.list()
 						.withType(ShinyListType.ORDERED)
 						.addAllItems(items)
@@ -99,7 +100,7 @@ class ShinyMarkdownVisitor extends AbstractVisitor {
 				}
 			}
 		}
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.table()
 						.withHeader(headers.toArray(new String[0]))
 						.addAllRows(rows)

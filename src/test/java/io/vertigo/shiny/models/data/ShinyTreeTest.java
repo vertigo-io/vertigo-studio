@@ -1,6 +1,7 @@
 package io.vertigo.shiny.models.data;
 
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyTreeTest {
@@ -9,7 +10,7 @@ public class ShinyTreeTest {
 	}
 
 	private static void testVideoGamesTree() {
-		Shiny.writer().println(ShinyColors.BLUE_BRIGHT.fg("--- Video Games Tree ---"));
+		ShinyRenderer.writer().println(ShinyColors.BLUE_BRIGHT.fg("--- Video Games Tree ---"));
 		final var treeBuilder = Shiny.tree().withLabel("Video Games");
 		treeBuilder.addTree("RPG")
 				.addLeaf("Final Fantasy")
@@ -21,7 +22,7 @@ public class ShinyTreeTest {
 				.addLeaf("The Legend of Zelda")
 				.addLeaf("Uncharted");
 
-		Shiny.render(treeBuilder.build());
-		Shiny.writer().println();
+		ShinyRenderer.render(treeBuilder.build());
+		ShinyRenderer.writer().println();
 	}
 }

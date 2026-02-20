@@ -11,6 +11,7 @@ import java.util.Scanner;
 import java.util.UUID;
 
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.data.table.cell.ShinyStringCell;
 import io.vertigo.shiny.models.input.multiselection.ShinyMultiSelection;
@@ -21,7 +22,7 @@ public class ShinyAllComponentsTest {
 	private static Scanner scanner = new Scanner(System.in);
 
 	public static void main(final String[] args) {
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyWriter writer = ShinyRenderer.writer();
 
 		writer.println(BLUE_BRIGHT.fg("--- Starting All Shiny Components with their default style---"));
 		waitForEnter(writer);
@@ -75,7 +76,7 @@ public class ShinyAllComponentsTest {
 				.withOptions("Apple", "Banana", "Cherry")
 				.build();
 
-		Shiny.render(multiSelection);
+		ShinyRenderer.render(multiSelection);
 
 		final List<String> selected = multiSelection.getSelectedOptions();
 		writer.println(selected.toString());
@@ -85,7 +86,7 @@ public class ShinyAllComponentsTest {
 		writer.println(CYAN.fg("Component: ShinyBarChart"))
 				.println("Parameters: title='Monthly Sales', header=['Jan', 'Feb', 'Mar'], rows=[100, 120, 90], sort=VALUE_DESC, maxBarLength=50");
 		//---
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.barChart()
 						.withTitle("Monthly Sales")
 						.withLabels("Jan", "Feb", "Mar")
@@ -98,7 +99,7 @@ public class ShinyAllComponentsTest {
 		writer.println(CYAN.fg("Component: ShinyCalendar"))
 				.println("Parameters: year=2024, month=JULY, locale=FRENCH, highlight=[2024-07-14], tableBorder=ROUNDED");
 		//---
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.calendar()
 						.withYear(2024)
 						.withMonth(Month.JULY.getValue())
@@ -111,7 +112,7 @@ public class ShinyAllComponentsTest {
 		writer.println(CYAN.fg("Component: ShinyFiglet"))
 				.println("Parameters: text='Hello', font=BIG, color=BLUE");
 		//---
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.figlet()
 						.withText("Hello")
 						.build());
@@ -122,7 +123,7 @@ public class ShinyAllComponentsTest {
 		writer.println(CYAN.fg("Component: ShinyGauge"))
 				.println("Parameters: title='Progress', value=75, maxValue=100, color=GREEN");
 		//---
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.gauge()
 						.withTitle("Progress")
 						.withValue(75)
@@ -138,7 +139,7 @@ public class ShinyAllComponentsTest {
 		final String json = """
 				{\"name\": \"John Doe\", \"age\": 30, \"isStudent\": true, \"address\": null}
 				""";
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.json()
 						.withJson(json)
 						.build());
@@ -149,7 +150,7 @@ public class ShinyAllComponentsTest {
 		writer.println(CYAN.fg("Component: ShinyList"))
 				.println("Parameters: title='Tasks', items=['Task 1', 'Task 2', 'Task 3']");
 		//---
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.list()
 						.withTitle("Tasks")
 						.addItem("Task 1")
@@ -180,7 +181,7 @@ public class ShinyAllComponentsTest {
 		writer.println(CYAN.fg("Component: ShinyRating"))
 				.println("Parameters: rating=4, maxValue=5");
 		//---
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.rating()
 						.withValue(4)
 						.withMaxValue(5)
@@ -192,7 +193,7 @@ public class ShinyAllComponentsTest {
 		writer.println(CYAN.fg("Component: ShinySparkline"))
 				.println("Parameters: title='Data Trend', data=[10, 12, 15, 13, 11, 10, 9, 10, 12, 14, 16, 15], color=MAGENTA");
 		//---
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.sparkline()
 						.withTitle("Data Trend")
 						.withValues(List.of(10.0, 12.0, 15.0, 13.0, 11.0, 10.0, 9.0, 10.0, 12.0, 14.0, 16.0, 15.0))
@@ -218,7 +219,7 @@ public class ShinyAllComponentsTest {
 		writer.println(CYAN.fg("Component: ShinyStatus"))
 				.println("Parameters: title='Build Status', statuses=[SUCCESS, WARNING, ERROR, INFO], shape=SQUARE");
 		//---
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.status()
 						.withTitle("Build Status")
 						.addAllTypes(
@@ -234,7 +235,7 @@ public class ShinyAllComponentsTest {
 		writer.println(CYAN.fg("Component: ShinyTable"))
 				.println("Parameters: title='Users', header=['firstName', 'lastName', 'Age'], rows=[['John', 'doe', '30'], ['Jane', 'doe', '25']], tableBorder=ASCII");
 		//---
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.table()
 						.withTitle("Users")
 						.withHeader("FirstName", "LastName", "Age")
@@ -252,7 +253,7 @@ public class ShinyAllComponentsTest {
 		writer.println(CYAN.fg("Component: ShinyTextPath"))
 				.println("Parameters: path='/home/user/documents/report.pdf', custom colors");
 		//---
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.textPath()
 						.withPath("C:/home/user/documents/report.pdf")
 						.build());
@@ -263,7 +264,7 @@ public class ShinyAllComponentsTest {
 		writer.println(CYAN.fg("Component: ShinyTitle"))
 				.println("text: title='My Awesome Title', color=MAGENTA");
 		//---
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.title()
 						.withText("My Awesome Title")
 						.build());
@@ -274,7 +275,7 @@ public class ShinyAllComponentsTest {
 		writer.println(CYAN.fg("Component: ShinyToggle"))
 				.println("Parameters: label='Enable Feature', enabled=true");
 		//---
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.toggle()
 						.withLabel("Enable Feature")
 						.withValue(true)
@@ -290,7 +291,7 @@ public class ShinyAllComponentsTest {
 		treeBuilder.addTree("src")
 				.addLeaf("main")
 				.addLeaf("file.txt");
-		Shiny.render(treeBuilder.build());
+		ShinyRenderer.render(treeBuilder.build());
 		waitForEnter(writer);
 	}
 
@@ -298,7 +299,7 @@ public class ShinyAllComponentsTest {
 		writer.println(CYAN.fg("Component: ShinyInputText"))
 				.println("Parameters: label='Enter your name'");
 		//---
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.inputText()
 						.withLabel("Enter your name")
 						.build());
@@ -309,7 +310,7 @@ public class ShinyAllComponentsTest {
 		writer.println(CYAN.fg("Component: ShinyParagraph"))
 				.println("Parameters: text='This is a simple paragraph.'");
 		//---
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.paragraph()
 						.withText("This is a simple paragraph.")
 						.build());
@@ -320,7 +321,7 @@ public class ShinyAllComponentsTest {
 		writer.println(CYAN.fg("Component: ShinyError"))
 				.println("Parameters: text='This is an amazing error.'");
 		//---
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.error()
 						.withText("This is an amazing error.")
 						.build());
@@ -331,7 +332,7 @@ public class ShinyAllComponentsTest {
 		writer.println(CYAN.fg("Component: ShinyContainer"))
 				.println("Parameters: models=[table, paragraph]");
 		//---
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.container()
 						.addModel(
 								Shiny.table()

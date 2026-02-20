@@ -1,13 +1,14 @@
 package io.vertigo.shiny.models.live;
 
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.live.progressbar.ShinyProgressBar;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyProgressBarTest {
 	public static void main(final String[] args) {
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyWriter writer = ShinyRenderer.writer();
 		testBasicProgressBar(writer);
 		testFastProgressBar(writer);
 		testSlowProgressBar(writer);

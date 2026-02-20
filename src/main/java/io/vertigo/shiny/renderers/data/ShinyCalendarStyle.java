@@ -1,7 +1,7 @@
 package io.vertigo.shiny.renderers.data;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 
 public class ShinyCalendarStyle {
 	private ShinyTableStyle tableStyle;
@@ -14,7 +14,7 @@ public class ShinyCalendarStyle {
 
 	public ShinyTableStyle tableStyle() {
 		return tableStyle == null
-				? Shiny.theme().tableStyle()
+				? ShinyRenderer.theme().tableStyle()
 				: tableStyle;
 	}
 

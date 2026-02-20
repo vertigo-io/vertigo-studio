@@ -56,8 +56,6 @@ import io.vertigo.shiny.models.text.textpath.ShinyTextPathBuilder;
 import io.vertigo.shiny.models.text.title.ShinyTitleBuilder;
 
 public final class Shiny {
-	private static final Shiny INSTANCE = new Shiny();
-
 	private Shiny() {
 	}
 
@@ -264,7 +262,7 @@ public final class Shiny {
 
 	//-----
 	public static ShinyMermaidServer mermaid() {
-		return new ShinyMermaidServer(INSTANCE, 5656);
+		return new ShinyMermaidServer(5656);
 	}
 
 	public static ShinyYoutubeBuilder youtube() {

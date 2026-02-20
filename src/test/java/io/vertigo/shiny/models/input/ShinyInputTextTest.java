@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.models.input.text.ShinyInputText;
 
 public class ShinyInputTextTest {
@@ -20,7 +21,7 @@ public class ShinyInputTextTest {
 				.withLabel("Enter your name")
 				.build();
 
-		Shiny.render(input);
+		ShinyRenderer.render(input);
 
 		Assertions.assertEquals("Hello World", input.value().get());
 	}
@@ -35,7 +36,7 @@ public class ShinyInputTextTest {
 				.withRequired(true)
 				.build();
 
-		Shiny.render(input);
+		ShinyRenderer.render(input);
 
 		Assertions.assertEquals("Hello World", input.value().get());
 	}
@@ -50,7 +51,7 @@ public class ShinyInputTextTest {
 				.withPattern("\\d{5}")
 				.build();
 
-		Shiny.render(input);
+		ShinyRenderer.render(input);
 
 		Assertions.assertEquals("12345", input.value().get());
 	}
@@ -65,7 +66,7 @@ public class ShinyInputTextTest {
 				.addAllSuggestions(Arrays.asList("red", "green", "blue"))
 				.build();
 
-		Shiny.render(input);
+		ShinyRenderer.render(input);
 
 		Assertions.assertEquals("red", input.value().get());
 	}
@@ -80,7 +81,7 @@ public class ShinyInputTextTest {
 				.withDefaultValue("Paris")
 				.build();
 
-		Shiny.render(input);
+		ShinyRenderer.render(input);
 
 		Assertions.assertEquals("Paris", input.value().get());
 	}

@@ -4,6 +4,7 @@ import static io.vertigo.shiny.style.ShinyColors.GREEN;
 import static io.vertigo.shiny.style.ShinyColors.RED;
 
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.data.list.ShinyList;
 import io.vertigo.shiny.models.data.list.ShinyListType;
@@ -12,7 +13,7 @@ import io.vertigo.shiny.style.ShinyColors;
 public class ShinyListTest {
 
 	public static void main(final String[] args) {
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyWriter writer = ShinyRenderer.writer();
 		testUnorderedList(writer);
 		testOrderedList(writer);
 		testDashedList(writer);
@@ -22,7 +23,7 @@ public class ShinyListTest {
 
 	private static void testUnorderedList(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Unordered List ---"));
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.list()
 						.withType(ShinyListType.UNORDERED)
 						.addItem("Item 1")
@@ -34,7 +35,7 @@ public class ShinyListTest {
 
 	private static void testOrderedList(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Ordered List ---"));
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.list()
 						.withType(ShinyListType.ORDERED)
 						.addItem("First item")
@@ -46,7 +47,7 @@ public class ShinyListTest {
 
 	private static void testDashedList(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Dashed List ---"));
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.list()
 						.withType(ShinyListType.DASHED)
 						.addItem("Task A")
@@ -64,7 +65,7 @@ public class ShinyListTest {
 				.addItem("Sub-item 2")
 				.build();
 
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.list()
 						.withType(ShinyListType.ORDERED)
 						.addItem("Main Item 1")
@@ -77,12 +78,12 @@ public class ShinyListTest {
 	private static void testColoredList(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Colored List ---"));
 
-		Shiny.theme().listStyle()
+		ShinyRenderer.theme().listStyle()
 				// Color the bullets/numbers/dashes
 				.withItemColor(GREEN)
 				.withBulletColor(RED);
 
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.list()
 						.withType(ShinyListType.DASHED)
 						.addItem("Uranus")

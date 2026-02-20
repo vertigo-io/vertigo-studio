@@ -12,21 +12,18 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 
 // This is a simplified webSErver. A real one would use a dedicated library.
 
 public final class ShinyMermaidServer {
-	private final Shiny shiny;
 	private final int port;
 	private HttpServer httpServer;
 	private String currentMermaidDiagram = "";
 
-	public ShinyMermaidServer(@Nonnull final Shiny shiny, final int port) {
-		Assertion.check().isNotNull(shiny);
+	public ShinyMermaidServer(final int port) {
 		Assertion.check().isTrue(port > 0 && port < 65536, "Port must be valid");
 		//---
-		this.shiny = shiny;
 		this.port = port;
 	}
 
@@ -37,14 +34,14 @@ public final class ShinyMermaidServer {
 		// For now, we'll just serve the HTML and assume the JS will try to connect.
 		httpServer.setExecutor(Executors.newFixedThreadPool(1)); // Single thread for simplicity
 		httpServer.start();
-		shiny.getWriter().println("ShinyMermaidServer started on http://localhost:" + port);
-		shiny.getWriter().println("Open your browser to view the diagram.");
+		ShinyRenderer.writer().println("ShinyMermaidServer started on http://localhost:" + port);
+		ShinyRenderer.writer().println("Open your browser to view the diagram.");
 	}
 
 	public void stop() {
 		if (httpServer != null) {
 			httpServer.stop(0); // Stop immediately
-			shiny.getWriter().println("ShinyMermaidServer stopped.");
+			ShinyRenderer.writer().println("ShinyMermaidServer stopped.");
 		}
 	}
 

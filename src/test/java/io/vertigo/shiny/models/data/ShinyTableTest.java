@@ -3,6 +3,7 @@ package io.vertigo.shiny.models.data;
 import java.util.List;
 
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.data.table.ShinyTableBuilder;
 import io.vertigo.shiny.renderers.data.ShinyTableBorder;
@@ -11,7 +12,7 @@ import io.vertigo.shiny.style.ShinyColors;
 public class ShinyTableTest {
 
 	public static void main(final String[] args) {
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyWriter writer = ShinyRenderer.writer();
 		testBasicTable(writer);
 		testEuropeanCountriesTable(writer);
 		testEmptyTable(writer);
@@ -25,7 +26,7 @@ public class ShinyTableTest {
 				new String[] { "Jane Smith", "25", "London" },
 				new String[] { "Peter Jones", "35", "Paris" });
 
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.table()
 						.withTitle("User Information")
 						.withHeader("Name", "Age", "City")
@@ -65,7 +66,7 @@ public class ShinyTableTest {
 				new String[] { "Spain", "48000000" },
 				new String[] { "Sweden", "10600000" });
 
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.table()
 						.withTitle("European Union Countries - Population")
 						.withHeader("Country", "Population")
@@ -76,7 +77,7 @@ public class ShinyTableTest {
 
 	private static void testEmptyTable(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Empty Table ---"));
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.table()
 						.withTitle("Empty Data")
 						.withHeader("Col1", "Col2")
@@ -93,12 +94,12 @@ public class ShinyTableTest {
 				new String[] { "Item B", "250", "Inactive" },
 				new String[] { "Item C", "75", "Active" });
 
-		Shiny.theme().tableStyle()
+		ShinyRenderer.theme().tableStyle()
 				.withTitleBackgroundColor(ShinyColors.WHITE)
 				.withHeaderBackgroundColor(ShinyColors.GREEN_BRIGHT)
 				.withAltRowBackgroundColor(ShinyColors.CYAN_BRIGHT)
 				.withBorderColor(ShinyColors.RED);
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.table()
 						.withTitle("Product Status")
 						.withHeader("Product", "Quantity", "Status")
@@ -113,14 +114,14 @@ public class ShinyTableTest {
 						new String[] { "North", "12345", "10.5%" },
 						new String[] { "South", "9876", "5.2%" }));
 
-		Shiny.theme().tableStyle()
+		ShinyRenderer.theme().tableStyle()
 				.withTitleBackgroundColor(ShinyColors.BLUE)
 				.withHeaderBackgroundColor(ShinyColors.WHITE)
 				.withAltRowBackgroundColor(ShinyColors.CYAN)
 				.withBorderColor(ShinyColors.YELLOW)
 				.withBorder(ShinyTableBorder.Simple);
 
-		Shiny.render(
+		ShinyRenderer.render(
 				tableBuilder
 						.withTitle("Sales Report - Simple")
 						.withHeader("Region", "Sales", "Growth") // Need to re-add header and rows
@@ -131,10 +132,10 @@ public class ShinyTableTest {
 
 		writer.println();
 
-		Shiny.theme().tableStyle()
+		ShinyRenderer.theme().tableStyle()
 				.withBorder(ShinyTableBorder.SimpleHeavy);
 
-		Shiny.render(
+		ShinyRenderer.render(
 				tableBuilder
 						.withTitle("Sales Report - SimpleHeavy")
 						.withHeader("Region", "Sales", "Growth") // Need to re-add header and rows
@@ -145,9 +146,9 @@ public class ShinyTableTest {
 
 		writer.println();
 
-		Shiny.theme().tableStyle()
+		ShinyRenderer.theme().tableStyle()
 				.withBorder(ShinyTableBorder.Horizontal);
-		Shiny.render(
+		ShinyRenderer.render(
 				tableBuilder
 						.withTitle("Sales Report - Horizontal")
 						.withHeader("Region", "Sales", "Growth") // Need to re-add header and rows

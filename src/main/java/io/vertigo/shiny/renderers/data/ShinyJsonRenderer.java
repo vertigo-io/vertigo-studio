@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.data.json.ShinyJson;
@@ -28,8 +28,8 @@ public final class ShinyJsonRenderer implements ShinyModelRenderer<ShinyJson> {
 		Assertion.check()
 				.isNotNull(shinyJson);
 		//---
-		final ShinyJsonStyle style = Shiny.theme().jsonStyle();
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyJsonStyle style = ShinyRenderer.theme().jsonStyle();
+		final ShinyWriter writer = ShinyRenderer.writer();
 		try {
 			final JsonNode rootNode = OBJECT_MAPPER.readTree(shinyJson.json());
 			printNode(shinyJson, style, writer, rootNode, "", true);

@@ -1,12 +1,13 @@
 package io.vertigo.shiny.models.dataviz;
 
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyBarChartTest {
 	public static void main(final String[] args) {
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyWriter writer = ShinyRenderer.writer();
 		testSimpleBarChart(writer);
 		testEuropeanCountriesPopulation(writer);
 		testBarChartWithDifferentSortModes(writer);
@@ -14,7 +15,7 @@ public class ShinyBarChartTest {
 
 	private static void testSimpleBarChart(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Simple Bar Chart ---"));
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.barChart()
 						.withTitle("Monthly Sales")
 						.withLabels("Jan", "Feb", "Mar", "Apr", "May")
@@ -25,7 +26,7 @@ public class ShinyBarChartTest {
 
 	private static void testEuropeanCountriesPopulation(final ShinyWriter writer) {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- European Countries Population (Sorted Desc) ---"));
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.barChart()
 						.withTitle("Population in European Countries")
 						.withLabels("Austria", "Belgium", "Bulgaria", "Croatia", "Cyprus",
@@ -48,7 +49,7 @@ public class ShinyBarChartTest {
 
 		// No sort
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- No Sort ---"));
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.barChart()
 						.withTitle("Fruits (No Sort)")
 						.withLabels(headers)
@@ -58,7 +59,7 @@ public class ShinyBarChartTest {
 
 		// Value Ascending
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Value Ascending ---"));
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.barChart()
 						.withTitle("Fruits (Value Asc)")
 						.withLabels(headers)
@@ -69,7 +70,7 @@ public class ShinyBarChartTest {
 
 		// Value Descending
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Value Descending ---"));
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.barChart()
 						.withTitle("Fruits (Value Desc)")
 						.withLabels(headers)
@@ -80,7 +81,7 @@ public class ShinyBarChartTest {
 
 		// Header Ascending
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Header Ascending ---"));
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.barChart()
 						.withTitle("Fruits (Header Asc)")
 						.withLabels(headers)
@@ -92,10 +93,10 @@ public class ShinyBarChartTest {
 		// Header Descending
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Header Descending ---"));
 
-		Shiny.theme().barChartStyle()
+		ShinyRenderer.theme().barChartStyle()
 				.withColors(ShinyColors.MAGENTA, ShinyColors.MAGENTA_BRIGHT);
 
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.barChart()
 						.withTitle("Fruits (Header Desc)")
 						.withLabels(headers)

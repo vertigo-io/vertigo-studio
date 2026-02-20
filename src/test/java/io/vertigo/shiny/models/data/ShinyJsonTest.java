@@ -1,13 +1,14 @@
 package io.vertigo.shiny.models.data;
 
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinyJsonTest {
 
 	public static void main(final String[] args) {
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyWriter writer = ShinyRenderer.writer();
 
 		testBasicJson(writer);
 		testComplexJson(writer);
@@ -26,7 +27,7 @@ public class ShinyJsonTest {
 				"address": null
 				}
 				""";
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.json()
 						.withJson(json)
 						.build());
@@ -50,7 +51,7 @@ public class ShinyJsonTest {
 							  },"customer": null
 
 				}""";
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.json()
 						.withJson(json)
 						.build());
@@ -66,14 +67,14 @@ public class ShinyJsonTest {
 				}
 				""";
 
-		Shiny.theme().jsonStyle()
+		ShinyRenderer.theme().jsonStyle()
 				.withLabelColor(ShinyColors.CYAN)
 				.withNumberColor(ShinyColors.MAGENTA)
 				.withStringColor(ShinyColors.YELLOW)
 				.withColonColor(ShinyColors.GREEN)
 				.withBracketColor(ShinyColors.RED)
 				.withBracesColor(ShinyColors.RED);
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.json()
 						.withJson(json)
 						.build());
@@ -93,7 +94,7 @@ public class ShinyJsonTest {
 					}
 				""";
 
-		Shiny.theme().jsonStyle()
+		ShinyRenderer.theme().jsonStyle()
 				.withLabelColor(ShinyColors.BLUE_BRIGHT)
 				.withStringColor(ShinyColors.GREEN_BRIGHT)
 				.withNumberColor(ShinyColors.CYAN_BRIGHT)
@@ -104,7 +105,7 @@ public class ShinyJsonTest {
 				.withBooleanColor(ShinyColors.GREEN)
 				.withNullColor(ShinyColors.RED);
 
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.json()
 						.withJson(json)
 						.build());
@@ -120,7 +121,7 @@ public class ShinyJsonTest {
 				"isStudent": false,
 				"address": null
 				"""; // Missing closing brace
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.json()
 						.withJson(json)
 						.build());

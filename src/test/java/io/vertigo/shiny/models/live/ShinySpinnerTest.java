@@ -1,13 +1,14 @@
 package io.vertigo.shiny.models.live;
 
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.live.spinner.ShinySpinner;
 import io.vertigo.shiny.style.ShinyColors;
 
 public class ShinySpinnerTest {
 	public static void main(final String[] args) throws Exception {
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyWriter writer = ShinyRenderer.writer();
 		testBasicSpinner(writer);
 		testSpinnerWithMultipleMessages(writer);
 		testShortDurationSpinner(writer);
@@ -40,7 +41,7 @@ public class ShinySpinnerTest {
 	private static void testShortDurationSpinner(final ShinyWriter writer) throws Exception {
 		writer.println(ShinyColors.BLUE_BRIGHT.fg("--- Short Duration Spinner ---"));
 
-		Shiny.theme().spinnerStyle()
+		ShinyRenderer.theme().spinnerStyle()
 				.withFrames("|", "/", "─", "\\");
 		try (ShinySpinner spinner = Shiny.spinner().build().start()) {
 			spinner.liveSend("Quick task...");
