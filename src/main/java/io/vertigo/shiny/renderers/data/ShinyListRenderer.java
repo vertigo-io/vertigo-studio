@@ -1,7 +1,7 @@
 package io.vertigo.shiny.renderers.data;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.data.list.ShinyList;
@@ -19,8 +19,8 @@ public final class ShinyListRenderer implements ShinyModelRenderer<ShinyList> {
 		Assertion.check()
 				.isNotNull(shinyList);
 		//---
-		final ShinyListStyle style = Shiny.theme().listStyle();
-		ShinyWriter writer = Shiny.writer();
+		final ShinyListStyle style = ShinyRenderer.theme().listStyle();
+		ShinyWriter writer = ShinyRenderer.writer();
 
 		if (shinyList.title() != null) {
 			writer.println(shinyList.title());

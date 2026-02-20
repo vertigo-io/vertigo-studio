@@ -3,7 +3,7 @@ package io.vertigo.shiny.renderers.dataviz;
 import java.util.stream.Collectors;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.text.sparkline.ShinySparkline;
@@ -20,8 +20,8 @@ public final class ShinySparklineRenderer implements ShinyModelRenderer<ShinySpa
 		Assertion.check()
 				.isNotNull(shinySparkline);
 		//---
-		final ShinySparklineStyle style = Shiny.theme().sparklineStyle();
-		final ShinyWriter writer = Shiny.writer();
+		final ShinySparklineStyle style = ShinyRenderer.theme().sparklineStyle();
+		final ShinyWriter writer = ShinyRenderer.writer();
 
 		final String sparkline = shinySparkline.values().stream()
 				.map(value -> getSparklineChar(shinySparkline, value))

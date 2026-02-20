@@ -6,7 +6,7 @@ import com.github.dtmo.jfiglet.FigFontResources;
 import com.github.dtmo.jfiglet.FigletRenderer;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.text.figlet.ShinyFiglet;
@@ -23,8 +23,8 @@ public final class ShinyFigletRenderer implements ShinyModelRenderer<ShinyFiglet
 		Assertion.check()
 				.isNotNull(shinyFiglet);
 		//---
-		final ShinyFigletStyle style = Shiny.theme().figletStyle();
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyFigletStyle style = ShinyRenderer.theme().figletStyle();
+		final ShinyWriter writer = ShinyRenderer.writer();
 
 		try {
 			final FigletRenderer figletRenderer = new FigletRenderer(FigFontResources.loadFigFontResource(style.font().getFileName()));

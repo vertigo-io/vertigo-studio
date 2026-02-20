@@ -3,7 +3,7 @@ package io.vertigo.shiny.renderers.text;
 import java.util.regex.Pattern;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.text.textpath.ShinyTextPath;
@@ -23,8 +23,8 @@ public final class ShinyTextPathRenderer implements ShinyModelRenderer<ShinyText
 				.isNotNull(shinyTextPath)
 				.isNotBlank(shinyTextPath.path(), "Path cannot be blank");
 		//---
-		final ShinyTextPathStyle style = Shiny.theme().textPathStyle();
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyTextPathStyle style = ShinyRenderer.theme().textPathStyle();
+		final ShinyWriter writer = ShinyRenderer.writer();
 
 		//		final StringBuilder coloredPath = new StringBuilder();
 		final String[] parts = shinyTextPath.path().split(Pattern.quote(shinyTextPath.separator())); // Modified line

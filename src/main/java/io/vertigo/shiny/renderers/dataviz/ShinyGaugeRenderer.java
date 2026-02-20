@@ -1,7 +1,7 @@
 package io.vertigo.shiny.renderers.dataviz;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.dataviz.gauge.ShinyGauge;
@@ -18,8 +18,8 @@ public final class ShinyGaugeRenderer implements ShinyModelRenderer<ShinyGauge> 
 		Assertion.check()
 				.isNotNull(shinyGauge);
 		//---
-		final ShinyGaugeStyle style = Shiny.theme().gaugeStyle();
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyGaugeStyle style = ShinyRenderer.theme().gaugeStyle();
+		final ShinyWriter writer = ShinyRenderer.writer();
 		final double percentage;
 		if (shinyGauge.value() >= shinyGauge.maxValue()) {
 			percentage = 1;

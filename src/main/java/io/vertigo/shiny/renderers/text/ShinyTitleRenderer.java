@@ -1,7 +1,7 @@
 package io.vertigo.shiny.renderers.text;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.text.title.ShinyTitle;
@@ -20,7 +20,7 @@ public final class ShinyTitleRenderer implements ShinyModelRenderer<ShinyTitle> 
 				.isNotNull(shinyTitle);
 		//---
 		//		final ShinyTitleStyle style = Shiny.theme().titleStyle();
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyWriter writer = ShinyRenderer.writer();
 
 		switch (shinyTitle.level()) {
 			case 1:

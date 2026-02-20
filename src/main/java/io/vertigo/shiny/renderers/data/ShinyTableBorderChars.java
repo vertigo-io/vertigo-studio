@@ -1,7 +1,7 @@
 package io.vertigo.shiny.renderers.data;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 
 /**
  * Box-drawing characters for rendering table structures in console output.
@@ -57,19 +57,19 @@ final class ShinyTableBorderChars {
 	}
 
 	private String horizontal() {
-		return Shiny.theme().ascii() ? "-" : UNICODE_HORIZONTAL;
+		return ShinyRenderer.theme().ascii() ? "-" : UNICODE_HORIZONTAL;
 	}
 
 	private String heavyHorizontal() {
-		return Shiny.theme().ascii() ? "-" : UNICODE_HEAVY_HORIZONTAL;
+		return ShinyRenderer.theme().ascii() ? "-" : UNICODE_HEAVY_HORIZONTAL;
 	}
 
 	private String verticalChar() {
-		return Shiny.theme().ascii() ? "|" : UNICODE_VERTICAL;
+		return ShinyRenderer.theme().ascii() ? "|" : UNICODE_VERTICAL;
 	}
 
 	private String blank() {
-		return Shiny.theme().ascii() ? " " : UNICODE_BLANK;
+		return ShinyRenderer.theme().ascii() ? " " : UNICODE_BLANK;
 	}
 
 	String topHorizontal() {
@@ -102,9 +102,9 @@ final class ShinyTableBorderChars {
 
 	String topLeft() {
 		return switch (border) {
-			case Normal -> Shiny.theme().ascii()
+			case Normal -> ShinyRenderer.theme().ascii()
 					? "+"
-					: Shiny.theme().square() ? UNICODE_SQUARE_TOP_LEFT : UNICODE_ROUNDED_TOP_LEFT;
+					: ShinyRenderer.theme().square() ? UNICODE_SQUARE_TOP_LEFT : UNICODE_ROUNDED_TOP_LEFT;
 			case Horizontal -> horizontal();
 			case Simple, SimpleHeavy -> blank();
 		};
@@ -112,9 +112,11 @@ final class ShinyTableBorderChars {
 
 	String topMiddle() {
 		return switch (border) {
-			case Normal -> Shiny.theme().ascii()
+			case Normal -> ShinyRenderer.theme().ascii()
 					? "+"
-					: Shiny.theme().square() ? UNICODE_SQUARE_TOP_MIDDLE : UNICODE_ROUNDED_TOP_MIDDLE;
+					: ShinyRenderer.theme().square()
+							? UNICODE_SQUARE_TOP_MIDDLE
+							: UNICODE_ROUNDED_TOP_MIDDLE;
 			case Horizontal -> horizontal();
 			case Simple, SimpleHeavy -> blank();
 		};
@@ -122,9 +124,9 @@ final class ShinyTableBorderChars {
 
 	String topRight() {
 		return switch (border) {
-			case Normal -> Shiny.theme().ascii()
+			case Normal -> ShinyRenderer.theme().ascii()
 					? "+"
-					: Shiny.theme().square() ? UNICODE_SQUARE_TOP_RIGHT : UNICODE_ROUNDED_TOP_RIGHT;
+					: ShinyRenderer.theme().square() ? UNICODE_SQUARE_TOP_RIGHT : UNICODE_ROUNDED_TOP_RIGHT;
 			case Horizontal -> horizontal();
 			case Simple, SimpleHeavy -> blank();
 		};
@@ -132,9 +134,11 @@ final class ShinyTableBorderChars {
 
 	String innerRight() {
 		return switch (border) {
-			case Normal -> Shiny.theme().ascii()
+			case Normal -> ShinyRenderer.theme().ascii()
 					? "+"
-					: Shiny.theme().square() ? UNICODE_SQUARE_INNER_RIGHT : UNICODE_ROUNDED_INNER_RIGHT;
+					: ShinyRenderer.theme().square()
+							? UNICODE_SQUARE_INNER_RIGHT
+							: UNICODE_ROUNDED_INNER_RIGHT;
 			case Horizontal, Simple -> horizontal();
 			case SimpleHeavy -> heavyHorizontal();
 		};
@@ -142,9 +146,11 @@ final class ShinyTableBorderChars {
 
 	String center() {
 		return switch (border) {
-			case Normal -> Shiny.theme().ascii()
+			case Normal -> ShinyRenderer.theme().ascii()
 					? "+"
-					: Shiny.theme().square() ? UNICODE_SQUARE_CENTER : UNICODE_ROUNDED_CENTER;
+					: ShinyRenderer.theme().square()
+							? UNICODE_SQUARE_CENTER
+							: UNICODE_ROUNDED_CENTER;
 			case Horizontal, Simple -> horizontal();
 			case SimpleHeavy -> heavyHorizontal();
 		};
@@ -152,9 +158,11 @@ final class ShinyTableBorderChars {
 
 	String innerLeft() {
 		return switch (border) {
-			case Normal -> Shiny.theme().ascii()
+			case Normal -> ShinyRenderer.theme().ascii()
 					? "+"
-					: Shiny.theme().square() ? UNICODE_SQUARE_INNER_LEFT : UNICODE_ROUNDED_INNER_LEFT;
+					: ShinyRenderer.theme().square()
+							? UNICODE_SQUARE_INNER_LEFT
+							: UNICODE_ROUNDED_INNER_LEFT;
 			case Horizontal, Simple -> horizontal();
 			case SimpleHeavy -> heavyHorizontal();
 		};
@@ -162,9 +170,11 @@ final class ShinyTableBorderChars {
 
 	String bottomLeft() {
 		return switch (border) {
-			case Normal -> Shiny.theme().ascii()
+			case Normal -> ShinyRenderer.theme().ascii()
 					? "+"
-					: Shiny.theme().square() ? UNICODE_SQUARE_BOTTOM_LEFT : UNICODE_ROUNDED_BOTTOM_LEFT;
+					: ShinyRenderer.theme().square()
+							? UNICODE_SQUARE_BOTTOM_LEFT
+							: UNICODE_ROUNDED_BOTTOM_LEFT;
 			case Horizontal -> horizontal();
 			case Simple, SimpleHeavy -> blank();
 		};
@@ -172,9 +182,11 @@ final class ShinyTableBorderChars {
 
 	String bottomMiddle() {
 		return switch (border) {
-			case Normal -> Shiny.theme().ascii()
+			case Normal -> ShinyRenderer.theme().ascii()
 					? "+"
-					: Shiny.theme().square() ? UNICODE_SQUARE_BOTTOM_MIDDLE : UNICODE_ROUNDED_BOTTOM_MIDDLE;
+					: ShinyRenderer.theme().square()
+							? UNICODE_SQUARE_BOTTOM_MIDDLE
+							: UNICODE_ROUNDED_BOTTOM_MIDDLE;
 			case Horizontal -> horizontal();
 			case Simple, SimpleHeavy -> blank();
 		};
@@ -182,9 +194,11 @@ final class ShinyTableBorderChars {
 
 	String bottomRight() {
 		return switch (border) {
-			case Normal -> Shiny.theme().ascii()
+			case Normal -> ShinyRenderer.theme().ascii()
 					? "+"
-					: Shiny.theme().square() ? UNICODE_SQUARE_BOTTOM_RIGHT : UNICODE_ROUNDED_BOTTOM_RIGHT;
+					: ShinyRenderer.theme().square()
+							? UNICODE_SQUARE_BOTTOM_RIGHT
+							: UNICODE_ROUNDED_BOTTOM_RIGHT;
 			case Horizontal -> horizontal();
 			case Simple, SimpleHeavy -> blank();
 		};

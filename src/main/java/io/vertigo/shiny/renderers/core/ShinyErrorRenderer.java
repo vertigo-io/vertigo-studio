@@ -1,7 +1,7 @@
 package io.vertigo.shiny.renderers.core;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.feedback.error.ShinyError;
@@ -21,7 +21,7 @@ public final class ShinyErrorRenderer implements ShinyModelRenderer<ShinyError> 
 				.isNotNull(shinyError);
 		//---
 		//final ShinyErrorStyle style = Shiny.theme().errorStyle();
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyWriter writer = ShinyRenderer.writer();
 		writer.println(ShinyColors.RED.fg("!> " + shinyError.text() + " "));
 	}
 }

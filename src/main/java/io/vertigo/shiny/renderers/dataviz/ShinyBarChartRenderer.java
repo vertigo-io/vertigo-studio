@@ -1,7 +1,7 @@
 package io.vertigo.shiny.renderers.dataviz;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.dataviz.chart.ShinyChart;
@@ -21,8 +21,8 @@ public final class ShinyBarChartRenderer implements ShinyModelRenderer<ShinyChar
 		Assertion.check()
 				.isNotNull(shinyChart);
 		//---// Trouver la valeur maximale pour normaliser les barres
-		final ShinyBarChartStyle style = Shiny.theme().barChartStyle();
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyBarChartStyle style = ShinyRenderer.theme().barChartStyle();
+		final ShinyWriter writer = ShinyRenderer.writer();
 
 		final double maxCount = shinyChart.series().stream()
 				.flatMap(serie -> serie.data().stream())

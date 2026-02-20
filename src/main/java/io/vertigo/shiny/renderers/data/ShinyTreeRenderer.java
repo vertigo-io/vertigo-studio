@@ -3,7 +3,7 @@ package io.vertigo.shiny.renderers.data;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.data.tree.ShinyTree;
@@ -20,7 +20,7 @@ public final class ShinyTreeRenderer implements ShinyModelRenderer<ShinyTree> {
 		Assertion.check()
 				.isNotNull(shinyTree);
 		//---
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyWriter writer = ShinyRenderer.writer();
 		writer.println(shinyTree.label());
 		printChildren(writer, "", shinyTree.children());
 	}

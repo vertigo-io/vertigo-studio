@@ -1,7 +1,7 @@
 package io.vertigo.shiny.renderers.text;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.text.paragraph.ShinyParagraph;
@@ -20,7 +20,7 @@ public final class ShinyParagraphRenderer implements ShinyModelRenderer<ShinyPar
 				.isNotNull(shinyParagraph);
 		//---
 		//		final ShinyParagraphStyle style = Shiny.theme().paragraphStyle();
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyWriter writer = ShinyRenderer.writer();
 
 		writer.println(shinyParagraph.text());
 		writer.println(); // Add a blank line after the paragraph

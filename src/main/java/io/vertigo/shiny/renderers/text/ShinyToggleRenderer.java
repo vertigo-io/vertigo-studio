@@ -1,7 +1,7 @@
 package io.vertigo.shiny.renderers.text;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.input.toggle.ShinyToggle;
@@ -20,8 +20,8 @@ public final class ShinyToggleRenderer implements ShinyModelRenderer<ShinyToggle
 		Assertion.check()
 				.isNotNull(shinyToggle);
 		//---
-		final ShinyToggleStyle style = Shiny.theme().toggleStyle();
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyToggleStyle style = ShinyRenderer.theme().toggleStyle();
+		final ShinyWriter writer = ShinyRenderer.writer();
 
 		final String icon = shinyToggle.value() ? shinyToggle.toggleType().getOnIcon() : shinyToggle.toggleType().getOffIcon();
 		final ShinyColor color = shinyToggle.value()

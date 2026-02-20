@@ -1,7 +1,7 @@
 package io.vertigo.shiny.renderers.core;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.block.ShinyContainer;
@@ -20,10 +20,10 @@ public final class ShinyContainerRenderer implements ShinyModelRenderer<ShinyCon
 				.isNotNull(container);
 		//---
 		//		final ShinyContainerStyle style = Shiny.theme().containerStyle();
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyWriter writer = ShinyRenderer.writer();
 
 		for (ShinyModel model : container.content()) {
-			Shiny.render(model);
+			ShinyRenderer.render(model);
 			writer.println("-------");
 		}
 	}

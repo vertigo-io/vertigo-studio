@@ -1,7 +1,7 @@
 package io.vertigo.shiny.renderers.dataviz;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.text.rating.ShinyRating;
@@ -20,8 +20,8 @@ public final class ShinyRatingRenderer implements ShinyModelRenderer<ShinyRating
 		Assertion.check()
 				.isNotNull(shinyRating);
 		//---
-		final ShinyRatingStyle style = Shiny.theme().ratingStyle();
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyRatingStyle style = ShinyRenderer.theme().ratingStyle();
+		final ShinyWriter writer = ShinyRenderer.writer();
 
 		final int maxValue = getEffectiveMaxValue(shinyRating);
 		final double clampedValue = Math.min(shinyRating.value(), maxValue);

@@ -2,7 +2,7 @@ package io.vertigo.shiny.models.live;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.models.ShinyBlock;
 
 public abstract class ShinyLiveComponent<S extends ShinyLiveComponent<S>> implements ShinyBlock, AutoCloseable {
@@ -29,7 +29,7 @@ public abstract class ShinyLiveComponent<S extends ShinyLiveComponent<S>> implem
 		} catch (final InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
-		Shiny.writer().println() // Final newline
+		ShinyRenderer.writer().println() // Final newline
 				.flush();
 	}
 

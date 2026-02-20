@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.regex.Matcher;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.input.text.ShinyInputText;
@@ -25,7 +25,7 @@ public final class ShinyInputTextRenderer implements ShinyModelRenderer<ShinyInp
 				.isNotNull(shinyInputText);
 		//---
 		//		final ShinyInputTextStyle style = Shiny.theme().inputTextStyle();
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyWriter writer = ShinyRenderer.writer();
 
 		String prompt = shinyInputText.label();
 		if (shinyInputText.required()) {

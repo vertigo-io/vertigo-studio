@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.data.table.ShinyTable;
@@ -27,10 +27,10 @@ public final class ShinyTableRenderer implements ShinyModelRenderer<ShinyTable> 
 				.when(shinyTable.rows().isEmpty(), () -> Assertion.check().isNotBlank(shinyTable.noDataFound()))
 				.isNotNull(shinyTable.header());
 		//---
-		final ShinyTableStyle style = Shiny.theme().tableStyle();
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyTableStyle style = ShinyRenderer.theme().tableStyle();
+		final ShinyWriter writer = ShinyRenderer.writer();
 
-		final NumberFormat numberFormat = Shiny.theme().numberFormat();
+		final NumberFormat numberFormat = ShinyRenderer.theme().numberFormat();
 
 		if (shinyTable.rows().isEmpty()) {
 			writer.println(shinyTable.noDataFound());

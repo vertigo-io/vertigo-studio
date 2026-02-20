@@ -10,6 +10,7 @@ import java.util.Locale;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.dataviz.calendar.ShinyCalendar;
 import io.vertigo.shiny.renderers.ShinyModelRenderer;
@@ -28,7 +29,7 @@ public final class ShinyCalendarRenderer implements ShinyModelRenderer<ShinyCale
 		//		final ShinyCalendarStyle style = Shiny.theme().calendarStyle();
 		//		final ShinyWriter writer = Shiny.writer();
 
-		final Locale calendarLocale = Shiny.theme().locale();
+		final Locale calendarLocale = ShinyRenderer.theme().locale();
 		final LocalDate firstDayOfMonth = LocalDate.of(shinyCalendar.year(), shinyCalendar.month(), 1);
 		final LocalDate lastDayOfMonth = firstDayOfMonth.plusMonths(1).minusDays(1);
 
@@ -61,7 +62,7 @@ public final class ShinyCalendarRenderer implements ShinyModelRenderer<ShinyCale
 				row = new String[7];
 			}
 		}
-		Shiny.render(
+		ShinyRenderer.render(
 				Shiny.table()
 						.withTitle(String.format("%s %d", monthName, shinyCalendar.year()))
 						.withHeader(days)

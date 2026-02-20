@@ -1,7 +1,7 @@
 package io.vertigo.shiny.renderers.media;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.media.pdf.ShinyPdf;
@@ -19,7 +19,7 @@ public final class ShinyPdfRenderer implements ShinyModelRenderer<ShinyPdf> {
 	public void render(final ShinyPdf pdfComponent) {
 		Assertion.check().isNotNull(pdfComponent);
 		//---
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyWriter writer = ShinyRenderer.writer();
 
 		final String title = pdfComponent.title() != null ? pdfComponent.title() : "PDF Document";
 		final String boxLine = "+".concat("-".repeat(title.length() + 2)).concat("+");

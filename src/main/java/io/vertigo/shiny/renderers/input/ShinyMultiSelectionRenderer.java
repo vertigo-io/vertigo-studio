@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import io.vertigo.core.lang.Assertion;
-import io.vertigo.shiny.Shiny;
+import io.vertigo.shiny.ShinyRenderer;
 import io.vertigo.shiny.ShinyWriter;
 import io.vertigo.shiny.models.ShinyModel;
 import io.vertigo.shiny.models.input.multiselection.ShinyMultiSelection;
@@ -24,7 +24,7 @@ public final class ShinyMultiSelectionRenderer implements ShinyModelRenderer<Shi
 				.isNotNull(shinyMultiSelection);
 		//---
 		//		final ShinyMultiSelectionStyle style = Shiny.theme().multiSelectionStyle();
-		final ShinyWriter writer = Shiny.writer();
+		final ShinyWriter writer = ShinyRenderer.writer();
 		if (shinyMultiSelection.title() != null) {
 			writer.println(shinyMultiSelection.title());
 		}
