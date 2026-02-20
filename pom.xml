@@ -11,16 +11,6 @@
 	<artifactId>vertigo-studio</artifactId>
 	<packaging>jar</packaging>
 	<name>vertigo-studio</name>
-	<repositories>
-    	<repository>
-        	<id>jitpack.io</id>
-        	<url>https://jitpack.io</url>
-    	</repository>
-	</repositories>
-	<properties>
-		<langchain4j.version>1.10.0</langchain4j.version> 
-    </properties>	
-    	
 	<dependencies>
 		<dependency>
 			<groupId>io.vertigo</groupId>
@@ -52,18 +42,6 @@
 			<version>2.3.34</version>
 		</dependency>
 		<dependency>
-			<groupId>com.rometools</groupId>
-			<artifactId>rome</artifactId>
-			<version>1.15.0</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>jakarta.servlet</groupId>
-    		<artifactId>jakarta.servlet-api</artifactId>
-			<version>6.1.0</version>
-		</dependency>
-
-		<dependency>
 		    <groupId>com.h2database</groupId>
 		    <artifactId>h2</artifactId>
 		    <version>2.2.224</version>
@@ -82,77 +60,6 @@
 			<artifactId>slf4j-simple</artifactId>
 			<version>2.0.17</version>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>info.picocli</groupId>
-			<artifactId>picocli</artifactId>
-			<version>4.7.0</version>
-		</dependency>
-		<dependency>
-    		<groupId>com.fasterxml.jackson.core</groupId>
-    		<artifactId>jackson-databind</artifactId>
-	    	<version>2.17.2</version>
-		</dependency>
-		<dependency>
-    		<groupId>com.github.java-json-tools</groupId>
-    		<artifactId>json-schema-validator</artifactId>
-    		<version>2.2.14</version>
-		</dependency>
-		<dependency>
-			<groupId>org.postgresql</groupId>
-  			<artifactId>postgresql</artifactId>
-  			<version>42.7.3</version>
-		</dependency>
-		<!-- LangChain4j -->
-        <dependency>
-            <groupId>dev.langchain4j</groupId>
-            <artifactId>langchain4j</artifactId>
-            <version>${langchain4j.version}</version>
-        </dependency>
-		<dependency>
-	    		<groupId>dev.langchain4j</groupId>
-	    		<artifactId>langchain4j-open-ai</artifactId>
-	    		<version>${langchain4j.version}</version>
-		</dependency>
-		<dependency>
-    			<groupId>dev.langchain4j</groupId>
-		    <artifactId>langchain4j-ollama</artifactId>
-            <version>${langchain4j.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jline</groupId>
-			<artifactId>jline</artifactId>
-			<version>3.25.1</version>
-		</dependency>
-		<dependency>
-  			<groupId>com.github.dtmo</groupId>
-  			<artifactId>jfiglet</artifactId>
-  			<version>1.0.1</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.java-websocket</groupId>
-		    <artifactId>Java-WebSocket</artifactId>
-		    <version>1.5.6</version>
-		</dependency>
-		<dependency>
-        	<groupId>com.github.javaparser</groupId>
-        	<artifactId>javaparser-core</artifactId>
-	    	<version>3.27.0</version>
-    	</dependency>
-		<dependency>
-			<groupId>com.drewnoakes</groupId>
-			<artifactId>metadata-extractor</artifactId>
-			<version>2.19.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.commonmark</groupId>
-			<artifactId>commonmark</artifactId>
-			<version>0.25.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.commonmark</groupId>
-			<artifactId>commonmark-ext-gfm-tables</artifactId>
-			<version>0.25.0</version>
 		</dependency>
 	</dependencies>
 	<build>
