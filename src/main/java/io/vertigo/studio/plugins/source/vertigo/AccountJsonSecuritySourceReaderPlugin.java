@@ -28,8 +28,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import jakarta.inject.Inject;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -40,6 +38,7 @@ import io.vertigo.studio.impl.source.SourceReaderPlugin;
 import io.vertigo.studio.notebook.Notebook;
 import io.vertigo.studio.source.Source;
 import io.vertigo.studio.vertigo.authorization.SecuredFeatureSketch;
+import jakarta.inject.Inject;
 
 public final class AccountJsonSecuritySourceReaderPlugin implements SourceReaderPlugin {
 
@@ -73,7 +72,7 @@ public final class AccountJsonSecuritySourceReaderPlugin implements SourceReader
 	final List<SecuredFeatureSketch> parseJson(final URL url) {
 		final List<SecuredFeatureSketch> securedFeatureSketchs = new ArrayList<>();
 		final JsonObject rootJsonObject;
-		try (InputStream inputStream = url.openStream()) {
+		try (InputStream _ = url.openStream()) {
 			rootJsonObject = gson.fromJson(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8), JsonObject.class);
 		} catch (final IOException e) {
 			throw WrappedException.wrap(e);
