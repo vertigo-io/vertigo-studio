@@ -29,7 +29,6 @@ import io.vertigo.core.lang.Assertion;
 /**
  * A Studio notebook is a space where sketches are shared and modified. (not threadSafe).
  * It's a conceptual representation of a project design that is human readable, storable and comparable
- *, 
  * @author mlaroche, pchretien
  */
 public final class Notebook {
@@ -38,6 +37,7 @@ public final class Notebook {
 	/**
 	 * Registers a new Sketch.
 	 * The sketch must not be already registered.
+	 *
 	 * @param sketch the sketch
 	 */
 	public void register(final Sketch sketch) {
@@ -60,7 +60,10 @@ public final class Notebook {
 				.isNotNull(clazz)
 				.isTrue(contains(name), "no sketch found with key {0} in {1}", name, sketches.keySet());
 		//---
-		return clazz.cast(sketches.get(name));
+		final var sketch = sketches.get(name);
+		Assertion.check()
+				.isTrue(clazz.isInstance(sketch), "espected a sketch of type {0} for name '{1}' but found {2}", clazz.getSimpleName(), name, sketch.getClass().getSimpleName());
+		return clazz.cast(sketch);
 	}
 
 	/** {@inheritDoc} */
