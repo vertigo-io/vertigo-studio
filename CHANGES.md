@@ -10,7 +10,7 @@ Release 4.3.1 - 2025/06/13
 ----------------------
 [Migration help](https://github.com/vertigo-io/vertigo/wiki/Vertigo-Migration-Guide#from-430-to-431)
 
-* [Studio] Fix name multiSelectable in FacetDefinition (multi**s**electable before)
+* **[Studio] Fix name multiSelectable in FacetDefinition** (multi**s**electable before)
 
 
 Release 4.3.0 - 2025/03/28
