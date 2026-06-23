@@ -1,0 +1,23 @@
+package io.vertigo.studio.search
+
+create IndexDefinition IdxCar {
+	keyConcept : DtCar
+	dtIndex : DtCar
+	loaderId : "CarSearchLoader"
+}
+
+alter DtDefinition DtCar {
+	stereotype : "KeyConcept"
+}
+
+create FacetDefinition FctCarYear {
+	dtDefinition:DtCar, fieldName:"year", label:"Car years"
+}
+
+create FacetedQueryDefinition QryCar {
+	dtIndex : DtCar
+	facets : [FctCarYear]
+	domainCriteria : DoFullText
+	listFilterBuilderClass : "io.vertigo.datafactory.impl.search.dsl.DslListFilterBuilder"
+	listFilterBuilderQuery : "year:#+query*#"
+}
