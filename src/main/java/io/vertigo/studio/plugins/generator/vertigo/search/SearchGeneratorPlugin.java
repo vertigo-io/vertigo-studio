@@ -19,9 +19,11 @@ package io.vertigo.studio.plugins.generator.vertigo.search;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.function.Function;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import io.vertigo.core.lang.Assertion;
 import io.vertigo.core.lang.MapBuilder;
@@ -75,9 +77,12 @@ public final class SearchGeneratorPlugin implements GeneratorPlugin {
 			final GeneratorConfig generatorConfig,
 			final GeneratorResultBuilder generatorResultBuilder) {
 
-		notebook.getAll(SearchIndexSketch.class)
-				.stream()
-				.map(SearchIndexSketch::getIndexDtSketch)
+		Stream.of(
+			notebook.getAll(SearchIndexSketch.class).stream().map(SearchIndexSketch::getIndexDtSketch),
+			notebook.getAll(FacetedQuerySketch.class).stream().map(FacetedQuerySketch::getIndexDtSketch),
+			notebook.getAll(FacetSketch.class).stream().map(FacetSketch::getIndexDtSketch)
+		)
+				.flatMap(Function.identity())
 				.map(DtSketch::getKey)
 				.distinct()
 				.map(dtSketchKey -> notebook.resolve(dtSketchKey.getName(), DtSketch.class))
@@ -138,6 +143,12 @@ public final class SearchGeneratorPlugin implements GeneratorPlugin {
 			}
 		}
 
+		if (searchIndexSketches.isEmpty() && facetedQueryDefinitions.isEmpty() && facetDefinitions.isEmpty()) {
+			return;
+		}
+
+		final boolean hasSearchIndex = !searchIndexSketches.isEmpty();
+
 		final Map<String, Object> model = new MapBuilder<String, Object>()
 				.put("packageName", packageName)
 				.put("facetedQueryDefinitions", facetedQueryDefinitions)
@@ -149,12 +160,20 @@ public final class SearchGeneratorPlugin implements GeneratorPlugin {
 				.put("hasRangeFacet", facetDefinitions.stream().anyMatch(FacetModel::isRange))
 				.build();
 
+		final String classSimpleName = searchDtModel.getClassSimpleName();
+		final String generatedFileName = hasSearchIndex
+				? classSimpleName + "SearchClient.java"
+				: classSimpleName + "FacetDefinitionProvider.java";
+		final String templateName = hasSearchIndex
+				? "template/search_client.ftl"
+				: "template/facet_definition_provider.ftl";
+
 		FileGenerator.builder(generatorConfig)
 				.withModel(model)
-				.withFileName(searchDtModel.getClassSimpleName() + "SearchClient.java")
+				.withFileName(generatedFileName)
 				.withGenSubDir(targetSubDir)
 				.withPackageName(packageName)
-				.withTemplateName(SearchGeneratorPlugin.class, "template/search_client.ftl")
+				.withTemplateName(SearchGeneratorPlugin.class, templateName)
 				.build()
 				.generateFile(generatorResultBuilder);
 	}
