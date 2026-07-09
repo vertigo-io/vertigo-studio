@@ -6,11 +6,17 @@ Running 5.0.0
 
 more to come :)
 
-Running 4.5.0-SNAPSHOT - 2026-07-XX
-----------------------
-[Migration help](https://github.com/vertigo-io/vertigo/wiki/Vertigo-Migration-Guide#from-440-to-450)
 
-* **[Studio] Generate FacetDefinitionProvider when no search index is declared** ÔÇö Generates `XxxFacetDefinitionProvider.java` (implements `SimpleDefinitionProvider`) instead of `XxxSearchClient.java` when only facets are defined. Used with `CollectionsManager.facetList()` for in-memory faceted search.
+Running 4.5.0-SNAPSHOT - 2026-12-XX
+----------------------
+more to come :)
+
+
+Release 4.4.0 - 2026/07/09
+----------------------
+[Migration help](https://github.com/vertigo-io/vertigo/wiki/Vertigo-Migration-Guide#from-432-to-440)
+
+* **[Studio] Generate FacetDefinitionProvider when no search index is declared** â€” Generates `XxxFacetDefinitionProvider.java` (implements `SimpleDefinitionProvider`) instead of `XxxSearchClient.java` when only facets are defined. Used with `CollectionsManager.facetList()` for in-memory faceted search.
 * [Studio] Add type check in Notebook.get; add KSP negative test
 * Update libs
   - c3p0 0.11.1 -> 0.14.1
@@ -238,4 +244,3 @@ __In Bold__ : Potential compatibility problems
 
 Release 0.9.1 - 2016/02/05
 ----------------------
-
