@@ -1,7 +1,7 @@
 <#import "macro_ao.ftl" as lib>
 package ${dao.packageName};
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 <#if dao.options >
 import java.util.Optional;

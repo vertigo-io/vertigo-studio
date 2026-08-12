@@ -1,7 +1,7 @@
 <#import "macro_ao.ftl" as lib>
 package ${pao.packageName};
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 <#if pao.options >
 import java.util.Optional;
