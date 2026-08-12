@@ -1,0 +1,11 @@
+package io.vertigo.dynamock.domain
+
+/* wrong Domain!! */
+create Task TkGetTestEntity {
+    className : "io.vertigo.basics.task.TaskEngineSelect"
+    request : "
+				select * from Test_Entity
+				limit 1
+			"
+	out testEntity {domain : DtTestEntity  cardinality:"?" }
+}

@@ -1,7 +1,7 @@
 /*
  * vertigo - application development platform
  *
- * Copyright (C) 2013-2025, Vertigo.io, team@vertigo.io
+ * Copyright (C) 2013-2026, Vertigo.io, team@vertigo.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,13 +47,13 @@ public final class KspEnvironmentManagerTest {
 	private SourceManager sourceManager;
 
 	@BeforeEach
-	public final void setUp() {
+	public void setUp() {
 		node = new AutoCloseableNode(buildNodeConfig());
 		DIInjector.injectMembers(this, node.getComponentSpace());
 	}
 
 	@AfterEach
-	public final void tearDown() {
+	public void tearDown() {
 		if (node != null) {
 			node.close();
 		}
@@ -80,6 +80,13 @@ public final class KspEnvironmentManagerTest {
 	public void testWrongNavigability() {
 		Assertions.assertThrows(IllegalStateException.class, () -> {
 			sourceManager.read(List.of(Source.of("kpr", "io/vertigo/studio/source/vertigo/ksp/data/execution-forbidden.kpr")));
+		});
+	}
+
+	@Test
+	public void testBadType() {
+		Assertions.assertThrows(IllegalStateException.class, () -> {
+			sourceManager.read(List.of(Source.of("kpr", "io/vertigo/studio/source/vertigo/ksp/data/execution-bad1.kpr")));
 		});
 	}
 
