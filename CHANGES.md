@@ -7,9 +7,10 @@ Running 5.0.0
 more to come :)
 
 
-Running 4.4.1 - 2026-12-XX
+Release 4.4.1 - 2026/08/28
 ----------------------
-more to come :)
+
+_No changes this time_
 
 
 Release 4.4.0 - 2026/07/09
