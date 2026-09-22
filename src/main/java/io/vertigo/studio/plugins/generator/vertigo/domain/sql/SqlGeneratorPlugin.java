@@ -220,7 +220,7 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 		}
 
 		final Map<String, Object> model = modelBuilder.build();
-		final String templatName = isSqlServer(baseCible) ? "template/sqlserver.ftl" : "template/sql.ftl";
+		final String templatName = getTemplateFileName(baseCible);
 
 		FileGenerator.builder(generatorConfig)
 				.withModel(model)
@@ -232,8 +232,12 @@ public final class SqlGeneratorPlugin implements GeneratorPlugin {
 				.generateFile(generatorResultBuilder);
 	}
 
-	private static boolean isSqlServer(final String baseCible) {
-		return "sqlserver".equalsIgnoreCase(baseCible) || "sql server".equalsIgnoreCase(baseCible);
+	private static String getTemplateFileName(final String baseCible) {
+        return switch (baseCible.toLowerCase()) {
+            case "sqlserver", "sql server" -> "template/sqlserver.ftl";
+            case "mariadb" -> "template/mariadb.ftl";
+            default -> "template/sql.ftl";
+        };
 	}
 
 	private static boolean isOracle(final String baseCible) {
