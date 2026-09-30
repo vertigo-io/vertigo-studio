@@ -63,6 +63,7 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 	private final List<DtSketchField> myFields = new ArrayList<>();
 	private String myDataSpace;
 	private String mySortFieldName;
+	private boolean mySortFieldDesc = false;
 	private String myDisplayFieldName;
 	private String myHandleFieldName;
 	private String myKeyFieldName;
@@ -288,7 +289,18 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 	 * @return this builder
 	 */
 	public DtSketchBuilder withSortField(final String sortFieldName) {
+		return withSortField(sortFieldName, false);
+	}
+
+	/**
+	 * Specifies which field to be used for sorting and the default sort direction
+	 * @param sortFieldName fieldName to use
+	 * @param desc default sort direction (true for descending order)
+	 * @return this builder
+	 */
+	public DtSketchBuilder withSortField(final String sortFieldName, final boolean desc) {
 		mySortFieldName = sortFieldName;
+		mySortFieldDesc = desc;
 		return this;
 	}
 
@@ -332,13 +344,17 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 		}
 
 		final DtSketchField sortField;
+		final Optional<Boolean> sortDesc;
 		if (mySortFieldName != null) {
 			sortField = findFieldByName(mySortFieldName)
 					.orElseThrow(() -> new IllegalStateException(StringUtil.format("Sort field '{0}' not found on '{1}'", mySortFieldName, dtSketch)));
+			sortDesc = Optional.of(mySortFieldDesc);
 		} else if (myStereotype == StudioStereotype.Fragment) {
 			sortField = myFragment.getSortField().orElse(null);
+			sortDesc = myFragment.getSortDesc();
 		} else {
 			sortField = null;
+			sortDesc = Optional.empty();
 		}
 
 		final DtSketchField displayField;
@@ -377,6 +393,7 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 				myFields,
 				myDataSpace == null ? "main" : myDataSpace,
 				Optional.ofNullable(sortField),
+				sortDesc,
 				Optional.ofNullable(displayField),
 				Optional.ofNullable(handleField),
 				Optional.ofNullable(keyField));

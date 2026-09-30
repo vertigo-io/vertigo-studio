@@ -59,6 +59,7 @@ public final class DtSketch extends AbstractSketch {
 	private final Optional<DtSketchField> idFieldOpt;
 
 	private final Optional<DtSketchField> sortFieldOpt;
+	private final Optional<Boolean> sortDescOpt;
 	private final Optional<DtSketchField> displayFieldOpt;
 	private final Optional<DtSketchField> handleFieldOpt;
 	private final Optional<DtSketchField> keyFieldOpt;
@@ -76,6 +77,7 @@ public final class DtSketch extends AbstractSketch {
 			final List<DtSketchField> dtFields,
 			final String dataSpace,
 			final Optional<DtSketchField> sortFieldOpt,
+			final Optional<Boolean> sortDescOpt,
 			final Optional<DtSketchField> displayFieldOpt,
 			final Optional<DtSketchField> handleFieldOpt,
 			final Optional<DtSketchField> keyFieldOpt) {
@@ -88,6 +90,8 @@ public final class DtSketch extends AbstractSketch {
 				.isNotBlank(dataSpace)
 				.isTrue(REGEX_DATA_SPACE.matcher(dataSpace).matches(), "dataSpace {0} must match pattern {1}", dataSpace, REGEX_DATA_SPACE)
 				.isNotNull(sortFieldOpt)
+				.isNotNull(sortDescOpt)
+				.isTrue(sortFieldOpt.isPresent() == sortDescOpt.isPresent(), "sortDescOpt {0} must be present if and only if sortFieldOpt is present on '{1}'", sortDescOpt, name)
 				.isNotNull(displayFieldOpt)
 				.isNotNull(handleFieldOpt);
 		//-----
@@ -98,6 +102,7 @@ public final class DtSketch extends AbstractSketch {
 		DtSketchField id = null;
 
 		this.sortFieldOpt = sortFieldOpt;
+		this.sortDescOpt = sortDescOpt;
 		this.displayFieldOpt = displayFieldOpt;
 		this.handleFieldOpt = handleFieldOpt;
 		this.keyFieldOpt = keyFieldOpt;
@@ -245,6 +250,13 @@ public final class DtSketch extends AbstractSketch {
 	 */
 	public Optional<DtSketchField> getSortField() {
 		return sortFieldOpt;
+	}
+
+	/**
+	 * @return The default sort direction ({@code true} for a descending sort). Empty when the definition has no sort field.
+	 */
+	public Optional<Boolean> getSortDesc() {
+		return sortDescOpt;
 	}
 
 	/**

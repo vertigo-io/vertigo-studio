@@ -9,7 +9,8 @@ more to come :)
 
 Running 4.5.0-SNAPSHOT - 2026-12-XX
 ----------------------
-more to come :)
+* [Studio] KSP : new optional sortFieldDesc attribute on DtDefinition and Fragment ("true" = descending default sort) ; the DTO generator emits @SortField(desc = true) when set ; a sortFieldDesc without sortField is now rejected at load
+* [Studio] Fix KSP property parsing when a property name is a prefix of another one (e.g. sortField / sortFieldDesc) : property names are now tried longest-first in the PEG choice
 
 
 Release 4.4.1 - 2026/08/28

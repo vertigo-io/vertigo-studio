@@ -129,8 +129,10 @@ public final class DomainSketchFactory implements DslSketchFactory {
 		final DtSketch from = notebook.resolve(dslSketch.getRawKeyByFieldName("from").getName(), DtSketch.class);
 
 		final String sortFieldName = (String) dslSketch.getPropertyValue(KspProperty.SORT_FIELD);
+		final Boolean sortFieldDesc = (Boolean) dslSketch.getPropertyValue(KspProperty.SORT_FIELD_DESC);
 		final String displayFieldName = (String) dslSketch.getPropertyValue(KspProperty.DISPLAY_FIELD);
 		final String handleFieldName = (String) dslSketch.getPropertyValue(KspProperty.HANDLE_FIELD);
+		Assertion.check().isFalse(sortFieldDesc != null && sortFieldName == null, "sortFieldDesc on '{0}' is incoherent without a sortField", dslSketch.getKey().getName());
 
 		//0. clones characteristics
 		final DtSketchBuilder dtDefinitionBuilder = DtSketch.builder(dslSketch.getKey().getName())
@@ -138,7 +140,7 @@ public final class DomainSketchFactory implements DslSketchFactory {
 				.withPackageName(dslSketch.getPackageName())
 				.withDataSpace(from.getDataSpace())
 				.withPackageName(from.getPackageName())
-				.withSortField(sortFieldName)
+				.withSortField(sortFieldName, sortFieldName != null && Boolean.TRUE.equals(sortFieldDesc))
 				.withDisplayField(displayFieldName)
 				.withHandleField(handleFieldName);
 
@@ -193,9 +195,11 @@ public final class DomainSketchFactory implements DslSketchFactory {
 	private DtSketch createDtSketch(final Notebook notebook, final DslRaw dtDslSketch) {
 		//Déclaration de la définition
 		final String sortFieldName = (String) dtDslSketch.getPropertyValue(KspProperty.SORT_FIELD);
+		final Boolean sortFieldDesc = (Boolean) dtDslSketch.getPropertyValue(KspProperty.SORT_FIELD_DESC);
 		final String displayFieldName = (String) dtDslSketch.getPropertyValue(KspProperty.DISPLAY_FIELD);
 		final String handleFieldName = (String) dtDslSketch.getPropertyValue(KspProperty.HANDLE_FIELD);
 		final String keyFieldName = (String) dtDslSketch.getPropertyValue(KspProperty.KEY_FIELD);
+		Assertion.check().isFalse(sortFieldDesc != null && sortFieldName == null, "sortFieldDesc on '{0}' is incoherent without a sortField", dtDslSketch.getKey().getName());
 		//-----
 		final String tmpStereotype = (String) dtDslSketch.getPropertyValue(KspProperty.STEREOTYPE);
 		//Si Stereotype est non renseigné on suppose que la définition est DtStereotype.Data.
@@ -210,7 +214,7 @@ public final class DomainSketchFactory implements DslSketchFactory {
 		final DtSketchBuilder dtDefinitionBuilder = DtSketch.builder(dtSketchKey.getName())
 				.withPackageName(dtDslSketch.getPackageName())
 				.withDataSpace(dataSpace)
-				.withSortField(sortFieldName)
+				.withSortField(sortFieldName, sortFieldName != null && Boolean.TRUE.equals(sortFieldDesc))
 				.withDisplayField(displayFieldName)
 				.withHandleField(handleFieldName)
 				.withKeyField(keyFieldName);

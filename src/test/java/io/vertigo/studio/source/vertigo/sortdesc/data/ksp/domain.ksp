@@ -1,0 +1,38 @@
+package io.vertigo.studio.domain.sortdesc
+
+create Domain DoId {
+	dataType : Long
+}
+
+create Domain DoFullText {
+	dataType : String
+}
+
+create DtDefinition DtSortDesc {
+		id id   		{ domain: DoId,       label:"Id" }
+		field label   { domain: DoFullText, label:"Label", cardinality: "1" }
+		sortField : "label"
+		sortFieldDesc : "true"
+}
+
+create DtDefinition DtSortAsc {
+		id id   		{ domain: DoId,       label:"Id" }
+		field label   { domain: DoFullText, label:"Label", cardinality: "1" }
+		sortField : "label"
+}
+
+create DtDefinition DtNoSort {
+		id id   		{ domain: DoId,       label:"Id" }
+		field label   { domain: DoFullText, label:"Label", cardinality: "1" }
+}
+
+create Fragment DtSortDescFragment {
+	from : DtSortDesc
+	alias label {}
+}
+
+create Fragment DtSortAscOverride {
+	from : DtSortDesc
+	alias label {}
+	sortField : "label"
+}

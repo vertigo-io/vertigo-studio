@@ -1,0 +1,15 @@
+package io.vertigo.studio.domain.sortdesc
+
+create Domain DoId {
+	dataType : Long
+}
+
+create Domain DoFullText {
+	dataType : String
+}
+
+create DtDefinition DtOrphanDesc {
+		id id   		{ domain: DoId,       label:"Id" }
+		field label   { domain: DoFullText, label:"Label", cardinality: "1" }
+		sortFieldDesc : "true"
+}

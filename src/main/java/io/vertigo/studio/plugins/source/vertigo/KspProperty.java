@@ -67,6 +67,11 @@ public final class KspProperty {
 	public static final String SORT_FIELD = "SORT_FIELD";
 
 	/**
+	 * Default sort direction carried by the sort field (default : ascending).
+	 */
+	public static final String SORT_FIELD_DESC = "SORT_FIELD_DESC";
+
+	/**
 	 * Champ qui porte l'affichage par défaut. (Un au plus par DT)
 	 */
 	public static final String DISPLAY_FIELD = "DISPLAY_FIELD";
