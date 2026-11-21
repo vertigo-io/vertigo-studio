@@ -17,10 +17,9 @@
  */
 package io.vertigo.studio.plugins.generator.vertigo.task.test;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
 import io.vertigo.core.lang.VUserException;
+import io.vertigo.core.lang.WrappedException;
+import io.vertigo.datamodel.smarttype.definitions.ConstraintException;
 
 /**
  * Vérifieur d'objets d'accès aux données.
@@ -41,45 +40,23 @@ public class TaskTestDaoChecker {
 		} catch (final VUserException vue) {
 			// Erreur utilisateur liées aux données
 			// On considère que le test est OK.
-		} catch (final NullPointerException npe) {
-			if (isOutAttributeNullCase(npe)) {
-				// Cas où la requête ne retourne aucune ligne : on soncidère que c'est lié aux données.
+		} catch (final WrappedException e) {
+			if (isConstraintCase(e)) {
+				// Contrainte sur les données (ex : la requête ne retourne aucune ligne alors que le résultat est obligatoire) : on considère que le test est OK.
 				return;
 			}
-			throw npe;
-		} catch (final Exception e) {
-			// TODO Attraper les erreurs liées aux données.
-			// Autre erreur : on relance pour faire tomber le test en erreur.
 			throw e;
 		}
+		// Autre erreur : elle fait tomber le test en erreur.
 	}
 
-	private boolean isOutAttributeNullCase(final NullPointerException npe) {
-
-		/* Dans le cas d'une requête qui n'a pas retournée de ligne alors qu'on en attend une,
-		 * on constate la stacktrace suivante :
-		 *
-		 * java.lang.NullPointerException: Attribut task CLASSIFICATION ne doit pas etre null (cf. paramétrage task)
-		at io.vertigo.lang.Assertion.check().notNull(Assertion.java:71)
-		at io.vertigo.dynamo.task.metamodel.TaskAttribute.checkAttribute(TaskAttribute.java:102)
-		at io.vertigo.dynamo.task.model.TaskResult.lambda$new$4(TaskResult.java:47)
-		at java.util.Optional.ifPresent(Optional.java:159)
-		at io.vertigo.dynamo.task.model.TaskResult.<init>(TaskResult.java:47)
-		at io.vertigo.dynamo.task.model.TaskEngine.process(TaskEngine.java:58)
-		at io.vertigo.dynamo.impl.task.TaskManagerImpl.doExecute(TaskManagerImpl.java:60)
-		at io.vertigo.dynamo.impl.task.TaskManagerImpl.lambda$execute$25(TaskManagerImpl.java:55)
-		at io.vertigo.commons.impl.analytics.AnalyticsManagerImpl.traceWithReturn(AnalyticsManagerImpl.java:88)
-		at io.vertigo.dynamo.impl.task.TaskManagerImpl.execute(TaskManagerImpl.java:52)
-		 *
-		 * */
-		//---
-		final StringWriter sw = new StringWriter();
-		final PrintWriter pw = new PrintWriter(sw, true);
-		npe.printStackTrace(pw);
-		final String st = sw.getBuffer().toString();
-		//---
-		return st.contains("ne doit pas etre null (cf. paramétrage task)") &&
-				st.contains("at io.vertigo.dynamo.task.model.TaskResult.<init>");
+	/** @return if a ConstraintException is the cause : the validation of the data (task params or result, see TaskResult) */
+	private static boolean isConstraintCase(final WrappedException e) {
+		for (Throwable cause = e.getCause(); cause != null; cause = cause.getCause()) {
+			if (cause instanceof ConstraintException) {
+				return true;
+			}
+		}
+		return false;
 	}
-
 }
