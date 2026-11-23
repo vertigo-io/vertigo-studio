@@ -16,6 +16,7 @@ Running 4.5.0-SNAPSHOT - 2026-12-XX
   - freemarker 2.3.34 -> 2.3.35
   - c3p0 0.14.1 -> 0.15.1
   - slf4j-simple 2.0.18 -> 2.0.20
+  - h2 2.2.224 -> 2.5.252 (tests)
 
 more to come :)
 
