@@ -31,13 +31,21 @@ import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslPropertyDec
 public final class DslPropertyDeclarationRuleTest {
 	private static final String LABEL = "LABEL";
 	private static final String SIZE = "SIZE";
+	private static final String SORT_FIELD = "SORT_FIELD";
+	private static final String SORT_FIELD_DESC = "SORT_FIELD_DESC";
 
 	private static final DslPropertyDeclarationRule MAIN;
+	private static final DslPropertyDeclarationRule PREFIX;
 	static {
 		final Set<String> propertyNames = new HashSet<>();
 		propertyNames.add(LABEL);
 		propertyNames.add(SIZE);
 		MAIN = new DslPropertyDeclarationRule(propertyNames);
+
+		final Set<String> prefixPropertyNames = new HashSet<>();
+		prefixPropertyNames.add(SORT_FIELD);
+		prefixPropertyNames.add(SORT_FIELD_DESC);
+		PREFIX = new DslPropertyDeclarationRule(prefixPropertyNames);
 	}
 
 	@Test
@@ -90,6 +98,36 @@ public final class DslPropertyDeclarationRuleTest {
 		Assertions.assertThrows(PegNoMatchFoundException.class, () -> {
 			final String text = "label  :    vert \"";
 			MAIN.parse(text); //On omet la quote de début
+		});
+	}
+
+	@Test
+	public void testSortFieldDesc() throws PegNoMatchFoundException {
+		final String text = "sortFieldDesc : \"true\"";
+		final PegResult<DslPropertyEntry> cursor = PREFIX
+				.parse(text);
+		final DslPropertyEntry propertyEntry = cursor.getValue();
+		Assertions.assertEquals(SORT_FIELD_DESC, propertyEntry.getPropertyName());
+		Assertions.assertEquals("true", propertyEntry.getPropertyValueAsString());
+		Assertions.assertEquals(text.length(), cursor.getIndex());
+	}
+
+	@Test
+	public void testSortField() throws PegNoMatchFoundException {
+		final String text = "sortField : \"label\"";
+		final PegResult<DslPropertyEntry> cursor = PREFIX
+				.parse(text);
+		final DslPropertyEntry propertyEntry = cursor.getValue();
+		Assertions.assertEquals(SORT_FIELD, propertyEntry.getPropertyName());
+		Assertions.assertEquals("label", propertyEntry.getPropertyValueAsString());
+		Assertions.assertEquals(text.length(), cursor.getIndex());
+	}
+
+	@Test
+	public void testSortFieldDescPrefixUnknown() {
+		Assertions.assertThrows(PegNoMatchFoundException.class, () -> {
+			//A partial prefix of a registered name must not be accepted
+			PREFIX.parse("sortFieldX : \"y\"");
 		});
 	}
 

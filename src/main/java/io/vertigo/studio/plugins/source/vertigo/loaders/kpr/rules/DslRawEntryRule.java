@@ -35,6 +35,11 @@ import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw.DslRawEntry;
 
 /**
  * Règle de déclaration d'une champ référenéant une listes de clés.
+ *
+ * Field names are tried in list order : the PEG engine performs no backtracking inside a choice,
+ * so a shorter name must never precede a longer name of which it is a prefix (the current names
+ * have no such pair).
+ *
  * @author pchretien, mlaroche
  */
 public final class DslRawEntryRule extends PegAbstractRule<DslRawEntry, List<Object>> {

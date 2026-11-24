@@ -7,6 +7,20 @@ Running 5.0.0
 more to come :)
 
 
+Running 4.5.0-SNAPSHOT - 2026-12-XX
+----------------------
+* [Studio] Add optional KSP attribute `sortFieldDesc` on DtDefinition and Fragment (`sortFieldDesc : "true"`) : descending default sort, generated as `@SortField(desc = true)` (requires vertigo-libs 4.5.0) ; a `sortFieldDesc` without `sortField` is rejected at load
+* [Studio] Fix KSP property parsing when a property name is the prefix of another one (e.g. `sortField` / `sortFieldDesc`)
+* [Studio] Fix the generated task tests failing when a task returns no row for a mandatory result (since 4.2.0) : an error of the data validation (`ConstraintException`) no longer fails them, as a `VUserException`
+* Update libs
+  - freemarker 2.3.34 -> 2.3.35
+  - c3p0 0.14.1 -> 0.15.1
+  - slf4j-simple 2.0.18 -> 2.0.20
+  - h2 2.2.224 -> 2.5.252 (tests)
+
+more to come :)
+
+
 Release 4.4.1 - 2026/08/28
 ----------------------
 

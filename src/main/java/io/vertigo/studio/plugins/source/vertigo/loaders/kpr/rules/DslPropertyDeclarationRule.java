@@ -24,7 +24,7 @@ import static io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslSynt
 import static io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslSyntaxRules.RAW_PROPERTY_VALUE;
 import static io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslSyntaxRules.SPACES;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +47,10 @@ import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.raw.DslPropertyEntry
  * Syntaxe : nomPropriété: "valeur";
  * Exemple : maxLength:"10";
  *
+ * Property names are sorted by decreasing length before building the choice : the PEG engine
+ * performs no backtracking inside a choice, so a shorter name must never precede a longer
+ * name of which it is a prefix.
+ *
  * @author pchretien, mlaroche
  */
 public final class DslPropertyDeclarationRule extends PegAbstractRule<DslPropertyEntry, List<Object>> {
@@ -67,10 +71,12 @@ public final class DslPropertyDeclarationRule extends PegAbstractRule<DslPropert
 	}
 
 	private static PegRule<List<Object>> createMainRule(final Set<String> entityPropertyNames) {
-		final List<PegRule<?>> propertyNamesRules = new ArrayList<>();
-		for (final String entityPropertyName : entityPropertyNames) {
-			propertyNamesRules.add(PegRules.term(StringUtil.constToLowerCamelCase(entityPropertyName)));
-		}
+		final List<PegRule<?>> propertyNamesRules = entityPropertyNames
+				.stream()
+				.map(StringUtil::constToLowerCamelCase)
+				.sorted(Comparator.comparingInt(String::length).reversed().thenComparing(Comparator.naturalOrder()))
+				.<PegRule<?>> map(PegRules::term)
+				.toList();
 
 		return PegRules.sequence(
 				PegRules.choice(propertyNamesRules),

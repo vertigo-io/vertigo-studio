@@ -41,6 +41,7 @@ import static io.vertigo.studio.plugins.source.vertigo.KspProperty.PERSISTENT;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.ROLE_A;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.ROLE_B;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.SORT_FIELD;
+import static io.vertigo.studio.plugins.source.vertigo.KspProperty.SORT_FIELD_DESC;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.STEREOTYPE;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.STORE_TYPE;
 import static io.vertigo.studio.plugins.source.vertigo.KspProperty.TABLE_NAME;
@@ -139,6 +140,7 @@ public final class DomainGrammar implements DslGrammar {
 		DT_ENTITY = DslEntity.builder("DtDefinition")
 				.addOptionalField(DISPLAY_FIELD, String)
 				.addOptionalField(SORT_FIELD, String)
+				.addOptionalField(SORT_FIELD_DESC, Boolean)
 				.addOptionalField(HANDLE_FIELD, String)
 				.addOptionalField(KEY_FIELD, String)
 				.addManyFields(DATA_FIELD, DT_DATA_FIELD_ENTITY)
@@ -160,6 +162,7 @@ public final class DomainGrammar implements DslGrammar {
 				.addManyFields(ALIAS, fieldAliasEntity) //on peut ajouter des champs
 				.addOptionalField(DISPLAY_FIELD, String)
 				.addOptionalField(SORT_FIELD, String)
+				.addOptionalField(SORT_FIELD_DESC, Boolean)
 				.addOptionalField(HANDLE_FIELD, String)
 				.addManyFields(DATA_FIELD, DT_DATA_FIELD_ENTITY) //on peut ajouter des champs
 				.addManyFields(COMPUTED_FIELD, DT_COMPUTED_FIELD_ENTITY) //et des computed

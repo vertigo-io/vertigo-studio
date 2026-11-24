@@ -131,6 +131,13 @@ public final class StudioDtFieldModel {
 	}
 
 	/**
+	 * @return true when the field carries the default sort and the direction is descending
+	 */
+	public boolean isSortFieldDesc() {
+		return isSortField() && dtSketch.getSortDesc().orElse(false);
+	}
+
+	/**
 	 * @return Label du champ
 	 */
 	public boolean isDisplayField() {

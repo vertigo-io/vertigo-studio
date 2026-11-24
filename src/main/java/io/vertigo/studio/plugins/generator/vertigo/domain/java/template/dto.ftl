@@ -110,7 +110,7 @@ public final class ${dtDefinition.classSimpleName} implements ${dtDefinition.ste
 	${annotation}
 	</#list>
 	<#if dtField.isSortField()>
-	@io.vertigo.datamodel.data.stereotype.SortField
+	@io.vertigo.datamodel.data.stereotype.SortField<#if dtField.isSortFieldDesc()>(desc = true)</#if>
 	</#if>
 	<#if dtField.isDisplayField()>
 	@io.vertigo.datamodel.data.stereotype.DisplayField
@@ -147,7 +147,7 @@ public final class ${dtDefinition.classSimpleName} implements ${dtDefinition.ste
 	${annotation}
 		</#list>
 	<#if dtField.isSortField()>
-	@io.vertigo.datamodel.data.stereotype.SortField
+	@io.vertigo.datamodel.data.stereotype.SortField<#if dtField.isSortFieldDesc()>(desc = true)</#if>
 	</#if>
 	<#if dtField.isDisplayField()>
 	@io.vertigo.datamodel.data.stereotype.DisplayField

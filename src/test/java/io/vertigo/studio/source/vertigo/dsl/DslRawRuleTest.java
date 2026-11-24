@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Test;
 import io.vertigo.commons.peg.PegNoMatchFoundException;
 import io.vertigo.studio.impl.source.dsl.raw.DslRaw;
 import io.vertigo.studio.impl.source.dsl.raw.DslRawRepository;
+import io.vertigo.studio.plugins.source.vertigo.KspProperty;
 import io.vertigo.studio.plugins.source.vertigo.loaders.kpr.rules.DslRawRule;
 
 public class DslRawRuleTest {
@@ -46,6 +47,33 @@ public class DslRawRuleTest {
 						}
 						""");
 
+	}
+
+	@Test
+	public void testSortFieldAlone() throws PegNoMatchFoundException {
+		final DslRaw raw = new DslRawRule("alter", rawRepository.getGrammar())
+				.parse("alter DtDefinition DtTag { sortField : \"label\" }")
+				.getValue();
+		Assertions.assertEquals("label", raw.getPropertyValue(KspProperty.SORT_FIELD));
+		Assertions.assertNull(raw.getPropertyValue(KspProperty.SORT_FIELD_DESC));
+	}
+
+	@Test
+	public void testSortFieldDescAlone() throws PegNoMatchFoundException {
+		final DslRaw raw = new DslRawRule("alter", rawRepository.getGrammar())
+				.parse("alter DtDefinition DtTag { sortFieldDesc : \"true\" }")
+				.getValue();
+		Assertions.assertEquals(Boolean.TRUE, raw.getPropertyValue(KspProperty.SORT_FIELD_DESC));
+		Assertions.assertNull(raw.getPropertyValue(KspProperty.SORT_FIELD));
+	}
+
+	@Test
+	public void testSortFieldAndDescTogether() throws PegNoMatchFoundException {
+		final DslRaw raw = new DslRawRule("alter", rawRepository.getGrammar())
+				.parse("alter DtDefinition DtTag { sortField : \"label\" sortFieldDesc : \"true\" }")
+				.getValue();
+		Assertions.assertEquals("label", raw.getPropertyValue(KspProperty.SORT_FIELD));
+		Assertions.assertEquals(Boolean.TRUE, raw.getPropertyValue(KspProperty.SORT_FIELD_DESC));
 	}
 
 	@Test
