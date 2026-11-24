@@ -29,7 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import io.vertigo.commons.peg.PegChoice;
 import io.vertigo.commons.peg.rule.PegAbstractRule;
@@ -76,8 +75,8 @@ public final class DslPropertyDeclarationRule extends PegAbstractRule<DslPropert
 				.stream()
 				.map(StringUtil::constToLowerCamelCase)
 				.sorted(Comparator.comparingInt(String::length).reversed().thenComparing(Comparator.naturalOrder()))
-				.map(PegRules::term)
-				.collect(Collectors.toList());
+				.<PegRule<?>> map(PegRules::term)
+				.toList();
 
 		return PegRules.sequence(
 				PegRules.choice(propertyNamesRules),

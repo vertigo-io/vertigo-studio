@@ -63,7 +63,7 @@ public final class DtSketchBuilder implements Builder<DtSketch> {
 	private final List<DtSketchField> myFields = new ArrayList<>();
 	private String myDataSpace;
 	private String mySortFieldName;
-	private boolean mySortFieldDesc = false;
+	private boolean mySortFieldDesc;
 	private String myDisplayFieldName;
 	private String myHandleFieldName;
 	private String myKeyFieldName;
