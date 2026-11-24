@@ -7,7 +7,7 @@ Running 5.0.0
 more to come :)
 
 
-Running 4.5.0 - 2026-12-XX
+Release 4.5.0 - 2026/11/24
 ----------------------
 * [Studio] Add optional KSP attribute `sortFieldDesc` on DtDefinition and Fragment (`sortFieldDesc : "true"`) : descending default sort, generated as `@SortField(desc = true)` (requires vertigo-libs 4.5.0) ; a `sortFieldDesc` without `sortField` is rejected at load
 * [Studio] Fix KSP property parsing when a property name is the prefix of another one (e.g. `sortField` / `sortFieldDesc`)
